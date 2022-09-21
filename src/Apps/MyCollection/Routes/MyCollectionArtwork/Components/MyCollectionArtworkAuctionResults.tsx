@@ -3,10 +3,10 @@ import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/Auc
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
+import { MyCollectionArtworkAuctionResults_artist$data } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
 
 interface MyCollectionArtworkAuctionResultsProps {
-  artist: MyCollectionArtworkAuctionResults_artist
+  artist: MyCollectionArtworkAuctionResults_artist$data
 }
 
 const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionResultsProps> = ({
@@ -52,6 +52,7 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
             return (
               <ArtistAuctionResultItemFragmentContainer
                 key={index}
+                // @ts-ignore RELAY UPGRADE 13
                 auctionResult={result}
                 filtersAtDefault={false}
               />

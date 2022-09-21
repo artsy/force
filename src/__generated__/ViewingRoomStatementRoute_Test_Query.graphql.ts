@@ -1,145 +1,69 @@
+/**
+ * @generated SignedSource<<656a769a24c3253150074ef79ca9792b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomStatementRoute_Test_QueryVariables = {
-    slug: string;
+export type ViewingRoomStatementRoute_Test_Query$variables = {
+  slug: string;
 };
-export type ViewingRoomStatementRoute_Test_QueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
+export type ViewingRoomStatementRoute_Test_Query$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
+  } | null;
+};
+export type ViewingRoomStatementRoute_Test_Query$rawResponse = {
+  readonly viewingRoom: {
+    readonly introStatement: string | null;
+    readonly artworksConnection: {
+      readonly totalCount: number | null;
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly artistNames: string | null;
+          readonly date: string | null;
+          readonly saleMessage: string | null;
+          readonly title: string | null;
+          readonly image: {
+            readonly resized: {
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+              readonly height: number | null;
+            } | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
     } | null;
-};
-export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
-    readonly viewingRoom: ({
-        readonly introStatement: string | null;
-        readonly artworksConnection: ({
-            readonly totalCount: number | null;
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string;
-                    readonly artistNames: string | null;
-                    readonly date: string | null;
-                    readonly saleMessage: string | null;
-                    readonly title: string | null;
-                    readonly image: ({
-                        readonly resized: ({
-                            readonly src: string;
-                            readonly srcSet: string;
-                            readonly width: number | null;
-                            readonly height: number | null;
-                        }) | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly pullQuote: string | null;
-        readonly body: string | null;
-        readonly subsections: ReadonlyArray<{
-            readonly internalID: string;
-            readonly title: string | null;
-            readonly body: string | null;
-            readonly image: ({
-                readonly width: number | null;
-                readonly height: number | null;
-                readonly imageURLs: ({
-                    readonly normalized: string | null;
-                }) | null;
-            }) | null;
-            readonly caption: string | null;
-        }>;
-    }) | null;
+    readonly pullQuote: string | null;
+    readonly body: string | null;
+    readonly subsections: ReadonlyArray<{
+      readonly internalID: string;
+      readonly title: string | null;
+      readonly body: string | null;
+      readonly image: {
+        readonly width: number | null;
+        readonly height: number | null;
+        readonly imageURLs: {
+          readonly normalized: string | null;
+        } | null;
+      } | null;
+      readonly caption: string | null;
+    }>;
+  } | null;
 };
 export type ViewingRoomStatementRoute_Test_Query = {
-    readonly response: ViewingRoomStatementRoute_Test_QueryResponse;
-    readonly variables: ViewingRoomStatementRoute_Test_QueryVariables;
-    readonly rawResponse: ViewingRoomStatementRoute_Test_QueryRawResponse;
+  variables: ViewingRoomStatementRoute_Test_Query$variables;
+  response: ViewingRoomStatementRoute_Test_Query$data;
+  rawResponse: ViewingRoomStatementRoute_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ViewingRoomStatementRoute_Test_Query(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) {
-    ...ViewingRoomStatementRoute_viewingRoom
-  }
-}
-
-fragment ViewingRoomBody_viewingRoom on ViewingRoom {
-  body
-}
-
-fragment ViewingRoomIntro_viewingRoom on ViewingRoom {
-  introStatement
-}
-
-fragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {
-  pullQuote
-}
-
-fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
-  ...ViewingRoomIntro_viewingRoom
-  ...ViewingRoomWorks_viewingRoom
-  ...ViewingRoomPullQuote_viewingRoom
-  ...ViewingRoomBody_viewingRoom
-  ...ViewingRoomSubsections_viewingRoom
-  artworksConnection(first: 2) {
-    totalCount
-  }
-  subsections {
-    internalID
-  }
-}
-
-fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
-  subsections {
-    internalID
-    title
-    body
-    image {
-      width
-      height
-      imageURLs {
-        normalized
-      }
-    }
-    caption
-  }
-}
-
-fragment ViewingRoomWorksArtwork_artwork on Artwork {
-  artistNames
-  date
-  saleMessage
-  title
-  image {
-    resized(width: 445) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-  artworksConnection(first: 2) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...ViewingRoomWorksArtwork_artwork
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -536,5 +460,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ff6fa30c7a24fd5b06c3ff3ec9e030a4';
+
+(node as any).hash = "ff6fa30c7a24fd5b06c3ff3ec9e030a4";
+
 export default node;

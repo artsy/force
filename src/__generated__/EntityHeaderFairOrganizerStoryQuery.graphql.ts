@@ -1,63 +1,27 @@
+/**
+ * @generated SignedSource<<a69d7ff73b28c3ba64998528d4497861>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFairOrganizerStoryQueryVariables = {
-    id: string;
+export type EntityHeaderFairOrganizerStoryQuery$variables = {
+  id: string;
 };
-export type EntityHeaderFairOrganizerStoryQueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
-    } | null;
+export type EntityHeaderFairOrganizerStoryQuery$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
+  } | null;
 };
 export type EntityHeaderFairOrganizerStoryQuery = {
-    readonly response: EntityHeaderFairOrganizerStoryQueryResponse;
-    readonly variables: EntityHeaderFairOrganizerStoryQueryVariables;
+  variables: EntityHeaderFairOrganizerStoryQuery$variables;
+  response: EntityHeaderFairOrganizerStoryQuery$data;
 };
-
-
-
-/*
-query EntityHeaderFairOrganizerStoryQuery(
-  $id: String!
-) {
-  fairOrganizer(id: $id) {
-    ...EntityHeaderFairOrganizer_fairOrganizer
-    id
-  }
-}
-
-fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
-  internalID
-  slug
-  name
-  fairsConnection {
-    totalCount
-  }
-  profile {
-    ...FollowProfileButton_profile
-    href
-    initials
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -263,5 +227,7 @@ return {
   }
 };
 })();
-(node as any).hash = '569b26e1ac6b86aa02075e596e15c6df';
+
+(node as any).hash = "569b26e1ac6b86aa02075e596e15c6df";
+
 export default node;

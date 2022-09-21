@@ -10,14 +10,14 @@ import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"
-import { ShowsCurrentShows_viewer } from "__generated__/ShowsCurrentShows_viewer.graphql"
+import { ShowsCurrentShows_viewer$data } from "__generated__/ShowsCurrentShows_viewer.graphql"
 import {
   ShowsCurrentShowFragmentContainer,
   ShowsCurrentShowPlaceholder,
 } from "./ShowsCurrentShow"
 
 interface ShowsCurrentShowsProps {
-  viewer: ShowsCurrentShows_viewer
+  viewer: ShowsCurrentShows_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -48,6 +48,7 @@ const ShowsCurrentShows: React.FC<ShowsCurrentShowsProps> = ({
           return (
             <ShowsCurrentShowFragmentContainer
               key={show.internalID}
+              // @ts-ignore RELAY UPGRADE 13
               show={show}
             />
           )
@@ -149,6 +150,7 @@ export const ShowsCurrentShowsQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
+          // @ts-ignore RELAY UPGRADE 13
           return <ShowsCurrentShowsPaginationContainer viewer={props.viewer} />
         }
 

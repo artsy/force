@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<6e1b496c909a5a420f15cf584469db9d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkVideoPlayer_artwork = {
-    readonly figures: ReadonlyArray<{
-        readonly type: "Video";
-        readonly url: string;
-        readonly height: number;
-        readonly width: number;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly type: "%other";
-    }>;
-    readonly " $refType": "ArtworkVideoPlayer_artwork";
+export type ArtworkVideoPlayer_artwork$data = {
+  readonly figures: ReadonlyArray<{
+    readonly type: "Video";
+    readonly url: string;
+    readonly height: number;
+    readonly width: number;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly type: "%other";
+  }>;
+  readonly " $fragmentType": "ArtworkVideoPlayer_artwork";
 };
-export type ArtworkVideoPlayer_artwork$data = ArtworkVideoPlayer_artwork;
 export type ArtworkVideoPlayer_artwork$key = {
-    readonly " $data"?: ArtworkVideoPlayer_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkVideoPlayer_artwork">;
+  readonly " $data"?: ArtworkVideoPlayer_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkVideoPlayer_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -81,5 +84,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '974a30d74f842d7276a8cb99153735a5';
+
+(node as any).hash = "974a30d74f842d7276a8cb99153735a5";
+
 export default node;

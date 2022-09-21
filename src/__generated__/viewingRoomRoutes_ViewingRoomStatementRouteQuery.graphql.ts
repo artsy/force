@@ -1,103 +1,27 @@
+/**
+ * @generated SignedSource<<5d9a15d9b546f236a06a7f23a2593239>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type viewingRoomRoutes_ViewingRoomStatementRouteQueryVariables = {
-    slug: string;
+export type viewingRoomRoutes_ViewingRoomStatementRouteQuery$variables = {
+  slug: string;
 };
-export type viewingRoomRoutes_ViewingRoomStatementRouteQueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
-    } | null;
+export type viewingRoomRoutes_ViewingRoomStatementRouteQuery$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
+  } | null;
 };
 export type viewingRoomRoutes_ViewingRoomStatementRouteQuery = {
-    readonly response: viewingRoomRoutes_ViewingRoomStatementRouteQueryResponse;
-    readonly variables: viewingRoomRoutes_ViewingRoomStatementRouteQueryVariables;
+  variables: viewingRoomRoutes_ViewingRoomStatementRouteQuery$variables;
+  response: viewingRoomRoutes_ViewingRoomStatementRouteQuery$data;
 };
-
-
-
-/*
-query viewingRoomRoutes_ViewingRoomStatementRouteQuery(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) @principalField {
-    ...ViewingRoomStatementRoute_viewingRoom
-  }
-}
-
-fragment ViewingRoomBody_viewingRoom on ViewingRoom {
-  body
-}
-
-fragment ViewingRoomIntro_viewingRoom on ViewingRoom {
-  introStatement
-}
-
-fragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {
-  pullQuote
-}
-
-fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
-  ...ViewingRoomIntro_viewingRoom
-  ...ViewingRoomWorks_viewingRoom
-  ...ViewingRoomPullQuote_viewingRoom
-  ...ViewingRoomBody_viewingRoom
-  ...ViewingRoomSubsections_viewingRoom
-  artworksConnection(first: 2) {
-    totalCount
-  }
-  subsections {
-    internalID
-  }
-}
-
-fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
-  subsections {
-    internalID
-    title
-    body
-    image {
-      width
-      height
-      imageURLs {
-        normalized
-      }
-    }
-    caption
-  }
-}
-
-fragment ViewingRoomWorksArtwork_artwork on Artwork {
-  artistNames
-  date
-  saleMessage
-  title
-  image {
-    resized(width: 445) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-  artworksConnection(first: 2) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...ViewingRoomWorksArtwork_artwork
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -392,5 +316,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1451a2279a35ecfe9e1088e2060d31b7';
+
+(node as any).hash = "1451a2279a35ecfe9e1088e2060d31b7";
+
 export default node;

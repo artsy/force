@@ -1,280 +1,36 @@
+/**
+ * @generated SignedSource<<c136dba932d81f3c9e555747049a8637>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateBidderInput = {
-    clientMutationId?: string | null | undefined;
-    saleID: string;
+  clientMutationId?: string | null;
+  saleID: string;
 };
-export type useCreateBidderMutationVariables = {
-    input: CreateBidderInput;
+export type useCreateBidderMutation$variables = {
+  input: CreateBidderInput;
 };
-export type useCreateBidderMutationResponse = {
-    readonly createBidder: {
-        readonly bidder: {
-            readonly internalID: string;
-            readonly sale: {
-                readonly " $fragmentRefs": FragmentRefs<"AuctionApp_sale">;
-            } | null;
-        } | null;
+export type useCreateBidderMutation$data = {
+  readonly createBidder: {
+    readonly bidder: {
+      readonly internalID: string;
+      readonly sale: {
+        readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_sale">;
+      } | null;
     } | null;
+  } | null;
 };
 export type useCreateBidderMutation = {
-    readonly response: useCreateBidderMutationResponse;
-    readonly variables: useCreateBidderMutationVariables;
+  variables: useCreateBidderMutation$variables;
+  response: useCreateBidderMutation$data;
 };
-
-
-
-/*
-mutation useCreateBidderMutation(
-  $input: CreateBidderInput!
-) {
-  createBidder(input: $input) {
-    bidder {
-      internalID
-      sale {
-        ...AuctionApp_sale
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment AuctionApp_sale on Sale {
-  ...AuctionMeta_sale
-  ...AuctionAssociatedSale_sale
-  ...AuctionBuyNowRail_sale
-  ...AuctionDetails_sale
-  ...CascadingEndTimesBanner_sale
-  internalID
-  slug
-  isClosed
-  eligibleSaleArtworksCount
-  coverImage {
-    url(version: ["wide", "source", "large_rectangle"])
-  }
-  showAssociatedSale: associatedSale {
-    internalID
-    id
-  }
-  showBuyNowTab: promotedSale {
-    internalID
-    id
-  }
-  cascadingEndTimeIntervalMinutes
-  extendedBiddingIntervalMinutes
-  status
-}
-
-fragment AuctionAssociatedSale_sale on Sale {
-  associatedSale {
-    coverImage {
-      cropped(width: 445, height: 250) {
-        src
-        srcSet
-      }
-    }
-    displayTimelyAt
-    href
-    slug
-    name
-    id
-  }
-}
-
-fragment AuctionBuyNowRail_sale on Sale {
-  promotedSale {
-    href
-    internalID
-    name
-    saleArtworksConnection(first: 99) {
-      edges {
-        node {
-          artwork {
-            ...ShelfArtwork_artwork
-            id
-          }
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment AuctionDetails_sale on Sale {
-  ...RegisterButton_sale
-  ...AuctionInfoSidebar_sale
-  ...SaleDetailTimer_sale
-  internalID
-  name
-  slug
-  liveStartAt
-  startAt
-  endAt
-  description(format: HTML)
-  href
-  isClosed
-  cascadingEndTimeIntervalMinutes
-}
-
-fragment AuctionInfoSidebar_sale on Sale {
-  liveStartAt
-}
-
-fragment AuctionMeta_sale on Sale {
-  name
-  description(format: HTML)
-  slug
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment CascadingEndTimesBanner_sale on Sale {
-  cascadingEndTimeIntervalMinutes
-  extendedBiddingIntervalMinutes
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment RegisterButton_sale on Sale {
-  bidder {
-    qualifiedForBidding
-    id
-  }
-  isAuction
-  isClosed
-  isLiveOpen
-  isPreview
-  isRegistrationClosed
-  liveURLIfOpen
-  requireIdentityVerification
-  registrationStatus {
-    internalID
-    id
-  }
-  slug
-  status
-}
-
-fragment SaleDetailTimer_sale on Sale {
-  endAt
-  endedAt
-  startAt
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1089,5 +845,7 @@ return {
   }
 };
 })();
-(node as any).hash = '114995feec2a443c89bcb818cef2c27f';
+
+(node as any).hash = "114995feec2a443c89bcb818cef2c27f";
+
 export default node;

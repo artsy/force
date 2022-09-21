@@ -1,419 +1,202 @@
+/**
+ * @generated SignedSource<<971d535616ff62a69a188f16b8c8c3f2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type FilterArtworksInput = {
-    acquireable?: boolean | null | undefined;
-    additionalGeneIDs?: Array<string | null> | null | undefined;
-    after?: string | null | undefined;
-    aggregationPartnerCities?: Array<string | null> | null | undefined;
-    aggregations?: Array<ArtworkAggregation | null> | null | undefined;
-    artistID?: string | null | undefined;
-    artistIDs?: Array<string | null> | null | undefined;
-    artistNationalities?: Array<string | null> | null | undefined;
-    artistSeriesID?: string | null | undefined;
-    atAuction?: boolean | null | undefined;
-    attributionClass?: Array<string | null> | null | undefined;
-    before?: string | null | undefined;
-    color?: string | null | undefined;
-    colors?: Array<string | null> | null | undefined;
-    dimensionRange?: string | null | undefined;
-    excludeArtworkIDs?: Array<string | null> | null | undefined;
-    extraAggregationGeneIDs?: Array<string | null> | null | undefined;
-    first?: number | null | undefined;
-    forSale?: boolean | null | undefined;
-    geneID?: string | null | undefined;
-    geneIDs?: Array<string | null> | null | undefined;
-    height?: string | null | undefined;
-    includeArtworksByFollowedArtists?: boolean | null | undefined;
-    includeMediumFilterInAggregation?: boolean | null | undefined;
-    inquireableOnly?: boolean | null | undefined;
-    keyword?: string | null | undefined;
-    keywordMatchExact?: boolean | null | undefined;
-    last?: number | null | undefined;
-    locationCities?: Array<string | null> | null | undefined;
-    majorPeriods?: Array<string | null> | null | undefined;
-    marketable?: boolean | null | undefined;
-    marketingCollectionID?: string | null | undefined;
-    materialsTerms?: Array<string | null> | null | undefined;
-    medium?: string | null | undefined;
-    offerable?: boolean | null | undefined;
-    page?: number | null | undefined;
-    partnerCities?: Array<string | null> | null | undefined;
-    partnerID?: string | null | undefined;
-    partnerIDs?: Array<string | null> | null | undefined;
-    period?: string | null | undefined;
-    periods?: Array<string | null> | null | undefined;
-    priceRange?: string | null | undefined;
-    saleID?: string | null | undefined;
-    size?: number | null | undefined;
-    sizes?: Array<ArtworkSizes | null> | null | undefined;
-    sort?: string | null | undefined;
-    tagID?: string | null | undefined;
-    width?: string | null | undefined;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string | null> | null;
+  after?: string | null;
+  aggregationPartnerCities?: ReadonlyArray<string | null> | null;
+  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string | null> | null;
+  artistNationalities?: ReadonlyArray<string | null> | null;
+  artistSeriesID?: string | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string | null> | null;
+  before?: string | null;
+  color?: string | null;
+  colors?: ReadonlyArray<string | null> | null;
+  dimensionRange?: string | null;
+  excludeArtworkIDs?: ReadonlyArray<string | null> | null;
+  extraAggregationGeneIDs?: ReadonlyArray<string | null> | null;
+  first?: number | null;
+  forSale?: boolean | null;
+  geneID?: string | null;
+  geneIDs?: ReadonlyArray<string | null> | null;
+  height?: string | null;
+  includeArtworksByFollowedArtists?: boolean | null;
+  includeMediumFilterInAggregation?: boolean | null;
+  inquireableOnly?: boolean | null;
+  keyword?: string | null;
+  keywordMatchExact?: boolean | null;
+  last?: number | null;
+  locationCities?: ReadonlyArray<string | null> | null;
+  majorPeriods?: ReadonlyArray<string | null> | null;
+  marketable?: boolean | null;
+  marketingCollectionID?: string | null;
+  materialsTerms?: ReadonlyArray<string | null> | null;
+  medium?: string | null;
+  offerable?: boolean | null;
+  page?: number | null;
+  partnerCities?: ReadonlyArray<string | null> | null;
+  partnerID?: string | null;
+  partnerIDs?: ReadonlyArray<string | null> | null;
+  period?: string | null;
+  periods?: ReadonlyArray<string | null> | null;
+  priceRange?: string | null;
+  saleID?: string | null;
+  size?: number | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  sort?: string | null;
+  tagID?: string | null;
+  width?: string | null;
 };
-export type ArtworkQueryFilterQueryVariables = {
-    input?: FilterArtworksInput | null | undefined;
+export type ArtworkQueryFilterQuery$variables = {
+  input?: FilterArtworksInput | null;
 };
-export type ArtworkQueryFilterQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
-    } | null;
+export type ArtworkQueryFilterQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
+  } | null;
 };
-export type ArtworkQueryFilterQueryRawResponse = {
-    readonly viewer: ({
-        readonly filtered_artworks: ({
+export type ArtworkQueryFilterQuery$rawResponse = {
+  readonly viewer: {
+    readonly filtered_artworks: {
+      readonly id: string;
+      readonly pageInfo: {
+        readonly hasNextPage: boolean;
+        readonly endCursor: string | null;
+      };
+      readonly pageCursors: {
+        readonly around: ReadonlyArray<{
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        }>;
+        readonly first: {
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        } | null;
+        readonly last: {
+          readonly cursor: string;
+          readonly page: number;
+          readonly isCurrent: boolean;
+        } | null;
+        readonly previous: {
+          readonly cursor: string;
+          readonly page: number;
+        } | null;
+      };
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+          readonly slug?: string;
+          readonly href?: string | null;
+          readonly internalID?: string;
+          readonly image?: {
+            readonly aspect_ratio: number;
+            readonly placeholder: string | null;
+            readonly url: string | null;
+            readonly resized: {
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+              readonly height: number | null;
+            } | null;
+          } | null;
+          readonly title?: string | null;
+          readonly image_title?: string | null;
+          readonly artistNames?: string | null;
+          readonly date?: string | null;
+          readonly sale_message?: string | null;
+          readonly cultural_maker?: string | null;
+          readonly artists?: ReadonlyArray<{
             readonly id: string;
-            readonly pageInfo: {
-                readonly hasNextPage: boolean;
-                readonly endCursor: string | null;
-            };
-            readonly pageCursors: {
-                readonly around: ReadonlyArray<{
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }>;
-                readonly first: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }) | null;
-                readonly last: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                    readonly isCurrent: boolean;
-                }) | null;
-                readonly previous: ({
-                    readonly cursor: string;
-                    readonly page: number;
-                }) | null;
-            };
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly slug?: string | undefined;
-                    readonly href?: string | null | undefined;
-                    readonly internalID?: string | undefined;
-                    readonly image?: ({
-                        readonly aspect_ratio: number;
-                        readonly placeholder: string | null;
-                        readonly url: string | null;
-                        readonly resized: ({
-                            readonly src: string;
-                            readonly srcSet: string;
-                            readonly width: number | null;
-                            readonly height: number | null;
-                        }) | null;
-                    }) | null | undefined;
-                    readonly title?: string | null | undefined;
-                    readonly image_title?: string | null | undefined;
-                    readonly artistNames?: string | null | undefined;
-                    readonly date?: string | null | undefined;
-                    readonly sale_message?: string | null | undefined;
-                    readonly cultural_maker?: string | null | undefined;
-                    readonly artists?: ReadonlyArray<({
-                        readonly id: string;
-                        readonly href: string | null;
-                        readonly name: string | null;
-                    }) | null> | null | undefined;
-                    readonly collecting_institution?: string | null | undefined;
-                    readonly partner?: ({
-                        readonly name: string | null;
-                        readonly href: string | null;
-                        readonly id: string;
-                    }) | null | undefined;
-                    readonly sale?: ({
-                        readonly endAt: string | null;
-                        readonly cascadingEndTimeIntervalMinutes: number | null;
-                        readonly extendedBiddingIntervalMinutes: number | null;
-                        readonly startAt: string | null;
-                        readonly is_auction: boolean | null;
-                        readonly is_closed: boolean | null;
-                        readonly id: string;
-                        readonly is_preview: boolean | null;
-                        readonly display_timely_at: string | null;
-                        readonly extendedBiddingPeriodMinutes: number | null;
-                    }) | null | undefined;
-                    readonly sale_artwork?: ({
-                        readonly lotID: string | null;
-                        readonly lotLabel: string | null;
-                        readonly endAt: string | null;
-                        readonly extendedBiddingEndAt: string | null;
-                        readonly formattedEndDateTime: string | null;
-                        readonly counts: ({
-                            readonly bidder_positions: number | null;
-                        }) | null;
-                        readonly highest_bid: ({
-                            readonly display: string | null;
-                        }) | null;
-                        readonly opening_bid: ({
-                            readonly display: string | null;
-                        }) | null;
-                        readonly id: string;
-                    }) | null | undefined;
-                    readonly is_saved?: boolean | null | undefined;
-                    readonly attributionClass?: ({
-                        readonly name: string | null;
-                        readonly id: string;
-                    }) | null | undefined;
-                    readonly mediumType?: ({
-                        readonly filterGene: ({
-                            readonly name: string | null;
-                            readonly id: string;
-                        }) | null;
-                    }) | null | undefined;
-                    readonly is_biddable?: boolean | null | undefined;
-                    readonly saleArtwork?: ({
-                        readonly endAt: string | null;
-                        readonly extendedBiddingEndAt: string | null;
-                        readonly lotID: string | null;
-                        readonly id: string;
-                    }) | null | undefined;
-                }) | null;
-                readonly __typename?: string | undefined;
-                readonly __isNode?: string | undefined;
-                readonly id?: string | undefined;
-            }) | null> | null;
-            readonly counts: ({
-                readonly total: number | null;
-            }) | null;
-            readonly __isArtworkConnectionInterface: "FilterArtworksConnection";
-        }) | null;
-    }) | null;
+            readonly href: string | null;
+            readonly name: string | null;
+          } | null> | null;
+          readonly collecting_institution?: string | null;
+          readonly partner?: {
+            readonly name: string | null;
+            readonly href: string | null;
+            readonly id: string;
+          } | null;
+          readonly sale?: {
+            readonly endAt: string | null;
+            readonly cascadingEndTimeIntervalMinutes: number | null;
+            readonly extendedBiddingIntervalMinutes: number | null;
+            readonly startAt: string | null;
+            readonly is_auction: boolean | null;
+            readonly is_closed: boolean | null;
+            readonly id: string;
+            readonly is_preview: boolean | null;
+            readonly display_timely_at: string | null;
+            readonly extendedBiddingPeriodMinutes: number | null;
+          } | null;
+          readonly sale_artwork?: {
+            readonly lotID: string | null;
+            readonly lotLabel: string | null;
+            readonly endAt: string | null;
+            readonly extendedBiddingEndAt: string | null;
+            readonly formattedEndDateTime: string | null;
+            readonly counts: {
+              readonly bidder_positions: any | null;
+            } | null;
+            readonly highest_bid: {
+              readonly display: string | null;
+            } | null;
+            readonly opening_bid: {
+              readonly display: string | null;
+            } | null;
+            readonly id: string;
+          } | null;
+          readonly is_saved?: boolean | null;
+          readonly attributionClass?: {
+            readonly name: string | null;
+            readonly id: string;
+          } | null;
+          readonly mediumType?: {
+            readonly filterGene: {
+              readonly name: string | null;
+              readonly id: string;
+            } | null;
+          } | null;
+          readonly is_biddable?: boolean | null;
+          readonly saleArtwork?: {
+            readonly endAt: string | null;
+            readonly extendedBiddingEndAt: string | null;
+            readonly lotID: string | null;
+            readonly id: string;
+          } | null;
+        } | null;
+        readonly __typename?: string;
+        readonly __isNode?: string;
+        readonly id?: string;
+      } | null> | null;
+      readonly counts: {
+        readonly total: any | null;
+      } | null;
+      readonly __isArtworkConnectionInterface: "FilterArtworksConnection";
+    } | null;
+  } | null;
 };
 export type ArtworkQueryFilterQuery = {
-    readonly response: ArtworkQueryFilterQueryResponse;
-    readonly variables: ArtworkQueryFilterQueryVariables;
-    readonly rawResponse: ArtworkQueryFilterQueryRawResponse;
+  variables: ArtworkQueryFilterQuery$variables;
+  response: ArtworkQueryFilterQuery$data;
+  rawResponse: ArtworkQueryFilterQuery$rawResponse;
 };
-
-
-
-/*
-query ArtworkQueryFilterQuery(
-  $input: FilterArtworksInput
-) {
-  viewer {
-    ...ArtworkFilter_viewer_2VV6jB
-  }
-}
-
-fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
-  id
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  pageCursors {
-    ...Pagination_pageCursors
-  }
-  edges {
-    node {
-      id
-    }
-  }
-  ...ArtworkGrid_artworks
-}
-
-fragment ArtworkFilter_viewer_2VV6jB on Viewer {
-  filtered_artworks: artworksConnection(input: $input) {
-    ...ArtworkFilterArtworkGrid_filtered_artworks
-    counts {
-      total(format: "0,0")
-    }
-    id
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1134,5 +917,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4fe9b4de2137e1cbd004bf1de7b05390';
+
+(node as any).hash = "4fe9b4de2137e1cbd004bf1de7b05390";
+
 export default node;

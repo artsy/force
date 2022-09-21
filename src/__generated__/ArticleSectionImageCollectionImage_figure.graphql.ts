@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<367e77860317b2907c19f5d2fe9f32bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSectionImageCollectionImage_figure = {
-    readonly id?: string | undefined;
-    readonly image?: {
-        readonly url: string | null;
-        readonly width: number | null;
-        readonly height: number | null;
-    } | null | undefined;
-    readonly " $refType": "ArticleSectionImageCollectionImage_figure";
+export type ArticleSectionImageCollectionImage_figure$data = {
+  readonly id?: string;
+  readonly image?: {
+    readonly url: string | null;
+    readonly width: number | null;
+    readonly height: number | null;
+  } | null;
+  readonly " $fragmentType": "ArticleSectionImageCollectionImage_figure";
 };
-export type ArticleSectionImageCollectionImage_figure$data = ArticleSectionImageCollectionImage_figure;
 export type ArticleSectionImageCollectionImage_figure$key = {
-    readonly " $data"?: ArticleSectionImageCollectionImage_figure$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionImage_figure">;
+  readonly " $data"?: ArticleSectionImageCollectionImage_figure$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollectionImage_figure">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -96,5 +99,7 @@ return {
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
 })();
-(node as any).hash = 'ef16ef43b057a46f4cc81474730a3b79';
+
+(node as any).hash = "ef16ef43b057a46f4cc81474730a3b79";
+
 export default node;

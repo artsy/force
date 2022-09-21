@@ -1,52 +1,55 @@
+/**
+ * @generated SignedSource<<538395194c312d84bd1a1ea0f51ebf11>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAuctionResultItem_auctionResult = {
-    readonly title: string | null;
-    readonly dimension_text: string | null;
-    readonly organization: string | null;
-    readonly artist: {
-        readonly name: string | null;
+export type ArtistAuctionResultItem_auctionResult$data = {
+  readonly title: string | null;
+  readonly dimension_text: string | null;
+  readonly organization: string | null;
+  readonly artist: {
+    readonly name: string | null;
+  } | null;
+  readonly images: {
+    readonly larger: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
     } | null;
-    readonly images: {
-        readonly larger: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
-        } | null;
-    } | null;
-    readonly mediumText: string | null;
-    readonly categoryText: string | null;
-    readonly date_text: string | null;
-    readonly saleDate: string | null;
-    readonly boughtIn: boolean | null;
-    readonly currency: string | null;
-    readonly price_realized: {
-        readonly display: string | null;
-        readonly display_usd: string | null;
-        readonly cents_usd: number | null;
-    } | null;
-    readonly performance: {
-        readonly mid: string | null;
-    } | null;
-    readonly estimate: {
-        readonly display: string | null;
-    } | null;
-    readonly " $refType": "ArtistAuctionResultItem_auctionResult";
+  } | null;
+  readonly mediumText: string | null;
+  readonly categoryText: string | null;
+  readonly date_text: string | null;
+  readonly saleDate: string | null;
+  readonly boughtIn: boolean | null;
+  readonly currency: string | null;
+  readonly price_realized: {
+    readonly display: string | null;
+    readonly display_usd: string | null;
+    readonly cents_usd: number | null;
+  } | null;
+  readonly performance: {
+    readonly mid: string | null;
+  } | null;
+  readonly estimate: {
+    readonly display: string | null;
+  } | null;
+  readonly " $fragmentType": "ArtistAuctionResultItem_auctionResult";
 };
-export type ArtistAuctionResultItem_auctionResult$data = ArtistAuctionResultItem_auctionResult;
 export type ArtistAuctionResultItem_auctionResult$key = {
-    readonly " $data"?: ArtistAuctionResultItem_auctionResult$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+  readonly " $data"?: ArtistAuctionResultItem_auctionResult$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -276,5 +279,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ca855de874c5dbd389b7615f1e1f1265';
+
+(node as any).hash = "ca855de874c5dbd389b7615f1e1f1265";
+
 export default node;

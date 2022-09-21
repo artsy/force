@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PurchaseOnInquiryButton_conversation } from "__generated__/PurchaseOnInquiryButton_conversation.graphql"
+import { PurchaseOnInquiryButton_conversation$data } from "__generated__/PurchaseOnInquiryButton_conversation.graphql"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { useTracking } from "react-tracking"
 import { TappedBuyNow, ActionType, OwnerType } from "@artsy/cohesion"
@@ -8,7 +8,7 @@ import { Button } from "@artsy/palette"
 
 export interface PurchaseOnInquiryButtonProps {
   openInquiryModal: () => void
-  conversation: PurchaseOnInquiryButton_conversation
+  conversation: PurchaseOnInquiryButton_conversation$data
 }
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
   openInquiryModal,
@@ -47,6 +47,7 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
   ) : (
     // Creates an order and redirects to the checkout flow
     <ConfirmArtworkButtonFragmentContainer
+      // @ts-ignore RELAY UPGRADE 13
       artwork={artwork}
       conversationID={conversationID}
       editionSetID={editionSets?.[0]?.internalID || null}

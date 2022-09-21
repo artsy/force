@@ -1,11 +1,11 @@
-import { OtherCollectionsRail_collectionGroup } from "__generated__/OtherCollectionsRail_collectionGroup.graphql"
+import { OtherCollectionsRail_collectionGroup$data } from "__generated__/OtherCollectionsRail_collectionGroup.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
 import { Rail } from "Components/Rail"
 
 interface OtherCollectionsRailProps {
-  collectionGroup: OtherCollectionsRail_collectionGroup
+  collectionGroup: OtherCollectionsRail_collectionGroup$data
 }
 export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
   collectionGroup: { name, members },
@@ -18,6 +18,7 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
           return (
             <OtherCollectionEntity
               key={index}
+              // @ts-ignore RELAY UPGRADE 13
               member={slide}
               itemNumber={index}
             />

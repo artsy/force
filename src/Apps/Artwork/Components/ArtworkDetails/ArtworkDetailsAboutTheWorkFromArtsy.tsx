@@ -2,7 +2,7 @@ import { HTML, ReadMore, Spacer } from "@artsy/palette"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ArtworkDetailsAboutTheWorkFromArtsy_artwork } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
+import { ArtworkDetailsAboutTheWorkFromArtsy_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import track from "react-tracking"
 
@@ -12,7 +12,7 @@ export const READ_MORE_MAX_CHARS = {
 }
 
 export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
-  artwork: ArtworkDetailsAboutTheWorkFromArtsy_artwork
+  artwork: ArtworkDetailsAboutTheWorkFromArtsy_artwork$data
 }
 
 @track({

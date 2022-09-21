@@ -14,9 +14,9 @@ import { usePoll } from "Utils/Hooks/usePoll"
 
 import {
   UnreadMessagesToastQuery,
-  UnreadMessagesToastQueryResponse,
+  UnreadMessagesToastQuery$data,
 } from "__generated__/UnreadMessagesToastQuery.graphql"
-import { UnreadMessagesToast_conversation } from "__generated__/UnreadMessagesToast_conversation.graphql"
+import { UnreadMessagesToast_conversation$data } from "__generated__/UnreadMessagesToast_conversation.graphql"
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottom?: number }>`
@@ -40,7 +40,7 @@ interface UnreadMessagesToastProps {
   refreshCallback: () => void
   hasScrolled: boolean
   relay: RelayRefetchProp
-  conversation?: UnreadMessagesToast_conversation | null
+  conversation?: UnreadMessagesToast_conversation$data | null
   lastOrderUpdate?: string | null
 }
 
@@ -171,9 +171,10 @@ export const UnreadMessagesToastQueryRenderer: React.FC<{
       variables={{
         conversationID,
       }}
-      render={renderWithLoadProgress<UnreadMessagesToastQueryResponse>(
+      render={renderWithLoadProgress<UnreadMessagesToastQuery$data>(
         ({ me }) => (
           <UnreadMessagesToastRefetchContainer
+            // @ts-ignore RELAY UPGRADE 13
             conversation={me?.conversation}
             {...rest}
           />

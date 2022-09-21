@@ -6,7 +6,7 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { ViewingRoomsLatestGrid_viewingRooms } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
+import { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import { extractNodes } from "Utils/extractNodes"
@@ -14,7 +14,7 @@ import { getStatus } from "../Utils/getStatus"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
-  viewingRooms: ViewingRoomsLatestGrid_viewingRooms
+  viewingRooms: ViewingRoomsLatestGrid_viewingRooms$data
 }
 
 export const PAGE_SIZE = 12

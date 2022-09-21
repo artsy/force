@@ -2,11 +2,11 @@ import * as React from "react"
 import { Box, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairTimer_fair } from "__generated__/FairTimer_fair.graphql"
+import { FairTimer_fair$data } from "__generated__/FairTimer_fair.graphql"
 import { useTimer } from "Utils/Hooks/useTimer"
 
 interface FairTimerProps {
-  fair: FairTimer_fair
+  fair: FairTimer_fair$data
 }
 
 export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {

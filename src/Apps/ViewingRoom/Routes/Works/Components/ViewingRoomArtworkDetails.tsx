@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Button, GridColumns, Column, Text } from "@artsy/palette"
-import { ViewingRoomArtworkDetails_artwork } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
+import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 
 interface ViewingRoomArtworkDetailsProps {
-  artwork: ViewingRoomArtworkDetails_artwork
+  artwork: ViewingRoomArtworkDetails_artwork$data
 }
 
 export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps> = ({

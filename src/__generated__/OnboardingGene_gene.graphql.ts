@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<0c88ad2d472ee7eb3adb4b73ebad912c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingGene_gene = {
-    readonly name: string | null;
-    readonly artworks: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
-    readonly " $refType": "OnboardingGene_gene";
+export type OnboardingGene_gene$data = {
+  readonly name: string | null;
+  readonly artworks: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
+  readonly " $fragmentType": "OnboardingGene_gene";
 };
-export type OnboardingGene_gene$data = OnboardingGene_gene;
 export type OnboardingGene_gene$key = {
-    readonly " $data"?: OnboardingGene_gene$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"OnboardingGene_gene">;
+  readonly " $data"?: OnboardingGene_gene$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OnboardingGene_gene">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -143,5 +146,7 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'b3e1ab6675c1dadf0befc91eb69b357b';
+
+(node as any).hash = "b3e1ab6675c1dadf0befc91eb69b357b";
+
 export default node;

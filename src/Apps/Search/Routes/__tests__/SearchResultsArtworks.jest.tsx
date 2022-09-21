@@ -30,6 +30,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { renderWithRelay } = setupTestWrapperTL<SearchResultsArtworks_Query>({
   Component: ({ viewer }) => (
     <MockBoot user={{ id: "percy-z" }}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <SearchResultsArtworks viewer={viewer!} />
     </MockBoot>
   ),

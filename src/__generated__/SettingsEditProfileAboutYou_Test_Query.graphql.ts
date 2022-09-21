@@ -1,42 +1,25 @@
+/**
+ * @generated SignedSource<<81dea4836adbae468c9f9c2a0bc8e24a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditProfileAboutYou_Test_QueryVariables = {};
-export type SettingsEditProfileAboutYou_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileAboutYou_me">;
-    } | null;
+export type SettingsEditProfileAboutYou_Test_Query$variables = {};
+export type SettingsEditProfileAboutYou_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileAboutYou_me">;
+  } | null;
 };
 export type SettingsEditProfileAboutYou_Test_Query = {
-    readonly response: SettingsEditProfileAboutYou_Test_QueryResponse;
-    readonly variables: SettingsEditProfileAboutYou_Test_QueryVariables;
+  variables: SettingsEditProfileAboutYou_Test_Query$variables;
+  response: SettingsEditProfileAboutYou_Test_Query$data;
 };
-
-
-
-/*
-query SettingsEditProfileAboutYou_Test_Query {
-  me {
-    ...SettingsEditProfileAboutYou_me
-    id
-  }
-}
-
-fragment SettingsEditProfileAboutYou_me on Me {
-  location {
-    display
-    id
-  }
-  profession
-  shareFollows
-  priceRange
-  priceRangeMin
-  priceRangeMax
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -203,5 +186,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd7efa9d8fdd1fbe69df938aeefb6b431';
+
+(node as any).hash = "d7efa9d8fdd1fbe69df938aeefb6b431";
+
 export default node;

@@ -1,12 +1,12 @@
 import * as React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairTiming_fair } from "__generated__/FairTiming_fair.graphql"
+import { FairTiming_fair$data } from "__generated__/FairTiming_fair.graphql"
 import { EventTiming } from "Components/EventTiming"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 
 interface Props {
-  fair: FairTiming_fair
+  fair: FairTiming_fair$data
 }
 
 const FairTiming: React.FC<Props> = ({

@@ -1,49 +1,36 @@
+/**
+ * @generated SignedSource<<620151dd26201e60495f7f85420c1f74>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistBioTestQueryVariables = {};
-export type ArtistBioTestQueryResponse = {
-    readonly bio: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistBio_bio">;
-    } | null;
+export type ArtistBioTestQuery$variables = {};
+export type ArtistBioTestQuery$data = {
+  readonly bio: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistBio_bio">;
+  } | null;
 };
-export type ArtistBioTestQueryRawResponse = {
-    readonly bio: ({
-        readonly biographyBlurb: ({
-            readonly credit: string | null;
-            readonly partnerID: string | null;
-            readonly text: string | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ArtistBioTestQuery$rawResponse = {
+  readonly bio: {
+    readonly biographyBlurb: {
+      readonly credit: string | null;
+      readonly partnerID: string | null;
+      readonly text: string | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtistBioTestQuery = {
-    readonly response: ArtistBioTestQueryResponse;
-    readonly variables: ArtistBioTestQueryVariables;
-    readonly rawResponse: ArtistBioTestQueryRawResponse;
+  variables: ArtistBioTestQuery$variables;
+  response: ArtistBioTestQuery$data;
+  rawResponse: ArtistBioTestQuery$rawResponse;
 };
-
-
-
-/*
-query ArtistBioTestQuery {
-  bio: artist(id: "unused") {
-    ...ArtistBio_bio
-    id
-  }
-}
-
-fragment ArtistBio_bio on Artist {
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -189,5 +176,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3f1ee721b84fbe1f4678f268c11573b3';
+
+(node as any).hash = "3f1ee721b84fbe1f4678f268c11573b3";
+
 export default node;

@@ -9,14 +9,14 @@ import { FairCollectionsFragmentContainer } from "../Components/FairCollections"
 import { FairFollowedArtistsFragmentContainer } from "../Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { FairOverview_fair } from "__generated__/FairOverview_fair.graphql"
+import { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
 import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
 import { useRouter } from "System/Router/useRouter"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 
 interface FairOverviewProps extends BoxProps {
-  fair: FairOverview_fair
+  fair: FairOverview_fair$data
 }
 
 const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
@@ -47,6 +47,7 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
   return (
     <Box>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairAbout fair={fair} />
 
       {hasArticles && (
@@ -60,6 +61,7 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
             )}
           </Box>
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairEditorialFragmentContainer fair={fair} />
         </Box>
       )}
@@ -70,10 +72,12 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
             Curated Highlights
           </Text>
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairCollectionsFragmentContainer fair={fair} />
         </Box>
       )}
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
 
       <Box id="jump--BoothsSection">

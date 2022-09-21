@@ -9,6 +9,7 @@ jest.mock("react-tracking")
 
 describe("ArtistWorksForSaleRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistWorksForSaleRail_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistWorksForSaleRailFragmentContainer,
     query: graphql`
       query ArtistWorksForSaleRail_Test_Query @relay_test_operation {

@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairFollowedArtists_fair } from "__generated__/FairFollowedArtists_fair.graphql"
+import { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
 import { Carousel } from "Components/Carousel"
 import FillwidthItem from "Components/Artwork/FillwidthItem"
 import {
@@ -17,7 +17,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 const IMAGE_HEIGHT = 160
 
 interface FairFollowedArtistsProps extends BoxProps {
-  fair: FairFollowedArtists_fair
+  fair: FairFollowedArtists_fair$data
 }
 
 export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({

@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
-import { EditionSelectBox_edition } from "__generated__/EditionSelectBox_edition.graphql"
+import { EditionSelectBox_edition$data } from "__generated__/EditionSelectBox_edition.graphql"
 
 const UnavailableIndicator = styled(Box)`
   height: 8px;
@@ -16,7 +16,7 @@ const UnavailableIndicator = styled(Box)`
 `
 
 interface Props {
-  edition: EditionSelectBox_edition
+  edition: EditionSelectBox_edition$data
   selected: boolean
   onSelect: (editionSetId: string, isAvailable: boolean) => void
 }

@@ -2,11 +2,11 @@ import { Box, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ShowContextualLink_show } from "__generated__/ShowContextualLink_show.graphql"
+import { ShowContextualLink_show$data } from "__generated__/ShowContextualLink_show.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 
 interface Props {
-  show: ShowContextualLink_show
+  show: ShowContextualLink_show$data
 }
 
 export const ShowContextualLink: React.FC<Props> = ({ show }) => {

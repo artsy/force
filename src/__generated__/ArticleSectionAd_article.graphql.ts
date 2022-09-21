@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<ed3c60ab4915e269fa64a057a6d9d204>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
-export type ArticleSectionAd_article = {
-    readonly layout: ArticleLayout;
-    readonly sections: ReadonlyArray<{
-        readonly __typename: string;
-    }>;
-    readonly " $refType": "ArticleSectionAd_article";
+import { FragmentRefs } from "relay-runtime";
+export type ArticleSectionAd_article$data = {
+  readonly layout: ArticleLayout;
+  readonly sections: ReadonlyArray<{
+    readonly __typename: string;
+  }>;
+  readonly " $fragmentType": "ArticleSectionAd_article";
 };
-export type ArticleSectionAd_article$data = ArticleSectionAd_article;
 export type ArticleSectionAd_article$key = {
-    readonly " $data"?: ArticleSectionAd_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionAd_article">;
+  readonly " $data"?: ArticleSectionAd_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionAd_article">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -55,5 +58,7 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'b4afe561e61651706142323e85372e06';
+
+(node as any).hash = "b4afe561e61651706142323e85372e06";
+
 export default node;

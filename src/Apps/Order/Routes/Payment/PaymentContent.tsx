@@ -18,9 +18,9 @@ import {
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
-import { Payment_me } from "__generated__/Payment_me.graphql"
+import { Payment_me$data } from "__generated__/Payment_me.graphql"
 import {
-  Payment_order,
+  Payment_order$data,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
 
@@ -34,8 +34,8 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 export interface Props {
-  order: Payment_order
-  me: Payment_me
+  order: Payment_order$data
+  me: Payment_me$data
   commitMutation: CommitMutation
   onSetPayment: () => void
   CreditCardPicker: RefObject<CreditCardPicker>
@@ -74,6 +74,7 @@ export const PaymentContent: FC<Props> = props => {
   if (order.availablePaymentMethods.length === 1) {
     return (
       <>
+        {/* @ts-ignore RELAY UPGRADE 13  */}
         <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}

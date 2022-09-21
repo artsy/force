@@ -2,7 +2,7 @@ import { Image } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { ViewInRoomArtwork_artwork } from "__generated__/ViewInRoomArtwork_artwork.graphql"
+import { ViewInRoomArtwork_artwork$data } from "__generated__/ViewInRoomArtwork_artwork.graphql"
 import { cmToPx } from "./util"
 
 const eyeLevelCm = 144.78 // 57"
@@ -12,7 +12,7 @@ const groundLevelPx = cmToPx(groundLevelCm)
 const eyeLevelSizeLimit = 200 // cm
 
 interface ViewInRoomArtworkProps {
-  artwork: ViewInRoomArtwork_artwork
+  artwork: ViewInRoomArtwork_artwork$data
 }
 
 const ViewInRoomArtwork: React.FC<ViewInRoomArtworkProps> = ({ artwork }) => {

@@ -1,82 +1,43 @@
+/**
+ * @generated SignedSource<<99b56c2839da53ee78ece7d29c51ebd0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSetPaymentByStripeIntentInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
-    oneTimeUse?: boolean | null | undefined;
-    setupIntentId: string;
+  clientMutationId?: string | null;
+  id: string;
+  oneTimeUse?: boolean | null;
+  setupIntentId: string;
 };
-export type useSetPaymentByStripeIntentMutationVariables = {
-    input: CommerceSetPaymentByStripeIntentInput;
+export type useSetPaymentByStripeIntentMutation$variables = {
+  input: CommerceSetPaymentByStripeIntentInput;
 };
-export type useSetPaymentByStripeIntentMutationResponse = {
-    readonly commerceSetPaymentByStripeIntent: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"Payment_validation">;
-            } | undefined;
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            } | undefined;
-        };
-    } | null;
+export type useSetPaymentByStripeIntentMutation$data = {
+  readonly commerceSetPaymentByStripeIntent: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type useSetPaymentByStripeIntentMutation = {
-    readonly response: useSetPaymentByStripeIntentMutationResponse;
-    readonly variables: useSetPaymentByStripeIntentMutationVariables;
+  variables: useSetPaymentByStripeIntentMutation$variables;
+  response: useSetPaymentByStripeIntentMutation$data;
 };
-
-
-
-/*
-mutation useSetPaymentByStripeIntentMutation(
-  $input: CommerceSetPaymentByStripeIntentInput!
-) {
-  commerceSetPaymentByStripeIntent(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          id
-          ...Payment_validation
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-
-fragment Payment_validation on CommerceOrder {
-  __isCommerceOrder: __typename
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      id
-    }
-    ... on BankAccount {
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -318,5 +279,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd2253efc1244e8b8f78ad61e1cc5554c';
+
+(node as any).hash = "d2253efc1244e8b8f78ad61e1cc5554c";
+
 export default node;

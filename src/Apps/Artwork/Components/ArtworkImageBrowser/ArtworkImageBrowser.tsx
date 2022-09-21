@@ -6,7 +6,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCursor } from "use-cursor"
 import { Media } from "Utils/Responsive"
-import { ArtworkImageBrowser_artwork } from "__generated__/ArtworkImageBrowser_artwork.graphql"
+import { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
@@ -14,7 +14,7 @@ import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowser
 const MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
-  artwork: ArtworkImageBrowser_artwork
+  artwork: ArtworkImageBrowser_artwork$data
   isMyCollectionArtwork?: boolean
 }
 
@@ -60,6 +60,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     >
       <Media at="xs">
         <ArtworkImageBrowserSmallFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           index={index}
           setIndex={setCursor}
@@ -69,6 +70,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 
       <Media greaterThan="xs">
         <ArtworkImageBrowserLargeFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           index={index}
           onNext={handleNext}
@@ -81,6 +83,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           <Spacer mt={2} />
 
           <ArtworkActions
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             selectDefaultSlide={handleSelectDefaultSlide}
           />
@@ -90,28 +93,29 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   )
 }
 
-export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
-  ArtworkImageBrowserProps
->(ArtworkImageBrowser, {
-  artwork: graphql`
-    fragment ArtworkImageBrowser_artwork on Artwork {
-      ...ArtworkActions_artwork
-      ...ArtworkImageBrowserSmall_artwork
-      ...ArtworkImageBrowserLarge_artwork
-      internalID
-      images {
-        width
-        height
-      }
-      figures {
-        ... on Image {
-          internalID
-          isDefault
+export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
+  ArtworkImageBrowser,
+  {
+    artwork: graphql`
+      fragment ArtworkImageBrowser_artwork on Artwork {
+        ...ArtworkActions_artwork
+        ...ArtworkImageBrowserSmall_artwork
+        ...ArtworkImageBrowserLarge_artwork
+        internalID
+        images {
+          width
+          height
         }
-        ... on Video {
-          type: __typename
+        figures {
+          ... on Image {
+            internalID
+            isDefault
+          }
+          ... on Video {
+            type: __typename
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  }
+)

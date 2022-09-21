@@ -7,8 +7,8 @@ import { ArtworkSidebarCommercialFragmentContainer } from "./ArtworkSidebarComme
 import { ArtworkSidebarMetadataFragmentContainer } from "./ArtworkSidebarMetadata"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkSidebar_artwork } from "__generated__/ArtworkSidebar_artwork.graphql"
-import { ArtworkSidebar_me } from "__generated__/ArtworkSidebar_me.graphql"
+import { ArtworkSidebar_artwork$data } from "__generated__/ArtworkSidebar_artwork.graphql"
+import { ArtworkSidebar_me$data } from "__generated__/ArtworkSidebar_me.graphql"
 import { AuthenticityCertificateFragmentContainer } from "../TrustSignals/AuthenticityCertificate"
 import { SecurePaymentFragmentContainer } from "../TrustSignals/SecurePayment"
 import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
@@ -27,8 +27,8 @@ import {
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 
 export interface ArtworkSidebarProps {
-  artwork: ArtworkSidebar_artwork
-  me: ArtworkSidebar_me
+  artwork: ArtworkSidebar_artwork$data
+  me: ArtworkSidebar_me$data
 }
 
 const ArtworkSidebarContainer = Box
@@ -69,9 +69,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
       <Spacer mt={4} />
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <AuthenticityCertificateFragmentContainer artwork={artwork} />
 
       {is_in_auction ? (
@@ -79,13 +82,16 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           <Spacer mt={2} />
           <Join separator={<Spacer mt={2} />}>
             <ArtworkSidebarAuctionPartnerInfoFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
             {hasEnded ? (
               <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
               />
             ) : (
+              // @ts-ignore RELAY UPGRADE 13
               <ArtworkSidebarAuctionPollingRefetchContainer
                 artwork={artwork}
                 me={me}
@@ -94,12 +100,14 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           </Join>
 
           {!hasEnded && (
+            // @ts-ignore RELAY UPGRADE 13
             <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
           )}
         </>
       ) : (
         <>
           <Spacer mt={2} />
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ArtworkSidebarCommercialFragmentContainer artwork={artwork} />
         </>
       )}
@@ -107,18 +115,24 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       {shouldRenderArtworkBadges && (
         <Join separator={<Spacer mt={2} />}>
           <Separator mt={2} />
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <SecurePaymentFragmentContainer artwork={artwork} />
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <VerifiedSellerFragmentContainer artwork={artwork} />
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <BuyerGuaranteeFragmentContainer artwork={artwork} />
         </Join>
       )}
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
 
       {!shouldHideDetailsCreateAlertCTA && (
+        // @ts-ignore RELAY UPGRADE 13
         <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
       )}
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )

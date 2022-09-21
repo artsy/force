@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { Offer_order } from "__generated__/Offer_order.graphql"
+import { Offer_order$data } from "__generated__/Offer_order.graphql"
 import { OfferMutation } from "__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
@@ -29,7 +29,7 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
 export interface OfferRouteProps {
-  order: Offer_order
+  order: Offer_order$data
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -254,6 +254,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
                 Your Offer
               </Text>
 
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <PriceOptionsFragmentContainer
                 artwork={artwork}
                 order={order}
@@ -295,6 +296,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
             <TransactionDetailsSummaryItem
               transactionStep="offer"

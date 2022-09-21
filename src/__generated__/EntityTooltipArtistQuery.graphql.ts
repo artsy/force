@@ -1,69 +1,27 @@
+/**
+ * @generated SignedSource<<62d3ec280b5dea4971597398d3da3e1e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityTooltipArtistQueryVariables = {
-    id: string;
+export type EntityTooltipArtistQuery$variables = {
+  id: string;
 };
-export type EntityTooltipArtistQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityTooltipArtist_artist">;
-    } | null;
+export type EntityTooltipArtistQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipArtist_artist">;
+  } | null;
 };
 export type EntityTooltipArtistQuery = {
-    readonly response: EntityTooltipArtistQueryResponse;
-    readonly variables: EntityTooltipArtistQueryVariables;
+  variables: EntityTooltipArtistQuery$variables;
+  response: EntityTooltipArtistQuery$data;
 };
-
-
-
-/*
-query EntityTooltipArtistQuery(
-  $id: String!
-) {
-  artist(id: $id) {
-    ...EntityTooltipArtist_artist
-    id
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityTooltipArtist_artist on Artist {
-  ...EntityHeaderArtist_artist
-  href
-  blurb(format: PLAIN)
-  carousel {
-    images {
-      resized(height: 100) {
-        src
-        srcSet
-        height
-        width
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -327,5 +285,7 @@ return {
   }
 };
 })();
-(node as any).hash = '90844e985dd1a3be5cc4d1df56ae1858';
+
+(node as any).hash = "90844e985dd1a3be5cc4d1df56ae1858";
+
 export default node;

@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<7f7976b496a114ae8c29863f4c89c81a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SubmittedOrderModal_me = {
-    readonly orders: {
-        readonly edges: ReadonlyArray<{
+export type SubmittedOrderModal_me$data = {
+  readonly orders: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly stateExpiresAt: string | null;
+        readonly lineItems: {
+          readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly stateExpiresAt: string | null;
-                readonly lineItems: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly artwork: {
-                                readonly slug: string;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
+              readonly artwork: {
+                readonly slug: string;
+              } | null;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SubmittedOrderModal_me";
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SubmittedOrderModal_me";
 };
-export type SubmittedOrderModal_me$data = SubmittedOrderModal_me;
 export type SubmittedOrderModal_me$key = {
-    readonly " $data"?: SubmittedOrderModal_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SubmittedOrderModal_me">;
+  readonly " $data"?: SubmittedOrderModal_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SubmittedOrderModal_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -161,5 +164,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'bfb069a7b920b63045641b628daaf2c8';
+
+(node as any).hash = "bfb069a7b920b63045641b628daaf2c8";
+
 export default node;

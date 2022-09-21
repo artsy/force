@@ -1,120 +1,61 @@
+/**
+ * @generated SignedSource<<fae925bd5372afa9ab98f9d8417c786c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQueryVariables = {
-    id?: string | null | undefined;
-    externalId?: string | null | undefined;
-    sessionID?: string | null | undefined;
+export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery$variables = {
+  id?: string | null;
+  externalId?: string | null;
+  sessionID?: string | null;
 };
-export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQueryResponse = {
-    readonly submission: {
-        readonly externalId: string;
-        readonly artist: {
-            readonly internalID: string;
-            readonly name: string | null;
-        } | null;
-        readonly locationCity: string | null;
-        readonly locationCountry: string | null;
-        readonly locationState: string | null;
-        readonly locationPostalCode: string | null;
-        readonly locationCountryCode: string | null;
-        readonly year: string | null;
-        readonly title: string | null;
-        readonly medium: string | null;
-        readonly attributionClass: ConsignmentAttributionClass | null;
-        readonly editionNumber: string | null;
-        readonly editionSize: string | null;
-        readonly height: string | null;
-        readonly width: string | null;
-        readonly depth: string | null;
-        readonly dimensionsMetric: string | null;
-        readonly provenance: string | null;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
+export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery$data = {
+  readonly submission: {
+    readonly externalId: string;
+    readonly artist: {
+      readonly internalID: string;
+      readonly name: string | null;
     } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
-    } | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationState: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationCountryCode: string | null;
+    readonly year: string | null;
+    readonly title: string | null;
+    readonly medium: string | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly height: string | null;
+    readonly width: string | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly provenance: string | null;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+  } | null;
 };
 export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery = {
-    readonly response: consignFromMyCollectionRoutes_contactInformationArtworkOwnerQueryResponse;
-    readonly variables: consignFromMyCollectionRoutes_contactInformationArtworkOwnerQueryVariables;
+  variables: consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery$variables;
+  response: consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery$data;
 };
-
-
-
-/*
-query consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery(
-  $id: ID
-  $externalId: ID
-  $sessionID: String
-) {
-  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
-    ...ContactInformation_submission
-    externalId
-    artist {
-      internalID
-      name
-      id
-    }
-    locationCity
-    locationCountry
-    locationState
-    locationPostalCode
-    locationCountryCode
-    year
-    title
-    medium
-    attributionClass
-    editionNumber
-    editionSize
-    height
-    width
-    depth
-    dimensionsMetric
-    provenance
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-    id
-  }
-  me {
-    ...ContactInformation_me
-    id
-  }
-}
-
-fragment ContactInformation_me on Me {
-  internalID
-  name
-  email
-  phone
-  phoneNumber {
-    isValid
-    international: display(format: INTERNATIONAL)
-    national: display(format: NATIONAL)
-    regionCode
-  }
-}
-
-fragment ContactInformation_submission on ConsignmentSubmission {
-  externalId
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -348,6 +289,11 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ContactInformation_submission"
+          },
           (v4/*: any*/),
           {
             "alias": null,
@@ -378,12 +324,7 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
-          (v24/*: any*/),
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ContactInformation_submission"
-          }
+          (v24/*: any*/)
         ],
         "storageKey": null
       },
@@ -552,5 +493,7 @@ return {
   }
 };
 })();
-(node as any).hash = '85d9491367e112abb391f870a62d26d9';
+
+(node as any).hash = "85d9491367e112abb391f870a62d26d9";
+
 export default node;

@@ -2,10 +2,10 @@ import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { ArtworkSidebar2SizeInfo_piece } from "__generated__/ArtworkSidebar2SizeInfo_piece.graphql"
+import { ArtworkSidebar2SizeInfo_piece$data } from "__generated__/ArtworkSidebar2SizeInfo_piece.graphql"
 
 interface ArtworkSidebar2SizeInfoProps {
-  piece: ArtworkSidebar2SizeInfo_piece
+  piece: ArtworkSidebar2SizeInfo_piece$data
 }
 
 const ArtworkSidebar2SizeInfo: React.FC<ArtworkSidebar2SizeInfoProps> = ({

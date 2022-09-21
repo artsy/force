@@ -14,6 +14,7 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
 const { renderWithRelay } = setupTestWrapperTL<
   PartnersFeaturedCarousel_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: PartnersFeaturedCarouselFragmentContainer,
   query: graphql`
     query PartnersFeaturedCarousel_Test_Query @relay_test_operation {

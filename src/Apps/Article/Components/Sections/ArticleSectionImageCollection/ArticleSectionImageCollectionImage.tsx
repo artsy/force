@@ -3,11 +3,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleZoomButton } from "../../ArticleZoomButton"
 import { useArticleZoomGallery } from "../../ArticleZoomGallery"
-import { ArticleSectionImageCollectionImage_figure } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
+import { ArticleSectionImageCollectionImage_figure$data } from "__generated__/ArticleSectionImageCollectionImage_figure.graphql"
 import { resized } from "Utils/resized"
 
 interface ArticleSectionImageCollectionImageProps {
-  figure: ArticleSectionImageCollectionImage_figure
+  figure: ArticleSectionImageCollectionImage_figure$data
   targetWidth: number
 }
 

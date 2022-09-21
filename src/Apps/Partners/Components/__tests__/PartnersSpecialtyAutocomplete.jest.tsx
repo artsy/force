@@ -11,6 +11,7 @@ jest.mock("System/Router/useRouter")
 const { renderWithRelay } = setupTestWrapperTL<
   PartnersSpecialtyAutocomplete_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: PartnersSpecialtyAutocompleteFragmentContainer,
   query: graphql`
     query PartnersSpecialtyAutocomplete_Test_Query @relay_test_operation {

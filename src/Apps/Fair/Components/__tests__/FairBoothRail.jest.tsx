@@ -25,6 +25,7 @@ const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
           }}
         >
           <BoothFilterContextProvider filters={{ sort: "NAME_ASC", page: 2 }}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <FairBoothRailFragmentContainer show={props.show} />
           </BoothFilterContextProvider>
         </AnalyticsContext.Provider>

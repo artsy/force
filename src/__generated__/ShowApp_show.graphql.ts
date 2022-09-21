@@ -1,54 +1,57 @@
+/**
+ * @generated SignedSource<<21d18e6e99aae43c387e3b048aa7adad>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
-export type ShowApp_show = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly about: string | null;
-    readonly isFairBooth: boolean | null;
-    readonly viewingRoomsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly __typename: string;
-        } | null> | null;
-    } | null;
-    readonly counts: {
-        readonly eligibleArtworks: number | null;
-    } | null;
-    readonly fair: {
-        readonly hasFullFeature: boolean | null;
-    } | null;
-    readonly sidebar: {
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null | undefined;
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
-    } | null;
-    readonly images: ReadonlyArray<{
-        readonly url: string | null;
+import { FragmentRefs } from "relay-runtime";
+export type ShowApp_show$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly about: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly viewingRoomsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly __typename: string;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"BackToFairBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
-    readonly " $refType": "ShowApp_show";
+  } | null;
+  readonly counts: {
+    readonly eligibleArtworks: any | null;
+  } | null;
+  readonly fair: {
+    readonly hasFullFeature: boolean | null;
+  } | null;
+  readonly sidebar: {
+    readonly counts?: {
+      readonly followedArtists: any | null;
+    } | null;
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly images: ReadonlyArray<{
+    readonly url: string | null;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+  readonly " $fragmentType": "ShowApp_show";
 };
-export type ShowApp_show$data = ShowApp_show;
 export type ShowApp_show$key = {
-    readonly " $data"?: ShowApp_show$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ShowApp_show">;
+  readonly " $data"?: ShowApp_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowApp_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -201,6 +204,31 @@ return {
       "plural": false,
       "selections": [
         {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
+        },
+        {
           "alias": null,
           "args": null,
           "concreteType": "ArtworksAggregationResults",
@@ -243,31 +271,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
         }
       ],
       "storageKey": null
@@ -357,5 +360,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '23479d42cc44afac10eaa90d09324015';
+
+(node as any).hash = "23479d42cc44afac10eaa90d09324015";
+
 export default node;

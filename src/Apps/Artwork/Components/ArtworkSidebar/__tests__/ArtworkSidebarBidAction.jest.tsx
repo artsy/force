@@ -1,4 +1,4 @@
-import { ArtworkSidebarBidAction_Test_QueryRawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
+import { ArtworkSidebarBidAction_Test_Query$rawResponse } from "__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
 import {
   ArtworkFromAuctionPreview,
   ArtworkFromClosedAuction,
@@ -25,7 +25,7 @@ jest.unmock("react-relay")
 
 describe("ArtworkSidebarBidAction", () => {
   const getWrapper = async (
-    response: ArtworkSidebarBidAction_Test_QueryRawResponse
+    response: ArtworkSidebarBidAction_Test_Query$rawResponse
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarBidActionFragmentContainer,
@@ -44,7 +44,7 @@ describe("ArtworkSidebarBidAction", () => {
       mockData: {
         artwork: response.artwork,
         me: response.me,
-      } as ArtworkSidebarBidAction_Test_QueryRawResponse,
+      } as ArtworkSidebarBidAction_Test_Query$rawResponse,
     })
   }
 
@@ -235,7 +235,7 @@ describe("ArtworkSidebarBidAction", () => {
           ArtworkFromTimedAuctionRegistrationOpen,
           NotRegisteredToBid
         )
-        const data: ArtworkSidebarBidAction_Test_QueryRawResponse = {
+        const data: ArtworkSidebarBidAction_Test_Query$rawResponse = {
           artwork,
           me: NotIDVedUser,
         }

@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<bd524e90c672da7793b09f985739e351>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFairOrganizer_fairOrganizer = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly fairsConnection: {
-        readonly totalCount: number | null;
+export type EntityHeaderFairOrganizer_fairOrganizer$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly fairsConnection: {
+    readonly totalCount: number | null;
+  } | null;
+  readonly profile: {
+    readonly href: string | null;
+    readonly initials: string | null;
+    readonly avatar: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly profile: {
-        readonly href: string | null;
-        readonly initials: string | null;
-        readonly avatar: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-    } | null;
-    readonly " $refType": "EntityHeaderFairOrganizer_fairOrganizer";
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly " $fragmentType": "EntityHeaderFairOrganizer_fairOrganizer";
 };
-export type EntityHeaderFairOrganizer_fairOrganizer$data = EntityHeaderFairOrganizer_fairOrganizer;
 export type EntityHeaderFairOrganizer_fairOrganizer$key = {
-    readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
+  readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -85,6 +88,11 @@ const node: ReaderFragment = {
       "name": "profile",
       "plural": false,
       "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
+        },
         {
           "alias": null,
           "args": null,
@@ -145,11 +153,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -158,5 +161,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '052b967b34d0875f92bf82944cfa0ee2';
+
+(node as any).hash = "052b967b34d0875f92bf82944cfa0ee2";
+
 export default node;

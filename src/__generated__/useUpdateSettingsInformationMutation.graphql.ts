@@ -1,135 +1,95 @@
+/**
+ * @generated SignedSource<<bea8d169ef484db24bf3da1f84b03c26>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null | undefined;
-    bio?: string | null | undefined;
-    clientMutationId?: string | null | undefined;
-    collectorLevel?: number | null | undefined;
-    completedOnboarding?: boolean | null | undefined;
-    currencyPreference?: CurrencyPreference | null | undefined;
-    email?: string | null | undefined;
-    emailFrequency?: string | null | undefined;
-    gender?: string | null | undefined;
-    iconUrl?: string | null | undefined;
-    industry?: string | null | undefined;
-    isCollector?: boolean | null | undefined;
-    lengthUnitPreference?: LengthUnitPreference | null | undefined;
-    location?: EditableLocation | null | undefined;
-    name?: string | null | undefined;
-    notes?: string | null | undefined;
-    otherRelevantPositions?: string | null | undefined;
-    password?: string | null | undefined;
-    phone?: string | null | undefined;
-    priceRangeMax?: number | null | undefined;
-    priceRangeMin?: number | null | undefined;
-    privacy?: string | null | undefined;
-    profession?: string | null | undefined;
-    receiveLotOpeningSoonNotification?: boolean | null | undefined;
-    receiveNewSalesNotification?: boolean | null | undefined;
-    receiveNewWorksNotification?: boolean | null | undefined;
-    receiveOrderNotification?: boolean | null | undefined;
-    receiveOutbidNotification?: boolean | null | undefined;
-    receivePromotionNotification?: boolean | null | undefined;
-    receivePurchaseNotification?: boolean | null | undefined;
-    receiveSaleOpeningClosingNotification?: boolean | null | undefined;
-    receiveViewingRoomNotification?: boolean | null | undefined;
-    shareFollows?: boolean | null | undefined;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOrderNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  receiveViewingRoomNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null | undefined;
-    address2?: string | null | undefined;
-    city?: string | null | undefined;
-    country?: string | null | undefined;
-    countryCode?: string | null | undefined;
-    postalCode?: string | null | undefined;
-    state?: string | null | undefined;
-    stateCode?: string | null | undefined;
-    summary?: string | null | undefined;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  countryCode?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type useUpdateSettingsInformationMutationVariables = {
-    input: UpdateMyProfileInput;
+export type useUpdateSettingsInformationMutation$variables = {
+  input: UpdateMyProfileInput;
 };
-export type useUpdateSettingsInformationMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly me: {
-            readonly name: string | null;
-            readonly email: string | null;
-            readonly phone: string | null;
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
-        } | null;
-        readonly userOrError: {
-            readonly user?: {
-                readonly internalID: string;
-            } | null | undefined;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-                readonly error: string | null;
-                readonly fieldErrors: ReadonlyArray<{
-                    readonly name: string;
-                    readonly message: string;
-                } | null> | null;
-            } | null | undefined;
-        } | null;
+export type useUpdateSettingsInformationMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly me: {
+      readonly name: string | null;
+      readonly email: string | null;
+      readonly phone: string | null;
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
     } | null;
+    readonly userOrError: {
+      readonly user?: {
+        readonly internalID: string;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+        readonly error: string | null;
+        readonly fieldErrors: ReadonlyArray<{
+          readonly name: string;
+          readonly message: string;
+        } | null> | null;
+      } | null;
+    } | null;
+  } | null;
 };
 export type useUpdateSettingsInformationMutation = {
-    readonly response: useUpdateSettingsInformationMutationResponse;
-    readonly variables: useUpdateSettingsInformationMutationVariables;
+  variables: useUpdateSettingsInformationMutation$variables;
+  response: useUpdateSettingsInformationMutation$data;
 };
-
-
-
-/*
-mutation useUpdateSettingsInformationMutation(
-  $input: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $input) {
-    me {
-      ...SettingsEditSettingsInformation_me
-      name
-      email
-      phone
-      id
-    }
-    userOrError {
-      __typename
-      ... on UpdateMyProfileMutationSuccess {
-        user {
-          internalID
-          id
-        }
-      }
-      ... on UpdateMyProfileMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-          error
-          fieldErrors {
-            name
-            message
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsEditSettingsInformation_me on Me {
-  email
-  name
-  paddleNumber
-  phone
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -264,14 +224,14 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "SettingsEditSettingsInformation_me"
-              }
+              },
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -403,5 +363,7 @@ return {
   }
 };
 })();
-(node as any).hash = '75b2af000cf6f99e786ce594039695c4';
+
+(node as any).hash = "75b2af000cf6f99e786ce594039695c4";
+
 export default node;

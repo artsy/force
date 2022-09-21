@@ -13,7 +13,7 @@ import { graphql } from "relay-runtime"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   NavBarLoggedInActionsQuery,
-  NavBarLoggedInActionsQueryResponse,
+  NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
 import { checkAndSyncIndicatorsCount } from "./helpers"
@@ -27,7 +27,7 @@ import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
-  NavBarLoggedInActionsQueryResponse
+  NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({

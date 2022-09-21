@@ -1,137 +1,31 @@
+/**
+ * @generated SignedSource<<e372cf991b7a25ff45aa0bf7f1ce870a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
-export type PartnersFilteredCellsQueryVariables = {
-    after?: string | null | undefined;
-    near?: string | null | undefined;
-    category?: Array<string | null> | null | undefined;
-    type?: Array<PartnerClassification | null> | null | undefined;
+export type PartnersFilteredCellsQuery$variables = {
+  after?: string | null;
+  near?: string | null;
+  category?: ReadonlyArray<string | null> | null;
+  type?: ReadonlyArray<PartnerClassification | null> | null;
 };
-export type PartnersFilteredCellsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersFilteredCells_viewer">;
-    } | null;
+export type PartnersFilteredCellsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersFilteredCells_viewer">;
+  } | null;
 };
 export type PartnersFilteredCellsQuery = {
-    readonly response: PartnersFilteredCellsQueryResponse;
-    readonly variables: PartnersFilteredCellsQueryVariables;
+  variables: PartnersFilteredCellsQuery$variables;
+  response: PartnersFilteredCellsQuery$data;
 };
-
-
-
-/*
-query PartnersFilteredCellsQuery(
-  $after: String
-  $near: String
-  $category: [String]
-  $type: [PartnerClassification]
-) {
-  viewer {
-    ...PartnersFilteredCells_viewer_iDCAR
-  }
-}
-
-fragment CellPartner_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment PartnersFilteredCells_viewer_iDCAR on Viewer {
-  partnersConnection(after: $after, defaultProfilePublic: true, eligibleForListing: true, first: 12, near: $near, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...CellPartner_partner
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -630,5 +524,7 @@ return {
   }
 };
 })();
-(node as any).hash = '40643de86cc477764755f3806a559c93';
+
+(node as any).hash = "40643de86cc477764755f3806a559c93";
+
 export default node;

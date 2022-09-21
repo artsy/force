@@ -1,39 +1,27 @@
+/**
+ * @generated SignedSource<<0ceb8abc9ffc181f8993fb6f8aedb569>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionTimerQueryVariables = {
-    saleID: string;
+export type AuctionTimerQuery$variables = {
+  saleID: string;
 };
-export type AuctionTimerQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
-    } | null;
+export type AuctionTimerQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionTimer_sale">;
+  } | null;
 };
 export type AuctionTimerQuery = {
-    readonly response: AuctionTimerQueryResponse;
-    readonly variables: AuctionTimerQueryVariables;
+  variables: AuctionTimerQuery$variables;
+  response: AuctionTimerQuery$data;
 };
-
-
-
-/*
-query AuctionTimerQuery(
-  $saleID: String!
-) {
-  sale(id: $saleID) {
-    ...AuctionTimer_sale
-    id
-  }
-}
-
-fragment AuctionTimer_sale on Sale {
-  liveStartAt
-  endAt
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -127,5 +115,7 @@ return {
   }
 };
 })();
-(node as any).hash = '67de4ea3de2f4ebe608f8bd2df2d6b88';
+
+(node as any).hash = "67de4ea3de2f4ebe608f8bd2df2d6b88";
+
 export default node;

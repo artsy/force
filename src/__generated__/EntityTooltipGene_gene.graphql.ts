@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<444a8a78a3881aba0f1d98bba182685e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityTooltipGene_gene = {
-    readonly href: string | null;
-    readonly description: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly height: number;
-            readonly width: number;
-        } | null;
+export type EntityTooltipGene_gene$data = {
+  readonly href: string | null;
+  readonly description: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly height: number;
+      readonly width: number;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
-    readonly " $refType": "EntityTooltipGene_gene";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderGene_gene">;
+  readonly " $fragmentType": "EntityTooltipGene_gene";
 };
-export type EntityTooltipGene_gene$data = EntityTooltipGene_gene;
 export type EntityTooltipGene_gene$key = {
-    readonly " $data"?: EntityTooltipGene_gene$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityTooltipGene_gene">;
+  readonly " $data"?: EntityTooltipGene_gene$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipGene_gene">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -32,6 +35,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityTooltipGene_gene",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderGene_gene"
+    },
     {
       "alias": null,
       "args": null,
@@ -120,15 +128,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "EntityHeaderGene_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '599deba5f6a9cd75d515f99fe51e0151';
+
+(node as any).hash = "599deba5f6a9cd75d515f99fe51e0151";
+
 export default node;

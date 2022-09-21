@@ -1,71 +1,27 @@
+/**
+ * @generated SignedSource<<ed6a40917ec026e062ee60dc2073e952>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type viewingRoomRoutes_ViewingRoomWorksRouteQueryVariables = {
-    slug: string;
+export type viewingRoomRoutes_ViewingRoomWorksRouteQuery$variables = {
+  slug: string;
 };
-export type viewingRoomRoutes_ViewingRoomWorksRouteQueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
-    } | null;
+export type viewingRoomRoutes_ViewingRoomWorksRouteQuery$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
+  } | null;
 };
 export type viewingRoomRoutes_ViewingRoomWorksRouteQuery = {
-    readonly response: viewingRoomRoutes_ViewingRoomWorksRouteQueryResponse;
-    readonly variables: viewingRoomRoutes_ViewingRoomWorksRouteQueryVariables;
+  variables: viewingRoomRoutes_ViewingRoomWorksRouteQuery$variables;
+  response: viewingRoomRoutes_ViewingRoomWorksRouteQuery$data;
 };
-
-
-
-/*
-query viewingRoomRoutes_ViewingRoomWorksRouteQuery(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) @principalField {
-    ...ViewingRoomWorksRoute_viewingRoom
-  }
-}
-
-fragment ViewingRoomArtworkDetails_artwork on Artwork {
-  id
-  additionalInformation
-  artistNames
-  title
-  date
-  href
-  saleMessage
-}
-
-fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
-  artworksConnection {
-    edges {
-      node {
-        internalID
-        title
-        images {
-          internalID
-          solo: resized(width: 600, version: "normalized") {
-            src
-            srcSet
-            width
-            height
-          }
-          resized(height: 550, version: "normalized") {
-            src
-            srcSet
-            width
-            height
-          }
-        }
-        ...ViewingRoomArtworkDetails_artwork
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -309,5 +265,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6831e224b321ceb1d1e4df7d1dcf8d44';
+
+(node as any).hash = "6831e224b321ceb1d1e4df7d1dcf8d44";
+
 export default node;

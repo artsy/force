@@ -8,13 +8,13 @@ import { ShowEventsFragmentContainer } from "Apps/Partner/Components/PartnerShow
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import { ShowPaginatedEventsRendererQuery } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import { ShowPaginatedEvents_partner } from "__generated__/ShowPaginatedEvents_partner.graphql"
+import { ShowPaginatedEvents_partner$data } from "__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp
-  partner: ShowPaginatedEvents_partner
+  partner: ShowPaginatedEvents_partner$data
   scrollTo: string
   eventTitle: string
   offset: number
@@ -96,6 +96,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
       <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
+          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
           onClick={handleClick}
           onNext={handleNext}
@@ -210,6 +211,7 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         return (
           <ShowEventsRefetchContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
             paramsPage={page!}
           />

@@ -2,12 +2,12 @@ import * as React from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-import { ArtistConsignMeta_artist } from "__generated__/ArtistConsignMeta_artist.graphql"
+import { ArtistConsignMeta_artist$data } from "__generated__/ArtistConsignMeta_artist.graphql"
 import { get } from "Utils/get"
 import { MetaTags } from "Components/MetaTags"
 
 interface ArtistConsignMetaProps {
-  artist: ArtistConsignMeta_artist
+  artist: ArtistConsignMeta_artist$data
 }
 
 export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {

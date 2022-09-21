@@ -1,4 +1,4 @@
-import { RejectTestQueryRawResponse } from "__generated__/RejectTestQuery.graphql"
+import { RejectTestQuery$rawResponse } from "__generated__/RejectTestQuery.graphql"
 import { OfferOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { DateTime } from "luxon"
@@ -51,7 +51,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
-const testOrder: RejectTestQueryRawResponse["order"] = {
+const testOrder: RejectTestQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   __isCommerceOrder: "CommerceOfferOrder",
   __typename: "CommerceOfferOrder",

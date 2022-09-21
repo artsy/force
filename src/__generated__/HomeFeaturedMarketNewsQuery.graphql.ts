@@ -1,67 +1,25 @@
+/**
+ * @generated SignedSource<<69873d7b0bb6ce50245f630c158850a2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedMarketNewsQueryVariables = {};
-export type HomeFeaturedMarketNewsQueryResponse = {
-    readonly articles: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
-    }>;
+export type HomeFeaturedMarketNewsQuery$variables = {};
+export type HomeFeaturedMarketNewsQuery$data = {
+  readonly articles: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedMarketNews_articles">;
+  }>;
 };
 export type HomeFeaturedMarketNewsQuery = {
-    readonly response: HomeFeaturedMarketNewsQueryResponse;
-    readonly variables: HomeFeaturedMarketNewsQueryVariables;
+  variables: HomeFeaturedMarketNewsQuery$variables;
+  response: HomeFeaturedMarketNewsQuery$data;
 };
-
-
-
-/*
-query HomeFeaturedMarketNewsQuery {
-  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
-    ...HomeFeaturedMarketNews_articles
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment HomeFeaturedMarketNews_articles on Article {
-  ...CellArticle_article
-  internalID
-  href
-  byline
-  slug
-  title
-  publishedAt(format: "MMM D, YYYY")
-  vertical
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -289,5 +247,7 @@ return {
   }
 };
 })();
-(node as any).hash = '484565658b47f40dd52c68e8e8dabde1';
+
+(node as any).hash = "484565658b47f40dd52c68e8e8dabde1";
+
 export default node;

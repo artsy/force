@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<749a31ffa7dc4ed59cabbabcb6e90045>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_submission = {
-    readonly externalId: string;
-    readonly " $refType": "ContactInformation_submission";
+export type ContactInformation_submission$data = {
+  readonly externalId: string;
+  readonly " $fragmentType": "ContactInformation_submission";
 };
-export type ContactInformation_submission$data = ContactInformation_submission;
 export type ContactInformation_submission$key = {
-    readonly " $data"?: ContactInformation_submission$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
+  readonly " $data"?: ContactInformation_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '403f4a265149c820349eb773cd1f812d';
+
+(node as any).hash = "403f4a265149c820349eb773cd1f812d";
+
 export default node;

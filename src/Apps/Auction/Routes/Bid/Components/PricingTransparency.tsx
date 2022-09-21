@@ -2,8 +2,8 @@ import * as React from "react"
 import { graphql } from "react-relay"
 import {
   PricingTransparencyQuery,
-  PricingTransparencyQueryResponse,
-  PricingTransparencyQueryVariables,
+  PricingTransparencyQuery$data,
+  PricingTransparencyQuery$variables,
 } from "__generated__/PricingTransparencyQuery.graphql"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -19,7 +19,7 @@ import {
 } from "@artsy/palette"
 import { useMemo } from "react"
 
-const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props => {
+const PricingTransparency: React.FC<PricingTransparencyQuery$data> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
 
   return (
@@ -84,7 +84,7 @@ const PLACEHOLDER = (
 export const PricingTransparencyQueryRenderer = ({
   saleId,
   artworkId,
-}: Omit<PricingTransparencyQueryVariables, "bidAmountMinor">) => {
+}: Omit<PricingTransparencyQuery$variables, "bidAmountMinor">) => {
   const { relayEnvironment } = useSystemContext()
   const { values } = useFormContext()
   const bidAmountMinor = parseInt(values.selectedBid!)

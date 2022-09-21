@@ -1,216 +1,30 @@
+/**
+ * @generated SignedSource<<e92b9beec303cd4808c5e2c6d479040c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type newForYouRoutes_TopLevelQueryVariables = {
-    first?: number | null | undefined;
-    includeBackfill: boolean;
-    version?: string | null | undefined;
-    maxWorksPerArtist?: number | null | undefined;
+export type newForYouRoutes_TopLevelQuery$variables = {
+  first?: number | null;
+  includeBackfill: boolean;
+  version?: string | null;
+  maxWorksPerArtist?: number | null;
 };
-export type newForYouRoutes_TopLevelQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"NewForYouApp_viewer">;
-    } | null;
+export type newForYouRoutes_TopLevelQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"NewForYouApp_viewer">;
+  } | null;
 };
 export type newForYouRoutes_TopLevelQuery = {
-    readonly response: newForYouRoutes_TopLevelQueryResponse;
-    readonly variables: newForYouRoutes_TopLevelQueryVariables;
+  variables: newForYouRoutes_TopLevelQuery$variables;
+  response: newForYouRoutes_TopLevelQuery$data;
 };
-
-
-
-/*
-query newForYouRoutes_TopLevelQuery(
-  $first: Int
-  $includeBackfill: Boolean!
-  $version: String
-  $maxWorksPerArtist: Int
-) {
-  viewer {
-    ...NewForYouApp_viewer_132xqu
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewForYouApp_viewer_132xqu on Viewer {
-  ...NewForYouArtworksGrid_viewer_132xqu
-}
-
-fragment NewForYouArtworksGrid_viewer_132xqu on Viewer {
-  artworksForUser(first: $first, includeBackfill: $includeBackfill, version: $version, maxWorksPerArtist: $maxWorksPerArtist) {
-    totalCount
-    ...ArtworkGrid_artworks
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -381,31 +195,6 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "totalCount",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  }
-                ],
                 "storageKey": null
               },
               {
@@ -832,6 +621,31 @@ return {
                 ],
                 "type": "ArtworkConnectionInterface",
                 "abstractKey": "__isArtworkConnectionInterface"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -851,5 +665,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0667eaca126a7f099809bc8386ecd370';
+
+(node as any).hash = "0667eaca126a7f099809bc8386ecd370";
+
 export default node;

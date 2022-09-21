@@ -1,76 +1,25 @@
+/**
+ * @generated SignedSource<<2930f2abca700e5b599eb7d535c6010f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSeries_test_QueryVariables = {};
-export type ArticleSeries_test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSeries_article">;
-    } | null;
+export type ArticleSeries_test_Query$variables = {};
+export type ArticleSeries_test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSeries_article">;
+  } | null;
 };
 export type ArticleSeries_test_Query = {
-    readonly response: ArticleSeries_test_QueryResponse;
-    readonly variables: ArticleSeries_test_QueryVariables;
+  variables: ArticleSeries_test_Query$variables;
+  response: ArticleSeries_test_Query$data;
 };
-
-
-
-/*
-query ArticleSeries_test_Query {
-  article(id: "example") {
-    ...ArticleSeries_article
-    id
-  }
-}
-
-fragment ArticleSeriesItem_article on Article {
-  href
-  vertical
-  title
-  thumbnailTitle
-  byline
-  description
-  publishedAt(format: "MMM DD, YYYY")
-  thumbnailImage {
-    display: cropped(width: 869, height: 580) {
-      src
-      srcSet
-    }
-  }
-  media {
-    duration
-  }
-  seriesArticle {
-    title
-    id
-  }
-}
-
-fragment ArticleSeries_article on Article {
-  title
-  byline
-  href
-  series {
-    description
-  }
-  sponsor {
-    ...ArticleSponsor_sponsor
-  }
-  relatedArticles {
-    ...ArticleSeriesItem_article
-    internalID
-    id
-  }
-}
-
-fragment ArticleSponsor_sponsor on ArticleSponsor {
-  partnerLightLogo
-  partnerDarkLogo
-  partnerLogoLink
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -434,5 +383,7 @@ return {
   }
 };
 })();
-(node as any).hash = '17f8ec93b14a0799e4b41874b3b9859b';
+
+(node as any).hash = "17f8ec93b14a0799e4b41874b3b9859b";
+
 export default node;

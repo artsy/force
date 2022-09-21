@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<7e0479d5d71ac5f4d38e456b1bd48791>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorialRailArticles_fair = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairEditorialRailArticles_fair";
+export type FairEditorialRailArticles_fair$data = {
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairEditorialRailArticles_fair";
 };
-export type FairEditorialRailArticles_fair$data = FairEditorialRailArticles_fair;
 export type FairEditorialRailArticles_fair$key = {
-    readonly " $data"?: FairEditorialRailArticles_fair$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorialRailArticles_fair">;
+  readonly " $data"?: FairEditorialRailArticles_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairEditorialRailArticles_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,6 +69,11 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArticle_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -78,11 +86,6 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "slug",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -97,5 +100,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '30676188c1197d7f9f369fc18a86211c';
+
+(node as any).hash = "30676188c1197d7f9f369fc18a86211c";
+
 export default node;

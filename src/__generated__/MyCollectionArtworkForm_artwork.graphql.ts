@@ -1,66 +1,69 @@
+/**
+ * @generated SignedSource<<b8f7709201b47a5a3b5b350d0b583a99>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkForm_artwork = {
-    readonly artist: {
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly formattedNationalityAndBirthday: string | null;
-        readonly targetSupply: {
-            readonly isP1: boolean | null;
-        } | null;
-    } | null;
-    readonly consignmentSubmission: {
-        readonly inProgress: boolean | null;
-    } | null;
-    readonly artistNames: string | null;
-    readonly category: string | null;
-    readonly pricePaid: {
-        readonly display: string | null;
-        readonly minor: number;
-        readonly currencyCode: string;
-    } | null;
-    readonly date: string | null;
-    readonly depth: string | null;
-    readonly dimensions: {
-        readonly in: string | null;
-        readonly cm: string | null;
-    } | null;
-    readonly editionSize: string | null;
-    readonly editionNumber: string | null;
-    readonly height: string | null;
-    readonly attributionClass: {
-        readonly name: string | null;
-    } | null;
-    readonly id: string;
-    readonly images: ReadonlyArray<{
-        readonly internalID: string | null;
-        readonly isDefault: boolean | null;
-        readonly imageURL: string | null;
-        readonly width: number | null;
-        readonly height: number | null;
-    } | null> | null;
+export type MyCollectionArtworkForm_artwork$data = {
+  readonly artist: {
     readonly internalID: string;
-    readonly isEdition: boolean | null;
-    readonly medium: string | null;
-    readonly metric: string | null;
-    readonly artworkLocation: string | null;
-    readonly provenance: string | null;
-    readonly slug: string;
-    readonly title: string | null;
-    readonly width: string | null;
-    readonly " $refType": "MyCollectionArtworkForm_artwork";
+    readonly name: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly targetSupply: {
+      readonly isP1: boolean | null;
+    } | null;
+  } | null;
+  readonly consignmentSubmission: {
+    readonly inProgress: boolean | null;
+  } | null;
+  readonly artistNames: string | null;
+  readonly category: string | null;
+  readonly pricePaid: {
+    readonly display: string | null;
+    readonly minor: number;
+    readonly currencyCode: string;
+  } | null;
+  readonly date: string | null;
+  readonly depth: string | null;
+  readonly dimensions: {
+    readonly in: string | null;
+    readonly cm: string | null;
+  } | null;
+  readonly editionSize: string | null;
+  readonly editionNumber: string | null;
+  readonly height: string | null;
+  readonly attributionClass: {
+    readonly name: string | null;
+  } | null;
+  readonly id: string;
+  readonly images: ReadonlyArray<{
+    readonly internalID: string | null;
+    readonly isDefault: boolean | null;
+    readonly imageURL: string | null;
+    readonly width: number | null;
+    readonly height: number | null;
+  } | null> | null;
+  readonly internalID: string;
+  readonly isEdition: boolean | null;
+  readonly medium: string | null;
+  readonly metric: string | null;
+  readonly artworkLocation: string | null;
+  readonly provenance: string | null;
+  readonly slug: string;
+  readonly title: string | null;
+  readonly width: string | null;
+  readonly " $fragmentType": "MyCollectionArtworkForm_artwork";
 };
-export type MyCollectionArtworkForm_artwork$data = MyCollectionArtworkForm_artwork;
 export type MyCollectionArtworkForm_artwork$key = {
-    readonly " $data"?: MyCollectionArtworkForm_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+  readonly " $data"?: MyCollectionArtworkForm_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -356,5 +359,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '994888b6b6d5a10c58f9a4a95608e1d2';
+
+(node as any).hash = "994888b6b6d5a10c58f9a4a95608e1d2";
+
 export default node;

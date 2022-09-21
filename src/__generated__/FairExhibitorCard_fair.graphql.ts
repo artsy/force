@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<1b44aeee3e13b5057f2997a279f0466e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorCard_fair = {
-    readonly href: string | null;
-    readonly " $refType": "FairExhibitorCard_fair";
+export type FairExhibitorCard_fair$data = {
+  readonly href: string | null;
+  readonly " $fragmentType": "FairExhibitorCard_fair";
 };
-export type FairExhibitorCard_fair$data = FairExhibitorCard_fair;
 export type FairExhibitorCard_fair$key = {
-    readonly " $data"?: FairExhibitorCard_fair$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_fair">;
+  readonly " $data"?: FairExhibitorCard_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairExhibitorCard_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'f01b4590774d36f51baaed9222888184';
+
+(node as any).hash = "f01b4590774d36f51baaed9222888184";
+
 export default node;

@@ -21,6 +21,7 @@ describe("ArtistApp", () => {
   let mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistAppFragmentContainer,
     query: graphql`
       query ArtistApp_Test_Query @relay_test_operation {

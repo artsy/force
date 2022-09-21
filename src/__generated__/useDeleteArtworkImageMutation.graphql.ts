@@ -1,52 +1,36 @@
+/**
+ * @generated SignedSource<<9ab0b5ddb8b8f62c0acde11374d785e6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteArtworkImageInput = {
-    artworkID: string;
-    clientMutationId?: string | null | undefined;
-    imageID: string;
+  artworkID: string;
+  clientMutationId?: string | null;
+  imageID: string;
 };
-export type useDeleteArtworkImageMutationVariables = {
-    input: DeleteArtworkImageInput;
+export type useDeleteArtworkImageMutation$variables = {
+  input: DeleteArtworkImageInput;
 };
-export type useDeleteArtworkImageMutationResponse = {
-    readonly deleteArtworkImage: {
-        readonly artworkOrError: {
-            readonly success?: boolean | null | undefined;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null | undefined;
-        } | null;
+export type useDeleteArtworkImageMutation$data = {
+  readonly deleteArtworkImage: {
+    readonly artworkOrError: {
+      readonly success?: boolean | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
     } | null;
+  } | null;
 };
 export type useDeleteArtworkImageMutation = {
-    readonly response: useDeleteArtworkImageMutationResponse;
-    readonly variables: useDeleteArtworkImageMutationVariables;
+  variables: useDeleteArtworkImageMutation$variables;
+  response: useDeleteArtworkImageMutation$data;
 };
-
-
-
-/*
-mutation useDeleteArtworkImageMutation(
-  $input: DeleteArtworkImageInput!
-) {
-  deleteArtworkImage(input: $input) {
-    artworkOrError {
-      __typename
-      ... on ArtworkMutationDeleteSuccess {
-        success
-      }
-      ... on ArtworkMutationFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -186,5 +170,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3246345f0e61e291bc377aa19f38b8a7';
+
+(node as any).hash = "3246345f0e61e291bc377aa19f38b8a7";
+
 export default node;

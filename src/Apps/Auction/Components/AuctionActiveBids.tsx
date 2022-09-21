@@ -17,13 +17,13 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { AuctionActiveBids_me } from "__generated__/AuctionActiveBids_me.graphql"
+import { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "../Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "Utils/Responsive"
 import { useAuctionTracking } from "../Hooks/useAuctionTracking"
 
 interface AuctionActiveBidsProps {
-  me: AuctionActiveBids_me
+  me: AuctionActiveBids_me$data
   relay: RelayRefetchProp
 }
 
@@ -59,6 +59,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
               <Box my={4}>
                 <Join separator={<Spacer mb={0.5} />}>
                   <AuctionLotInfoFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     saleArtwork={lotStanding?.saleArtwork!}
                   />
                   <BidStatus lotStanding={lotStanding} />
@@ -84,6 +85,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
             <GridColumns my={2} key={index}>
               <Column>
                 <AuctionLotInfoFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   saleArtwork={lotStanding.saleArtwork!}
                   hideLotInfo
                 />

@@ -1,201 +1,27 @@
+/**
+ * @generated SignedSource<<af0701e930a05c9d5b09481dc12ba98c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesCategoriesQueryVariables = {
-    after?: string | null | undefined;
+export type SettingsSavesCategoriesQuery$variables = {
+  after?: string | null;
 };
-export type SettingsSavesCategoriesQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsSavesCategories_me">;
-    } | null;
+export type SettingsSavesCategoriesQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesCategories_me">;
+  } | null;
 };
 export type SettingsSavesCategoriesQuery = {
-    readonly response: SettingsSavesCategoriesQueryResponse;
-    readonly variables: SettingsSavesCategoriesQueryVariables;
+  variables: SettingsSavesCategoriesQuery$variables;
+  response: SettingsSavesCategoriesQuery$data;
 };
-
-
-
-/*
-query SettingsSavesCategoriesQuery(
-  $after: String
-) {
-  me {
-    ...SettingsSavesCategories_me_WGPvJ
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment CategoryRail_category on Gene {
-  name
-  href
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  ...FollowGeneButton_gene
-  filterArtworksConnection(first: 10) {
-    edges {
-      node {
-        internalID
-        ...ShelfArtwork_artwork
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SettingsSavesCategories_me_WGPvJ on Me {
-  followsAndSaves {
-    categoriesConnection: genesConnection(first: 4, after: $after) {
-      totalCount
-      edges {
-        node {
-          internalID
-          category: gene {
-            internalID
-            ...CategoryRail_category
-            id
-          }
-          id
-          __typename
-        }
-        cursor
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -865,5 +691,7 @@ return {
   }
 };
 })();
-(node as any).hash = '327705ff375f0107f78a8130d3494c7d';
+
+(node as any).hash = "327705ff375f0107f78a8130d3494c7d";
+
 export default node;

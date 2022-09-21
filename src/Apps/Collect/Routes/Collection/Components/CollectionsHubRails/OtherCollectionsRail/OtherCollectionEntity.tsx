@@ -1,5 +1,5 @@
 import { Text, Image } from "@artsy/palette"
-import { OtherCollectionEntity_member } from "__generated__/OtherCollectionEntity_member.graphql"
+import { OtherCollectionEntity_member$data } from "__generated__/OtherCollectionEntity_member.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import * as React from "react"
@@ -9,7 +9,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { cropped } from "Utils/resized"
 
 export interface CollectionProps {
-  member: OtherCollectionEntity_member
+  member: OtherCollectionEntity_member$data
   itemNumber: number
 }
 

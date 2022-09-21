@@ -3,13 +3,13 @@ import * as React from "react"
 import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { Articles_partner } from "__generated__/Articles_partner.graphql"
+import { Articles_partner$data } from "__generated__/Articles_partner.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { LoadingArea } from "Components/LoadingArea"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 
 interface ArticlesProps {
-  partner: Articles_partner
+  partner: Articles_partner$data
   relay: RelayRefetchProp
 }
 
@@ -90,6 +90,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
       <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
+          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
           onClick={handleClick}
           onNext={handleNext}

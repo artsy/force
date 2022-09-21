@@ -15,12 +15,12 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { FairArticles_fair } from "__generated__/FairArticles_fair.graphql"
+import { FairArticles_fair$data } from "__generated__/FairArticles_fair.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { FairEditorialShare } from "../Components/FairEditorial/FairEditorialShare"
 
 interface FairArticlesProps {
-  fair: FairArticles_fair
+  fair: FairArticles_fair$data
   relay: RelayPaginationProp
 }
 

@@ -2,16 +2,17 @@ import { FC } from "react"
 import { HTML } from "@artsy/palette"
 import Metadata from "Components/Artwork/Metadata"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleSectionImageCollectionCaption_figure } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
+import { ArticleSectionImageCollectionCaption_figure$data } from "__generated__/ArticleSectionImageCollectionCaption_figure.graphql"
 
 interface ArticleSectionImageCollectionCaptionProps {
-  figure: ArticleSectionImageCollectionCaption_figure
+  figure: ArticleSectionImageCollectionCaption_figure$data
 }
 
 const ArticleSectionImageCollectionCaption: FC<ArticleSectionImageCollectionCaptionProps> = ({
   figure,
 }) => {
   if (figure.__typename === "Artwork") {
+    // @ts-ignore RELAY UPGRADE 13
     return <Metadata mt={0} artwork={figure} />
   }
 

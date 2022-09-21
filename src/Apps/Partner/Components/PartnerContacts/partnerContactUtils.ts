@@ -2,11 +2,13 @@ import { compact } from "lodash"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import qs from "qs"
-import { PartnerContactMap_location } from "__generated__/PartnerContactMap_location.graphql"
-import { PartnerContactAddress_location } from "__generated__/PartnerContactAddress_location.graphql"
+import { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
+import { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 
 export function getContactAddressLines(
-  location: PartnerContactMap_location | PartnerContactAddress_location
+  location:
+    | PartnerContactMap_location$data
+    | PartnerContactAddress_location$data
 ) {
   if (!location) return []
 
@@ -21,7 +23,7 @@ export function getContactAddressLines(
   ])
 }
 
-export function getGoogleMapUrl(location: PartnerContactMap_location) {
+export function getGoogleMapUrl(location: PartnerContactMap_location$data) {
   if (!location) return null
 
   const locationString = location.coordinates
@@ -39,7 +41,7 @@ export function getGoogleMapUrl(location: PartnerContactMap_location) {
 }
 
 export function getGoogleStaticMapImageUrl(
-  location: PartnerContactMap_location,
+  location: PartnerContactMap_location$data,
   width: number = 480,
   height: number = 480
 ) {

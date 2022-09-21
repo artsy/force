@@ -10,6 +10,7 @@ const { renderWithRelay } = setupTestWrapperTL<
   ArtworkSidebar2ShippingInformation_Test_Query
 >({
   Component: ({ artwork }) => (
+    // @ts-ignore RELAY UPGRADE 13
     <ArtworkSidebar2ShippingInformationFragmentContainer artwork={artwork!} />
   ),
   query: graphql`

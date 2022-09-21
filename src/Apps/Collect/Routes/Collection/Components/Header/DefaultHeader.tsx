@@ -1,12 +1,12 @@
 import { Shelf } from "@artsy/palette"
-import { DefaultHeader_headerArtworks } from "__generated__/DefaultHeader_headerArtworks.graphql"
+import { DefaultHeader_headerArtworks$data } from "__generated__/DefaultHeader_headerArtworks.graphql"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DefaultHeaderArtworkFragmentContainer as DefaultHeaderArtwork } from "./DefaultHeaderArtwork"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface CollectionDefaultHeaderProps {
-  headerArtworks: DefaultHeader_headerArtworks
+  headerArtworks: DefaultHeader_headerArtworks$data
   collectionId: string
   collectionSlug: string
 }
@@ -25,6 +25,7 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
       {artworks.map((artwork, i) => (
         <DefaultHeaderArtwork
           key={i}
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           collectionId={collectionId}
           collectionSlug={collectionSlug}

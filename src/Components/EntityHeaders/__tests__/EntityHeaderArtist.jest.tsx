@@ -18,6 +18,7 @@ describe("EntityHeaderArtist", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderArtistFragmentContainer_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderArtistFragmentContainer,
     query: QUERY,
   })
@@ -51,6 +52,7 @@ describe("EntityHeaderArtist", () => {
         if (!props.artist) return null
         return (
           <EntityHeaderArtistFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             artist={props.artist}
             displayCounts
           />

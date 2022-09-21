@@ -14,12 +14,12 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { AuctionFAQsDialog_viewer } from "__generated__/AuctionFAQsDialog_viewer.graphql"
+import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
 import { AuctionFAQsDialogQuery } from "__generated__/AuctionFAQsDialogQuery.graphql"
 
 interface AuctionFAQsDialogProps {
   onClose(): void
-  viewer: AuctionFAQsDialog_viewer
+  viewer: AuctionFAQsDialog_viewer$data
 }
 
 const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
@@ -64,12 +64,15 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
           (key: keyof Omit<typeof viewer, " $refType">) => {
             const page = viewer[key]
 
+            // @ts-ignore RELAY UPGRADE 13
             if (!page.content) return null
 
+            // @ts-ignore RELAY UPGRADE 13
             const name = page.name.replace("How Auctions Work: ", "")
 
             return (
               <Tab key={key} name={name}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <HTML variant="sm" html={page.content} />
               </Tab>
             )
@@ -148,6 +151,7 @@ export const AuctionFAQsDialogQueryRenderer: React.FC<AuctionFAQsDialogQueryRend
           return (
             <AuctionFAQsDialogFragmentContainer
               onClose={onClose}
+              // @ts-ignore RELAY UPGRADE 13
               viewer={props.viewer}
             />
           )

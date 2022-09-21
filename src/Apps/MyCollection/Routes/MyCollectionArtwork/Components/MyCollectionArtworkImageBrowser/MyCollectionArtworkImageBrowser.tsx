@@ -4,11 +4,11 @@ import { useEffect, useState } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { getArtworkLocalImages, StoredImage } from "Utils/localImagesHelpers"
-import { MyCollectionArtworkImageBrowser_artwork } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
+import { MyCollectionArtworkImageBrowser_artwork$data } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 
 interface MyCollectionArtworkImageBrowserProps {
-  artwork: MyCollectionArtworkImageBrowser_artwork
+  artwork: MyCollectionArtworkImageBrowser_artwork$data
 }
 const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserProps> = ({
   artwork,
@@ -71,6 +71,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
 
   return (
     <ArtworkImageBrowserFragmentContainer
+      // @ts-ignore RELAY UPGRADE 13
       artwork={artwork}
       isMyCollectionArtwork
     />

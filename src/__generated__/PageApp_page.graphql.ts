@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<524547d9cd278fec890ae58456580dc7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PageApp_page = {
-    readonly internalID: string;
-    readonly name: string;
-    readonly content: string | null;
-    readonly " $refType": "PageApp_page";
+export type PageApp_page$data = {
+  readonly internalID: string;
+  readonly name: string;
+  readonly content: string | null;
+  readonly " $fragmentType": "PageApp_page";
 };
-export type PageApp_page$data = PageApp_page;
 export type PageApp_page$key = {
-    readonly " $data"?: PageApp_page$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PageApp_page">;
+  readonly " $data"?: PageApp_page$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PageApp_page">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -55,5 +58,7 @@ const node: ReaderFragment = {
   "type": "Page",
   "abstractKey": null
 };
-(node as any).hash = '94845d296973a411f90edbe8aca444a5';
+
+(node as any).hash = "94845d296973a411f90edbe8aca444a5";
+
 export default node;

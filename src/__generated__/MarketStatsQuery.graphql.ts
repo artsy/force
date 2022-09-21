@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<83799c4b3cc582d59ffa9f097ade266a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MarketStatsQueryVariables = {
-    artistInternalID: string;
+export type MarketStatsQuery$variables = {
+  artistInternalID: string;
 };
-export type MarketStatsQueryResponse = {
-    readonly priceInsightsConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"MarketStats_priceInsightsConnection">;
-    } | null;
+export type MarketStatsQuery$data = {
+  readonly priceInsightsConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"MarketStats_priceInsightsConnection">;
+  } | null;
 };
 export type MarketStatsQuery = {
-    readonly response: MarketStatsQueryResponse;
-    readonly variables: MarketStatsQueryVariables;
+  variables: MarketStatsQuery$variables;
+  response: MarketStatsQuery$data;
 };
-
-
-
-/*
-query MarketStatsQuery(
-  $artistInternalID: ID!
-) {
-  priceInsightsConnection: priceInsights(artistId: $artistInternalID, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {
-    ...MarketStats_priceInsightsConnection
-  }
-}
-
-fragment MarketStats_priceInsightsConnection on PriceInsightConnection {
-  edges {
-    node {
-      medium
-      annualLotsSold
-      annualValueSoldCents
-      sellThroughRate
-      medianSaleOverEstimatePercentage
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -182,5 +163,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b8c04641b23e82c0ad5fb0e068f340a0';
+
+(node as any).hash = "b8c04641b23e82c0ad5fb0e068f340a0";
+
 export default node;

@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<e68c031e1458ad3f37247941bdf9bea0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorCard_exhibitor = {
-    readonly profileID: string | null;
-    readonly partner: {
-        readonly internalID: string;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-    } | null;
-    readonly " $refType": "FairExhibitorCard_exhibitor";
+export type FairExhibitorCard_exhibitor$data = {
+  readonly profileID: string | null;
+  readonly partner: {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+  } | null;
+  readonly " $fragmentType": "FairExhibitorCard_exhibitor";
 };
-export type FairExhibitorCard_exhibitor$data = FairExhibitorCard_exhibitor;
 export type FairExhibitorCard_exhibitor$key = {
-    readonly " $data"?: FairExhibitorCard_exhibitor$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_exhibitor">;
+  readonly " $data"?: FairExhibitorCard_exhibitor$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairExhibitorCard_exhibitor">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -43,6 +46,11 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "EntityHeaderPartner_partner"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
@@ -55,11 +63,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "EntityHeaderPartner_partner"
         }
       ],
       "storageKey": null
@@ -68,5 +71,7 @@ const node: ReaderFragment = {
   "type": "FairExhibitor",
   "abstractKey": null
 };
-(node as any).hash = '117da6dd1e9b1be9e5b6ba89e8baf624';
+
+(node as any).hash = "117da6dd1e9b1be9e5b6ba89e8baf624";
+
 export default node;

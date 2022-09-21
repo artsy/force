@@ -1,45 +1,48 @@
+/**
+ * @generated SignedSource<<f07e77ff18b63354ae98d80ad21f8196>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleVideo_article = {
-    readonly vertical: string | null;
+export type ArticleVideo_article$data = {
+  readonly vertical: string | null;
+  readonly title: string | null;
+  readonly href: string | null;
+  readonly description: string | null;
+  readonly media: {
+    readonly coverImage: {
+      readonly url: string | null;
+    } | null;
+    readonly credits: string | null;
+    readonly description: string | null;
+    readonly duration: string | null;
+    readonly releaseDate: string | null;
+    readonly url: string | null;
+  } | null;
+  readonly seriesArticle: {
     readonly title: string | null;
     readonly href: string | null;
     readonly description: string | null;
-    readonly media: {
-        readonly coverImage: {
-            readonly url: string | null;
-        } | null;
-        readonly credits: string | null;
-        readonly description: string | null;
-        readonly duration: string | null;
-        readonly releaseDate: string | null;
-        readonly url: string | null;
+    readonly sponsor: {
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
     } | null;
-    readonly seriesArticle: {
-        readonly title: string | null;
-        readonly href: string | null;
-        readonly description: string | null;
-        readonly sponsor: {
-            readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
-        } | null;
-    } | null;
-    readonly moreRelatedArticles: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSeriesItem_article">;
-    }>;
-    readonly " $refType": "ArticleVideo_article";
+  } | null;
+  readonly moreRelatedArticles: ReadonlyArray<{
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSeriesItem_article">;
+  }>;
+  readonly " $fragmentType": "ArticleVideo_article";
 };
-export type ArticleVideo_article$data = ArticleVideo_article;
 export type ArticleVideo_article$key = {
-    readonly " $data"?: ArticleVideo_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleVideo_article">;
+  readonly " $data"?: ArticleVideo_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleVideo_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -183,16 +186,16 @@ return {
       "plural": true,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArticleSeriesItem_article"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "internalID",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArticleSeriesItem_article"
         }
       ],
       "storageKey": "relatedArticles(size:4)"
@@ -202,5 +205,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f2619340e6e8033695245026b3b0de16';
+
+(node as any).hash = "f2619340e6e8033695245026b3b0de16";
+
 export default node;

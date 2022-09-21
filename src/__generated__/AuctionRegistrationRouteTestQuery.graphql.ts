@@ -1,57 +1,28 @@
+/**
+ * @generated SignedSource<<8000f566ca91b332baaa2a728cefb241>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionRegistrationRouteTestQueryVariables = {};
-export type AuctionRegistrationRouteTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionRegistrationRoute_me">;
-    } | null;
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionRegistrationRoute_sale">;
-    } | null;
+export type AuctionRegistrationRouteTestQuery$variables = {};
+export type AuctionRegistrationRouteTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionRegistrationRoute_me">;
+  } | null;
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionRegistrationRoute_sale">;
+  } | null;
 };
 export type AuctionRegistrationRouteTestQuery = {
-    readonly response: AuctionRegistrationRouteTestQueryResponse;
-    readonly variables: AuctionRegistrationRouteTestQueryVariables;
+  variables: AuctionRegistrationRouteTestQuery$variables;
+  response: AuctionRegistrationRouteTestQuery$data;
 };
-
-
-
-/*
-query AuctionRegistrationRouteTestQuery {
-  me {
-    ...AuctionRegistrationRoute_me
-    id
-  }
-  sale(id: "foo") {
-    ...AuctionRegistrationRoute_sale
-    id
-  }
-}
-
-fragment AuctionRegistrationRoute_me on Me {
-  internalID
-  identityVerified
-  hasQualifiedCreditCards
-}
-
-fragment AuctionRegistrationRoute_sale on Sale {
-  slug
-  name
-  internalID
-  status
-  requireIdentityVerification
-  isClosed
-  isLiveOpen
-  bidder {
-    qualifiedForBidding
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -290,5 +261,7 @@ return {
   }
 };
 })();
-(node as any).hash = '47ac62a537a9a0edc3b8d73614fa1e50';
+
+(node as any).hash = "47ac62a537a9a0edc3b8d73614fa1e50";
+
 export default node;

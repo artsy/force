@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<403af7a290cbf5d0e999d49393117d19>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_fairOrganizer = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly description: string | null;
-    readonly profile: {
-        readonly image: {
-            readonly url: string | null;
-        } | null;
+export type FairOrganizerApp_fairOrganizer$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly description: string | null;
+  readonly profile: {
+    readonly image: {
+      readonly url: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer" | "FairOrganizerHeaderImage_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
-    readonly " $refType": "FairOrganizerApp_fairOrganizer";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer" | "FairOrganizerHeaderImage_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
+  readonly " $fragmentType": "FairOrganizerApp_fairOrganizer";
 };
-export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
 export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+  readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -116,5 +119,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = 'bd849d7afe3472495fb15da8a2be9710';
+
+(node as any).hash = "bd849d7afe3472495fb15da8a2be9710";
+
 export default node;

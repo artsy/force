@@ -29,6 +29,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
   Component: ({ tag }) => (
     <MockBoot user={{ id: "percy-z" }}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagArtworkFilterRefetchContainer tag={tag!} />
     </MockBoot>
   ),

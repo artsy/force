@@ -31,6 +31,7 @@ describe("BankDebitProvider", () => {
           mode: "BUY",
           bankAccountId: "bank-id-1",
           paymentMethodDetails: null,
+          // @ts-ignore RELAY UPGRADE 13
           " $refType": "BankAccountPicker_order",
         }}
       />

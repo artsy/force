@@ -1,13 +1,13 @@
 import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarClassification_artwork } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
+import { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 export interface ArtworkSidebarClassificationProps {
-  artwork: ArtworkSidebarClassification_artwork
+  artwork: ArtworkSidebarClassification_artwork$data
 }
 
 export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps> = ({

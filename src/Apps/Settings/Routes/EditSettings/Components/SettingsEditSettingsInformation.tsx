@@ -12,11 +12,11 @@ import { Form, Formik } from "formik"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
-import { SettingsEditSettingsInformation_me } from "__generated__/SettingsEditSettingsInformation_me.graphql"
+import { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 
 interface SettingsEditSettingsInformationProps {
-  me: SettingsEditSettingsInformation_me
+  me: SettingsEditSettingsInformation_me$data
 }
 
 export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInformationProps> = ({

@@ -6,12 +6,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-import { ArtworkSidebar2PartnerInfo_artwork } from "__generated__/ArtworkSidebar2PartnerInfo_artwork.graphql"
+import { ArtworkSidebar2PartnerInfo_artwork$data } from "__generated__/ArtworkSidebar2PartnerInfo_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkSidebar2PartnerInfoProps {
-  artwork: ArtworkSidebar2PartnerInfo_artwork
+  artwork: ArtworkSidebar2PartnerInfo_artwork$data
 }
 
 interface PartnerNameProps {

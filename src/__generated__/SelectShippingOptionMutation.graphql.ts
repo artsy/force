@@ -1,96 +1,52 @@
+/**
+ * @generated SignedSource<<cf74ed13c78b7940d6690e1f778e32d4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSelectShippingOptionInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
-    selectedShippingQuoteId: string;
+  clientMutationId?: string | null;
+  id: string;
+  selectedShippingQuoteId: string;
 };
-export type SelectShippingOptionMutationVariables = {
-    input: CommerceSelectShippingOptionInput;
+export type SelectShippingOptionMutation$variables = {
+  input: CommerceSelectShippingOptionInput;
 };
-export type SelectShippingOptionMutationResponse = {
-    readonly commerceSelectShippingOption: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order?: {
-                readonly lineItems: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly shippingQuoteOptions: {
-                                readonly edges: ReadonlyArray<{
-                                    readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-                                } | null> | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
-            } | undefined;
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            } | undefined;
-        };
-    } | null;
+export type SelectShippingOptionMutation$data = {
+  readonly commerceSelectShippingOption: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order?: {
+        readonly lineItems: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly shippingQuoteOptions: {
+                readonly edges: ReadonlyArray<{
+                  readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
+                } | null> | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type SelectShippingOptionMutation = {
-    readonly response: SelectShippingOptionMutationResponse;
-    readonly variables: SelectShippingOptionMutationVariables;
+  variables: SelectShippingOptionMutation$variables;
+  response: SelectShippingOptionMutation$data;
 };
-
-
-
-/*
-mutation SelectShippingOptionMutation(
-  $input: CommerceSelectShippingOptionInput!
-) {
-  commerceSelectShippingOption(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        __typename
-        order {
-          __typename
-          lineItems {
-            edges {
-              node {
-                shippingQuoteOptions {
-                  edges {
-                    ...ShippingQuotes_shippingQuotes
-                  }
-                }
-                id
-              }
-            }
-          }
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-
-fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
-  node {
-    id
-    isSelected
-    price(precision: 2)
-    priceCents
-    typeName
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -437,5 +393,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b71546b77d6db4f5be7777383c540e4b';
+
+(node as any).hash = "b71546b77d6db4f5be7777383c540e4b";
+
 export default node;

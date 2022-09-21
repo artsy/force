@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<0bcf36d5853d30bde3054e0769401349>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderArtist_artist = {
-    readonly internalID: string;
-    readonly href: string | null;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly initials: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly counts: {
-        readonly artworks: number | null;
-        readonly forSaleArtworks: number | null;
+export type EntityHeaderArtist_artist$data = {
+  readonly internalID: string;
+  readonly href: string | null;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly initials: string | null;
+  readonly formattedNationalityAndBirthday: string | null;
+  readonly counts: {
+    readonly artworks: any | null;
+    readonly forSaleArtworks: any | null;
+  } | null;
+  readonly avatar: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly avatar: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "EntityHeaderArtist_artist";
+  } | null;
+  readonly " $fragmentType": "EntityHeaderArtist_artist";
 };
-export type EntityHeaderArtist_artist$data = EntityHeaderArtist_artist;
 export type EntityHeaderArtist_artist$key = {
-    readonly " $data"?: EntityHeaderArtist_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
+  readonly " $data"?: EntityHeaderArtist_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -155,5 +158,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '2d83c72ea73ba22c6674603767f1322d';
+
+(node as any).hash = "2d83c72ea73ba22c6674603767f1322d";
+
 export default node;

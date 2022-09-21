@@ -2,10 +2,10 @@ import * as React from "react"
 import { Text, Message } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SubscriberBanner_partner } from "__generated__/SubscriberBanner_partner.graphql"
+import { SubscriberBanner_partner$data } from "__generated__/SubscriberBanner_partner.graphql"
 
 export interface SubscriberBannerProps {
-  partner: SubscriberBanner_partner
+  partner: SubscriberBanner_partner$data
 }
 
 export const SubscriberBanner: React.FC<SubscriberBannerProps> = ({

@@ -1,344 +1,42 @@
+/**
+ * @generated SignedSource<<0b04457d85088f89ba17a213ad8f04ce>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceBuyerCounterOfferInput = {
-    amountCents: number;
-    clientMutationId?: string | null | undefined;
-    note?: string | null | undefined;
-    offerId: string;
+  amountCents: number;
+  clientMutationId?: string | null;
+  note?: string | null;
+  offerId: string;
 };
-export type RespondCounterOfferMutationVariables = {
-    input: CommerceBuyerCounterOfferInput;
+export type RespondCounterOfferMutation$variables = {
+  input: CommerceBuyerCounterOfferInput;
 };
-export type RespondCounterOfferMutationResponse = {
-    readonly commerceBuyerCounterOffer: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly " $fragmentRefs": FragmentRefs<"Respond_order">;
-            } | undefined;
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            } | undefined;
-        };
-    } | null;
+export type RespondCounterOfferMutation$data = {
+  readonly commerceBuyerCounterOffer: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type RespondCounterOfferMutation = {
-    readonly response: RespondCounterOfferMutationResponse;
-    readonly variables: RespondCounterOfferMutationVariables;
+  variables: RespondCounterOfferMutation$variables;
+  response: RespondCounterOfferMutation$data;
 };
-
-
-
-/*
-mutation RespondCounterOfferMutation(
-  $input: CommerceBuyerCounterOfferInput!
-) {
-  commerceBuyerCounterOffer(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          ...Respond_order
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          date
-          shippingOrigin
-          id
-        }
-        artworkVersion {
-          artistNames
-          title
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment OfferHistoryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    offers {
-      edges {
-        node {
-          internalID
-          amount(precision: 2)
-          createdAt(format: "MMM D")
-          fromParticipant
-          id
-        }
-      }
-    }
-    currencyCode
-    lastOffer {
-      internalID
-      fromParticipant
-      amount(precision: 2)
-      shippingTotal(precision: 2)
-      taxTotal(precision: 2)
-      note
-      id
-    }
-  }
-}
-
-fragment PaymentMethodSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      brand
-      lastDigits
-      expirationYear
-      expirationMonth
-      id
-    }
-    ... on BankAccount {
-      last4
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-}
-
-fragment Respond_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  state
-  currencyCode
-  itemsTotal(precision: 2)
-  itemsTotalCents
-  stateExpiresAt
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          price
-          id
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    isInquiryOrder
-    lastOffer {
-      createdAt
-      internalID
-      note
-      id
-    }
-    myLastOffer {
-      createdAt
-      id
-    }
-  }
-  ...TransactionDetailsSummaryItem_order
-  ...ArtworkSummaryItem_order
-  ...ShippingSummaryItem_order
-  ...PaymentMethodSummaryItem_order
-  ...OfferHistoryItem_order
-}
-
-fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
-  __isCommerceRequestedFulfillmentUnion: __typename
-  ... on CommerceShip {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-  ... on CommerceShipArta {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-}
-
-fragment ShippingSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  state
-  paymentMethod
-  requestedFulfillment {
-    __typename
-    ...ShippingAddress_ship
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          shippingOrigin
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          typeName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1169,5 +867,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a4d9f2cfd72fdd085f7318543ed3de2e';
+
+(node as any).hash = "a4d9f2cfd72fdd085f7318543ed3de2e";
+
 export default node;

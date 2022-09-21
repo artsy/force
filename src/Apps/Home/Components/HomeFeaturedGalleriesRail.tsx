@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeFeaturedGalleriesRail_orderedSet } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
+import { HomeFeaturedGalleriesRail_orderedSet$data } from "__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
 import { HomeFeaturedGalleriesRailQuery } from "__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -20,7 +20,7 @@ import {
 } from "Components/Cells/CellPartner"
 
 interface HomeFeaturedGalleriesRailProps {
-  orderedSet: HomeFeaturedGalleriesRail_orderedSet
+  orderedSet: HomeFeaturedGalleriesRail_orderedSet$data
 }
 
 const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
@@ -57,6 +57,7 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
           return (
             <CellPartnerFragmentContainer
               key={index}
+              // @ts-ignore RELAY UPGRADE 13
               partner={node.owner}
               onClick={() => {
                 const trackingEvent: ClickedGalleryGroup = {
@@ -148,6 +149,7 @@ export const HomeFeaturedGalleriesRailQueryRenderer: React.FC = () => {
         if (props.orderedSet) {
           return (
             <HomeFeaturedGalleriesRailFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               orderedSet={props.orderedSet}
             />
           )

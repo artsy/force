@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { InstitutionPartnershipsShows_orderedSet } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
+import { InstitutionPartnershipsShows_orderedSet$data } from "__generated__/InstitutionPartnershipsShows_orderedSet.graphql"
 import { InstitutionPartnershipsShowsQuery } from "__generated__/InstitutionPartnershipsShowsQuery.graphql"
 import {
   CellShowFragmentContainer,
@@ -10,7 +10,7 @@ import {
 import { Column, GridColumns } from "@artsy/palette"
 
 interface InstitutionPartnershipsShowsProps {
-  orderedSet: InstitutionPartnershipsShows_orderedSet
+  orderedSet: InstitutionPartnershipsShows_orderedSet$data
 }
 
 const InstitutionPartnershipsShows: FC<InstitutionPartnershipsShowsProps> = ({
@@ -27,6 +27,7 @@ const InstitutionPartnershipsShows: FC<InstitutionPartnershipsShowsProps> = ({
 
         return (
           <Column key={show.internalID} span={6}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <CellShowFragmentContainer mode="GRID" show={show} />
           </Column>
         )
@@ -89,6 +90,7 @@ export const InstitutionPartnershipsShowsQueryRenderer: FC = () => {
 
         return (
           <InstitutionPartnershipsShowsFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             orderedSet={props.orderedSet}
           />
         )

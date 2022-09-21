@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
-import { RelatedCollectionEntity_collection } from "__generated__/RelatedCollectionEntity_collection.graphql"
+import { RelatedCollectionEntity_collection$data } from "__generated__/RelatedCollectionEntity_collection.graphql"
 import { useTracking } from "react-tracking"
 import currency from "currency.js"
 import * as React from "react"
@@ -10,7 +10,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 
 export interface RelatedCollectionEntityProps {
-  collection: RelatedCollectionEntity_collection
+  collection: RelatedCollectionEntity_collection$data
   lazyLoad?: boolean
   slideIndex: number
 }

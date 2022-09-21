@@ -13,10 +13,10 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
-import { SettingsAuctionsLotStanding_lotStanding } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
+import { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
 
 interface SettingsAuctionsLotStandingProps {
-  lotStanding: SettingsAuctionsLotStanding_lotStanding
+  lotStanding: SettingsAuctionsLotStanding_lotStanding$data
 }
 
 const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
@@ -65,6 +65,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
               </Text>
             )}
 
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <DetailsFragmentContainer includeLinks={false} artwork={artwork} />
           </Flex>
         </RouterLink>

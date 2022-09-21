@@ -6,11 +6,11 @@ import {
   SettingsPurchasesRowFragmentContainer,
   SettingsPurchasesRowPlaceholder,
 } from "./SettingsPurchasesRow"
-import { SettingsPurchases_me } from "__generated__/SettingsPurchases_me.graphql"
+import { SettingsPurchases_me$data } from "__generated__/SettingsPurchases_me.graphql"
 import { CommercePaginationFragmentContainer } from "Components/Pagination/CommercePagination"
 
 export interface SettingsPurchasesProps {
-  me: SettingsPurchases_me
+  me: SettingsPurchases_me$data
   relay: RelayRefetchProp
 }
 
@@ -68,6 +68,7 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
         {orders.map(order => (
           <SettingsPurchasesRowFragmentContainer
             key={order.code}
+            // @ts-ignore RELAY UPGRADE 13
             order={order}
           />
         ))}
@@ -78,6 +79,7 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
           hasNextPage={hasNextPage}
           onClick={handleClick}
           onNext={handleNext}
+          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
         />
       )}

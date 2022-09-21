@@ -2,7 +2,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { FollowButton } from "./Button"
-import { FollowGeneButton_gene } from "__generated__/FollowGeneButton_gene.graphql"
+import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import { ButtonProps } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { Intent, ContextModule, AuthContextModule } from "@artsy/cohesion"
@@ -10,7 +10,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
-  gene: FollowGeneButton_gene
+  gene: FollowGeneButton_gene$data
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
 }

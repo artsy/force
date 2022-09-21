@@ -1,5 +1,5 @@
 import { BorderedRadio, Button, Collapse } from "@artsy/palette"
-import { BankAccountPickerTestQueryRawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
+import { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
@@ -9,7 +9,7 @@ import { graphql } from "react-relay"
 import { BankAccountPickerFragmentContainer } from "../BankAccountPicker"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
+import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { BankAccountSelection } from "../../Routes/Payment/index"
@@ -64,7 +64,7 @@ const orderWithBankAccount = {
   ...orderBankAccount,
 }
 
-const defaultData: BankAccountPickerTestQueryRawResponse = {
+const defaultData: BankAccountPickerTestQuery$rawResponse = {
   me: {
     id: "my-id",
     bankAccounts: {
@@ -157,7 +157,7 @@ describe("BankAccountFragmentContainer", () => {
 
     const bankAccounts: Array<
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      BankAccountPicker_me["bankAccounts"]["edges"][0]["node"]
+      BankAccountPicker_me$data["bankAccounts"]["edges"][0]["node"]
     > = [
       {
         internalID: "bank-id-1",

@@ -1,14 +1,14 @@
 import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { InsightsRoute_me } from "__generated__/InsightsRoute_me.graphql"
+import { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
 import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsLandingPage } from "./Components/InsightsLandingPage"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
 interface InsightsRouteProps {
-  me: InsightsRoute_me
+  me: InsightsRoute_me$data
 }
 
 const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {

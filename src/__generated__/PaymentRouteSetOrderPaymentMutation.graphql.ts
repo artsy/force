@@ -1,104 +1,54 @@
+/**
+ * @generated SignedSource<<aee06f9dc89f65459281479df2c58412>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
-    paymentMethod: CommercePaymentMethodEnum;
-    paymentMethodId?: string | null | undefined;
+  clientMutationId?: string | null;
+  id: string;
+  paymentMethod: CommercePaymentMethodEnum;
+  paymentMethodId?: string | null;
 };
-export type PaymentRouteSetOrderPaymentMutationVariables = {
-    input: CommerceSetPaymentInput;
+export type PaymentRouteSetOrderPaymentMutation$variables = {
+  input: CommerceSetPaymentInput;
 };
-export type PaymentRouteSetOrderPaymentMutationResponse = {
-    readonly commerceSetPayment: {
-        readonly orderOrError: {
-            readonly order?: {
-                readonly id: string;
-                readonly creditCard: {
-                    readonly internalID: string;
-                    readonly name: string | null;
-                    readonly street1: string | null;
-                    readonly street2: string | null;
-                    readonly city: string | null;
-                    readonly state: string | null;
-                    readonly country: string | null;
-                    readonly postal_code: string | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"Payment_validation">;
-            } | undefined;
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            } | undefined;
-        };
-    } | null;
+export type PaymentRouteSetOrderPaymentMutation$data = {
+  readonly commerceSetPayment: {
+    readonly orderOrError: {
+      readonly order?: {
+        readonly id: string;
+        readonly creditCard: {
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+          readonly city: string | null;
+          readonly state: string | null;
+          readonly country: string | null;
+          readonly postal_code: string | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
+      };
+      readonly error?: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    };
+  } | null;
 };
 export type PaymentRouteSetOrderPaymentMutation = {
-    readonly response: PaymentRouteSetOrderPaymentMutationResponse;
-    readonly variables: PaymentRouteSetOrderPaymentMutationVariables;
+  variables: PaymentRouteSetOrderPaymentMutation$variables;
+  response: PaymentRouteSetOrderPaymentMutation$data;
 };
-
-
-
-/*
-mutation PaymentRouteSetOrderPaymentMutation(
-  $input: CommerceSetPaymentInput!
-) {
-  commerceSetPayment(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          id
-          ...Payment_validation
-          creditCard {
-            internalID
-            name
-            street1
-            street2
-            city
-            state
-            country
-            postal_code: postalCode
-            id
-          }
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-
-fragment Payment_validation on CommerceOrder {
-  __isCommerceOrder: __typename
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      id
-    }
-    ... on BankAccount {
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -263,6 +213,11 @@ return {
                     "selections": [
                       (v2/*: any*/),
                       {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "Payment_validation"
+                      },
+                      {
                         "alias": null,
                         "args": null,
                         "concreteType": "CreditCard",
@@ -280,11 +235,6 @@ return {
                           (v10/*: any*/)
                         ],
                         "storageKey": null
-                      },
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "Payment_validation"
                       }
                     ],
                     "storageKey": null
@@ -435,5 +385,7 @@ return {
   }
 };
 })();
-(node as any).hash = '015c7f56ebaab419c4febddd8a3505b1';
+
+(node as any).hash = "015c7f56ebaab419c4febddd8a3505b1";
+
 export default node;

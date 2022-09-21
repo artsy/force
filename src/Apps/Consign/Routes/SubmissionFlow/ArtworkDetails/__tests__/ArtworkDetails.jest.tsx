@@ -5,7 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "../ArtworkDetails"
-import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
+import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
@@ -34,7 +34,7 @@ const validForm = {
   depth: "5",
   dimensionsMetric: "cm",
   provenance: "provenance",
-} as ArtworkDetails_submission
+} as ArtworkDetails_submission$data
 
 const artwrokData = {
   internalID: "6324911f2c6b47000e277879",

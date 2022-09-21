@@ -9,12 +9,12 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { CellSale_sale } from "__generated__/CellSale_sale.graphql"
+import { CellSale_sale$data } from "__generated__/CellSale_sale.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { FC } from "react"
 
 export interface CellSaleProps extends Omit<RouterLinkProps, "to"> {
-  sale: CellSale_sale
+  sale: CellSale_sale$data
 }
 
 const CellSale: FC<CellSaleProps> = ({ sale, ...rest }) => {

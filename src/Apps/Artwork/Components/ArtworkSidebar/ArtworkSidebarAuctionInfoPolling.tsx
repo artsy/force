@@ -2,15 +2,15 @@ import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
-import { ArtworkSidebarAuctionInfoPolling_artwork } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
-import { ArtworkSidebarAuctionInfoPolling_me } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
+import { ArtworkSidebarAuctionInfoPolling_artwork$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
+import { ArtworkSidebarAuctionInfoPolling_me$data } from "__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
 import { Spacer } from "@artsy/palette"
 
 type Props = {
-  artwork: ArtworkSidebarAuctionInfoPolling_artwork
-  me: ArtworkSidebarAuctionInfoPolling_me
+  artwork: ArtworkSidebarAuctionInfoPolling_artwork$data
+  me: ArtworkSidebarAuctionInfoPolling_me$data
   relay: RelayRefetchProp
 }
 
@@ -53,9 +53,11 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
     <>
       <ArtworkSidebarCurrentBidInfoFragmentContainer
         currentBidChanged={currentBidChanged}
+        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
       />
       <Spacer mt={2} />
+      {/* @ts-ignore RELAY UPGRADE 13  */}
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
     </>
   )

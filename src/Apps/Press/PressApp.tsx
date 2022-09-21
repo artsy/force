@@ -3,11 +3,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { PressApp_page } from "__generated__/PressApp_page.graphql"
+import { PressApp_page$data } from "__generated__/PressApp_page.graphql"
 import { PageHTML } from "../Page/Components/PageHTML"
 
 interface PressAppProps {
-  page: PressApp_page
+  page: PressApp_page$data
 }
 
 const PressApp: FC<PressAppProps> = ({ page }) => {

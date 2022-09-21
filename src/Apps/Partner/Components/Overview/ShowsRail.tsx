@@ -1,12 +1,12 @@
 import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowsRail_partner } from "__generated__/ShowsRail_partner.graphql"
+import { ShowsRail_partner$data } from "__generated__/ShowsRail_partner.graphql"
 import { ViewAllButton } from "./ViewAllButton"
 import { extractNodes } from "Utils/extractNodes"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 
 interface ShowsRailProps extends BoxProps {
-  partner: ShowsRail_partner
+  partner: ShowsRail_partner$data
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
@@ -39,6 +39,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         {shows.map(show => (
           <CellShowFragmentContainer
             key={show.internalID}
+            // @ts-ignore RELAY UPGRADE 13
             show={show}
             displayKind
             displayPartner={false}

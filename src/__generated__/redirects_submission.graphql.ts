@@ -1,48 +1,51 @@
+/**
+ * @generated SignedSource<<376a8569011d6d00799b8ed1ee3629d1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type redirects_submission = {
-    readonly externalId: string;
-    readonly artist: {
-        readonly internalID: string;
-        readonly name: string | null;
-    } | null;
-    readonly locationCity: string | null;
-    readonly locationCountry: string | null;
-    readonly locationState: string | null;
-    readonly locationPostalCode: string | null;
-    readonly locationCountryCode: string | null;
-    readonly year: string | null;
-    readonly title: string | null;
-    readonly medium: string | null;
-    readonly attributionClass: ConsignmentAttributionClass | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
-    readonly height: string | null;
-    readonly width: string | null;
-    readonly depth: string | null;
-    readonly dimensionsMetric: string | null;
-    readonly provenance: string | null;
-    readonly assets: ReadonlyArray<{
-        readonly id: string;
-        readonly imageUrls: unknown | null;
-        readonly geminiToken: string | null;
-        readonly size: string | null;
-        readonly filename: string | null;
-    } | null> | null;
-    readonly " $refType": "redirects_submission";
+import { FragmentRefs } from "relay-runtime";
+export type redirects_submission$data = {
+  readonly externalId: string;
+  readonly artist: {
+    readonly internalID: string;
+    readonly name: string | null;
+  } | null;
+  readonly locationCity: string | null;
+  readonly locationCountry: string | null;
+  readonly locationState: string | null;
+  readonly locationPostalCode: string | null;
+  readonly locationCountryCode: string | null;
+  readonly year: string | null;
+  readonly title: string | null;
+  readonly medium: string | null;
+  readonly attributionClass: ConsignmentAttributionClass | null;
+  readonly editionNumber: string | null;
+  readonly editionSize: string | null;
+  readonly height: string | null;
+  readonly width: string | null;
+  readonly depth: string | null;
+  readonly dimensionsMetric: string | null;
+  readonly provenance: string | null;
+  readonly assets: ReadonlyArray<{
+    readonly id: string;
+    readonly imageUrls: any | null;
+    readonly geminiToken: string | null;
+    readonly size: string | null;
+    readonly filename: string | null;
+  } | null> | null;
+  readonly " $fragmentType": "redirects_submission";
 };
-export type redirects_submission$data = redirects_submission;
 export type redirects_submission$key = {
-    readonly " $data"?: redirects_submission$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"redirects_submission">;
+  readonly " $data"?: redirects_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"redirects_submission">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -244,5 +247,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '48ac3149c54524ad41edd60f316c56e5';
+
+(node as any).hash = "48ac3149c54524ad41edd60f316c56e5";
+
 export default node;

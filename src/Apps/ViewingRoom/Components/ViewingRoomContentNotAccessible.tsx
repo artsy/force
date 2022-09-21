@@ -3,10 +3,10 @@ import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 
-import { ViewingRoomContentNotAccessible_viewingRoom } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
+import { ViewingRoomContentNotAccessible_viewingRoom$data } from "__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
 
 interface ViewingRoomContentNotAccessibleProps {
-  viewingRoom: ViewingRoomContentNotAccessible_viewingRoom
+  viewingRoom: ViewingRoomContentNotAccessible_viewingRoom$data
 }
 
 const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleProps> = ({

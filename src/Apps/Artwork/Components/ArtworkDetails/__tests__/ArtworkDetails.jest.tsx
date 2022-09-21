@@ -15,6 +15,7 @@ const { getWrapper } = setupTestWrapper<ArtworkDetails_Test_Query>({
   Component: ({ artwork }) => {
     return (
       <MockBoot breakpoint="xs">
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkDetailsFragmentContainer artwork={artwork!} />
       </MockBoot>
     )

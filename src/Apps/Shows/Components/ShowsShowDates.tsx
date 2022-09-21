@@ -3,10 +3,10 @@ import { Text, TextProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
-import { ShowsShowDates_show } from "__generated__/ShowsShowDates_show.graphql"
+import { ShowsShowDates_show$data } from "__generated__/ShowsShowDates_show.graphql"
 
 interface ShowsShowDatesProps extends TextProps {
-  show: ShowsShowDates_show
+  show: ShowsShowDates_show$data
 }
 
 const ShowsShowDates: React.FC<ShowsShowDatesProps> = ({ show, ...rest }) => {

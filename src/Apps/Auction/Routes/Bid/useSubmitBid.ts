@@ -12,21 +12,21 @@ import {
 } from "Apps/Auction/Components/Form/Utils"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { AuctionBidRoute_sale } from "__generated__/AuctionBidRoute_sale.graphql"
-import { AuctionBidRoute_artwork } from "__generated__/AuctionBidRoute_artwork.graphql"
-import { AuctionBidRoute_me } from "__generated__/AuctionBidRoute_me.graphql"
+import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { RelayRefetchProp } from "react-relay"
 import { useToasts } from "@artsy/palette"
 
 const logger = createLogger("useSubmitBid")
 
 export interface UseSubmitBidProps {
-  artwork: AuctionBidRoute_artwork
+  artwork: AuctionBidRoute_artwork$data
   bidderID: string
-  me: AuctionBidRoute_me
+  me: AuctionBidRoute_me$data
   relay: RelayRefetchProp
   requiresPaymentInformation: boolean
-  sale: AuctionBidRoute_sale
+  sale: AuctionBidRoute_sale$data
 }
 
 export const useSubmitBid = ({
@@ -128,7 +128,7 @@ export const useSubmitBid = ({
 }
 
 const setupCheckBidStatus = (props: {
-  artwork: AuctionBidRoute_artwork
+  artwork: AuctionBidRoute_artwork$data
   bidderID: string
   fetchBidderPosition: ReturnType<
     typeof useBidderPosition
@@ -137,7 +137,7 @@ const setupCheckBidStatus = (props: {
   redirectTo: string
   relay: RelayRefetchProp
   router: Router
-  sale: AuctionBidRoute_sale
+  sale: AuctionBidRoute_sale$data
   sendToast: ReturnType<typeof useToasts>["sendToast"]
   tracking: ReturnType<typeof useAuctionTracking>["tracking"]
 }) => {

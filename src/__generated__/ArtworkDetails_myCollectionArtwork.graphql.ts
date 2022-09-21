@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<da8166f78a01bdee52f457a8a2291ca3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_myCollectionArtwork = {
+export type ArtworkDetails_myCollectionArtwork$data = {
+  readonly internalID: string;
+  readonly artist: {
     readonly internalID: string;
-    readonly artist: {
-        readonly internalID: string;
-        readonly name: string | null;
-    } | null;
-    readonly location: {
-        readonly city: string | null;
-        readonly country: string | null;
-        readonly state: string | null;
-        readonly postalCode: string | null;
-    } | null;
-    readonly date: string | null;
-    readonly title: string | null;
-    readonly medium: string | null;
-    readonly attributionClass: {
-        readonly name: string | null;
-    } | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
-    readonly height: string | null;
-    readonly width: string | null;
-    readonly depth: string | null;
-    readonly metric: string | null;
-    readonly provenance: string | null;
-    readonly " $refType": "ArtworkDetails_myCollectionArtwork";
+    readonly name: string | null;
+  } | null;
+  readonly location: {
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly state: string | null;
+    readonly postalCode: string | null;
+  } | null;
+  readonly date: string | null;
+  readonly title: string | null;
+  readonly medium: string | null;
+  readonly attributionClass: {
+    readonly name: string | null;
+  } | null;
+  readonly editionNumber: string | null;
+  readonly editionSize: string | null;
+  readonly height: string | null;
+  readonly width: string | null;
+  readonly depth: string | null;
+  readonly metric: string | null;
+  readonly provenance: string | null;
+  readonly " $fragmentType": "ArtworkDetails_myCollectionArtwork";
 };
-export type ArtworkDetails_myCollectionArtwork$data = ArtworkDetails_myCollectionArtwork;
 export type ArtworkDetails_myCollectionArtwork$key = {
-    readonly " $data"?: ArtworkDetails_myCollectionArtwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+  readonly " $data"?: ArtworkDetails_myCollectionArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -200,5 +203,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2d2f0d7fa843cfc7614df4071613e8b7';
+
+(node as any).hash = "2d2f0d7fa843cfc7614df4071613e8b7";
+
 export default node;

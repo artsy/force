@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<cb41157f57f05fcd566800a2ba9ff825>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2PartnerInfo_artwork = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly isInquireable: boolean | null;
-    readonly isInAuction: boolean | null;
-    readonly partner: {
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly cities: ReadonlyArray<string | null> | null;
-    } | null;
-    readonly sale: {
-        readonly name: string | null;
-        readonly href: string | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebar2PartnerInfo_artwork";
+export type ArtworkSidebar2PartnerInfo_artwork$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly isInquireable: boolean | null;
+  readonly isInAuction: boolean | null;
+  readonly partner: {
+    readonly name: string | null;
+    readonly href: string | null;
+    readonly cities: ReadonlyArray<string | null> | null;
+  } | null;
+  readonly sale: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebar2PartnerInfo_artwork";
 };
-export type ArtworkSidebar2PartnerInfo_artwork$data = ArtworkSidebar2PartnerInfo_artwork;
 export type ArtworkSidebar2PartnerInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebar2PartnerInfo_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2PartnerInfo_artwork">;
+  readonly " $data"?: ArtworkSidebar2PartnerInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2PartnerInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -115,5 +118,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5d70162ad85a9342368d05cbe697a4bb';
+
+(node as any).hash = "5d70162ad85a9342368d05cbe697a4bb";
+
 export default node;

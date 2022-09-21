@@ -14,11 +14,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AuctionBuyersPremiumDialogQuery } from "__generated__/AuctionBuyersPremiumDialogQuery.graphql"
-import { AuctionBuyersPremiumDialog_sale } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
+import { AuctionBuyersPremiumDialog_sale$data } from "__generated__/AuctionBuyersPremiumDialog_sale.graphql"
 
 interface AuctionBuyersPremiumDialogProps {
   onClose(): void
-  sale: AuctionBuyersPremiumDialog_sale
+  sale: AuctionBuyersPremiumDialog_sale$data
 }
 
 const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
@@ -169,6 +169,7 @@ export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<AuctionBuyersPrem
           return (
             <AuctionBuyersPremiumDialogFragmentContainer
               onClose={onClose}
+              // @ts-ignore RELAY UPGRADE 13
               sale={props.sale}
             />
           )

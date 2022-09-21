@@ -10,7 +10,7 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EntityTooltipGeneQuery } from "__generated__/EntityTooltipGeneQuery.graphql"
-import { EntityTooltipGene_gene } from "__generated__/EntityTooltipGene_gene.graphql"
+import { EntityTooltipGene_gene$data } from "__generated__/EntityTooltipGene_gene.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderGeneFragmentContainer } from "../EntityHeaders/EntityHeaderGene"
 import { useAnalyticsContext } from "System"
@@ -18,7 +18,7 @@ import { useTracking } from "react-tracking"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipGeneProps {
-  gene: EntityTooltipGene_gene
+  gene: EntityTooltipGene_gene$data
 }
 
 const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
@@ -63,6 +63,7 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
       )}
 
       <EntityHeaderGeneFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         gene={gene}
         displayAvatar={false}
         alignItems="flex-start"
@@ -149,6 +150,7 @@ export const EntityTooltipGeneQueryRenderer: FC<EntityTooltipGeneQueryRendererPr
           return <EntityTooltipGenePlaceholder />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <EntityTooltipGeneFragmentContainer gene={props.gene} />
       }}
     />

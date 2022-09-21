@@ -4,11 +4,11 @@ import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
-import { PartnerArtistsCarouselItem_artist } from "__generated__/PartnerArtistsCarouselItem_artist.graphql"
+import { PartnerArtistsCarouselItem_artist$data } from "__generated__/PartnerArtistsCarouselItem_artist.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface PartnerArtistsCarouselItemProps {
-  artist: PartnerArtistsCarouselItem_artist
+  artist: PartnerArtistsCarouselItem_artist$data
   partnerArtistHref: string
 }
 
@@ -40,6 +40,7 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
           href={partnerArtistHref}
         />
         <FollowArtistButtonFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={artist.node!}
           contextModule={ContextModule.recommendedArtistsRail}
           size="small"

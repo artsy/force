@@ -1,28 +1,24 @@
+/**
+ * @generated SignedSource<<8d841f497e207ee763be6f2512fa75ab>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type buildClientAppTestQueryVariables = {};
-export type buildClientAppTestQueryResponse = {
-    readonly me: {
-        readonly id: string;
-    } | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type buildClientAppTestQuery$variables = {};
+export type buildClientAppTestQuery$data = {
+  readonly me: {
+    readonly id: string;
+  } | null;
 };
 export type buildClientAppTestQuery = {
-    readonly response: buildClientAppTestQueryResponse;
-    readonly variables: buildClientAppTestQueryVariables;
+  variables: buildClientAppTestQuery$variables;
+  response: buildClientAppTestQuery$data;
 };
-
-
-
-/*
-query buildClientAppTestQuery {
-  me {
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -87,5 +83,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3c905c887770618ef318f43d80e4b464';
+
+(node as any).hash = "3c905c887770618ef318f43d80e4b464";
+
 export default node;

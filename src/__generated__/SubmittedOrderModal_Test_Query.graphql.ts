@@ -1,53 +1,25 @@
+/**
+ * @generated SignedSource<<7b8cd06c4ca4613fb2ab90fcaf2f736d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SubmittedOrderModal_Test_QueryVariables = {};
-export type SubmittedOrderModal_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SubmittedOrderModal_me">;
-    } | null;
+export type SubmittedOrderModal_Test_Query$variables = {};
+export type SubmittedOrderModal_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SubmittedOrderModal_me">;
+  } | null;
 };
 export type SubmittedOrderModal_Test_Query = {
-    readonly response: SubmittedOrderModal_Test_QueryResponse;
-    readonly variables: SubmittedOrderModal_Test_QueryVariables;
+  variables: SubmittedOrderModal_Test_Query$variables;
+  response: SubmittedOrderModal_Test_Query$data;
 };
-
-
-
-/*
-query SubmittedOrderModal_Test_Query {
-  me {
-    ...SubmittedOrderModal_me
-    id
-  }
-}
-
-fragment SubmittedOrderModal_me on Me {
-  orders(states: [SUBMITTED], mode: OFFER, first: 1, sort: UPDATED_AT_DESC) {
-    edges {
-      node {
-        __typename
-        stateExpiresAt(format: "MMM D")
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-                id
-              }
-              id
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -244,5 +216,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5123f11edbc981c9aa0d45575fb866ab';
+
+(node as any).hash = "5123f11edbc981c9aa0d45575fb866ab";
+
 export default node;

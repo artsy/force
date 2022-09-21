@@ -1,83 +1,51 @@
+/**
+ * @generated SignedSource<<5960edf1ba9b5889f84a6454ca5e9a4a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreditCardInput = {
-    clientMutationId?: string | null | undefined;
-    oneTimeUse?: boolean | null | undefined;
-    token: string;
+  clientMutationId?: string | null;
+  oneTimeUse?: boolean | null;
+  token: string;
 };
-export type CreditCardPickerCreateCreditCardMutationVariables = {
-    input: CreditCardInput;
+export type CreditCardPickerCreateCreditCardMutation$variables = {
+  input: CreditCardInput;
 };
-export type CreditCardPickerCreateCreditCardMutationResponse = {
-    readonly createCreditCard: {
-        readonly creditCardOrError: {
-            readonly creditCard?: {
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly street1: string | null;
-                readonly street2: string | null;
-                readonly city: string | null;
-                readonly state: string | null;
-                readonly country: string | null;
-                readonly postalCode: string | null;
-                readonly expirationMonth: number;
-                readonly expirationYear: number;
-                readonly lastDigits: string;
-                readonly brand: string;
-            } | null | undefined;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-            } | null | undefined;
-        } | null;
+export type CreditCardPickerCreateCreditCardMutation$data = {
+  readonly createCreditCard: {
+    readonly creditCardOrError: {
+      readonly creditCard?: {
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly street1: string | null;
+        readonly street2: string | null;
+        readonly city: string | null;
+        readonly state: string | null;
+        readonly country: string | null;
+        readonly postalCode: string | null;
+        readonly expirationMonth: number;
+        readonly expirationYear: number;
+        readonly lastDigits: string;
+        readonly brand: string;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type CreditCardPickerCreateCreditCardMutation = {
-    readonly response: CreditCardPickerCreateCreditCardMutationResponse;
-    readonly variables: CreditCardPickerCreateCreditCardMutationVariables;
+  variables: CreditCardPickerCreateCreditCardMutation$variables;
+  response: CreditCardPickerCreateCreditCardMutation$data;
 };
-
-
-
-/*
-mutation CreditCardPickerCreateCreditCardMutation(
-  $input: CreditCardInput!
-) {
-  createCreditCard(input: $input) {
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCard {
-          internalID
-          name
-          street1
-          street2
-          city
-          state
-          country
-          postalCode
-          expirationMonth
-          expirationYear
-          lastDigits
-          brand
-          id
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -366,5 +334,7 @@ return {
   }
 };
 })();
-(node as any).hash = '93d2f38e59fc6191787907ef69756ed8';
+
+(node as any).hash = "93d2f38e59fc6191787907ef69756ed8";
+
 export default node;

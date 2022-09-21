@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<0f6ac22703f54815da4577046bc41754>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ExampleArtworkRoute_artwork = {
-    readonly title: string | null;
-    readonly artistNames: string | null;
-    readonly medium: string | null;
-    readonly imageUrl: string | null;
-    readonly date: string | null;
-    readonly internalID: string;
-    readonly slug: string;
-    readonly artist: {
-        readonly related: {
-            readonly artistsConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+export type ExampleArtworkRoute_artwork$data = {
+  readonly title: string | null;
+  readonly artistNames: string | null;
+  readonly medium: string | null;
+  readonly imageUrl: string | null;
+  readonly date: string | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly artist: {
+    readonly related: {
+      readonly artistsConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "ExampleArtworkRoute_artwork";
+  } | null;
+  readonly " $fragmentType": "ExampleArtworkRoute_artwork";
 };
-export type ExampleArtworkRoute_artwork$data = ExampleArtworkRoute_artwork;
 export type ExampleArtworkRoute_artwork$key = {
-    readonly " $data"?: ExampleArtworkRoute_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
+  readonly " $data"?: ExampleArtworkRoute_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkRoute_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -148,16 +151,16 @@ const node: ReaderFragment = {
                       "plural": false,
                       "selections": [
                         {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "EntityHeaderArtist_artist"
+                        },
+                        {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
                           "name": "__typename",
                           "storageKey": null
-                        },
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "EntityHeaderArtist_artist"
                         }
                       ],
                       "storageKey": null
@@ -210,5 +213,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '48e949f2d2071b986181176ba9fde9d6';
+
+(node as any).hash = "48e949f2d2071b986181176ba9fde9d6";
+
 export default node;

@@ -10,8 +10,8 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { ArtistsIndex_featuredArtists } from "__generated__/ArtistsIndex_featuredArtists.graphql"
-import { ArtistsIndex_featuredGenes } from "__generated__/ArtistsIndex_featuredGenes.graphql"
+import { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
+import { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArtistsIndexMeta } from "../Components/ArtistsIndexMeta"
 import { ArtistsCarouselCellFragmentContainer } from "../Components/ArtistsCarouselCell"
@@ -21,8 +21,8 @@ import { compact } from "lodash"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
 
 interface ArtistsIndexProps {
-  featuredArtists: ArtistsIndex_featuredArtists
-  featuredGenes: ArtistsIndex_featuredGenes
+  featuredArtists: ArtistsIndex_featuredArtists$data
+  featuredGenes: ArtistsIndex_featuredGenes$data
 }
 
 export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
@@ -64,6 +64,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 return (
                   <ArtistsCarouselCellFragmentContainer
                     key={featuredLink.internalID}
+                    // @ts-ignore RELAY UPGRADE 13
                     featuredLink={featuredLink}
                     index={index}
                   />
@@ -110,6 +111,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
                         <CellArtistFragmentContainer
                           mode="GRID"
+                          // @ts-ignore RELAY UPGRADE 13
                           artist={artist}
                         />
                       </Column>

@@ -1,64 +1,27 @@
+/**
+ * @generated SignedSource<<2ba4a1be465a56c8e4b9ed0787aaef36>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type consignFromMyCollectionRoutes_myCollectionArtworkQueryVariables = {
-    artworkId: string;
+export type consignFromMyCollectionRoutes_myCollectionArtworkQuery$variables = {
+  artworkId: string;
 };
-export type consignFromMyCollectionRoutes_myCollectionArtworkQueryResponse = {
-    readonly myCollectionArtwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
-    } | null;
+export type consignFromMyCollectionRoutes_myCollectionArtworkQuery$data = {
+  readonly myCollectionArtwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+  } | null;
 };
 export type consignFromMyCollectionRoutes_myCollectionArtworkQuery = {
-    readonly response: consignFromMyCollectionRoutes_myCollectionArtworkQueryResponse;
-    readonly variables: consignFromMyCollectionRoutes_myCollectionArtworkQueryVariables;
+  variables: consignFromMyCollectionRoutes_myCollectionArtworkQuery$variables;
+  response: consignFromMyCollectionRoutes_myCollectionArtworkQuery$data;
 };
-
-
-
-/*
-query consignFromMyCollectionRoutes_myCollectionArtworkQuery(
-  $artworkId: String!
-) {
-  myCollectionArtwork: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtwork
-    id
-  }
-}
-
-fragment ArtworkDetails_myCollectionArtwork on Artwork {
-  internalID
-  artist {
-    internalID
-    name
-    id
-  }
-  location {
-    city
-    country
-    state
-    postalCode
-    id
-  }
-  date
-  title
-  medium
-  attributionClass {
-    name
-    id
-  }
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  metric
-  provenance
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -291,5 +254,7 @@ return {
   }
 };
 })();
-(node as any).hash = '607beecc45826ee712df5ef8abbb4550';
+
+(node as any).hash = "607beecc45826ee712df5ef8abbb4550";
+
 export default node;

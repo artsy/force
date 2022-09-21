@@ -4,10 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
 import { ArtworkSidebarTitleInfoFragmentContainer } from "./ArtworkSidebarTitleInfo"
-import { ArtworkSidebarMetadata_artwork } from "__generated__/ArtworkSidebarMetadata_artwork.graphql"
+import { ArtworkSidebarMetadata_artwork$data } from "__generated__/ArtworkSidebarMetadata_artwork.graphql"
 
 export interface ArtworkSidebarMetadataProps {
-  artwork: ArtworkSidebarMetadata_artwork
+  artwork: ArtworkSidebarMetadata_artwork$data
 }
 
 export class ArtworkSidebarMetadata extends Component<
@@ -28,12 +28,15 @@ export class ArtworkSidebarMetadata extends Component<
           </Text>
         )}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarTitleInfoFragmentContainer artwork={artwork} />
 
         {(artwork.edition_sets?.length ?? 0) < 2 && (
+          // @ts-ignore RELAY UPGRADE 13
           <ArtworkSidebarSizeInfoFragmentContainer piece={artwork} />
         )}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarClassificationFragmentContainer artwork={artwork} />
       </>
     )

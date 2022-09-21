@@ -1,5 +1,5 @@
 import { Flex, FlexProps, Spacer, Text } from "@artsy/palette"
-import { OfferHistoryItem_order } from "__generated__/OfferHistoryItem_order.graphql"
+import { OfferHistoryItem_order$data } from "__generated__/OfferHistoryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -12,7 +12,7 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
 const OfferHistoryItem: React.FC<
   {
-    order: OfferHistoryItem_order
+    order: OfferHistoryItem_order$data
   } & StepSummaryItemProps
 > = ({ order: { currencyCode, lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)

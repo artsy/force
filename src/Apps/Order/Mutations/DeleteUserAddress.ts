@@ -1,7 +1,7 @@
 import { commitMutation, Environment, graphql } from "react-relay"
 import {
   DeleteUserAddressMutation,
-  DeleteUserAddressMutationResponse,
+  DeleteUserAddressMutation$data,
 } from "__generated__/DeleteUserAddressMutation.graphql"
 
 export const deleteUserAddress = (
@@ -10,7 +10,7 @@ export const deleteUserAddress = (
   onSuccess: () => void,
   onError: (message: string) => void
 ) => {
-  return new Promise<DeleteUserAddressMutationResponse>((resolve, reject) => {
+  return new Promise<DeleteUserAddressMutation$data>((resolve, reject) => {
     commitMutation<DeleteUserAddressMutation>(environment, {
       variables: {
         input: {

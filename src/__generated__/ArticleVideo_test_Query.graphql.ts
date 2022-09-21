@@ -1,90 +1,25 @@
+/**
+ * @generated SignedSource<<509eed73e3b79d5cb6d8cd2963216ca9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleVideo_test_QueryVariables = {};
-export type ArticleVideo_test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleVideo_article">;
-    } | null;
+export type ArticleVideo_test_Query$variables = {};
+export type ArticleVideo_test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleVideo_article">;
+  } | null;
 };
 export type ArticleVideo_test_Query = {
-    readonly response: ArticleVideo_test_QueryResponse;
-    readonly variables: ArticleVideo_test_QueryVariables;
+  variables: ArticleVideo_test_Query$variables;
+  response: ArticleVideo_test_Query$data;
 };
-
-
-
-/*
-query ArticleVideo_test_Query {
-  article(id: "example") {
-    ...ArticleVideo_article
-    id
-  }
-}
-
-fragment ArticleSeriesItem_article on Article {
-  href
-  vertical
-  title
-  thumbnailTitle
-  byline
-  description
-  publishedAt(format: "MMM DD, YYYY")
-  thumbnailImage {
-    display: cropped(width: 869, height: 580) {
-      src
-      srcSet
-    }
-  }
-  media {
-    duration
-  }
-  seriesArticle {
-    title
-    id
-  }
-}
-
-fragment ArticleSponsor_sponsor on ArticleSponsor {
-  partnerLightLogo
-  partnerDarkLogo
-  partnerLogoLink
-}
-
-fragment ArticleVideo_article on Article {
-  vertical
-  title
-  href
-  description
-  media {
-    coverImage {
-      url
-    }
-    credits
-    description
-    duration
-    releaseDate(format: "MMM DD, YYYY h:mma")
-    url
-  }
-  seriesArticle {
-    title
-    href
-    description
-    sponsor {
-      ...ArticleSponsor_sponsor
-    }
-    id
-  }
-  moreRelatedArticles: relatedArticles(size: 4) {
-    ...ArticleSeriesItem_article
-    internalID
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -521,5 +456,7 @@ return {
   }
 };
 })();
-(node as any).hash = '81bf77f6aa4641a59ad86cce1ffebb28';
+
+(node as any).hash = "81bf77f6aa4641a59ad86cce1ffebb28";
+
 export default node;

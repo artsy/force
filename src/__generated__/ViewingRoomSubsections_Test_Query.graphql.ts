@@ -1,45 +1,25 @@
+/**
+ * @generated SignedSource<<6faccf417e8abe1d1c3f8ae9f4b53fbb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomSubsections_Test_QueryVariables = {};
-export type ViewingRoomSubsections_Test_QueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomSubsections_viewingRoom">;
-    } | null;
+export type ViewingRoomSubsections_Test_Query$variables = {};
+export type ViewingRoomSubsections_Test_Query$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomSubsections_viewingRoom">;
+  } | null;
 };
 export type ViewingRoomSubsections_Test_Query = {
-    readonly response: ViewingRoomSubsections_Test_QueryResponse;
-    readonly variables: ViewingRoomSubsections_Test_QueryVariables;
+  variables: ViewingRoomSubsections_Test_Query$variables;
+  response: ViewingRoomSubsections_Test_Query$data;
 };
-
-
-
-/*
-query ViewingRoomSubsections_Test_Query {
-  viewingRoom(id: "exmaple") {
-    ...ViewingRoomSubsections_viewingRoom
-  }
-}
-
-fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
-  subsections {
-    internalID
-    title
-    body
-    image {
-      width
-      height
-      imageURLs {
-        normalized
-      }
-    }
-    caption
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -238,5 +218,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bc8f96611276651c7a403a7c60a8693e';
+
+(node as any).hash = "bc8f96611276651c7a403a7c60a8693e";
+
 export default node;

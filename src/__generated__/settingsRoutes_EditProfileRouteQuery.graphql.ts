@@ -1,70 +1,25 @@
+/**
+ * @generated SignedSource<<2f74210347898ab300358af5a207b788>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_EditProfileRouteQueryVariables = {};
-export type settingsRoutes_EditProfileRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileRoute_me">;
-    } | null;
+export type settingsRoutes_EditProfileRouteQuery$variables = {};
+export type settingsRoutes_EditProfileRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileRoute_me">;
+  } | null;
 };
 export type settingsRoutes_EditProfileRouteQuery = {
-    readonly response: settingsRoutes_EditProfileRouteQueryResponse;
-    readonly variables: settingsRoutes_EditProfileRouteQueryVariables;
+  variables: settingsRoutes_EditProfileRouteQuery$variables;
+  response: settingsRoutes_EditProfileRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_EditProfileRouteQuery {
-  me {
-    ...SettingsEditProfileRoute_me
-    id
-  }
-}
-
-fragment SettingsEditProfileAboutYou_me on Me {
-  location {
-    display
-    id
-  }
-  profession
-  shareFollows
-  priceRange
-  priceRangeMin
-  priceRangeMax
-}
-
-fragment SettingsEditProfileArtistsYouCollect_me on Me {
-  collectorProfile {
-    userInterests {
-      internalID
-      category
-      interest {
-        __typename
-        ... on Artist {
-          internalID
-          name
-          slug
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment SettingsEditProfileRoute_me on Me {
-  ...SettingsEditProfileAboutYou_me
-  ...SettingsEditProfileArtistsYouCollect_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -272,5 +227,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2af6af652354dd9f68b4325960bff2df';
+
+(node as any).hash = "2af6af652354dd9f68b4325960bff2df";
+
 export default node;

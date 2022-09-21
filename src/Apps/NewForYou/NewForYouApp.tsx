@@ -2,14 +2,14 @@ import React, { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
 import { Message, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { NewForYouApp_viewer } from "__generated__/NewForYouApp_viewer.graphql"
+import { NewForYouApp_viewer$data } from "__generated__/NewForYouApp_viewer.graphql"
 import { NewForYouArtworksGridFragmentContainer } from "Apps/NewForYou/Components/NewForYouArtworksGrid"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 
 interface NewForYouAppProps {
-  viewer: NewForYouApp_viewer
+  viewer: NewForYouApp_viewer$data
 }
 
 export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
@@ -36,6 +36,7 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
           <Spacer mt={4} />
         </>
       )}
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       {viewer && <NewForYouArtworksGridFragmentContainer viewer={viewer} />}
     </>
   )

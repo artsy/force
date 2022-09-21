@@ -5,7 +5,7 @@ import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
-import { PollAccountBalance_commerceBankAccountBalance } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
+import { PollAccountBalance_commerceBankAccountBalance$data } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
 import { BalanceCheckResult } from "../Routes/Payment/index"
 import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 
@@ -13,7 +13,7 @@ interface PollAccountBalanceProps {
   relay: RelayRefetchProp
   setupIntentId: string
   bankAccountId: string
-  commerceBankAccountBalance: PollAccountBalance_commerceBankAccountBalance | null
+  commerceBankAccountBalance: PollAccountBalance_commerceBankAccountBalance$data | null
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
     checkResult: BalanceCheckResult
@@ -136,6 +136,7 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
 
         return (
           <PollAccountBalanceRefetchContainer
+            // @ts-ignore RELAY UPGRADE 13
             commerceBankAccountBalance={props.commerceBankAccountBalance}
             setupIntentId={setupIntentId}
             bankAccountId={bankAccountId}

@@ -34,6 +34,7 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
           mediumAggregation,
           materialsTermsAggregation,
         ]}
+        // @ts-ignore RELAY UPGRADE 13
         artistSeries={artistSeries!}
       />
     </MockBoot>

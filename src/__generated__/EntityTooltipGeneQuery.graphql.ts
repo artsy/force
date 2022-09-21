@@ -1,75 +1,27 @@
+/**
+ * @generated SignedSource<<52bdac86cf91e9a171d7739136e90d5d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityTooltipGeneQueryVariables = {
-    id: string;
+export type EntityTooltipGeneQuery$variables = {
+  id: string;
 };
-export type EntityTooltipGeneQueryResponse = {
-    readonly gene: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityTooltipGene_gene">;
-    } | null;
+export type EntityTooltipGeneQuery$data = {
+  readonly gene: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipGene_gene">;
+  } | null;
 };
 export type EntityTooltipGeneQuery = {
-    readonly response: EntityTooltipGeneQueryResponse;
-    readonly variables: EntityTooltipGeneQueryVariables;
+  variables: EntityTooltipGeneQuery$variables;
+  response: EntityTooltipGeneQuery$data;
 };
-
-
-
-/*
-query EntityTooltipGeneQuery(
-  $id: String!
-) {
-  gene(id: $id) {
-    ...EntityTooltipGene_gene
-    id
-  }
-}
-
-fragment EntityHeaderGene_gene on Gene {
-  ...FollowGeneButton_gene
-  internalID
-  href
-  name
-  avatar: image {
-    cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
-      src
-      srcSet
-    }
-  }
-  filterArtworksConnection(first: 1) {
-    counts {
-      total
-    }
-    id
-  }
-}
-
-fragment EntityTooltipGene_gene on Gene {
-  ...EntityHeaderGene_gene
-  href
-  description(format: PLAIN)
-  image {
-    cropped(width: 260, height: 146, version: ["big_and_tall", "tall"]) {
-      src
-      srcSet
-      height
-      width
-    }
-  }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -342,5 +294,7 @@ return {
   }
 };
 })();
-(node as any).hash = '55bf0136d41a773ae9562b8fb6520db5';
+
+(node as any).hash = "55bf0136d41a773ae9562b8fb6520db5";
+
 export default node;

@@ -1,119 +1,28 @@
+/**
+ * @generated SignedSource<<5af5a2d733ee5d05c7cf70fd17a97215>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type showsRoutes_ShowsIndexQueryVariables = {};
-export type showsRoutes_ShowsIndexQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_viewer">;
-    } | null;
-    readonly featuredShows: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_featuredShows">;
-    } | null;
+export type showsRoutes_ShowsIndexQuery$variables = {};
+export type showsRoutes_ShowsIndexQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsIndex_viewer">;
+  } | null;
+  readonly featuredShows: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsIndex_featuredShows">;
+  } | null;
 };
 export type showsRoutes_ShowsIndexQuery = {
-    readonly response: showsRoutes_ShowsIndexQueryResponse;
-    readonly variables: showsRoutes_ShowsIndexQueryVariables;
+  variables: showsRoutes_ShowsIndexQuery$variables;
+  response: showsRoutes_ShowsIndexQuery$data;
 };
-
-
-
-/*
-query showsRoutes_ShowsIndexQuery {
-  viewer {
-    ...ShowsIndex_viewer
-  }
-  featuredShows: orderedSet(id: "530ebe92139b21efd6000071") {
-    ...ShowsIndex_featuredShows
-    id
-  }
-}
-
-fragment ShowsFeaturedShow_show on Show {
-  ...ShowsShowDates_show
-  id
-  name
-  href
-  coverImage {
-    title
-    large: cropped(width: 910, height: 683) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 600, height: 450) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment ShowsHeader_viewer on Viewer {
-  allCities: cities {
-    text: name
-    value: slug
-  }
-  featuredCities: cities(featured: true) {
-    text: name
-    value: slug
-  }
-}
-
-fragment ShowsIndex_featuredShows on OrderedSet {
-  name
-  items {
-    __typename
-    ... on Show {
-      id
-      ...ShowsFeaturedShow_show
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment ShowsIndex_viewer on Viewer {
-  ...ShowsHeader_viewer
-}
-
-fragment ShowsShowDates_show on Show {
-  startAt
-  endAt
-  formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "MMM D")
-  location {
-    city
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -495,5 +404,7 @@ return {
   }
 };
 })();
-(node as any).hash = '78a1bbdc471215e91cf6dfcd9ab0345d';
+
+(node as any).hash = "78a1bbdc471215e91cf6dfcd9ab0345d";
+
 export default node;

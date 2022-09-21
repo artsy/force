@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PartnerArtistList_artists } from "__generated__/PartnerArtistList_artists.graphql"
+import { PartnerArtistList_artists$data } from "__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
 import { groupArtists } from "../partnerArtistsUtils"
@@ -10,7 +10,7 @@ import { Carousel } from "Components/Carousel"
 import { ScrollIntoViewProps } from "Utils/scrollHelpers"
 
 export interface PartnerArtistListProps {
-  artists: PartnerArtistList_artists
+  artists: PartnerArtistList_artists$data
   distinguishRepresentedArtists: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps
@@ -54,14 +54,14 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                      // @ts-ignore RELAY UPGRADE 13
                       key={node.internalID}
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                      // @ts-ignore RELAY UPGRADE 13
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}

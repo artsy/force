@@ -1,231 +1,28 @@
+/**
+ * @generated SignedSource<<05eddeded7305e9a0fcbe8c13e70bbe0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouFeedPaginationQueryVariables = {
-    count: number;
-    cursor?: string | null | undefined;
+export type WorksForYouFeedPaginationQuery$variables = {
+  count: number;
+  cursor?: string | null;
 };
-export type WorksForYouFeedPaginationQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYouFeed_viewer">;
-    } | null;
+export type WorksForYouFeedPaginationQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"WorksForYouFeed_viewer">;
+  } | null;
 };
 export type WorksForYouFeedPaginationQuery = {
-    readonly response: WorksForYouFeedPaginationQueryResponse;
-    readonly variables: WorksForYouFeedPaginationQueryVariables;
+  variables: WorksForYouFeedPaginationQuery$variables;
+  response: WorksForYouFeedPaginationQuery$data;
 };
-
-
-
-/*
-query WorksForYouFeedPaginationQuery(
-  $count: Int!
-  $cursor: String
-) {
-  viewer {
-    ...WorksForYouFeed_viewer_1G22uz
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment WorksForYouFeed_viewer_1G22uz on Viewer {
-  me {
-    followsAndSaves {
-      bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: $count, after: $cursor, forSale: true) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            id
-            href
-            summary
-            artists
-            publishedAt(format: "MMM DD")
-            artworksConnection {
-              ...ArtworkGrid_artworks
-            }
-            image {
-              resized(height: 80, width: 80) {
-                src
-                srcSet
-              }
-            }
-            __typename
-          }
-          cursor
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -995,5 +792,7 @@ return {
   }
 };
 })();
-(node as any).hash = '149b7694e3ce81d09a3b328ae2ae1b4d';
+
+(node as any).hash = "149b7694e3ce81d09a3b328ae2ae1b4d";
+
 export default node;

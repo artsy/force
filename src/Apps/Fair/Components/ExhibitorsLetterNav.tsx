@@ -4,14 +4,14 @@ import styled from "styled-components"
 import { Text, Flex, Swiper } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { scrollIntoView } from "Utils/scrollHelpers"
-import { ExhibitorsLetterNav_fair } from "__generated__/ExhibitorsLetterNav_fair.graphql"
+import { ExhibitorsLetterNav_fair$data } from "__generated__/ExhibitorsLetterNav_fair.graphql"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
 import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("")
 
 interface ExhibitorsLetterNavProps {
-  fair: ExhibitorsLetterNav_fair
+  fair: ExhibitorsLetterNav_fair$data
 }
 
 export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({

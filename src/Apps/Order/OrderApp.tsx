@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from "react"
 import { Box } from "@artsy/palette"
-import { OrderApp_order } from "__generated__/OrderApp_order.graphql"
+import { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "Components/ErrorPage"
@@ -25,7 +25,7 @@ export interface OrderAppProps extends RouterState {
   params: {
     orderID: string
   }
-  order: OrderApp_order
+  order: OrderApp_order$data
 }
 
 export const preventHardReload = event => {

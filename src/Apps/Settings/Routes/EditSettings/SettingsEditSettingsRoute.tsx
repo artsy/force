@@ -4,13 +4,13 @@ import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditSettingsInformationFragmentContainer } from "./Components/SettingsEditSettingsInformation"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "./Components/SettingsEditSettingsTwoFactor"
 import { SettingsEditSettingsPasswordFragmentContainer } from "./Components/SettingsEditSettingsPassword"
-import { SettingsEditSettingsRoute_me } from "__generated__/SettingsEditSettingsRoute_me.graphql"
+import { SettingsEditSettingsRoute_me$data } from "__generated__/SettingsEditSettingsRoute_me.graphql"
 import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 import { SettingsEditSettingsEmailPreferences } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 
 interface SettingsEditRouteProps {
-  me: SettingsEditSettingsRoute_me
+  me: SettingsEditSettingsRoute_me$data
 }
 
 const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
@@ -18,12 +18,16 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsInformationFragmentContainer me={me} />
 
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsPasswordFragmentContainer me={me} />
 
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
 
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
 
           <SettingsEditSettingsEmailPreferences />

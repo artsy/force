@@ -1,75 +1,25 @@
+/**
+ * @generated SignedSource<<aa31f3e88e40865739639d84900d8d0b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkTopContextBar_Test_QueryVariables = {};
-export type ArtworkTopContextBar_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkTopContextBar_artwork">;
-    } | null;
+export type ArtworkTopContextBar_Test_Query$variables = {};
+export type ArtworkTopContextBar_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkTopContextBar_artwork">;
+  } | null;
 };
 export type ArtworkTopContextBar_Test_Query = {
-    readonly response: ArtworkTopContextBar_Test_QueryResponse;
-    readonly variables: ArtworkTopContextBar_Test_QueryVariables;
+  variables: ArtworkTopContextBar_Test_Query$variables;
+  response: ArtworkTopContextBar_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkTopContextBar_Test_Query {
-  artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-    ...ArtworkTopContextBar_artwork
-    id
-  }
-}
-
-fragment ArtworkTopContextBar_artwork on Artwork {
-  partner {
-    name
-    id
-  }
-  sale {
-    isAuction
-    isBenefit
-    isGalleryAuction
-    coverImage {
-      url
-    }
-    id
-  }
-  context {
-    __typename
-    ... on Sale {
-      name
-      href
-    }
-    ... on Fair {
-      name
-      href
-      profile {
-        icon {
-          url
-        }
-        id
-      }
-    }
-    ... on Show {
-      name
-      href
-      status
-      thumbnail: coverImage {
-        url
-      }
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -397,5 +347,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7da0b728030eab40a23c0d60a44c5bd1';
+
+(node as any).hash = "7da0b728030eab40a23c0d60a44c5bd1";
+
 export default node;

@@ -8,13 +8,13 @@ import {
   SwiperRailProps,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkImageBrowserSmall_artwork } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
+import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
 
 interface ArtworkImageBrowserSmallProps {
-  artwork: ArtworkImageBrowserSmall_artwork
+  artwork: ArtworkImageBrowserSmall_artwork$data
   index: number
   setIndex(index: number): void
   maxHeight: number
@@ -39,6 +39,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
     <>
       {activeFigure.type === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           image={activeFigure}
           onClose={hideDeepZoom}
         />
@@ -53,6 +54,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
                   key={figure.internalID ?? i}
                   maxHeight={maxHeight}
                   my={2}
+                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                   activeIndex={i}
                   lazyLoad={i !== 0}
@@ -69,6 +71,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
                   key={i}
                   activeIndex={i}
                   my={2}
+                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                   maxHeight={maxHeight}
                 />

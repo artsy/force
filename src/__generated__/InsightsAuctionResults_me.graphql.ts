@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<f9da3d7bb8efe83a6a8fe10ab3cadf78>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InsightsAuctionResults_me = {
-    readonly myCollectionAuctionResults: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "InsightsAuctionResults_me";
+export type InsightsAuctionResults_me$data = {
+  readonly myCollectionAuctionResults: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "InsightsAuctionResults_me";
 };
-export type InsightsAuctionResults_me$data = InsightsAuctionResults_me;
 export type InsightsAuctionResults_me$key = {
-    readonly " $data"?: InsightsAuctionResults_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"InsightsAuctionResults_me">;
+  readonly " $data"?: InsightsAuctionResults_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"InsightsAuctionResults_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -76,5 +79,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'b483ead964ca2dfd7c04d73e25ec8637';
+
+(node as any).hash = "b483ead964ca2dfd7c04d73e25ec8637";
+
 export default node;

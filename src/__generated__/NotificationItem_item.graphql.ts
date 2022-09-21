@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<8c098f4037c3a794be682f71e04cc5a6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
-export type NotificationItem_item = {
-    readonly title: string;
-    readonly message: string;
-    readonly createdAt: string | null;
-    readonly targetHref: string;
-    readonly isUnread: boolean;
-    readonly notificationType: NotificationTypesEnum;
-    readonly artworksConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly title: string | null;
-                readonly image: {
-                    readonly thumb: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "NotificationItem_item";
+import { FragmentRefs } from "relay-runtime";
+export type NotificationItem_item$data = {
+  readonly title: string;
+  readonly message: string;
+  readonly createdAt: string | null;
+  readonly targetHref: string;
+  readonly isUnread: boolean;
+  readonly notificationType: NotificationTypesEnum;
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly title: string | null;
+        readonly image: {
+          readonly thumb: {
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "NotificationItem_item";
 };
-export type NotificationItem_item$data = NotificationItem_item;
 export type NotificationItem_item$key = {
-    readonly " $data"?: NotificationItem_item$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"NotificationItem_item">;
+  readonly " $data"?: NotificationItem_item$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -193,5 +196,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '00ea44f628b676260e68860b4294e07a';
+
+(node as any).hash = "00ea44f628b676260e68860b4294e07a";
+
 export default node;

@@ -14,6 +14,7 @@ const { getWrapper } = setupTestWrapper<ShowsIndex_Test_Query>({
   Component: ({ featuredShows, viewer }) => {
     return (
       <MockBoot>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsIndexFragmentContainer
           viewer={viewer!}
           featuredShows={featuredShows!}

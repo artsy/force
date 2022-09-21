@@ -1,45 +1,48 @@
+/**
+ * @generated SignedSource<<adcd876f99341ed877f14a07b64518b6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCareerHighlights_artist = {
-    readonly insightAchievements: ReadonlyArray<{
-        readonly __typename: string;
-    }>;
-    readonly insightBadges: ReadonlyArray<{
-        readonly __typename: string;
-    }>;
-    readonly artistHighlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly __typename: string;
-                } | null;
-            } | null> | null;
+export type ArtistCareerHighlights_artist$data = {
+  readonly insightAchievements: ReadonlyArray<{
+    readonly __typename: string;
+  }>;
+  readonly insightBadges: ReadonlyArray<{
+    readonly __typename: string;
+  }>;
+  readonly artistHighlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: string;
         } | null;
+      } | null> | null;
     } | null;
-    readonly biographyBlurb: {
-        readonly partner: {
-            readonly profile: {
-                readonly href: string | null;
-            } | null;
-        } | null;
-        readonly credit: string | null;
-        readonly text: string | null;
+  } | null;
+  readonly biographyBlurb: {
+    readonly partner: {
+      readonly profile: {
+        readonly href: string | null;
+      } | null;
     } | null;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
-    readonly " $refType": "ArtistCareerHighlights_artist";
+    readonly credit: string | null;
+    readonly text: string | null;
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
+  readonly " $fragmentType": "ArtistCareerHighlights_artist";
 };
-export type ArtistCareerHighlights_artist$data = ArtistCareerHighlights_artist;
 export type ArtistCareerHighlights_artist$key = {
-    readonly " $data"?: ArtistCareerHighlights_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCareerHighlights_artist">;
+  readonly " $data"?: ArtistCareerHighlights_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlights_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -57,6 +60,16 @@ return {
   "metadata": null,
   "name": "ArtistCareerHighlights_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistInsightBadges_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistInsightAchievements_artist"
+    },
     {
       "alias": "insightAchievements",
       "args": [
@@ -227,21 +240,13 @@ return {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistInsightBadges_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistInsightAchievements_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
-(node as any).hash = '1f04de8c288e1ae6f30a173581a797f5';
+
+(node as any).hash = "1f04de8c288e1ae6f30a173581a797f5";
+
 export default node;

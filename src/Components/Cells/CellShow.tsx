@@ -9,13 +9,13 @@ import {
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { CellShow_show } from "__generated__/CellShow_show.graphql"
+import { CellShow_show$data } from "__generated__/CellShow_show.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
 
 export interface CellShowProps extends Omit<RouterLinkProps, "to"> {
-  show: CellShow_show
+  show: CellShow_show$data
   displayKind?: boolean
   displayStatus?: boolean
   displayPartner?: boolean

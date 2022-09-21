@@ -13,12 +13,12 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistRailQuery } from "__generated__/ArtistRailQuery.graphql"
-import { ArtistRail_artist } from "__generated__/ArtistRail_artist.graphql"
+import { ArtistRail_artist$data } from "__generated__/ArtistRail_artist.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
 import { FollowArtistButtonFragmentContainer } from "./FollowButton/FollowArtistButton"
 
 interface ArtistRailProps {
-  artist: ArtistRail_artist
+  artist: ArtistRail_artist$data
 }
 
 const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
@@ -38,6 +38,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
           srcSet: artist.avatar?.cropped?.srcSet,
         }}
         FollowButton={
+          // @ts-ignore RELAY UPGRADE 13
           <FollowArtistButtonFragmentContainer artist={artist} size="small">
             Follow
           </FollowArtistButtonFragmentContainer>
@@ -52,6 +53,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
               <ShelfArtworkFragmentContainer
                 key={artwork.internalID}
                 contextModule={{} as any} // TODO:
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 lazyLoad
               />
@@ -156,6 +158,7 @@ export const ArtistRailQueryRenderer: FC<ArtistRailQueryRendererProps> = ({
           return ARTIST_RAIL_PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <ArtistRailFragmentContainer artist={props.artist} />
       }}
     />

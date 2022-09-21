@@ -1,7 +1,7 @@
 import { FC, Fragment, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { OnboardingGene_gene } from "__generated__/OnboardingGene_gene.graphql"
+import { OnboardingGene_gene$data } from "__generated__/OnboardingGene_gene.graphql"
 import { OnboardingGeneQuery } from "__generated__/OnboardingGeneQuery.graphql"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
@@ -14,7 +14,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 interface OnboardingGeneProps {
-  gene: OnboardingGene_gene
+  gene: OnboardingGene_gene$data
   description: JSX.Element
 }
 
@@ -44,6 +44,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
         </Box>
 
         <FollowGeneButtonFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           gene={gene}
           display={["none", "block"]}
           contextModule={ContextModule.onboardingFlow}
@@ -51,6 +52,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
       </Flex>
 
       <FollowGeneButtonFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         gene={gene}
         mt={2}
         display={["block", "none"]}
@@ -67,6 +69,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                 <Spacer mb={2} />
@@ -157,6 +160,7 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
 
         return (
           <OnboardingGeneFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             gene={props.gene}
             description={description}
           />

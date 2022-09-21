@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<f199ef3b6181a24d206b594803496fe1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Metadata_artwork = {
-    readonly internalID: string;
-    readonly href: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
-    readonly " $refType": "Metadata_artwork";
+export type Metadata_artwork$data = {
+  readonly internalID: string;
+  readonly href: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
+  readonly " $fragmentType": "Metadata_artwork";
 };
-export type Metadata_artwork$data = Metadata_artwork;
 export type Metadata_artwork$key = {
-    readonly " $data"?: Metadata_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
+  readonly " $data"?: Metadata_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -24,6 +27,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Metadata_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Details_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -37,15 +45,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Details_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b32ff35e55d3159ffb6bfb362459aff9';
+
+(node as any).hash = "b32ff35e55d3159ffb6bfb362459aff9";
+
 export default node;

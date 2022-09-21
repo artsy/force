@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<f8e35b288f3a57df75560525f830a486>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFair_fair = {
-    readonly internalID: string;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly avatar: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type EntityHeaderFair_fair$data = {
+  readonly internalID: string;
+  readonly href: string | null;
+  readonly name: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly avatar: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly profile: {
-        readonly initials: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-    } | null;
-    readonly " $refType": "EntityHeaderFair_fair";
+  } | null;
+  readonly profile: {
+    readonly initials: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly " $fragmentType": "EntityHeaderFair_fair";
 };
-export type EntityHeaderFair_fair$data = EntityHeaderFair_fair;
 export type EntityHeaderFair_fair$key = {
-    readonly " $data"?: EntityHeaderFair_fair$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
+  readonly " $data"?: EntityHeaderFair_fair$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -139,16 +142,16 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "initials",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -157,5 +160,7 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'e4e1a33d028f86d9efa0f3b80e0458cc';
+
+(node as any).hash = "e4e1a33d028f86d9efa0f3b80e0458cc";
+
 export default node;

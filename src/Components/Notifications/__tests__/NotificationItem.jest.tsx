@@ -12,6 +12,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
     const notification = props.notificationsConnection?.edges?.[0]?.node
 
     if (notification) {
+      // @ts-ignore RELAY UPGRADE 13
       return <NotificationItemFragmentContainer item={notification} />
     }
 

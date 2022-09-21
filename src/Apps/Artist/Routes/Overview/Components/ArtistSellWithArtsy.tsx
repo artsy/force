@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSellWithArtsy_artist } from "__generated__/ArtistSellWithArtsy_artist.graphql"
+import { ArtistSellWithArtsy_artist$data } from "__generated__/ArtistSellWithArtsy_artist.graphql"
 import { ArtistSellWithArtsyQuery } from "__generated__/ArtistSellWithArtsyQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -20,7 +20,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import styled from "styled-components"
 
 interface ArtistSellWithArtsyProps {
-  artist?: ArtistSellWithArtsy_artist
+  artist?: ArtistSellWithArtsy_artist$data
 }
 
 const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
@@ -169,6 +169,7 @@ export const ArtistSellWithArtsyQueryRenderer: FC<ArtistSellWithArtsyQueryRender
           return <ArtistSellWithArtsy />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <ArtistSellWithArtsyFragmentContainer artist={props.artist} />
       }}
     />

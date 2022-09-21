@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<eef6d3714b4149439fa94f6e16a61442>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Accept_order = {
+export type Accept_order$data = {
+  readonly internalID: string;
+  readonly stateExpiresAt: string | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+          readonly artists: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly creditCardId: string | null;
+  readonly lastOffer?: {
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                    readonly artists: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly creditCardId: string | null;
-    readonly lastOffer?: {
-        readonly internalID: string;
-        readonly createdAt: string;
-    } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
-    readonly " $refType": "Accept_order";
+    readonly createdAt: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
+  readonly " $fragmentType": "Accept_order";
 };
-export type Accept_order$data = Accept_order;
 export type Accept_order$key = {
-    readonly " $data"?: Accept_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Accept_order">;
+  readonly " $data"?: Accept_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Accept_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -179,5 +182,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'e24b3b62b12a9ee09c1ef6803d2fae78';
+
+(node as any).hash = "e24b3b62b12a9ee09c1ef6803d2fae78";
+
 export default node;

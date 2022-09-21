@@ -12,6 +12,7 @@ const { renderWithRelay } = setupTestWrapperTL<DetailsSidebar_Test_Query>({
 
     return (
       <DetailsSidebarFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         conversation={props.node}
         setShowDetails={jest.fn()}
         showDetails

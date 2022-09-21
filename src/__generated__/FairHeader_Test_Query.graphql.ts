@@ -1,55 +1,25 @@
+/**
+ * @generated SignedSource<<18953e9953b84c1d2c43a4937c133d36>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairHeader_Test_QueryVariables = {};
-export type FairHeader_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairHeader_fair">;
-    } | null;
+export type FairHeader_Test_Query$variables = {};
+export type FairHeader_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairHeader_fair">;
+  } | null;
 };
 export type FairHeader_Test_Query = {
-    readonly response: FairHeader_Test_QueryResponse;
-    readonly variables: FairHeader_Test_QueryVariables;
+  variables: FairHeader_Test_Query$variables;
+  response: FairHeader_Test_Query$data;
 };
-
-
-
-/*
-query FairHeader_Test_Query {
-  fair(id: "example") {
-    ...FairHeader_fair
-    id
-  }
-}
-
-fragment FairHeader_fair on Fair {
-  name
-  exhibitionPeriod
-  profile {
-    icon {
-      desktop: cropped(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      mobile: cropped(width: 60, height: 60, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      sticky: cropped(width: 50, height: 50, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -321,5 +291,7 @@ return {
   }
 };
 })();
-(node as any).hash = '636084f15ab257f7f0469e1054238fb5';
+
+(node as any).hash = "636084f15ab257f7f0469e1054238fb5";
+
 export default node;

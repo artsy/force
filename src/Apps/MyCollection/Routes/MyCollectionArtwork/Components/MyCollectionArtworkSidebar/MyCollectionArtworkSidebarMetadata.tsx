@@ -1,10 +1,10 @@
 import { Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { MyCollectionArtworkSidebarMetadata_artwork } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
+import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 
 export interface MyCollectionArtworkSidebarMetadataProps {
-  artwork: MyCollectionArtworkSidebarMetadata_artwork
+  artwork: MyCollectionArtworkSidebarMetadata_artwork$data
 }
 
 export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSidebarMetadataProps> = ({

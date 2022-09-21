@@ -1,59 +1,25 @@
+/**
+ * @generated SignedSource<<f635c850d9f2560c15b7a5d728385d09>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFairOrganizerFragmentContainer_Test_QueryVariables = {};
-export type EntityHeaderFairOrganizerFragmentContainer_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
-    } | null;
+export type EntityHeaderFairOrganizerFragmentContainer_Test_Query$variables = {};
+export type EntityHeaderFairOrganizerFragmentContainer_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
+  } | null;
 };
 export type EntityHeaderFairOrganizerFragmentContainer_Test_Query = {
-    readonly response: EntityHeaderFairOrganizerFragmentContainer_Test_QueryResponse;
-    readonly variables: EntityHeaderFairOrganizerFragmentContainer_Test_QueryVariables;
+  variables: EntityHeaderFairOrganizerFragmentContainer_Test_Query$variables;
+  response: EntityHeaderFairOrganizerFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query EntityHeaderFairOrganizerFragmentContainer_Test_Query {
-  fairOrganizer(id: "example") {
-    ...EntityHeaderFairOrganizer_fairOrganizer
-    id
-  }
-}
-
-fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
-  internalID
-  slug
-  name
-  fairsConnection {
-    totalCount
-  }
-  profile {
-    ...FollowProfileButton_profile
-    href
-    initials
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -327,5 +293,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd4dfcd6725704f2a2f51e9152aefe9c0';
+
+(node as any).hash = "d4dfcd6725704f2a2f51e9152aefe9c0";
+
 export default node;

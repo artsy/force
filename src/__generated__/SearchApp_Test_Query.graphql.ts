@@ -1,72 +1,25 @@
+/**
+ * @generated SignedSource<<49f545287d12c6c0bc777912f59e7a63>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchApp_Test_QueryVariables = {};
-export type SearchApp_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchApp_viewer">;
-    } | null;
+export type SearchApp_Test_Query$variables = {};
+export type SearchApp_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchApp_viewer">;
+  } | null;
 };
 export type SearchApp_Test_Query = {
-    readonly response: SearchApp_Test_QueryResponse;
-    readonly variables: SearchApp_Test_QueryVariables;
+  variables: SearchApp_Test_Query$variables;
+  response: SearchApp_Test_Query$data;
 };
-
-
-
-/*
-query SearchApp_Test_Query {
-  viewer {
-    ...SearchApp_viewer_2rc5k6
-  }
-}
-
-fragment NavigationTabs_searchableConnection on SearchableConnection {
-  aggregations {
-    slice
-    counts {
-      count
-      name
-    }
-  }
-}
-
-fragment SearchApp_viewer_2rc5k6 on Viewer {
-  searchConnection(query: "andy", first: 1, aggregations: [TYPE]) {
-    aggregations {
-      slice
-      counts {
-        count
-        name
-      }
-    }
-    ...NavigationTabs_searchableConnection
-    edges {
-      node {
-        __typename
-        ... on SearchableItem {
-          slug
-          displayLabel
-          displayType
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-  artworksConnection(keyword: "andy", size: 0, aggregations: [TOTAL]) {
-    counts {
-      total
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -419,5 +372,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5bfd09b367a9e823a2784960ec441573';
+
+(node as any).hash = "5bfd09b367a9e823a2784960ec441573";
+
 export default node;

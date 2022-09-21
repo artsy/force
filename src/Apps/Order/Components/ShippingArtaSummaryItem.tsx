@@ -1,4 +1,4 @@
-import { ShippingArtaSummaryItem_order } from "__generated__/ShippingArtaSummaryItem_order.graphql"
+import { ShippingArtaSummaryItem_order$data } from "__generated__/ShippingArtaSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -10,7 +10,7 @@ import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
 
 interface ShippingArtaSummaryItemProps {
-  order: ShippingArtaSummaryItem_order
+  order: ShippingArtaSummaryItem_order$data
 }
 
 const ShippingArtaSummaryItem: React.FC<

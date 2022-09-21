@@ -12,7 +12,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { FeatureFeaturedLink_featuredLink } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
+import { FeatureFeaturedLink_featuredLink$data } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
 const Figure = styled(RouterLink)<RouterLinkProps>`
@@ -36,7 +36,7 @@ const FullHTML = styled(HTML)<HTMLProps>`
 
 export interface FeatureFeaturedLinkProps extends FlexProps {
   size: "small" | "medium" | "large" | "full"
-  featuredLink: FeatureFeaturedLink_featuredLink
+  featuredLink: FeatureFeaturedLink_featuredLink$data
 }
 
 export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({

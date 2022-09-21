@@ -1,177 +1,25 @@
+/**
+ * @generated SignedSource<<5eea18d9d02f652f8e8775929b0ea462>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleZoomGallery_test_QueryVariables = {};
-export type ArticleZoomGallery_test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGallery_article">;
-    } | null;
+export type ArticleZoomGallery_test_Query$variables = {};
+export type ArticleZoomGallery_test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGallery_article">;
+  } | null;
 };
 export type ArticleZoomGallery_test_Query = {
-    readonly response: ArticleZoomGallery_test_QueryResponse;
-    readonly variables: ArticleZoomGallery_test_QueryVariables;
+  variables: ArticleZoomGallery_test_Query$variables;
+  response: ArticleZoomGallery_test_Query$data;
 };
-
-
-
-/*
-query ArticleZoomGallery_test_Query {
-  article(id: "example") {
-    ...ArticleZoomGallery_article
-    id
-  }
-}
-
-fragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    ...Metadata_artwork
-    href
-  }
-  ... on ArticleImageSection {
-    caption
-  }
-}
-
-fragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    image {
-      width
-      height
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-  ... on ArticleImageSection {
-    image {
-      width
-      height
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-}
-
-fragment ArticleZoomGallery_article on Article {
-  sections {
-    __typename
-    ... on ArticleSectionImageCollection {
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-    ... on ArticleSectionImageSet {
-      title
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -869,5 +717,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2523033682aa7a3ad5d0fe7ec81db7f1';
+
+(node as any).hash = "2523033682aa7a3ad5d0fe7ec81db7f1";
+
 export default node;

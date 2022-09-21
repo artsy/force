@@ -1,5 +1,5 @@
 import { Spacer } from "@artsy/palette"
-import { Collection_collection } from "__generated__/Collection_collection.graphql"
+import { Collection_collection$data } from "__generated__/Collection_collection.graphql"
 import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "Apps/Collect/Routes/Collection/Components/Header"
@@ -28,7 +28,7 @@ import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
-  collection: Collection_collection
+  collection: Collection_collection$data
   relay: RelayRefetchProp
   tracking: TrackingProp
 }
@@ -82,6 +82,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       />
 
       {artworksConnection && (
+        // @ts-ignore RELAY UPGRADE 13
         <SeoProductsForArtworks artworks={artworksConnection} />
       )}
 
@@ -107,6 +108,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
             <Spacer mt={6} />
 
             <CollectionsHubRails
+              // @ts-ignore RELAY UPGRADE 13
               linkedCollections={collection.linkedCollections}
             />
           </>
@@ -115,6 +117,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
         <Spacer mt={6} />
 
         <CollectionArtworksFilterRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           collection={collection}
           aggregations={
             collection.artworksConnection
@@ -134,6 +137,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
               <Spacer mt={6} />
 
               <RelatedCollectionsRail
+                // @ts-ignore RELAY UPGRADE 13
                 collections={collection.relatedCollections}
                 title={collection.title}
                 lazyLoadImages

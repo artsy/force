@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
-import { ArtistWorksForSaleRoute_artist } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
+import { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesRailFragmentContainer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
@@ -11,7 +11,7 @@ import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { useRouter } from "System/Router/useRouter"
 
 interface ArtistWorksForSaleRouteProps {
-  artist: ArtistWorksForSaleRoute_artist
+  artist: ArtistWorksForSaleRoute_artist$data
 }
 
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
@@ -49,12 +49,14 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       <Title>{title}</Title>
 
       <ArtistSeriesRailFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         contextModule={ContextModule.artistSeriesRail}
         showProgress
         mb={6}
       />
       <ArtistArtworkFilterRefetchContainer
+        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         aggregations={
           artist.sidebarAggregations

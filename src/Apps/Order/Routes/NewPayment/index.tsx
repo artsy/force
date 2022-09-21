@@ -1,5 +1,5 @@
-import { NewPayment_me } from "__generated__/NewPayment_me.graphql"
-import { NewPayment_order } from "__generated__/NewPayment_order.graphql"
+import { NewPayment_me$data } from "__generated__/NewPayment_me.graphql"
+import { NewPayment_order$data } from "__generated__/NewPayment_order.graphql"
 import { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -38,8 +38,8 @@ export interface StripeProps {
 }
 
 export interface NewPaymentProps {
-  order: NewPayment_order
-  me: NewPayment_me
+  order: NewPayment_order$data
+  me: NewPayment_me$data
   router: Router
   route: RouteConfig
   dialog: Dialog
@@ -237,6 +237,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
             </>
           )}
           <Join separator={<Spacer mb={4} />}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <CreditCardPickerFragmentContainer
               order={order}
               me={me}
@@ -252,6 +253,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
             <TransactionDetailsSummaryItem order={order} />
           </Flex>

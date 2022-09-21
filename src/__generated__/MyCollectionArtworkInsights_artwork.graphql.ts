@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<44e5b3d5819860d941bd28fe7f2044a5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkInsights_artwork = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
-    } | null;
-    readonly marketPriceInsights: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkComparables_artwork">;
-    readonly " $refType": "MyCollectionArtworkInsights_artwork";
+export type MyCollectionArtworkInsights_artwork$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
+  } | null;
+  readonly marketPriceInsights: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork">;
+  readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };
-export type MyCollectionArtworkInsights_artwork$data = MyCollectionArtworkInsights_artwork;
 export type MyCollectionArtworkInsights_artwork$key = {
-    readonly " $data"?: MyCollectionArtworkInsights_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkInsights_artwork">;
+  readonly " $data"?: MyCollectionArtworkInsights_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkInsights_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -28,6 +31,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "MyCollectionArtworkInsights_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkComparables_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -64,15 +72,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkComparables_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'd2c1c99d0676209196c88f2cf47fe118';
+
+(node as any).hash = "d2c1c99d0676209196c88f2cf47fe118";
+
 export default node;

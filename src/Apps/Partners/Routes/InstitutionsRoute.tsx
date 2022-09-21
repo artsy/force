@@ -13,14 +13,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { InstitutionsRoute_viewer } from "__generated__/InstitutionsRoute_viewer.graphql"
+import { InstitutionsRoute_viewer$data } from "__generated__/InstitutionsRoute_viewer.graphql"
 import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
 import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
 import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
 
 interface InstitutionsRouteProps {
-  viewer: InstitutionsRoute_viewer
+  viewer: InstitutionsRoute_viewer$data
 }
 
 const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
@@ -39,6 +39,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
       />
 
       <Join separator={<Spacer mt={4} />}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex justifyContent="space-between" alignItems="center">

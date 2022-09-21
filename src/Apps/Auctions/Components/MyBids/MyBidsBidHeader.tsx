@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyBidsBidHeader_sale } from "__generated__/MyBidsBidHeader_sale.graphql"
+import { MyBidsBidHeader_sale$data } from "__generated__/MyBidsBidHeader_sale.graphql"
 import { Box, Image, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
@@ -8,7 +8,7 @@ import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System"
 
 interface MyBidsBidHeaderProps {
-  sale: MyBidsBidHeader_sale
+  sale: MyBidsBidHeader_sale$data
 }
 
 export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {

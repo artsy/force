@@ -14,6 +14,7 @@ const { renderWithRelay } = setupTestWrapperTL<ExampleApp_Test_Query>({
 
     return (
       <MockBoot>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ExampleAppFragmentContainer system={props.system} />
       </MockBoot>
     )

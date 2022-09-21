@@ -6,7 +6,7 @@ import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/E
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingSearchResults_viewer } from "__generated__/OnboardingSearchResults_viewer.graphql"
+import { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
 import { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { ContextModule } from "@artsy/cohesion"
@@ -14,7 +14,7 @@ import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/Fo
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 
 interface OnboardingSearchResultsProps {
-  viewer: OnboardingSearchResults_viewer
+  viewer: OnboardingSearchResults_viewer$data
   term: string
 }
 
@@ -41,6 +41,7 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderArtistFragmentContainer
                 key={node.internalID}
+                // @ts-ignore RELAY UPGRADE 13
                 artist={node}
                 FollowButton={
                   <FollowArtistButtonQueryRenderer
@@ -63,9 +64,11 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderPartnerFragmentContainer
                 key={node.internalID}
+                // @ts-ignore RELAY UPGRADE 13
                 partner={partner}
                 FollowButton={
                   <FollowProfileButtonFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     profile={node}
                     id={node.internalID}
                     contextModule={ContextModule.onboardingFlow}
@@ -168,6 +171,7 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
         return (
           <OnboardingSearchResultsFragmentContainer
             term={term}
+            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
           />
         )

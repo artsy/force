@@ -1,99 +1,41 @@
+/**
+ * @generated SignedSource<<cf4484ecbcf2790bde4668677351d114>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteBankAccountInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
+  clientMutationId?: string | null;
+  id: string;
 };
-export type useDeleteBankAccountMutationVariables = {
-    input: DeleteBankAccountInput;
+export type useDeleteBankAccountMutation$variables = {
+  input: DeleteBankAccountInput;
 };
-export type useDeleteBankAccountMutationResponse = {
-    readonly deleteBankAccount: {
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
-        } | null;
-        readonly bankAccountOrError: {
-            readonly bankAccount?: {
-                readonly " $fragmentRefs": FragmentRefs<"SettingsBankAccount_bankAccount">;
-            } | null | undefined;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null | undefined;
-        } | null;
+export type useDeleteBankAccountMutation$data = {
+  readonly deleteBankAccount: {
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
     } | null;
+    readonly bankAccountOrError: {
+      readonly bankAccount?: {
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
+      } | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
+    } | null;
+  } | null;
 };
 export type useDeleteBankAccountMutation = {
-    readonly response: useDeleteBankAccountMutationResponse;
-    readonly variables: useDeleteBankAccountMutationVariables;
+  variables: useDeleteBankAccountMutation$variables;
+  response: useDeleteBankAccountMutation$data;
 };
-
-
-
-/*
-mutation useDeleteBankAccountMutation(
-  $input: DeleteBankAccountInput!
-) {
-  deleteBankAccount(input: $input) {
-    me {
-      ...SettingsPaymentsMethods_me
-      id
-    }
-    bankAccountOrError {
-      __typename
-      ... on BankAccountMutationSuccess {
-        bankAccount {
-          ...SettingsBankAccount_bankAccount
-          id
-        }
-      }
-      ... on BankAccountMutationFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-
-fragment SettingsBankAccount_bankAccount on BankAccount {
-  internalID
-  last4
-}
-
-fragment SettingsCreditCard_creditCard on CreditCard {
-  internalID
-  name
-  brand
-  lastDigits
-  expirationYear
-  expirationMonth
-}
-
-fragment SettingsPaymentsMethods_me on Me {
-  creditCards(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsCreditCard_creditCard
-        id
-      }
-    }
-  }
-  bankAccounts(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsBankAccount_bankAccount
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -419,5 +361,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3f412db286ec13bf72154f61855e2542';
+
+(node as any).hash = "3f412db286ec13bf72154f61855e2542";
+
 export default node;

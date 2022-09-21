@@ -1,321 +1,30 @@
+/**
+ * @generated SignedSource<<ebff149ba0f9c8d2ae5600c1204a177f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type orderRoutes_PaymentQueryVariables = {
-    orderID: string;
+export type orderRoutes_PaymentQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_PaymentQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Payment_me">;
-    } | null;
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Payment_order">;
-    } | null;
+export type orderRoutes_PaymentQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"Payment_me">;
+  } | null;
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Payment_order">;
+  } | null;
 };
 export type orderRoutes_PaymentQuery = {
-    readonly response: orderRoutes_PaymentQueryResponse;
-    readonly variables: orderRoutes_PaymentQueryVariables;
+  variables: orderRoutes_PaymentQuery$variables;
+  response: orderRoutes_PaymentQuery$data;
 };
-
-
-
-/*
-query orderRoutes_PaymentQuery(
-  $orderID: ID!
-) {
-  me {
-    ...Payment_me
-    id
-  }
-  order: commerceOrder(id: $orderID) {
-    __typename
-    ...Payment_order
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          date
-          shippingOrigin
-          id
-        }
-        artworkVersion {
-          artistNames
-          title
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment BankAccountPicker_me on Me {
-  bankAccounts(first: 100) {
-    edges {
-      node {
-        internalID
-        last4
-        id
-      }
-    }
-  }
-}
-
-fragment BankAccountPicker_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  bankAccountId
-  paymentMethodDetails {
-    __typename
-    ... on BankAccount {
-      internalID
-      last4
-      id
-    }
-    ... on CreditCard {
-      id
-    }
-  }
-}
-
-fragment CreditCardPicker_me on Me {
-  creditCards(first: 100) {
-    edges {
-      node {
-        internalID
-        brand
-        lastDigits
-        expirationMonth
-        expirationYear
-        id
-      }
-    }
-  }
-}
-
-fragment CreditCardPicker_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  state
-  creditCard {
-    internalID
-    name
-    street1
-    street2
-    city
-    state
-    country
-    postalCode
-    expirationMonth
-    expirationYear
-    lastDigits
-    brand
-    id
-  }
-  requestedFulfillment {
-    __typename
-    ... on CommerceShip {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-    }
-    ... on CommerceShipArta {
-      name
-      addressLine1
-      addressLine2
-      city
-      region
-      country
-      postalCode
-    }
-    ... on CommercePickup {
-      fulfillmentType
-    }
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment Payment_me on Me {
-  bankAccounts(first: 100) {
-    edges {
-      node {
-        internalID
-        last4
-        id
-      }
-    }
-  }
-  ...CreditCardPicker_me
-  ...BankAccountPicker_me
-}
-
-fragment Payment_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  bankAccountId
-  availablePaymentMethods
-  buyerTotalCents
-  internalID
-  mode
-  currencyCode
-  buyerTotal(precision: 2)
-  lineItems {
-    edges {
-      node {
-        artwork {
-          slug
-          id
-        }
-        id
-      }
-    }
-  }
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      id
-    }
-    ... on BankAccount {
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-  ...CreditCardPicker_order
-  ...BankAccountPicker_order
-  ...ArtworkSummaryItem_order
-  ...TransactionDetailsSummaryItem_order
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          typeName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1080,7 +789,6 @@ return {
             "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
           },
-          (v5/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -1107,7 +815,8 @@ return {
             ],
             "type": "CommerceOfferOrder",
             "abstractKey": null
-          }
+          },
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -1123,5 +832,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ec2117b5fad2a762cca75b33914b5cc1';
+
+(node as any).hash = "ec2117b5fad2a762cca75b33914b5cc1";
+
 export default node;

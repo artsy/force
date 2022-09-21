@@ -9,11 +9,11 @@ import createLogger from "Utils/logger"
 import { openAuthModal } from "Utils/openAuthModal"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { RequestConditionReport_artwork } from "__generated__/RequestConditionReport_artwork.graphql"
-import { RequestConditionReport_me } from "__generated__/RequestConditionReport_me.graphql"
+import { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
+import { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
 import {
   RequestConditionReportMutation,
-  RequestConditionReportMutationResponse,
+  RequestConditionReportMutation$data,
 } from "__generated__/RequestConditionReportMutation.graphql"
 import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import { ModalType } from "Components/Authentication/Types"
@@ -24,8 +24,8 @@ const logger = createLogger(
 )
 
 interface RequestConditionReportProps {
-  artwork: RequestConditionReport_artwork
-  me: RequestConditionReport_me | null
+  artwork: RequestConditionReport_artwork$data
+  me: RequestConditionReport_me$data | null
 }
 
 export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
@@ -41,7 +41,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const isLoggedIn = Boolean(me)
 
   const requestConditionReport = () => {
-    return new Promise<RequestConditionReportMutationResponse>(
+    return new Promise<RequestConditionReportMutation$data>(
       async (resolve, reject) => {
         commitMutation<RequestConditionReportMutation>(relayEnvironment!, {
           onCompleted: data => {
@@ -222,6 +222,7 @@ export const RequestConditionReportQueryRenderer: React.FC<{
       render={({ props }) => {
         if (props && props.artwork) {
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <RequestConditionReportFragmentContainer
               artwork={props.artwork}
               me={props.me}

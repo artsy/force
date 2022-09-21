@@ -1,4 +1,4 @@
-import { ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
+import { ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
 import { ArtworkWithEstimateAndPremium } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { renderRelayTree } from "DevTools"
@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 
 describe("ArtworkSidebarAuctionPartnerInfo", () => {
   const getWrapper = async (
-    response: ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse["artwork"]
+    response: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"]
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
@@ -23,7 +23,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
       `,
       mockData: {
         artwork: response,
-      } as ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse,
+      } as ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse,
     })
   }
 

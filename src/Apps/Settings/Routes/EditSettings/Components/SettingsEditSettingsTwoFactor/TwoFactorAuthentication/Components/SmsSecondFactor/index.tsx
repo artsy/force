@@ -17,7 +17,7 @@ import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import request from "superagent"
 import { useSystemContext } from "System"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
-import { SmsSecondFactor_me } from "__generated__/SmsSecondFactor_me.graphql"
+import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import { ApiError } from "../../ApiError"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { isArtsyEmail } from "./isArtsyEmail"
@@ -25,7 +25,7 @@ import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 
 interface SmsSecondFactorProps {
-  me: SmsSecondFactor_me
+  me: SmsSecondFactor_me$data
   relay: RelayRefetchProp
 }
 

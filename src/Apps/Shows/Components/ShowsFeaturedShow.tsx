@@ -10,11 +10,11 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-import { ShowsFeaturedShow_show } from "__generated__/ShowsFeaturedShow_show.graphql"
+import { ShowsFeaturedShow_show$data } from "__generated__/ShowsFeaturedShow_show.graphql"
 import { ShowsShowDatesFragmentContainer } from "./ShowsShowDates"
 
 interface ShowsFeaturedShowProps {
-  show: ShowsFeaturedShow_show
+  show: ShowsFeaturedShow_show$data
   size: "large" | "small"
 }
 
@@ -68,6 +68,7 @@ const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
       <Spacer mt={1} />
 
       <ShowsShowDatesFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         show={show}
         variant={variants.secondary}
       />

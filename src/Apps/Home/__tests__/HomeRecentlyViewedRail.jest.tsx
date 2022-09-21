@@ -10,6 +10,7 @@ jest.mock("react-tracking")
 const { getWrapper } = setupTestWrapper<HomeRecentlyViewedRail_Test_Query>({
   Component: props => {
     return (
+      // @ts-ignore RELAY UPGRADE 13
       <HomeRecentlyViewedRailFragmentContainer homePage={props.homePage!} />
     )
   },

@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<cbee3213ff606f551f2ea831478fbe2e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarBidAction_artwork = {
-    readonly myLotStanding: ReadonlyArray<{
-        readonly most_recent_bid: {
-            readonly max_bid: {
-                readonly cents: number | null;
-            } | null;
-        } | null;
-    }> | null;
+export type ArtworkSidebarBidAction_artwork$data = {
+  readonly myLotStanding: ReadonlyArray<{
+    readonly most_recent_bid: {
+      readonly max_bid: {
+        readonly cents: number | null;
+      } | null;
+    } | null;
+  }> | null;
+  readonly slug: string;
+  readonly internalID: string;
+  readonly sale: {
     readonly slug: string;
-    readonly internalID: string;
-    readonly sale: {
-        readonly slug: string;
-        readonly registrationStatus: {
-            readonly qualified_for_bidding: boolean | null;
-        } | null;
-        readonly is_preview: boolean | null;
-        readonly is_open: boolean | null;
-        readonly is_live_open: boolean | null;
-        readonly is_closed: boolean | null;
-        readonly is_registration_closed: boolean | null;
-        readonly requireIdentityVerification: boolean | null;
+    readonly registrationStatus: {
+      readonly qualified_for_bidding: boolean | null;
     } | null;
-    readonly sale_artwork: {
-        readonly increments: ReadonlyArray<{
-            readonly cents: number | null;
-            readonly display: string | null;
-        } | null> | null;
-        readonly endedAt: string | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebarBidAction_artwork";
+    readonly is_preview: boolean | null;
+    readonly is_open: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly is_closed: boolean | null;
+    readonly is_registration_closed: boolean | null;
+    readonly requireIdentityVerification: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly increments: ReadonlyArray<{
+      readonly cents: number | null;
+      readonly display: string | null;
+    } | null> | null;
+    readonly endedAt: string | null;
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebarBidAction_artwork";
 };
-export type ArtworkSidebarBidAction_artwork$data = ArtworkSidebarBidAction_artwork;
 export type ArtworkSidebarBidAction_artwork$key = {
-    readonly " $data"?: ArtworkSidebarBidAction_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
+  readonly " $data"?: ArtworkSidebarBidAction_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -226,5 +229,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ef98ba696c44f0d74e28be6047ea4ce3';
+
+(node as any).hash = "ef98ba696c44f0d74e28be6047ea4ce3";
+
 export default node;

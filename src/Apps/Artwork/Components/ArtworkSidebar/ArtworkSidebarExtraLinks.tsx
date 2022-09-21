@@ -2,14 +2,14 @@ import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarExtraLinks_artwork } from "__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
+import { ArtworkSidebarExtraLinks_artwork$data } from "__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { useInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
 import { useDialog } from "Utils/Hooks/useDialog"
 import { AuctionFAQsDialogQueryRenderer } from "Components/AuctionFAQsDialog"
 import track from "react-tracking"
 
 export interface ArtworkSidebarExtraLinksProps {
-  artwork: ArtworkSidebarExtraLinks_artwork
+  artwork: ArtworkSidebarExtraLinks_artwork$data
 }
 
 export interface ArtworkSidebarExtraLinksContainerProps

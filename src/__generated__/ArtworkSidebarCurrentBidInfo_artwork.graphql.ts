@@ -1,48 +1,51 @@
+/**
+ * @generated SignedSource<<98c13c3b94070af1b33b299c133dfb7d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCurrentBidInfo_artwork = {
-    readonly sale: {
-        readonly is_closed: boolean | null;
-        readonly is_live_open: boolean | null;
-        readonly internalID: string;
-        readonly is_with_buyers_premium: boolean | null;
+export type ArtworkSidebarCurrentBidInfo_artwork$data = {
+  readonly sale: {
+    readonly is_closed: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly internalID: string;
+    readonly is_with_buyers_premium: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly is_with_reserve: boolean | null;
+    readonly reserve_message: string | null;
+    readonly reserve_status: string | null;
+    readonly endedAt: string | null;
+    readonly current_bid: {
+      readonly display: string | null;
     } | null;
-    readonly sale_artwork: {
-        readonly is_with_reserve: boolean | null;
-        readonly reserve_message: string | null;
-        readonly reserve_status: string | null;
-        readonly endedAt: string | null;
-        readonly current_bid: {
-            readonly display: string | null;
-        } | null;
-        readonly counts: {
-            readonly bidder_positions: number | null;
-        } | null;
+    readonly counts: {
+      readonly bidder_positions: any | null;
     } | null;
-    readonly myLotStanding: ReadonlyArray<{
-        readonly active_bid: {
-            readonly is_winning: boolean | null;
-        } | null;
-        readonly most_recent_bid: {
-            readonly max_bid: {
-                readonly display: string | null;
-            } | null;
-        } | null;
-    }> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
-    readonly " $refType": "ArtworkSidebarCurrentBidInfo_artwork";
+  } | null;
+  readonly myLotStanding: ReadonlyArray<{
+    readonly active_bid: {
+      readonly is_winning: boolean | null;
+    } | null;
+    readonly most_recent_bid: {
+      readonly max_bid: {
+        readonly display: string | null;
+      } | null;
+    } | null;
+  }> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
+  readonly " $fragmentType": "ArtworkSidebarCurrentBidInfo_artwork";
 };
-export type ArtworkSidebarCurrentBidInfo_artwork$data = ArtworkSidebarCurrentBidInfo_artwork;
 export type ArtworkSidebarCurrentBidInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebarCurrentBidInfo_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork">;
+  readonly " $data"?: ArtworkSidebarCurrentBidInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -232,5 +235,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9a308c73b8de6ab64f191f6f8ecbe54c';
+
+(node as any).hash = "9a308c73b8de6ab64f191f6f8ecbe54c";
+
 export default node;

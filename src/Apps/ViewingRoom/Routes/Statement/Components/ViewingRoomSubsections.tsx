@@ -1,11 +1,11 @@
 import React from "react"
 import { Box, Image, Join, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomSubsections_viewingRoom } from "__generated__/ViewingRoomSubsections_viewingRoom.graphql"
+import { ViewingRoomSubsections_viewingRoom$data } from "__generated__/ViewingRoomSubsections_viewingRoom.graphql"
 import { resized } from "Utils/resized"
 
 interface ViewingRoomSubsectionsProps {
-  viewingRoom: ViewingRoomSubsections_viewingRoom
+  viewingRoom: ViewingRoomSubsections_viewingRoom$data
 }
 
 const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({

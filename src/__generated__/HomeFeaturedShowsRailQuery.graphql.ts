@@ -1,86 +1,25 @@
+/**
+ * @generated SignedSource<<b7d8794424913116b5f3a4b54a26519b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShowsRailQueryVariables = {};
-export type HomeFeaturedShowsRailQueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
-    } | null;
+export type HomeFeaturedShowsRailQuery$variables = {};
+export type HomeFeaturedShowsRailQuery$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
+  } | null;
 };
 export type HomeFeaturedShowsRailQuery = {
-    readonly response: HomeFeaturedShowsRailQueryResponse;
-    readonly variables: HomeFeaturedShowsRailQueryVariables;
+  variables: HomeFeaturedShowsRailQuery$variables;
+  response: HomeFeaturedShowsRailQuery$data;
 };
-
-
-
-/*
-query HomeFeaturedShowsRailQuery {
-  orderedSet(id: "530ebe92139b21efd6000071") {
-    ...HomeFeaturedShowsRail_orderedSet
-    id
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment HomeFeaturedShow_show on Show {
-  ...CellShow_show
-  internalID
-  slug
-}
-
-fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
-  items {
-    __typename
-    ... on Show {
-      ...HomeFeaturedShow_show
-      internalID
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -342,5 +281,7 @@ return {
   }
 };
 })();
-(node as any).hash = '790e9f6329d58e4b6b83a54cebdb8d70';
+
+(node as any).hash = "790e9f6329d58e4b6b83a54cebdb8d70";
+
 export default node;

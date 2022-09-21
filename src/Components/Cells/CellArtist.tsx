@@ -8,14 +8,14 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { CellArtist_artist } from "__generated__/CellArtist_artist.graphql"
+import { CellArtist_artist$data } from "__generated__/CellArtist_artist.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderArtistFragmentContainer } from "../EntityHeaders/EntityHeaderArtist"
 import { FC } from "react"
 import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
 
 export interface CellArtistProps extends Omit<RouterLinkProps, "to"> {
-  artist: CellArtist_artist
+  artist: CellArtist_artist$data
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayCounts?: boolean
@@ -65,6 +65,7 @@ const CellArtist: FC<CellArtistProps> = ({
       </ResponsiveBox>
 
       <EntityHeaderArtistFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         displayAvatar={false}
         displayLink={false}

@@ -1,136 +1,25 @@
+/**
+ * @generated SignedSource<<e6ed54aa5532a9f2aada1914520a355c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingSearchResults_Test_QueryVariables = {};
-export type OnboardingSearchResults_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"OnboardingSearchResults_viewer">;
-    } | null;
+export type OnboardingSearchResults_Test_Query$variables = {};
+export type OnboardingSearchResults_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"OnboardingSearchResults_viewer">;
+  } | null;
 };
 export type OnboardingSearchResults_Test_Query = {
-    readonly response: OnboardingSearchResults_Test_QueryResponse;
-    readonly variables: OnboardingSearchResults_Test_QueryVariables;
+  variables: OnboardingSearchResults_Test_Query$variables;
+  response: OnboardingSearchResults_Test_Query$data;
 };
-
-
-
-/*
-query OnboardingSearchResults_Test_Query {
-  viewer {
-    ...OnboardingSearchResults_viewer
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment OnboardingSearchResults_viewer on Viewer {
-  matchConnection(term: "", entities: [], first: 10, mode: AUTOSUGGEST) {
-    edges {
-      node {
-        __typename
-        ... on Artist {
-          internalID
-          ...EntityHeaderArtist_artist
-        }
-        ... on Profile {
-          internalID
-          ...FollowProfileButton_profile
-          owner {
-            __typename
-            ... on Partner {
-              ...EntityHeaderPartner_partner
-            }
-            ... on Node {
-              __isNode: __typename
-              id
-            }
-            ... on FairOrganizer {
-              id
-            }
-          }
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on Feature {
-          id
-        }
-        ... on Page {
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -732,5 +621,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c8f59847dd93fe5390e434941270456d';
+
+(node as any).hash = "c8f59847dd93fe5390e434941270456d";
+
 export default node;

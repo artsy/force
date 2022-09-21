@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<469214823baa9b3f4e1a9355a20625d4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_DeleteAccountRouteQueryVariables = {};
-export type settingsRoutes_DeleteAccountRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"DeleteAccountRoute_me">;
-    } | null;
+export type settingsRoutes_DeleteAccountRouteQuery$variables = {};
+export type settingsRoutes_DeleteAccountRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"DeleteAccountRoute_me">;
+  } | null;
 };
 export type settingsRoutes_DeleteAccountRouteQuery = {
-    readonly response: settingsRoutes_DeleteAccountRouteQueryResponse;
-    readonly variables: settingsRoutes_DeleteAccountRouteQueryVariables;
+  variables: settingsRoutes_DeleteAccountRouteQuery$variables;
+  response: settingsRoutes_DeleteAccountRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_DeleteAccountRouteQuery {
-  me {
-    ...DeleteAccountRoute_me
-    id
-  }
-}
-
-fragment DeleteAccountRoute_me on Me {
-  hasPassword
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -99,5 +90,7 @@ const node: ConcreteRequest = {
     "text": "query settingsRoutes_DeleteAccountRouteQuery {\n  me {\n    ...DeleteAccountRoute_me\n    id\n  }\n}\n\nfragment DeleteAccountRoute_me on Me {\n  hasPassword\n}\n"
   }
 };
-(node as any).hash = 'c54bb2421e59e40f01d0a70e9f8bca56';
+
+(node as any).hash = "c54bb2421e59e40f01d0a70e9f8bca56";
+
 export default node;

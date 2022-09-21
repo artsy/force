@@ -1,138 +1,25 @@
+/**
+ * @generated SignedSource<<b2b4cf56bf20ab5d0a601f2e09705e1c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InstitutionPartnershipsProfilesQueryVariables = {};
-export type InstitutionPartnershipsProfilesQueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"InstitutionPartnershipsProfiles_orderedSet">;
-    } | null;
+export type InstitutionPartnershipsProfilesQuery$variables = {};
+export type InstitutionPartnershipsProfilesQuery$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"InstitutionPartnershipsProfiles_orderedSet">;
+  } | null;
 };
 export type InstitutionPartnershipsProfilesQuery = {
-    readonly response: InstitutionPartnershipsProfilesQueryResponse;
-    readonly variables: InstitutionPartnershipsProfilesQueryVariables;
+  variables: InstitutionPartnershipsProfilesQuery$variables;
+  response: InstitutionPartnershipsProfilesQuery$data;
 };
-
-
-
-/*
-query InstitutionPartnershipsProfilesQuery {
-  orderedSet(id: "62ace82dd1b5bd000b4e674e") {
-    ...InstitutionPartnershipsProfiles_orderedSet
-    id
-  }
-}
-
-fragment CellPartner_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {
-  items {
-    __typename
-    ... on Profile {
-      internalID
-      owner {
-        __typename
-        ... on Partner {
-          ...CellPartner_partner
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on FairOrganizer {
-          id
-        }
-      }
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -529,5 +416,7 @@ return {
   }
 };
 })();
-(node as any).hash = '07651e28356d9d2cf349d5f757b497fb';
+
+(node as any).hash = "07651e28356d9d2cf349d5f757b497fb";
+
 export default node;

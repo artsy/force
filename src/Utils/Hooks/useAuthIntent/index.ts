@@ -59,14 +59,18 @@ export const runAuthIntent = async (
         case "follow":
           switch (value.kind) {
             case "artist":
+              // @ts-ignore RELAY UPGRADE 13
               return followArtistMutation(relayEnvironment, value.objectId)
             case "gene":
+              // @ts-ignore RELAY UPGRADE 13
               return followGeneMutation(relayEnvironment, value.objectId)
             case "profile":
+              // @ts-ignore RELAY UPGRADE 13
               return followProfileMutation(relayEnvironment, value.objectId)
           }
           break
         case "save":
+          // @ts-ignore RELAY UPGRADE 13
           return saveArtworkMutation(relayEnvironment, value.objectId)
       }
     })()

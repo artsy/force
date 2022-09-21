@@ -1,5 +1,5 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { OtherAuctions_salesConnection } from "__generated__/OtherAuctions_salesConnection.graphql"
+import { OtherAuctions_salesConnection$data } from "__generated__/OtherAuctions_salesConnection.graphql"
 import { OtherAuctionsQuery } from "__generated__/OtherAuctionsQuery.graphql"
 import { SystemContext } from "System"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
@@ -13,7 +13,7 @@ import { Header } from "./OtherWorks/Header"
 import { extractNodes } from "Utils/extractNodes"
 
 interface OtherAuctionsProps {
-  salesConnection: OtherAuctions_salesConnection
+  salesConnection: OtherAuctions_salesConnection$data
 }
 export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
   salesConnection,
@@ -30,6 +30,7 @@ export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
         {sales.map(sale => {
           return (
             <Column key={sale.internalID} span={3}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <AuctionCardFragmentContainer sale={sale} />
             </Column>
           )

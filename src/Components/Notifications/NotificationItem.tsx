@@ -1,14 +1,14 @@
 import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
+import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { getDateLabel } from "./util"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
 interface NotificationItemProps {
-  item: NotificationItem_item
+  item: NotificationItem_item$data
 }
 
 const UNREAD_INDICATOR_SIZE = 8

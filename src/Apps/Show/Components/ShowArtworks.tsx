@@ -1,4 +1,4 @@
-import { ShowArtworks_show } from "__generated__/ShowArtworks_show.graphql"
+import { ShowArtworks_show$data } from "__generated__/ShowArtworks_show.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -15,7 +15,7 @@ import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/Active
 import { useSystemContext } from "System"
 
 interface ShowArtworksFilterProps extends BoxProps {
-  show: ShowArtworks_show
+  show: ShowArtworks_show$data
   relay: RelayRefetchProp
   aggregations: SharedArtworkFilterContextProps["aggregations"]
   counts?: Counts

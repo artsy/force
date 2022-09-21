@@ -1,220 +1,28 @@
+/**
+ * @generated SignedSource<<f5e525859105c7bc5d3c1f6f662ff714>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RelatedWorksArtworkGridRefetchQueryVariables = {
-    artworkSlug: string;
-    layerId: string;
+export type RelatedWorksArtworkGridRefetchQuery$variables = {
+  artworkSlug: string;
+  layerId: string;
 };
-export type RelatedWorksArtworkGridRefetchQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
-    } | null;
+export type RelatedWorksArtworkGridRefetchQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
+  } | null;
 };
 export type RelatedWorksArtworkGridRefetchQuery = {
-    readonly response: RelatedWorksArtworkGridRefetchQueryResponse;
-    readonly variables: RelatedWorksArtworkGridRefetchQueryVariables;
+  variables: RelatedWorksArtworkGridRefetchQuery$variables;
+  response: RelatedWorksArtworkGridRefetchQuery$data;
 };
-
-
-
-/*
-query RelatedWorksArtworkGridRefetchQuery(
-  $artworkSlug: String!
-  $layerId: String!
-) {
-  artwork(id: $artworkSlug) {
-    ...RelatedWorksArtworkGrid_artwork_hOSfN
-    id
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment RelatedWorksArtworkGrid_artwork_hOSfN on Artwork {
-  layers {
-    name
-    internalID
-    id
-  }
-  slug
-  layer(id: $layerId) {
-    name
-    artworksConnection(first: 8) {
-      ...ArtworkGrid_artworks
-      edges {
-        node {
-          slug
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -861,5 +669,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b9bb3b794827decc1ba6134e62e41ef2';
+
+(node as any).hash = "b9bb3b794827decc1ba6134e62e41ef2";
+
 export default node;

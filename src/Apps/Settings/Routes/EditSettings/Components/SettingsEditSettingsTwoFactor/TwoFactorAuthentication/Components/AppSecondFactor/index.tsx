@@ -14,7 +14,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import request from "superagent"
 import { useSystemContext } from "System"
-import { AppSecondFactor_me } from "__generated__/AppSecondFactor_me.graphql"
+import { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { ApiError } from "../../ApiError"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
@@ -24,7 +24,7 @@ import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface AppSecondFactorProps {
-  me: AppSecondFactor_me
+  me: AppSecondFactor_me$data
   relay: RelayRefetchProp
 }
 

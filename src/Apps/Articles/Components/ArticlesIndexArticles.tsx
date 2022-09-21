@@ -6,11 +6,11 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ArticlesIndexArticles_viewer } from "__generated__/ArticlesIndexArticles_viewer.graphql"
+import { ArticlesIndexArticles_viewer$data } from "__generated__/ArticlesIndexArticles_viewer.graphql"
 import { ArticlesIndexArticleFragmentContainer } from "./ArticlesIndexArticle"
 
 interface ArticlesIndexArticlesProps {
-  viewer: ArticlesIndexArticles_viewer
+  viewer: ArticlesIndexArticles_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -44,6 +44,7 @@ export const ArticlesIndexArticles: FC<ArticlesIndexArticlesProps> = ({
           return (
             <ArticlesIndexArticleFragmentContainer
               key={article.internalID}
+              // @ts-ignore RELAY UPGRADE 13
               article={article}
             />
           )

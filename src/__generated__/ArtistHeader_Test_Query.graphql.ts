@@ -1,84 +1,25 @@
+/**
+ * @generated SignedSource<<b981ea4c883a32c1a7ff0902482e24b7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistHeader_Test_QueryVariables = {};
-export type ArtistHeader_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistHeader_artist">;
-    } | null;
+export type ArtistHeader_Test_Query$variables = {};
+export type ArtistHeader_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist">;
+  } | null;
 };
 export type ArtistHeader_Test_Query = {
-    readonly response: ArtistHeader_Test_QueryResponse;
-    readonly variables: ArtistHeader_Test_QueryVariables;
+  variables: ArtistHeader_Test_Query$variables;
+  response: ArtistHeader_Test_Query$data;
 };
-
-
-
-/*
-query ArtistHeader_Test_Query {
-  artist(id: "example") {
-    ...ArtistHeader_artist
-    id
-  }
-}
-
-fragment ArtistHeader_artist on Artist {
-  ...FollowArtistButton_artist
-  ...ArtistInsightPills_artist
-  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
-    edges {
-      node {
-        price_realized: priceRealized {
-          display(format: "0.0a")
-        }
-        organization
-        sale_date: saleDate(format: "YYYY")
-        id
-      }
-    }
-  }
-  image {
-    cropped(width: 100, height: 100) {
-      src
-      srcSet
-    }
-  }
-  internalID
-  slug
-  name
-  formattedNationalityAndBirthday
-  counts {
-    follows
-    forSaleArtworks
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    credit
-    partnerID
-    text
-  }
-}
-
-fragment ArtistInsightPills_artist on Artist {
-  insightPills: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {
-    kind
-    label
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-  counts {
-    follows
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -558,5 +499,7 @@ return {
   }
 };
 })();
-(node as any).hash = '488ad05ec853dc8831a05ff896bf0d3c';
+
+(node as any).hash = "488ad05ec853dc8831a05ff896bf0d3c";
+
 export default node;

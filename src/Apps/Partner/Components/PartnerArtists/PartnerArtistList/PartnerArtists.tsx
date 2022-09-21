@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import * as React from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerArtists_partner } from "__generated__/PartnerArtists_partner.graphql"
+import { PartnerArtists_partner$data } from "__generated__/PartnerArtists_partner.graphql"
 import { PartnerArtistsQuery } from "__generated__/PartnerArtistsQuery.graphql"
 import { ScrollIntoViewProps } from "Utils/scrollHelpers"
 import { useSystemContext } from "System"
@@ -12,7 +12,7 @@ import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistsProps {
-  partner: PartnerArtists_partner
+  partner: PartnerArtists_partner$data
   scrollTo?: ScrollIntoViewProps
 }
 
@@ -38,11 +38,10 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
 
   return (
     <Box mt={4}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <PartnerArtistListFragmentContainer
         partnerSlug={slug}
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         scrollTo={scrollTo}
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         artists={artists}
         distinguishRepresentedArtists={!!distinguishRepresentedArtists}
         displayFullPartnerPage={!!displayFullPartnerPage}
@@ -95,6 +94,7 @@ export const PartnerArtistsRenderer: React.FC<{
         if (error || !props) return <PartnerArtistListPlaceholder />
 
         return (
+          // @ts-ignore RELAY UPGRADE 13
           <PartnerArtistsFragmentContainer {...rest} partner={props.partner!} />
         )
       }}

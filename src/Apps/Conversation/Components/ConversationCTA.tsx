@@ -13,12 +13,13 @@ import { extractNodes } from "Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { PurchaseOnInquiryButtonFragmentContainer } from "./PurchaseOnInquiryButton"
 import { MakeOfferOnInquiryButtonFragmentContainer } from "./MakeOfferOnInquiryButton"
-import { ConversationCTA_conversation } from "__generated__/ConversationCTA_conversation.graphql"
+import { ConversationCTA_conversation$data } from "__generated__/ConversationCTA_conversation.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
-  conversation: ConversationCTA_conversation
+  conversation: ConversationCTA_conversation$data
+  // @ts-ignore RELAY UPGRADE 13
   openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
@@ -81,6 +82,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: false })
                 }
+                // @ts-ignore RELAY UPGRADE 13
                 conversation={conversation}
               />
             )}
@@ -89,6 +91,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: true })
                 }
+                // @ts-ignore RELAY UPGRADE 13
                 conversation={conversation}
               />
             )}

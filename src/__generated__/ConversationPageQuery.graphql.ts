@@ -1,737 +1,27 @@
+/**
+ * @generated SignedSource<<25bbb252dd9c36e198bf8605c52153d3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationPageQueryVariables = {
-    conversationID: string;
+export type ConversationPageQuery$variables = {
+  conversationID: string;
 };
-export type ConversationPageQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Conversation_me">;
-    } | null;
+export type ConversationPageQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"Conversation_me">;
+  } | null;
 };
 export type ConversationPageQuery = {
-    readonly response: ConversationPageQueryResponse;
-    readonly variables: ConversationPageQueryVariables;
+  variables: ConversationPageQuery$variables;
+  response: ConversationPageQuery$data;
 };
-
-
-
-/*
-query ConversationPageQuery(
-  $conversationID: String!
-) {
-  me {
-    ...Conversation_me_3oGfhn
-    id
-  }
-}
-
-fragment ConfirmArtworkButton_artwork on Artwork {
-  internalID
-}
-
-fragment ConversationCTA_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        isOfferableFromInquiry
-        is_acquireable: isAcquireable
-        is_offerable: isOfferable
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-    item {
-      __typename
-      ... on Artwork {
-        internalID
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-  activeOrders: orderConnection(first: 10, states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]) {
-    edges {
-      node {
-        __typename
-        internalID
-        state
-        stateReason
-        stateExpiresAt
-        ... on CommerceOfferOrder {
-          buyerAction
-          offers(first: 5) {
-            edges {
-              node {
-                internalID
-                id
-              }
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-  ...PurchaseOnInquiryButton_conversation
-  ...MakeOfferOnInquiryButton_conversation
-}
-
-fragment ConversationList_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      cursor
-      node {
-        id
-        internalID
-        lastMessage
-        ...ConversationSnippet_conversation
-        __typename
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-
-fragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {
-  edges {
-    node {
-      __typename
-      orderHistory {
-        ...OrderUpdate_event
-        __typename
-        ... on CommerceOrderStateChangedEvent {
-          state
-          stateReason
-          createdAt
-        }
-        ... on CommerceOfferSubmittedEvent {
-          createdAt
-        }
-      }
-      id
-    }
-  }
-}
-
-fragment ConversationMessages_messages on MessageConnection {
-  edges {
-    node {
-      __typename
-      id
-      internalID
-      createdAt
-      isFromUser
-      body
-      ...Message_message
-    }
-  }
-}
-
-fragment ConversationSnippet_conversation on Conversation {
-  internalID
-  to {
-    name
-    id
-  }
-  lastMessage
-  lastMessageAt
-  unread
-  items {
-    item {
-      __typename
-      ... on Artwork {
-        date
-        title
-        artistNames
-        image {
-          url
-        }
-      }
-      ... on Show {
-        fair {
-          name
-          id
-        }
-        name
-        coverImage {
-          url
-        }
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-
-fragment Conversation_conversation on Conversation {
-  id
-  internalID
-  from {
-    email
-    id
-  }
-  to {
-    name
-    initials
-    id
-  }
-  initialMessage
-  lastMessageID
-  fromLastViewedMessageID
-  isLastMessageToUser
-  unread
-  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {
-    edges {
-      node {
-        __typename
-        internalID
-        updatedAt
-        ... on CommerceOfferOrder {
-          buyerAction
-        }
-        id
-      }
-    }
-    ...ConversationMessages_events
-  }
-  messagesConnection(first: 30, sort: DESC) {
-    pageInfo {
-      startCursor
-      endCursor
-      hasPreviousPage
-      hasNextPage
-    }
-    edges {
-      node {
-        id
-        __typename
-      }
-      cursor
-    }
-    totalCount
-    ...ConversationMessages_messages
-  }
-  items {
-    item {
-      __typename
-      ... on Artwork {
-        id
-        isOfferable
-        isOfferableFromInquiry
-        internalID
-      }
-      ...Item_item
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        isOfferable
-        isOfferableFromInquiry
-        isAcquireable
-        internalID
-        __typename
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-  ...ConversationCTA_conversation
-}
-
-fragment Conversation_me_3oGfhn on Me {
-  ...ConversationList_me
-  conversation(id: $conversationID) {
-    internalID
-    ...Conversation_conversation
-    ...ConversationCTA_conversation
-    ...DetailsSidebar_conversation
-    id
-  }
-}
-
-fragment DetailsSidebar_conversation on Conversation {
-  to {
-    name
-    initials
-    id
-  }
-  sidebarOrderConnection: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL]) {
-    edges {
-      node {
-        __typename
-        internalID
-        state
-        displayState
-        mode
-        stateReason
-        code
-        stateExpiresAt(format: "MMM D")
-        ...TransactionDetailsSummaryItem_order
-        ...ShippingSummaryItem_order
-        ...PaymentMethodSummaryItem_order
-        creditCard {
-          brand
-          lastDigits
-          expirationYear
-          expirationMonth
-          id
-        }
-        requestedFulfillment {
-          __typename
-        }
-        ... on CommerceOfferOrder {
-          buyerAction
-        }
-        lineItems {
-          edges {
-            node {
-              artwork {
-                shippingOrigin
-                id
-              }
-              shipment {
-                trackingNumber
-                trackingUrl
-                carrierName
-                estimatedDeliveryWindow
-                id
-              }
-              selectedShippingQuote {
-                typeName
-                id
-              }
-              fulfillments {
-                edges {
-                  node {
-                    courier
-                    trackingId
-                    estimatedDelivery(format: "MMM Do, YYYY")
-                    id
-                  }
-                }
-              }
-              id
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-  attachmentsConnection: messagesConnection(first: 30, sort: DESC) {
-    edges {
-      node {
-        attachments {
-          id
-          contentType
-          fileName
-          downloadURL
-        }
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-  items {
-    item {
-      __typename
-      ... on Artwork {
-        href
-        ...Metadata_artwork
-        image {
-          thumbnailUrl: url(version: "small")
-        }
-      }
-      ... on Show {
-        href
-        image: coverImage {
-          thumbnailUrl: url(version: "small")
-        }
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Item_item on ConversationItemType {
-  __isConversationItemType: __typename
-  __typename
-  ... on Artwork {
-    internalID
-    id
-    date
-    title
-    artistNames
-    href
-    isOfferableFromInquiry
-    image {
-      url(version: ["large"])
-    }
-    listPrice {
-      __typename
-      ... on Money {
-        display
-      }
-      ... on PriceRange {
-        display
-      }
-    }
-  }
-  ... on Show {
-    id
-    fair {
-      name
-      exhibitionPeriod
-      location {
-        city
-        id
-      }
-      id
-    }
-    href
-    name
-    coverImage {
-      url
-    }
-  }
-}
-
-fragment MakeOfferOnInquiryButton_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        is_acquireable: isAcquireable
-        isEdition
-        editionSets {
-          internalID
-          id
-        }
-        ...ConfirmArtworkButton_artwork
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-
-fragment Message_message on Message {
-  __typename
-  internalID
-  body
-  createdAt
-  isFromUser
-  from {
-    name
-    email
-  }
-  attachments {
-    id
-    contentType
-    fileName
-    downloadURL
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment OrderUpdate_event on CommerceOrderEventUnion {
-  __isCommerceOrderEventUnion: __typename
-  __typename
-  ... on CommerceOrderStateChangedEvent {
-    createdAt
-    orderUpdateState
-    state
-    stateReason
-  }
-  ... on CommerceOfferSubmittedEvent {
-    createdAt
-    offer {
-      amount
-      fromParticipant
-      definesTotal
-      offerAmountChanged
-      respondsTo {
-        fromParticipant
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment PaymentMethodSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      brand
-      lastDigits
-      expirationYear
-      expirationMonth
-      id
-    }
-    ... on BankAccount {
-      last4
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-}
-
-fragment PurchaseOnInquiryButton_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        isEdition
-        internalID
-        slug
-        editionSets {
-          internalID
-          id
-        }
-        ...ConfirmArtworkButton_artwork
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-
-fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
-  __isCommerceRequestedFulfillmentUnion: __typename
-  ... on CommerceShip {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-  ... on CommerceShipArta {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-}
-
-fragment ShippingSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  state
-  paymentMethod
-  requestedFulfillment {
-    __typename
-    ...ShippingAddress_ship
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          shippingOrigin
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          typeName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -886,35 +176,35 @@ v21 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "createdAt",
+  "name": "buyerAction",
   "storageKey": null
 },
 v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "state",
+  "name": "createdAt",
   "storageKey": null
 },
 v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "stateReason",
+  "name": "state",
   "storageKey": null
 },
 v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "fromParticipant",
+  "name": "stateReason",
   "storageKey": null
 },
 v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "buyerAction",
+  "name": "fromParticipant",
   "storageKey": null
 },
 v26 = [
@@ -1133,37 +423,6 @@ v45 = {
   "storageKey": "buyerTotal(precision:2)"
 },
 v46 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "brand",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "lastDigits",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "expirationYear",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "expirationMonth",
-    "storageKey": null
-  },
-  (v3/*: any*/)
-],
-v47 = [
   (v4/*: any*/),
   {
     "alias": null,
@@ -1191,12 +450,43 @@ v47 = [
     "name": "buyerTotalCents",
     "storageKey": null
   },
-  (v24/*: any*/),
+  (v25/*: any*/),
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "note",
+    "storageKey": null
+  },
+  (v3/*: any*/)
+],
+v47 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "brand",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "lastDigits",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "expirationYear",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "expirationMonth",
     "storageKey": null
   },
   (v3/*: any*/)
@@ -1527,6 +817,14 @@ return {
                             "name": "updatedAt",
                             "storageKey": null
                           },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v21/*: any*/)
+                            ],
+                            "type": "CommerceOfferOrder",
+                            "abstractKey": null
+                          },
                           (v3/*: any*/),
                           {
                             "alias": null,
@@ -1544,7 +842,7 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v21/*: any*/),
+                                  (v22/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -1552,8 +850,8 @@ return {
                                     "name": "orderUpdateState",
                                     "storageKey": null
                                   },
-                                  (v22/*: any*/),
-                                  (v23/*: any*/)
+                                  (v23/*: any*/),
+                                  (v24/*: any*/)
                                 ],
                                 "type": "CommerceOrderStateChangedEvent",
                                 "abstractKey": null
@@ -1561,7 +859,7 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v21/*: any*/),
+                                  (v22/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -1577,7 +875,7 @@ return {
                                         "name": "amount",
                                         "storageKey": null
                                       },
-                                      (v24/*: any*/),
+                                      (v25/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -1600,7 +898,7 @@ return {
                                         "name": "respondsTo",
                                         "plural": false,
                                         "selections": [
-                                          (v24/*: any*/),
+                                          (v25/*: any*/),
                                           (v3/*: any*/)
                                         ],
                                         "storageKey": null
@@ -1615,14 +913,6 @@ return {
                               }
                             ],
                             "storageKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v25/*: any*/)
-                            ],
-                            "type": "CommerceOfferOrder",
-                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -1675,7 +965,7 @@ return {
                           (v3/*: any*/),
                           (v8/*: any*/),
                           (v4/*: any*/),
-                          (v21/*: any*/),
+                          (v22/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1747,10 +1037,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v8/*: any*/),
-                      {
-                        "kind": "TypeDiscriminator",
-                        "abstractKey": "__isConversationItemType"
-                      },
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -2033,6 +1319,10 @@ return {
                         "abstractKey": null
                       },
                       {
+                        "kind": "TypeDiscriminator",
+                        "abstractKey": "__isConversationItemType"
+                      },
+                      {
                         "kind": "InlineFragment",
                         "selections": [
                           (v3/*: any*/),
@@ -2196,8 +1486,8 @@ return {
                         "selections": [
                           (v8/*: any*/),
                           (v4/*: any*/),
-                          (v22/*: any*/),
                           (v23/*: any*/),
+                          (v24/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -2205,11 +1495,10 @@ return {
                             "name": "stateExpiresAt",
                             "storageKey": null
                           },
-                          (v3/*: any*/),
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v25/*: any*/),
+                              (v21/*: any*/),
                               {
                                 "alias": null,
                                 "args": [
@@ -2251,7 +1540,8 @@ return {
                             ],
                             "type": "CommerceOfferOrder",
                             "abstractKey": null
-                          }
+                          },
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -2299,7 +1589,7 @@ return {
                         "selections": [
                           (v8/*: any*/),
                           (v4/*: any*/),
-                          (v22/*: any*/),
+                          (v23/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -2314,7 +1604,7 @@ return {
                             "name": "mode",
                             "storageKey": null
                           },
-                          (v23/*: any*/),
+                          (v24/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -2590,6 +1880,34 @@ return {
                             "storageKey": null
                           },
                           {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceOffer",
+                                "kind": "LinkedField",
+                                "name": "lastOffer",
+                                "plural": false,
+                                "selections": (v46/*: any*/),
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceOffer",
+                                "kind": "LinkedField",
+                                "name": "myLastOffer",
+                                "plural": false,
+                                "selections": (v46/*: any*/),
+                                "storageKey": null
+                              },
+                              (v21/*: any*/)
+                            ],
+                            "type": "CommerceOfferOrder",
+                            "abstractKey": null
+                          },
+                          {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
@@ -2607,7 +1925,7 @@ return {
                               (v8/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v46/*: any*/),
+                                "selections": (v47/*: any*/),
                                 "type": "CreditCard",
                                 "abstractKey": null
                               },
@@ -2650,38 +1968,10 @@ return {
                             "kind": "LinkedField",
                             "name": "creditCard",
                             "plural": false,
-                            "selections": (v46/*: any*/),
+                            "selections": (v47/*: any*/),
                             "storageKey": null
                           },
-                          (v3/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "CommerceOffer",
-                                "kind": "LinkedField",
-                                "name": "lastOffer",
-                                "plural": false,
-                                "selections": (v47/*: any*/),
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "CommerceOffer",
-                                "kind": "LinkedField",
-                                "name": "myLastOffer",
-                                "plural": false,
-                                "selections": (v47/*: any*/),
-                                "storageKey": null
-                              },
-                              (v25/*: any*/)
-                            ],
-                            "type": "CommerceOfferOrder",
-                            "abstractKey": null
-                          }
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -2769,5 +2059,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b83b50f78717fb2472f26bd88ae34b54';
+
+(node as any).hash = "b83b50f78717fb2472f26bd88ae34b54";
+
 export default node;

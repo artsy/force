@@ -1,60 +1,27 @@
+/**
+ * @generated SignedSource<<e1bc31dbc43f60e057ab37ff75d15c14>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleHeroStoryQueryVariables = {
-    id: string;
+export type ArticleHeroStoryQuery$variables = {
+  id: string;
 };
-export type ArticleHeroStoryQueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleHero_article">;
-    } | null;
+export type ArticleHeroStoryQuery$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleHero_article">;
+  } | null;
 };
 export type ArticleHeroStoryQuery = {
-    readonly response: ArticleHeroStoryQueryResponse;
-    readonly variables: ArticleHeroStoryQueryVariables;
+  variables: ArticleHeroStoryQuery$variables;
+  response: ArticleHeroStoryQuery$data;
 };
-
-
-
-/*
-query ArticleHeroStoryQuery(
-  $id: String!
-) {
-  article(id: $id) {
-    ...ArticleHero_article
-    id
-  }
-}
-
-fragment ArticleHero_article on Article {
-  title
-  href
-  vertical
-  byline
-  hero {
-    __typename
-    ... on ArticleFeatureSection {
-      layout
-      embed
-      media
-      image {
-        url
-        split: resized(width: 900) {
-          src
-          srcSet
-        }
-        text: cropped(width: 1600, height: 900) {
-          src
-          srcSet
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -279,5 +246,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bf57963357018c27fddcdd1e3199942c';
+
+(node as any).hash = "bf57963357018c27fddcdd1e3199942c";
+
 export default node;

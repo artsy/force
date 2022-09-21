@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<583f10976e6a4f6f821fa9b2e2fd5ae7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSectionVideo_section = {
-    readonly embed: string | null;
-    readonly fallbackEmbed: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type ArticleSectionVideo_section$data = {
+  readonly embed: string | null;
+  readonly fallbackEmbed: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "ArticleSectionVideo_section";
+  } | null;
+  readonly " $fragmentType": "ArticleSectionVideo_section";
 };
-export type ArticleSectionVideo_section$data = ArticleSectionVideo_section;
 export type ArticleSectionVideo_section$key = {
-    readonly " $data"?: ArticleSectionVideo_section$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionVideo_section">;
+  readonly " $data"?: ArticleSectionVideo_section$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionVideo_section">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -106,5 +109,7 @@ const node: ReaderFragment = {
   "type": "ArticleSectionVideo",
   "abstractKey": null
 };
-(node as any).hash = 'efd503a2f10aa94d7d0d86d131a47e4f';
+
+(node as any).hash = "efd503a2f10aa94d7d0d86d131a47e4f";
+
 export default node;

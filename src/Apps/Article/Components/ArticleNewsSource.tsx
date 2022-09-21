@@ -1,10 +1,10 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArticleTracking } from "../useArticleTracking"
-import { ArticleNewsSource_article } from "__generated__/ArticleNewsSource_article.graphql"
+import { ArticleNewsSource_article$data } from "__generated__/ArticleNewsSource_article.graphql"
 
 interface ArticleNewsSourceProps {
-  article: ArticleNewsSource_article
+  article: ArticleNewsSource_article$data
 }
 
 const ArticleNewsSource: FC<ArticleNewsSourceProps> = ({ article }) => {

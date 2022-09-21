@@ -1,123 +1,32 @@
+/**
+ * @generated SignedSource<<b585b8d7dcf693f2f5c94083069a6106>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationMessages_Test_QueryVariables = {};
-export type ConversationMessages_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly messagesConnection: {
-                readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
-            } | null;
-            readonly orderConnection: {
-                readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_events">;
-            } | null;
-        } | null;
+export type ConversationMessages_Test_Query$variables = {};
+export type ConversationMessages_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly messagesConnection: {
+        readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_messages">;
+      } | null;
+      readonly orderConnection: {
+        readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_events">;
+      } | null;
     } | null;
+  } | null;
 };
 export type ConversationMessages_Test_Query = {
-    readonly response: ConversationMessages_Test_QueryResponse;
-    readonly variables: ConversationMessages_Test_QueryVariables;
+  variables: ConversationMessages_Test_Query$variables;
+  response: ConversationMessages_Test_Query$data;
 };
-
-
-
-/*
-query ConversationMessages_Test_Query {
-  me {
-    conversation(id: "1234") {
-      messagesConnection(first: 10) {
-        ...ConversationMessages_messages
-      }
-      orderConnection(first: 10) {
-        ...ConversationMessages_events
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {
-  edges {
-    node {
-      __typename
-      orderHistory {
-        ...OrderUpdate_event
-        __typename
-        ... on CommerceOrderStateChangedEvent {
-          state
-          stateReason
-          createdAt
-        }
-        ... on CommerceOfferSubmittedEvent {
-          createdAt
-        }
-      }
-      id
-    }
-  }
-}
-
-fragment ConversationMessages_messages on MessageConnection {
-  edges {
-    node {
-      __typename
-      id
-      internalID
-      createdAt
-      isFromUser
-      body
-      ...Message_message
-    }
-  }
-}
-
-fragment Message_message on Message {
-  __typename
-  internalID
-  body
-  createdAt
-  isFromUser
-  from {
-    name
-    email
-  }
-  attachments {
-    id
-    contentType
-    fileName
-    downloadURL
-  }
-}
-
-fragment OrderUpdate_event on CommerceOrderEventUnion {
-  __isCommerceOrderEventUnion: __typename
-  __typename
-  ... on CommerceOrderStateChangedEvent {
-    createdAt
-    orderUpdateState
-    state
-    stateReason
-  }
-  ... on CommerceOfferSubmittedEvent {
-    createdAt
-    offer {
-      amount
-      fromParticipant
-      definesTotal
-      offerAmountChanged
-      respondsTo {
-        fromParticipant
-        id
-      }
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -681,5 +590,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ac8b0cdff355d22116be3bda3e109e57';
+
+(node as any).hash = "ac8b0cdff355d22116be3bda3e109e57";
+
 export default node;

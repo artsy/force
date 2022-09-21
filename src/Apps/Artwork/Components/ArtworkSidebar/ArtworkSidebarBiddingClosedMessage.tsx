@@ -1,10 +1,10 @@
 import { Separator, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
-import { ArtworkSidebarBiddingClosedMessage_artwork } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
+import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
 
 interface BiddingClosedMessageProps {
-  artwork: ArtworkSidebarBiddingClosedMessage_artwork
+  artwork: ArtworkSidebarBiddingClosedMessage_artwork$data
 }
 
 const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
@@ -26,6 +26,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
             Be notified when a similar work is available
           </Text>
           <Spacer my={2} />
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
         </>
       )}

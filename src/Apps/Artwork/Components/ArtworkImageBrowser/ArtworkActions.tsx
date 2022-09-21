@@ -1,4 +1,4 @@
-import { ArtworkActions_artwork } from "__generated__/ArtworkActions_artwork.graphql"
+import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
 import { useSystemContext } from "System"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -37,7 +37,7 @@ import {
 import { getENV } from "Utils/getENV"
 
 interface ArtworkActionsProps {
-  artwork: ArtworkActions_artwork
+  artwork: ArtworkActions_artwork$data
   selectDefaultSlide(): void
 }
 
@@ -90,6 +90,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
           <ArtworkSharePanelFragmentContainer
             width={300}
             pt={1}
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
           />
         }
@@ -153,6 +154,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   }
 
   const SaveButton = () => {
+    // @ts-ignore RELAY UPGRADE 13
     return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
   }
 
@@ -197,6 +199,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     <>
       {isViewInRoomVisible && (
         <ViewInRoomFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           onClose={hideViewInRoom}
         />

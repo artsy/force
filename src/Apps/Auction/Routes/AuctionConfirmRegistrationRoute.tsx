@@ -10,8 +10,8 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { AuctionConfirmRegistrationRoute_me } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
-import { AuctionConfirmRegistrationRoute_sale } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
+import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
@@ -27,8 +27,8 @@ import { redirectToSaleHome } from "./AuctionRegistrationRoute"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 interface AuctionConfirmRegistrationRouteProps {
-  me: AuctionConfirmRegistrationRoute_me
-  sale: AuctionConfirmRegistrationRoute_sale
+  me: AuctionConfirmRegistrationRoute_me$data
+  sale: AuctionConfirmRegistrationRoute_sale$data
 }
 
 const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteProps> = ({

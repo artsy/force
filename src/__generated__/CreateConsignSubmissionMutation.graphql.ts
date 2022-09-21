@@ -1,83 +1,74 @@
+/**
+ * @generated SignedSource<<7cb72efd9c28e3c4c22815919600986d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ConsignmentSubmissionCategoryAggregation = "ARCHITECTURE" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER" | "FASHION_DESIGN_AND_WEARABLE_ART" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE_ART" | "PHOTOGRAPHY" | "PRINT" | "SCULPTURE" | "TEXTILE_ARTS" | "VIDEO_FILM_ANIMATION" | "%future added value";
 export type ConsignmentSubmissionSource = "ADMIN" | "APP_INBOUND" | "MY_COLLECTION" | "PARTNER" | "WEB_INBOUND" | "%future added value";
 export type ConsignmentSubmissionStateAggregation = "APPROVED" | "CLOSED" | "DRAFT" | "HOLD" | "PUBLISHED" | "REJECTED" | "SUBMITTED" | "%future added value";
 export type CreateSubmissionMutationInput = {
-    additionalInfo?: string | null | undefined;
-    artistID: string;
-    attributionClass?: ConsignmentAttributionClass | null | undefined;
-    authenticityCertificate?: boolean | null | undefined;
-    category?: ConsignmentSubmissionCategoryAggregation | null | undefined;
-    clientMutationId?: string | null | undefined;
-    coaByAuthenticatingBody?: boolean | null | undefined;
-    coaByGallery?: boolean | null | undefined;
-    currency?: string | null | undefined;
-    depth?: string | null | undefined;
-    dimensionsMetric?: string | null | undefined;
-    edition?: boolean | null | undefined;
-    editionNumber?: string | null | undefined;
-    editionSize?: number | null | undefined;
-    editionSizeFormatted?: string | null | undefined;
-    height?: string | null | undefined;
-    locationCity?: string | null | undefined;
-    locationCountry?: string | null | undefined;
-    locationCountryCode?: string | null | undefined;
-    locationPostalCode?: string | null | undefined;
-    locationState?: string | null | undefined;
-    medium?: string | null | undefined;
-    minimumPriceDollars?: number | null | undefined;
-    myCollectionArtworkID?: string | null | undefined;
-    provenance?: string | null | undefined;
-    sessionID?: string | null | undefined;
-    signature?: boolean | null | undefined;
-    source?: ConsignmentSubmissionSource | null | undefined;
-    sourceArtworkID?: string | null | undefined;
-    state?: ConsignmentSubmissionStateAggregation | null | undefined;
-    title?: string | null | undefined;
-    userAgent?: string | null | undefined;
-    userEmail?: string | null | undefined;
-    userName?: string | null | undefined;
-    userPhone?: string | null | undefined;
-    utmMedium?: string | null | undefined;
-    utmSource?: string | null | undefined;
-    utmTerm?: string | null | undefined;
-    width?: string | null | undefined;
-    year?: string | null | undefined;
+  additionalInfo?: string | null;
+  artistID: string;
+  attributionClass?: ConsignmentAttributionClass | null;
+  authenticityCertificate?: boolean | null;
+  category?: ConsignmentSubmissionCategoryAggregation | null;
+  clientMutationId?: string | null;
+  coaByAuthenticatingBody?: boolean | null;
+  coaByGallery?: boolean | null;
+  currency?: string | null;
+  depth?: string | null;
+  dimensionsMetric?: string | null;
+  edition?: boolean | null;
+  editionNumber?: string | null;
+  editionSize?: number | null;
+  editionSizeFormatted?: string | null;
+  height?: string | null;
+  locationCity?: string | null;
+  locationCountry?: string | null;
+  locationCountryCode?: string | null;
+  locationPostalCode?: string | null;
+  locationState?: string | null;
+  medium?: string | null;
+  minimumPriceDollars?: number | null;
+  myCollectionArtworkID?: string | null;
+  provenance?: string | null;
+  sessionID?: string | null;
+  signature?: boolean | null;
+  source?: ConsignmentSubmissionSource | null;
+  sourceArtworkID?: string | null;
+  state?: ConsignmentSubmissionStateAggregation | null;
+  title?: string | null;
+  userAgent?: string | null;
+  userEmail?: string | null;
+  userName?: string | null;
+  userPhone?: string | null;
+  utmMedium?: string | null;
+  utmSource?: string | null;
+  utmTerm?: string | null;
+  width?: string | null;
+  year?: string | null;
 };
-export type CreateConsignSubmissionMutationVariables = {
-    input: CreateSubmissionMutationInput;
+export type CreateConsignSubmissionMutation$variables = {
+  input: CreateSubmissionMutationInput;
 };
-export type CreateConsignSubmissionMutationResponse = {
-    readonly createConsignmentSubmission: {
-        readonly consignmentSubmission: {
-            readonly externalId: string;
-        } | null;
+export type CreateConsignSubmissionMutation$data = {
+  readonly createConsignmentSubmission: {
+    readonly consignmentSubmission: {
+      readonly externalId: string;
     } | null;
+  } | null;
 };
 export type CreateConsignSubmissionMutation = {
-    readonly response: CreateConsignSubmissionMutationResponse;
-    readonly variables: CreateConsignSubmissionMutationVariables;
+  variables: CreateConsignSubmissionMutation$variables;
+  response: CreateConsignSubmissionMutation$data;
 };
-
-
-
-/*
-mutation CreateConsignSubmissionMutation(
-  $input: CreateSubmissionMutationInput!
-) {
-  createConsignmentSubmission(input: $input) {
-    consignmentSubmission {
-      externalId
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -183,5 +174,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3594c743b90e28b37cf944e971ad8a33';
+
+(node as any).hash = "3594c743b90e28b37cf944e971ad8a33";
+
 export default node;

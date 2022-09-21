@@ -48,6 +48,7 @@ export const EntityHeaderGene = () => {
 
               return (
                 <EntityHeaderGeneFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   gene={props.gene}
                   {...rest}
                 />

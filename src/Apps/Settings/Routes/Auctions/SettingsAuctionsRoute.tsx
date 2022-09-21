@@ -1,13 +1,13 @@
 import { Join, Separator } from "@artsy/palette"
 import React from "react"
-import { SettingsAuctionsRoute_me } from "__generated__/SettingsAuctionsRoute_me.graphql"
+import { SettingsAuctionsRoute_me$data } from "__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { UserActiveBidsFragmentContainer } from "./Components/UserActiveBids"
 import { UserBidHistoryFragmentContainer } from "./Components/UserBidHistory"
 import { UserRegistrationAuctionsFragmentContainer } from "./Components/UserRegistrationAuctions"
 
 interface SettingsAuctionsRouteProps {
-  me: SettingsAuctionsRoute_me
+  me: SettingsAuctionsRoute_me$data
 }
 
 const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
@@ -15,10 +15,13 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
 }) => {
   return (
     <Join separator={<Separator my={4} />}>
+      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserActiveBidsFragmentContainer me={me} />
 
+      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserBidHistoryFragmentContainer me={me} />
 
+      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserRegistrationAuctionsFragmentContainer me={me} />
     </Join>
   )

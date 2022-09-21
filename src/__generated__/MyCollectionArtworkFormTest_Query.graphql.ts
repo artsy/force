@@ -1,86 +1,27 @@
+/**
+ * @generated SignedSource<<80123d93d05583431b97736fa3727f6a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkFormTest_QueryVariables = {
-    slug: string;
+export type MyCollectionArtworkFormTest_Query$variables = {
+  slug: string;
 };
-export type MyCollectionArtworkFormTest_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkForm_artwork">;
-    } | null;
+export type MyCollectionArtworkFormTest_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+  } | null;
 };
 export type MyCollectionArtworkFormTest_Query = {
-    readonly response: MyCollectionArtworkFormTest_QueryResponse;
-    readonly variables: MyCollectionArtworkFormTest_QueryVariables;
+  variables: MyCollectionArtworkFormTest_Query$variables;
+  response: MyCollectionArtworkFormTest_Query$data;
 };
-
-
-
-/*
-query MyCollectionArtworkFormTest_Query(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...MyCollectionArtworkForm_artwork
-    id
-  }
-}
-
-fragment MyCollectionArtworkForm_artwork on Artwork {
-  artist {
-    internalID
-    name
-    formattedNationalityAndBirthday
-    targetSupply {
-      isP1
-    }
-    id
-  }
-  consignmentSubmission {
-    inProgress
-  }
-  artistNames
-  category
-  pricePaid {
-    display
-    minor
-    currencyCode
-  }
-  date
-  depth
-  dimensions {
-    in
-    cm
-  }
-  editionSize
-  editionNumber
-  height
-  attributionClass {
-    name
-    id
-  }
-  id
-  images {
-    internalID
-    isDefault
-    imageURL
-    width
-    height
-  }
-  internalID
-  isEdition
-  medium
-  metric
-  artworkLocation
-  provenance
-  slug
-  title
-  width
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -438,5 +379,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1d521dcbc2788e59998436db4ad9cdc0';
+
+(node as any).hash = "1d521dcbc2788e59998436db4ad9cdc0";
+
 export default node;

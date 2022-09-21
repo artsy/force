@@ -8,8 +8,8 @@ import {
   Spacer,
   ReadMore,
 } from "@artsy/palette"
-import { Header_artworks } from "__generated__/Header_artworks.graphql"
-import { Header_collection } from "__generated__/Header_collection.graphql"
+import { Header_artworks$data } from "__generated__/Header_artworks.graphql"
+import { Header_collection$data } from "__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer } from "Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { Link } from "found"
 import { compact, filter, take } from "lodash"
@@ -20,8 +20,8 @@ import { slugify } from "underscore.string"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 
 export interface CollectionHeaderProps {
-  collection: Header_collection
-  artworks: Header_artworks
+  collection: Header_collection$data
+  artworks: Header_artworks$data
 }
 
 export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
@@ -77,6 +77,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           <Spacer mt={6} />
 
           <CollectionDefaultHeaderFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             headerArtworks={artworks}
             collectionId={collection.id}
             collectionSlug={collection.slug}
@@ -95,17 +96,20 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
           <GridColumns>
             {featuredArtists.map(artist => {
+              // @ts-ignore RELAY UPGRADE 13
               if (!artist.name) return
 
               return (
                 <Column
                   span={[12, 6, 3, 3]}
+                  // @ts-ignore RELAY UPGRADE 13
                   key={artist.internalID}
                   data-test={ContextModule.featuredArtistsRail}
                   display="flex"
                   alignItems="center"
                 >
                   <EntityHeaderArtistFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     artist={artist}
                     width="100%"
                     alignItems="flex-start"
@@ -156,8 +160,8 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
 
 export const getFeaturedArtists = (
   artistsCount: number,
-  collection: Header_collection,
-  merchandisableArtists: Header_artworks["merchandisableArtists"]
+  collection: Header_collection$data,
+  merchandisableArtists: Header_artworks$data["merchandisableArtists"]
 ) => {
   if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
     return compact(

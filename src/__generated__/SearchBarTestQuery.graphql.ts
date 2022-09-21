@@ -1,95 +1,62 @@
+/**
+ * @generated SignedSource<<a817f45682385d4e4bb8ca6a7e1e2282>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchBarTestQueryVariables = {
-    term: string;
-    hasTerm: boolean;
+export type SearchBarTestQuery$variables = {
+  term: string;
+  hasTerm: boolean;
 };
-export type SearchBarTestQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"SearchBar_viewer">;
+export type SearchBarTestQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SearchBar_viewer">;
+  } | null;
+};
+export type SearchBarTestQuery$rawResponse = {
+  readonly viewer: {
+    readonly searchConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly displayLabel: string | null;
+          readonly href: string | null;
+          readonly __typename: "SearchableItem";
+          readonly __isNode: "SearchableItem";
+          readonly id: string;
+          readonly displayType: string | null;
+          readonly slug: string;
+        } | {
+          readonly displayLabel: string | null;
+          readonly href: string | null;
+          readonly __typename: "Artist";
+          readonly __isNode: "Artist";
+          readonly id: string;
+          readonly statuses: {
+            readonly artworks: boolean | null;
+            readonly auctionLots: boolean | null;
+          } | null;
+        } | {
+          readonly displayLabel: string | null;
+          readonly href: string | null;
+          readonly __typename: string;
+          readonly __isNode: string;
+          readonly id: string;
+        } | null;
+      } | null> | null;
     } | null;
-};
-export type SearchBarTestQueryRawResponse = {
-    readonly viewer: ({
-        readonly searchConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly displayLabel: string | null;
-                    readonly href: string | null;
-                    readonly __typename: "SearchableItem";
-                    readonly __isNode: "SearchableItem";
-                    readonly id: string;
-                    readonly displayType: string | null;
-                    readonly slug: string;
-                } | {
-                    readonly displayLabel: string | null;
-                    readonly href: string | null;
-                    readonly __typename: "Artist";
-                    readonly __isNode: "Artist";
-                    readonly id: string;
-                    readonly statuses: ({
-                        readonly artworks: boolean | null;
-                        readonly auctionLots: boolean | null;
-                    }) | null;
-                } | {
-                    readonly displayLabel: string | null;
-                    readonly href: string | null;
-                    readonly __typename: string;
-                    readonly __isNode: string;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-    }) | null;
+  } | null;
 };
 export type SearchBarTestQuery = {
-    readonly response: SearchBarTestQueryResponse;
-    readonly variables: SearchBarTestQueryVariables;
-    readonly rawResponse: SearchBarTestQueryRawResponse;
+  variables: SearchBarTestQuery$variables;
+  response: SearchBarTestQuery$data;
+  rawResponse: SearchBarTestQuery$rawResponse;
 };
-
-
-
-/*
-query SearchBarTestQuery(
-  $term: String!
-  $hasTerm: Boolean!
-) {
-  viewer {
-    ...SearchBar_viewer_2Mejjw
-  }
-}
-
-fragment SearchBar_viewer_2Mejjw on Viewer {
-  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {
-    edges {
-      node {
-        displayLabel
-        href
-        __typename
-        ... on SearchableItem {
-          displayType
-          slug
-        }
-        ... on Artist {
-          statuses {
-            artworks
-            auctionLots
-          }
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -385,5 +352,7 @@ return {
   }
 };
 })();
-(node as any).hash = '51e1f4122a06a1b1cbcbce24402b88c6';
+
+(node as any).hash = "51e1f4122a06a1b1cbcbce24402b88c6";
+
 export default node;

@@ -1,39 +1,29 @@
+/**
+ * @generated SignedSource<<1697832ae03d2c2a78d05ff5660a1d17>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type InquiryGalleriesYouWorkWithQueryVariables = {
-    term: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type InquiryGalleriesYouWorkWithQuery$variables = {
+  term: string;
 };
-export type InquiryGalleriesYouWorkWithQueryResponse = {
-    readonly external: {
-        readonly galleries: ReadonlyArray<{
-            readonly internalID: string;
-            readonly name: string;
-        }>;
-    };
+export type InquiryGalleriesYouWorkWithQuery$data = {
+  readonly external: {
+    readonly galleries: ReadonlyArray<{
+      readonly internalID: string;
+      readonly name: string;
+    }>;
+  };
 };
 export type InquiryGalleriesYouWorkWithQuery = {
-    readonly response: InquiryGalleriesYouWorkWithQueryResponse;
-    readonly variables: InquiryGalleriesYouWorkWithQueryVariables;
+  variables: InquiryGalleriesYouWorkWithQuery$variables;
+  response: InquiryGalleriesYouWorkWithQuery$data;
 };
-
-
-
-/*
-query InquiryGalleriesYouWorkWithQuery(
-  $term: String!
-) {
-  external {
-    galleries(size: 5, term: $term) {
-      internalID
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -153,5 +143,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a809931107dcaaaa65313f438b066f42';
+
+(node as any).hash = "a809931107dcaaaa65313f438b066f42";
+
 export default node;

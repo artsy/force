@@ -1,44 +1,27 @@
+/**
+ * @generated SignedSource<<9a4a330eb0d16c3856ed44c85cb1c2b1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerFollowButton_Test_QueryVariables = {
-    id: string;
+export type FairOrganizerFollowButton_Test_Query$variables = {
+  id: string;
 };
-export type FairOrganizerFollowButton_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
-    } | null;
+export type FairOrganizerFollowButton_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
+  } | null;
 };
 export type FairOrganizerFollowButton_Test_Query = {
-    readonly response: FairOrganizerFollowButton_Test_QueryResponse;
-    readonly variables: FairOrganizerFollowButton_Test_QueryVariables;
+  variables: FairOrganizerFollowButton_Test_Query$variables;
+  response: FairOrganizerFollowButton_Test_Query$data;
 };
-
-
-
-/*
-query FairOrganizerFollowButton_Test_Query(
-  $id: String!
-) {
-  fairOrganizer(id: $id) {
-    ...FairOrganizerFollowButton_fairOrganizer
-    id
-  }
-}
-
-fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    id
-    internalID
-    isFollowed
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -196,5 +179,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e786f3e32ea273cb52989dfa99e228fd';
+
+(node as any).hash = "e786f3e32ea273cb52989dfa99e228fd";
+
 export default node;

@@ -1,105 +1,25 @@
+/**
+ * @generated SignedSource<<ae3fc42447dbe497712404f67c044463>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MetadataTestQueryVariables = {};
-export type MetadataTestQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
-    } | null;
+export type MetadataTestQuery$variables = {};
+export type MetadataTestQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  } | null;
 };
 export type MetadataTestQuery = {
-    readonly response: MetadataTestQueryResponse;
-    readonly variables: MetadataTestQueryVariables;
+  variables: MetadataTestQuery$variables;
+  response: MetadataTestQuery$data;
 };
-
-
-
-/*
-query MetadataTestQuery {
-  artwork(id: "artwork-id") {
-    ...Metadata_artwork
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -591,5 +511,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cebe154e3dde0451c32cf0aeae0947c7';
+
+(node as any).hash = "cebe154e3dde0451c32cf0aeae0947c7";
+
 export default node;

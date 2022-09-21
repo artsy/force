@@ -11,7 +11,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeWorksByArtistsYouFollowRail_homePage } from "__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
+import { HomeWorksByArtistsYouFollowRail_homePage$data } from "__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
 import { HomeWorksByArtistsYouFollowRailQuery } from "__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import {
@@ -22,7 +22,7 @@ import {
 } from "@artsy/cohesion"
 
 interface HomeWorksByArtistsYouFollowRailProps {
-  homePage: HomeWorksByArtistsYouFollowRail_homePage
+  homePage: HomeWorksByArtistsYouFollowRail_homePage$data
 }
 
 const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailProps> = ({
@@ -44,6 +44,7 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
 
         return (
           <ShelfArtworkFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             key={index}
             // TODO: Add home type to cohesion once we have tracking
@@ -134,6 +135,7 @@ export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC = () => {
         if (props.homePage) {
           return (
             <HomeWorksByArtistsYouFollowRailFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               homePage={props.homePage}
             />
           )

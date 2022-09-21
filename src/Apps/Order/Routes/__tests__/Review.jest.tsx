@@ -1,4 +1,4 @@
-import { ReviewTestQueryRawResponse } from "__generated__/ReviewTestQuery.graphql"
+import { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
 import {
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
@@ -75,7 +75,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
-const testOrder: ReviewTestQueryRawResponse["order"] = {
+const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,

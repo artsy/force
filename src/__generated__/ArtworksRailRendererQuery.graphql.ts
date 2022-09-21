@@ -1,154 +1,27 @@
+/**
+ * @generated SignedSource<<2da67b0c1dce27b1b0639bd03e50a307>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworksRailRendererQueryVariables = {
-    partnerId: string;
+export type ArtworksRailRendererQuery$variables = {
+  partnerId: string;
 };
-export type ArtworksRailRendererQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworksRail_partner">;
-    } | null;
+export type ArtworksRailRendererQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworksRail_partner">;
+  } | null;
 };
 export type ArtworksRailRendererQuery = {
-    readonly response: ArtworksRailRendererQueryResponse;
-    readonly variables: ArtworksRailRendererQueryVariables;
+  variables: ArtworksRailRendererQuery$variables;
+  response: ArtworksRailRendererQuery$data;
 };
-
-
-
-/*
-query ArtworksRailRendererQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...ArtworksRail_partner
-    id
-  }
-}
-
-fragment ArtworksRail_partner on Partner {
-  slug
-  filterArtworksConnection(first: 20, sort: "-partner_updated_at", forSale: true) {
-    edges {
-      node {
-        id
-        ...FillwidthItem_artwork
-      }
-    }
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -625,5 +498,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5b6bc8a288df30f749b6db178dae4d64';
+
+(node as any).hash = "5b6bc8a288df30f749b6db178dae4d64";
+
 export default node;

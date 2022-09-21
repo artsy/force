@@ -1,11 +1,11 @@
 import { CreditCardIcon, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsCreditCard_creditCard } from "__generated__/SettingsCreditCard_creditCard.graphql"
+import { SettingsCreditCard_creditCard$data } from "__generated__/SettingsCreditCard_creditCard.graphql"
 import { useDeleteCreditCard } from "../useDeleteCreditCard"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
 
 interface SettingsCreditCardProps {
-  creditCard: SettingsCreditCard_creditCard
+  creditCard: SettingsCreditCard_creditCard$data
 }
 const SettingsCreditCard: React.FC<SettingsCreditCardProps> = ({
   creditCard,

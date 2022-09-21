@@ -26,7 +26,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "__generated__/HomeFeaturedMarketNewsQuery.graphql"
-import { HomeFeaturedMarketNews_articles } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
+import { HomeFeaturedMarketNews_articles$data } from "__generated__/HomeFeaturedMarketNews_articles.graphql"
 import {
   CellArticleFragmentContainer,
   CellArticlePlaceholder,
@@ -35,7 +35,7 @@ import {
 const ARTICLE_COUNT = 6
 
 interface HomeFeaturedMarketNewsProps {
-  articles: HomeFeaturedMarketNews_articles
+  articles: HomeFeaturedMarketNews_articles$data
 }
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
   articles,
@@ -106,6 +106,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               return (
                 <CellArticleFragmentContainer
                   key={article.internalID}
+                  // @ts-ignore RELAY UPGRADE 13
                   article={article}
                   mode="GRID"
                   mb={4}
@@ -244,6 +245,7 @@ export const HomeFeaturedMarketNewsQueryRenderer: React.FC = () => {
         if (props.articles) {
           return (
             <HomeFeaturedMarketNewsFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               articles={compact(props.articles)}
             />
           )

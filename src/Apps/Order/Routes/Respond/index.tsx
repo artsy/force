@@ -8,7 +8,7 @@ import {
   Spacer,
   TextAreaChange,
 } from "@artsy/palette"
-import { Respond_order } from "__generated__/Respond_order.graphql"
+import { Respond_order$data } from "__generated__/Respond_order.graphql"
 import { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
@@ -39,7 +39,7 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface RespondProps extends RouterState {
-  order: Respond_order
+  order: Respond_order$data
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
@@ -225,6 +225,7 @@ export const RespondRoute: FC<RespondProps> = ({
               countdownStart={order.lastOffer?.createdAt!}
               countdownEnd={order.stateExpiresAt!}
             />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <OfferHistoryItem order={order} />
             <TransactionDetailsSummaryItem
               order={order}
@@ -306,8 +307,11 @@ export const RespondRoute: FC<RespondProps> = ({
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ShippingSummaryItem order={order} locked />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

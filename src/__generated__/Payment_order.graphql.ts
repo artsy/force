@@ -1,53 +1,56 @@
+/**
+ * @generated SignedSource<<cdc99c744e9f7b8a8c3013dba62d8688>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
-export type Payment_order = {
-    readonly bankAccountId: string | null;
-    readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
-    readonly buyerTotalCents: number | null;
-    readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly currencyCode: string;
-    readonly buyerTotal: string | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
-    readonly paymentMethodDetails: ({
-        readonly __typename: "CreditCard";
-        readonly id: string;
-    } | {
-        readonly __typename: "BankAccount";
-        readonly id: string;
-    } | {
-        readonly __typename: "WireTransfer";
-        readonly isManualPayment: boolean;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_order" | "BankAccountPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
-    readonly " $refType": "Payment_order";
+import { FragmentRefs } from "relay-runtime";
+export type Payment_order$data = {
+  readonly bankAccountId: string | null;
+  readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
+  readonly buyerTotalCents: number | null;
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly currencyCode: string;
+  readonly buyerTotal: string | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "CreditCard";
+    readonly id: string;
+  } | {
+    readonly __typename: "BankAccount";
+    readonly id: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_order" | "BankAccountPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentType": "Payment_order";
 };
-export type Payment_order$data = Payment_order;
 export type Payment_order$key = {
-    readonly " $data"?: Payment_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Payment_order">;
+  readonly " $data"?: Payment_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Payment_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -247,5 +250,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '36bd58e36dba50cf9a0c1a266ee9b9e2';
+
+(node as any).hash = "36bd58e36dba50cf9a0c1a266ee9b9e2";
+
 export default node;

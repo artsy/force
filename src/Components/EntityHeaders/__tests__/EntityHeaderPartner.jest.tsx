@@ -18,6 +18,7 @@ describe("EntityHeaderPartner", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderPartnerFragmentContainer_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderPartnerFragmentContainer,
     query: QUERY,
   })

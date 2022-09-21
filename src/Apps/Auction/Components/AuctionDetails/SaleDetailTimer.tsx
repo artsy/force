@@ -1,4 +1,4 @@
-import { SaleDetailTimer_sale } from "__generated__/SaleDetailTimer_sale.graphql"
+import { SaleDetailTimer_sale$data } from "__generated__/SaleDetailTimer_sale.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Flex, Text } from "@artsy/palette"
@@ -6,7 +6,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 
 export interface SaleDetailTimerProps {
-  sale: SaleDetailTimer_sale
+  sale: SaleDetailTimer_sale$data
 }
 
 export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {

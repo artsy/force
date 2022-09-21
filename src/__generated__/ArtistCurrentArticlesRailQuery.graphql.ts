@@ -1,68 +1,27 @@
+/**
+ * @generated SignedSource<<f65b41ac8bd9bd1575d52afe53942049>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentArticlesRailQueryVariables = {
-    slug: string;
+export type ArtistCurrentArticlesRailQuery$variables = {
+  slug: string;
 };
-export type ArtistCurrentArticlesRailQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
-    } | null;
+export type ArtistCurrentArticlesRailQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
+  } | null;
 };
 export type ArtistCurrentArticlesRailQuery = {
-    readonly response: ArtistCurrentArticlesRailQueryResponse;
-    readonly variables: ArtistCurrentArticlesRailQueryVariables;
+  variables: ArtistCurrentArticlesRailQuery$variables;
+  response: ArtistCurrentArticlesRailQuery$data;
 };
-
-
-
-/*
-query ArtistCurrentArticlesRailQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistCurrentArticlesRail_artist
-    id
-  }
-}
-
-fragment ArtistCurrentArticlesRail_artist on Artist {
-  internalID
-  name
-  slug
-  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
-    edges {
-      node {
-        ...CellArticle_article
-        internalID
-        slug
-        href
-        id
-      }
-    }
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -327,5 +286,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'be4434fca4312f2b84c9aa68f0eb0eb9';
+
+(node as any).hash = "be4434fca4312f2b84c9aa68f0eb0eb9";
+
 export default node;

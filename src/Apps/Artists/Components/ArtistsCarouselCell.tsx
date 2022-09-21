@@ -4,10 +4,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ArtistsCarouselCell_featuredLink } from "__generated__/ArtistsCarouselCell_featuredLink.graphql"
+import { ArtistsCarouselCell_featuredLink$data } from "__generated__/ArtistsCarouselCell_featuredLink.graphql"
 
 interface ArtistsCarouselCellProps {
-  featuredLink: ArtistsCarouselCell_featuredLink
+  featuredLink: ArtistsCarouselCell_featuredLink$data
   index: number
 }
 

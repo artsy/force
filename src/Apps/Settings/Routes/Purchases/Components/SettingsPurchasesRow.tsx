@@ -19,7 +19,7 @@ import { DateTime } from "luxon"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { SettingsPurchasesRow_order } from "__generated__/SettingsPurchasesRow_order.graphql"
+import { SettingsPurchasesRow_order$data } from "__generated__/SettingsPurchasesRow_order.graphql"
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
@@ -59,7 +59,7 @@ const ORDER_COLORS = {
 } as const
 
 const getPaymentMethodText = (
-  paymentMethodDetails: SettingsPurchasesRow_order["paymentMethodDetails"]
+  paymentMethodDetails: SettingsPurchasesRow_order$data["paymentMethodDetails"]
 ) => {
   switch (paymentMethodDetails?.__typename) {
     case "BankAccount":
@@ -74,7 +74,7 @@ const getPaymentMethodText = (
 }
 
 interface SettingsPurchasesRowProps {
-  order: SettingsPurchasesRow_order
+  order: SettingsPurchasesRow_order$data
 }
 
 const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {

@@ -1,86 +1,27 @@
+/**
+ * @generated SignedSource<<480e35ae1c6d17bc897e2614e4d80be0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type myCollectionRoutes_MyCollectionArtworkFormQueryVariables = {
-    slug: string;
+export type myCollectionRoutes_MyCollectionArtworkFormQuery$variables = {
+  slug: string;
 };
-export type myCollectionRoutes_MyCollectionArtworkFormQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkForm_artwork">;
-    } | null;
+export type myCollectionRoutes_MyCollectionArtworkFormQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+  } | null;
 };
 export type myCollectionRoutes_MyCollectionArtworkFormQuery = {
-    readonly response: myCollectionRoutes_MyCollectionArtworkFormQueryResponse;
-    readonly variables: myCollectionRoutes_MyCollectionArtworkFormQueryVariables;
+  variables: myCollectionRoutes_MyCollectionArtworkFormQuery$variables;
+  response: myCollectionRoutes_MyCollectionArtworkFormQuery$data;
 };
-
-
-
-/*
-query myCollectionRoutes_MyCollectionArtworkFormQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...MyCollectionArtworkForm_artwork
-    id
-  }
-}
-
-fragment MyCollectionArtworkForm_artwork on Artwork {
-  artist {
-    internalID
-    name
-    formattedNationalityAndBirthday
-    targetSupply {
-      isP1
-    }
-    id
-  }
-  consignmentSubmission {
-    inProgress
-  }
-  artistNames
-  category
-  pricePaid {
-    display
-    minor
-    currencyCode
-  }
-  date
-  depth
-  dimensions {
-    in
-    cm
-  }
-  editionSize
-  editionNumber
-  height
-  attributionClass {
-    name
-    id
-  }
-  id
-  images {
-    internalID
-    isDefault
-    imageURL
-    width
-    height
-  }
-  internalID
-  isEdition
-  medium
-  metric
-  artworkLocation
-  provenance
-  slug
-  title
-  width
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -438,5 +379,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b71414f83640ffcfed692c626d3ab609';
+
+(node as any).hash = "b71414f83640ffcfed692c626d3ab609";
+
 export default node;

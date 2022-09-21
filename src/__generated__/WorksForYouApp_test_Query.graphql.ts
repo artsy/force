@@ -1,312 +1,34 @@
+/**
+ * @generated SignedSource<<b12422db5c34e0b8e10121b552159284>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouApp_test_QueryVariables = {
-    includeSelectedArtist: boolean;
-    artistSlug: string;
+export type WorksForYouApp_test_Query$variables = {
+  includeSelectedArtist: boolean;
+  artistSlug: string;
 };
-export type WorksForYouApp_test_QueryResponse = {
-    readonly viewerArtist: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerArtist">;
-    } | null;
-    readonly viewerFeed: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerFeed">;
-    } | null;
-    readonly viewerMe: {
-        readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
-    } | null;
+export type WorksForYouApp_test_Query$data = {
+  readonly viewerArtist: {
+    readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerArtist">;
+  } | null;
+  readonly viewerFeed: {
+    readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerFeed">;
+  } | null;
+  readonly viewerMe: {
+    readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerMe">;
+  } | null;
 };
 export type WorksForYouApp_test_Query = {
-    readonly response: WorksForYouApp_test_QueryResponse;
-    readonly variables: WorksForYouApp_test_QueryVariables;
+  variables: WorksForYouApp_test_Query$variables;
+  response: WorksForYouApp_test_Query$data;
 };
-
-
-
-/*
-query WorksForYouApp_test_Query(
-  $includeSelectedArtist: Boolean!
-  $artistSlug: String!
-) {
-  viewerArtist: viewer {
-    ...WorksForYouApp_viewerArtist_1H2h5M @include(if: $includeSelectedArtist)
-  }
-  viewerFeed: viewer {
-    ...WorksForYouApp_viewerFeed @skip(if: $includeSelectedArtist)
-  }
-  viewerMe: viewer {
-    ...WorksForYouApp_viewerMe
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment WorksForYouApp_viewerArtist_1H2h5M on Viewer {
-  ...WorksForYouArtistFeed_viewer_1H2h5M
-}
-
-fragment WorksForYouApp_viewerFeed on Viewer {
-  ...WorksForYouFeed_viewer
-}
-
-fragment WorksForYouApp_viewerMe on Viewer {
-  me {
-    followsAndSaves {
-      artistsConnection(first: 99) {
-        totalCount
-        edges {
-          node {
-            artist {
-              name
-              slug
-              id
-            }
-            id
-          }
-        }
-      }
-      bundledArtworksByArtistConnection(first: 1, forSale: true) {
-        edges {
-          node {
-            id
-          }
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment WorksForYouArtistFeed_viewer_1H2h5M on Viewer {
-  artist(id: $artistSlug) {
-    internalID
-    name
-    href
-    counts {
-      artworks
-      forSaleArtworks
-    }
-    image {
-      resized(height: 80, width: 80) {
-        src
-        srcSet
-      }
-    }
-    artworksConnection(sort: PUBLISHED_AT_DESC, first: 25, filter: [IS_FOR_SALE]) {
-      ...ArtworkGrid_artworks
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          id
-          __typename
-        }
-        cursor
-      }
-    }
-    id
-  }
-}
-
-fragment WorksForYouFeed_viewer on Viewer {
-  me {
-    followsAndSaves {
-      bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 25, forSale: true) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        edges {
-          node {
-            id
-            href
-            summary
-            artists
-            publishedAt(format: "MMM DD")
-            artworksConnection {
-              ...ArtworkGrid_artworks
-            }
-            image {
-              resized(height: 80, width: 80) {
-                src
-                srcSet
-              }
-            }
-            __typename
-          }
-          cursor
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -1871,5 +1593,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5f5e36c15c4692eb45b576053791a919';
+
+(node as any).hash = "5f5e36c15c4692eb45b576053791a919";
+
 export default node;

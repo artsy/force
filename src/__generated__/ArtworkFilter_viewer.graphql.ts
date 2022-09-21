@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<88cebfbe258549238ca90086c9e5a403>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkFilter_viewer = {
-    readonly filtered_artworks: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+export type ArtworkFilter_viewer$data = {
+  readonly filtered_artworks: {
+    readonly counts: {
+      readonly total: any | null;
     } | null;
-    readonly " $refType": "ArtworkFilter_viewer";
+    readonly id: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+  } | null;
+  readonly " $fragmentType": "ArtworkFilter_viewer";
 };
-export type ArtworkFilter_viewer$data = ArtworkFilter_viewer;
 export type ArtworkFilter_viewer$key = {
-    readonly " $data"?: ArtworkFilter_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
+  readonly " $data"?: ArtworkFilter_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -48,6 +51,11 @@ const node: ReaderFragment = {
       "name": "artworksConnection",
       "plural": false,
       "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
+        },
         {
           "alias": null,
           "args": null,
@@ -78,11 +86,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "id",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -91,5 +94,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'e895dd932cedbb1634cb1071dc34cba1';
+
+(node as any).hash = "e895dd932cedbb1634cb1071dc34cba1";
+
 export default node;

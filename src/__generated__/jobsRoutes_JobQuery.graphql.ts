@@ -1,42 +1,27 @@
+/**
+ * @generated SignedSource<<1351cc8396acba3040cd0e04dafa6c61>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type jobsRoutes_JobQueryVariables = {
-    id: string;
+export type jobsRoutes_JobQuery$variables = {
+  id: string;
 };
-export type jobsRoutes_JobQueryResponse = {
-    readonly job: {
-        readonly " $fragmentRefs": FragmentRefs<"JobApp_job">;
-    };
+export type jobsRoutes_JobQuery$data = {
+  readonly job: {
+    readonly " $fragmentSpreads": FragmentRefs<"JobApp_job">;
+  };
 };
 export type jobsRoutes_JobQuery = {
-    readonly response: jobsRoutes_JobQueryResponse;
-    readonly variables: jobsRoutes_JobQueryVariables;
+  variables: jobsRoutes_JobQuery$variables;
+  response: jobsRoutes_JobQuery$data;
 };
-
-
-
-/*
-query jobsRoutes_JobQuery(
-  $id: ID!
-) {
-  job(id: $id) {
-    ...JobApp_job
-    id
-  }
-}
-
-fragment JobApp_job on Job {
-  id
-  title
-  location
-  content
-  externalURL
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -144,5 +129,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3aefeefbfece4cf8b909d34539893c96';
+
+(node as any).hash = "3aefeefbfece4cf8b909d34539893c96";
+
 export default node;

@@ -1,72 +1,75 @@
+/**
+ * @generated SignedSource<<e9045bb98c7d00d2498d1c3435bc9b6f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type Offer_order = {
-    readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly state: CommerceOrderStateEnum;
-    readonly totalListPriceCents: number;
-    readonly currencyCode: string;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                    readonly price: string | null;
-                    readonly isPriceRange: boolean | null;
-                    readonly listPrice: ({
-                        readonly __typename: "Money";
-                        readonly major: number;
-                    } | {
-                        readonly __typename: "PriceRange";
-                        readonly maxPrice: {
-                            readonly major: number;
-                        } | null;
-                        readonly minPrice: {
-                            readonly major: number;
-                        } | null;
-                    } | {
-                        /*This will never be '%other', but we need some
-                        value in case none of the concrete values match.*/
-                        readonly __typename: "%other";
-                    }) | null;
-                    readonly editionSets: ReadonlyArray<{
-                        readonly internalID: string;
-                    } | null> | null;
-                    readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
-                } | null;
-                readonly artworkOrEditionSet: ({
-                    readonly __typename: "Artwork";
-                    readonly price: string | null;
-                    readonly displayPriceRange: boolean | null;
-                } | {
-                    readonly __typename: "EditionSet";
-                    readonly price: string | null;
-                    readonly displayPriceRange: boolean | null;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
+import { FragmentRefs } from "relay-runtime";
+export type Offer_order$data = {
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly totalListPriceCents: number;
+  readonly currencyCode: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+          readonly price: string | null;
+          readonly isPriceRange: boolean | null;
+          readonly listPrice: {
+            readonly __typename: "Money";
+            readonly major: number;
+          } | {
+            readonly __typename: "PriceRange";
+            readonly maxPrice: {
+              readonly major: number;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly isInquiryOrder?: boolean | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "PriceOptions_order">;
-    readonly " $refType": "Offer_order";
+            readonly minPrice: {
+              readonly major: number;
+            } | null;
+          } | {
+            // This will never be '%other', but we need some
+            // value in case none of the concrete values match.
+            readonly __typename: "%other";
+          } | null;
+          readonly editionSets: ReadonlyArray<{
+            readonly internalID: string;
+          } | null> | null;
+          readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
+        } | null;
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly price: string | null;
+          readonly displayPriceRange: boolean | null;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly price: string | null;
+          readonly displayPriceRange: boolean | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly isInquiryOrder?: boolean;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "PriceOptions_order">;
+  readonly " $fragmentType": "Offer_order";
 };
-export type Offer_order$data = Offer_order;
 export type Offer_order$key = {
-    readonly " $data"?: Offer_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Offer_order">;
+  readonly " $data"?: Offer_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Offer_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -323,5 +326,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'a1867bbac372e425b11e65589e96fc5a';
+
+(node as any).hash = "a1867bbac372e425b11e65589e96fc5a";
+
 export default node;

@@ -1,80 +1,83 @@
+/**
+ * @generated SignedSource<<e172a9881a2cc37e65c16875def5222c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type TransactionDetailsSummaryItem_order = {
+import { FragmentRefs } from "relay-runtime";
+export type TransactionDetailsSummaryItem_order$data = {
+  readonly __typename: string;
+  readonly requestedFulfillment: {
     readonly __typename: string;
-    readonly requestedFulfillment: {
-        readonly __typename: string;
-    } | null;
-    readonly code: string;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artworkOrEditionSet: ({
-                    readonly __typename: "Artwork";
-                    readonly price: string | null;
-                } | {
-                    readonly __typename: "EditionSet";
-                    readonly price: string | null;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                }) | null;
-                readonly selectedShippingQuote: {
-                    readonly typeName: string;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+  } | null;
+  readonly code: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artworkOrEditionSet: {
+          readonly __typename: "Artwork";
+          readonly price: string | null;
+        } | {
+          readonly __typename: "EditionSet";
+          readonly price: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+        readonly selectedShippingQuote: {
+          readonly typeName: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly shippingTotal: string | null;
+  readonly shippingTotalCents: number | null;
+  readonly taxTotal: string | null;
+  readonly taxTotalCents: number | null;
+  readonly itemsTotal: string | null;
+  readonly buyerTotal: string | null;
+  readonly currencyCode: string;
+  readonly lastOffer?: {
+    readonly internalID: string;
+    readonly amount: string | null;
+    readonly amountCents: number;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
-    readonly itemsTotal: string | null;
     readonly buyerTotal: string | null;
-    readonly currencyCode: string;
-    readonly lastOffer?: {
-        readonly internalID: string;
-        readonly amount: string | null;
-        readonly amountCents: number;
-        readonly shippingTotal: string | null;
-        readonly shippingTotalCents: number | null;
-        readonly taxTotal: string | null;
-        readonly taxTotalCents: number | null;
-        readonly buyerTotal: string | null;
-        readonly buyerTotalCents: number | null;
-        readonly fromParticipant: CommerceOrderParticipantEnum | null;
-        readonly note: string | null;
-    } | null | undefined;
-    readonly myLastOffer?: {
-        readonly internalID: string;
-        readonly amount: string | null;
-        readonly amountCents: number;
-        readonly shippingTotal: string | null;
-        readonly shippingTotalCents: number | null;
-        readonly taxTotal: string | null;
-        readonly taxTotalCents: number | null;
-        readonly buyerTotal: string | null;
-        readonly buyerTotalCents: number | null;
-        readonly fromParticipant: CommerceOrderParticipantEnum | null;
-        readonly note: string | null;
-    } | null | undefined;
-    readonly " $refType": "TransactionDetailsSummaryItem_order";
+    readonly buyerTotalCents: number | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly note: string | null;
+  } | null;
+  readonly myLastOffer?: {
+    readonly internalID: string;
+    readonly amount: string | null;
+    readonly amountCents: number;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
+    readonly buyerTotal: string | null;
+    readonly buyerTotalCents: number | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly note: string | null;
+  } | null;
+  readonly " $fragmentType": "TransactionDetailsSummaryItem_order";
 };
-export type TransactionDetailsSummaryItem_order$data = TransactionDetailsSummaryItem_order;
 export type TransactionDetailsSummaryItem_order$key = {
-    readonly " $data"?: TransactionDetailsSummaryItem_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order">;
+  readonly " $data"?: TransactionDetailsSummaryItem_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -343,5 +346,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '6fbb092aebc67d05abdf31f7a3ff3cf5';
+
+(node as any).hash = "6fbb092aebc67d05abdf31f7a3ff3cf5";
+
 export default node;

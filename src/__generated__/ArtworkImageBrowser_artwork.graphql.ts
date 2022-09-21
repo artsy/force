@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<bb9ffe564ce7c4de071eb0a0f235659c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkImageBrowser_artwork = {
-    readonly internalID: string;
-    readonly images: ReadonlyArray<{
-        readonly width: number | null;
-        readonly height: number | null;
-    } | null> | null;
-    readonly figures: ReadonlyArray<{
-        readonly internalID?: string | null | undefined;
-        readonly isDefault?: boolean | null | undefined;
-        readonly type: "Video";
-    }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
-    readonly " $refType": "ArtworkImageBrowser_artwork";
+export type ArtworkImageBrowser_artwork$data = {
+  readonly internalID: string;
+  readonly images: ReadonlyArray<{
+    readonly width: number | null;
+    readonly height: number | null;
+  } | null> | null;
+  readonly figures: ReadonlyArray<{
+    readonly internalID?: string | null;
+    readonly isDefault?: boolean | null;
+    readonly type: "Video";
+  }>;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
+  readonly " $fragmentType": "ArtworkImageBrowser_artwork";
 };
-export type ArtworkImageBrowser_artwork$data = ArtworkImageBrowser_artwork;
 export type ArtworkImageBrowser_artwork$key = {
-    readonly " $data"?: ArtworkImageBrowser_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork">;
+  readonly " $data"?: ArtworkImageBrowser_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -40,6 +43,21 @@ return {
   "metadata": null,
   "name": "ArtworkImageBrowser_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkActions_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkImageBrowserSmall_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkImageBrowserLarge_artwork"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -105,26 +123,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkActions_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkImageBrowserSmall_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkImageBrowserLarge_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '541f4cb1252318c53c846581e242af3b';
+
+(node as any).hash = "541f4cb1252318c53c846581e242af3b";
+
 export default node;

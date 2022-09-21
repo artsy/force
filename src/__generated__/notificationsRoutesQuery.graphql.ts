@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<b1be4e1d24ac628aa39c88c6dbe30b2d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesQueryVariables = {};
-export type notificationsRoutesQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"NotificationsApp_me">;
-    } | null;
+export type notificationsRoutesQuery$variables = {};
+export type notificationsRoutesQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
+  } | null;
 };
 export type notificationsRoutesQuery = {
-    readonly response: notificationsRoutesQueryResponse;
-    readonly variables: notificationsRoutesQueryVariables;
+  variables: notificationsRoutesQuery$variables;
+  response: notificationsRoutesQuery$data;
 };
-
-
-
-/*
-query notificationsRoutesQuery {
-  me {
-    ...NotificationsApp_me
-    id
-  }
-}
-
-fragment NotificationsApp_me on Me {
-  unreadNotificationsCount
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -99,5 +90,7 @@ const node: ConcreteRequest = {
     "text": "query notificationsRoutesQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
   }
 };
-(node as any).hash = '186bea32415fd2b3c522c5bebe874558';
+
+(node as any).hash = "186bea32415fd2b3c522c5bebe874558";
+
 export default node;

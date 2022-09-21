@@ -1,58 +1,25 @@
+/**
+ * @generated SignedSource<<238a7ec4b7545e625ef027fb54105a2d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarNotificationsQueryVariables = {};
-export type NavBarNotificationsQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"NavBarNotifications_me">;
-    } | null;
+export type NavBarNotificationsQuery$variables = {};
+export type NavBarNotificationsQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarNotifications_me">;
+  } | null;
 };
 export type NavBarNotificationsQuery = {
-    readonly response: NavBarNotificationsQueryResponse;
-    readonly variables: NavBarNotificationsQueryVariables;
+  variables: NavBarNotificationsQuery$variables;
+  response: NavBarNotificationsQuery$data;
 };
-
-
-
-/*
-query NavBarNotificationsQuery {
-  me {
-    ...NavBarNotifications_me
-    id
-  }
-}
-
-fragment NavBarNotifications_me on Me {
-  unreadNotificationsCount
-  followsAndSaves {
-    notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {
-      edges {
-        node {
-          href
-          summary
-          artists
-          published_at: publishedAt(format: "MMM DD")
-          image {
-            thumb: cropped(height: 80, width: 80) {
-              url
-            }
-          }
-          id
-          __typename
-        }
-        cursor
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -307,5 +274,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3a7576546a827a35592e3716a3268ce0';
+
+(node as any).hash = "3a7576546a827a35592e3716a3268ce0";
+
 export default node;

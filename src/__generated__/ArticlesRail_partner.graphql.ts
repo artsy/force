@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<a5a9e218075ebd2e5a1614748c6e3c29>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticlesRail_partner = {
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArticlesRail_partner";
+export type ArticlesRail_partner$data = {
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArticlesRail_partner";
 };
-export type ArticlesRail_partner$data = ArticlesRail_partner;
 export type ArticlesRail_partner$key = {
-    readonly " $data"?: ArticlesRail_partner$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_partner">;
+  readonly " $data"?: ArticlesRail_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticlesRail_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -100,5 +103,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '09179c23e2649250a136cbb5629b2960';
+
+(node as any).hash = "09179c23e2649250a136cbb5629b2960";
+
 export default node;

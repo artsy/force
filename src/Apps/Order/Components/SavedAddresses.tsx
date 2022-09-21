@@ -15,7 +15,7 @@ import { useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
-import { SavedAddresses_me } from "__generated__/SavedAddresses_me.graphql"
+import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import { AddressModal, ModalDetails } from "Apps/Order/Components/AddressModal"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import createLogger from "Utils/logger"
@@ -24,8 +24,8 @@ import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { useSystemContext } from "System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
-import { UpdateUserAddressMutationResponse } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutationResponse } from "__generated__/CreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
@@ -34,7 +34,7 @@ const PAGE_SIZE = 30
 
 interface SavedAddressesProps {
   onChangeAddressCount?: (active?: number) => void
-  me: SavedAddresses_me
+  me: SavedAddresses_me$data
   onSelect?: (string) => void
   inCollectorProfile: boolean
   commitMutation?: CommitMutation
@@ -42,10 +42,10 @@ interface SavedAddressesProps {
   addressCount?: number
   onAddressDelete?: (removedAddressId: string) => void
   onAddressCreate?: (
-    address: CreateUserAddressMutationResponse["createUserAddress"]
+    address: CreateUserAddressMutation$data["createUserAddress"]
   ) => void
   onAddressEdit?: (
-    address: UpdateUserAddressMutationResponse["updateUserAddress"]
+    address: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => void
   selectedAddress?: string
   onShowToast?: (isShow: boolean, action: string) => void
@@ -53,7 +53,9 @@ interface SavedAddressesProps {
 
 type Address = NonNullable<
   NonNullable<
-    NonNullable<NonNullable<SavedAddresses_me["addressConnection"]>["edges"]>[0]
+    NonNullable<
+      NonNullable<SavedAddresses_me$data["addressConnection"]>["edges"]
+    >[0]
   >["node"]
 >
 
@@ -145,8 +147,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const createOrUpdateAddressSuccess = (
-    address?: UpdateUserAddressMutationResponse &
-      CreateUserAddressMutationResponse
+    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => {
     refetchAddresses(() => {
       if (address?.createUserAddress) {

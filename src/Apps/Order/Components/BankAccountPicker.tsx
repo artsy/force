@@ -2,13 +2,13 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
+import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { BorderedRadio, RadioGroup, Collapse, Spacer } from "@artsy/palette"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
-import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
+import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useSetPayment } from "../Mutations/useSetPayment"
 import { camelCase, upperFirst } from "lodash"
@@ -20,8 +20,8 @@ interface BankAccountRecord {
 }
 
 interface Props {
-  order: BankAccountPicker_order
-  me: BankAccountPicker_me
+  order: BankAccountPicker_order$data
+  me: BankAccountPicker_me$data
 }
 
 export const BankAccountPicker: FC<Props> = props => {

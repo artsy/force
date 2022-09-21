@@ -1,57 +1,25 @@
+/**
+ * @generated SignedSource<<08ffb5cdaf054bcf236b0f92ea99b227>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQsDialog_Test_QueryVariables = {};
-export type AuctionFAQsDialog_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionFAQsDialog_viewer">;
-    } | null;
+export type AuctionFAQsDialog_Test_Query$variables = {};
+export type AuctionFAQsDialog_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQsDialog_viewer">;
+  } | null;
 };
 export type AuctionFAQsDialog_Test_Query = {
-    readonly response: AuctionFAQsDialog_Test_QueryResponse;
-    readonly variables: AuctionFAQsDialog_Test_QueryVariables;
+  variables: AuctionFAQsDialog_Test_Query$variables;
+  response: AuctionFAQsDialog_Test_Query$data;
 };
-
-
-
-/*
-query AuctionFAQsDialog_Test_Query {
-  viewer {
-    ...AuctionFAQsDialog_viewer
-  }
-}
-
-fragment AuctionFAQsDialog_viewer on Viewer {
-  bidding: page(id: "how-auctions-work-bidding") {
-    name
-    content(format: HTML)
-    id
-  }
-  buyersPremium: page(id: "how-auctions-work-buyers-premium-taxes-and-fees") {
-    name
-    content(format: HTML)
-    id
-  }
-  paymentsAndShipping: page(id: "how-auctions-work-payments-and-shipping") {
-    name
-    content(format: HTML)
-    id
-  }
-  emailsAndAlerts: page(id: "how-auctions-work-emails-and-alerts") {
-    name
-    content(format: HTML)
-    id
-  }
-  conditionsOfSale: page(id: "how-auctions-work-conditions-of-sale") {
-    name
-    content(format: HTML)
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -272,5 +240,7 @@ return {
   }
 };
 })();
-(node as any).hash = '175fc2bbd27ccf82b0175bdc54ef184e';
+
+(node as any).hash = "175fc2bbd27ccf82b0175bdc54ef184e";
+
 export default node;

@@ -1,40 +1,28 @@
+/**
+ * @generated SignedSource<<c07181ec0be48b1cd49603187dfca030>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PollAccountBalanceQueryVariables = {
-    setupIntentId?: string | null | undefined;
-    bankAccountId?: string | null | undefined;
+export type PollAccountBalanceQuery$variables = {
+  setupIntentId?: string | null;
+  bankAccountId?: string | null;
 };
-export type PollAccountBalanceQueryResponse = {
-    readonly commerceBankAccountBalance: {
-        readonly " $fragmentRefs": FragmentRefs<"PollAccountBalance_commerceBankAccountBalance">;
-    } | null;
+export type PollAccountBalanceQuery$data = {
+  readonly commerceBankAccountBalance: {
+    readonly " $fragmentSpreads": FragmentRefs<"PollAccountBalance_commerceBankAccountBalance">;
+  } | null;
 };
 export type PollAccountBalanceQuery = {
-    readonly response: PollAccountBalanceQueryResponse;
-    readonly variables: PollAccountBalanceQueryVariables;
+  variables: PollAccountBalanceQuery$variables;
+  response: PollAccountBalanceQuery$data;
 };
-
-
-
-/*
-query PollAccountBalanceQuery(
-  $setupIntentId: ID
-  $bankAccountId: ID
-) {
-  commerceBankAccountBalance(setupIntentId: $setupIntentId, bankAccountId: $bankAccountId) {
-    ...PollAccountBalance_commerceBankAccountBalance
-  }
-}
-
-fragment PollAccountBalance_commerceBankAccountBalance on CommerceBankAccountBalance {
-  balanceCents
-  currencyCode
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -135,5 +123,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b689bbfa9a6c58e6d8d5e10418240c6a';
+
+(node as any).hash = "b689bbfa9a6c58e6d8d5e10418240c6a";
+
 export default node;

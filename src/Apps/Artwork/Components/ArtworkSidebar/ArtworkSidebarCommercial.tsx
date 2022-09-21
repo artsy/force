@@ -11,7 +11,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { ArtworkSidebarCommercial_artwork } from "__generated__/ArtworkSidebarCommercial_artwork.graphql"
+import { ArtworkSidebarCommercial_artwork$data } from "__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "__generated__/ArtworkSidebarCommercialOrderMutation.graphql"
 import { SystemContext } from "System"
@@ -38,7 +38,7 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSideb
 import track from "react-tracking"
 
 type EditionSet = NonNullable<
-  ArtworkSidebarCommercial_artwork["edition_sets"]
+  ArtworkSidebarCommercial_artwork$data["edition_sets"]
 >[0]
 
 export interface ArtworkSidebarCommercialContainerProps
@@ -107,6 +107,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SizeInfo piece={editionSet!} />
 
         <Text ml={1} variant="xs" data-test="SaleMessage">
@@ -391,6 +392,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           Be notified when a similar work is available
         </Text>
         <Spacer mt={2} />
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </>
     )
@@ -551,7 +553,7 @@ const ErrorToast: FC<{ onClose(): void; show: boolean }> = ({
 }
 
 interface ArtworkSidebarCommercialProps {
-  artwork: ArtworkSidebarCommercial_artwork
+  artwork: ArtworkSidebarCommercial_artwork$data
   relay?: RelayProp
 }
 

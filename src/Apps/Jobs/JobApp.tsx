@@ -10,11 +10,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { TopContextBar } from "Components/TopContextBar"
-import { JobApp_job } from "__generated__/JobApp_job.graphql"
+import { JobApp_job$data } from "__generated__/JobApp_job.graphql"
 import { PageHTML } from "../Page/Components/PageHTML"
 
 interface JobAppProps {
-  job: JobApp_job
+  job: JobApp_job$data
 }
 
 const JobApp: FC<JobAppProps> = ({ job }) => {

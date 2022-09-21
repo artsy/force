@@ -16,12 +16,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArticleHero_article } from "__generated__/ArticleHero_article.graphql"
+import { ArticleHero_article$data } from "__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
 import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 
 interface ArticleHeroProps {
-  article: ArticleHero_article
+  article: ArticleHero_article$data
   fixed?: boolean
 }
 

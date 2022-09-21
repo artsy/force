@@ -1,7 +1,7 @@
 import { Box, Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistCareerHighlights_artist } from "__generated__/ArtistCareerHighlights_artist.graphql"
+import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System"
@@ -14,7 +14,7 @@ import { getENV } from "Utils/getENV"
 import { useTranslation } from "react-i18next"
 
 interface ArtistCareerHighlightsProps {
-  artist: ArtistCareerHighlights_artist
+  artist: ArtistCareerHighlights_artist$data
 }
 
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
@@ -57,12 +57,14 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
       <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
         {displayInsightAchievements && (
           <Column span={6}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightAchievementsFragmentContainer artist={artist} />
           </Column>
         )}
 
         {displayInsightBadges && (
           <Column span={6}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightBadgesFragmentContainer artist={artist} />
           </Column>
         )}
@@ -158,6 +160,7 @@ export const ArtistCareerHighlightsQueryRenderer: React.FC<{
 
         if (props.artist) {
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <ArtistCareerHighlightsFragmentContainer artist={props.artist} />
           )
         }

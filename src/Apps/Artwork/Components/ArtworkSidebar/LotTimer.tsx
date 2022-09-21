@@ -1,4 +1,4 @@
-import { LotTimer_saleArtwork } from "__generated__/LotTimer_saleArtwork.graphql"
+import { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Text, Spacer, Box } from "@artsy/palette"
@@ -8,7 +8,7 @@ import { ArtworkSidebarAuctionProgressBar } from "./ArtworkSidebarAuctionProgres
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 
 export interface LotTimerProps {
-  saleArtwork: LotTimer_saleArtwork
+  saleArtwork: LotTimer_saleArtwork$data
 }
 
 export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {

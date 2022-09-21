@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<05e03a2004947d5038dfc65266abbeba>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersFilteredCells_viewer = {
-    readonly partnersConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "PartnersFilteredCells_viewer";
+export type PartnersFilteredCells_viewer$data = {
+  readonly partnersConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "PartnersFilteredCells_viewer";
 };
-export type PartnersFilteredCells_viewer$data = PartnersFilteredCells_viewer;
 export type PartnersFilteredCells_viewer$key = {
-    readonly " $data"?: PartnersFilteredCells_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PartnersFilteredCells_viewer">;
+  readonly " $data"?: PartnersFilteredCells_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PartnersFilteredCells_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -137,16 +140,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellPartner_partner"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellPartner_partner"
                 }
               ],
               "storageKey": null
@@ -193,5 +196,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'e5b6e92d05656ec2e55e3392793f7c1f';
+
+(node as any).hash = "e5b6e92d05656ec2e55e3392793f7c1f";
+
 export default node;

@@ -11,8 +11,8 @@ import { useMemo, useRef, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
-import { ShowsCity_viewer } from "__generated__/ShowsCity_viewer.graphql"
-import { ShowsCity_city } from "__generated__/ShowsCity_city.graphql"
+import { ShowsCity_viewer$data } from "__generated__/ShowsCity_viewer.graphql"
+import { ShowsCity_city$data } from "__generated__/ShowsCity_city.graphql"
 import { ShowsMeta } from "../Components/ShowsMeta"
 import { ShowsFeaturedShowFragmentContainer } from "../Components/ShowsFeaturedShow"
 import { DateTime } from "luxon"
@@ -22,8 +22,8 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 
 interface ShowsCityProps {
-  viewer: ShowsCity_viewer
-  city: ShowsCity_city
+  viewer: ShowsCity_viewer$data
+  city: ShowsCity_city$data
   relay: RelayRefetchProp
 }
 
@@ -105,6 +105,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsHeaderFragmentContainer viewer={viewer} />
 
         {openingThisWeek.length > 0 && (
@@ -165,6 +166,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
               return (
                 <Column key={show.internalID} span={4}>
                   <ShowsFeaturedShowFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     show={show}
                     size="small"
                   />
@@ -177,6 +179,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
         {city.currentShows?.pageCursors && (
           <PaginationFragmentContainer
             hasNextPage={!!city.currentShows.pageInfo.hasNextPage}
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={city.currentShows.pageCursors}
             onClick={handleClick}
             onNext={handleNext}
@@ -217,6 +220,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
                   return (
                     <Column key={show.internalID} span={4}>
                       <ShowsFeaturedShowFragmentContainer
+                        // @ts-ignore RELAY UPGRADE 13
                         show={show}
                         size="small"
                       />
@@ -227,6 +231,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
             </>
           )}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsHeaderFragmentContainer viewer={viewer} />
       </Join>
     </>

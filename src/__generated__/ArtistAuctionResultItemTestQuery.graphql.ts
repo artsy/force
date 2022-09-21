@@ -1,80 +1,31 @@
+/**
+ * @generated SignedSource<<88959b723e661eb13f96222334c5a679>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAuctionResultItemTestQueryVariables = {};
-export type ArtistAuctionResultItemTestQueryResponse = {
-    readonly artist: {
-        readonly auctionResultsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-                } | null;
-            } | null> | null;
+export type ArtistAuctionResultItemTestQuery$variables = {};
+export type ArtistAuctionResultItemTestQuery$data = {
+  readonly artist: {
+    readonly auctionResultsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type ArtistAuctionResultItemTestQuery = {
-    readonly response: ArtistAuctionResultItemTestQueryResponse;
-    readonly variables: ArtistAuctionResultItemTestQueryVariables;
+  variables: ArtistAuctionResultItemTestQuery$variables;
+  response: ArtistAuctionResultItemTestQuery$data;
 };
-
-
-
-/*
-query ArtistAuctionResultItemTestQuery {
-  artist(id: "andy-warhol") {
-    auctionResultsConnection(first: 1) {
-      edges {
-        node {
-          ...ArtistAuctionResultItem_auctionResult
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
-  title
-  dimension_text: dimensionText
-  organization
-  artist {
-    name
-    id
-  }
-  images {
-    larger {
-      cropped(width: 100, height: 100) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-  }
-  mediumText
-  categoryText
-  date_text: dateText
-  saleDate
-  boughtIn
-  currency
-  price_realized: priceRealized {
-    display
-    display_usd: displayUSD
-    cents_usd: centsUSD
-  }
-  performance {
-    mid
-  }
-  estimate {
-    display
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -439,5 +390,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5717529e5ff595a83f6f8a42abb5d99e';
+
+(node as any).hash = "5717529e5ff595a83f6f8a42abb5d99e";
+
 export default node;

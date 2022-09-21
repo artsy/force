@@ -1,56 +1,27 @@
+/**
+ * @generated SignedSource<<b3dd9b87717d5d934a18492aa8fed6ad>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InquiryInquiryQueryVariables = {
-    id: string;
+export type InquiryInquiryQuery$variables = {
+  id: string;
 };
-export type InquiryInquiryQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"InquiryInquiry_artwork">;
-    } | null;
+export type InquiryInquiryQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"InquiryInquiry_artwork">;
+  } | null;
 };
 export type InquiryInquiryQuery = {
-    readonly response: InquiryInquiryQueryResponse;
-    readonly variables: InquiryInquiryQueryVariables;
+  variables: InquiryInquiryQuery$variables;
+  response: InquiryInquiryQuery$data;
 };
-
-
-
-/*
-query InquiryInquiryQuery(
-  $id: String!
-) {
-  artwork(id: $id) {
-    ...InquiryInquiry_artwork
-    id
-  }
-}
-
-fragment InquiryInquiry_artwork on Artwork {
-  internalID
-  title
-  date
-  artist {
-    name
-    id
-  }
-  partner {
-    name
-    id
-  }
-  image {
-    resized(width: 60, height: 45) {
-      height
-      width
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -243,5 +214,7 @@ return {
   }
 };
 })();
-(node as any).hash = '231704eaffd30963a3caa4c5c525fa0d';
+
+(node as any).hash = "231704eaffd30963a3caa4c5c525fa0d";
+
 export default node;

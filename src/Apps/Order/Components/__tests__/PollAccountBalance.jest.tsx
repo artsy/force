@@ -17,6 +17,7 @@ const { renderWithRelay } = setupTestWrapperTL<
       <PollAccountBalanceRefetchContainer
         setupIntentId={"setupIntentId"}
         bankAccountId={"bankAccountId"}
+        // @ts-ignore RELAY UPGRADE 13
         commerceBankAccountBalance={commerceBankAccountBalance}
         onBalanceCheckComplete={mockBalanceCheckComplete}
         buyerTotalCents={100}

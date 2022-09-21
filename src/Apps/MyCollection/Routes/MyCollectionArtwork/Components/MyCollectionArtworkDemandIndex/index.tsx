@@ -8,12 +8,12 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkDemandIndex_marketPriceInsights } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
+import { MyCollectionArtworkDemandIndex_marketPriceInsights$data } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
 import { DemandIndexBar } from "./DemandIndexBar"
 import { HighDemandIcon } from "./HighDemandIcon"
 
 interface MyCollectionArtworkDemandIndexProps {
-  marketPriceInsights: MyCollectionArtworkDemandIndex_marketPriceInsights
+  marketPriceInsights: MyCollectionArtworkDemandIndex_marketPriceInsights$data
 }
 
 const DemandIndexExplanation =

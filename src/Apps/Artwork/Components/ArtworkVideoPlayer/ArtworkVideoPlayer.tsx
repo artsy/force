@@ -1,11 +1,11 @@
 import React, { FC } from "react"
 import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkVideoPlayer_artwork } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
+import { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
 
 interface ArtworkVideoPlayerProps extends BoxProps {
   activeIndex: number
-  artwork: ArtworkVideoPlayer_artwork
+  artwork: ArtworkVideoPlayer_artwork$data
   maxHeight: number
 }
 

@@ -29,6 +29,7 @@ jest.mock("System/Router/useRouter", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
+  // @ts-ignore RELAY UPGRADE 13
   Component: ShowAppFragmentContainer,
   query: graphql`
     query ShowApp_Test_Query @relay_test_operation {

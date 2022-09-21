@@ -1,60 +1,41 @@
+/**
+ * @generated SignedSource<<48a5dba6a73bb090e9ce433a7d3b1f64>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateAccountRequestMutationInput = {
-    action?: string | null | undefined;
-    clientMutationId?: string | null | undefined;
-    email?: string | null | undefined;
-    name?: string | null | undefined;
-    notes: string;
-    userID?: string | null | undefined;
+  action?: string | null;
+  clientMutationId?: string | null;
+  email?: string | null;
+  name?: string | null;
+  notes: string;
+  userID?: string | null;
 };
-export type CCPARequestMutationVariables = {
-    input: CreateAccountRequestMutationInput;
+export type CCPARequestMutation$variables = {
+  input: CreateAccountRequestMutationInput;
 };
-export type CCPARequestMutationResponse = {
-    readonly createAccountRequest: {
-        readonly accountRequestOrError: {
-            readonly accountRequest?: {
-                readonly notes: string | null;
-            } | null | undefined;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null | undefined;
-        } | null;
+export type CCPARequestMutation$data = {
+  readonly createAccountRequest: {
+    readonly accountRequestOrError: {
+      readonly accountRequest?: {
+        readonly notes: string | null;
+      } | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
     } | null;
+  } | null;
 };
 export type CCPARequestMutation = {
-    readonly response: CCPARequestMutationResponse;
-    readonly variables: CCPARequestMutationVariables;
+  variables: CCPARequestMutation$variables;
+  response: CCPARequestMutation$data;
 };
-
-
-
-/*
-mutation CCPARequestMutation(
-  $input: CreateAccountRequestMutationInput!
-) {
-  createAccountRequest(input: $input) {
-    accountRequestOrError {
-      __typename
-      ... on CreateAccountRequestMutationSuccess {
-        accountRequest {
-          notes
-          id
-        }
-      }
-      ... on CreateAccountRequestMutationFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -230,5 +211,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e1d550810190e2f3e06e6e9f74f413b9';
+
+(node as any).hash = "e1d550810190e2f3e06e6e9f74f413b9";
+
 export default node;

@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { PartnerArtistDetails_partnerArtist } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
+import { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
 import {
   Box,
@@ -18,7 +18,7 @@ import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlacehold
 import { PartnerArtistArtworksRailPaginationContainer } from "./PartnerArtistArtworksRail"
 
 export interface PartnerArtistDetailsProps {
-  partnerArtist: PartnerArtistDetails_partnerArtist
+  partnerArtist: PartnerArtistDetails_partnerArtist$data
   partnerId: string
 }
 
@@ -49,6 +49,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
             </Column>
             <Column span={[12, 6]}>
               <FollowArtistButton
+                // @ts-ignore RELAY UPGRADE 13
                 artist={partnerArtist.node}
                 contextModule={ContextModule.artistHeader}
                 width="100%"
@@ -75,6 +76,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           <PartnerArtistArtworksRailPaginationContainer
             partnerId={partnerId}
             artistId={partnerArtist.node.slug}
+            // @ts-ignore RELAY UPGRADE 13
             partnerArtist={partnerArtist}
           ></PartnerArtistArtworksRailPaginationContainer>
         </Column>
@@ -139,6 +141,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
             {...rest}
             {...props}
             partnerId={partnerId}
+            // @ts-ignore RELAY UPGRADE 13
             partnerArtist={props?.partner?.artistsConnection?.edges?.[0]!}
           />
         )

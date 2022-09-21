@@ -1,6 +1,6 @@
 import { MockBoot, renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
-import { ArtworkArtistSeries_QueryRawResponse } from "__generated__/ArtworkArtistSeries_Query.graphql"
+import { ArtworkArtistSeries_Query$rawResponse } from "__generated__/ArtworkArtistSeries_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 import { ArtworkArtistSeriesFragmentContainer } from "../ArtworkArtistSeries"
@@ -21,7 +21,7 @@ describe("ArtworkArtistSeries", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: ArtworkArtistSeries_QueryRawResponse = ArtworkArtistSeriesFixture
+    response: ArtworkArtistSeries_Query$rawResponse = ArtworkArtistSeriesFixture
   ) => {
     return renderRelayTree({
       Component: ({ artwork }) => {
@@ -54,7 +54,7 @@ describe("ArtworkArtistSeries", () => {
   })
 
   it("includes just the series rail if there are no artworks", async () => {
-    const noArtworksData: ArtworkArtistSeries_QueryRawResponse = {
+    const noArtworksData: ArtworkArtistSeries_Query$rawResponse = {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
@@ -75,7 +75,7 @@ describe("ArtworkArtistSeries", () => {
   })
 
   it("includes just series if the artist has any", async () => {
-    const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+    const noSeriesData: ArtworkArtistSeries_Query$rawResponse = {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
@@ -89,7 +89,7 @@ describe("ArtworkArtistSeries", () => {
   })
 
   it("is null if there is no series or artworks", async () => {
-    const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+    const noSeriesData: ArtworkArtistSeries_Query$rawResponse = {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
@@ -109,7 +109,7 @@ describe("ArtworkArtistSeries", () => {
   })
 })
 
-const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
+const ArtworkArtistSeriesFixture: ArtworkArtistSeries_Query$rawResponse = {
   artwork: {
     id: "relayrelay",
     internalID: "abc124",

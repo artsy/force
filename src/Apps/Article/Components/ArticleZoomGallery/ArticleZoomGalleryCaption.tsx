@@ -3,10 +3,10 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Metadata from "Components/Artwork/Metadata"
 import { RouterLink } from "System/Router/RouterLink"
-import { ArticleZoomGalleryCaption_figure } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
+import { ArticleZoomGalleryCaption_figure$data } from "__generated__/ArticleZoomGalleryCaption_figure.graphql"
 
 interface ArticleZoomGalleryCaptionProps {
-  figure: ArticleZoomGalleryCaption_figure
+  figure: ArticleZoomGalleryCaption_figure$data
 }
 
 const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({
@@ -22,6 +22,7 @@ const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({
           flex={1}
           maxWidth={["75%", "100%"]}
         >
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <Metadata mt={0} artwork={figure} width="100%" />
 
           <Button

@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<07f3dcab68dda23b4e358f076b2aa7f7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInsightAchievements_Test_QueryVariables = {};
-export type ArtistInsightAchievements_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInsightAchievements_artist">;
-    } | null;
+export type ArtistInsightAchievements_Test_Query$variables = {};
+export type ArtistInsightAchievements_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightAchievements_artist">;
+  } | null;
 };
 export type ArtistInsightAchievements_Test_Query = {
-    readonly response: ArtistInsightAchievements_Test_QueryResponse;
-    readonly variables: ArtistInsightAchievements_Test_QueryVariables;
+  variables: ArtistInsightAchievements_Test_Query$variables;
+  response: ArtistInsightAchievements_Test_Query$data;
 };
-
-
-
-/*
-query ArtistInsightAchievements_Test_Query {
-  artist(id: "example") {
-    ...ArtistInsightAchievements_artist
-    id
-  }
-}
-
-fragment ArtistInsightAchievements_artist on Artist {
-  slug
-  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
-    label
-    entities
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -184,5 +171,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9972d4f3c5f79b6a5c2b5d5815bf6061';
+
+(node as any).hash = "9972d4f3c5f79b6a5c2b5d5815bf6061";
+
 export default node;

@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<843ebc658f9fc57c0e1fcd272a2c350e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InsightsRoute_me = {
-    readonly internalID: string;
-    readonly myCollectionInfo: {
-        readonly artworksCount: number;
-        readonly " $fragmentRefs": FragmentRefs<"InsightsOverview_info">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"InsightsAuctionResults_me">;
-    readonly " $refType": "InsightsRoute_me";
+export type InsightsRoute_me$data = {
+  readonly internalID: string;
+  readonly myCollectionInfo: {
+    readonly artworksCount: number;
+    readonly " $fragmentSpreads": FragmentRefs<"InsightsOverview_info">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"InsightsAuctionResults_me">;
+  readonly " $fragmentType": "InsightsRoute_me";
 };
-export type InsightsRoute_me$data = InsightsRoute_me;
 export type InsightsRoute_me$key = {
-    readonly " $data"?: InsightsRoute_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"InsightsRoute_me">;
+  readonly " $data"?: InsightsRoute_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"InsightsRoute_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,5 +69,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '52f7c13c0f5d5b900a11b8252d44798c';
+
+(node as any).hash = "52f7c13c0f5d5b900a11b8252d44798c";
+
 export default node;

@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<3dca1ba95609c8dc1e74a888fef04045>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeNewWorksForYouRail_artworksForUser = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly internalID: string;
-            readonly slug: string;
-            readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "HomeNewWorksForYouRail_artworksForUser";
+export type HomeNewWorksForYouRail_artworksForUser$data = {
+  readonly edges: ReadonlyArray<{
+    readonly node: {
+      readonly internalID: string;
+      readonly slug: string;
+      readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "HomeNewWorksForYouRail_artworksForUser";
 };
-export type HomeNewWorksForYouRail_artworksForUser$data = HomeNewWorksForYouRail_artworksForUser;
 export type HomeNewWorksForYouRail_artworksForUser$key = {
-    readonly " $data"?: HomeNewWorksForYouRail_artworksForUser$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeNewWorksForYouRail_artworksForUser">;
+  readonly " $data"?: HomeNewWorksForYouRail_artworksForUser$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeNewWorksForYouRail_artworksForUser">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -79,5 +82,7 @@ const node: ReaderFragment = {
   "type": "ArtworkConnection",
   "abstractKey": null
 };
-(node as any).hash = 'c80497b8abf280f4f25d4ab38900546f';
+
+(node as any).hash = "c80497b8abf280f4f25d4ab38900546f";
+
 export default node;

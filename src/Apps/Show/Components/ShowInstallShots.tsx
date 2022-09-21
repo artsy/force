@@ -10,13 +10,13 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CarouselProps } from "Components/Carousel"
-import { ShowInstallShots_show } from "__generated__/ShowInstallShots_show.graphql"
+import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
 import { compact } from "lodash"
 
-type InstallShot = NonNullable<ShowInstallShots_show["images"]>[number]
+type InstallShot = NonNullable<ShowInstallShots_show$data["images"]>[number]
 
 interface ShowInstallShotsProps extends Omit<CarouselProps, "children"> {
-  show: ShowInstallShots_show
+  show: ShowInstallShots_show$data
 }
 
 export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({

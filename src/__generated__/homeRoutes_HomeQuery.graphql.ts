@@ -1,94 +1,28 @@
+/**
+ * @generated SignedSource<<73e00e105e0d63c4777a18d26cc61675>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type homeRoutes_HomeQueryVariables = {};
-export type homeRoutes_HomeQueryResponse = {
-    readonly homePage: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeApp_homePage">;
-    } | null;
-    readonly featuredEventsOrderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
-    } | null;
+export type homeRoutes_HomeQuery$variables = {};
+export type homeRoutes_HomeQuery$data = {
+  readonly homePage: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_homePage">;
+  } | null;
+  readonly featuredEventsOrderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
+  } | null;
 };
 export type homeRoutes_HomeQuery = {
-    readonly response: homeRoutes_HomeQueryResponse;
-    readonly variables: homeRoutes_HomeQueryVariables;
+  variables: homeRoutes_HomeQuery$variables;
+  response: homeRoutes_HomeQuery$data;
 };
-
-
-
-/*
-query homeRoutes_HomeQuery {
-  homePage {
-    ...HomeApp_homePage
-  }
-  featuredEventsOrderedSet: orderedSet(id: "529939e2275b245e290004a0") {
-    ...HomeApp_featuredEventsOrderedSet
-    id
-  }
-}
-
-fragment HomeApp_featuredEventsOrderedSet on OrderedSet {
-  ...HomeFeaturedEventsRail_orderedSet
-}
-
-fragment HomeApp_homePage on HomePage {
-  ...HomeHeroUnits_homePage
-}
-
-fragment HomeFeaturedEventsRail_orderedSet on OrderedSet {
-  items {
-    __typename
-    ... on FeaturedLink {
-      internalID
-      title
-      subtitle
-      href
-      image {
-        small: cropped(width: 95, height: 63, version: ["main", "wide", "large_rectangle"]) {
-          src
-          srcSet
-          width
-          height
-        }
-        large: cropped(width: 445, height: 297, version: ["main", "wide", "large_rectangle"]) {
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment HomeHeroUnit_heroUnit on HomePageHeroUnit {
-  backgroundImageURL
-  heading
-  title
-  subtitle
-  linkText
-  href
-  creditLine
-}
-
-fragment HomeHeroUnits_homePage on HomePage {
-  heroUnits(platform: DESKTOP) {
-    internalID
-    ...HomeHeroUnit_heroUnit
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -410,5 +344,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f030323f431f45ee405e86ffac831e6c';
+
+(node as any).hash = "f030323f431f45ee405e86ffac831e6c";
+
 export default node;

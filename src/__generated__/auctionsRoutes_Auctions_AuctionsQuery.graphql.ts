@@ -1,45 +1,25 @@
+/**
+ * @generated SignedSource<<d38f6ec4afb590b1f7203ab6eef9b0b8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionsRoutes_Auctions_AuctionsQueryVariables = {};
-export type auctionsRoutes_Auctions_AuctionsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionsRoute_viewer">;
-    } | null;
+export type auctionsRoutes_Auctions_AuctionsQuery$variables = {};
+export type auctionsRoutes_Auctions_AuctionsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionsRoute_viewer">;
+  } | null;
 };
 export type auctionsRoutes_Auctions_AuctionsQuery = {
-    readonly response: auctionsRoutes_Auctions_AuctionsQueryResponse;
-    readonly variables: auctionsRoutes_Auctions_AuctionsQueryVariables;
+  variables: auctionsRoutes_Auctions_AuctionsQuery$variables;
+  response: auctionsRoutes_Auctions_AuctionsQuery$data;
 };
-
-
-
-/*
-query auctionsRoutes_Auctions_AuctionsQuery {
-  viewer {
-    ...AuctionsRoute_viewer
-  }
-}
-
-fragment AuctionsRoute_viewer on Viewer {
-  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {
-    totalCount
-    edges {
-      node {
-        slug
-        name
-        href
-        liveStartAt
-        isLiveOpen
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -204,5 +184,7 @@ const node: ConcreteRequest = {
     "text": "query auctionsRoutes_Auctions_AuctionsQuery {\n  viewer {\n    ...AuctionsRoute_viewer\n  }\n}\n\nfragment AuctionsRoute_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        id\n      }\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = '8238d88063273ae63f5b86b4a7980789';
+
+(node as any).hash = "8238d88063273ae63f5b86b4a7980789";
+
 export default node;

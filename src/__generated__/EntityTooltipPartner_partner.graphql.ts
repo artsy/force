@@ -1,33 +1,36 @@
+/**
+ * @generated SignedSource<<d32ac55044351324121a6e8fa5651fe0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityTooltipPartner_partner = {
-    readonly href: string | null;
-    readonly profile: {
-        readonly bio: string | null;
-        readonly fullBio: string | null;
-        readonly image: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
-        } | null;
+export type EntityTooltipPartner_partner$data = {
+  readonly href: string | null;
+  readonly profile: {
+    readonly bio: string | null;
+    readonly fullBio: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-    readonly " $refType": "EntityTooltipPartner_partner";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+  readonly " $fragmentType": "EntityTooltipPartner_partner";
 };
-export type EntityTooltipPartner_partner$data = EntityTooltipPartner_partner;
 export type EntityTooltipPartner_partner$key = {
-    readonly " $data"?: EntityTooltipPartner_partner$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityTooltipPartner_partner">;
+  readonly " $data"?: EntityTooltipPartner_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipPartner_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -35,6 +38,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityTooltipPartner_partner",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderPartner_partner"
+    },
     {
       "alias": null,
       "args": null,
@@ -135,15 +143,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "EntityHeaderPartner_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '82bb31bb03b675a6c87f8734d20e1534';
+
+(node as any).hash = "82bb31bb03b675a6c87f8734d20e1534";
+
 export default node;

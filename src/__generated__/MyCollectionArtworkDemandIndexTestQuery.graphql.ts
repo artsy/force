@@ -1,39 +1,27 @@
+/**
+ * @generated SignedSource<<1a1907a691507c449d4f01a662d52657>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkDemandIndexTestQueryVariables = {};
-export type MyCollectionArtworkDemandIndexTestQueryResponse = {
-    readonly artwork: {
-        readonly marketPriceInsights: {
-            readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkDemandIndex_marketPriceInsights">;
-        } | null;
+export type MyCollectionArtworkDemandIndexTestQuery$variables = {};
+export type MyCollectionArtworkDemandIndexTestQuery$data = {
+  readonly artwork: {
+    readonly marketPriceInsights: {
+      readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkDemandIndex_marketPriceInsights">;
     } | null;
+  } | null;
 };
 export type MyCollectionArtworkDemandIndexTestQuery = {
-    readonly response: MyCollectionArtworkDemandIndexTestQueryResponse;
-    readonly variables: MyCollectionArtworkDemandIndexTestQueryVariables;
+  variables: MyCollectionArtworkDemandIndexTestQuery$variables;
+  response: MyCollectionArtworkDemandIndexTestQuery$data;
 };
-
-
-
-/*
-query MyCollectionArtworkDemandIndexTestQuery {
-  artwork(id: "artwork-ID") {
-    marketPriceInsights {
-      ...MyCollectionArtworkDemandIndex_marketPriceInsights
-    }
-    id
-  }
-}
-
-fragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {
-  demandRank
-  demandRankDisplayText
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -175,5 +163,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7121f0cff6104b5586ec27d63da30ef1';
+
+(node as any).hash = "7121f0cff6104b5586ec27d63da30ef1";
+
 export default node;

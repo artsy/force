@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<7b6634158ebbc41df9ae534401dc5969>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuNotificationsIndicator_test_QueryVariables = {};
-export type NavBarMobileMenuNotificationsIndicator_test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuNotificationsIndicator_me">;
-    } | null;
+export type NavBarMobileMenuNotificationsIndicator_test_Query$variables = {};
+export type NavBarMobileMenuNotificationsIndicator_test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotificationsIndicator_me">;
+  } | null;
 };
 export type NavBarMobileMenuNotificationsIndicator_test_Query = {
-    readonly response: NavBarMobileMenuNotificationsIndicator_test_QueryResponse;
-    readonly variables: NavBarMobileMenuNotificationsIndicator_test_QueryVariables;
+  variables: NavBarMobileMenuNotificationsIndicator_test_Query$variables;
+  response: NavBarMobileMenuNotificationsIndicator_test_Query$data;
 };
-
-
-
-/*
-query NavBarMobileMenuNotificationsIndicator_test_Query {
-  me {
-    ...NavBarMobileMenuNotificationsIndicator_me
-    id
-  }
-}
-
-fragment NavBarMobileMenuNotificationsIndicator_me on Me {
-  unreadConversationCount
-  unreadNotificationsCount
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -132,5 +122,7 @@ return {
   }
 };
 })();
-(node as any).hash = '26ec2da0ab6233adec36923fad6a1536';
+
+(node as any).hash = "26ec2da0ab6233adec36923fad6a1536";
+
 export default node;

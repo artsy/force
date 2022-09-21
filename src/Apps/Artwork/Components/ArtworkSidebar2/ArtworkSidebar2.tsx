@@ -1,7 +1,7 @@
 import { Flex, Separator, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebar2ArtistsFragmentContainer } from "./ArtworkSidebar2Artists"
-import { ArtworkSidebar2_artwork } from "__generated__/ArtworkSidebar2_artwork.graphql"
+import { ArtworkSidebar2_artwork$data } from "__generated__/ArtworkSidebar2_artwork.graphql"
 import { ArtworkSidebar2ShippingInformationFragmentContainer } from "./ArtworkSidebar2ShippingInformation"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useTranslation } from "react-i18next"
@@ -18,7 +18,7 @@ import { ArtworkSidebar2EditionSetFragmentContainer } from "./ArtworkSidebar2Edi
 import { ArtworkSidebar2LinksFragmentContainer } from "./ArtworkSidebar2Links"
 
 export interface ArtworkSidebarProps {
-  artwork: ArtworkSidebar2_artwork
+  artwork: ArtworkSidebar2_artwork$data
 }
 
 const checkIfArtworkIsOnLoanOrPermanentCollection = (
@@ -71,13 +71,17 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
 
   return (
     <Flex flexDirection="column">
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
       <Separator />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2EditionSetFragmentContainer artwork={artwork} />
 
       {!isSold && artworkEcommerceAvailable && (
@@ -87,6 +91,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
           >
             <ArtworkSidebar2ShippingInformationFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
           </SidebarExpandable>
@@ -102,11 +107,13 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       <Separator />
       <Spacer mt={2} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
       {(!shouldHideDetailsCreateAlertCTA ||
         checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
+        // @ts-ignore RELAY UPGRADE 13
         <ArtworkSidebar2CreateArtworkAlertFragmentContainer artwork={artwork} />
       )}
       <Separator />

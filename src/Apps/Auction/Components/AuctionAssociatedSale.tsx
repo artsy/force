@@ -2,10 +2,10 @@ import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { startCase } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { AuctionAssociatedSale_sale } from "__generated__/AuctionAssociatedSale_sale.graphql"
+import { AuctionAssociatedSale_sale$data } from "__generated__/AuctionAssociatedSale_sale.graphql"
 
 interface AuctionAssociatedSaleProps {
-  sale: AuctionAssociatedSale_sale
+  sale: AuctionAssociatedSale_sale$data
 }
 
 const AuctionAssociatedSale: React.FC<AuctionAssociatedSaleProps> = ({

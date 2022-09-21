@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
-import { ShowSubApp_show } from "__generated__/ShowSubApp_show.graphql"
+import { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import {
   AnalyticsContext,
@@ -10,7 +10,7 @@ import {
 import { TopContextBar } from "Components/TopContextBar"
 
 interface ShowAppProps {
-  show: ShowSubApp_show
+  show: ShowSubApp_show$data
 }
 
 const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
@@ -18,6 +18,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
 
   return (
     <>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ShowMeta show={show} />
 
       <AnalyticsContext.Provider

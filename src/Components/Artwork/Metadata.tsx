@@ -4,13 +4,13 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
+import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 import { DetailsFragmentContainer as Details } from "./Details"
 
 export interface MetadataProps
   extends BoxProps,
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  artwork: Metadata_artwork
+  artwork: Metadata_artwork$data
   extended?: boolean
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
@@ -48,6 +48,7 @@ export const Metadata: React.FC<MetadataProps> = ({
     >
       <Details
         includeLinks={false}
+        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
         hideSaleInfo={hideSaleInfo}
         hidePartnerName={hidePartnerName}

@@ -2,10 +2,10 @@ import { Text } from "@artsy/palette"
 import React, { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import ArtworkGrid from "Components/ArtworkGrid"
-import { NewForYouArtworksGrid_viewer } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
+import { NewForYouArtworksGrid_viewer$data } from "__generated__/NewForYouArtworksGrid_viewer.graphql"
 
 interface NewForYouArtworksGridProps {
-  viewer: NewForYouArtworksGrid_viewer
+  viewer: NewForYouArtworksGrid_viewer$data
 }
 
 export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({

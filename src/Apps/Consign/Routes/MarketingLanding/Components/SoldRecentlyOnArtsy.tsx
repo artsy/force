@@ -20,10 +20,10 @@ import { RouterLink } from "System/Router/RouterLink"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
 import { SoldRecentlyOnArtsyQuery } from "__generated__/SoldRecentlyOnArtsyQuery.graphql"
-import { SoldRecentlyOnArtsy_recentlySoldArtworks } from "__generated__/SoldRecentlyOnArtsy_recentlySoldArtworks.graphql"
+import { SoldRecentlyOnArtsy_recentlySoldArtworks$data } from "__generated__/SoldRecentlyOnArtsy_recentlySoldArtworks.graphql"
 
 interface SoldRecentlyOnArtsyProps {
-  recentlySoldArtworks: SoldRecentlyOnArtsy_recentlySoldArtworks
+  recentlySoldArtworks: SoldRecentlyOnArtsy_recentlySoldArtworks$data
 }
 
 export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
@@ -66,6 +66,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   textDecoration="none"
                   onClick={trackArtworkItemClick(artwork, index)}
                 >
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ShelfArtworkFragmentContainer
                     artwork={artwork!}
                     key={artwork!.internalID}
@@ -208,6 +209,7 @@ export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
 
         return (
           <SoldRecentlyOnArtsyFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             recentlySoldArtworks={props.recentlySoldArtworks}
           />
         )

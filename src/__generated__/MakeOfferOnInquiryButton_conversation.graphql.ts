@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<371ef3b52dcdbb5894671edaa32c83e3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MakeOfferOnInquiryButton_conversation = {
-    readonly internalID: string | null;
-    readonly items: ReadonlyArray<{
-        readonly liveArtwork: ({
-            readonly __typename: "Artwork";
-            readonly is_acquireable: boolean | null;
-            readonly isEdition: boolean | null;
-            readonly editionSets: ReadonlyArray<{
-                readonly internalID: string;
-            } | null> | null;
-            readonly " $fragmentRefs": FragmentRefs<"ConfirmArtworkButton_artwork">;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
-    } | null> | null;
-    readonly " $refType": "MakeOfferOnInquiryButton_conversation";
+export type MakeOfferOnInquiryButton_conversation$data = {
+  readonly internalID: string | null;
+  readonly items: ReadonlyArray<{
+    readonly liveArtwork: {
+      readonly __typename: "Artwork";
+      readonly is_acquireable: boolean | null;
+      readonly isEdition: boolean | null;
+      readonly editionSets: ReadonlyArray<{
+        readonly internalID: string;
+      } | null> | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "MakeOfferOnInquiryButton_conversation";
 };
-export type MakeOfferOnInquiryButton_conversation$data = MakeOfferOnInquiryButton_conversation;
 export type MakeOfferOnInquiryButton_conversation$key = {
-    readonly " $data"?: MakeOfferOnInquiryButton_conversation$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
+  readonly " $data"?: MakeOfferOnInquiryButton_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -118,5 +121,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '83495b9f1eccf619be532226b9386ddb';
+
+(node as any).hash = "83495b9f1eccf619be532226b9386ddb";
+
 export default node;

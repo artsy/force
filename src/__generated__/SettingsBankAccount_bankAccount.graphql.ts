@@ -1,21 +1,24 @@
+/**
+ * @generated SignedSource<<dcdb27a7cdbde2e669da1c52955c5d38>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsBankAccount_bankAccount = {
-    readonly internalID: string;
-    readonly last4: string;
-    readonly " $refType": "SettingsBankAccount_bankAccount";
+export type SettingsBankAccount_bankAccount$data = {
+  readonly internalID: string;
+  readonly last4: string;
+  readonly " $fragmentType": "SettingsBankAccount_bankAccount";
 };
-export type SettingsBankAccount_bankAccount$data = SettingsBankAccount_bankAccount;
 export type SettingsBankAccount_bankAccount$key = {
-    readonly " $data"?: SettingsBankAccount_bankAccount$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsBankAccount_bankAccount">;
+  readonly " $data"?: SettingsBankAccount_bankAccount$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -41,5 +44,7 @@ const node: ReaderFragment = {
   "type": "BankAccount",
   "abstractKey": null
 };
-(node as any).hash = '35ab302f8b7ff6a657c572d98be2ee2b';
+
+(node as any).hash = "35ab302f8b7ff6a657c572d98be2ee2b";
+
 export default node;

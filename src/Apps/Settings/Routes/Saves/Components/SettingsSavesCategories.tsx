@@ -21,10 +21,10 @@ import {
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
-import { SettingsSavesCategories_me } from "__generated__/SettingsSavesCategories_me.graphql"
+import { SettingsSavesCategories_me$data } from "__generated__/SettingsSavesCategories_me.graphql"
 
 interface SettingsSavesCategoriesProps {
-  me: SettingsSavesCategories_me
+  me: SettingsSavesCategories_me$data
   relay: RelayPaginationProp
 }
 
@@ -66,6 +66,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
               return (
                 <CategoryRailFragmentContainer
                   key={internalID}
+                  // @ts-ignore RELAY UPGRADE 13
                   category={category}
                 />
               )
@@ -165,6 +166,7 @@ export const SettingsSavesCategoriesQueryRenderer = () => {
           return SETTINGS_SAVES_CATEGORIES_PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesCategoriesPaginationContainer me={props.me} />
       }}
     />

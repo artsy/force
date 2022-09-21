@@ -61,6 +61,7 @@ export const CellShow = () => {
                 return <CellShowPlaceholder {...rest} />
               }
 
+              // @ts-ignore RELAY UPGRADE 13
               return <CellShowFragmentContainer show={props.show} {...rest} />
             }}
           />

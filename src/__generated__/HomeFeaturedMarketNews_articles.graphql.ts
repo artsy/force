@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<8f4d0287ca510e1649d9377413d95d42>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
-    readonly internalID: string;
-    readonly href: string | null;
-    readonly byline: string | null;
-    readonly slug: string | null;
-    readonly title: string | null;
-    readonly publishedAt: string | null;
-    readonly vertical: string | null;
-    readonly thumbnailTitle: string | null;
-    readonly thumbnailImage: {
-        readonly large: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type HomeFeaturedMarketNews_articles$data = ReadonlyArray<{
+  readonly internalID: string;
+  readonly href: string | null;
+  readonly byline: string | null;
+  readonly slug: string | null;
+  readonly title: string | null;
+  readonly publishedAt: string | null;
+  readonly vertical: string | null;
+  readonly thumbnailTitle: string | null;
+  readonly thumbnailImage: {
+    readonly large: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-    readonly " $refType": "HomeFeaturedMarketNews_articles";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+  readonly " $fragmentType": "HomeFeaturedMarketNews_articles";
 }>;
-export type HomeFeaturedMarketNews_articles$data = HomeFeaturedMarketNews_articles;
 export type HomeFeaturedMarketNews_articles$key = ReadonlyArray<{
-    readonly " $data"?: HomeFeaturedMarketNews_articles$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
+  readonly " $data"?: HomeFeaturedMarketNews_articles$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedMarketNews_articles">;
 }>;
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -40,6 +43,11 @@ const node: ReaderFragment = {
   },
   "name": "HomeFeaturedMarketNews_articles",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CellArticle_article"
+    },
     {
       "alias": null,
       "args": null,
@@ -162,15 +170,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CellArticle_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '82d378969890b54e0b2e84237bc130f9';
+
+(node as any).hash = "82d378969890b54e0b2e84237bc130f9";
+
 export default node;

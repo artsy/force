@@ -2,14 +2,14 @@ import * as React from "react"
 import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomHeader_viewingRoom } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
+import { ViewingRoomHeader_viewingRoom$data } from "__generated__/ViewingRoomHeader_viewingRoom.graphql"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { resized } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { getStatus } from "../Utils/getStatus"
 
 interface ViewingRoomHeaderProps {
-  viewingRoom: ViewingRoomHeader_viewingRoom
+  viewingRoom: ViewingRoomHeader_viewingRoom$data
 }
 
 const ViewingRoomHeader: React.FC<ViewingRoomHeaderProps> = props => {

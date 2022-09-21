@@ -1,84 +1,30 @@
+/**
+ * @generated SignedSource<<8759530cf5658d74904c7361eff46695>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_ContactQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_ContactQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_ContactQueryResponse = {
-    readonly partner: {
-        readonly locations: {
-            readonly totalCount: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Contact_partner">;
+export type partnerRoutes_ContactQuery$data = {
+  readonly partner: {
+    readonly locations: {
+      readonly totalCount: number | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Contact_partner">;
+  } | null;
 };
 export type partnerRoutes_ContactQuery = {
-    readonly response: partnerRoutes_ContactQueryResponse;
-    readonly variables: partnerRoutes_ContactQueryVariables;
+  variables: partnerRoutes_ContactQuery$variables;
+  response: partnerRoutes_ContactQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_ContactQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...Contact_partner
-    locations: locationsConnection(first: 50) {
-      totalCount
-    }
-    id
-  }
-}
-
-fragment Contact_partner on Partner {
-  locations: locationsConnection(first: 50) {
-    edges {
-      ...PartnerContacts_edges
-    }
-  }
-}
-
-fragment PartnerContactAddress_location on Location {
-  city
-  phone
-  state
-  address
-  address2
-  postalCode
-  displayCountry
-}
-
-fragment PartnerContactCard_location on Location {
-  ...PartnerContactAddress_location
-  ...PartnerContactMap_location
-}
-
-fragment PartnerContactMap_location on Location {
-  city
-  phone
-  state
-  address
-  address2
-  postalCode
-  displayCountry
-  coordinates {
-    lat
-    lng
-  }
-}
-
-fragment PartnerContacts_edges on LocationEdge {
-  node {
-    id
-    ...PartnerContactCard_location
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -132,6 +78,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Contact_partner"
+          },
+          {
             "alias": "locations",
             "args": (v2/*: any*/),
             "concreteType": "LocationConnection",
@@ -142,11 +93,6 @@ return {
               (v3/*: any*/)
             ],
             "storageKey": "locationsConnection(first:50)"
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "Contact_partner"
           }
         ],
         "storageKey": null
@@ -294,5 +240,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6ddff1c5f84afd16f5e95ca1fa07a10b';
+
+(node as any).hash = "6ddff1c5f84afd16f5e95ca1fa07a10b";
+
 export default node;

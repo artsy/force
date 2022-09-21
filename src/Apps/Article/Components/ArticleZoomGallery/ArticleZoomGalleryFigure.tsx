@@ -6,11 +6,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
-import { ArticleZoomGalleryFigure_figure } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
+import { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
 import { ArticleZoomGalleryResponsiveBox } from "./ArticleZoomGalleryResponsiveBox"
 
 interface ArticleZoomGalleryFigureProps {
-  figure: ArticleZoomGalleryFigure_figure
+  figure: ArticleZoomGalleryFigure_figure$data
   /* Should display the image? */
   active: boolean
   /* Should only preload the image? */

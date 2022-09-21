@@ -1,61 +1,27 @@
+/**
+ * @generated SignedSource<<9c84fceecd49c4b5cf4c73cb08222088>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFairStoryQueryVariables = {
-    id: string;
+export type EntityHeaderFairStoryQuery$variables = {
+  id: string;
 };
-export type EntityHeaderFairStoryQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
-    } | null;
+export type EntityHeaderFairStoryQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
+  } | null;
 };
 export type EntityHeaderFairStoryQuery = {
-    readonly response: EntityHeaderFairStoryQueryResponse;
-    readonly variables: EntityHeaderFairStoryQueryVariables;
+  variables: EntityHeaderFairStoryQuery$variables;
+  response: EntityHeaderFairStoryQuery$data;
 };
-
-
-
-/*
-query EntityHeaderFairStoryQuery(
-  $id: String!
-) {
-  fair(id: $id) {
-    ...EntityHeaderFair_fair
-    id
-  }
-}
-
-fragment EntityHeaderFair_fair on Fair {
-  internalID
-  href
-  name
-  startAt(format: "MMM Do")
-  endAt(format: "MMM Do YYYY")
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  profile {
-    ...FollowProfileButton_profile
-    initials
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -267,5 +233,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fcbf66e61120838cdbb9154af857c2c8';
+
+(node as any).hash = "fcbf66e61120838cdbb9154af857c2c8";
+
 export default node;

@@ -6,11 +6,11 @@ import { graphql } from "relay-runtime"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RouterLink } from "System/Router/RouterLink"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
-import { ViewingRoomWorksArtwork_artwork } from "__generated__/ViewingRoomWorksArtwork_artwork.graphql"
+import { ViewingRoomWorksArtwork_artwork$data } from "__generated__/ViewingRoomWorksArtwork_artwork.graphql"
 
 interface ViewingRoomWorksArtworkProps {
   to: string
-  artwork: ViewingRoomWorksArtwork_artwork
+  artwork: ViewingRoomWorksArtwork_artwork$data
 }
 
 const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({

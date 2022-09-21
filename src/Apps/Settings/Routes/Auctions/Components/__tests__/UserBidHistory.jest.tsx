@@ -8,6 +8,7 @@ jest.unmock("react-relay")
 
 describe("UserBidHistory", () => {
   const { renderWithRelay } = setupTestWrapperTL<UserBidHistory_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: UserBidHistoryFragmentContainer,
     query: graphql`
       query UserBidHistory_Test_Query @relay_test_operation {

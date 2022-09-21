@@ -4,14 +4,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Router/RouterLink"
-import { JobsApp_viewer } from "__generated__/JobsApp_viewer.graphql"
+import { JobsApp_viewer$data } from "__generated__/JobsApp_viewer.graphql"
 import { JobsFilterFragmentContainer } from "./Components/JobsFilter"
 
 const HEADER_IMAGE_URL =
   "https://artsy-media-uploads.s3.amazonaws.com/xUM8bX2vV6CkHmlNuKUF-g%2F18_11_09_Artsy_0573%2B0591.jpg"
 
 interface JobsAppProps {
-  viewer: JobsApp_viewer
+  viewer: JobsApp_viewer$data
 }
 
 const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
@@ -92,6 +92,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 
       <Separator my={4} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <JobsFilterFragmentContainer viewer={viewer} />
     </>
   )

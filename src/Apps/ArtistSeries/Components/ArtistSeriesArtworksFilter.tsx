@@ -1,4 +1,4 @@
-import { ArtistSeriesArtworksFilter_artistSeries } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import { ArtistSeriesArtworksFilter_artistSeries$data } from "__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -12,7 +12,7 @@ import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/Active
 import { useSystemContext } from "System"
 
 interface ArtistSeriesArtworksFilterProps {
-  artistSeries: ArtistSeriesArtworksFilter_artistSeries
+  artistSeries: ArtistSeriesArtworksFilter_artistSeries$data
   relay: RelayRefetchProp
   match?: Match
   aggregations: SharedArtworkFilterContextProps["aggregations"]
