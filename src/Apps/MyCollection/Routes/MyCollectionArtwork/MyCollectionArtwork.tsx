@@ -95,6 +95,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const hasInsights =
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
 
+  const isP1Artist = artwork.artist?.targetSupply?.isP1
+
   return (
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
@@ -118,7 +120,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
 
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-            {isMyCollectionPhase5Enabled && (
+            {isMyCollectionPhase5Enabled && isP1Artist && (
               <Media greaterThanOrEqual="sm">
                 {!!submissionId ? (
                   <>
@@ -146,7 +148,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                   />
-                  {!!isMyCollectionPhase5Enabled && (
+                  {!!isMyCollectionPhase5Enabled && isP1Artist && (
                     <Media lessThan="sm">
                       {!!submissionId ? (
                         <MyCollectionArtworkSWASectionSubmitted />
@@ -236,6 +238,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         artist {
           slug
+          targetSupply {
+            isP1
+          }
           auctionResults: auctionResultsConnection {
             totalCount
           }

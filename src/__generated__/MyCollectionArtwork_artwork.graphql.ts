@@ -13,6 +13,9 @@ export type MyCollectionArtwork_artwork = {
     readonly internalID: string;
     readonly artist: {
         readonly slug: string;
+        readonly targetSupply: {
+            readonly isP1: boolean | null;
+        } | null;
         readonly auctionResults: {
             readonly totalCount: number | null;
         } | null;
@@ -92,6 +95,24 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "alias": "auctionResults",
           "args": null,
           "concreteType": "AuctionResultConnection",
@@ -144,5 +165,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2852e3a55d0de5f4506897403c32f82a';
+(node as any).hash = 'a84a3fa447cc2f53deb2d7a279baea4d';
 export default node;

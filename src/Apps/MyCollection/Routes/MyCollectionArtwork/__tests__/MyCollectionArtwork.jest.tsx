@@ -1,10 +1,11 @@
 import { Breakpoint } from "@artsy/palette"
-import { screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
+import { MyCollectionArtworkSWASectionMobileLayout } from "../Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkFragmentContainer } from "../MyCollectionArtwork"
 
 jest.mock("System/useSystemContext")
@@ -77,17 +78,28 @@ describe("MyCollectionArtwork", () => {
   })
 
   describe("SWA section", () => {
-    it("renders correct component when artwork has submission id", () => {
+    it("P1 artist: renders correct component when artwork has submission id", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversWithInsights)
 
       expect(screen.getByText("Artwork has been submitted for sale"))
     })
-    it("renders correct component when artwork does not have submission id", () => {
+    it("P1 artist: renders correct component when artwork does not have submission id", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversWithoutInsights)
 
       expect(screen.getByText("Interested in Selling This Work?"))
+    })
+    it("not P1 artist: the section is not rendered", () => {
+      const { renderWithRelay } = getWrapper("lg")
+      renderWithRelay(mockResolversNotP1)
+
+      expect(
+        screen.queryByText("Artwork has been submitted for sale")
+      ).not.toBeInTheDocument()
+      expect(
+        screen.queryByText("Interested in Selling This Work?")
+      ).not.toBeInTheDocument()
     })
   })
 })
@@ -100,6 +112,11 @@ const mockResolversWithInsights = {
     artistNames: "Banksy",
     hasMarketPriceInsights: true,
     submissionId: "submission-id",
+    artist: {
+      targetSupply: {
+        isP1: true,
+      },
+    },
   }),
 }
 
@@ -113,7 +130,26 @@ const mockResolversWithoutInsights = {
     comparables: null,
     artist: {
       auctionResults: null,
+      targetSupply: {
+        isP1: true,
+      },
     },
     submissionId: null,
+  }),
+}
+
+const mockResolversNotP1 = {
+  Artwork: () => ({
+    internalID: "61efced8a47135000c7b4c31",
+    title: "Anima",
+    date: "2020",
+    artistNames: "MAria",
+    hasMarketPriceInsights: false,
+    submissionId: "submission-id",
+    artist: {
+      targetSupply: {
+        isP1: false,
+      },
+    },
   }),
 }
