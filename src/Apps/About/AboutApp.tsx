@@ -23,7 +23,7 @@ export const AboutApp: React.FC = () => {
     <>
       <MetaTags
         title="About | Artsy"
-        description="Artsy’s mission is to make all of the world’s art accessible to anyone with an Internet connection."
+        description="Artsy’s mission is to expand the art market to support more artists and art in the world."
         imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
