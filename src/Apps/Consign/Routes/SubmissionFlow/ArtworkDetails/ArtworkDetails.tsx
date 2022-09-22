@@ -5,6 +5,8 @@ import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
+  getArtworkDetailsFormInitialValuesProps,
+  SubmissionType,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "System/Router/useRouter"
 import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
@@ -40,10 +42,17 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
-  const initialValue = getArtworkDetailsFormInitialValues(
-    submission,
-    myCollectionArtwork
-  )
+
+  const data: getArtworkDetailsFormInitialValuesProps = submission
+    ? { values: submission!, type: SubmissionType.submission }
+    : myCollectionArtwork
+    ? {
+        values: myCollectionArtwork!,
+        type: SubmissionType.myCollectionArtwork,
+      }
+    : { type: SubmissionType.default }
+
+  const initialValue = getArtworkDetailsFormInitialValues(data)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const artworkId = myCollectionArtwork?.internalID

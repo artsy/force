@@ -88,12 +88,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push({
-          pathname: compact([
+        router.push(
+          compact([
             `/sell/submission/${submission?.externalId}/thank-you`,
             artworkId,
-          ]).join("/"),
-        })
+          ]).join("/")
+        )
       } catch (error) {
         logger.error("Submission error", error)
 
