@@ -37,10 +37,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 }) => {
   const { editCollectedArtwork } = useMyCollectionTracking()
 
-  // TODO: use real value
-  const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
-    boolean
-  >(false)
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(
