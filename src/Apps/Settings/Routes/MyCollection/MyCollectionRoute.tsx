@@ -25,13 +25,14 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
 import {
-  getLocalImagesByArtwork,
+  cleanImagesLocalStore,
+  getAllLocalImagesByArtwork,
   StoredArtworkWithImages,
   StoredImage,
 } from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
-import { RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY } from "./constants"
+import { IMAGES_LOCAL_STORE_KEY } from "./constants"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -65,9 +66,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   }, [])
 
   useEffect(() => {
-    getLocalImagesByArtwork({
-      key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY,
-    })
+    getAllLocalImagesByArtwork(IMAGES_LOCAL_STORE_KEY)
       .then(localImagesByArtwork => {
         setLocalArtworksImages(localImagesByArtwork)
       })
@@ -75,6 +74,10 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
         console.error("Error getting local images by artwork", error)
         return undefined
       })
+  }, [])
+
+  useEffect(() => {
+    cleanImagesLocalStore(IMAGES_LOCAL_STORE_KEY)
   }, [])
 
   const { scrollTo: scrollToMyCollection } = useScrollToElement({

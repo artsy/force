@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY } from "Apps/Settings/Routes/MyCollection/constants"
+import { IMAGES_LOCAL_STORE_KEY } from "Apps/Settings/Routes/MyCollection/constants"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
@@ -36,7 +36,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
       return await storeArtworkLocalImages(
         artworkId,
         localImages.map(({ photoID, ...rest }) => rest),
-        RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY
+        IMAGES_LOCAL_STORE_KEY
       )
     } catch (error) {
       console.error("Error saving images to localforage storage", error)

@@ -13,6 +13,7 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
@@ -21,8 +22,10 @@ import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
+import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
@@ -128,12 +131,24 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       }
 
       // Store images locally
-      if (artworkId && artworkFormImagesRef.current) {
+      if (
+        artworkId &&
+        artworkFormImagesRef.current &&
+        values.newPhotos.length
+      ) {
         await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
+        await setLocalImagesStoreLastUpdatedAt(
+          IMAGES_LOCAL_STORE_LAST_UPDATED_AT
+        )
+      }
+
+      // If the user is editing, we need to wait a bit until gemini starts
+      // returning the new processing images array
+      if (isEditing && values.newPhotos.length) {
+        await wait(2000)
       }
 
       // Remove photos marked for deletion
-
       const removedPhotos = values.photos.filter(photo => photo.removed)
 
       await Promise.all(

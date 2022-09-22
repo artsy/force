@@ -1,6 +1,6 @@
 import { Flex, ResponsiveBox, Image } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
-import { RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY } from "Apps/Settings/Routes/MyCollection/constants"
+import { IMAGES_LOCAL_STORE_KEY } from "Apps/Settings/Routes/MyCollection/constants"
 import { useEffect, useState } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
@@ -18,10 +18,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
   const [localArtworkImages, setLocalArtworkImages] = useState<StoredImage[]>()
 
   useEffect(() => {
-    getArtworkLocalImages(
-      artwork.internalID,
-      RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY
-    )
+    getArtworkLocalImages(artwork.internalID, IMAGES_LOCAL_STORE_KEY)
       .then(images => {
         if (images) {
           setLocalArtworkImages(images)
@@ -40,7 +37,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
             maxWidth="100%"
             aspectWidth={1}
             aspectHeight={1}
-            mx={[0, 2, 4]}
+            // mx={[0, 2, 4]}
           >
             <Flex
               position="absolute"
@@ -54,8 +51,6 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
               <Image
                 src={localArtworkImages[0].data}
                 style={{ objectFit: "contain" }}
-                height={["100%", "auto"]}
-                width={["100%", "auto"]}
                 alt=""
                 lazyLoad
               />

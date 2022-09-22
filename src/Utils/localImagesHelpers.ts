@@ -1,3 +1,4 @@
+import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import localforage from "localforage"
 
 const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 1
@@ -25,12 +26,13 @@ const addMinutes = (date: Date, minutes: number) => {
 export const storeArtworkLocalImages = async (
   artworkID: string,
   images: LocalImage[],
-  rootKey: string
+  key: string
 ) => {
   const expirationDate = addMinutes(
     new Date(),
     GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES
   )
+
   const imagesToStore: StoredImage[] = []
   for (const image of images) {
     const imageToStore: StoredImage = {
@@ -42,46 +44,62 @@ export const storeArtworkLocalImages = async (
     imagesToStore.push(imageToStore)
   }
 
-  const localArtworksImages = await getLocalImagesByArtwork({ key: rootKey })
+  const localArtworksImages = await getAllLocalImagesByArtwork(key)
 
   // Get existing artworks with images except the one we are storing
   const updatedLocalArtworksImages = localArtworksImages.filter(
     artworkImagesObj => artworkImagesObj.artworkID !== artworkID
   )
 
-  const existingArtworkImages = await getArtworkLocalImages(artworkID, rootKey)
   // Add the new artwork with images to the list
   updatedLocalArtworksImages.push({
     artworkID,
-    images: imagesToStore.concat(existingArtworkImages),
+    images: imagesToStore,
   })
 
   // Store the updated list
   const artworkImages = JSON.stringify(updatedLocalArtworksImages || [])
 
-  return localforage.setItem(rootKey, artworkImages)
+  return localforage.setItem(key, artworkImages)
 }
 
-export const deleteLocalImages = (key: string) => {
-  return localforage.removeItem(key)
+//
+export const setLocalImagesStoreLastUpdatedAt = (lastUpdatedAtKey: string) => {
+  return localforage.setItem(lastUpdatedAtKey, new Date().toString())
+}
+
+// Cleam store after gemini processing time is over
+export const cleanImagesLocalStore = (key: string) => {
+  return localforage
+    .getItem(IMAGES_LOCAL_STORE_LAST_UPDATED_AT)
+    .then((date: string) => {
+      const lastUpdatedDate = new Date(date)
+      const currentDate = new Date()
+      const diffInMinutes =
+        (currentDate.getTime() - lastUpdatedDate.getTime()) / 60000
+
+      if (diffInMinutes > GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES) {
+        return localforage.removeItem(key)
+      }
+    })
+    .catch(() => {
+      // If there is no last updated date, we can assume that the store is clean
+      console.log("No last updated date, store must be clean")
+    })
 }
 
 // Retrieve all artworks local images that have not expired from local storage
-export const getLocalImagesByArtwork = ({
-  key,
-  excludeExpired = true,
-}: {
+export const getAllLocalImagesByArtwork = (
   key: string
-  excludeExpired?: boolean
-}): Promise<StoredArtworkWithImages[]> => {
+): Promise<StoredArtworkWithImages[]> => {
   return localforage
     .getItem(key)
     .then((imagesByArtworkJSONString: string) => {
-      const imagesByArtwork = JSON.parse(imagesByArtworkJSONString || "") as
-        | StoredArtworkWithImages[]
-        | null
-      if (Array.isArray(imagesByArtwork)) {
-        if (excludeExpired) {
+      if (imagesByArtworkJSONString) {
+        const imagesByArtwork = JSON.parse(imagesByArtworkJSONString) as
+          | StoredArtworkWithImages[]
+          | null
+        if (Array.isArray(imagesByArtwork)) {
           return imagesByArtwork.filter(artworkImagesObj => {
             const images = artworkImagesObj.images.filter(image => {
               // @ts-ignore
@@ -93,12 +111,11 @@ export const getLocalImagesByArtwork = ({
             return images.length > 0
           })
         }
-        return imagesByArtwork
       }
       return []
     })
     .catch(error => {
-      console.error(error)
+      console.error("failed to get all local images", error)
       return []
     })
 }
@@ -121,11 +138,9 @@ export const getHeightAndWidthFromDataUrl = file => {
 // Retrieve artwork local images from local storage
 export const getArtworkLocalImages = async (
   artworkID: string,
-  rootKey: string
+  key: string
 ): Promise<StoredImage[]> => {
-  const localArtworksImages = await getLocalImagesByArtwork({
-    key: rootKey,
-  })
+  const localArtworksImages = await getAllLocalImagesByArtwork(key)
   const artworkImages = localArtworksImages?.find(
     artworkImagesObj => artworkImagesObj.artworkID === artworkID
   )
