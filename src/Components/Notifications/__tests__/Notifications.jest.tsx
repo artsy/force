@@ -7,7 +7,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 describe("Notifications", () => {
   it("should render tabs", () => {
-    render(<Notifications mode="page" />)
+    render(<Notifications mode="page" unreadCounts={0} />)
 
     expect(screen.getByText("All")).toBeInTheDocument()
     expect(screen.getByText("Alerts")).toBeInTheDocument()

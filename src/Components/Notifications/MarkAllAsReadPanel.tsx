@@ -7,8 +7,13 @@ export const MARK_ALL_AS_READ_PANEL_HEIGHT = 40
 
 const logger = createLogger("MarkAllAsReadPanel")
 
-export const MarkAllAsReadPanel = () => {
+export interface MarkAllAsReadPanelProps {
+  unreadCounts: number
+}
+
+export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = props => {
   const { relayEnvironment } = useSystemContext()
+  const { unreadCounts } = props
 
   const markAllAsRead = async () => {
     if (!relayEnvironment) {
@@ -37,8 +42,13 @@ export const MarkAllAsReadPanel = () => {
       alignItems="center"
       borderBottom="1px solid"
       borderBottomColor="black15"
+      flexDirection="row"
+      justifyContent="space-between"
       bg="white100"
     >
+      <Text variant="xs" color="brand">
+        {unreadCounts} New Notifications
+      </Text>
       <Clickable onClick={markAllAsRead}>
         <Text variant="xs" color="black60">
           Mark all as read

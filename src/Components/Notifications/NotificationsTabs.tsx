@@ -12,12 +12,13 @@ import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
 import {
   MarkAllAsReadPanel,
+  MarkAllAsReadPanelProps,
   MARK_ALL_AS_READ_PANEL_HEIGHT,
 } from "./MarkAllAsReadPanel"
 
 const TABS_CONTAINER_HEIGHT = 60
 
-export interface NofiticationsTabsProps {
+export interface NofiticationsTabsProps extends MarkAllAsReadPanelProps {
   mode: "dropdown" | "page"
   maxDropdownHeight?: string
 }
@@ -25,6 +26,7 @@ export interface NofiticationsTabsProps {
 export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   mode,
   maxDropdownHeight,
+  unreadCounts,
   children,
 }) => {
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
@@ -66,7 +68,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
             <CloseIcon display="block" />
           </Clickable>
         </HeaderContainer>
-        <MarkAllAsReadPanel />
+        <MarkAllAsReadPanel unreadCounts={unreadCounts} />
 
         <Box
           maxHeight={`calc(${maxDropdownHeight} - ${headerTotalHeight}px)`}
@@ -82,7 +84,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
     <StickyProvider>
       <Sticky>
         <HeaderContainer>{Tabs}</HeaderContainer>
-        <MarkAllAsReadPanel />
+        <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </Sticky>
       {activeTab.current.child}
     </StickyProvider>
