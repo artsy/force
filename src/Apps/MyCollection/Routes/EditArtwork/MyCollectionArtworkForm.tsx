@@ -3,6 +3,7 @@ import {
   ActionType,
   ContextModule,
   OwnerType,
+  SaveCollectedArtwork,
 } from "@artsy/cohesion"
 import {
   ArtsyLogoBlackIcon,
@@ -462,7 +463,7 @@ const tracks = {
     context_owner_type: OwnerType.myCollectionArtwork,
     platform: "web",
   }),
-  saveCollectedArtwork: () => ({
+  saveCollectedArtwork: (): SaveCollectedArtwork => ({
     action: ActionType.saveCollectedArtwork,
     context_module: ContextModule.myCollectionHome,
     context_owner_type: OwnerType.myCollection,
