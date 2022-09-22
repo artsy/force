@@ -33,7 +33,6 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = props => {
         throw new Error(errorMessage)
       }
     } catch (error) {
-      console.log("[debug] error", error)
       logger.error(error)
     }
   }

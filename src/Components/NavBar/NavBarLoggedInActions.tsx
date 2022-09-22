@@ -30,8 +30,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQueryResponse
 >> = ({ me }) => {
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
-  console.log("[debug] me", me?.unreadNotificationsCount)
-
   const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
     notifications: me?.unreadNotificationsCount,
     conversations: me?.unreadConversationCount,
