@@ -10,6 +10,10 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
+import {
+  MarkAllAsReadPanel,
+  MARK_ALL_AS_READ_PANEL_HEIGHT,
+} from "./MarkAllAsReadPanel"
 
 const TABS_CONTAINER_HEIGHT = 60
 
@@ -48,6 +52,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   )
 
   if (mode === "dropdown") {
+    const headerTotalHeight =
+      TABS_CONTAINER_HEIGHT - MARK_ALL_AS_READ_PANEL_HEIGHT
+
     return (
       <>
         <HeaderContainer display="flex" flexDirection="row" alignItems="center">
@@ -59,9 +66,10 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
             <CloseIcon display="block" />
           </Clickable>
         </HeaderContainer>
+        <MarkAllAsReadPanel />
 
         <Box
-          maxHeight={`calc(${maxDropdownHeight} - ${TABS_CONTAINER_HEIGHT}px)`}
+          maxHeight={`calc(${maxDropdownHeight} - ${headerTotalHeight}px)`}
           overflowY="scroll"
         >
           {activeTab.current.child}
@@ -74,6 +82,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
     <StickyProvider>
       <Sticky>
         <HeaderContainer>{Tabs}</HeaderContainer>
+        <MarkAllAsReadPanel />
       </Sticky>
       {activeTab.current.child}
     </StickyProvider>
