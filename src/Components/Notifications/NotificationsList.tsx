@@ -115,7 +115,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
           first: $count
           after: $cursor
           notificationTypes: $types
-        ) @connection(key: "NotificationsList_notifications") {
+        ) @connection(key: "NotificationsList_notifications", filters: []) {
           edges {
             node {
               internalID
@@ -128,6 +128,9 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
   },
   {
     query: NOTIFICATIONS_NEXT_QUERY,
+    getConnectionFromProps(props) {
+      return props.viewer.notifications
+    },
     getFragmentVariables(prevVars, totalCount) {
       return {
         ...prevVars,
