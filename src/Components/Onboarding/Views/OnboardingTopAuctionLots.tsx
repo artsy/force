@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
+import { OnboardingMarketingCollectionQueryRenderer } from "../Components/OnboardingMarketingCollection"
 
 export const OnboardingTopAuctionLots: FC = () => {
   return (
@@ -7,8 +7,8 @@ export const OnboardingTopAuctionLots: FC = () => {
       slug="top-auction-lots"
       description={
         <>
-          Follow for works by emerging and established market stars—now open for
-          bidding. Click the heart to save artworks you love.
+          Works by emerging and established market stars—now open for bidding.
+          Click the heart to save artworks you love.
         </>
       }
     />
