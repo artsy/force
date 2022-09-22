@@ -1,10 +1,4 @@
 import {
-  ActionType,
-  AddCollectedArtwork,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import {
   Button,
   Column,
   GridColumns,
@@ -12,7 +6,7 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { useTracking } from "react-tracking"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
@@ -26,7 +20,7 @@ const image = resized(
 )
 
 const DesktopLayout: React.FC = () => {
-  const { trackEvent } = useTracking()
+  const { addCollectedArtwork } = useMyCollectionTracking()
 
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
@@ -43,7 +37,7 @@ const DesktopLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => trackEvent(tracks.addCollectedArtwork())}
+          onClick={() => addCollectedArtwork()}
         >
           Upload Artwork
         </Button>
@@ -66,7 +60,7 @@ const DesktopLayout: React.FC = () => {
 }
 
 const MobileLayout: React.FC = () => {
-  const { trackEvent } = useTracking()
+  const { addCollectedArtwork } = useMyCollectionTracking()
 
   return (
     <GridColumns gridRowGap={2} alignItems="center">
@@ -97,7 +91,7 @@ const MobileLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => trackEvent(tracks.addCollectedArtwork())}
+          onClick={() => addCollectedArtwork()}
           width="100%"
         >
           Upload Artwork
@@ -118,13 +112,4 @@ export const MyCollectionEmptyState: React.FC = () => {
       </Media>
     </>
   )
-}
-
-const tracks = {
-  addCollectedArtwork: (): AddCollectedArtwork => ({
-    action: ActionType.addCollectedArtwork,
-    context_module: ContextModule.myCollectionHome,
-    context_owner_type: OwnerType.myCollection,
-    platform: "web",
-  }),
 }

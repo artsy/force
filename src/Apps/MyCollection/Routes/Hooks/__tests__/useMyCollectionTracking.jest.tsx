@@ -27,6 +27,17 @@ describe("useMyCollectionTracking", () => {
     jest.clearAllMocks()
   })
 
+  it("#addCollectedArtwork", () => {
+    setupHook().addCollectedArtwork()
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "addCollectedArtwork",
+      context_module: "myCollectionHome",
+      context_owner_type: "myCollection",
+      platform: "web",
+    })
+  })
+
   it("#deleteCollectedArtwork", () => {
     setupHook().deleteCollectedArtwork("artwork-id", "artwork-slug")
 
@@ -40,17 +51,6 @@ describe("useMyCollectionTracking", () => {
     })
   })
 
-  it("#saveCollectedArtwork", () => {
-    setupHook().saveCollectedArtwork()
-
-    expect(trackingSpy).toBeCalledWith({
-      action: "saveCollectedArtwork",
-      context_module: "myCollectionHome",
-      context_owner_type: "myCollection",
-      platform: "web",
-    })
-  })
-
   it("#editCollectedArtwork", () => {
     setupHook().editCollectedArtwork("artwork-id", "artwork-slug")
 
@@ -60,6 +60,17 @@ describe("useMyCollectionTracking", () => {
       context_owner_id: "artwork-id",
       context_owner_slug: "artwork-slug",
       context_owner_type: "myCollectionArtwork",
+      platform: "web",
+    })
+  })
+
+  it("#saveCollectedArtwork", () => {
+    setupHook().saveCollectedArtwork()
+
+    expect(trackingSpy).toBeCalledWith({
+      action: "saveCollectedArtwork",
+      context_module: "myCollectionHome",
+      context_owner_type: "myCollection",
       platform: "web",
     })
   })

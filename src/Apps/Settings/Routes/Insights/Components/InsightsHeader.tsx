@@ -1,20 +1,14 @@
-import {
-  AddCollectedArtwork,
-  ActionType,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
 import { Box, Button, DROP_SHADOW, Flex, FullBleed, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 export const InsightsHeader: React.FC = () => {
-  const { trackEvent } = useTracking()
+  const { addCollectedArtwork } = useMyCollectionTracking()
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -56,7 +50,7 @@ export const InsightsHeader: React.FC = () => {
                         size={["small", "large"]}
                         variant="primaryBlack"
                         to="/my-collection/artworks/new"
-                        onClick={() => trackEvent(tracks.addCollectedArtwork())}
+                        onClick={() => addCollectedArtwork()}
                       >
                         Upload Artwork
                       </Button>
@@ -70,13 +64,4 @@ export const InsightsHeader: React.FC = () => {
       </Sticky>
     </Box>
   )
-}
-
-const tracks = {
-  addCollectedArtwork: (): AddCollectedArtwork => ({
-    action: ActionType.addCollectedArtwork,
-    context_module: ContextModule.myCollectionHome,
-    context_owner_type: OwnerType.myCollection,
-    platform: "web",
-  }),
 }
