@@ -411,14 +411,19 @@ describe("Edit artwork", () => {
         })
       )
 
-      expect(trackingSpy).toHaveBeenCalledWith({
-        action: "deleteCollectedArtwork",
-        context_module: "myCollectionArtwork",
-        context_owner_id: "62fc96c48d3ff8000b556c3a",
-        context_owner_slug: "62fc96c48d3ff8000b556c3a",
-        context_owner_type: "myCollectionArtwork",
-        platform: "web",
-      })
+      expect(trackingSpy).toBeCalledTimes(1)
+      expect(trackingSpy.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "deleteCollectedArtwork",
+            "context_module": "myCollectionArtwork",
+            "context_owner_id": "62fc96c48d3ff8000b556c3a",
+            "context_owner_slug": "62fc96c48d3ff8000b556c3a",
+            "context_owner_type": "myCollectionArtwork",
+            "platform": "web",
+          },
+        ]
+      `)
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/settings/my-collection",
