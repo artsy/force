@@ -6,15 +6,20 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
 
-describe("Notifications", () => {
-  it("should render tabs", () => {
+describe("MarkAllAsReadPanel", () => {
+  it("should the empty state", () => {
     render(<Notifications mode="page" unreadCounts={0} />)
 
-    expect(screen.getByText("All")).toBeInTheDocument()
-    expect(screen.getByText("Alerts")).toBeInTheDocument()
+    expect(screen.getByText("No new notifications")).toBeInTheDocument()
   })
 
-  it("should display the count of unread notifications", () => {
+  it("should the single state", () => {
+    render(<Notifications mode="page" unreadCounts={1} />)
+
+    expect(screen.getByText("1 new notification")).toBeInTheDocument()
+  })
+
+  it("should the multiple state", () => {
     render(<Notifications mode="page" unreadCounts={5} />)
 
     expect(screen.getByText("5 new notifications")).toBeInTheDocument()
