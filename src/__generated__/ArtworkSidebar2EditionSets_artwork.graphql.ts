@@ -73,6 +73,13 @@ return {
           "name": "id",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         (v0/*: any*/),
         (v1/*: any*/),
         {

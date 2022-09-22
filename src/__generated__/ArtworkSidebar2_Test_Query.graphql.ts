@@ -110,38 +110,53 @@ v9 = {
   "name": "editionOf",
   "storageKey": null
 },
-v10 = {
+v10 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+],
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v12 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
 v13 = {
   "enumValues": null,
   "nullable": true,
-  "plural": true,
+  "plural": false,
   "type": "String"
 },
 v14 = {
   "enumValues": null,
   "nullable": true,
+  "plural": true,
+  "type": "String"
+},
+v15 = {
+  "enumValues": null,
+  "nullable": true,
   "plural": false,
   "type": "dimensions"
 },
-v15 = {
+v16 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -319,6 +334,7 @@ return {
             "plural": true,
             "selections": [
               (v6/*: any*/),
+              (v7/*: any*/),
               (v3/*: any*/),
               (v2/*: any*/),
               (v4/*: any*/),
@@ -334,70 +350,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingOrigin",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "shippingInfo",
-            "storageKey": null
-          },
           (v7/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
-            "plural": false,
-            "selections": [
-              (v5/*: any*/),
-              (v10/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cities",
-                "storageKey": null
-              },
-              (v6/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
-            "plural": false,
-            "selections": [
-              (v5/*: any*/),
-              (v10/*: any*/),
-              (v6/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isClosed",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "startAt",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -418,6 +371,99 @@ return {
                   (v5/*: any*/),
                   (v6/*: any*/)
                 ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "listPrice",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v10/*: any*/),
+                "type": "PriceRange",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v10/*: any*/),
+                "type": "Money",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingOrigin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "shippingInfo",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Partner",
+            "kind": "LinkedField",
+            "name": "partner",
+            "plural": false,
+            "selections": [
+              (v5/*: any*/),
+              (v11/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cities",
+                "storageKey": null
+              },
+              (v6/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Sale",
+            "kind": "LinkedField",
+            "name": "sale",
+            "plural": false,
+            "selections": [
+              (v5/*: any*/),
+              (v11/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isClosed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startAt",
                 "storageKey": null
               }
             ],
@@ -463,7 +509,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0eaf8534ee4a4e037460e80fc5cf2c8",
+    "cacheID": "774c4b666589b62284409e89a15ec807",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -479,62 +525,66 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v11/*: any*/),
-        "artwork.artists.internalID": (v11/*: any*/),
-        "artwork.artists.name": (v12/*: any*/),
-        "artwork.artists.slug": (v11/*: any*/),
+        "artwork.artists.id": (v12/*: any*/),
+        "artwork.artists.internalID": (v12/*: any*/),
+        "artwork.artists.name": (v13/*: any*/),
+        "artwork.artists.slug": (v12/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v11/*: any*/),
-        "artwork.attributionClass.internalID": (v11/*: any*/),
-        "artwork.attributionClass.shortArrayDescription": (v13/*: any*/),
-        "artwork.culturalMaker": (v12/*: any*/),
-        "artwork.date": (v12/*: any*/),
-        "artwork.dimensions": (v14/*: any*/),
-        "artwork.dimensions.cm": (v12/*: any*/),
-        "artwork.dimensions.in": (v12/*: any*/),
-        "artwork.editionOf": (v12/*: any*/),
+        "artwork.attributionClass.id": (v12/*: any*/),
+        "artwork.attributionClass.internalID": (v12/*: any*/),
+        "artwork.attributionClass.shortArrayDescription": (v14/*: any*/),
+        "artwork.culturalMaker": (v13/*: any*/),
+        "artwork.date": (v13/*: any*/),
+        "artwork.dimensions": (v15/*: any*/),
+        "artwork.dimensions.cm": (v13/*: any*/),
+        "artwork.dimensions.in": (v13/*: any*/),
+        "artwork.editionOf": (v13/*: any*/),
         "artwork.editionSets": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "EditionSet"
         },
-        "artwork.editionSets.__isSellable": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "String"
-        },
-        "artwork.editionSets.dimensions": (v14/*: any*/),
-        "artwork.editionSets.dimensions.cm": (v12/*: any*/),
-        "artwork.editionSets.dimensions.in": (v12/*: any*/),
-        "artwork.editionSets.editionOf": (v12/*: any*/),
-        "artwork.editionSets.id": (v11/*: any*/),
-        "artwork.editionSets.isAcquireable": (v15/*: any*/),
-        "artwork.editionSets.isOfferable": (v15/*: any*/),
-        "artwork.editionSets.saleMessage": (v12/*: any*/),
+        "artwork.editionSets.__isSellable": (v16/*: any*/),
+        "artwork.editionSets.dimensions": (v15/*: any*/),
+        "artwork.editionSets.dimensions.cm": (v13/*: any*/),
+        "artwork.editionSets.dimensions.in": (v13/*: any*/),
+        "artwork.editionSets.editionOf": (v13/*: any*/),
+        "artwork.editionSets.id": (v12/*: any*/),
+        "artwork.editionSets.internalID": (v12/*: any*/),
+        "artwork.editionSets.isAcquireable": (v17/*: any*/),
+        "artwork.editionSets.isOfferable": (v17/*: any*/),
+        "artwork.editionSets.saleMessage": (v13/*: any*/),
         "artwork.framed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkInfoRow"
         },
-        "artwork.framed.details": (v12/*: any*/),
-        "artwork.hasCertificateOfAuthenticity": (v15/*: any*/),
-        "artwork.id": (v11/*: any*/),
-        "artwork.internalID": (v11/*: any*/),
-        "artwork.isAcquireable": (v15/*: any*/),
-        "artwork.isBiddable": (v15/*: any*/),
-        "artwork.isInAuction": (v15/*: any*/),
-        "artwork.isInquireable": (v15/*: any*/),
-        "artwork.isOfferable": (v15/*: any*/),
-        "artwork.isSold": (v15/*: any*/),
-        "artwork.medium": (v12/*: any*/),
+        "artwork.framed.details": (v13/*: any*/),
+        "artwork.hasCertificateOfAuthenticity": (v17/*: any*/),
+        "artwork.id": (v12/*: any*/),
+        "artwork.internalID": (v12/*: any*/),
+        "artwork.isAcquireable": (v17/*: any*/),
+        "artwork.isBiddable": (v17/*: any*/),
+        "artwork.isInAuction": (v17/*: any*/),
+        "artwork.isInquireable": (v17/*: any*/),
+        "artwork.isOfferable": (v17/*: any*/),
+        "artwork.isSold": (v17/*: any*/),
+        "artwork.listPrice": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ListPrice"
+        },
+        "artwork.listPrice.__typename": (v16/*: any*/),
+        "artwork.listPrice.display": (v13/*: any*/),
+        "artwork.medium": (v13/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -547,19 +597,19 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "artwork.mediumType.filterGene.id": (v11/*: any*/),
-        "artwork.mediumType.filterGene.name": (v12/*: any*/),
-        "artwork.mediumType.filterGene.slug": (v11/*: any*/),
+        "artwork.mediumType.filterGene.id": (v12/*: any*/),
+        "artwork.mediumType.filterGene.name": (v13/*: any*/),
+        "artwork.mediumType.filterGene.slug": (v12/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.cities": (v13/*: any*/),
-        "artwork.partner.href": (v12/*: any*/),
-        "artwork.partner.id": (v11/*: any*/),
-        "artwork.partner.name": (v12/*: any*/),
+        "artwork.partner.cities": (v14/*: any*/),
+        "artwork.partner.href": (v13/*: any*/),
+        "artwork.partner.id": (v12/*: any*/),
+        "artwork.partner.name": (v13/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
@@ -577,20 +627,20 @@ return {
           "plural": false,
           "type": "SaleArtwork"
         },
-        "artwork.saleArtwork.endAt": (v12/*: any*/),
-        "artwork.saleArtwork.extendedBiddingEndAt": (v12/*: any*/),
-        "artwork.saleArtwork.id": (v11/*: any*/),
-        "artwork.saleArtwork.lotID": (v12/*: any*/),
-        "artwork.saleMessage": (v12/*: any*/),
-        "artwork.shippingInfo": (v12/*: any*/),
-        "artwork.shippingOrigin": (v12/*: any*/),
-        "artwork.slug": (v11/*: any*/),
-        "artwork.title": (v12/*: any*/)
+        "artwork.saleArtwork.endAt": (v13/*: any*/),
+        "artwork.saleArtwork.extendedBiddingEndAt": (v13/*: any*/),
+        "artwork.saleArtwork.id": (v12/*: any*/),
+        "artwork.saleArtwork.lotID": (v13/*: any*/),
+        "artwork.saleMessage": (v13/*: any*/),
+        "artwork.shippingInfo": (v13/*: any*/),
+        "artwork.shippingOrigin": (v13/*: any*/),
+        "artwork.slug": (v12/*: any*/),
+        "artwork.title": (v13/*: any*/)
       }
     },
     "name": "ArtworkSidebar2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebar2_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2Artists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebar2ArtworkTitle_artwork on Artwork {\n  date\n  title\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2CommercialButtons_artwork on Artwork {\n  ...ArtworkSidebar2EditionSets_artwork\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  editionSets {\n    id\n    isAcquireable\n    isOfferable\n    saleMessage\n  }\n}\n\nfragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n\nfragment ArtworkSidebar2EditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebar2SizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebar2ShippingInformation_artwork on Artwork {\n  shippingOrigin\n  shippingInfo\n}\n\nfragment ArtworkSidebar2SizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n\nfragment ArtworkSidebar2_artwork on Artwork {\n  slug\n  isSold\n  isAcquireable\n  isOfferable\n  isInAuction\n  saleMessage\n  ...ArtworkSidebar2ArtworkTitle_artwork\n  ...ArtworkSidebar2Artists_artwork\n  ...ArtworkSidebar2Details_artwork\n  ...ArtworkSidebar2CommercialButtons_artwork\n  ...ArtworkSidebar2ShippingInformation_artwork\n  ...ArtworkSidebar2PartnerInfo_artwork\n  ...ArtworkSidebar2CreateArtworkAlert_artwork\n  sale {\n    startAt\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n  artists {\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebar2_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2Artists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebar2ArtworkTitle_artwork on Artwork {\n  date\n  title\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2CommercialButtons_artwork on Artwork {\n  ...ArtworkSidebar2EditionSets_artwork\n  ...ArtworkSidebarCreateAlertButton_artwork\n  artists {\n    internalID\n    id\n  }\n  internalID\n  slug\n  saleMessage\n  isInquireable\n  isAcquireable\n  isOfferable\n  isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  editionSets {\n    id\n    internalID\n    isAcquireable\n    isOfferable\n    saleMessage\n  }\n}\n\nfragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n\nfragment ArtworkSidebar2EditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    internalID\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebar2SizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebar2ShippingInformation_artwork on Artwork {\n  shippingOrigin\n  shippingInfo\n}\n\nfragment ArtworkSidebar2SizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n\nfragment ArtworkSidebar2_artwork on Artwork {\n  slug\n  isSold\n  isAcquireable\n  isOfferable\n  isInAuction\n  saleMessage\n  ...ArtworkSidebar2ArtworkTitle_artwork\n  ...ArtworkSidebar2Artists_artwork\n  ...ArtworkSidebar2Details_artwork\n  ...ArtworkSidebar2CommercialButtons_artwork\n  ...ArtworkSidebar2ShippingInformation_artwork\n  ...ArtworkSidebar2PartnerInfo_artwork\n  ...ArtworkSidebar2CreateArtworkAlert_artwork\n  sale {\n    startAt\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n  artists {\n    internalID\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

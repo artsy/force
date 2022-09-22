@@ -5,18 +5,27 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar2CommercialButtons_artwork = {
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+    } | null> | null;
+    readonly internalID: string;
+    readonly slug: string;
     readonly saleMessage: string | null;
     readonly isInquireable: boolean | null;
     readonly isAcquireable: boolean | null;
     readonly isOfferable: boolean | null;
     readonly isSold: boolean | null;
+    readonly listPrice: {
+        readonly display?: string | null | undefined;
+    } | null;
     readonly editionSets: ReadonlyArray<{
         readonly id: string;
+        readonly internalID: string;
         readonly isAcquireable: boolean | null;
         readonly isOfferable: boolean | null;
         readonly saleMessage: string | null;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2EditionSets_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebarCreateAlertButton_artwork">;
     readonly " $refType": "ArtworkSidebar2CommercialButtons_artwork";
 };
 export type ArtworkSidebar2CommercialButtons_artwork$data = ArtworkSidebar2CommercialButtons_artwork;
@@ -32,30 +41,66 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saleMessage",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isAcquireable",
+  "name": "saleMessage",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "isAcquireable",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "isOfferable",
   "storageKey": null
-};
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSidebar2CommercialButtons_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -63,13 +108,36 @@ return {
       "name": "isInquireable",
       "storageKey": null
     },
-    (v1/*: any*/),
     (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isSold",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "listPrice",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": (v4/*: any*/),
+          "type": "PriceRange",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v4/*: any*/),
+          "type": "Money",
+          "abstractKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -87,9 +155,10 @@ return {
           "name": "id",
           "storageKey": null
         },
-        (v1/*: any*/),
+        (v0/*: any*/),
         (v2/*: any*/),
-        (v0/*: any*/)
+        (v3/*: any*/),
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -97,11 +166,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar2EditionSets_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '1294609029e6979329c3938dc223aed6';
+(node as any).hash = '3e875d951c5403f0de3c289b5684a28f';
 export default node;
