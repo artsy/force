@@ -30,7 +30,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
         value={attributionClass?.shortDescription}
       />
       <MetadataField
-        label="Size"
+        label="Dimensions"
         value={metric === "in" ? dimensions?.in : dimensions?.cm}
       />
 
