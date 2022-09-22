@@ -101,6 +101,14 @@ fragment ArtworkSidebar2EditionSets_artwork on Artwork {
   }
 }
 
+fragment ArtworkSidebar2Links_artwork on Artwork {
+  isInAuction
+  sale {
+    isClosed
+    id
+  }
+}
+
 fragment ArtworkSidebar2PartnerInfo_artwork on Artwork {
   internalID
   slug
@@ -147,6 +155,7 @@ fragment ArtworkSidebar2_artwork on Artwork {
   ...ArtworkSidebar2ShippingInformation_artwork
   ...ArtworkSidebar2PartnerInfo_artwork
   ...ArtworkSidebar2CreateArtworkAlert_artwork
+  ...ArtworkSidebar2Links_artwork
   sale {
     startAt
     id
@@ -528,6 +537,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "isClosed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "startAt",
                 "storageKey": null
               }
@@ -599,7 +615,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c7224f7fea0ec3709725d0981f05cfe4",
+    "cacheID": "d9e7d5bba6d8cf0e5dc85b83b7553831",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -704,6 +720,7 @@ return {
         },
         "artwork.sale.href": (v12/*: any*/),
         "artwork.sale.id": (v11/*: any*/),
+        "artwork.sale.isClosed": (v15/*: any*/),
         "artwork.sale.name": (v12/*: any*/),
         "artwork.sale.startAt": (v12/*: any*/),
         "artwork.saleArtwork": {
@@ -725,7 +742,7 @@ return {
     },
     "name": "ArtworkSidebar2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebar2_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2Artists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebar2ArtworkTitle_artwork on Artwork {\n  date\n  title\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n\nfragment ArtworkSidebar2EditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebar2SizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebar2ShippingInformation_artwork on Artwork {\n  shippingOrigin\n  shippingInfo\n}\n\nfragment ArtworkSidebar2SizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n\nfragment ArtworkSidebar2_artwork on Artwork {\n  slug\n  isSold\n  isAcquireable\n  isOfferable\n  isInAuction\n  saleMessage\n  ...ArtworkSidebar2ArtworkTitle_artwork\n  ...ArtworkSidebar2Artists_artwork\n  ...ArtworkSidebar2Details_artwork\n  ...ArtworkSidebar2EditionSets_artwork\n  ...ArtworkSidebar2ShippingInformation_artwork\n  ...ArtworkSidebar2PartnerInfo_artwork\n  ...ArtworkSidebar2CreateArtworkAlert_artwork\n  sale {\n    startAt\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n  artists {\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebar2_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2Artists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebar2ArtworkTitle_artwork on Artwork {\n  date\n  title\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n\nfragment ArtworkSidebar2EditionSets_artwork on Artwork {\n  isInquireable\n  isOfferable\n  isAcquireable\n  editionSets {\n    id\n    isOfferable\n    isAcquireable\n    saleMessage\n    ...ArtworkSidebar2SizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebar2Links_artwork on Artwork {\n  isInAuction\n  sale {\n    isClosed\n    id\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebar2ShippingInformation_artwork on Artwork {\n  shippingOrigin\n  shippingInfo\n}\n\nfragment ArtworkSidebar2SizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  editionOf\n}\n\nfragment ArtworkSidebar2_artwork on Artwork {\n  slug\n  isSold\n  isAcquireable\n  isOfferable\n  isInAuction\n  saleMessage\n  ...ArtworkSidebar2ArtworkTitle_artwork\n  ...ArtworkSidebar2Artists_artwork\n  ...ArtworkSidebar2Details_artwork\n  ...ArtworkSidebar2EditionSets_artwork\n  ...ArtworkSidebar2ShippingInformation_artwork\n  ...ArtworkSidebar2PartnerInfo_artwork\n  ...ArtworkSidebar2CreateArtworkAlert_artwork\n  ...ArtworkSidebar2Links_artwork\n  sale {\n    startAt\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n  artists {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

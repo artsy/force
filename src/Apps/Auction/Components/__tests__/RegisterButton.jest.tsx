@@ -229,7 +229,7 @@ describe("RegisterButton", () => {
       ;(wrapper.find("ButtonAction").props() as any).onClick()
       expect(spy).toHaveBeenCalledWith("login", {
         contextModule: "auctionSidebar",
-        copy: "Sign up to bid on artworks",
+        copy: "Log in to bid on artworks",
         intent: "registerToBid",
         redirectTo: "/auction/sale-slug/register",
       })

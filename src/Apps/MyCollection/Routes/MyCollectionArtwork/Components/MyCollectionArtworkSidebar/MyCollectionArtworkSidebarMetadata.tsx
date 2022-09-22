@@ -21,8 +21,6 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
     provenance,
   } = artwork
 
-  console.log({ artwork })
-
   return (
     <>
       <MetadataField label="Medium" value={category} />

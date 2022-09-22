@@ -17,7 +17,7 @@ export const newForYouRoutes: AppRouteConfig[] = [
       const first = parseInt(props.location.query.first, 10) || 20
       const includeBackfill = props.location.query.includeBackfill ?? true
       const version = props.location.query.version?.toUpperCase()
-      const maxWorksPerArtist = props.location.query.maxWorksPerArtist ?? 1
+      const maxWorksPerArtist = props.location.query.maxWorksPerArtist ?? 3
 
       return {
         ...params,

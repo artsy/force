@@ -24,6 +24,8 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
   show,
   show: { about, pressRelease, partner, hasLocation },
 }) => {
+  const events = show.events || []
+
   return (
     <>
       <Text as="h1" variant="xl" my={4}>
@@ -62,6 +64,8 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
                 </HTML>
               </Box>
             )}
+
+            {events.length > 0 && <EventList events={events} />}
           </Join>
         </Column>
 
@@ -95,6 +99,40 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
   )
 }
 
+const EventList: React.FC<{ events: ShowInfoProps["show"]["events"] }> = ({
+  events,
+}) => {
+  if (!events?.length) return null
+
+  return (
+    <Box>
+      <Text as="h2" variant="xl" mb="2">
+        Events
+      </Text>
+
+      <Join separator={<Spacer mt="2" />}>
+        {events.map((event, index) => {
+          if (!event) return null
+
+          const eventHeading = event.title || event.eventType
+
+          return (
+            <Box key={index}>
+              <Text as="h3" variant="lg">
+                {eventHeading}
+              </Text>
+              <Text color="black60" mb="1">
+                {event.dateTimeRange}
+              </Text>
+              <Text>{event.description}</Text>
+            </Box>
+          )
+        })}
+      </Join>
+    </Box>
+  )
+}
+
 export const ShowInfoFragmentContainer = createFragmentContainer(ShowInfo, {
   show: graphql`
     fragment ShowInfo_show on Show {
@@ -104,6 +142,12 @@ export const ShowInfoFragmentContainer = createFragmentContainer(ShowInfo, {
       about: description
       pressRelease(format: HTML)
       hasLocation
+      events {
+        dateTimeRange
+        description
+        eventType
+        title
+      }
       partner {
         __typename
         ... on Partner {

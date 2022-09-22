@@ -17,7 +17,6 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { MNTNConversionPixel, MNTNTrackingPixel } from "Components/MNTNPixels"
 import { createGlobalStyle } from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
@@ -110,9 +109,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Theme>
 
       {onboardingComponent}
-
-      <MNTNConversionPixel />
-      <MNTNTrackingPixel />
 
       {isMounted && <OneTrustModalOverlayHotfixStyles />}
     </Flex>

@@ -4,17 +4,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type createTestEnv_artwork = {
-    readonly title: string | null;
-    readonly artist: {
-        readonly name: string | null;
+export type ArtworkSidebar2Links_artwork = {
+    readonly isInAuction: boolean | null;
+    readonly sale: {
+        readonly isClosed: boolean | null;
     } | null;
-    readonly " $refType": "createTestEnv_artwork";
+    readonly " $refType": "ArtworkSidebar2Links_artwork";
 };
-export type createTestEnv_artwork$data = createTestEnv_artwork;
-export type createTestEnv_artwork$key = {
-    readonly " $data"?: createTestEnv_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"createTestEnv_artwork">;
+export type ArtworkSidebar2Links_artwork$data = ArtworkSidebar2Links_artwork;
+export type ArtworkSidebar2Links_artwork$key = {
+    readonly " $data"?: ArtworkSidebar2Links_artwork$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Links_artwork">;
 };
 
 
@@ -23,28 +23,28 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "createTestEnv_artwork",
+  "name": "ArtworkSidebar2Links_artwork",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "isInAuction",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "concreteType": "Artist",
+      "concreteType": "Sale",
       "kind": "LinkedField",
-      "name": "artist",
+      "name": "sale",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "name",
+          "name": "isClosed",
           "storageKey": null
         }
       ],
@@ -54,5 +54,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '77748b446a7cb5332e22b3fc524700a1';
+(node as any).hash = '11e6ccb268ff43e951912377d6877e66';
 export default node;

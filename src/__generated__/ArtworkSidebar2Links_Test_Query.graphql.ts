@@ -4,42 +4,31 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type createTestEnvQueryVariables = {};
-export type createTestEnvQueryResponse = {
+export type ArtworkSidebar2Links_Test_QueryVariables = {};
+export type ArtworkSidebar2Links_Test_QueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"createTestEnv_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Links_artwork">;
     } | null;
 };
-export type createTestEnvQueryRawResponse = {
-    readonly artwork: ({
-        readonly title: string | null;
-        readonly artist: ({
-            readonly name: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
-};
-export type createTestEnvQuery = {
-    readonly response: createTestEnvQueryResponse;
-    readonly variables: createTestEnvQueryVariables;
-    readonly rawResponse: createTestEnvQueryRawResponse;
+export type ArtworkSidebar2Links_Test_Query = {
+    readonly response: ArtworkSidebar2Links_Test_QueryResponse;
+    readonly variables: ArtworkSidebar2Links_Test_QueryVariables;
 };
 
 
 
 /*
-query createTestEnvQuery {
-  artwork(id: "unused") {
-    ...createTestEnv_artwork
+query ArtworkSidebar2Links_Test_Query {
+  artwork(id: "josef-albers-homage-to-the-square-85") {
+    ...ArtworkSidebar2Links_artwork
     id
   }
 }
 
-fragment createTestEnv_artwork on Artwork {
-  title
-  artist {
-    name
+fragment ArtworkSidebar2Links_artwork on Artwork {
+  isInAuction
+  sale {
+    isClosed
     id
   }
 }
@@ -50,7 +39,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "unused"
+    "value": "josef-albers-homage-to-the-square-85"
   }
 ],
 v1 = {
@@ -70,14 +59,14 @@ v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "createTestEnvQuery",
+    "name": "ArtworkSidebar2Links_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -90,10 +79,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "createTestEnv_artwork"
+            "name": "ArtworkSidebar2Links_artwork"
           }
         ],
-        "storageKey": "artwork(id:\"unused\")"
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
     "type": "Query",
@@ -103,7 +92,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "createTestEnvQuery",
+    "name": "ArtworkSidebar2Links_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -117,22 +106,22 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "title",
+            "name": "isInAuction",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artist",
+            "concreteType": "Sale",
             "kind": "LinkedField",
-            "name": "artist",
+            "name": "sale",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "name",
+                "name": "isClosed",
                 "storageKey": null
               },
               (v1/*: any*/)
@@ -141,12 +130,12 @@ return {
           },
           (v1/*: any*/)
         ],
-        "storageKey": "artwork(id:\"unused\")"
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "4b1d5d56fe44157d5741390cb8eba295",
+    "cacheID": "9aa10cf8a757f0520adedaef640a5363",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -156,23 +145,23 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artist": {
+        "artwork.id": (v2/*: any*/),
+        "artwork.isInAuction": (v3/*: any*/),
+        "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Artist"
+          "type": "Sale"
         },
-        "artwork.artist.id": (v2/*: any*/),
-        "artwork.artist.name": (v3/*: any*/),
-        "artwork.id": (v2/*: any*/),
-        "artwork.title": (v3/*: any*/)
+        "artwork.sale.id": (v2/*: any*/),
+        "artwork.sale.isClosed": (v3/*: any*/)
       }
     },
-    "name": "createTestEnvQuery",
+    "name": "ArtworkSidebar2Links_Test_Query",
     "operationKind": "query",
-    "text": "query createTestEnvQuery {\n  artwork(id: \"unused\") {\n    ...createTestEnv_artwork\n    id\n  }\n}\n\nfragment createTestEnv_artwork on Artwork {\n  title\n  artist {\n    name\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebar2Links_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2Links_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2Links_artwork on Artwork {\n  isInAuction\n  sale {\n    isClosed\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '269f6794cf21b26557a57a6b61cc5864';
+(node as any).hash = '27c814d23326c44f49f2e3d948f523e4';
 export default node;

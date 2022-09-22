@@ -1,7 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
 import { Inquiry } from "./Inquiry"
-import { MNTNConversionPixel } from "../MNTNPixels"
 
 export interface UseInquiryProps {
   artworkID: string
@@ -30,7 +29,6 @@ export const useInquiry = ({ artworkID }: UseInquiryProps) => {
             onClose={hideInquiry}
             askSpecialist={askSpecialist}
           />
-          <MNTNConversionPixel forceEmbed />
         </>
       )}
     </>

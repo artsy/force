@@ -1,5 +1,4 @@
 import { RootTestPage } from "DevTools/RootTestPage"
-import { createTestEnv } from "DevTools/createTestEnv"
 import { SaveButtonFragmentContainer } from "../index"
 import { graphql } from "react-relay"
 import { mediator } from "Server/mediator"
@@ -8,6 +7,8 @@ import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SaveArtwork } from "../SaveArtworkMutation"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { MockBoot } from "DevTools"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
@@ -22,27 +23,37 @@ class SaveButtonTestPage extends RootTestPage {
 }
 
 describe("Save artwork", () => {
-  let defaultData
   let defaultMutationResults
   let trackEvent
-  let Component
   let trigger
 
-  beforeAll(() => {
-    mediator.on("open:auth", () => {})
+  const artwork = {
+    id: "foo",
+    internalID: "abcd1234",
+    slug: "andy-warhol-skull",
+    is_saved: false,
+    title: "Skull",
+  }
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot>
+        <SaveButtonFragmentContainer
+          contextModule={ContextModule.worksForSaleRail}
+          {...props}
+        />
+      </MockBoot>
+    ),
+    query: graphql`
+      query SaveButtonTestQuery @relay_test_operation {
+        artwork(id: "example-artwork-id") {
+          ...SaveButton_artwork
+        }
+      }
+    `,
   })
 
   beforeAll(() => {
-    const artwork = {
-      id: "foo",
-      internalID: "abcd1234",
-      slug: "andy-warhol-skull",
-      is_saved: false,
-      title: "Skull",
-      " $fragmentRefs": null,
-      " $refType": null,
-    }
-    defaultData = { artwork }
     defaultMutationResults = {
       saveArtwork: {
         artwork: {
@@ -51,19 +62,14 @@ describe("Save artwork", () => {
         },
       },
     }
+
+    mediator.on("open:auth", () => {})
     ;(SaveArtwork as jest.Mock).mockImplementation(() =>
       Promise.resolve(defaultMutationResults)
     )
 
     trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
-
-    Component = props => (
-      <SaveButtonFragmentContainer
-        contextModule={ContextModule.worksForSaleRail}
-        {...props}
-      />
-    )
 
     jest.spyOn(mediator, "trigger")
     mockLocation()
@@ -83,25 +89,11 @@ describe("Save artwork", () => {
     })
   })
 
-  const setupTestEnv = () => {
-    return createTestEnv({
-      Component,
-      TestPage: SaveButtonTestPage,
-      defaultData,
-      defaultMutationResults,
-      query: graphql`
-        query SaveButtonTestQuery @relay_test_operation {
-          artwork(id: "example-artwork-id") {
-            ...SaveButton_artwork
-          }
-        }
-      `,
-    })
-  }
-
   it("can save an artwork", async () => {
-    const env = setupTestEnv()
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      Artwork: () => artwork,
+    })
+    const page = new SaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 
@@ -115,10 +107,11 @@ describe("Save artwork", () => {
   })
 
   it("can remove a saved artwork", async () => {
-    defaultData.artwork.is_saved = true
     defaultMutationResults.saveArtwork.artwork.is_saved = false
-    const env = setupTestEnv()
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      Artwork: () => ({ ...artwork, is_saved: true }),
+    })
+    const page = new SaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 
@@ -145,8 +138,10 @@ describe("Save artwork", () => {
       }
     })
 
-    const env = setupTestEnv()
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      Artwork: () => artwork,
+    })
+    const page = new SaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 

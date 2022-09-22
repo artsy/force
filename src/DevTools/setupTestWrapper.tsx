@@ -138,11 +138,11 @@ export const setupTestWrapper = <T extends OperationType>({
 }: SetupTestWrapper<T>) => {
   const getWrapper = (
     mockResolvers: MockResolvers = {},
-    componentProps: {} = {}
+    componentProps: {} = {},
+    mockedEnv?: ReturnType<typeof createMockEnvironment>
   ) => {
-    const env = createMockEnvironment()
+    const env = mockedEnv ?? createMockEnvironment()
 
-    // componentProps["children"][""]
     const TestRenderer = () => (
       <QueryRenderer<T>
         environment={env}
