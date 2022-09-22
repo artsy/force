@@ -41,7 +41,6 @@ const mockRouterPush = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush },
-    match: { params: { artworkId: undefined } },
   })),
 }))
 

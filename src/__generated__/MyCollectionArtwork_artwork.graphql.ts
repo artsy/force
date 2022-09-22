@@ -9,14 +9,10 @@ export type MyCollectionArtwork_artwork = {
         readonly totalCount: number | null;
     } | null;
     readonly hasMarketPriceInsights: boolean | null;
-    readonly submissionId: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly artist: {
         readonly slug: string;
-        readonly targetSupply: {
-            readonly isP1: boolean | null;
-        } | null;
         readonly auctionResults: {
             readonly totalCount: number | null;
         } | null;
@@ -77,13 +73,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "submissionId",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -97,24 +86,6 @@ return {
       "plural": false,
       "selections": [
         (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtistTargetSupply",
-          "kind": "LinkedField",
-          "name": "targetSupply",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isP1",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
         {
           "alias": "auctionResults",
           "args": null,
@@ -168,5 +139,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a9c2824058171c07d83ec1a2656d14cf';
+(node as any).hash = 'fab8df5f1af3b0044a009aee5788c1ec';
 export default node;

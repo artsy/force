@@ -37,6 +37,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 }) => {
   const { editCollectedArtwork } = useMyCollectionTracking()
 
+  // TODO: use real value
+  const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
+    boolean
+  >(false)
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(
@@ -80,8 +84,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   )
 
   const slug = artwork?.artist?.slug!
-  const id = artwork.internalID
-  const submissionId = artwork.submissionId
 
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
@@ -98,8 +100,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const hasInsights =
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
-
-  const isP1Artist = artwork.artist?.targetSupply?.isP1
 
   return (
     <>
@@ -124,9 +124,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
 
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-            {isMyCollectionPhase5Enabled && isP1Artist && (
+            {isMyCollectionPhase5Enabled && (
               <Media greaterThanOrEqual="sm">
-                {!!submissionId ? (
+                {!!isArtworkSubmittedToSell ? (
                   <>
                     <Separator my={2} />
                     <MyCollectionArtworkSWASectionSubmitted />
@@ -134,10 +134,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   </>
                 ) : (
                   <MyCollectionArtworkSWASectionDesktopLayout
-                    route={`/sell/submission/artwork-details/${id}`}
+                    onSubmit={() => {
+                      setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
+                    }}
                     learnMore={() => setShowHowItWorksModal(true)}
-                    slug={slug}
-                    artworkId={artwork.internalID}
                   />
                 )}
               </Media>
@@ -154,16 +154,18 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                   />
-                  {!!isMyCollectionPhase5Enabled && isP1Artist && (
+                  {!!isMyCollectionPhase5Enabled && (
                     <Media lessThan="sm">
-                      {!!submissionId ? (
+                      {!!isArtworkSubmittedToSell ? (
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/sell/submission/artwork-details/${id}`}
+                          onSubmit={() =>
+                            setIsArtworkSubmittedToSell(
+                              !isArtworkSubmittedToSell
+                            )
+                          }
                           learnMore={() => setShowHowItWorksModal(true)}
-                          slug={slug}
-                          artworkId={artwork.internalID}
                         />
                       )}
                     </Media>
@@ -242,14 +244,10 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           totalCount
         }
         hasMarketPriceInsights
-        submissionId
         internalID
         slug
         artist {
           slug
-          targetSupply {
-            isP1
-          }
           auctionResults: auctionResultsConnection {
             totalCount
           }
