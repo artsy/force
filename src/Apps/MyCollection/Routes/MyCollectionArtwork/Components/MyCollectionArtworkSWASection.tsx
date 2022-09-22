@@ -1,14 +1,23 @@
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Button, Clickable, Separator, Text } from "@artsy/palette"
+import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface Props {
-  onSubmit: () => void
+  route: string
   learnMore: () => void
+  slug: string
+  artworkId: string
 }
 
 export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
-  onSubmit,
+  route,
   learnMore,
+  slug,
+  artworkId,
 }) => {
+  const tracking = useTracking()
+
   return (
     <>
       <Text mb={2} mt={4} variant="sm-display">
@@ -17,20 +26,41 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        onClick={onSubmit}
-        variant="primaryBlack"
-        width="100%"
-        mb={2}
-        data-testid="submit-for-sale"
-      >
-        Submit for Sale
-      </Button>
-
+      <RouterLink noUnderline to={route} data-testid="submit-for-sale-link">
+        <Button
+          variant="primaryBlack"
+          width="100%"
+          mb={2}
+          data-testid="submit-for-sale"
+          onClick={() => {
+            tracking.trackEvent({
+              contextModule: ContextModule.topWorksRail,
+              context_page_owner_type: OwnerType.myCollectionArtwork,
+              context_page_owner_id: artworkId,
+              context_page_owner_slug: slug,
+              destination_page_owner_type: OwnerType.consignmentFlow,
+              subject: "Submit This Artwork to Sell",
+              platform: "web",
+            })
+          }}
+        >
+          Submit for Sale
+        </Button>
+      </RouterLink>
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
-          onClick={learnMore}
+          onClick={() => {
+            learnMore()
+            tracking.trackEvent({
+              contextModule: ContextModule.topWorksRail,
+              context_page_owner_type: OwnerType.myCollectionArtwork,
+              context_page_owner_id: artworkId,
+              context_page_owner_slug: slug,
+              subject: "Learn More",
+              platform: "web",
+            })
+          }}
           color="black60"
           textDecoration="underline"
           data-testid="learn-more"
@@ -43,9 +73,13 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 }
 
 export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
-  onSubmit,
+  route,
   learnMore,
+  slug,
+  artworkId,
 }) => {
+  const tracking = useTracking()
+
   return (
     <>
       <Separator my={2} />
@@ -55,19 +89,45 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        onClick={onSubmit}
-        variant="secondaryNeutral"
-        width="100%"
-        mb={2}
-        data-testid="submit-for-sale-desktop"
+      <RouterLink
+        noUnderline
+        to={route}
+        data-testid="submit-for-sale-link"
+        onClick={() => {
+          tracking.trackEvent({
+            contextModule: ContextModule.topWorksRail,
+            context_page_owner_type: OwnerType.myCollectionArtwork,
+            context_page_owner_id: artworkId,
+            context_page_owner_slug: slug,
+            destination_page_owner_type: OwnerType.consignmentFlow,
+            subject: "Submit This Artwork to Sell",
+            platform: "web",
+          })
+        }}
       >
-        Submit for Sale
-      </Button>
+        <Button
+          variant="secondaryNeutral"
+          width="100%"
+          mb={2}
+          data-testid="submit-for-sale-desktop"
+        >
+          Submit for Sale
+        </Button>
+      </RouterLink>
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
-          onClick={learnMore}
+          onClick={() => {
+            learnMore()
+            tracking.trackEvent({
+              contextModule: ContextModule.topWorksRail,
+              context_page_owner_type: OwnerType.myCollectionArtwork,
+              context_page_owner_id: artworkId,
+              context_page_owner_slug: slug,
+              subject: "Learn More",
+              platform: "web",
+            })
+          }}
           color="black60"
           textDecoration="underline"
           data-testid="learn-more-desktop"

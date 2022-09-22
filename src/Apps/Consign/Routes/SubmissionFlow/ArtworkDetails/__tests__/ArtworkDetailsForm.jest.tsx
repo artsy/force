@@ -7,6 +7,7 @@ import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
+  SubmissionType,
 } from "../Components/ArtworkDetailsForm"
 
 const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
@@ -19,7 +20,9 @@ const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
 describe("ArtworkDetailsForm", () => {
   let wrapper: ReactWrapper
   beforeAll(() => {
-    wrapper = renderArtworkForm(getArtworkDetailsFormInitialValues())
+    wrapper = renderArtworkForm(
+      getArtworkDetailsFormInitialValues({ type: SubmissionType.default })
+    )
   })
 
   it("renders correctly initial fields", () => {

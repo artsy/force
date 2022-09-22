@@ -5,35 +5,57 @@ import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
+  getArtworkDetailsFormInitialValuesProps,
+  SubmissionType,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "System/Router/useRouter"
 import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
-import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
+import {
+  createOrUpdateConsignSubmission,
+  SubmissionInput,
+} from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
+  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
+  myCollectionArtwork,
 }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
-  const initialValue = getArtworkDetailsFormInitialValues(submission)
+
+  const data: getArtworkDetailsFormInitialValuesProps = submission
+    ? { values: submission!, type: SubmissionType.submission }
+    : myCollectionArtwork
+    ? {
+        values: myCollectionArtwork!,
+        type: SubmissionType.myCollectionArtwork,
+      }
+    : { type: SubmissionType.default }
+
+  const initialValue = getArtworkDetailsFormInitialValues(data)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
+
+  const artworkId = myCollectionArtwork?.internalID
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -61,34 +83,44 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       : undefined
 
     if (relayEnvironment) {
+      let submissionData: SubmissionInput
+      submissionData = {
+        externalId: submission?.externalId,
+        artistID: artworkDetailsForm.artistId,
+        year: artworkDetailsForm.year,
+        title: artworkDetailsForm.title,
+        medium: artworkDetailsForm.materials,
+        attributionClass: artworkDetailsForm.rarity
+          .replace(" ", "_")
+          .toUpperCase() as ConsignmentAttributionClass,
+        editionNumber: artworkDetailsForm.editionNumber,
+        editionSizeFormatted: artworkDetailsForm.editionSize,
+        height: artworkDetailsForm.height,
+        width: artworkDetailsForm.width,
+        depth: artworkDetailsForm.depth,
+        dimensionsMetric: artworkDetailsForm.units,
+        provenance: artworkDetailsForm.provenance,
+        locationCity: artworkDetailsForm.location.city.trim(),
+        locationCountry: artworkDetailsForm.location.country?.trim(),
+        locationState: artworkDetailsForm.location.state?.trim(),
+        locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
+        locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
+        state: "DRAFT",
+        utmMedium: utmParams?.utmMedium,
+        utmSource: utmParams?.utmSource,
+        utmTerm: utmParams?.utmTerm,
+        sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+      }
+      if (artworkId && !match?.params?.id) {
+        ;(submissionData as CreateSubmissionMutationInput).source =
+          "MY_COLLECTION"
+        ;(submissionData as CreateSubmissionMutationInput).myCollectionArtworkID = artworkId
+      }
       try {
-        submissionId = await createOrUpdateConsignSubmission(relayEnvironment, {
-          externalId: submission?.externalId,
-          artistID: artworkDetailsForm.artistId,
-          year: artworkDetailsForm.year,
-          title: artworkDetailsForm.title,
-          medium: artworkDetailsForm.materials,
-          attributionClass: artworkDetailsForm.rarity
-            .replace(" ", "_")
-            .toUpperCase() as ConsignmentAttributionClass,
-          editionNumber: artworkDetailsForm.editionNumber,
-          editionSizeFormatted: artworkDetailsForm.editionSize,
-          height: artworkDetailsForm.height,
-          width: artworkDetailsForm.width,
-          depth: artworkDetailsForm.depth,
-          dimensionsMetric: artworkDetailsForm.units,
-          provenance: artworkDetailsForm.provenance,
-          locationCity: artworkDetailsForm.location.city.trim(),
-          locationCountry: artworkDetailsForm.location.country?.trim(),
-          locationState: artworkDetailsForm.location.state?.trim(),
-          locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
-          locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
-          state: "DRAFT",
-          utmMedium: utmParams?.utmMedium,
-          utmSource: utmParams?.utmSource,
-          utmTerm: utmParams?.utmTerm,
-          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
-        })
+        submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          submissionData
+        )
       } catch (error) {
         logger.error(
           `Submission not ${submission?.externalId ? "updated" : "created"}`,
@@ -108,7 +140,10 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         pathname: `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: `/sell/submission/${submissionId}/upload-photos`,
+        pathname: compact([
+          `/sell/submission/${submissionId}/upload-photos`,
+          artworkId,
+        ]).join("/"),
       })
     }
   }
@@ -193,6 +228,34 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         width
         depth
         dimensionsMetric
+        provenance
+      }
+    `,
+    myCollectionArtwork: graphql`
+      fragment ArtworkDetails_myCollectionArtwork on Artwork {
+        internalID
+        artist {
+          internalID
+          name
+        }
+        location {
+          city
+          country
+          state
+          postalCode
+        }
+        date
+        title
+        medium
+        attributionClass {
+          name
+        }
+        editionNumber
+        editionSize
+        height
+        width
+        depth
+        metric
         provenance
       }
     `,
