@@ -28,7 +28,6 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 

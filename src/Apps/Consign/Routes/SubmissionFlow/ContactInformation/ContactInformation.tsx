@@ -21,7 +21,6 @@ import { getENV } from "Utils/getENV"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
 import createLogger from "Utils/logger"
-import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 

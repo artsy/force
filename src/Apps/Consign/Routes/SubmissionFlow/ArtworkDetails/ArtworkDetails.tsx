@@ -26,7 +26,6 @@ import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
