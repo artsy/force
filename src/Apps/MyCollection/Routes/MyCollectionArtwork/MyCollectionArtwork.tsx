@@ -35,7 +35,9 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  const { editCollectedArtwork } = useMyCollectionTracking()
+  const {
+    editCollectedArtwork: trackEditCollectedArtwork,
+  } = useMyCollectionTracking()
 
   // TODO: use real value
   const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
@@ -75,7 +77,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         variant="secondaryNeutral"
         size="small"
         to={`/my-collection/artworks/${artwork.internalID}/edit`}
-        onClick={() => editCollectedArtwork(artwork.internalID, artwork.slug)}
+        onClick={() =>
+          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+        }
         alignSelf="flex-end"
       >
         Edit Artwork Details

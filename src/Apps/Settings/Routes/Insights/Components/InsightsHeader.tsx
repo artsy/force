@@ -8,7 +8,9 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 export const InsightsHeader: React.FC = () => {
-  const { addCollectedArtwork } = useMyCollectionTracking()
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -50,7 +52,7 @@ export const InsightsHeader: React.FC = () => {
                         size={["small", "large"]}
                         variant="primaryBlack"
                         to="/my-collection/artworks/new"
-                        onClick={() => addCollectedArtwork()}
+                        onClick={() => trackAddCollectedArtwork()}
                       >
                         Upload Artwork
                       </Button>

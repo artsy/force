@@ -51,8 +51,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   artwork,
 }) => {
   const {
-    deleteCollectedArtwork,
-    saveCollectedArtwork,
+    deleteCollectedArtwork: trackDeleteCollectedArtwork,
+    saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
@@ -119,7 +119,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       // Track saving only when the user adds a new artwork.
       if (!isEditing) {
-        saveCollectedArtwork()
+        trackSaveCollectedArtwork()
       }
 
       // Remove photos marked for deletion
@@ -183,7 +183,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   }
 
   const handleDelete = async () => {
-    deleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
+    trackDeleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
     try {
       await deleteArtwork({
         variables: {

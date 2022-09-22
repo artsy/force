@@ -20,7 +20,9 @@ const image = resized(
 )
 
 const DesktopLayout: React.FC = () => {
-  const { addCollectedArtwork } = useMyCollectionTracking()
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
 
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
@@ -37,7 +39,7 @@ const DesktopLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => addCollectedArtwork()}
+          onClick={() => trackAddCollectedArtwork()}
         >
           Upload Artwork
         </Button>
@@ -60,7 +62,9 @@ const DesktopLayout: React.FC = () => {
 }
 
 const MobileLayout: React.FC = () => {
-  const { addCollectedArtwork } = useMyCollectionTracking()
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
 
   return (
     <GridColumns gridRowGap={2} alignItems="center">
@@ -91,7 +95,7 @@ const MobileLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => addCollectedArtwork()}
+          onClick={() => trackAddCollectedArtwork()}
           width="100%"
         >
           Upload Artwork
