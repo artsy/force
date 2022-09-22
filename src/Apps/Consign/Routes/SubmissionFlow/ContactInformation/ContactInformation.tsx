@@ -21,7 +21,6 @@ import { getENV } from "Utils/getENV"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
 import createLogger from "Utils/logger"
-import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -48,7 +47,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   submission,
 }) => {
   const { trackEvent } = useTracking()
-  const { router, match } = useRouter()
+  const { router } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const initialValue = getContactInformationFormInitialValues(me)
@@ -56,7 +55,6 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     initialValue,
     contactInformationValidationSchema
   )
-  const artworkId = match.params.artworkId
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
@@ -88,12 +86,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push(
-          compact([
-            `/sell/submission/${submission?.externalId}/thank-you`,
-            artworkId,
-          ]).join("/")
-        )
+        router.push(`/sell/submission/${submission?.externalId}/thank-you`)
       } catch (error) {
         logger.error("Submission error", error)
 
@@ -114,10 +107,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={compact([
-          `/sell/submission/${submission?.externalId}/upload-photos`,
-          artworkId,
-        ]).join("/")}
+        to={`/sell/submission/${submission?.externalId}/upload-photos`}
       >
         Back
       </BackLink>

@@ -24,104 +24,34 @@ import {
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
 import { useState } from "react"
-import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
-export enum SubmissionType {
-  submission = "SUBMISSION",
-  myCollectionArtwork = "MY_COLLECTION_ARTWORK",
-  default = "DEFAULT",
-}
-
-export type getArtworkDetailsFormInitialValuesProps =
-  | {
-      values: ArtworkDetails_submission
-      type: SubmissionType.submission
-    }
-  | {
-      values: ArtworkDetails_myCollectionArtwork
-      type: SubmissionType.myCollectionArtwork
-    }
-  | {
-      type: SubmissionType.default
-    }
-
 export const getArtworkDetailsFormInitialValues = (
-  props: getArtworkDetailsFormInitialValuesProps
-) => {
-  switch (props.type) {
-    case "SUBMISSION":
-      return {
-        artistId: props.values.artist?.internalID ?? "",
-        artistName: props.values.artist?.name ?? "",
-        year: props.values.year ?? "",
-        title: props.values.title ?? "",
-        materials: props.values.medium ?? "",
-        rarity:
-          props.values.attributionClass?.replace("_", " ").toLowerCase() ?? "",
-        editionNumber: props.values.editionNumber ?? "",
-        editionSize: props.values.editionSize ?? undefined,
-        height: props.values.height ?? "",
-        width: props.values.width ?? "",
-        depth: props.values.depth ?? "",
-        units: props.values.dimensionsMetric ?? "in",
-        provenance: props.values.provenance ?? "",
-        location: {
-          city: props.values.locationCity ?? "",
-          country: props.values.locationCountry ?? undefined,
-          state: props.values.locationState ?? undefined,
-          countryCode: props.values.locationCountryCode ?? undefined,
-        },
-        postalCode: props.values.locationPostalCode ?? undefined,
-      } as ArtworkDetailsFormModel
-
-    case "MY_COLLECTION_ARTWORK":
-      return {
-        artistId: props.values.artist?.internalID ?? "",
-        artistName: props.values.artist?.name ?? "",
-        year: props.values.date ?? "",
-        title: props.values.title ?? "",
-        materials: props.values.medium ?? "",
-        rarity:
-          props.values.attributionClass?.name
-            ?.replace("_", " ")
-            .toLowerCase() ?? "",
-        editionNumber: props.values.editionNumber ?? "",
-        editionSize: props.values.editionSize ?? undefined,
-        height: props.values.height ?? "",
-        width: props.values.width ?? "",
-        depth: props.values.depth ?? "",
-        units: props.values.metric ?? "in",
-        provenance: props.values.provenance ?? "",
-        location: {
-          city: "",
-        },
-        postalCode: undefined,
-      } as ArtworkDetailsFormModel
-    default:
-      return {
-        artistId: "",
-        artistName: "",
-        year: "",
-        title: "",
-        materials: "",
-        rarity: "",
-        editionNumber: "",
-        editionSize: undefined,
-        height: "",
-        width: "",
-        depth: "",
-        units: "in",
-        provenance: "",
-        location: {
-          city: "",
-        },
-        postalCode: undefined,
-      }
-  }
-}
+  submission?: ArtworkDetails_submission
+): ArtworkDetailsFormModel => ({
+  artistId: submission?.artist?.internalID ?? "",
+  artistName: submission?.artist?.name ?? "",
+  year: submission?.year ?? "",
+  title: submission?.title ?? "",
+  materials: submission?.medium ?? "",
+  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+  editionNumber: submission?.editionNumber ?? "",
+  editionSize: submission?.editionSize ?? undefined,
+  height: submission?.height ?? "",
+  width: submission?.width ?? "",
+  depth: submission?.depth ?? "",
+  units: submission?.dimensionsMetric ?? "in",
+  provenance: submission?.provenance ?? "",
+  location: {
+    city: submission?.locationCity ?? "",
+    country: submission?.locationCountry ?? undefined,
+    state: submission?.locationState ?? undefined,
+    countryCode: submission?.locationCountryCode ?? undefined,
+  },
+  postalCode: submission?.locationPostalCode ?? undefined,
+})
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -226,7 +156,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Input
-            title="Year"
+            title="year"
             maxLength={256}
             placeholder="YYYY"
             name="year"

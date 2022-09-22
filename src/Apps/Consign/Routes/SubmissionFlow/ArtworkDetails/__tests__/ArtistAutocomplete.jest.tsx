@@ -7,7 +7,6 @@ import { ArtistAutoComplete } from "../Components/ArtistAutocomplete"
 import {
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
-  SubmissionType,
 } from "../Components/ArtworkDetailsForm"
 
 jest.mock("System/Router/useRouter", () => ({
@@ -92,9 +91,7 @@ describe("ArtistAutocomplete", () => {
   let wrapper: ReactWrapper
 
   beforeAll(async () => {
-    wrapper = renderArtistAutosuggest(
-      getArtworkDetailsFormInitialValues({ type: SubmissionType.default })
-    )
+    wrapper = renderArtistAutosuggest(getArtworkDetailsFormInitialValues())
   })
 
   afterEach(() => {

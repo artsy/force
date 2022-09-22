@@ -37,6 +37,15 @@ describe("ThankYou page", () => {
         },
       }
     })
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        isLoggedIn: true,
+        user: {
+          id: "123",
+          email: "d@e.f",
+        },
+      }
+    })
   })
 
   describe("when user is logged in", () => {
@@ -44,10 +53,6 @@ describe("ThankYou page", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
           isLoggedIn: true,
-          user: {
-            id: "123",
-            email: "d@e.f",
-          },
         }
       })
     })
@@ -75,26 +80,6 @@ describe("ThankYou page", () => {
 
       expect(wrapper.find("SoldRecentlyOnArtsyQueryRenderer").length).toBe(1)
       expect(wrapper.find("FAQ").length).toBe(1)
-    })
-
-    it("tracks submit another artwork click with user email and ID", async () => {
-      const wrapper = mount(<ThankYou />)
-
-      const submitAnotherButton = wrapper.find(
-        "button[data-test-id='submit-another-work']"
-      )
-
-      submitAnotherButton.simulate("click")
-
-      expect(trackEvent).toHaveBeenCalled()
-      expect(trackEvent).toHaveBeenCalledWith({
-        action_type: DeprecatedAnalyticsSchema.ActionType.SubmitAnotherArtwork,
-        context_module: ContextModule.consignSubmissionFlow,
-        context_owner_type: OwnerType.consignmentSubmission,
-        submission_id: "12345",
-        user_email: "d@e.f",
-        user_id: "123",
-      })
     })
   })
 
@@ -130,6 +115,41 @@ describe("ThankYou page", () => {
 
       expect(wrapper.find("SoldRecentlyOnArtsyQueryRenderer").length).toBe(1)
       expect(wrapper.find("FAQ").length).toBe(1)
+    })
+  })
+
+  describe("when user logged in", () => {
+    it("tracks submit another artwork click with user email and ID", async () => {
+      const wrapper = mount(<ThankYou />)
+
+      const submitAnotherButton = wrapper.find(
+        "button[data-test-id='submit-another-work']"
+      )
+
+      submitAnotherButton.simulate("click")
+
+      expect(trackEvent).toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith({
+        action_type: DeprecatedAnalyticsSchema.ActionType.SubmitAnotherArtwork,
+        context_module: ContextModule.consignSubmissionFlow,
+        context_owner_type: OwnerType.consignmentSubmission,
+        submission_id: "12345",
+        user_email: "d@e.f",
+        user_id: "123",
+      })
+    })
+  })
+  describe("when user is notlogged in", () => {
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return {
+          isLoggedIn: false,
+          user: {
+            id: "",
+            email: "",
+          },
+        }
+      })
     })
 
     it("tracks submit another artwork click without user email", async () => {

@@ -36,28 +36,6 @@ const validForm = {
   provenance: "provenance",
 } as ArtworkDetails_submission
 
-const artwrokData = {
-  internalID: "6324911f2c6b47000e277879",
-  artist: {
-    internalID: "artist-id",
-    name: "name",
-  },
-  location: {
-    city: "",
-  },
-  date: "2021",
-  title: "Some title",
-  medium: "materials",
-  attributionClass: { name: "LIMITED_EDITION" },
-  editionNumber: "1",
-  editionSize: "2",
-  height: "3",
-  width: "4",
-  depth: "5",
-  metric: "cm",
-  provenance: "provenance",
-}
-
 const utmParams = { utmMedium: "Medium", utmSource: "Source", utmTerm: "Term" }
 
 const mockRouterPush = jest.fn()
@@ -105,79 +83,9 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
     },
   })
 
-const getAutopopulateWrapper = () =>
-  setupTestWrapperTL({
-    Component: (props: any) => {
-      return (
-        <MockBoot>
-          <ArtworkDetailsFragmentContainer {...props} />
-        </MockBoot>
-      )
-    },
-    query: graphql`
-      query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(
-        $artworkId: String!
-      ) @relay_test_operation {
-        myCollectionArtwork: artwork(id: $artworkId) {
-          ...ArtworkDetails_myCollectionArtwork
-        }
-      }
-    `,
-    variables: {
-      artworkId: artwrokData.internalID,
-    },
-  })
-
 describe("ArtworkDetails", () => {
   beforeEach(() => {
     sessionStore = {}
-  })
-
-  describe("Initial render when opened from My Collection artwork page", () => {
-    it("prepupulates the data", () => {
-      getAutopopulateWrapper().renderWithRelay({
-        Artwork: () => artwrokData,
-      })
-
-      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("name")
-      expect(screen.getByPlaceholderText("YYYY")).toHaveValue("2021")
-      expect(
-        screen.getByPlaceholderText("Add title or write 'Unknown'")
-      ).toHaveValue("Some title")
-      expect(screen.getByPlaceholderText("Add materials")).toHaveValue(
-        "materials"
-      )
-      expect(
-        screen
-          .getAllByRole("combobox")
-          .find(c => c.getAttribute("name") == "rarity")
-      ).toHaveValue("limited edition")
-      expect(
-        screen
-          .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "height")
-      ).toHaveValue("3")
-      expect(
-        screen
-          .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "width")
-      ).toHaveValue("4")
-      expect(
-        screen
-          .getAllByRole("textbox")
-          .find(c => c.getAttribute("name") == "depth")
-      ).toHaveValue("5")
-      expect(
-        screen.getAllByRole("radio").find(c => c.textContent == "cm")
-      ).toBeChecked()
-      expect(
-        screen.getByPlaceholderText("Describe how you acquired the work")
-      ).toHaveValue("provenance")
-
-      expect(
-        screen.getByPlaceholderText("Enter city where artwork is located")
-      ).toHaveValue("")
-    })
   })
 
   describe("Initial render", () => {
