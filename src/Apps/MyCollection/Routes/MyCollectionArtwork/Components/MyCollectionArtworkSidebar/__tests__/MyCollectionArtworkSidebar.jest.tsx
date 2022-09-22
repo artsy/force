@@ -74,7 +74,7 @@ describe("MyCollectionArtworkSidebar", () => {
         )
       })
 
-      it("displays size in cm", () => {
+      it("displays dimensions in cm", () => {
         expect(
           screen.getByText("55.9 × 41.9 cm", {
             collapseWhitespace: true,
@@ -113,7 +113,7 @@ describe("MyCollectionArtworkSidebar", () => {
       ).toBeInTheDocument()
 
       // shows labels when no data are available
-      expect(screen.getByText("Size")).toBeInTheDocument()
+      expect(screen.getByText("Dimensions")).toBeInTheDocument()
       expect(screen.getByText("Provenance")).toBeInTheDocument()
       expect(screen.getByText("Rarity")).toBeInTheDocument()
       expect(screen.getByText("Price Paid")).toBeInTheDocument()
