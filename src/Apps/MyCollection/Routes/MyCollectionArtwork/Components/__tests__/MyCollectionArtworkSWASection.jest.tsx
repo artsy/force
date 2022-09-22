@@ -5,6 +5,7 @@ import {
 } from "../MyCollectionArtworkSWASection"
 
 jest.unmock("react-relay")
+const onSubmit = jest.fn()
 const learnMore = jest.fn()
 
 // TODO: add more tests when the main functionality is in place
@@ -12,10 +13,8 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionMobileLayout
-        route={"/sell/submission/artwork-details/artwork-id"}
+        onSubmit={onSubmit}
         learnMore={learnMore}
-        slug={"slug"}
-        artworkId={"artwork-id"}
       />
     )
   }
@@ -27,14 +26,11 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
     expect(learnMore).toBeCalled()
   })
 
-  it("the link has right attributes", async () => {
+  it("opens the submission flow", async () => {
     getWrapper()
 
     fireEvent.click(screen.getByTestId("submit-for-sale"))
-    expect(screen.getByRole("link")).toHaveAttribute(
-      "href",
-      "/sell/submission/artwork-details/artwork-id"
-    )
+    expect(onSubmit).toBeCalled()
   })
 })
 
@@ -42,10 +38,8 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionDesktopLayout
-        route={`/sell/submission/artwork-details/artwork-id`}
+        onSubmit={onSubmit}
         learnMore={learnMore}
-        slug={"slug"}
-        artworkId={"artwork-id"}
       />
     )
   }
@@ -57,13 +51,10 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
     expect(learnMore).toBeCalled()
   })
 
-  it("the link has right attributes", async () => {
+  it("opens the submission flow", async () => {
     getWrapper()
 
     fireEvent.click(screen.getByTestId("submit-for-sale-desktop"))
-    expect(screen.getByRole("link")).toHaveAttribute(
-      "href",
-      "/sell/submission/artwork-details/artwork-id"
-    )
+    expect(onSubmit).toBeCalled()
   })
 })

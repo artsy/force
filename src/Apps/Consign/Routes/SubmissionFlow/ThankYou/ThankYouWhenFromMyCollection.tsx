@@ -7,10 +7,9 @@ export const ThankYouWhenFromMyCollection: React.FC = () => {
       <Text variant="xl" mt={4}>
         Your artwork has been submitted
       </Text>
-      <Text variant="md" color="black60" mt={1} mb={6}>
+      <Text variant="md" color="black60" mt={1} mb={[4, 6]}>
         We will email you within 1-3 days to confirm if your artwork has been
-        accepted or not. In the meantime, you can track the progress of your
-        submission in My Collection.
+        accepted or not.
       </Text>
 
       <Flex
@@ -18,7 +17,12 @@ export const ThankYouWhenFromMyCollection: React.FC = () => {
         alignItems={["stretch", "center"]}
       >
         <RouterLink to="/my-collection">
-          <Button width={["100%", "auto"]} size="large" variant="primaryBlack">
+          <Button
+            width={["100%", "auto"]}
+            data-test-id="back-to-my-collection"
+            size="large"
+            variant="primaryBlack"
+          >
             Back to My Collection
           </Button>
         </RouterLink>
