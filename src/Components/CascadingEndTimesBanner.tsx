@@ -19,7 +19,7 @@ const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
   return (
     <FullBleedBanner variant="brand" dismissable>
       {sale.extendedBiddingIntervalMinutes
-        ? "Closing times may be extended due to last minute competitive bidding"
+        ? "Closing times may be extended due to last-minute competitive bidding"
         : `Lots close at ${sale.cascadingEndTimeIntervalMinutes}-minute intervals`}
       .
       {!!helpArticleLink && (
