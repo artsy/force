@@ -1,11 +1,4 @@
 import {
-  DeleteCollectedArtwork,
-  ActionType,
-  ContextModule,
-  OwnerType,
-  SaveCollectedArtwork,
-} from "@artsy/cohesion"
-import {
   ArtsyLogoBlackIcon,
   Box,
   Button,
@@ -26,7 +19,6 @@ import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
@@ -34,6 +26,7 @@ import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
 import { MyCollectionArtworkFormImages } from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
@@ -57,7 +50,10 @@ export interface MyCollectionArtworkFormProps {
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
 }) => {
-  const { trackEvent } = useTracking()
+  const {
+    deleteCollectedArtwork,
+    saveCollectedArtwork,
+  } = useMyCollectionTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
@@ -123,7 +119,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       // Track saving only when the user adds a new artwork.
       if (!isEditing) {
-        trackEvent(tracks.saveCollectedArtwork())
+        saveCollectedArtwork()
       }
 
       // Remove photos marked for deletion
@@ -187,9 +183,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   }
 
   const handleDelete = async () => {
-    trackEvent(
-      tracks.deleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
-    )
+    deleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
     try {
       await deleteArtwork({
         variables: {
@@ -450,23 +444,3 @@ export const MyCollectionArtworkFormFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const tracks = {
-  deleteCollectedArtwork: (
-    internalID: string,
-    slug: string
-  ): DeleteCollectedArtwork => ({
-    action: ActionType.deleteCollectedArtwork,
-    context_module: ContextModule.myCollectionArtwork,
-    context_owner_id: internalID,
-    context_owner_slug: slug,
-    context_owner_type: OwnerType.myCollectionArtwork,
-    platform: "web",
-  }),
-  saveCollectedArtwork: (): SaveCollectedArtwork => ({
-    action: ActionType.saveCollectedArtwork,
-    context_module: ContextModule.myCollectionHome,
-    context_owner_type: OwnerType.myCollection,
-    platform: "web",
-  }),
-}

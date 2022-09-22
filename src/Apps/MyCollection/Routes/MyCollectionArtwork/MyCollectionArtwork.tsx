@@ -1,10 +1,4 @@
 import {
-  ActionType,
-  ContextModule,
-  EditCollectedArtwork,
-  OwnerType,
-} from "@artsy/cohesion"
-import {
   Button,
   Column,
   Flex,
@@ -17,11 +11,11 @@ import {
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -41,7 +35,7 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  const { trackEvent } = useTracking()
+  const { editCollectedArtwork } = useMyCollectionTracking()
 
   // TODO: use real value
   const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
@@ -81,11 +75,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         variant="secondaryNeutral"
         size="small"
         to={`/my-collection/artworks/${artwork.internalID}/edit`}
-        onClick={() =>
-          trackEvent(
-            tracks.editCollectedArtwork(artwork.internalID, artwork.slug)
-          )
-        }
+        onClick={() => editCollectedArtwork(artwork.internalID, artwork.slug)}
         alignSelf="flex-end"
       >
         Edit Artwork Details
@@ -267,17 +257,3 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const tracks = {
-  editCollectedArtwork: (
-    internalID: string,
-    slug: string
-  ): EditCollectedArtwork => ({
-    action: ActionType.editCollectedArtwork,
-    context_module: ContextModule.myCollectionArtwork,
-    context_owner_id: internalID,
-    context_owner_slug: slug,
-    context_owner_type: OwnerType.myCollectionArtwork,
-    platform: "web",
-  }),
-}
