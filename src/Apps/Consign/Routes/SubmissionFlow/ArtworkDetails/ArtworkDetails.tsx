@@ -43,7 +43,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
 
-  const data: getArtworkDetailsFormInitialValuesProps = submission
+  const inputData: getArtworkDetailsFormInitialValuesProps = submission
     ? { values: submission!, type: SubmissionType.submission }
     : myCollectionArtwork
     ? {
@@ -52,7 +52,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       }
     : { type: SubmissionType.default }
 
-  const initialValue = getArtworkDetailsFormInitialValues(data)
+  const initialValue = getArtworkDetailsFormInitialValues(inputData)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const artworkId = myCollectionArtwork?.internalID
@@ -135,22 +135,28 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
         return
       }
-
       router.replace({
-        pathname: `/sell/submission/${submissionId}/artwork-details`,
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
+          : `/sell/submission/${submissionId}/artwork-details`,
       })
+
       router.push({
-        pathname: compact([
-          `/sell/submission/${submissionId}/upload-photos`,
-          artworkId,
-        ]).join("/"),
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
+          : `/sell/submission/${submissionId}/upload-photos`,
       })
     }
   }
 
   return (
     <>
-      <BackLink py={2} mb={6} to="/sell" width="min-content">
+      <BackLink
+        py={2}
+        mb={6}
+        to={artworkId ? `/my-collection/artwork/${artworkId}` : "/sell"}
+        width="min-content"
+      >
         Back
       </BackLink>
 

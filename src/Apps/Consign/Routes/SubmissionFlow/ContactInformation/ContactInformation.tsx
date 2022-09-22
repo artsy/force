@@ -89,10 +89,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         })
 
         router.push(
-          compact([
-            `/sell/submission/${submission?.externalId}/thank-you`,
-            artworkId,
-          ]).join("/")
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/thank-you/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/thank-you`
         )
       } catch (error) {
         logger.error("Submission error", error)
@@ -114,10 +113,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={compact([
-          `/sell/submission/${submission?.externalId}/upload-photos`,
-          artworkId,
-        ]).join("/")}
+        to={
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/upload-photos/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/upload-photos`
+        }
       >
         Back
       </BackLink>

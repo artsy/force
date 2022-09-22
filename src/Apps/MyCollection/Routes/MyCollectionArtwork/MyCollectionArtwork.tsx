@@ -130,7 +130,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   </>
                 ) : (
                   <MyCollectionArtworkSWASectionDesktopLayout
-                    route={`/sell/submission/artwork-details/${id}`}
+                    route={`/my-collection/submission/artwork-details/${id}`}
                     learnMore={() => setShowHowItWorksModal(true)}
                     slug={slug}
                     artworkId={artwork.internalID}
@@ -156,7 +156,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/sell/submission/artwork-details/${id}`}
+                          route={`/my-collection/submission/artwork-details/${id}`}
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}

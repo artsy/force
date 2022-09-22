@@ -4,23 +4,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type consignRoutes_myCollectionArtworkQueryVariables = {
+export type consignFromMyCollectionRoutesChildren_myCollectionArtworkQueryVariables = {
     artworkId: string;
 };
-export type consignRoutes_myCollectionArtworkQueryResponse = {
+export type consignFromMyCollectionRoutesChildren_myCollectionArtworkQueryResponse = {
     readonly myCollectionArtwork: {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
     } | null;
 };
-export type consignRoutes_myCollectionArtworkQuery = {
-    readonly response: consignRoutes_myCollectionArtworkQueryResponse;
-    readonly variables: consignRoutes_myCollectionArtworkQueryVariables;
+export type consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery = {
+    readonly response: consignFromMyCollectionRoutesChildren_myCollectionArtworkQueryResponse;
+    readonly variables: consignFromMyCollectionRoutesChildren_myCollectionArtworkQueryVariables;
 };
 
 
 
 /*
-query consignRoutes_myCollectionArtworkQuery(
+query consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery(
   $artworkId: String!
 ) {
   myCollectionArtwork: artwork(id: $artworkId) {
@@ -101,7 +101,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignRoutes_myCollectionArtworkQuery",
+    "name": "consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery",
     "selections": [
       {
         "alias": "myCollectionArtwork",
@@ -127,7 +127,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "consignRoutes_myCollectionArtworkQuery",
+    "name": "consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery",
     "selections": [
       {
         "alias": "myCollectionArtwork",
@@ -282,14 +282,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5a23ffe3252b392339e2bbb644208329",
+    "cacheID": "b9b83ce6277d5aa8d923fb0a6807b7de",
     "id": null,
     "metadata": {},
-    "name": "consignRoutes_myCollectionArtworkQuery",
+    "name": "consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query consignFromMyCollectionRoutesChildren_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = 'e52ab9ec15be4a8176eded188385c990';
+(node as any).hash = 'afa434ba6a74d471ea1634ce2abeb56a';
 export default node;

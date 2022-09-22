@@ -88,10 +88,9 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   const handleSubmit = async () => {
     if (submission) {
       router.push({
-        pathname: compact([
-          `/sell/submission/${submission.externalId}/contact-information`,
-          artworkId,
-        ]).join("/"),
+        pathname: artworkId
+          ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
+          : `/sell/submission/${submission.externalId}/contact-information`,
       })
     }
   }
@@ -102,10 +101,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={compact([
-          `/sell/submission/${submission?.externalId}/artwork-details`,
-          artworkId,
-        ]).join("/")}
+        to={
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/artwork-details/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/artwork-details`
+        }
       >
         Back
       </BackLink>
