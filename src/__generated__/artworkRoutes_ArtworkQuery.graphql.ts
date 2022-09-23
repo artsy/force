@@ -730,6 +730,13 @@ v50 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "estimate",
+  "storageKey": null
+},
+v55 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "endedAt",
   "storageKey": null
 },
@@ -1597,13 +1604,7 @@ return {
                 "storageKey": null
               },
               (v12/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "estimate",
-                "storageKey": null
-              },
+              (v54/*: any*/),
               {
                 "alias": "is_with_reserve",
                 "args": null,

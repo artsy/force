@@ -127,6 +127,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isBiddable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Sale",
       "kind": "LinkedField",
       "name": "sale",
@@ -155,6 +162,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "lotID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotLabel",
           "storageKey": null
         },
         {

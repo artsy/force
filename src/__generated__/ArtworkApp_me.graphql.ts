@@ -33,6 +33,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "SubmittedOrderModal_me"
     }
   ],

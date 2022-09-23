@@ -229,6 +229,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarBiddingClosedMessage_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2BiddingClosedMessage_artwork"
     }
   ],
   "type": "Artwork",
