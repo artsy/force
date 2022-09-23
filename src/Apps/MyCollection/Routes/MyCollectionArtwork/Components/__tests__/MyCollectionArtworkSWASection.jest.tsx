@@ -12,7 +12,7 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionMobileLayout
-        route={"/sell/submission/artwork-details/artwork-id"}
+        route={"/my-collection/submission/artwork-details/artwork-id"}
         learnMore={learnMore}
         slug={"slug"}
         artworkId={"artwork-id"}
@@ -32,7 +32,7 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
     fireEvent.click(screen.getByTestId("submit-for-sale"))
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/sell/submission/artwork-details/artwork-id"
+      "/my-collection/submission/artwork-details/artwork-id"
     )
   })
 })
@@ -41,7 +41,7 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionDesktopLayout
-        route={`/sell/submission/artwork-details/artwork-id`}
+        route={`/my-collection/submission/artwork-details/artwork-id`}
         learnMore={learnMore}
         slug={"slug"}
         artworkId={"artwork-id"}
@@ -61,7 +61,7 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
     fireEvent.click(screen.getByTestId("submit-for-sale-desktop"))
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/sell/submission/artwork-details/artwork-id"
+      "/my-collection/submission/artwork-details/artwork-id"
     )
   })
 })
