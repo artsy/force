@@ -1,6 +1,5 @@
-import { Flex, ResponsiveBox, Image } from "@artsy/palette"
+import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
-import { IMAGES_LOCAL_STORE_KEY } from "Apps/Settings/Routes/MyCollection/constants"
 import { useEffect, useState } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
@@ -18,7 +17,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
   const [localArtworkImages, setLocalArtworkImages] = useState<StoredImage[]>()
 
   useEffect(() => {
-    getArtworkLocalImages(artwork.internalID, IMAGES_LOCAL_STORE_KEY)
+    getArtworkLocalImages(artwork.internalID)
       .then(images => {
         if (images) {
           setLocalArtworkImages(images)
@@ -33,12 +32,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
     if (localArtworkImages && localArtworkImages.length) {
       return (
         <Flex maxWidth={["100%", 600]} mx="auto">
-          <ResponsiveBox
-            maxWidth="100%"
-            aspectWidth={1}
-            aspectHeight={1}
-            // mx={[0, 2, 4]}
-          >
+          <ResponsiveBox maxWidth="100%" aspectWidth={1} aspectHeight={1}>
             <Flex
               position="absolute"
               top={0}

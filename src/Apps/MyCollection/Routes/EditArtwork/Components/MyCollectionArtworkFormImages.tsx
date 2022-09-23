@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import { IMAGES_LOCAL_STORE_KEY } from "Apps/Settings/Routes/MyCollection/constants"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
@@ -16,11 +15,11 @@ import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import { MyCollectionPhotoToPhoto } from "../Utils/artworkFormHelpers"
 import { ArtworkModel } from "../Utils/artworkModel"
 
-export interface MyCollectionArtworkFormImagesComponentRef {
+export interface MyCollectionArtworkFormImagesProps {
   saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
 }
 export const MyCollectionArtworkFormImages = forwardRef<
-  MyCollectionArtworkFormImagesComponentRef
+  MyCollectionArtworkFormImagesProps
 >((_, formImagesRef) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
   const [localImages, setlocalImages] = useState<
@@ -35,8 +34,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
       //and remove unnecessary fields
       return await storeArtworkLocalImages(
         artworkId,
-        localImages.map(({ photoID, ...rest }) => rest),
-        IMAGES_LOCAL_STORE_KEY
+        localImages.map(({ photoID, ...rest }) => rest)
       )
     } catch (error) {
       console.error("Error saving images to localforage storage", error)
@@ -157,6 +155,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
         "newPhotos",
         values.newPhotos.filter(p => p.id !== photo.id)
       )
+      // Remove images that have been removed from state
       setlocalImages(localImages.filter(p => p.photoID !== photo.id))
     } else {
       // Mark photo in photos as removed

@@ -1,4 +1,7 @@
-import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
+import {
+  IMAGES_LOCAL_STORE_KEY,
+  IMAGES_LOCAL_STORE_LAST_UPDATED_AT,
+} from "Apps/Settings/Routes/MyCollection/constants"
 import localforage from "localforage"
 
 const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 1
@@ -25,8 +28,7 @@ const addMinutes = (date: Date, minutes: number) => {
 
 export const storeArtworkLocalImages = async (
   artworkID: string,
-  images: LocalImage[],
-  key: string
+  images: LocalImage[]
 ) => {
   const expirationDate = addMinutes(
     new Date(),
@@ -44,7 +46,7 @@ export const storeArtworkLocalImages = async (
     imagesToStore.push(imageToStore)
   }
 
-  const localArtworksImages = await getAllLocalImagesByArtwork(key)
+  const localArtworksImages = await getAllLocalImagesByArtwork()
 
   // Get existing artworks with images except the one we are storing
   const updatedLocalArtworksImages = localArtworksImages.filter(
@@ -60,16 +62,21 @@ export const storeArtworkLocalImages = async (
   // Store the updated list
   const artworkImages = JSON.stringify(updatedLocalArtworksImages || [])
 
-  return localforage.setItem(key, artworkImages)
+  return localforage.setItem(IMAGES_LOCAL_STORE_KEY, artworkImages)
 }
 
 //
-export const setLocalImagesStoreLastUpdatedAt = (lastUpdatedAtKey: string) => {
-  return localforage.setItem(lastUpdatedAtKey, new Date().toString())
+export const setLocalImagesStoreLastUpdatedAt = (
+  IMAGES_LOCAL_STORE_LAST_UPDATED_AT: string
+) => {
+  return localforage.setItem(
+    IMAGES_LOCAL_STORE_LAST_UPDATED_AT,
+    new Date().toString()
+  )
 }
 
 // Cleam store after gemini processing time is over
-export const cleanImagesLocalStore = (key: string) => {
+export const cleanImagesLocalStore = () => {
   return localforage
     .getItem(IMAGES_LOCAL_STORE_LAST_UPDATED_AT)
     .then((date: string) => {
@@ -79,7 +86,7 @@ export const cleanImagesLocalStore = (key: string) => {
         (currentDate.getTime() - lastUpdatedDate.getTime()) / 60000
 
       if (diffInMinutes > GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES) {
-        return localforage.removeItem(key)
+        return localforage.removeItem(IMAGES_LOCAL_STORE_KEY)
       }
     })
     .catch(() => {
@@ -89,11 +96,11 @@ export const cleanImagesLocalStore = (key: string) => {
 }
 
 // Retrieve all artworks local images that have not expired from local storage
-export const getAllLocalImagesByArtwork = (
-  key: string
-): Promise<StoredArtworkWithImages[]> => {
+export const getAllLocalImagesByArtwork = (): Promise<
+  StoredArtworkWithImages[]
+> => {
   return localforage
-    .getItem(key)
+    .getItem(IMAGES_LOCAL_STORE_KEY)
     .then((imagesByArtworkJSONString: string) => {
       if (imagesByArtworkJSONString) {
         const imagesByArtwork = JSON.parse(imagesByArtworkJSONString) as
@@ -137,10 +144,9 @@ export const getHeightAndWidthFromDataUrl = file => {
 
 // Retrieve artwork local images from local storage
 export const getArtworkLocalImages = async (
-  artworkID: string,
-  key: string
+  artworkID: string
 ): Promise<StoredImage[]> => {
-  const localArtworksImages = await getAllLocalImagesByArtwork(key)
+  const localArtworksImages = await getAllLocalImagesByArtwork()
   const artworkImages = localArtworksImages?.find(
     artworkImagesObj => artworkImagesObj.artworkID === artworkID
   )

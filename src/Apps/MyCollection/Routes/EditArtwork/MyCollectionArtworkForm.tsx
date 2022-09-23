@@ -32,7 +32,7 @@ import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
 import {
   MyCollectionArtworkFormImages,
-  MyCollectionArtworkFormImagesComponentRef,
+  MyCollectionArtworkFormImagesProps,
 } from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
 import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
@@ -60,7 +60,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
   const { router, match } = useRouter()
-  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesComponentRef | null>(
+  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
     null
   )
   const { sendToast } = useToasts()

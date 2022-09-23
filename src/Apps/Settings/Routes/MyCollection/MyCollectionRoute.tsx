@@ -32,7 +32,6 @@ import {
 } from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
-import { IMAGES_LOCAL_STORE_KEY } from "./constants"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -66,7 +65,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   }, [])
 
   useEffect(() => {
-    getAllLocalImagesByArtwork(IMAGES_LOCAL_STORE_KEY)
+    getAllLocalImagesByArtwork()
       .then(localImagesByArtwork => {
         setLocalArtworksImages(localImagesByArtwork)
       })
@@ -77,7 +76,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   }, [])
 
   useEffect(() => {
-    cleanImagesLocalStore(IMAGES_LOCAL_STORE_KEY)
+    cleanImagesLocalStore()
   }, [])
 
   const { scrollTo: scrollToMyCollection } = useScrollToElement({
