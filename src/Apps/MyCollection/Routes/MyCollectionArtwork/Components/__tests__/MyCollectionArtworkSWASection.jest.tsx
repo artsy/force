@@ -5,7 +5,6 @@ import {
 } from "../MyCollectionArtworkSWASection"
 
 jest.unmock("react-relay")
-const onSubmit = jest.fn()
 const learnMore = jest.fn()
 
 // TODO: add more tests when the main functionality is in place

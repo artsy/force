@@ -26,6 +26,7 @@ import {
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
