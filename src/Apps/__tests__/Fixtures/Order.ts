@@ -1040,6 +1040,7 @@ export const BuyOrderPickup = {
   requestedFulfillment: {
     __typename: "CommercePickup",
     fulfillmentType: "PICKUP",
+    phoneNumber: "222",
   },
 } as const
 
@@ -1049,6 +1050,7 @@ export const OfferOrderPickup = {
   requestedFulfillment: {
     __typename: "CommercePickup",
     fulfillmentType: "PICKUP",
+    phoneNumber: "222",
   },
 } as const
 

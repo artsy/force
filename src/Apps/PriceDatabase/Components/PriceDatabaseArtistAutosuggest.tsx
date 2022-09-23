@@ -206,7 +206,8 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
       }
     `,
     { searchQuery }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   return response.searchConnection?.edges
 }

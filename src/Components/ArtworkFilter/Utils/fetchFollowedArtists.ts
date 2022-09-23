@@ -62,7 +62,8 @@ export async function fetchFollowedArtists(
   try {
     const data = await fetchQuery<
       fetchFollowedArtistsByFairIdQuery | fetchFollowedArtistsRawQuery
-    >(relayEnvironment, query, props)
+      // @ts-expect-error RELAY_UPGRADE
+    >(relayEnvironment, query, props).toPromise()
 
     const edges = data.me?.followsAndSaves?.artistsConnection?.edges ?? []
     const artists = edges.map(edge => edge?.node?.artist)

@@ -14,36 +14,40 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
 }))
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  fetchQuery: jest.fn().mockResolvedValue({
-    searchConnection: {
-      edges: [
-        {
-          node: {
-            displayLabel: "Banksy",
-            internalID: "111",
-            image: {
-              cropped: {
-                height: 44,
-                src: "some-img",
-                srcSet: "some-img",
-                width: 44,
-              },
+const results = {
+  searchConnection: {
+    edges: [
+      {
+        node: {
+          displayLabel: "Banksy",
+          internalID: "111",
+          image: {
+            cropped: {
+              height: 44,
+              src: "some-img",
+              srcSet: "some-img",
+              width: 44,
             },
           },
         },
-        { node: { displayLabel: "Andy Warhol", internalID: "222" } },
-      ],
-    },
-  }),
+      },
+      { node: { displayLabel: "Andy Warhol", internalID: "222" } },
+    ],
+  },
+}
+
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  fetchQuery: jest.fn(),
 }))
 
 import { fetchQuery } from "react-relay"
 import { artworkDetailsValidationSchema } from "../../Utils/validation"
 
 const mockErrorHandler = jest.fn()
-const mockFetchQuery = fetchQuery as jest.Mock
+let mockFetchQuery = (fetchQuery as jest.Mock).mockImplementation(() => ({
+  toPromise: jest.fn().mockResolvedValue(results),
+}))
 
 let formikValues: ArtworkDetailsFormModel
 const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
@@ -97,6 +101,12 @@ describe("ArtistAutocomplete", () => {
     )
   })
 
+  beforeEach(() => {
+    mockFetchQuery = (fetchQuery as jest.Mock).mockImplementation(() => ({
+      toPromise: jest.fn().mockResolvedValue(results),
+    }))
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -112,8 +122,7 @@ describe("ArtistAutocomplete", () => {
     it("starts when character is entered", async () => {
       await simulateTyping(wrapper, "B")
 
-      const searchString = (fetchQuery as jest.Mock).mock.calls[0][2]
-        .searchQuery
+      const searchString = mockFetchQuery.mock.calls[0][2].searchQuery
 
       expect(fetchQuery).toHaveBeenCalledTimes(1)
       expect(searchString).toBe("B")
@@ -128,7 +137,9 @@ describe("ArtistAutocomplete", () => {
 
   describe("ArtistAutocomplete component", () => {
     it("fires error handler with correct arg when query failed", async () => {
-      mockFetchQuery.mockRejectedValueOnce("no artist")
+      mockFetchQuery.mockImplementation(() => ({
+        toPromise: jest.fn().mockRejectedValueOnce("no artist"),
+      }))
 
       await simulateTyping(wrapper, "cas")
 

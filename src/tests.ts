@@ -127,6 +127,10 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
               !args[0].includes(
                 "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
               ) &&
+              // Relay 13 warning
+              !args[0].includes(
+                "has missing data and would suspend. When using features such as @defer or @module, use `useFragment` instead of a Relay Container"
+              ) &&
               !args[0].includes(
                 // Styled-components 5 warning
                 "You may see this warning because you've called styled inside another component"

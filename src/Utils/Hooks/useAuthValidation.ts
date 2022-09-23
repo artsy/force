@@ -17,7 +17,8 @@ export const useAuthValidation = () => {
           }
         `,
         {}
-      )
+        // @ts-expect-error RELAY_UPGRADE
+      ).toPromise()
 
       if (authenticationStatus === "INVALID") {
         await logout()
