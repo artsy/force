@@ -1,5 +1,5 @@
 // libs
-import { createRef, FC, useState, useEffect } from "react"
+import { createRef, FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
@@ -9,13 +9,11 @@ import { useTracking } from "react-tracking"
 
 // relay generated
 import { Payment_me } from "__generated__/Payment_me.graphql"
-import {
-  CommercePaymentMethodEnum,
-  Payment_order,
-} from "__generated__/Payment_order.graphql"
+import { Payment_order } from "__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
+import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import createLogger from "Utils/logger"
@@ -23,9 +21,13 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
+import {
+  getInitialPaymentMethodValue,
+  getInitialBankAccountSelection,
+} from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "../../Mutations/useSetPayment"
+import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -42,7 +44,6 @@ import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
-import { extractNodes } from "Utils/extractNodes"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -71,32 +72,46 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
-  const { trackEvent } = useTracking()
   const { order, me } = props
+  const { trackEvent } = useTracking()
   const { match } = useRouter()
-  const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
-  // user's selected payment method
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    CommercePaymentMethodEnum
-  >(getInitialPaymentMethodValue(order))
+  const CreditCardPicker = createRef<CreditCardPicker>()
 
-  useEffect(() => {
-    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
-  }, [order])
+  const {
+    selectedBankAccountId,
+    selectedPaymentMethod,
+    balanceCheckComplete,
+    isSavingPayment,
+    bankAccountHasInsufficientFunds,
+    setBankAccountSelection,
+    setSelectedPaymentMethod,
+    setBalanceCheckComplete,
+    setBankAccountHasInsufficientFunds,
+    setIsSavingPayment,
+  } = useOrderPaymentContext()
 
   const balanceCheckEnabled =
     useFeatureFlag("bank_account_balance_check") &&
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
-  /*
-    state to render a loading interface while one of the following is happening:
-    payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
-  */
-  const [isSavingPayment, setIsSavingPayment] = useState(
-    !!match?.location?.query?.setup_intent
-  )
+  useEffect(() => {
+    const bankAccountsArray =
+      selectedPaymentMethod !== "SEPA_DEBIT"
+        ? extractNodes(me.bankAccounts)
+        : []
+
+    setBankAccountSelection(
+      getInitialBankAccountSelection(order, bankAccountsArray)
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order])
 
   /*
     hook to handle Stripe redirect for newly-linked bank account
@@ -109,46 +124,45 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   } = useStripePaymentBySetupIntentId(order.internalID)
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
-  const displayLoading = isProcessingRedirect || isSavingPayment
+  const displayLoading =
+    isProcessingRedirect ||
+    isSavingPayment ||
+    (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
 
-  // an existing bank account's ID, used to query account balance
-  const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
-
-  // user's existing ACH bank accounts, if any
-  const bankAccountsArray =
-    selectedPaymentMethod === "US_BANK_ACCOUNT"
-      ? extractNodes(me.bankAccounts)
-      : []
-
-  const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (order.bankAccountId) {
-      return {
-        type: "existing",
-        id: order.bankAccountId,
-      }
-    } else {
-      return bankAccountsArray.length > 0
-        ? {
-            type: "existing",
-            id: bankAccountsArray[0]?.internalID!,
-          }
-        : { type: "new" }
+  // fired when balance check is done: either sets error state or moves to /review
+  const handleBalanceCheckComplete = (
+    displayInsufficientFundsError: boolean,
+    checkResult: BalanceCheckResult
+  ) => {
+    const event = {
+      subject: "balance_account_check",
+      outcome: checkResult,
+      payment_method: selectedPaymentMethod,
+      currency: order.currencyCode,
+      amount: order.buyerTotalCents,
+      order_id: order.internalID,
+      context_page_owner_type: OwnerType.ordersPayment,
+      action: ActionType.checkedAccountBalance,
+      flow: order.mode!,
     }
+
+    trackEvent(event)
+
+    setBalanceCheckComplete(true)
+    setIsSavingPayment(false)
+
+    if (displayInsufficientFundsError) {
+      setBankAccountHasInsufficientFunds(true)
+      return
+    }
+
+    handlePaymentStepComplete()
   }
 
-  // user's desired bank account; either already on Order or user's profile
-  const [bankAccountSelection, setBankAccountSelection] = useState<
-    BankAccountSelection
-  >(getInitialBankAccountSelection())
-
-  // whether balance check is performed for the current bank account
-  const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
-
-  // result of account balance check
-  const [
-    bankAccountHasInsufficientFunds,
-    setBankAccountHasInsufficientFunds,
-  ] = useState(false)
+  const handlePaymentStepComplete = () => {
+    setIsSavingPayment(false)
+    props.router.push(`/orders/${props.order.internalID}/review`)
+  }
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const handleSetPayment = () => {
@@ -229,46 +243,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       ).commerceSetPayment?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
+      setIsSavingPayment(false)
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       setIsSavingPayment(false)
       logger.error(error)
       props.dialog.showErrorDialog()
     }
-  }
-
-  // fired when balance check is done: either sets error state or moves to /review
-  const handleBalanceCheckComplete = (
-    displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
-  ) => {
-    const event = {
-      subject: "balance_account_check",
-      outcome: checkResult,
-      payment_method: selectedPaymentMethod,
-      currency: order.currencyCode,
-      amount: order.buyerTotalCents,
-      order_id: order.internalID,
-      context_page_owner_type: OwnerType.ordersPayment,
-      action: ActionType.checkedAccountBalance,
-      flow: order.mode!,
-    }
-
-    trackEvent(event)
-
-    setBalanceCheckComplete(true)
-    setIsSavingPayment(false)
-
-    if (displayInsufficientFundsError) {
-      setBankAccountHasInsufficientFunds(true)
-      return
-    }
-
-    handlePaymentStepComplete()
-  }
-
-  const handlePaymentStepComplete = () => {
-    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   // complete payment when balance check is disabled and bank account is set
@@ -358,23 +339,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               >
                 <PaymentContent
                   commitMutation={props.commitMutation}
-                  paymentMethod={selectedPaymentMethod}
                   me={props.me}
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
-                  onSetSelectedPaymentMethod={setSelectedPaymentMethod}
-                  bankAccountHasInsufficientFunds={
-                    bankAccountHasInsufficientFunds
-                  }
-                  onSetBankAccountHasInsufficientFunds={
-                    setBankAccountHasInsufficientFunds
-                  }
-                  onSetIsSavingPayment={setIsSavingPayment}
-                  onSetSelectedBankAccountId={setSelectedBankAccountId}
-                  onSetBalanceCheckComplete={setBalanceCheckComplete}
-                  bankAccountSelection={bankAccountSelection}
-                  onSetBankAccountSelection={setBankAccountSelection}
                 />
               </Flex>
             </>
