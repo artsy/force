@@ -245,6 +245,16 @@ describe("BankAccountFragmentContainer", () => {
     })
 
     it("the bank account associated with the order is selected when user navigates back to payment page", async () => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          bankAccountSelection: {
+            type: "existing",
+            id: "gravity-bank-account-id",
+          },
+        }
+      })
+
       const wrapper = getWrapper({
         CommerceOrder: () => orderWithBankAccount,
         Me: () => ({
@@ -255,12 +265,23 @@ describe("BankAccountFragmentContainer", () => {
       })
 
       const page = new BankAccountPickerTestPage(wrapper)
-      expect(page.radios.at(1).props().selected).toBeTruthy()
+      expect(page.radios.at(0).props().selected).toBeTruthy()
+      expect(page.radios.at(1).props().selected).toBeFalsy()
       expect(page.radios.at(2).props().selected).toBeFalsy()
-      expect(page.radios.at(0).props().selected).toBeFalsy()
     })
 
     it("sets the bank account on the order when user clicks 'Save and Continue'", async () => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          setBalanceCheckComplete: jest.fn(),
+          bankAccountSelection: mockBankAccountSelection,
+          setSelectedBankAccountId: jest.fn(),
+          setBankAccountSelection: jest.fn(),
+          setIsSavingPayment: jest.fn(),
+        }
+      })
+
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {
           orderOrError: {
