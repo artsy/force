@@ -6,6 +6,7 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
@@ -19,6 +20,10 @@ const image = resized(
 )
 
 const DesktopLayout: React.FC = () => {
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
+
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
       <Column span={6}>
@@ -34,6 +39,7 @@ const DesktopLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
+          onClick={() => trackAddCollectedArtwork()}
         >
           Upload Artwork
         </Button>
@@ -56,6 +62,10 @@ const DesktopLayout: React.FC = () => {
 }
 
 const MobileLayout: React.FC = () => {
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
+
   return (
     <GridColumns gridRowGap={2} alignItems="center">
       <Column span={6}>
@@ -85,6 +95,7 @@ const MobileLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
+          onClick={() => trackAddCollectedArtwork()}
           width="100%"
         >
           Upload Artwork

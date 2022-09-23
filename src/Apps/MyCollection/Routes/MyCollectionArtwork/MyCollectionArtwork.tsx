@@ -15,6 +15,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -34,6 +35,10 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  const {
+    editCollectedArtwork: trackEditCollectedArtwork,
+  } = useMyCollectionTracking()
+
   // TODO: use real value
   const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
     boolean
@@ -72,6 +77,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         variant="secondaryNeutral"
         size="small"
         to={`/my-collection/artworks/${artwork.internalID}/edit`}
+        onClick={() =>
+          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+        }
         alignSelf="flex-end"
       >
         Edit Artwork Details
@@ -241,6 +249,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         }
         hasMarketPriceInsights
         internalID
+        slug
         artist {
           slug
           auctionResults: auctionResultsConnection {

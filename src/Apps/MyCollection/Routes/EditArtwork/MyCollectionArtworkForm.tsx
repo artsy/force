@@ -26,6 +26,7 @@ import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
 import { MyCollectionArtworkFormImages } from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
@@ -49,6 +50,10 @@ export interface MyCollectionArtworkFormProps {
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
 }) => {
+  const {
+    deleteCollectedArtwork: trackDeleteCollectedArtwork,
+    saveCollectedArtwork: trackSaveCollectedArtwork,
+  } = useMyCollectionTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
@@ -112,6 +117,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         artworkLocation: values.artworkLocation,
       })
 
+      // Track saving only when the user adds a new artwork.
+      if (!isEditing) {
+        trackSaveCollectedArtwork()
+      }
+
       // Remove photos marked for deletion
 
       const removedPhotos = values.photos.filter(photo => photo.removed)
@@ -173,6 +183,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   }
 
   const handleDelete = async () => {
+    trackDeleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
     try {
       await deleteArtwork({
         variables: {

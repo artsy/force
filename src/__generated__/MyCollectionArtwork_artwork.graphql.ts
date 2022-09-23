@@ -10,6 +10,7 @@ export type MyCollectionArtwork_artwork = {
     } | null;
     readonly hasMarketPriceInsights: boolean | null;
     readonly internalID: string;
+    readonly slug: string;
     readonly artist: {
         readonly slug: string;
         readonly auctionResults: {
@@ -37,7 +38,14 @@ var v0 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -68,6 +76,7 @@ return {
       "name": "internalID",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -76,13 +85,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
+        (v1/*: any*/),
         {
           "alias": "auctionResults",
           "args": null,
@@ -136,5 +139,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c60f02bdf1b6a7b0f4beaf4a58896681';
+(node as any).hash = 'fab8df5f1af3b0044a009aee5788c1ec';
 export default node;

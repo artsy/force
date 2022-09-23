@@ -12,6 +12,7 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
@@ -32,6 +33,9 @@ interface MyCollectionRouteProps {
 }
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -151,6 +155,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                               size={["small", "large"]}
                               variant="primaryBlack"
                               to="/my-collection/artworks/new"
+                              onClick={() => trackAddCollectedArtwork()}
                             >
                               Upload Artwork
                             </Button>
