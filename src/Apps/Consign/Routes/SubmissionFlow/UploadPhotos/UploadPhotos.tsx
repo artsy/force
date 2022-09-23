@@ -288,7 +288,8 @@ const refetchSubmissionAssets = async (
     {
       force: true,
     }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   return response.submission?.assets || []
 }

@@ -3,7 +3,7 @@ import {
   useBidderPositionQuery$variables,
 } from "__generated__/useBidderPositionQuery.graphql"
 import { graphql } from "react-relay"
-import { Environment, fetchQuery as fetchRelayQuery } from "relay-runtime"
+import { Environment, fetchQuery } from "relay-runtime"
 import { useSystemContext } from "System"
 
 export const useBidderPosition = () => {
@@ -14,7 +14,7 @@ export const useBidderPosition = () => {
   }: {
     variables: useBidderPositionQuery$variables
   }) => {
-    return fetchRelayQuery<useBidderPositionQuery>(
+    return fetchQuery<useBidderPositionQuery>(
       relayEnvironment as Environment,
       graphql`
         query useBidderPositionQuery($bidderPositionID: String!) {
@@ -44,7 +44,8 @@ export const useBidderPosition = () => {
       {
         force: true,
       }
-    )
+      // @ts-expect-error RELAY_UPGRADE
+    ).toPromise()
   }
 
   return { fetchBidderPosition }

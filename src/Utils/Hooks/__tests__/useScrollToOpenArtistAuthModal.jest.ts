@@ -30,11 +30,17 @@ jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ relayEnvironment: {} }),
 }))
 
+let mockFetchQuery = fetchQuery as jest.Mock
+
 describe("CTA", () => {
   it("should query for artist data when artist cta is enabled and there is an artist id", () => {
+    mockFetchQuery.mockImplementation(() => ({
+      toPromise: jest.fn(),
+    }))
+
     renderHook(() => useScrollToOpenArtistAuthModal())
 
-    expect(fetchQuery).toBeCalledWith(
+    expect(mockFetchQuery).toBeCalledWith(
       expect.anything(),
       USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY,
       { id: "example" }

@@ -26,6 +26,7 @@ import { Environment, RecordSource, Store } from "relay-runtime"
 // eslint-disable-next-line no-restricted-imports
 import { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
+import ReactDOMServer from "react-dom/server"
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -63,17 +64,26 @@ describe("OrderApp routing redirects", () => {
     const environment = new Environment({ network, store })
 
     const result = await getFarceResult({
-      render: () => <div>hello</div>,
+      render: props => {
+        console.log(props)
+        return <div>hello</div>
+      },
       resolver: new Resolver(environment),
       routeConfig: orderRoutes,
       url,
     })
 
+    console.log(ReactDOMServer.renderToString(result.element))
     return result as FarceRedirectResult
   }
 
   const mockResolver = (data: orderRoutes_OrderQuery$rawResponse["order"]) => ({
-    me: { id: "alice_jane", name: "Alice Jane" },
+    me: {
+      id: "alice_jane",
+      name: "Alice Jane",
+      email: "foo",
+      addressConnection: null,
+    },
     order: data,
   })
 
@@ -88,7 +98,7 @@ describe("OrderApp routing redirects", () => {
     expect(redirect).toBe(undefined)
   })
 
-  it("redirects to the status route if the order is not pending", async () => {
+  it.only("redirects to the status route if the order is not pending", async () => {
     const res = await render(
       "/orders/2939023/shipping",
       mockResolver({
@@ -96,6 +106,7 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       })
     )
+    console.log(res.redirect)
     expect(res.redirect.url).toBe("/orders/2939023/status")
   })
 

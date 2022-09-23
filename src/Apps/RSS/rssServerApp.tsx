@@ -24,7 +24,8 @@ rssServerApp.get("/rss/news", async (req, res) => {
     relayEnvironment,
     RSS_ARTICLES_QUERY,
     { channelId: ARTSY_EDITORIAL_CHANNEL }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   const articles = extractNodes(articlesConnection)
 
@@ -44,7 +45,8 @@ rssServerApp.get("/rss/partner-updates", async (req, res) => {
     relayEnvironment,
     RSS_ARTICLES_QUERY,
     { channelId: GALLERY_PARTNER_UPDATES_CHANNEL }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   const articles = extractNodes(articlesConnection)
 

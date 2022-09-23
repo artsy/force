@@ -62,7 +62,8 @@ export const useScrollToOpenArtistAuthModal = () => {
         relayEnvironment,
         USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY,
         { id: id }
-      )
+        // @ts-expect-error RELAY_UPGRADE
+      ).toPromise()
 
       const artist = response?.artist
 
