@@ -178,9 +178,8 @@ We use [Jest](https://jestjs.io/) for our unit tests.
 
 Some top-level notes:
 
-- We use [`enzyme`](https://enzymejs.github.io/enzyme/)
-- As of 2021, we've also begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)
-- Enzyme is a unit testing library that matches React's internals 1:1. `@testing-library/react` is fundamentally a light weight html-based integration testing library. Depending on what you want to test one might be better suited than the other. Use what you think works best!
+- We use [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)
+- Legacy tests use [`enzyme`](https://enzymejs.github.io/enzyme/)
 - When testing React Hooks, [`@testing-library/react-hooks`](https://www.npmjs.com/package/@testing-library/react-hooks) is the best way to test that level of the stack.
 - We avoid snapshot tests; they produce too much churn for too little value.
 - We use the [`relay-test-utils`](https://github.com/facebook/relay/tree/main/packages/relay-test-utils) package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/main/src/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. There are two versions, one for Enzyme, and one for RTL. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that (see the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx) for an example).
