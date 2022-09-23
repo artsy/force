@@ -84,6 +84,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedPaymentMethod,
     balanceCheckComplete,
     isSavingPayment,
+    bankAccountHasInsufficientFunds,
     setBankAccountSelection,
     setSelectedPaymentMethod,
     setBalanceCheckComplete,
@@ -97,17 +98,20 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   useEffect(() => {
     const bankAccountsArray =
-      selectedPaymentMethod === "US_BANK_ACCOUNT"
+      selectedPaymentMethod !== "SEPA_DEBIT"
         ? extractNodes(me.bankAccounts)
         : []
 
     setBankAccountSelection(
       getInitialBankAccountSelection(order, bankAccountsArray)
     )
-    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
-    setIsSavingPayment(!!match?.location?.query?.setup_intent)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order])
 
   /*
     hook to handle Stripe redirect for newly-linked bank account
@@ -120,7 +124,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   } = useStripePaymentBySetupIntentId(order.internalID)
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
-  const displayLoading = isProcessingRedirect || isSavingPayment
+  const displayLoading =
+    isProcessingRedirect ||
+    isSavingPayment ||
+    (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
 
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
@@ -153,6 +160,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }
 
   const handlePaymentStepComplete = () => {
+    setIsSavingPayment(false)
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
@@ -235,6 +243,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       ).commerceSetPayment?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
+      setIsSavingPayment(false)
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       setIsSavingPayment(false)

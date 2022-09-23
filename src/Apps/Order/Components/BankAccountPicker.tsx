@@ -49,7 +49,7 @@ export const BankAccountPicker: FC<Props> = props => {
   if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
     const isOrderBankSaved = bankAccountsArray.find(
-      bank => bank.last4 === order.paymentMethodDetails?.last4
+      bank => bank.internalID === order.paymentMethodDetails?.internalID
     )
 
     if (!isOrderBankSaved) {
