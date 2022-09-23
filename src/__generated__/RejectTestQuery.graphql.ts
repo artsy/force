@@ -61,10 +61,6 @@ export type RejectTestQueryRawResponse = {
             readonly id: string;
             readonly name: string | null;
         } | {
-            readonly __typename: "User";
-            readonly __isNode: "User";
-            readonly id: string;
-        } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
@@ -126,10 +122,6 @@ export type RejectTestQueryRawResponse = {
             readonly id: string;
             readonly name: string | null;
         } | {
-            readonly __typename: "User";
-            readonly __isNode: "User";
-            readonly id: string;
-        } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
@@ -165,9 +157,6 @@ fragment ArtworkSummaryItem_order on CommerceOrder {
     }
     ... on Node {
       __isNode: __typename
-      id
-    }
-    ... on User {
       id
     }
   }
@@ -273,28 +262,27 @@ v4 = {
   "name": "price",
   "storageKey": null
 },
-v5 = [
-  (v3/*: any*/)
-],
-v6 = {
+v5 = {
   "kind": "InlineFragment",
-  "selections": (v5/*: any*/),
+  "selections": [
+    (v3/*: any*/)
+  ],
   "type": "Node",
   "abstractKey": "__isNode"
 },
-v7 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v8 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v9 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -438,7 +426,7 @@ return {
                             "type": "EditionSet",
                             "abstractKey": null
                           },
-                          (v6/*: any*/)
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -535,13 +523,7 @@ return {
                 "type": "Partner",
                 "abstractKey": null
               },
-              (v6/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
-                "type": "User",
-                "abstractKey": null
-              }
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -593,7 +575,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "be059634c2deeb3dc7335b16b62742cb",
+    "cacheID": "da2e5f896fbaa6ce992e452db274b68c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -603,20 +585,20 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "order.__isCommerceOrder": (v7/*: any*/),
-        "order.__typename": (v7/*: any*/),
-        "order.currencyCode": (v7/*: any*/),
-        "order.id": (v8/*: any*/),
-        "order.internalID": (v8/*: any*/),
+        "order.__isCommerceOrder": (v6/*: any*/),
+        "order.__typename": (v6/*: any*/),
+        "order.currencyCode": (v6/*: any*/),
+        "order.id": (v7/*: any*/),
+        "order.internalID": (v7/*: any*/),
         "order.lastOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOffer"
         },
-        "order.lastOffer.createdAt": (v7/*: any*/),
-        "order.lastOffer.id": (v8/*: any*/),
-        "order.lastOffer.internalID": (v8/*: any*/),
+        "order.lastOffer.createdAt": (v6/*: any*/),
+        "order.lastOffer.id": (v7/*: any*/),
+        "order.lastOffer.internalID": (v7/*: any*/),
         "order.lineItems": {
           "enumValues": null,
           "nullable": true,
@@ -641,28 +623,28 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "order.lineItems.edges.node.artwork.date": (v9/*: any*/),
-        "order.lineItems.edges.node.artwork.id": (v8/*: any*/),
-        "order.lineItems.edges.node.artwork.shippingOrigin": (v9/*: any*/),
-        "order.lineItems.edges.node.artwork.slug": (v8/*: any*/),
+        "order.lineItems.edges.node.artwork.date": (v8/*: any*/),
+        "order.lineItems.edges.node.artwork.id": (v7/*: any*/),
+        "order.lineItems.edges.node.artwork.shippingOrigin": (v8/*: any*/),
+        "order.lineItems.edges.node.artwork.slug": (v7/*: any*/),
         "order.lineItems.edges.node.artworkOrEditionSet": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkOrEditionSetType"
         },
-        "order.lineItems.edges.node.artworkOrEditionSet.__isNode": (v7/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v7/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.id": (v8/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.price": (v9/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.__isNode": (v6/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v6/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.id": (v7/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.price": (v8/*: any*/),
         "order.lineItems.edges.node.artworkVersion": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkVersion"
         },
-        "order.lineItems.edges.node.artworkVersion.artistNames": (v9/*: any*/),
-        "order.lineItems.edges.node.artworkVersion.id": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.artistNames": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.id": (v7/*: any*/),
         "order.lineItems.edges.node.artworkVersion.image": {
           "enumValues": null,
           "nullable": true,
@@ -675,9 +657,9 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem.url": (v7/*: any*/),
-        "order.lineItems.edges.node.artworkVersion.title": (v9/*: any*/),
-        "order.lineItems.edges.node.id": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.image.resized_ArtworkSummaryItem.url": (v6/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.title": (v8/*: any*/),
+        "order.lineItems.edges.node.id": (v7/*: any*/),
         "order.mode": {
           "enumValues": [
             "BUY",
@@ -693,16 +675,16 @@ return {
           "plural": false,
           "type": "OrderParty"
         },
-        "order.sellerDetails.__isNode": (v7/*: any*/),
-        "order.sellerDetails.__typename": (v7/*: any*/),
-        "order.sellerDetails.id": (v8/*: any*/),
-        "order.sellerDetails.name": (v9/*: any*/),
-        "order.stateExpiresAt": (v9/*: any*/)
+        "order.sellerDetails.__isNode": (v6/*: any*/),
+        "order.sellerDetails.__typename": (v6/*: any*/),
+        "order.sellerDetails.id": (v7/*: any*/),
+        "order.sellerDetails.name": (v8/*: any*/),
+        "order.stateExpiresAt": (v8/*: any*/)
       }
     },
     "name": "RejectTestQuery",
     "operationKind": "query",
-    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
   }
 };
 })();

@@ -131,11 +131,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       }
 
       // Store images locally
-      if (
-        artworkId &&
-        artworkFormImagesRef.current &&
-        values.newPhotos.length
-      ) {
+      if (artworkId && artworkFormImagesRef.current) {
         await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
         await setLocalImagesStoreLastUpdatedAt(
           IMAGES_LOCAL_STORE_LAST_UPDATED_AT
