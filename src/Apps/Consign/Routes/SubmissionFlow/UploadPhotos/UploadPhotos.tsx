@@ -18,6 +18,7 @@ import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
 import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
+import { UploadPhotos_myCollectionArtwork } from "__generated__/UploadPhotos_myCollectionArtwork.graphql"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
@@ -27,11 +28,13 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
+import { redirects_submission } from "__generated__/redirects_submission.graphql"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
+  myCollectionArtwork?: UploadPhotos_myCollectionArtwork
 }
 
 type SubmissionAsset = NonNullable<UploadPhotos_submission["assets"]>[0]
@@ -47,7 +50,7 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
 }
 
 export const getUploadPhotosFormInitialValues = (
-  submission?: UploadPhotos_submission
+  submission?: UploadPhotos_submission | redirects_submission
 ): UploadPhotosFormModel => {
   return {
     photos:
@@ -66,7 +69,10 @@ export const getUploadPhotosFormInitialValues = (
   }
 }
 
-export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
+export const UploadPhotos: React.FC<UploadPhotosProps> = ({
+  submission,
+  myCollectionArtwork,
+}) => {
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
@@ -78,11 +84,14 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
 
   const initialValue = getUploadPhotosFormInitialValues(submission)
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
+  const artworkId = myCollectionArtwork?.internalID
 
   const handleSubmit = async () => {
     if (submission) {
       router.push({
-        pathname: `/sell/submission/${submission.externalId}/contact-information`,
+        pathname: artworkId
+          ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
+          : `/sell/submission/${submission.externalId}/contact-information`,
       })
     }
   }
@@ -93,7 +102,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         py={2}
         mb={6}
         width="min-content"
-        to={`/sell/submission/${submission?.externalId}/artwork-details`}
+        to={
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/artwork-details/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/artwork-details`
+        }
       >
         Back
       </BackLink>
@@ -293,6 +306,11 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
           size
           filename
         }
+      }
+    `,
+    myCollectionArtwork: graphql`
+      fragment UploadPhotos_myCollectionArtwork on Artwork {
+        internalID
       }
     `,
   }
