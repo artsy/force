@@ -26,6 +26,7 @@ import { compact } from "lodash"
 import { useState } from "react"
 import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
+import { redirects_submission } from "__generated__/redirects_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
@@ -37,7 +38,7 @@ export enum SubmissionType {
 
 export type getArtworkDetailsFormInitialValuesProps =
   | {
-      values: ArtworkDetails_submission
+      values: ArtworkDetails_submission | redirects_submission
       type: SubmissionType.submission
     }
   | {

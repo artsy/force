@@ -5,12 +5,17 @@ import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
+  getArtworkDetailsFormInitialValuesProps,
+  SubmissionType,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "System/Router/useRouter"
 import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
-import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
+import {
+  createOrUpdateConsignSubmission,
+  SubmissionInput,
+} from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { compact } from "lodash"
