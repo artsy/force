@@ -18,12 +18,18 @@ import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
-import { FC, Fragment, useEffect, useState } from "react"
+import { FC, Fragment, useCallback, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
+import {
+  cleanImagesLocalStore,
+  getAllLocalImagesByArtwork,
+  StoredArtworkWithImages,
+  StoredImage,
+} from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
@@ -43,6 +49,10 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
 
+  const [localArtworksImages, setLocalArtworksImages] = useState<
+    StoredArtworkWithImages[]
+  >([])
+
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
 
   const { scrollTo } = useScrollTo({ behavior: "smooth" })
@@ -54,25 +64,53 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     )
   }, [])
 
+  useEffect(() => {
+    getAllLocalImagesByArtwork()
+      .then(localImagesByArtwork => {
+        setLocalArtworksImages(localImagesByArtwork)
+      })
+      .catch(error => {
+        console.error("Error getting local images by artwork", error)
+        return undefined
+      })
+  }, [])
+
+  useEffect(() => {
+    cleanImagesLocalStore()
+  }, [])
+
   const { scrollTo: scrollToMyCollection } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
     behavior: "smooth",
     offset: 20,
   })
 
-  const connection = me.myCollectionConnection
+  const { myCollectionConnection } = me
 
-  if (!connection) {
+  const getLocalImageSrcByArtworkID = useCallback(
+    (artworkID: string): StoredImage | null => {
+      const allArtworkImages = localArtworksImages.find(
+        localArtworkImagesObj => localArtworkImagesObj.artworkID === artworkID
+      )?.images
+      if (allArtworkImages?.length) {
+        return allArtworkImages[0]
+      }
+      return null
+    },
+    [localArtworksImages]
+  )
+
+  if (!myCollectionConnection) {
     return null
   }
 
-  const artworks = extractNodes(connection)
-  const total = connection.totalCount ?? 0
-  const hasNextPage = connection.pageInfo.hasNextPage ?? false
-  const endCursor = connection.pageInfo.endCursor
-  const pageCursors = connection.pageCursors!
+  const artworks = extractNodes(myCollectionConnection)
+  const total = myCollectionConnection.totalCount ?? 0
+  const hasNextPage = myCollectionConnection.pageInfo.hasNextPage ?? false
+  const endCursor = myCollectionConnection.pageInfo.endCursor
+  const pageCursors = myCollectionConnection.pageCursors!
 
-  const handleClick = (cursor: string, page: number) => {
+  const handleClick = (_: string, page: number) => {
     setLoading(true)
     scrollToMyCollection()
 
@@ -179,6 +217,9 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                 <Fragment key={artwork.internalID}>
                   <ArtworkGridItemFragmentContainer
                     artwork={artwork}
+                    localHeroImage={getLocalImageSrcByArtworkID(
+                      artwork.internalID
+                    )}
                     hideSaleInfo
                     showSaveButton={false}
                     showHoverDetails={false}
