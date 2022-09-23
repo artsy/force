@@ -17,7 +17,7 @@ export const ThankYouWhenFromMyCollection: React.FC = () => {
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
-        <RouterLink to="/my-collection">
+        <RouterLink to="/settings/my-collection">
           <Button width={["100%", "auto"]} size="large" variant="primaryBlack">
             Back to My Collection
           </Button>

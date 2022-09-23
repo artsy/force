@@ -18,7 +18,6 @@ import {
 } from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { compact } from "lodash"
 import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
@@ -133,21 +132,28 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         })
         return
       }
+
       router.replace({
-        pathname: `/sell/submission/${submissionId}/artwork-details`,
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
+          : `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: compact([
-          `/sell/submission/${submissionId}/upload-photos`,
-          artworkId,
-        ]).join("/"),
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
+          : `/sell/submission/${submissionId}/upload-photos`,
       })
     }
   }
 
   return (
     <>
-      <BackLink py={2} mb={6} to="/sell" width="min-content">
+      <BackLink
+        py={2}
+        mb={6}
+        to={artworkId ? `/my-collection/artwork/${artworkId}` : "/sell"}
+        width="min-content"
+      >
         Back
       </BackLink>
 
