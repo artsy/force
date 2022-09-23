@@ -3040,6 +3040,9 @@ type BankAccount {
 
   # Last four characters of the account identifier
   last4: String!
+
+  # Bank account type
+  type: BankAccountTypes!
 }
 
 # A connection to a list of items.
@@ -3072,6 +3075,11 @@ type BankAccountMutationSuccess {
 union BankAccountMutationType =
     BankAccountMutationFailure
   | BankAccountMutationSuccess
+
+enum BankAccountTypes {
+  SEPA_DEBIT
+  US_BANK_ACCOUNT
+}
 
 type Bidder implements Node {
   createdAt(
@@ -10167,6 +10175,7 @@ type Me implements Node {
     before: String
     first: Int
     last: Int
+    type: BankAccountTypes
   ): BankAccountConnection
 
   # Returns a single bidder position
