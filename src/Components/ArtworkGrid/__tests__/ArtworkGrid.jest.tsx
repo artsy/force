@@ -1,48 +1,24 @@
-import { ArtworkGrid_artist$data } from "__generated__/ArtworkGrid_artist.graphql"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
-import { ArtworkGrid_Test_Query$rawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
-import { renderRelayTree } from "DevTools"
-import { cloneDeep } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ExtractProps } from "Utils/ExtractProps"
+import { MockBoot } from "DevTools"
+import { graphql } from "react-relay"
 import GridItem, { ArtworkGridItem } from "../../Artwork/GridItem"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"
 import ArtworkGrid, {
   ArtworkGridContainer,
   ArtworkGridContainerState,
-  ArtworkGridProps,
   createSectionedArtworks,
 } from "../ArtworkGrid"
 import {
   ArtworkGridEmptyState,
   ResetFilterLink,
 } from "../ArtworkGridEmptyState"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 global.clearInterval = jest.fn()
 jest.mock("Components/Sticky", () => ({
   Sticky: ({ children }) => children({ stuck: false }),
 }))
-
-const TestContainer = createFragmentContainer(
-  ({
-    artist,
-    ...props
-  }: ExtractProps<typeof ArtworkGrid> & {
-    artist: ArtworkGrid_artist$data
-  }) => {
-    return <ArtworkGrid {...props} artworks={artist.artworks_connection} />
-  },
-  {
-    artist: graphql`
-      fragment ArtworkGrid_artist on Artist {
-        artworks_connection: artworksConnection(first: 4) {
-          ...ArtworkGrid_artworks
-        }
-      }
-    `,
-  }
-)
 
 describe("ArtworkGrid", () => {
   describe("state", () => {
@@ -113,106 +89,131 @@ describe("ArtworkGrid", () => {
   })
 
   describe("when rendering", () => {
-    const getRelayWrapper = async ({
-      artworks,
-      ...componentProps
-    }: Omit<ArtworkGridProps, "artworks"> & {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artworks: ArtworkGrid_Test_Query$rawResponse["artist"]["artworks_connection"]
-    }) => {
-      return await renderRelayTree({
-        Component: TestContainer,
-        componentProps,
-        query: graphql`
-          query ArtworkGrid_Test_Query
-            @raw_response_type
-            @relay_test_operation {
-            artist(id: "pablo-picasso") {
-              ...ArtworkGrid_artist
-            }
+    const onClearFilters = jest.fn()
+    const onLoadMore = jest.fn()
+    let preloadImageCount
+    let columnCount
+
+    const { getWrapper } = setupTestWrapper({
+      Component: (props: any) => {
+        return (
+          <MockBoot>
+            <ArtworkGrid
+              {...props}
+              artworks={props.artworksConnection}
+              onClearFilters={onClearFilters}
+              onLoadMore={onLoadMore}
+              columnCount={columnCount}
+              preloadImageCount={preloadImageCount}
+            />
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ArtworkGrid_Test_Query @raw_response_type @relay_test_operation {
+          artworksConnection(first: 4) {
+            ...ArtworkGrid_artworks
           }
-        `,
-        mockData: {
-          artist: { artworks_connection: artworks },
-        } as ArtworkGrid_Test_Query$rawResponse,
-      })
-    }
+        }
+      `,
+    })
 
-    let props: Parameters<typeof getRelayWrapper>[0]
-
-    beforeAll(() => {
-      props = { artworks: cloneDeep(ArtworkGridFixture) }
+    beforeEach(() => {
+      jest.clearAllMocks()
+      preloadImageCount = undefined
+      columnCount = undefined
     })
 
     it("Renders artworks if present", async () => {
-      const wrapper = await getRelayWrapper(props)
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+
       expect(wrapper.text()).toMatch(ArtworkGridFixture.edges[0].node.title)
       expect(wrapper.find(ArtworkGridItem).length).toBe(4)
     })
 
     it("Renders empty message if no artworks", async () => {
-      const wrapper = await getRelayWrapper({
-        artworks: { ...props.artworks, edges: [] },
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ({ edges: [] }),
       })
+
       expect(wrapper.find(ArtworkGridEmptyState).exists()).toBeTruthy()
     })
 
     it("Can call onClearFilters from empty message", async () => {
-      const onClearFilters = jest.fn()
-      const wrapper = await getRelayWrapper({
-        onClearFilters,
-        artworks: { ...props.artworks, edges: [] },
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ({ edges: [] }),
       })
       wrapper.find(ResetFilterLink).simulate("click")
+
       expect(onClearFilters).toBeCalled()
     })
 
     it("#componentDidMount sets state.interval if props.onLoadMore", async () => {
-      props.onLoadMore = jest.fn()
-      const wrapper = (await getRelayWrapper(props)).find(ArtworkGridContainer)
-      const { interval } = wrapper.state() as ArtworkGridContainerState
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+      const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
+
+      const {
+        interval,
+      } = artworkGridContainer.state() as ArtworkGridContainerState
       expect(interval).toBeGreaterThan(0)
     })
 
     it("#componentWillUnmount calls #clearInterval if state.interval exists", async () => {
-      props.onLoadMore = jest.fn()
-      const wrapper = (await getRelayWrapper(props)).find(ArtworkGridContainer)
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+      const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
+
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      wrapper.instance().componentWillUnmount()
+      artworkGridContainer.instance().componentWillUnmount()
       expect(global.clearInterval).toBeCalled()
     })
 
     it("#maybeLoadMore calls props.onLoadMore if scroll position is at end", async () => {
-      props.onLoadMore = jest.fn()
-      const wrapper = (await getRelayWrapper(props))
-        .find(ArtworkGridContainer)
-        .instance() as ArtworkGridContainer
-      wrapper.maybeLoadMore()
-      expect(props.onLoadMore).toBeCalled()
+      jest.useFakeTimers()
+      getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+
+      jest.advanceTimersByTime(150)
+      expect(onLoadMore).toBeCalled()
     })
 
     it("#sectionedArtworks divides artworks into columns", async () => {
-      const wrapper = (await getRelayWrapper(props))
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+      const artworkGridContainer = (await wrapper
         .find(ArtworkGridContainer)
-        .instance() as ArtworkGridContainer
-      const artworks = wrapper.sectionedArtworksForAllBreakpoints(
-        (props.artworks as any) as ArtworkGrid_artworks$data,
+        .instance()) as ArtworkGridContainer
+      const artworks = artworkGridContainer.sectionedArtworksForAllBreakpoints(
+        ArtworkGridFixture,
         [2, 2, 2, 3]
       )
       expect(artworks[0].length).toBe(2)
     })
 
     it("Renders artworks if present (2)", async () => {
-      const wrapper = (await getRelayWrapper(props)).find(ArtworkGridContainer)
-      expect(wrapper.text()).toMatch(ArtworkGridFixture.edges[0].node.title)
-      expect(wrapper.find(ArtworkGridItem).length).toBe(4)
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
+      })
+      const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
+
+      expect(artworkGridContainer.text()).toMatch(
+        ArtworkGridFixture.edges[0].node.title
+      )
+      expect(artworkGridContainer.find(ArtworkGridItem).length).toBe(4)
     })
 
     it("Should preload same number of images as specified in preloadImageCount", async () => {
-      const wrapper = await getRelayWrapper({
-        preloadImageCount: 2,
-        columnCount: 2,
-        ...props,
+      columnCount = 2
+      preloadImageCount = 2
+      const wrapper = getWrapper({
+        FilterArtworksConnection: () => ArtworkGridFixture,
       })
 
       // DOM order looks like:

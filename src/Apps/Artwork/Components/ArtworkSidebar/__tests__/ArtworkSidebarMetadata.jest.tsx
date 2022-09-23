@@ -14,6 +14,7 @@ import { ArtworkSidebarClassification } from "../../ArtworkSidebar/ArtworkSideba
 import { ArtworkSidebarMetadataFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarMetadata"
 import { ArtworkSidebarSizeInfo } from "../../ArtworkSidebar/ArtworkSidebarSizeInfo"
 import { useTracking } from "react-tracking"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -27,29 +28,44 @@ describe("ArtworkSidebarMetadata", () => {
 
   let wrapper: ReactWrapper
 
-  const getWrapper = async (
-    response: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = FilledOutMetadataNoEditions
-  ) => {
-    return await renderRelayTree({
-      Component: ArtworkSidebarMetadataFragmentContainer,
-      query: graphql`
-        query ArtworkSidebarMetadata_Test_Query
-          @raw_response_type
-          @relay_test_operation {
-          artwork(id: "josef-albers-homage-to-the-square-85") {
-            ...ArtworkSidebarMetadata_artwork
-          }
+  // const getWrapper = async (
+  //   response: ArtworkSidebarMetadata_Test_Query$rawResponse["artwork"] = FilledOutMetadataNoEditions
+  // ) => {
+  //   return await renderRelayTree({
+  //     Component: ArtworkSidebarMetadataFragmentContainer,
+  //     query: graphql`
+  //       query ArtworkSidebarMetadata_Test_Query
+  //         @raw_response_type
+  //         @relay_test_operation {
+  //         artwork(id: "josef-albers-homage-to-the-square-85") {
+  //           ...ArtworkSidebarMetadata_artwork
+  //         }
+  //       }
+  //     `,
+  //     mockData: {
+  //       artwork: response,
+  //     } as ArtworkSidebarMetadata_Test_Query$rawResponse,
+  //   })
+  // }
+
+  const { getWrapper } = setupTestWrapper({
+    Component: ArtworkSidebarMetadataFragmentContainer,
+    query: graphql`
+      query ArtworkSidebarMetadata_Test_Query
+        @raw_response_type
+        @relay_test_operation {
+        artwork(id: "josef-albers-homage-to-the-square-85") {
+          ...ArtworkSidebarMetadata_artwork
         }
-      `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarMetadata_Test_Query$rawResponse,
-    })
-  }
+      }
+    `,
+  })
 
   describe("for non editioned artwork", () => {
     beforeEach(async () => {
-      wrapper = await getWrapper()
+      wrapper = await getWrapper({
+        Artwork: () => FilledOutMetadataNoEditions,
+      })
     })
 
     it("displays title and year", () => {
@@ -76,7 +92,9 @@ describe("ArtworkSidebarMetadata", () => {
 
   describe("for artwork with one edition", () => {
     beforeAll(async () => {
-      wrapper = await getWrapper(FilledOutMetadataOneEditionSet)
+      wrapper = await getWrapper({
+        Artwork: () => FilledOutMetadataOneEditionSet,
+      })
     })
 
     it("displays title and year", () => {
@@ -104,7 +122,9 @@ describe("ArtworkSidebarMetadata", () => {
 
   describe("for artwork with multiple editions", () => {
     beforeAll(async () => {
-      wrapper = await getWrapper(FilledOutMetadataMultipleEditionSets)
+      wrapper = await getWrapper({
+        Artwork: () => FilledOutMetadataMultipleEditionSets,
+      })
     })
 
     it("displays title and year", () => {
@@ -131,7 +151,7 @@ describe("ArtworkSidebarMetadata", () => {
 
   describe("for artwork with minimal metadata", () => {
     it("only displays title info", async () => {
-      wrapper = await getWrapper(EmptyMetadataNoEditions)
+      wrapper = await getWrapper({ Artwork: () => EmptyMetadataNoEditions })
 
       const html = wrapper?.html()
       expect(html).toContain("<i>Empty metadata / No editions</i>")
@@ -145,14 +165,14 @@ describe("ArtworkSidebarMetadata", () => {
 
   describe("for artwork with no size info", () => {
     it("does not render any size info", async () => {
-      wrapper = await getWrapper(FilledOutMetadataNoSizeInfo)
+      wrapper = await getWrapper({ Artwork: () => FilledOutMetadataNoSizeInfo })
       expect(wrapper?.find(ArtworkSidebarSizeInfo).html()).toBe(null)
     })
   })
 
   describe("for artwork in an auction", () => {
     beforeAll(async () => {
-      wrapper = await getWrapper(MetadataForAuctionWork)
+      wrapper = await getWrapper({ Artwork: () => MetadataForAuctionWork })
     })
 
     it("displays lot number when present for biddable works", () => {
@@ -165,8 +185,7 @@ describe("ArtworkSidebarMetadata", () => {
         is_biddable: false,
       }
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      wrapper = await getWrapper(closedAuctionArtwork)
+      wrapper = await getWrapper({ Artwork: () => closedAuctionArtwork })
       expect(wrapper?.html()).not.toContain("Lot 210")
     })
 
