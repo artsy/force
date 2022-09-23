@@ -37,15 +37,6 @@ describe("ThankYou page", () => {
         },
       }
     })
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        isLoggedIn: true,
-        user: {
-          id: "123",
-          email: "d@e.f",
-        },
-      }
-    })
   })
 
   describe("when user is logged in", () => {
@@ -53,6 +44,10 @@ describe("ThankYou page", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
           isLoggedIn: true,
+          user: {
+            id: "123",
+            email: "d@e.f",
+          },
         }
       })
     })

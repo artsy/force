@@ -86,6 +86,16 @@ const ThankYou = loadable(
   }
 )
 
+const ThankYouWhenFromMyCollection = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYouWhenFromMyCollection"
+    ),
+  {
+    resolveComponent: component => component.ThankYouWhenFromMyCollection,
+  }
+)
+
 const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
   if (!(Component && props)) {
     return undefined
@@ -120,6 +130,13 @@ const prepareSubmissionFlowStepVariables = data => {
     ...data,
     ...searchFields,
     sessionID: getENV("SESSION_ID"),
+  }
+}
+
+const preparePrefillSubmissionFromArtworkVariables = data => {
+  return {
+    id: data.id,
+    ...data,
   }
 }
 
@@ -185,6 +202,23 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
+        path: "artwork-details/:artworkId",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_myCollectionArtworkQuery($artworkId: String!) {
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: preparePrefillSubmissionFromArtworkVariables,
+      },
+      {
         path: ":id/artwork-details",
         hideNav: true,
         hideFooter: true,
@@ -212,6 +246,37 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
+        path: ":id/artwork-details/:artworkId",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_artworkDetailsWithArtworkIdQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
         path: ":id/upload-photos",
         hideNav: true,
         hideFooter: true,
@@ -232,6 +297,37 @@ export const consignRoutes: AppRouteConfig[] = [
             ) {
               ...UploadPhotos_submission
               ...redirects_submission @relay(mask: false)
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/upload-photos/:artworkId",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => UploadPhotosFragmentContainer,
+        onClientSideRender: () => {
+          UploadPhotosFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_uploadArtworkPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...UploadPhotos_myCollectionArtwork
             }
           }
         `,
@@ -269,12 +365,51 @@ export const consignRoutes: AppRouteConfig[] = [
         prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
+        path: ":id/contact-information/:artworkId?",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: graphql`
+          query consignRoutes_contactInformationArtworkOwnerQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ContactInformation_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
         path: ":id/thank-you",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ThankYou,
         onClientSideRender: () => {
           ThankYou.preload()
+        },
+      },
+      {
+        path: ":id/thank-you/:artworkId?",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ThankYouWhenFromMyCollection,
+        onClientSideRender: () => {
+          ThankYouWhenFromMyCollection.preload()
         },
       },
     ],

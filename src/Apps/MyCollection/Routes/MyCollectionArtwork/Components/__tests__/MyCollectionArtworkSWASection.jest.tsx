@@ -13,24 +13,28 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionMobileLayout
-        onSubmit={onSubmit}
+        route={"/sell/submission/artwork-details/artwork-id"}
         learnMore={learnMore}
+        slug={"slug"}
+        artworkId={"artwork-id"}
       />
     )
   }
 
   it("opens Modal when Learn More is pressed", async () => {
     getWrapper()
-
     fireEvent.click(screen.getByTestId("learn-more"))
     expect(learnMore).toBeCalled()
   })
 
-  it("opens the submission flow", async () => {
+  it("the link has right attributes", async () => {
     getWrapper()
 
     fireEvent.click(screen.getByTestId("submit-for-sale"))
-    expect(onSubmit).toBeCalled()
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "href",
+      "/sell/submission/artwork-details/artwork-id"
+    )
   })
 })
 
@@ -38,23 +42,27 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
   const getWrapper = () => {
     render(
       <MyCollectionArtworkSWASectionDesktopLayout
-        onSubmit={onSubmit}
+        route={`/sell/submission/artwork-details/artwork-id`}
         learnMore={learnMore}
+        slug={"slug"}
+        artworkId={"artwork-id"}
       />
     )
   }
 
   it("opens Modal when Learn More is pressed", async () => {
     getWrapper()
-
     fireEvent.click(screen.getByTestId("learn-more-desktop"))
     expect(learnMore).toBeCalled()
   })
 
-  it("opens the submission flow", async () => {
+  it("the link has right attributes", async () => {
     getWrapper()
 
     fireEvent.click(screen.getByTestId("submit-for-sale-desktop"))
-    expect(onSubmit).toBeCalled()
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "href",
+      "/sell/submission/artwork-details/artwork-id"
+    )
   })
 })
