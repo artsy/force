@@ -73,6 +73,7 @@ export const useScrollToOpenArtistAuthModal = () => {
 
       if (!artwork) return
 
+      // @ts-expect-error RELAY_UPGRADE
       const image = artwork.image?.cropped?.src
 
       const handleScroll = () => {

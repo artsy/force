@@ -1,5 +1,3 @@
-import { ArtworkSidebarMetadata_Test_Query$rawResponse } from "__generated__/ArtworkSidebarMetadata_Test_Query.graphql"
-import { renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
 import { ReactWrapper } from "enzyme"
 import {

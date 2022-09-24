@@ -19,14 +19,12 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
-import { Environment, RecordSource, Store } from "relay-runtime"
 // eslint-disable-next-line no-restricted-imports
 import { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
-import ReactDOMServer from "react-dom/server"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -58,33 +56,38 @@ describe("OrderApp routing redirects", () => {
     url: string,
     mockData: orderRoutes_OrderQuery$rawResponse
   ): Promise<FarceRedirectResult> {
-    const network = createMockNetworkLayer2({ mockData })
-    const source = new RecordSource()
-    const store = new Store(source)
-    const environment = new Environment({ network, store })
+    const environment = createMockEnvironment()
+
+    environment.mock.queueOperationResolver(operation =>
+      MockPayloadGenerator.generate(operation, mockData as any)
+    )
 
     const result = await getFarceResult({
       render: props => {
-        console.log(props)
         return <div>hello</div>
       },
+      // @ts-expect-error RELAY_UPGRADE
       resolver: new Resolver(environment),
       routeConfig: orderRoutes,
       url,
     })
 
-    console.log(ReactDOMServer.renderToString(result.element))
     return result as FarceRedirectResult
   }
 
   const mockResolver = (data: orderRoutes_OrderQuery$rawResponse["order"]) => ({
-    me: {
+    Me: () => ({
       id: "alice_jane",
       name: "Alice Jane",
       email: "foo",
       addressConnection: null,
-    },
-    order: data,
+    }),
+    Query: () => ({
+      order: {
+        internalID: 2939023,
+        ...data,
+      },
+    }),
   })
 
   it("does not redirect to the status route if the order is pending", async () => {
@@ -98,7 +101,7 @@ describe("OrderApp routing redirects", () => {
     expect(redirect).toBe(undefined)
   })
 
-  it.only("redirects to the status route if the order is not pending", async () => {
+  it("redirects to the status route if the order is not pending", async () => {
     const res = await render(
       "/orders/2939023/shipping",
       mockResolver({
@@ -106,7 +109,7 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       })
     )
-    console.log(res.redirect)
+    // console.log(res.redirect)
     expect(res.redirect.url).toBe("/orders/2939023/status")
   })
 
