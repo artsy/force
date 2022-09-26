@@ -1,6 +1,8 @@
+import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { InsightsRoute_me } from "__generated__/InsightsRoute_me.graphql"
+import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
 import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
@@ -16,7 +18,11 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
       {isInsightsEnabled && (
         <>
           <InsightsHeader />
-          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+          <Join separator={<Spacer my={[4, 6]} />}>
+            <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+
+            <InsightsAuctionResultsFragmentContainer me={me} />
+          </Join>
         </>
       )}
     </>
@@ -32,6 +38,7 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         myCollectionInfo {
           ...InsightsOverview_info
         }
+        ...InsightsAuctionResults_me
       }
     `,
   }
