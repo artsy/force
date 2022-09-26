@@ -94,10 +94,10 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
     // if exists, skip creation logic and set
     // else, create template for user and save to db
     if (!quizTemplate) {
-      const template = {}
-      for (let artwork of artworks) {
-        Object.assign(template, { [artwork.slug]: false })
-      }
+      const template = artworks.reduce(
+        (acc, artwork) => ({ ...acc, [artwork.slug]: false }),
+        {}
+      )
       setQuizTemplate(template)
     }
   }, [artworks, quizTemplate])
