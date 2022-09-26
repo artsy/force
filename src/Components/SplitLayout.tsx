@@ -1,18 +1,19 @@
 import { ArtsyLogoIcon, Box, BoxProps, Flex } from "@artsy/palette"
 import { FC } from "react"
-
-interface OnboardingSplitLayoutProps {
+interface SplitLayoutProps {
   left: JSX.Element
   right: JSX.Element
   leftProps?: BoxProps
   rightProps?: BoxProps
+  hideLogo?: boolean
 }
 
-export const OnboardingSplitLayout: FC<OnboardingSplitLayoutProps> = ({
+export const SplitLayout: FC<SplitLayoutProps> = ({
   left,
   right,
   leftProps = {},
   rightProps = {},
+  hideLogo = false,
 }) => {
   return (
     <Flex height="100%" flexDirection={["column", "row"]}>
@@ -26,7 +27,9 @@ export const OnboardingSplitLayout: FC<OnboardingSplitLayoutProps> = ({
       >
         {left}
 
-        <ArtsyLogoIcon fill="white100" position="absolute" top={2} left={2} />
+        {!hideLogo && (
+          <ArtsyLogoIcon fill="white100" position="absolute" top={2} left={2} />
+        )}
       </Box>
 
       <Flex

@@ -24,7 +24,7 @@ export interface ArtQuizContextValues {
   quizTemplate: Record<string, boolean>
 }
 
-export const artQuizContext = createContext<ArtQuizContextValues>({
+export const ArtQuizContext = createContext<ArtQuizContextValues>({
   artworks: [],
   artworksTotalCount: 0,
   currentArtwork: null,
@@ -94,10 +94,10 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
     // if exists, skip creation logic and set
     // else, create template for user and save to db
     if (!quizTemplate) {
-      const template = {}
-      for (let artwork of artworks) {
-        Object.assign(template, { [artwork.slug]: false })
-      }
+      const template = artworks.reduce(
+        (acc, artwork) => ({ ...acc, [artwork.slug]: false }),
+        {}
+      )
       setQuizTemplate(template)
     }
   }, [artworks, quizTemplate])
@@ -109,7 +109,7 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
   }
 
   return (
-    <artQuizContext.Provider
+    <ArtQuizContext.Provider
       value={{
         artworks,
         artworksTotalCount: artworks.length,
@@ -124,12 +124,12 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
       }}
     >
       {children}
-    </artQuizContext.Provider>
+    </ArtQuizContext.Provider>
   )
 }
 
 export const useArtQuizContext = () => {
-  return useContext<ArtQuizContextValues>(artQuizContext)
+  return useContext<ArtQuizContextValues>(ArtQuizContext)
 }
 
 // TODO: Remove this fixture data once we have our query in place

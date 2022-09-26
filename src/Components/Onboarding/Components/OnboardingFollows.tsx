@@ -8,13 +8,13 @@ import {
 } from "@artsy/palette"
 import { FC, useState } from "react"
 import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrderedSet"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { SplitLayout } from "Components/SplitLayout"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"
@@ -49,7 +49,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
   const tracking = useOnboardingTracking()
 
   return (
-    <OnboardingSplitLayout
+    <SplitLayout
       left={
         <OnboardingFigure
           ref={register(0)}
