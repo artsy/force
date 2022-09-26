@@ -34,7 +34,6 @@ export const ArtQuizWelcome = () => {
             >
               {/* Vertically centers next Box */}
               <Box />
-
               <Box width="100%">
                 <ArtsyLogoIcon mb={2} />
                 <Text variant={["xl", "xxl"]}>Art Taste Quiz</Text>
@@ -50,7 +49,6 @@ export const ArtQuizWelcome = () => {
               </Box>
 
               <Spacer my={1} />
-
               <Box width="100%">
                 <Button width="100%">Start the Quiz</Button>
                 <Button
