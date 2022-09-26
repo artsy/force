@@ -8,6 +8,7 @@ import {
   useTabs,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
 import {
@@ -17,15 +18,18 @@ import {
 } from "./MarkAllAsReadPanel"
 
 const TABS_CONTAINER_HEIGHT = 60
+const DROPDOWN_HEADER_HEIGHT =
+  TABS_CONTAINER_HEIGHT + MARK_ALL_AS_READ_PANEL_HEIGHT
+const VERTICAL_OFFSET = 10
+const DROPDOWN_CONTENT_HEIGHT =
+  DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_TOP_TIER_HEIGHT + VERTICAL_OFFSET
 
 export interface NofiticationsTabsProps extends MarkAllAsReadPanelProps {
   mode: "dropdown" | "page"
-  maxDropdownHeight?: string
 }
 
 export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   mode,
-  maxDropdownHeight,
   unreadCounts,
   children,
 }) => {
@@ -54,9 +58,6 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   )
 
   if (mode === "dropdown") {
-    const headerTotalHeight =
-      TABS_CONTAINER_HEIGHT - MARK_ALL_AS_READ_PANEL_HEIGHT
-
     return (
       <>
         <HeaderContainer display="flex" flexDirection="row" alignItems="center">
@@ -71,7 +72,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
 
         <Box
-          maxHeight={`calc(${maxDropdownHeight} - ${headerTotalHeight}px)`}
+          maxHeight={`calc(100vh - ${DROPDOWN_CONTENT_HEIGHT}px)`}
           overflowY="scroll"
         >
           {activeTab.current.child}

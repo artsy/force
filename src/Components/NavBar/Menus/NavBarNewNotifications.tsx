@@ -27,12 +27,7 @@ export const NavBarNewNotifications: React.FC<NavBarNewNotificationsProps> = pro
       onMouseEnter={lockScroll}
       onMouseLeave={unlockScroll}
     >
-      <Notifications
-        mode="dropdown"
-        maxDropdownHeight="90vh"
-        paginationType="infinite"
-        {...props}
-      />
+      <Notifications mode="dropdown" paginationType="infinite" {...props} />
     </Box>
   )
 }
