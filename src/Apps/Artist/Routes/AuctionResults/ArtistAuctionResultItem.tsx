@@ -29,6 +29,7 @@ export interface Props extends SystemContextProps {
   expanded?: boolean
   auctionResult: ArtistAuctionResultItem_auctionResult
   filtersAtDefault: boolean
+  showArtistName?: boolean
 }
 
 export const ArtistAuctionResultItem: FC<Props> = props => {
@@ -72,6 +73,7 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
 const ArtistAuctionResultItemTop: FC<Props> = props => {
   const {
     expanded,
+    showArtistName,
     auctionResult: {
       images,
       date_text,
@@ -79,11 +81,13 @@ const ArtistAuctionResultItemTop: FC<Props> = props => {
       title,
       mediumText,
       saleDate,
+      artist,
     },
   } = getProps(props)
 
   const dateOfSale = getDisplaySaleDate(saleDate)
   const image = images?.larger?.cropped
+  const artistName = artist?.name
 
   return (
     <GridColumns>
@@ -108,9 +112,20 @@ const ArtistAuctionResultItemTop: FC<Props> = props => {
       </Column>
 
       <Column span={4}>
-        <Text variant="sm-display">
-          {[title, date_text].filter(Boolean).join(", ")}
-        </Text>
+        {!!showArtistName && <Text variant="sm-display">{artistName}</Text>}
+
+        {showArtistName ? (
+          <Text variant="sm-display" color="black60">
+            <i>{title?.trim()}</i>
+            {date_text &&
+              date_text.replace(/\s+/g, "").length > 0 &&
+              ", " + date_text}
+          </Text>
+        ) : (
+          <Text variant="sm-display">
+            {[title, date_text].filter(Boolean).join(", ")}
+          </Text>
+        )}
 
         {mediumText !== "Unknown" && (
           <Text variant="xs" color="black60" lineClamp={4}>
@@ -150,6 +165,9 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         title
         dimension_text: dimensionText
         organization
+        artist {
+          name
+        }
         images {
           larger {
             cropped(width: 100, height: 100) {

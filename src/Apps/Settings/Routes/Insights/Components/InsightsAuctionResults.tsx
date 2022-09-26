@@ -35,6 +35,7 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
                 key={index}
                 auctionResult={result}
                 filtersAtDefault={false}
+                showArtistName
               />
             )
           })}
