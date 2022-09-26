@@ -86,5 +86,11 @@
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",
     "resultsCount_other": "{{count}} results for"
+  },
+  "activityPanel": {
+    "newNotifications_zero": "No new notifications",
+    "newNotifications_one": "{{count}} new notification",
+    "newNotifications_other": "{{count}} new notifications",
+    "markAllAsRead": "Mark all as read"
   }
 }

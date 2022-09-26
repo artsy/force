@@ -47,7 +47,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   submission,
 }) => {
   const { trackEvent } = useTracking()
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const initialValue = getContactInformationFormInitialValues(me)
@@ -55,6 +55,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     initialValue,
     contactInformationValidationSchema
   )
+  const artworkId = match.params.artworkId
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
@@ -86,7 +87,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push(`/sell/submission/${submission?.externalId}/thank-you`)
+        router.push(
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/thank-you/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/thank-you`
+        )
       } catch (error) {
         logger.error("Submission error", error)
 
@@ -107,7 +112,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={`/sell/submission/${submission?.externalId}/upload-photos`}
+        to={
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/upload-photos/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/upload-photos`
+        }
       >
         Back
       </BackLink>
