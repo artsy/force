@@ -10,10 +10,15 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
+import {
+  MarkAllAsReadPanel,
+  MarkAllAsReadPanelProps,
+  MARK_ALL_AS_READ_PANEL_HEIGHT,
+} from "./MarkAllAsReadPanel"
 
 const TABS_CONTAINER_HEIGHT = 60
 
-export interface NofiticationsTabsProps {
+export interface NofiticationsTabsProps extends MarkAllAsReadPanelProps {
   mode: "dropdown" | "page"
   maxDropdownHeight?: string
 }
@@ -21,6 +26,7 @@ export interface NofiticationsTabsProps {
 export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   mode,
   maxDropdownHeight,
+  unreadCounts,
   children,
 }) => {
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
@@ -48,6 +54,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   )
 
   if (mode === "dropdown") {
+    const headerTotalHeight =
+      TABS_CONTAINER_HEIGHT - MARK_ALL_AS_READ_PANEL_HEIGHT
+
     return (
       <>
         <HeaderContainer display="flex" flexDirection="row" alignItems="center">
@@ -59,9 +68,10 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
             <CloseIcon display="block" />
           </Clickable>
         </HeaderContainer>
+        <MarkAllAsReadPanel unreadCounts={unreadCounts} />
 
         <Box
-          maxHeight={`calc(${maxDropdownHeight} - ${TABS_CONTAINER_HEIGHT}px)`}
+          maxHeight={`calc(${maxDropdownHeight} - ${headerTotalHeight}px)`}
           overflowY="scroll"
         >
           {activeTab.current.child}
@@ -74,6 +84,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
     <StickyProvider>
       <Sticky>
         <HeaderContainer>{Tabs}</HeaderContainer>
+        <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </Sticky>
       {activeTab.current.child}
     </StickyProvider>

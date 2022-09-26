@@ -3,7 +3,11 @@ import { Notifications } from "Components/Notifications/Notifications"
 import { useEffect } from "react"
 import { useScrollLock } from "Utils/Hooks/useScrollLock"
 
-export const NavBarNewNotifications = () => {
+interface NavBarNewNotificationsProps {
+  unreadCounts: number
+}
+
+export const NavBarNewNotifications: React.FC<NavBarNewNotificationsProps> = props => {
   const { lockScroll, unlockScroll } = useScrollLock()
 
   useEffect(() => {
@@ -27,6 +31,7 @@ export const NavBarNewNotifications = () => {
         mode="dropdown"
         maxDropdownHeight="90vh"
         paginationType="infinite"
+        {...props}
       />
     </Box>
   )

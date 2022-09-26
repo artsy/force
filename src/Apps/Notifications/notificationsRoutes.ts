@@ -1,11 +1,12 @@
 import loadable from "@loadable/component"
+import { graphql } from "relay-runtime"
 import { AppRouteConfig } from "System/Router/Route"
 
 const NotificationsApp = loadable(
   () =>
     import(/* webpackChunkName: "notificationsBundle" */ "./NotificationsApp"),
   {
-    resolveComponent: component => component.NotificationsApp,
+    resolveComponent: component => component.NotificationsAppFragmentContainer,
   }
 )
 
@@ -16,5 +17,12 @@ export const notificationsRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       NotificationsApp.preload()
     },
+    query: graphql`
+      query notificationsRoutesQuery {
+        me {
+          ...NotificationsApp_me
+        }
+      }
+    `,
   },
 ]
