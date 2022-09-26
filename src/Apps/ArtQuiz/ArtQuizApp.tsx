@@ -1,5 +1,5 @@
-import { ArtQuizContextProvider } from "Apps/ArtQuiz/ArtQuizContext"
-import { ArtQuizInterface } from "Apps/ArtQuiz/ArtQuizInterface"
+import { ArtQuizContextProvider } from "Apps/ArtQuiz/ArtQuizContext/ArtQuizContext"
+import { ArtQuizInterface } from "./ArtQuizInterface/ArtQuizInterface"
 
 export const ArtQuizApp = () => {
   return (

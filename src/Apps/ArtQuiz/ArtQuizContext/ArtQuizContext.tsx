@@ -1,10 +1,22 @@
-import { createContext, FC, useContext, useEffect, useState } from "react"
+import {
+  createContext,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { extractNodes } from "Utils/extractNodes"
 
-interface ArtQuizContext {
+// TODO: Kill all the anys!!
+export interface ArtQuizContextValues {
   artworks: any[]
+  artworksTotalCount: number
   currentArtwork: any | null
-  markItemComplete: (artworkSlug: keyof ArtQuizContext["quizTemplate"]) => void
+  currentIndex: number
+  markItemComplete: (
+    artworkSlug: keyof ArtQuizContextValues["quizTemplate"]
+  ) => void
   nextArtwork: any | null
   previousArtwork: any | null
   stepForward: () => void
@@ -12,12 +24,14 @@ interface ArtQuizContext {
   quizTemplate: Record<string, boolean>
 }
 
-const artQuizContext = createContext<ArtQuizContext>({
+export const artQuizContext = createContext<ArtQuizContextValues>({
   artworks: [],
+  artworksTotalCount: 0,
   currentArtwork: null,
+  currentIndex: 0,
   nextArtwork: null,
   previousArtwork: null,
-  markItemComplete: (_: keyof ArtQuizContext["quizTemplate"]) => {
+  markItemComplete: (_: keyof ArtQuizContextValues["quizTemplate"]) => {
     throw new Error("ArtQuizContext not initialized")
   },
   stepForward: () => {
@@ -30,46 +44,55 @@ const artQuizContext = createContext<ArtQuizContext>({
 })
 
 export const ArtQuizContextProvider: FC = ({ children }) => {
+  // Quiz template should be the source of truth for the content and state of a
+  // particular user's quiz. A stringified version will be stored in a table
+  // with the userId as its key.
   const [quizTemplate, setQuizTemplate] = useState<Record<string, boolean>>(
     (undefined as unknown) as Record<string, boolean>
   )
+
+  // This typing should clarify itself once we create our query and figure
+  // out which values we need to appropriately render the UI
   const [artworks, _setArtworks] = useState<any[]>(extractNodes({ edges }))
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const currentArtwork = () => {
+  const currentArtwork = useCallback(() => {
     if (artworks.length > currentIndex) {
       return artworks[currentIndex]
     }
     return null
-  }
-  const nextArtwork = () => {
+  }, [artworks, currentIndex])
+
+  const nextArtwork = useCallback(() => {
     if (artworks.length > currentIndex + 1) {
       return artworks[currentIndex + 1]
     }
     return null
-  }
-  const previousArtwork = () => {
+  }, [artworks, currentIndex])
+
+  const previousArtwork = useCallback(() => {
     if (currentIndex > 0) {
       return artworks[currentIndex - 1]
     }
     return null
-  }
+  }, [artworks, currentIndex])
 
-  const stepForward = () => {
+  const stepForward = useCallback(() => {
     if (artworks.length > currentIndex + 1) {
       setCurrentIndex(currentIndex + 1)
     }
-  }
+  }, [artworks, currentIndex])
 
-  const stepBackward = () => {
+  const stepBackward = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1)
     }
-  }
+  }, [currentIndex])
 
   useEffect(() => {
     // TODO: check db for quizTemplate
     // if exists, skip creation logic and set
+    // else, create template for user and save to db
     if (!quizTemplate) {
       const template = {}
       for (let artwork of artworks) {
@@ -80,7 +103,7 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
   }, [artworks, quizTemplate])
 
   const markItemComplete = (
-    artworkSlug: keyof ArtQuizContext["quizTemplate"]
+    artworkSlug: keyof ArtQuizContextValues["quizTemplate"]
   ) => {
     setQuizTemplate(prev => ({ ...prev, [artworkSlug]: true }))
   }
@@ -89,7 +112,9 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
     <artQuizContext.Provider
       value={{
         artworks,
+        artworksTotalCount: artworks.length,
         currentArtwork: currentArtwork(),
+        currentIndex,
         markItemComplete,
         nextArtwork: nextArtwork(),
         previousArtwork: previousArtwork(),
@@ -104,9 +129,10 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
 }
 
 export const useArtQuizContext = () => {
-  return useContext<ArtQuizContext>(artQuizContext)
+  return useContext<ArtQuizContextValues>(artQuizContext)
 }
 
+// TODO: Remove this fixture data once we have our query in place
 const edges = [
   {
     node: {

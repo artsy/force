@@ -1,72 +1,98 @@
 import {
-  HeartIcon,
-  CloseIcon,
   ArrowLeftIcon,
-  Text,
-  Clickable,
-  HeartFillIcon,
-  Image,
-  ClickableProps,
-  Flex,
+  CloseIcon,
   CSSGrid,
   FullBleed,
-  ImageProps,
-  TextProps,
-  FlexProps,
+  Spinner,
+  Text,
 } from "@artsy/palette"
-import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
-import { processImageUrl } from "Apps/ArtQuiz/ArtQuizInterface/maxHeight"
+import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext/ArtQuizContext"
+import {
+  ArtQuizDislikeButton,
+  ArtQuizSaveButton,
+} from "Apps/ArtQuiz/ArtQuizInterface/ArtQuizButtons"
+import {
+  GridClickable,
+  GridFlex,
+  GridImage,
+  GridResponsiveBox,
+  GridText,
+} from "Apps/ArtQuiz/ArtQuizInterface/ArtQuizGridComponents"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { FC, useState } from "react"
-import styled from "styled-components"
-import { flex, grid, GridProps } from "styled-system"
+import { FC, useEffect, useState } from "react"
+import { useWindowSize } from "Utils/Hooks/useWindowSize"
+
+const DESKTOP_ROW_HEIGHT = 120
+const DESKTOP_IMAGE_PY = 40
+const MOBILE_ROW_HEIGHT = 80
+const MOBILE_ADDRESS_BAR_HEIGHT = 55
 
 export const ArtQuizInterface: FC = () => {
   const { desktop, mobile } = useNavBarHeight()
-  const { currentArtwork } = useArtQuizContext()
+  const {
+    artworksTotalCount,
+    currentArtwork,
+    currentIndex,
+  } = useArtQuizContext()
+  const { height, width } = useWindowSize()
 
   const aspectRatio = currentArtwork.image?.aspectRatio ?? 1
-  const width = 445
-  const { src, srcSet } = processImageUrl({
-    aspectRatio,
-    width,
-    url: currentArtwork.image?.url,
-  })
+
+  const [maxHeight, setMaxHeight] = useState<number>(0)
+
+  useEffect(() => {
+    if (height && width > 768) {
+      setMaxHeight(height - DESKTOP_ROW_HEIGHT * 2 - DESKTOP_IMAGE_PY - desktop)
+    }
+    if (height && width < 768) {
+      setMaxHeight(
+        height - MOBILE_ROW_HEIGHT * 2 - MOBILE_ADDRESS_BAR_HEIGHT - mobile
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [height, width])
 
   return (
     // Should we lift this FullBleed up into the ArtQuizApp?
+    // Maybe not relevant to the results page
     <FullBleed
       height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
+      justifyContent="center"
     >
       <CSSGrid
         gridTemplateAreas={[
-          `"mobile-header"
+          `"header"
           "image"
           "controls"`,
           `"back progress skip"
           ". image ."
           ". controls ."`,
         ]}
-        gridTemplateColumns={["1fr", "240px 1fr 240px"]}
-        gridTemplateRows={["80px 1fr 80px", "120px 1fr 120px"]}
+        gridTemplateColumns={["1fr", "1fr 8fr 1fr"]}
+        gridTemplateRows={[
+          `${MOBILE_ROW_HEIGHT}px 1fr ${MOBILE_ROW_HEIGHT}px`,
+          `${DESKTOP_ROW_HEIGHT}px 1fr ${DESKTOP_ROW_HEIGHT}px`,
+        ]}
+        height="100%"
+        pb={6}
       >
         <GridClickable
           alignSelf={"center"}
-          gridArea={["mobile-header", "back"]}
+          gridArea={["header", "back"]}
           justifySelf={["flex-start", "flex-end"]}
           px={[2, 0]}
         >
           <ArrowLeftIcon />
         </GridClickable>
         <GridText
-          gridArea={["mobile-header", "progress"]}
+          gridArea={["header", "progress"]}
           alignSelf="center"
           justifySelf="center"
         >
-          1/16
+          {`${currentIndex + 1} / ${artworksTotalCount}`}
         </GridText>
         <GridClickable
-          gridArea={["mobile-header", "skip"]}
+          gridArea={["header", "skip"]}
           alignSelf="center"
           justifySelf={["flex-end", "flex-start"]}
           px={[2, 0]}
@@ -74,17 +100,35 @@ export const ArtQuizInterface: FC = () => {
           <CloseIcon />
         </GridClickable>
 
-        <GridImage
-          justifySelf="center"
-          alt={currentArtwork.title}
-          src={src}
-          srcSet={srcSet}
-          preventRightClick={true}
-          gridArea="image"
-          py={2}
-          px={[0, 2]}
-          height="100%"
-        />
+        <GridFlex gridArea="image" justifyContent="center" alignItems="center">
+          {/** The appearance/disappearance of this loader is startling and poor UX.
+           * We should definitely work on smoothing this visual transition out as part of
+           * the animation user story. */}
+          {!maxHeight && (
+            <>
+              <Text>Loading images...</Text>
+              <Spinner />
+            </>
+          )}
+          {!!maxHeight && (
+            <GridResponsiveBox
+              display="grid"
+              gridArea="image"
+              aspectWidth={aspectRatio}
+              aspectHeight={1}
+              maxHeight={maxHeight}
+              p={[0, 2]}
+            >
+              <GridImage
+                alt={currentArtwork.title}
+                src={currentArtwork.image?.url}
+                preventRightClick={true}
+                height="100%"
+                width="100%"
+              />
+            </GridResponsiveBox>
+          )}
+        </GridFlex>
 
         <GridFlex
           gridArea="controls"
@@ -93,80 +137,10 @@ export const ArtQuizInterface: FC = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <ArtQuizDislikeButton mx={6} />
-          <ArtQuizSaveButton slug={currentArtwork.slug} mx={6} />
+          <ArtQuizDislikeButton px={6} />
+          <ArtQuizSaveButton slug={currentArtwork.slug} px={6} />
         </GridFlex>
       </CSSGrid>
     </FullBleed>
   )
 }
-
-const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
-  slug,
-  ...rest
-}) => {
-  const [isHovered, setIsHovered] = useState(false)
-
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
-  const handleClick = () => {}
-
-  return (
-    <Clickable
-      display="flex"
-      p={0.5}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      alignItems="center"
-      {...rest}
-    >
-      {isHovered ? <HeartFillIcon /> : <HeartIcon />}
-    </Clickable>
-  )
-}
-
-// HEY LAURA DONT FORGET
-const ArtQuizDislikeButton: FC<ClickableProps> = ({ ...rest }) => {
-  const [isHovered, setIsHovered] = useState(false)
-
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
-  const handleClick = () => {}
-  return (
-    <Clickable
-      display="flex"
-      p={0.5}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      alignItems="center"
-      {...rest}
-    >
-      <CloseIcon height={isHovered ? 22 : 18} width={isHovered ? 22 : 18} />
-    </Clickable>
-  )
-}
-
-// It would be my preference to grid-enable our base Box component
-const GridClickable = styled(Clickable)<ClickableProps & GridProps>`
-  ${grid}
-`
-const GridImage = styled(Image)<ImageProps & GridProps & FlexProps>`
-  ${grid}
-  ${flex}
-`
-const GridText = styled(Text)<TextProps & GridProps>`
-  ${grid}
-`
-const GridFlex = styled(Flex)<FlexProps & GridProps>`
-  ${grid}
-`
