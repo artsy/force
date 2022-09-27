@@ -16,6 +16,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
+import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -65,21 +66,20 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   )
 
   const EditArtworkButton = () => (
-    <Flex justifyContent="flex-end" pb={[1, 2]}>
-      <Button
-        // @ts-ignore
-        as={RouterLink}
-        variant="secondaryNeutral"
-        size="small"
-        to={`/my-collection/artworks/${artwork.internalID}/edit`}
-        onClick={() =>
-          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
-        }
-        alignSelf="flex-end"
-      >
-        Edit Artwork Details
-      </Button>
-    </Flex>
+    <Button
+      // @ts-ignore
+      as={RouterLink}
+      variant="secondaryNeutral"
+      size="small"
+      to={`/my-collection/artworks/${artwork.internalID}/edit`}
+      onClick={() =>
+        trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+      }
+      alignSelf="flex-end"
+    >
+      <Media greaterThanOrEqual="sm">Edit Artwork Details</Media>
+      <Media lessThan="sm">Edit</Media>
+    </Button>
   )
 
   const slug = artwork?.artist?.slug!
@@ -114,18 +114,19 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         />
       )}
 
-      <GridColumns gridRowGap={[2, null]} py={[2, 6]}>
+      <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
+        <MyCollectionArtworkBackButton />
+
+        {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
+      </Flex>
+
+      <GridColumns gridRowGap={[2, null]}>
         <Column span={8}>
-          <Media lessThan="sm">
-            {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
-          </Media>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
-            {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
-
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isMyCollectionPhase5Enabled && isP1Artist && (
               <Media greaterThanOrEqual="sm">
