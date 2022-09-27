@@ -1,5 +1,5 @@
 import { omit } from "lodash"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useOnboarding } from "Components/Onboarding"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
@@ -7,6 +7,7 @@ import { useRouter } from "System/Router/useRouter"
 export const useOnboardingModal = () => {
   const { isLoggedIn } = useSystemContext()
   const { match, router } = useRouter()
+  const initialized = useRef(false)
 
   const { onboardingComponent, showOnboarding, hideOnboarding } = useOnboarding(
     {
@@ -19,7 +20,8 @@ export const useOnboardingModal = () => {
   // Check to see if we should open onboarding (logged in + ?onboarding=true),
   // show it, and then immediately remove the query param
   useEffect(() => {
-    if (!isLoggedIn || !match.location.query.onboarding) return
+    if (!isLoggedIn || !match.location.query.onboarding || initialized.current)
+      return
 
     showOnboarding()
 
@@ -27,6 +29,8 @@ export const useOnboardingModal = () => {
       ...match.location,
       query: omit(match.location.query, "onboarding"),
     })
+
+    initialized.current = true
   }, [isLoggedIn, match.location, router, showOnboarding])
 
   return { onboardingComponent }
