@@ -15,7 +15,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
           <OnboardingModal
             onClose={hideDialog}
             height={["100%", "90%"]}
-            dialogProps={{ height: ["100%", "90%"] }}
+            dialogProps={{ height: ["100%", "90%"], maxHeight: 800 }}
           >
             <OnboardingSteps />
           </OnboardingModal>
