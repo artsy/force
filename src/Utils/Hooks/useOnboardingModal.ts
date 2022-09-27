@@ -3,10 +3,11 @@ import { useEffect } from "react"
 import { useOnboarding } from "Components/Onboarding"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
+import { stringify } from "qs"
 
 export const useOnboardingModal = () => {
   const { isLoggedIn } = useSystemContext()
-  const { match, router } = useRouter()
+  const { match } = useRouter()
 
   const { onboardingComponent, showOnboarding, hideOnboarding } = useOnboarding(
     {
@@ -23,11 +24,15 @@ export const useOnboardingModal = () => {
 
     showOnboarding()
 
-    router.replace({
-      ...match.location,
-      query: omit(match.location.query, "onboarding"),
-    })
-  }, [isLoggedIn, match.location, router, showOnboarding])
+    // Manually manipulate URL to avoid triggering analytics with router.replace
+    const search = stringify(omit(match.location.query, "onboarding"))
+
+    window.history.replaceState(
+      null,
+      "",
+      match.location.pathname + (search !== "" ? `?${search}` : "")
+    )
+  }, [isLoggedIn, match.location, showOnboarding])
 
   return { onboardingComponent }
 }
