@@ -150,7 +150,7 @@ describe("AuctionResults", () => {
       expect(screen.getAllByRole("img")).toHaveLength(10)
     })
 
-    it("renders either realized price, bought in, or price not avail", () => {
+    it("renders either realized price, bought in, or price not available", () => {
       renderWithRelay(mockedResolver)
 
       expect(screen.getAllByText("Price not available")).toHaveLength(15)
@@ -178,7 +178,7 @@ describe("AuctionResults", () => {
               query: {
                 categories: ["Painting"],
                 sizes: ["SMALL", "LARGE"],
-                organizations: ["Phillips"],
+                organizations: ["Phillips", "Bonhams"],
               },
             },
           },
@@ -202,7 +202,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(5)
+        expect(checkedCheckboxes).toHaveLength(6)
         expect(checkedCheckboxes[0]).toHaveTextContent("CheckPainting")
         expect(checkedCheckboxes[1]).toHaveTextContent(
           "CheckSmall (under 40cm)"
@@ -214,6 +214,7 @@ describe("AuctionResults", () => {
           "CheckInclude unspecified dates"
         )
         expect(checkedCheckboxes[4]).toHaveTextContent("CheckPhillips")
+        expect(checkedCheckboxes[5]).toHaveTextContent("CheckBonhams")
       })
     })
 
