@@ -68,8 +68,9 @@ export const FooterDownloadAppBanner = () => {
       </Column>
       <Column span={12} order={[1, 2]}>
         <Text variant="xs" fontStyle="italic" textAlign="right">
-          Nicolas Party, Trees, 2019. Damien Cifelli, May You Live in
-          Interesting Times, 2022. Anna Park, It's Good For You, 2020
+          Jenna Gribbon, Luncheon on the grass, a recurring dream, 2020. Jenna
+          Gribbon, April studio, parting glance, 2021. Jenna Gribbon, Silver
+          Tongue, 2019
         </Text>
       </Column>
     </GridColumns>
