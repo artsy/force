@@ -4,23 +4,36 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_InsightsRouteQueryVariables = {};
-export type settingsRoutes_InsightsRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"InsightsRoute_me">;
+export type ArtistAuctionResultItemTestQueryVariables = {};
+export type ArtistAuctionResultItemTestQueryResponse = {
+    readonly artist: {
+        readonly auctionResultsConnection: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+                } | null;
+            } | null> | null;
+        } | null;
     } | null;
 };
-export type settingsRoutes_InsightsRouteQuery = {
-    readonly response: settingsRoutes_InsightsRouteQueryResponse;
-    readonly variables: settingsRoutes_InsightsRouteQueryVariables;
+export type ArtistAuctionResultItemTestQuery = {
+    readonly response: ArtistAuctionResultItemTestQueryResponse;
+    readonly variables: ArtistAuctionResultItemTestQueryVariables;
 };
 
 
 
 /*
-query settingsRoutes_InsightsRouteQuery {
-  me {
-    ...InsightsRoute_me
+query ArtistAuctionResultItemTestQuery {
+  artist(id: "andy-warhol") {
+    auctionResultsConnection(first: 1) {
+      edges {
+        node {
+          ...ArtistAuctionResultItem_auctionResult
+          id
+        }
+      }
+    }
     id
   }
 }
@@ -61,42 +74,31 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
     display
   }
 }
-
-fragment InsightsAuctionResults_me on Me {
-  myCollectionAuctionResults(first: 6) {
-    edges {
-      node {
-        ...ArtistAuctionResultItem_auctionResult
-        id
-      }
-    }
-  }
-}
-
-fragment InsightsOverview_info on MyCollectionInfo {
-  artworksCount
-  artistsCount
-}
-
-fragment InsightsRoute_me on Me {
-  internalID
-  myCollectionInfo {
-    artworksCount
-    ...InsightsOverview_info
-  }
-  ...InsightsAuctionResults_me
-}
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "andy-warhol"
+  }
+],
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -108,23 +110,56 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_InsightsRouteQuery",
+    "name": "ArtistAuctionResultItemTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "InsightsRoute_me"
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "AuctionResultConnection",
+            "kind": "LinkedField",
+            "name": "auctionResultsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuctionResultEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "AuctionResult",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "ArtistAuctionResultItem_auctionResult"
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "auctionResultsConnection(first:1)"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ],
     "type": "Query",
@@ -134,60 +169,22 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_InsightsRouteQuery",
+    "name": "ArtistAuctionResultItemTestQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
+        "args": (v0/*: any*/),
+        "concreteType": "Artist",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "artist",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "MyCollectionInfo",
-            "kind": "LinkedField",
-            "name": "myCollectionInfo",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "artworksCount",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "artistsCount",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 6
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "AuctionResultConnection",
             "kind": "LinkedField",
-            "name": "myCollectionAuctionResults",
+            "name": "auctionResultsConnection",
             "plural": false,
             "selections": [
               {
@@ -242,7 +239,7 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v0/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -368,7 +365,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -412,11 +409,11 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -424,23 +421,23 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "myCollectionAuctionResults(first:6)"
+            "storageKey": "auctionResultsConnection(first:1)"
           },
-          (v0/*: any*/)
+          (v2/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"andy-warhol\")"
       }
     ]
   },
   "params": {
-    "cacheID": "60cff8fbc90a515d0cde926ef48213f1",
+    "cacheID": "622159ac7364f50d790a7e0b974d98f4",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_InsightsRouteQuery",
+    "name": "ArtistAuctionResultItemTestQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n}\n"
+    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '05488390d019c37ca002a2608bb08e1b';
+(node as any).hash = '5717529e5ff595a83f6f8a42abb5d99e';
 export default node;

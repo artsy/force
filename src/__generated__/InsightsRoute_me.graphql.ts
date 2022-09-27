@@ -10,6 +10,7 @@ export type InsightsRoute_me = {
         readonly artworksCount: number;
         readonly " $fragmentRefs": FragmentRefs<"InsightsOverview_info">;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"InsightsAuctionResults_me">;
     readonly " $refType": "InsightsRoute_me";
 };
 export type InsightsRoute_me$data = InsightsRoute_me;
@@ -55,10 +56,15 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "InsightsAuctionResults_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'f8c2887b1183206aa30f21450b0ff12f';
+(node as any).hash = '52f7c13c0f5d5b900a11b8252d44798c';
 export default node;

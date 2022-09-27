@@ -46,6 +46,10 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
   title
   dimension_text: dimensionText
   organization
+  artist {
+    name
+    id
+  }
   images {
     larger {
       cropped(width: 100, height: 100) {
@@ -195,19 +199,26 @@ v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
+  "name": "name",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v14 = [
-  (v12/*: any*/),
+v15 = [
   (v13/*: any*/),
+  (v14/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -216,18 +227,18 @@ v14 = [
     "storageKey": null
   }
 ],
-v15 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "display",
-  "storageKey": null
-},
 v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
   "storageKey": null
 };
 return {
@@ -316,13 +327,7 @@ return {
             "name": "internalID",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
+          (v12/*: any*/),
           {
             "alias": null,
             "args": [
@@ -421,7 +426,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v14/*: any*/),
+                    "selections": (v15/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -431,7 +436,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v15/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -441,7 +446,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v14/*: any*/),
+                    "selections": (v15/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -452,8 +457,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
-                      (v13/*: any*/)
+                      (v13/*: any*/),
+                      (v14/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -502,6 +507,19 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "organization",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Artist",
+                        "kind": "LinkedField",
+                        "name": "artist",
+                        "plural": false,
+                        "selections": [
+                          (v12/*: any*/),
+                          (v16/*: any*/)
+                        ],
                         "storageKey": null
                       },
                       {
@@ -626,7 +644,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/),
+                          (v17/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -670,7 +688,7 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v15/*: any*/)
+                          (v17/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -691,12 +709,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9a20d9a3fc97eee29acf86c4a48930c9",
+    "cacheID": "2d60810939dfab8c0648b76b3c3eaa81",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_AuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n  $organizations: [String]\n  $categories: [String]\n  $sizes: [ArtworkSizes]\n  $createdAfterYear: Int\n  $createdBeforeYear: Int\n  $allowEmptyCreatedDates: Boolean\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist_20ZuLB\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {\n  ...ArtistAuctionResults_artist_20ZuLB\n}\n\nfragment ArtistAuctionResults_artist_20ZuLB on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n  $organizations: [String]\n  $categories: [String]\n  $sizes: [ArtworkSizes]\n  $createdAfterYear: Int\n  $createdBeforeYear: Int\n  $allowEmptyCreatedDates: Boolean\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist_20ZuLB\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {\n  ...ArtistAuctionResults_artist_20ZuLB\n}\n\nfragment ArtistAuctionResults_artist_20ZuLB on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
