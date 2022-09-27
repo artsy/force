@@ -33,6 +33,7 @@ fragment InsightsOverview_info on MyCollectionInfo {
 fragment InsightsRoute_me on Me {
   internalID
   myCollectionInfo {
+    artworksCount
     ...InsightsOverview_info
   }
 }
@@ -124,12 +125,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "721560a82d2462babd437b495ee06d47",
+    "cacheID": "180f193bf74b8ca6e07358315192aed9",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    ...InsightsOverview_info\n  }\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n}\n"
   }
 };
 (node as any).hash = '05488390d019c37ca002a2608bb08e1b';

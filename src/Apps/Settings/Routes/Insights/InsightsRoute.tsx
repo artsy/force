@@ -2,6 +2,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { InsightsRoute_me } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsHeader } from "./Components/InsightsHeader"
+import { InsightsLandingPage } from "./Components/InsightsLandingPage"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
 interface InsightsRouteProps {
@@ -10,6 +11,10 @@ interface InsightsRouteProps {
 
 const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+
+  if (!me.myCollectionInfo?.artworksCount) {
+    return <InsightsLandingPage />
+  }
 
   return (
     <>
@@ -30,6 +35,7 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
       fragment InsightsRoute_me on Me {
         internalID
         myCollectionInfo {
+          artworksCount
           ...InsightsOverview_info
         }
       }
