@@ -10,9 +10,14 @@ import {
 } from "@artsy/palette"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SplitLayout } from "Components/SplitLayout"
+import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 
-export const ArtQuizWelcome = () => {
+interface ArtQuizWelcomeProps {
+  onStartQuiz: () => void
+}
+
+export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
   const { desktop } = useNavBarHeight()
 
   return (
@@ -50,7 +55,9 @@ export const ArtQuizWelcome = () => {
 
               <Spacer my={1} />
               <Box width="100%">
-                <Button width="100%">Start the Quiz</Button>
+                <Button width="100%" onClick={onStartQuiz}>
+                  Start the Quiz
+                </Button>
                 <Button
                   // @ts-ignore
                   as={RouterLink}

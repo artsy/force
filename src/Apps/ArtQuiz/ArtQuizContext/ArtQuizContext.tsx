@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react"
 import { extractNodes } from "Utils/extractNodes"
@@ -102,29 +103,41 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
     }
   }, [artworks, quizTemplate])
 
-  const markItemComplete = (
-    artworkSlug: keyof ArtQuizContextValues["quizTemplate"]
-  ) => {
-    setQuizTemplate(prev => ({ ...prev, [artworkSlug]: true }))
-  }
+  const markItemComplete = useCallback(
+    (artworkSlug: keyof ArtQuizContextValues["quizTemplate"]) => {
+      setQuizTemplate(prev => ({ ...prev, [artworkSlug]: true }))
+    },
+    []
+  )
+
+  const value = useMemo(
+    () => ({
+      artworks,
+      artworksTotalCount: artworks.length,
+      currentArtwork: currentArtwork(),
+      currentIndex,
+      markItemComplete,
+      nextArtwork: nextArtwork(),
+      previousArtwork: previousArtwork(),
+      stepBackward,
+      stepForward,
+      quizTemplate,
+    }),
+    [
+      artworks,
+      currentArtwork,
+      currentIndex,
+      markItemComplete,
+      nextArtwork,
+      previousArtwork,
+      stepBackward,
+      stepForward,
+      quizTemplate,
+    ]
+  )
 
   return (
-    <ArtQuizContext.Provider
-      value={{
-        artworks,
-        artworksTotalCount: artworks.length,
-        currentArtwork: currentArtwork(),
-        currentIndex,
-        markItemComplete,
-        nextArtwork: nextArtwork(),
-        previousArtwork: previousArtwork(),
-        stepBackward,
-        stepForward,
-        quizTemplate,
-      }}
-    >
-      {children}
-    </ArtQuizContext.Provider>
+    <ArtQuizContext.Provider value={value}>{children}</ArtQuizContext.Provider>
   )
 }
 
