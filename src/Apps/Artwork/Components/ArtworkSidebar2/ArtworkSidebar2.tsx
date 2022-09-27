@@ -112,6 +112,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
           {!hasEnded && (
             <ArtworkSidebar2AuctionTimerFragmentContainer artwork={artwork} />
           )}
+          <Spacer mt={2} />
         </>
       ) : (
         <ArtworkSidebar2CommercialButtonsFragmentContainer artwork={artwork} />
