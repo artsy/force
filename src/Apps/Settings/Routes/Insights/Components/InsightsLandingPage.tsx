@@ -25,7 +25,7 @@ export const InsightsLandingPage = () => {
           Gain Deeper Knowledge of Your Collection
         </Text>
 
-        <Text variant="sm" mt={[0, 2]} mb={[2, 6]}>
+        <Text variant="sm" mt={[0, 2]} mb={[2, 4, 6]}>
           Get free market insights about the artists you collect.
         </Text>
 
