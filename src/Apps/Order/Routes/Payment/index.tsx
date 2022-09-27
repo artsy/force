@@ -80,6 +80,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const CreditCardPicker = createRef<CreditCardPicker>()
 
   const {
+    bankAccountSelection,
     selectedBankAccountId,
     selectedPaymentMethod,
     balanceCheckComplete,
@@ -97,16 +98,19 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   useEffect(() => {
-    const bankAccountsArray =
-      selectedPaymentMethod !== "SEPA_DEBIT"
-        ? extractNodes(me.bankAccounts)
-        : []
+    if (!bankAccountSelection && selectedPaymentMethod) {
+      const bankAccountsArray =
+        selectedPaymentMethod !== "SEPA_DEBIT"
+          ? extractNodes(me.bankAccounts)
+          : []
 
-    setBankAccountSelection(
-      getInitialBankAccountSelection(order, bankAccountsArray)
-    )
+      setBankAccountSelection(
+        getInitialBankAccountSelection(order, bankAccountsArray)
+      )
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [bankAccountSelection, selectedPaymentMethod])
 
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
