@@ -1434,6 +1434,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
       REVIEWED
       BIENNIAL
       ACTIVE_SECONDARY_MARKET
+      HIGH_AUCTION_RECORD
     ]
   ): [ArtistInsight!]!
 
@@ -1641,6 +1642,7 @@ enum ArtistInsightKind {
   BIENNIAL
   COLLECTED
   GROUP_SHOW
+  HIGH_AUCTION_RECORD
   REVIEWED
   SOLO_SHOW
 }
