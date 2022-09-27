@@ -1,5 +1,5 @@
 import { TransactionDetailsSummaryItem_order } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
-import * as React from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { Flex, Text, Spacer, Column } from "@artsy/palette"
@@ -29,214 +29,18 @@ export interface TransactionDetailsSummaryItemProps
   showOrderNumberHeader?: boolean
 }
 
-export class TransactionDetailsSummaryItem extends React.Component<
-  TransactionDetailsSummaryItemProps
-> {
-  static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
-    offerContextPrice: "LIST_PRICE",
-  }
-
-  render() {
-    const {
-      showOfferNote,
-      offerOverride,
-      order,
-      transactionStep,
-      isEigen,
-      showCongratulationMessage = false,
-      ...others
-    } = this.props
-
-    return (
-      <StepSummaryItem {...others}>
-        {this.renderPriceEntry()}
-        <Spacer mb={2} />
-        <Entry
-          label={this.shippingDisplayLabel(this.shippingNotCalculated)}
-          value={this.shippingDisplayAmount()}
-          data-test="shippingDisplayAmount"
-        />
-
-        <Entry
-          label="Tax*"
-          value={this.taxDisplayAmount()}
-          data-test="taxDisplayAmount"
-        />
-        <Spacer mb={2} />
-        <Entry
-          label="Total"
-          value={this.buyerTotalDisplayAmount()}
-          final
-          data-test="buyerTotalDisplayAmount"
-        />
-        <Spacer mb={2} />
-        <Text variant="xs" color="black60">
-          *Additional duties and taxes{" "}
-          <a
-            href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            may apply at import.
-          </a>
-        </Text>
-        {this.shippingNotCalculated() && (
-          <>
-            <Spacer mb={2} />
-            <Text variant="xs" color="black60">
-              **Shipping costs to be confirmed by gallery. You will be able to
-              review the total price before payment.
-            </Text>
-          </>
-        )}
-        {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
-        {showCongratulationMessage && (
-          <Column
-            span={4}
-            display="flex"
-            alignItems="center"
-            flexWrap="wrap"
-            backgroundColor="blue10"
-            justifyContent="center"
-            order={[2, 1]}
-            p={2}
-            mt={2}
-          >
-            <Flex flexDirection="column" mr="auto">
-              <Text variant="sm" color="blue100">
-                Congratulations! This artwork will be added to your Collection
-                once the gallery confirms the order.
-              </Text>
-              <Text variant="sm">
-                View and manage all artworks in your Collection{" "}
-                {!isEigen ? "on the Artsy app." : "through your "}
-                {isEigen && (
-                  <RouterLink to={"/my-profile"}>profile.</RouterLink>
-                )}
-              </Text>
-            </Flex>
-            <Flex pt={1}>
-              {!isEigen && (
-                <DownloadAppBadges
-                  contextModule={ContextModule.ordersSubmitted}
-                />
-              )}
-            </Flex>
-          </Column>
-        )}
-      </StepSummaryItem>
-    )
-  }
-
-  getOffer(): TransactionDetailsSummaryItem_order["lastOffer"] | null {
-    return this.props.useLastSubmittedOffer
-      ? this.props.order.lastOffer
-      : this.props.order.myLastOffer
-  }
-
-  amountPlaceholder = () => {
-    const { transactionStep } = this.props
-
-    return ["shipping", "offer"].includes(transactionStep!)
-      ? "Calculated in next steps"
-      : "Waiting for final costs"
-  }
-
-  shippingDisplayAmount = () => {
-    const { order } = this.props
-    const currency = order.currencyCode
-
-    switch (order.mode) {
-      case "BUY":
-        return (
-          appendCurrencySymbol(order.shippingTotal, currency) ||
-          this.amountPlaceholder()
-        )
-      case "OFFER":
-        const offer = this.getOffer()
-        return (
-          (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
-          this.amountPlaceholder()
-        )
-    }
-  }
-
-  shippingNotCalculated = () => {
-    const { order, transactionStep } = this.props
-    const shippingAddressAdded = !(
-      transactionStep === "shipping" || transactionStep === "offer"
-    )
-
-    switch (order.mode) {
-      case "BUY":
-        return shippingAddressAdded && !order.shippingTotal
-      case "OFFER":
-        const offer = this.getOffer()
-        return shippingAddressAdded && offer && !offer.shippingTotal
-    }
-  }
-
-  shippingDisplayLabel = shippingNotCalculated => {
-    const { order } = this.props
-
-    if (shippingNotCalculated()) {
-      return "Shipping**"
-    }
-
-    if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
-      const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
-        .selectedShippingQuote
-
-      if (selectedShippingQuote) {
-        return `${
-          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
-        } delivery`
-      }
-    }
-
-    return "Shipping"
-  }
-
-  taxDisplayAmount = () => {
-    const { order } = this.props
-    const currency = order.currencyCode
-
-    switch (order.mode) {
-      case "BUY":
-        return (
-          appendCurrencySymbol(order.taxTotal, currency) ||
-          this.amountPlaceholder()
-        )
-      case "OFFER":
-        const offer = this.getOffer()
-        return (
-          (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
-          this.amountPlaceholder()
-        )
-    }
-  }
-
-  buyerTotalDisplayAmount = () => {
-    const { order } = this.props
-    const currency = order.currencyCode
-    const totalPlaceholder = "Waiting for final costs"
-
-    switch (order.mode) {
-      case "BUY":
-        return (
-          appendCurrencySymbol(order.buyerTotal, currency) || totalPlaceholder
-        )
-      case "OFFER":
-        const offer = this.getOffer()
-        return (
-          (offer && appendCurrencySymbol(offer.buyerTotal, currency)) ||
-          totalPlaceholder
-        )
-    }
-  }
-
-  renderPriceEntry = () => {
-    const { order, offerOverride, offerContextPrice } = this.props
+export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProps> = ({
+  showOfferNote,
+  offerOverride,
+  order,
+  transactionStep,
+  isEigen,
+  showCongratulationMessage = false,
+  offerContextPrice = "LIST_PRICE",
+  useLastSubmittedOffer,
+  ...others
+}) => {
+  const renderPriceEntry = () => {
     const currency = order.currencyCode
 
     if (order.mode === "BUY") {
@@ -248,7 +52,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
         />
       )
     }
-    const offer = this.getOffer()
+    const offer = getOffer()
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
 
@@ -278,8 +82,106 @@ export class TransactionDetailsSummaryItem extends React.Component<
     )
   }
 
-  renderNoteEntry = () => {
-    const offer = this.getOffer()
+  const getOffer = ():
+    | TransactionDetailsSummaryItem_order["lastOffer"]
+    | null => {
+    return useLastSubmittedOffer ? order.lastOffer : order.myLastOffer
+  }
+
+  const shippingDisplayLabel = shippingNotCalculated => {
+    if (shippingNotCalculated()) {
+      return "Shipping**"
+    }
+
+    if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
+      const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
+        .selectedShippingQuote
+
+      if (selectedShippingQuote) {
+        return `${
+          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
+        } delivery`
+      }
+    }
+
+    return "Shipping"
+  }
+
+  const shippingNotCalculated = () => {
+    const shippingAddressAdded = !(
+      transactionStep === "shipping" || transactionStep === "offer"
+    )
+
+    switch (order.mode) {
+      case "BUY":
+        return shippingAddressAdded && !order.shippingTotal
+      case "OFFER":
+        const offer = getOffer()
+        return shippingAddressAdded && offer && !offer.shippingTotal
+    }
+  }
+
+  const shippingDisplayAmount = () => {
+    const currency = order.currencyCode
+
+    switch (order.mode) {
+      case "BUY":
+        return (
+          appendCurrencySymbol(order.shippingTotal, currency) ||
+          amountPlaceholder()
+        )
+      case "OFFER":
+        const offer = getOffer()
+        return (
+          (offer && appendCurrencySymbol(offer.shippingTotal, currency)) ||
+          amountPlaceholder()
+        )
+    }
+  }
+
+  const amountPlaceholder = () => {
+    return ["shipping", "offer"].includes(transactionStep!)
+      ? "Calculated in next steps"
+      : "Waiting for final costs"
+  }
+
+  const taxDisplayAmount = () => {
+    const currency = order.currencyCode
+
+    switch (order.mode) {
+      case "BUY":
+        return (
+          appendCurrencySymbol(order.taxTotal, currency) || amountPlaceholder()
+        )
+      case "OFFER":
+        const offer = getOffer()
+        return (
+          (offer && appendCurrencySymbol(offer.taxTotal, currency)) ||
+          amountPlaceholder()
+        )
+    }
+  }
+
+  const buyerTotalDisplayAmount = () => {
+    const currency = order.currencyCode
+    const totalPlaceholder = "Waiting for final costs"
+
+    switch (order.mode) {
+      case "BUY":
+        return (
+          appendCurrencySymbol(order.buyerTotal, currency) || totalPlaceholder
+        )
+      case "OFFER":
+        const offer = getOffer()
+        return (
+          (offer && appendCurrencySymbol(offer.buyerTotal, currency)) ||
+          totalPlaceholder
+        )
+    }
+  }
+
+  const renderNoteEntry = () => {
+    const offer = getOffer()
     if (offer?.note) {
       return (
         <>
@@ -294,6 +196,84 @@ export class TransactionDetailsSummaryItem extends React.Component<
       )
     }
   }
+
+  return (
+    <StepSummaryItem {...others}>
+      {renderPriceEntry()}
+      <Spacer mb={2} />
+      <Entry
+        label={shippingDisplayLabel(shippingNotCalculated)}
+        value={shippingDisplayAmount()}
+        data-test="shippingDisplayAmount"
+      />
+
+      <Entry
+        label="Tax*"
+        value={taxDisplayAmount()}
+        data-test="taxDisplayAmount"
+      />
+      <Spacer mb={2} />
+      <Entry
+        label="Total"
+        value={buyerTotalDisplayAmount()}
+        final
+        data-test="buyerTotalDisplayAmount"
+      />
+      <Spacer mb={2} />
+      <Text variant="xs" color="black60">
+        *Additional duties and taxes{" "}
+        <a
+          href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          may apply at import.
+        </a>
+      </Text>
+      {shippingNotCalculated() && (
+        <>
+          <Spacer mb={2} />
+          <Text variant="xs" color="black60">
+            **Shipping costs to be confirmed by gallery. You will be able to
+            review the total price before payment.
+          </Text>
+        </>
+      )}
+      {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
+      {showCongratulationMessage && (
+        <Column
+          span={4}
+          display="flex"
+          alignItems="center"
+          flexWrap="wrap"
+          backgroundColor="blue10"
+          justifyContent="center"
+          order={[2, 1]}
+          p={2}
+          mt={2}
+        >
+          <Flex flexDirection="column" mr="auto">
+            <Text variant="sm" color="blue100">
+              Congratulations! This artwork will be added to your Collection
+              once the gallery confirms the order.
+            </Text>
+            <Text variant="sm">
+              View and manage all artworks in your Collection{" "}
+              {!isEigen ? "on the Artsy app." : "through your "}
+              {isEigen && <RouterLink to={"/my-profile"}>profile.</RouterLink>}
+            </Text>
+          </Flex>
+          <Flex pt={1}>
+            {!isEigen && (
+              <DownloadAppBadges
+                contextModule={ContextModule.ordersSubmitted}
+              />
+            )}
+          </Flex>
+        </Column>
+      )}
+    </StepSummaryItem>
+  )
 }
 
 interface SecondaryEntryProps {
