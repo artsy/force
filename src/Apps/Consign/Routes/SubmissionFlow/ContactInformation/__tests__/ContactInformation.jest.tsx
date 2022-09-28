@@ -298,7 +298,7 @@ describe("Contact Information step", () => {
           state: "SUBMITTED",
           sessionID: "SessionID",
         })
-        expect(mockRouterReplace).toHaveBeenCalledWith("sell")
+        expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
         expect(mockRouterPush).toHaveBeenCalledWith(
           `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
