@@ -45,11 +45,6 @@ describe("InsightsHeader", () => {
       expect(
         screen.getByText("Gain deeper knowledge of your collection.")
       ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          "Get insights about the artists you collect from the Artsy Price Database, drawing on millions of results from leading auction houses across the globe."
-        )
-      ).toBeInTheDocument()
       expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
     })
   })

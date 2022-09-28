@@ -31,16 +31,10 @@ export const InsightsHeader: React.FC = () => {
                     justifyContent="space-between"
                     py={2}
                   >
-                    <Flex flex={1}>
+                    <Flex flex={1} alignItems="center">
                       <Media greaterThan="xs">
                         <Text variant="lg-display">
                           Gain deeper knowledge of your collection.
-                        </Text>
-
-                        <Text variant="xs" color="black60">
-                          Get insights about the artists you collect from the
-                          Artsy Price Database, drawing on millions of results
-                          from leading auction houses across the globe.
                         </Text>
                       </Media>
                     </Flex>
