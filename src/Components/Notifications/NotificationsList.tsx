@@ -35,6 +35,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   paginationType = "showMoreButton",
 }) => {
   const [loading, setLoading] = useState(false)
+  const [paginationMode, setPaginationMode] = useState(paginationType)
   const nodes = extractNodes(viewer.notifications)
 
   const handleLoadNext = () => {
@@ -46,7 +47,13 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
     relay.loadMore(10, err => {
       if (err) console.error(err)
+
       setLoading(false)
+
+      // Change pagination mode to "infinite" when "show more" button was pressed
+      if (paginationType === "showMoreButton") {
+        setPaginationMode("infinite")
+      }
     })
   }
 
@@ -55,7 +62,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
       return
     }
 
-    if (paginationType === "infinite") {
+    if (paginationMode === "infinite") {
       return <NotificationsListScrollSentinel onNext={handleLoadNext} />
     }
 
