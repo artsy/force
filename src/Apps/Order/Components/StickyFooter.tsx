@@ -1,71 +1,74 @@
 import { Flex, Spacer, Text, Clickable } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Component } from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { withInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
-import track from "react-tracking"
+import { useTracking } from "react-tracking"
 
 interface StickyFooterProps extends WithInquiryProps {
   artworkID: string
   orderType: string | null
 }
 
-@track()
-export class StickyFooter extends Component<StickyFooterProps> {
-  @track(props => ({
-    action_type: DeprecatedSchema.ActionType.Click,
-    subject: DeprecatedSchema.Subject.BNMOReadFAQ,
-    type: "button",
-    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
-  }))
-  onClickReadFAQ() {
+export const StickyFooter: FC<StickyFooterProps> = ({
+  showInquiry,
+  inquiryComponent,
+  orderType,
+}) => {
+  const { trackEvent } = useTracking()
+
+  const onClickReadFAQ = () => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.Click,
+      subject: DeprecatedSchema.Subject.BNMOReadFAQ,
+      type: "button",
+      flow: orderType === "OFFER" ? "make offer" : "buy now",
+    })
+
     window.open(
       "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
       "_blank"
     )
   }
 
-  @track(props => ({
-    action_type: DeprecatedSchema.ActionType.Click,
-    subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
-    type: "button",
-    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
-  }))
-  onClickAskSpecialist() {
-    this.props.showInquiry({ askSpecialist: true })
+  const onClickAskSpecialist = () => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.Click,
+      subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
+      type: "button",
+      flow: orderType === "OFFER" ? "make offer" : "buy now",
+    })
+    showInquiry({ askSpecialist: true })
   }
 
-  render() {
-    return (
-      <>
-        {this.props.inquiryComponent}
-
-        <FooterContainer>
-          <Text variant="xs" color="black60">
-            Need help?{" "}
-            <Clickable
-              data-test="help-center-link"
-              textDecoration="underline"
-              onClick={this.onClickReadFAQ.bind(this)}
-            >
-              <Text variant="xs">Visit our help center</Text>
-            </Clickable>{" "}
-            or{" "}
-            <Clickable
-              data-test="ask-question-link"
-              textDecoration="underline"
-              onClick={this.onClickAskSpecialist.bind(this)}
-            >
-              <Text variant="xs">ask a question</Text>
-            </Clickable>
-            .
-          </Text>
-          <Spacer mb={2} />
-        </FooterContainer>
-      </>
-    )
-  }
+  return (
+    <>
+      {inquiryComponent}
+      <FooterContainer>
+        <Text variant="xs" color="black60">
+          Need help?{" "}
+          <Clickable
+            data-test="help-center-link"
+            textDecoration="underline"
+            onClick={onClickReadFAQ}
+          >
+            <Text variant="xs">Visit our help center</Text>
+          </Clickable>{" "}
+          or{" "}
+          <Clickable
+            data-test="ask-question-link"
+            textDecoration="underline"
+            onClick={onClickAskSpecialist}
+          >
+            <Text variant="xs">ask a question</Text>
+          </Clickable>
+          .
+        </Text>
+        <Spacer mb={2} />
+      </FooterContainer>
+    </>
+  )
 }
 
 export const StickyFooterWithInquiry = withInquiry(StickyFooter)
