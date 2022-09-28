@@ -3,7 +3,7 @@ import { FAQ } from "./Components"
 
 export const FAQApp = () => {
   return (
-    <Box mt={2} mb={4}>
+    <Box mb={4}>
       <FAQ />
     </Box>
   )
