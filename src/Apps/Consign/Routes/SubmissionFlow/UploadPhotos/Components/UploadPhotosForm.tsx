@@ -21,12 +21,14 @@ export interface UploadPhotosFormProps extends BoxProps {
   maxTotalSize: number
   onPhotoUploaded: (photo: Photo) => void
   submissionId: string
+  // artworkPhotos: Photo[]
 }
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   maxTotalSize,
   onPhotoUploaded,
   submissionId,
+  // artworkPhotos,
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -38,6 +40,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     setFieldValue("photos", values.photos)
   }
 
+  // console.log("[LOGD] artworkPhotos = ", artworkPhotos)
   const uploadImage = async photo => {
     photo.loading = true
 
@@ -74,6 +77,15 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     }
   }, [values.photos])
 
+  /*   useEffect(() => {
+    console.log("---------- [LOGD] in useEffect = ", artworkPhotos)
+
+    if (artworkPhotos.length) {
+      artworkPhotos.forEach(onPhotoUploaded)
+      setFieldValue("photos", [...values.photos])
+    }
+  }, [artworkPhotos])
+ */
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const photos = acceptedFiles.map(file => normalizePhoto(file))
 

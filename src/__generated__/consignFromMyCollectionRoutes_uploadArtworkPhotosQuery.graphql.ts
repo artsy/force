@@ -102,6 +102,23 @@ query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(
 
 fragment UploadPhotos_myCollectionArtwork on Artwork {
   internalID
+  title
+  slug
+  artist {
+    internalID
+    name
+    id
+  }
+  images {
+    imageURL
+    internalID
+    href
+    tileBaseURL
+    imageVersions
+    versions
+    isDefault
+    url(version: "square")
+  }
 }
 
 fragment UploadPhotos_submission on ConsignmentSubmission {
@@ -340,7 +357,21 @@ v26 = [
     "name": "id",
     "variableName": "artworkId"
   }
-];
+],
+v27 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Artist",
+  "kind": "LinkedField",
+  "name": "artist",
+  "plural": false,
+  "selections": [
+    (v6/*: any*/),
+    (v7/*: any*/),
+    (v24/*: any*/)
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -441,20 +472,7 @@ return {
         "selections": [
           (v5/*: any*/),
           (v25/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v24/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v27/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
           (v10/*: any*/),
@@ -484,6 +502,82 @@ return {
         "plural": false,
         "selections": [
           (v6/*: any*/),
+          (v14/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          (v27/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "images",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "imageURL",
+                "storageKey": null
+              },
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "tileBaseURL",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "imageVersions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isDefault",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "square"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"square\")"
+              }
+            ],
+            "storageKey": null
+          },
           (v24/*: any*/)
         ],
         "storageKey": null
@@ -491,12 +585,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1e3eb0b41c2236ab4f30742d2d6ba42",
+    "cacheID": "69585bace0b4507be398841a7b92cfc4",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_uploadArtworkPhotosQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  title\n  slug\n  artist {\n    internalID\n    name\n    id\n  }\n  images {\n    imageURL\n    internalID\n    href\n    tileBaseURL\n    imageVersions\n    versions\n    isDefault\n    url(version: \"square\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

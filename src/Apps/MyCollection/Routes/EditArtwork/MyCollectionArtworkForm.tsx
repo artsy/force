@@ -444,7 +444,6 @@ export const MyCollectionArtworkFormFragmentContainer = createFragmentContainer(
           imageURL
           width
           height
-          internalID
         }
         internalID
         isEdition

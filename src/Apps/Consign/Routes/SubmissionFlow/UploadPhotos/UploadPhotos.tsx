@@ -4,7 +4,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   createFragmentContainer,
   Environment,
@@ -28,7 +28,7 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { redirects_submission } from "__generated__/redirects_submission.graphql"
+import { concat } from "lodash"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -48,12 +48,28 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
     (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
   )
 }
-
+let artworkPhotos = []
 export const getUploadPhotosFormInitialValues = (
-  submission?: UploadPhotos_submission | redirects_submission
+  submission?: UploadPhotos_submission,
+  myCollectionArtwork?: UploadPhotos_myCollectionArtwork
 ): UploadPhotosFormModel => {
-  return {
-    photos:
+  console.log("================= [LOGD] in getUploadPhotosFormInitialValues")
+  let submissionPhotos = []
+  let artworkPhotos = []
+
+  if (myCollectionArtwork) {
+    artworkPhotos =
+      myCollectionArtwork?.images?.map(image => ({
+        id: image!.internalID!,
+        name: "Automatically added",
+        geminiToken: image!.internalID!,
+        url: image!.url!,
+        removed: false,
+        loading: false,
+      })) || []
+  }
+  if (submission) {
+    submissionPhotos =
       submission?.assets
         ?.filter(asset => !!asset)
         .map(asset => ({
@@ -65,8 +81,10 @@ export const getUploadPhotosFormInitialValues = (
           url: getPhotoUrlFromAsset(asset),
           removed: false,
           loading: false,
-        })) || [],
+        })) || []
   }
+
+  return { photos: concat(submissionPhotos, artworkPhotos) }
 }
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({
@@ -76,14 +94,35 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
+  const [initialValues1, setInitialValues1] = useState({ photos: [] })
   const photosRefetchingCount = useRef(0)
   const {
     submitMutation: removeAsset,
   } = useRemoveAssetFromConsignmentSubmission()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
 
-  const initialValue = getUploadPhotosFormInitialValues(submission)
-  const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
+  useEffect(() => {
+    const initialValue: any = getUploadPhotosFormInitialValues(
+      submission,
+      myCollectionArtwork
+    )
+    setInitialValues1(initialValue)
+  }, [])
+
+  console.log("initialValues1 = ", initialValues1)
+  /*   if (myCollectionArtwork) {
+    artworkPhotos =
+      myCollectionArtwork?.images?.map(image => ({
+        id: image!.internalID!,
+        name: "Automatically added",
+        geminiToken: image!.internalID!,
+        url: image!.url!,
+        removed: false,
+        loading: false,
+      })) || []
+  } */
+
+  const initialErrors = validate(initialValues1, uploadPhotosValidationSchema)
   const artworkId = myCollectionArtwork?.internalID
 
   const handleSubmit = async () => {
@@ -129,7 +168,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={uploadPhotosValidationSchema}
-        initialValues={initialValue}
+        initialValues={initialValues1}
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
@@ -155,6 +194,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
+            console.log("[LOGD] photo in handlePhotoUploaded = ", photo)
             if (photo.geminiToken && submission?.externalId) {
               photo.loading = true
 
@@ -171,6 +211,10 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                     },
                   },
                 })
+                console.log(
+                  "[LOGD] response in handlePhotoUploaded = ",
+                  response
+                )
 
                 photo.assetId =
                   response.addAssetToConsignmentSubmission?.asset?.id
@@ -241,6 +285,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                 maxTotalSize={30}
                 onPhotoUploaded={handlePhotoUploaded}
                 submissionId={submission?.externalId || ""}
+                // artworkPhotos={artworkPhotos}
               />
 
               <Box mb={6}>
@@ -311,6 +356,22 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
     myCollectionArtwork: graphql`
       fragment UploadPhotos_myCollectionArtwork on Artwork {
         internalID
+        title
+        slug
+        artist {
+          internalID
+          name
+        }
+        images {
+          imageURL
+          internalID
+          href
+          tileBaseURL
+          imageVersions
+          versions
+          isDefault
+          url(version: "square")
+        }
       }
     `,
   }
