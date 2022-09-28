@@ -1,26 +1,26 @@
-import { Text, Button, useToasts } from "@artsy/palette"
+import { ActionType } from "@artsy/cohesion"
+import { Button, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
-import { useSystemContext } from "System"
-import { useTracking } from "react-tracking"
-import { useRouter } from "System/Router/useRouter"
-import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
+import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
-import {
-  ContactInformationForm,
-  ContactInformationFormModel,
-} from "./Components/ContactInformationForm"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { useSystemContext } from "System"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
+import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ContactInformation_me } from "__generated__/ContactInformation_me.graphql"
 import { ContactInformation_submission } from "__generated__/ContactInformation_submission.graphql"
+import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,
   validate,
 } from "../Utils/validation"
-import { BackLink } from "Components/Links/BackLink"
-import { getENV } from "Utils/getENV"
-import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
-import { ActionType } from "@artsy/cohesion"
-import createLogger from "Utils/logger"
+import {
+  ContactInformationForm,
+  ContactInformationFormModel,
+} from "./Components/ContactInformationForm"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -87,6 +87,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
+        router.replace(artworkId ? "/settings/my-collection" : "/sell")
         router.push(
           artworkId
             ? `/my-collection/submission/${submission?.externalId}/thank-you/${artworkId}`

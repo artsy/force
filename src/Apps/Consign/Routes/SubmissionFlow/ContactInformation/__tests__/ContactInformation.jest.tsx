@@ -1,12 +1,12 @@
-import { graphql } from "relay-runtime"
+import { ActionType } from "@artsy/cohesion"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { useTracking } from "react-tracking"
+import { graphql } from "relay-runtime"
 import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { ContactInformationFragmentContainer } from "../ContactInformation"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { ActionType } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -37,10 +37,11 @@ const mockSubmission = {
 }
 
 const mockRouterPush = jest.fn()
+const mockRouterReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush },
+    router: { push: mockRouterPush, replace: mockRouterReplace },
     match: { params: { artworkId: undefined } },
   })),
 }))
@@ -256,6 +257,7 @@ describe("Contact Information step", () => {
           state: "SUBMITTED",
           sessionID: "SessionID",
         })
+        expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
         expect(mockRouterPush).toHaveBeenCalledWith(
           `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
@@ -296,6 +298,7 @@ describe("Contact Information step", () => {
           state: "SUBMITTED",
           sessionID: "SessionID",
         })
+        expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
         expect(mockRouterPush).toHaveBeenCalledWith(
           `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
