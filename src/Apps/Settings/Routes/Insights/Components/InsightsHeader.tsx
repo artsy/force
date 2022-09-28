@@ -29,7 +29,7 @@ export const InsightsHeader: React.FC = () => {
                   <Flex
                     backgroundColor="white100"
                     justifyContent="space-between"
-                    py={2}
+                    py={[1, 2]}
                   >
                     <Flex flex={1} alignItems="center">
                       <Media greaterThan="xs">
