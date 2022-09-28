@@ -8,21 +8,42 @@ import {
   Flex,
 } from "@artsy/palette"
 import { uniq } from "lodash"
-import { FC, Fragment, useState } from "react"
+import { FC, Fragment, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { JobsFilter_viewer } from "__generated__/JobsFilter_viewer.graphql"
 import { JobLinkFragmentContainer } from "./JobLink"
+
+const LEADGEN_LOCATION = "Don't See Your Dream Job?"
+const LEADGEN_DEPARTMENT_ID = "84312"
 
 interface JobsFilterProps {
   viewer: JobsFilter_viewer
 }
 
 const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
-  const locations = uniq(
-    viewer.jobs
-      .flatMap(job => job.location.split(","))
-      .map(location => location.trim())
-  ).sort()
+  const locations = useMemo(
+    () =>
+      uniq(
+        viewer.jobs
+          .flatMap(job => job.location.split(","))
+          .map(location => location.trim())
+          .filter(location => location !== LEADGEN_LOCATION)
+      ).sort(),
+    [viewer.jobs]
+  )
+
+  const departments = useMemo(() => {
+    const department = viewer.departments.find(department => {
+      return department.id === LEADGEN_DEPARTMENT_ID
+    })
+
+    return [
+      ...viewer.departments.filter(department => {
+        return department.id !== LEADGEN_DEPARTMENT_ID
+      }),
+      ...(department ? [department] : []),
+    ]
+  }, [viewer.departments])
 
   const [selection, setSelection] = useState<string[]>([])
 
@@ -89,7 +110,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
 
       {/* Unfiltered results, grouped by department */}
       {selection.length === 0 &&
-        viewer.departments.map(department => {
+        departments.map(department => {
           if (department.jobs.length === 0) {
             return null
           }
