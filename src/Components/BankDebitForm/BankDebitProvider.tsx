@@ -6,16 +6,13 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
-import {
-  CommercePaymentMethodEnum,
-  Payment_order,
-} from "__generated__/Payment_order.graphql"
+import { Payment_order } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
-
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 const BankSetupErrorMessage = () => {
@@ -36,25 +33,17 @@ const BankSetupErrorMessage = () => {
 
 interface Props {
   order: BankAccountPicker_order | Payment_order
-  paymentMethod: CommercePaymentMethodEnum
-  bankAccountHasInsufficientFunds: boolean
-  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
-  onSetIsSavingPayment: (arg: boolean) => void
-  onSetClientSecret: (arg: string) => void
-  clientSecret: string | null
 }
 
-export const BankDebitProvider: FC<Props> = ({
-  order,
-  paymentMethod,
-  bankAccountHasInsufficientFunds,
-  onSetBankAccountHasInsufficientFunds,
-  onSetIsSavingPayment,
-  onSetClientSecret,
-  clientSecret,
-}) => {
+export const BankDebitProvider: FC<Props> = ({ order }) => {
+  const {
+    selectedPaymentMethod,
+    stripeClient,
+    isStripePaymentElementLoading,
+    setStripeClient,
+  } = useOrderPaymentContext()
+
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -68,7 +57,7 @@ export const BankDebitProvider: FC<Props> = ({
           orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
             .__typename === "CommerceOrderRequiresAction"
         ) {
-          onSetClientSecret(
+          setStripeClient(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
               .actionData.clientSecret
           )
@@ -87,7 +76,7 @@ export const BankDebitProvider: FC<Props> = ({
       }
     }
 
-    if (!clientSecret) {
+    if (!stripeClient) {
       fetchData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -141,27 +130,22 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   const options = {
-    clientSecret: clientSecret || "",
+    clientSecret: stripeClient || "",
     appearance: appearance,
   }
 
   return (
-    <div data-test={`paymentSection${upperFirst(camelCase(paymentMethod))}`}>
-      <LoadingArea isLoading={isPaymentElementLoading}>
-        {isPaymentElementLoading && <Box height={300}></Box>}
+    <div
+      data-test={`paymentSection${upperFirst(
+        camelCase(selectedPaymentMethod)
+      )}`}
+    >
+      <LoadingArea isLoading={isStripePaymentElementLoading}>
+        {isStripePaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
-        {clientSecret && (
+        {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
-            <BankDebitForm
-              order={order}
-              paymentMethod={paymentMethod}
-              bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-              onSetBankAccountHasInsufficientFunds={
-                onSetBankAccountHasInsufficientFunds
-              }
-              onSetIsSavingPayment={onSetIsSavingPayment}
-              onSetIsPaymentElementLoading={setIsPaymentElementLoading}
-            />
+            <BankDebitForm order={order} />
           </Elements>
         )}
         {bankDebitSetupError && <BankSetupErrorMessage />}

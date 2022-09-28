@@ -19,6 +19,7 @@ import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
 import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
 import { useSystemContext } from "System"
+import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -112,11 +113,13 @@ const OrderApp: FC<OrderAppProps> = props => {
         />
         {!isEigen && !isModal && renderZendeskScript()}
         <SafeAreaContainer>
-          <Elements stripe={stripePromise}>
-            <AppContainer>
-              <HorizontalPadding>{children}</HorizontalPadding>
-            </AppContainer>
-          </Elements>
+          <OrderPaymentContextProvider>
+            <Elements stripe={stripePromise}>
+              <AppContainer>
+                <HorizontalPadding>{children}</HorizontalPadding>
+              </AppContainer>
+            </Elements>
+          </OrderPaymentContextProvider>
         </SafeAreaContainer>
         {!isModal && (
           <StickyFooterWithInquiry

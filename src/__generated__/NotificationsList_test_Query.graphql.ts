@@ -371,9 +371,7 @@ return {
           {
             "alias": "notifications",
             "args": (v0/*: any*/),
-            "filters": [
-              "notificationTypes"
-            ],
+            "filters": [],
             "handle": "connection",
             "key": "NotificationsList_notifications",
             "kind": "LinkedHandle",
@@ -464,7 +462,8 @@ return {
         "viewer.notifications.edges.node.notificationType": {
           "enumValues": [
             "ARTWORK_ALERT",
-            "ARTWORK_PUBLISHED"
+            "ARTWORK_PUBLISHED",
+            "VIEWING_ROOM_PUBLISHED"
           ],
           "nullable": false,
           "plural": false,

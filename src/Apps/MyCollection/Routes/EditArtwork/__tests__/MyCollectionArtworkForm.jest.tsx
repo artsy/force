@@ -4,6 +4,7 @@ import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { Breakpoint } from "Utils/Responsive"
+import { useTracking } from "react-tracking"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import {
   MyCollectionArtworkForm,
@@ -55,9 +56,19 @@ jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   uploadMyCollectionPhoto: jest.fn(),
 }))
 const mockUploadPhoto = uploadMyCollectionPhoto as jest.Mock
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 describe("Edit artwork", () => {
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeAll(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+  })
+
   const getWrapper = (breakpoint: Breakpoint = "lg") =>
     setupTestWrapperTL({
       Component: (props: any) => {
@@ -399,6 +410,20 @@ describe("Edit artwork", () => {
           },
         })
       )
+
+      expect(trackingSpy).toBeCalledTimes(1)
+      expect(trackingSpy.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "deleteCollectedArtwork",
+            "context_module": "myCollectionArtwork",
+            "context_owner_id": "62fc96c48d3ff8000b556c3a",
+            "context_owner_slug": "62fc96c48d3ff8000b556c3a",
+            "context_owner_type": "myCollectionArtwork",
+            "platform": "web",
+          },
+        ]
+      `)
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/settings/my-collection",

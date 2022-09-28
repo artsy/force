@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "%future added value";
+export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 export type NotificationsListQueryVariables = {
     types?: Array<NotificationTypesEnum | null> | null | undefined;
 };
@@ -370,9 +370,7 @@ return {
           {
             "alias": "notifications",
             "args": (v1/*: any*/),
-            "filters": [
-              "notificationTypes"
-            ],
+            "filters": [],
             "handle": "connection",
             "key": "NotificationsList_notifications",
             "kind": "LinkedHandle",

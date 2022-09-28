@@ -2,7 +2,6 @@ import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
   OPTION_DEVELOPING_MY_ART_TASTES,
@@ -12,6 +11,7 @@ import {
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { SplitLayout } from "Components/SplitLayout"
 
 export const OnboardingQuestionTwo: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()
@@ -22,7 +22,7 @@ export const OnboardingQuestionTwo: FC = () => {
   const tracking = useOnboardingTracking()
 
   return (
-    <OnboardingSplitLayout
+    <SplitLayout
       left={
         <OnboardingFigure
           ref={register(0)}

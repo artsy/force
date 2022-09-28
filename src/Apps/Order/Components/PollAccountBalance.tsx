@@ -38,7 +38,7 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     callback: () => {
       relay.refetch({ setupIntentId, bankAccountId }, null, {}, { force: true })
     },
-    intervalTime: 1300,
+    intervalTime: 1600,
     key: setupIntentId || bankAccountId,
     clearWhen: shouldStopPolling,
   })

@@ -230,6 +230,7 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
+        cacheConfig: { force: true },
       },
       {
         path: "insights",

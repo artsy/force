@@ -28,7 +28,7 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { compact } from "lodash"
+import { redirects_submission } from "__generated__/redirects_submission.graphql"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -48,8 +48,9 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
     (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
   )
 }
+
 export const getUploadPhotosFormInitialValues = (
-  submission?: UploadPhotos_submission
+  submission?: UploadPhotos_submission | redirects_submission
 ): UploadPhotosFormModel => {
   return {
     photos:
@@ -88,10 +89,9 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   const handleSubmit = async () => {
     if (submission) {
       router.push({
-        pathname: compact([
-          `/sell/submission/${submission.externalId}/contact-information`,
-          artworkId,
-        ]).join("/"),
+        pathname: artworkId
+          ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
+          : `/sell/submission/${submission.externalId}/contact-information`,
       })
     }
   }
@@ -102,10 +102,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={compact([
-          `/sell/submission/${submission?.externalId}/artwork-details`,
-          artworkId,
-        ]).join("/")}
+        to={
+          artworkId
+            ? `/my-collection/submission/${submission?.externalId}/artwork-details/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/artwork-details`
+        }
       >
         Back
       </BackLink>

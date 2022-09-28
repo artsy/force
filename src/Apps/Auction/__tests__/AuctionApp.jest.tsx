@@ -134,7 +134,7 @@ describe("AuctionApp", () => {
       })
 
       expect(wrapper.text()).toContain(
-        "Closing times may be extended due to last minute competitive bidding"
+        "Closing times may be extended due to last-minute competitive bidding"
       )
     })
 
@@ -146,7 +146,7 @@ describe("AuctionApp", () => {
       })
 
       expect(wrapper.text()).not.toContain(
-        "Closing times may be extended due to last minute competitive bidding"
+        "Closing times may be extended due to last-minute competitive bidding"
       )
     })
   })

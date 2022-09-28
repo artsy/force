@@ -47,6 +47,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
           Submit for Sale
         </Button>
       </RouterLink>
+
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable

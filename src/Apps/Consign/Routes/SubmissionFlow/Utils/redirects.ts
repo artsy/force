@@ -2,7 +2,10 @@ import { Match, Router } from "found"
 import { isFunction } from "lodash"
 import { graphql } from "react-relay"
 import { redirects_submission } from "__generated__/redirects_submission.graphql"
-import { getArtworkDetailsFormInitialValues } from "../ArtworkDetails/Components/ArtworkDetailsForm"
+import {
+  getArtworkDetailsFormInitialValues,
+  SubmissionType,
+} from "../ArtworkDetails/Components/ArtworkDetailsForm"
 import { getUploadPhotosFormInitialValues } from "../UploadPhotos/UploadPhotos"
 import {
   artworkDetailsValidationSchema,
@@ -27,7 +30,10 @@ const checkArtworkDetailsFormValid = redirectToIf(
   id => `/sell/submission/${id}/artwork-details`,
   submission =>
     !artworkDetailsValidationSchema.isValidSync(
-      getArtworkDetailsFormInitialValues(submission as any)
+      getArtworkDetailsFormInitialValues({
+        values: submission,
+        type: SubmissionType.submission,
+      })
     )
 )
 
@@ -35,7 +41,7 @@ const checkUploadPhotosFormValid = redirectToIf(
   id => `/sell/submission/${id}/upload-photos`,
   submission =>
     !uploadPhotosValidationSchema.isValidSync(
-      getUploadPhotosFormInitialValues(submission as any)
+      getUploadPhotosFormInitialValues(submission)
     )
 )
 

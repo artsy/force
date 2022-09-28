@@ -1,12 +1,16 @@
 import { Box, Button, DROP_SHADOW, Flex, FullBleed, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 export const InsightsHeader: React.FC = () => {
+  const {
+    addCollectedArtwork: trackAddCollectedArtwork,
+  } = useMyCollectionTracking()
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -48,6 +52,7 @@ export const InsightsHeader: React.FC = () => {
                         size={["small", "large"]}
                         variant="primaryBlack"
                         to="/my-collection/artworks/new"
+                        onClick={() => trackAddCollectedArtwork()}
                       >
                         Upload Artwork
                       </Button>

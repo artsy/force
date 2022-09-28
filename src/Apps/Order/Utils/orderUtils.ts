@@ -2,6 +2,7 @@ import {
   CommercePaymentMethodEnum,
   Payment_order,
 } from "__generated__/Payment_order.graphql"
+import { BankAccountSelection } from "../Routes/Payment/index"
 
 const initialPaymentMethods: CommercePaymentMethodEnum[] = [
   "US_BANK_ACCOUNT",
@@ -34,3 +35,22 @@ export const getInitialPaymentMethodValue = ({
     : initialPaymentMethods.find(method =>
         availablePaymentMethods.includes(method)
       )!
+
+export const getInitialBankAccountSelection = (
+  { bankAccountId },
+  bankAccountsArray
+): BankAccountSelection => {
+  if (bankAccountId) {
+    return {
+      type: "existing",
+      id: bankAccountId,
+    }
+  } else {
+    return bankAccountsArray.length > 0
+      ? {
+          type: "existing",
+          id: bankAccountsArray[0]?.internalID!,
+        }
+      : { type: "new" }
+  }
+}

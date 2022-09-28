@@ -17,16 +17,15 @@ import {
   SubmissionInput,
 } from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
-import { compact } from "lodash"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -126,31 +125,35 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           `Submission not ${submission?.externalId ? "updated" : "created"}`,
           error
         )
-
         sendToast({
           variant: "error",
           message: "An error occurred",
           description: "Please contact sell@artsymail.com",
         })
-
         return
       }
 
       router.replace({
-        pathname: `/sell/submission/${submissionId}/artwork-details`,
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
+          : `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: compact([
-          `/sell/submission/${submissionId}/upload-photos`,
-          artworkId,
-        ]).join("/"),
+        pathname: artworkId
+          ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
+          : `/sell/submission/${submissionId}/upload-photos`,
       })
     }
   }
 
   return (
     <>
-      <BackLink py={2} mb={6} to="/sell" width="min-content">
+      <BackLink
+        py={2}
+        mb={6}
+        to={artworkId ? `/my-collection/artwork/${artworkId}` : "/sell"}
+        width="min-content"
+      >
         Back
       </BackLink>
 

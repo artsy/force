@@ -2,7 +2,6 @@ import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
 import { FC, useMemo } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_ARTISTS_ON_THE_RISE,
   OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
@@ -17,6 +16,7 @@ import {
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { SplitLayout } from "Components/SplitLayout"
 
 export const OnboardingQuestionThree: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()
@@ -63,7 +63,7 @@ export const OnboardingQuestionThree: FC = () => {
   }, [state.questionTwo])
 
   return (
-    <OnboardingSplitLayout
+    <SplitLayout
       left={
         <OnboardingFigure
           ref={register(0)}

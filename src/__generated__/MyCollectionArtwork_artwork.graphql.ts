@@ -11,6 +11,7 @@ export type MyCollectionArtwork_artwork = {
     readonly hasMarketPriceInsights: boolean | null;
     readonly submissionId: string | null;
     readonly internalID: string;
+    readonly slug: string;
     readonly artist: {
         readonly slug: string;
         readonly targetSupply: {
@@ -41,7 +42,14 @@ var v0 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -79,6 +87,7 @@ return {
       "name": "internalID",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -87,13 +96,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -165,5 +168,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a84a3fa447cc2f53deb2d7a279baea4d';
+(node as any).hash = 'a9c2824058171c07d83ec1a2656d14cf';
 export default node;

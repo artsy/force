@@ -1419,6 +1419,7 @@ return {
             "BIENNIAL",
             "COLLECTED",
             "GROUP_SHOW",
+            "HIGH_AUCTION_RECORD",
             "REVIEWED",
             "SOLO_SHOW"
           ],

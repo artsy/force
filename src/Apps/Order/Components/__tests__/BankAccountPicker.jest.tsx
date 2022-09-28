@@ -13,6 +13,9 @@ import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { BankAccountSelection } from "../../Routes/Payment/index"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+
+jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -89,6 +92,21 @@ let mockBankAccountSelection: BankAccountSelection = {
 }
 
 describe("BankAccountFragmentContainer", () => {
+  beforeAll(() => {
+    ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+      return {
+        selectedPaymentMethod: "US_BANK_ACCOUNT",
+        setBalanceCheckComplete: jest.fn(),
+        bankAccountHasInsufficientFunds: false,
+        bankAccountSelection: mockBankAccountSelection,
+        setBankAccountHasInsufficientFunds: jest.fn(),
+        setSelectedBankAccountId: jest.fn(),
+        setBankAccountSelection: jest.fn(),
+        setIsSavingPayment: jest.fn(),
+      }
+    })
+  })
+
   describe("user has no existing bank accounts", () => {
     const { getWrapper } = setupTestWrapper({
       Component: (props: any) => (
@@ -96,16 +114,6 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
-            paymentMethod="US_BANK_ACCOUNT"
-            bankAccountHasInsufficientFunds={false}
-            onSetBankAccountHasInsufficientFunds={jest.fn()}
-            onSetIsSavingPayment={jest.fn()}
-            onSetBalanceCheckComplete={jest.fn()}
-            onSetSelectedBankAccountId={jest.fn()}
-            bankAccountSelection={mockBankAccountSelection}
-            onSetBankAccountSelection={jest.fn()}
-            clientSecret="client-secret"
-            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),
@@ -141,16 +149,6 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
-            paymentMethod="US_BANK_ACCOUNT"
-            bankAccountHasInsufficientFunds={false}
-            onSetBankAccountHasInsufficientFunds={jest.fn()}
-            onSetIsSavingPayment={jest.fn()}
-            onSetBalanceCheckComplete={jest.fn()}
-            onSetSelectedBankAccountId={jest.fn()}
-            bankAccountSelection={mockBankAccountSelection}
-            onSetBankAccountSelection={jest.fn()}
-            clientSecret="client-secret"
-            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),
@@ -247,6 +245,16 @@ describe("BankAccountFragmentContainer", () => {
     })
 
     it("the bank account associated with the order is selected when user navigates back to payment page", async () => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          bankAccountSelection: {
+            type: "existing",
+            id: "gravity-bank-account-id",
+          },
+        }
+      })
+
       const wrapper = getWrapper({
         CommerceOrder: () => orderWithBankAccount,
         Me: () => ({
@@ -257,12 +265,23 @@ describe("BankAccountFragmentContainer", () => {
       })
 
       const page = new BankAccountPickerTestPage(wrapper)
-      expect(page.radios.at(1).props().selected).toBeTruthy()
+      expect(page.radios.at(0).props().selected).toBeTruthy()
+      expect(page.radios.at(1).props().selected).toBeFalsy()
       expect(page.radios.at(2).props().selected).toBeFalsy()
-      expect(page.radios.at(0).props().selected).toBeFalsy()
     })
 
     it("sets the bank account on the order when user clicks 'Save and Continue'", async () => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          setBalanceCheckComplete: jest.fn(),
+          bankAccountSelection: mockBankAccountSelection,
+          setSelectedBankAccountId: jest.fn(),
+          setBankAccountSelection: jest.fn(),
+          setIsSavingPayment: jest.fn(),
+        }
+      })
+
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {
           orderOrError: {

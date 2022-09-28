@@ -8,18 +8,48 @@ import {
   uploadMyCollectionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
-import { useEffect, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
+import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import { MyCollectionPhotoToPhoto } from "../Utils/artworkFormHelpers"
 import { ArtworkModel } from "../Utils/artworkModel"
 
-interface MyCollectionArtworkFormImagesProps {}
-
-export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImagesProps> = () => {
+export interface MyCollectionArtworkFormImagesProps {
+  saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
+}
+export const MyCollectionArtworkFormImages = forwardRef<
+  MyCollectionArtworkFormImagesProps
+>((_, formImagesRef) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
+  const [localImages, setlocalImages] = useState<
+    Array<LocalImage & { photoID: string }>
+  >([])
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
+
+  const saveImagesToLocalStorage = async (artworkId: string) => {
+    try {
+      // Store the artwork's local images in local storage
+      //and remove unnecessary fields
+      return await storeArtworkLocalImages(
+        artworkId,
+        localImages.map(({ photoID, ...rest }) => rest)
+      )
+    } catch (error) {
+      console.error("Error saving images to localforage storage", error)
+    }
+  }
+
+  useImperativeHandle(
+    formImagesRef,
+    () => {
+      return {
+        saveImagesToLocalStorage,
+      }
+    },
+    [localImages]
+  )
 
   const uploadPhoto = async (photo: Photo) => {
     photo.loading = true
@@ -50,10 +80,12 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
     }
   }
 
+  const getImagesToUpload = (photos: Photo[]) => {
+    return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
+  }
+
   useEffect(() => {
-    const imagesToUpload = values.newPhotos.filter(
-      c => !(c.geminiToken || c.url) && !c.loading
-    )
+    const imagesToUpload = getImagesToUpload(values.newPhotos)
 
     if (imagesToUpload.length) {
       imagesToUpload.forEach(uploadPhoto)
@@ -80,6 +112,32 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
     )
   }
 
+  const onImgLoad = (
+    image: React.SyntheticEvent<HTMLImageElement, Event>,
+    photoID: string
+  ) => {
+    const {
+      naturalHeight: height,
+      naturalWidth: width,
+      currentSrc,
+    } = image.target as any
+
+    const imageAlreadyAdded = localImages.find(
+      localImage => localImage.photoID === photoID
+    )
+    if (currentSrc.startsWith("data:image") && !imageAlreadyAdded) {
+      // Save the image dimensions as well as local path to the localImages array
+      setlocalImages(
+        localImages.concat({
+          data: currentSrc,
+          width,
+          height,
+          photoID,
+        })
+      )
+    }
+  }
+
   const handlePhotoDelete = (photo: {
     id: string
     size?: number
@@ -97,6 +155,8 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
         "newPhotos",
         values.newPhotos.filter(p => p.id !== photo.id)
       )
+      // Remove images that have been removed from state
+      setlocalImages(localImages.filter(p => p.photoID !== photo.id))
     } else {
       // Mark photo in photos as removed
       const photoToDelete = {
@@ -160,6 +220,7 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
         <PhotoThumbnail
           mt={2}
           key={photo?.id}
+          onLoad={image => void onImgLoad(image, photo.id)}
           photo={photo}
           data-testid="photo-thumbnail"
           onDelete={handlePhotoDelete}
@@ -167,4 +228,4 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
       ))}
     </>
   )
-}
+})

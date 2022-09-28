@@ -11,7 +11,7 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { useEffect, useState } from "react"
+import { ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import { formatFileSize, Photo } from "../Utils/fileUtils"
@@ -37,11 +37,12 @@ const ImageContainer = styled(Box).attrs({
   cursor: default;
 `
 
-export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
-  photo,
-  onDelete,
-  ...rest
-}) => {
+export const PhotoThumbnail: React.FC<
+  PhotoThumbnailProps &
+    BoxProps & {
+      onLoad?: ComponentProps<typeof Image>["onLoad"]
+    }
+> = ({ photo, onDelete, ...rest }) => {
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
@@ -77,7 +78,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
     } else if (photo.errorMessage) {
       return <PhotoThumbnailErrorState {...props} />
     } else if (photo.url || photo.file) {
-      return <PhotoThumbnailSuccessState {...props} />
+      return <PhotoThumbnailSuccessState onLoad={rest.onLoad} {...props} />
     } else if (photo.geminiToken) {
       return <PhotoThumbnailProcessingState {...props} />
     }
@@ -153,7 +154,7 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
     <ImageContainer>
       <Image
         src={photoSrc}
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "contain" }}
         height="100%"
         width="100%"
       />
@@ -182,19 +183,20 @@ const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
   </>
 )
 
-const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
-  onDelete,
-  photoSrc,
-  photo,
-}) => (
+const PhotoThumbnailSuccessState: React.FC<
+  PhotoThumbnailStateProps & {
+    onLoad: ComponentProps<typeof Image>["onLoad"]
+  }
+> = ({ onDelete, photoSrc, photo, onLoad = () => {} }) => (
   <>
     <Flex alignItems="center">
       <ImageContainer>
         <Image
           src={photoSrc}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "contain" }}
           height="100%"
           width="100%"
+          onLoad={onLoad}
         />
       </ImageContainer>
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>

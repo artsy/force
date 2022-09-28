@@ -15,6 +15,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -34,6 +35,9 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  const {
+    editCollectedArtwork: trackEditCollectedArtwork,
+  } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(
@@ -68,6 +72,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         variant="secondaryNeutral"
         size="small"
         to={`/my-collection/artworks/${artwork.internalID}/edit`}
+        onClick={() =>
+          trackEditCollectedArtwork(artwork.internalID, artwork.slug)
+        }
         alignSelf="flex-end"
       >
         Edit Artwork Details
@@ -130,7 +137,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   </>
                 ) : (
                   <MyCollectionArtworkSWASectionDesktopLayout
-                    route={`/sell/submission/artwork-details/${id}`}
+                    route={`/my-collection/submission/artwork-details/${id}`}
                     learnMore={() => setShowHowItWorksModal(true)}
                     slug={slug}
                     artworkId={artwork.internalID}
@@ -156,7 +163,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/sell/submission/artwork-details/${id}`}
+                          route={`/my-collection/submission/artwork-details/${id}`}
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}
@@ -240,6 +247,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         hasMarketPriceInsights
         submissionId
         internalID
+        slug
         artist {
           slug
           targetSupply {

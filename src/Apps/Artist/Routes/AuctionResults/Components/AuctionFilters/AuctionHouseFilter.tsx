@@ -11,6 +11,7 @@ export const auctionHouseMap = [
   { displayName: "Sotheby's", name: "Sotheby's" },
   { displayName: "Christie's", name: "Christie's" },
   { displayName: "Phillips", name: "Phillips" },
+  { displayName: "Bonhams", name: "Bonhams" },
 ]
 
 export const AuctionHouseFilter: React.FC = () => {

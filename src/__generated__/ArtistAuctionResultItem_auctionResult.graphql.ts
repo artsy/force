@@ -8,6 +8,9 @@ export type ArtistAuctionResultItem_auctionResult = {
     readonly title: string | null;
     readonly dimension_text: string | null;
     readonly organization: string | null;
+    readonly artist: {
+        readonly name: string | null;
+    } | null;
     readonly images: {
         readonly larger: {
             readonly cropped: {
@@ -78,6 +81,24 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "organization",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -255,5 +276,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'aa76b5ea027deae82c223d182589b741';
+(node as any).hash = 'ca855de874c5dbd389b7615f1e1f1265';
 export default node;

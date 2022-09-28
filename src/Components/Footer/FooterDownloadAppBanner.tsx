@@ -16,7 +16,12 @@ const MOBILE_COVER_IMAGE = resized(
 
 export const FooterDownloadAppBanner = () => {
   return (
-    <GridColumns borderBottom="1px solid" borderColor="black10">
+    <GridColumns
+      gridRowGap={1}
+      borderBottom="1px solid"
+      borderColor="black10"
+      pb={1}
+    >
       <Column
         span={4}
         display="flex"
@@ -60,6 +65,13 @@ export const FooterDownloadAppBanner = () => {
             style={{ objectFit: "cover", objectPosition: "center top" }}
           />
         </Media>
+      </Column>
+      <Column span={12} order={[1, 2]}>
+        <Text variant="xs" fontStyle="italic" textAlign="right">
+          Jenna Gribbon, Luncheon on the grass, a recurring dream, 2020. Jenna
+          Gribbon, April studio, parting glance, 2021. Jenna Gribbon, Silver
+          Tongue, 2019
+        </Text>
       </Column>
     </GridColumns>
   )

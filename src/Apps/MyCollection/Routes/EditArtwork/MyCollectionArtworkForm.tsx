@@ -13,21 +13,27 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
+import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
-import { MyCollectionArtworkFormImages } from "./Components/MyCollectionArtworkFormImages"
+import {
+  MyCollectionArtworkFormImages,
+  MyCollectionArtworkFormImagesProps,
+} from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
 import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
 import { useDeleteArtwork } from "./Mutations/useDeleteArtwork"
@@ -49,7 +55,14 @@ export interface MyCollectionArtworkFormProps {
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
 }) => {
+  const {
+    deleteCollectedArtwork: trackDeleteCollectedArtwork,
+    saveCollectedArtwork: trackSaveCollectedArtwork,
+  } = useMyCollectionTracking()
   const { router, match } = useRouter()
+  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
+    null
+  )
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
   const initialErrors = validateArtwork(
@@ -112,8 +125,26 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         artworkLocation: values.artworkLocation,
       })
 
-      // Remove photos marked for deletion
+      // Track saving only when the user adds a new artwork.
+      if (!isEditing) {
+        trackSaveCollectedArtwork()
+      }
 
+      // Store images locally
+      if (artworkId && artworkFormImagesRef.current) {
+        await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
+        await setLocalImagesStoreLastUpdatedAt(
+          IMAGES_LOCAL_STORE_LAST_UPDATED_AT
+        )
+      }
+
+      // If the user is editing, we need to wait a bit until gemini starts
+      // returning the new processing images array
+      if (isEditing && values.newPhotos.length) {
+        await wait(2000)
+      }
+
+      // Remove photos marked for deletion
       const removedPhotos = values.photos.filter(photo => photo.removed)
 
       await Promise.all(
@@ -138,12 +169,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           }
         })
       )
-
-      // Waiting for a few seconds to make sure the new images are processed
-      // and ready to be displayed
-      if (externalImageUrls.length) {
-        await wait(3000)
-      }
 
       if (isEditing) {
         router.replace({
@@ -173,6 +198,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   }
 
   const handleDelete = async () => {
+    trackDeleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
     try {
       await deleteArtwork({
         variables: {
@@ -316,7 +342,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               <Spacer mb={4} />
 
-              <MyCollectionArtworkFormImages />
+              <MyCollectionArtworkFormImages ref={artworkFormImagesRef} />
 
               <Spacer mt={6} />
 

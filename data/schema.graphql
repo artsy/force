@@ -1434,6 +1434,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
       REVIEWED
       BIENNIAL
       ACTIVE_SECONDARY_MARKET
+      HIGH_AUCTION_RECORD
     ]
   ): [ArtistInsight!]!
 
@@ -1641,6 +1642,7 @@ enum ArtistInsightKind {
   BIENNIAL
   COLLECTED
   GROUP_SHOW
+  HIGH_AUCTION_RECORD
   REVIEWED
   SOLO_SHOW
 }
@@ -2164,9 +2166,6 @@ type Artwork implements Node & Searchable & Sellable {
   slug: ID!
   submissionId: String
   title: String
-
-  # Whether this artwork is unlisted or not
-  unlisted: Boolean
 
   # Based on artwork location and status, verify that partner needs VAT exemption approval from Artsy.
   vatExemptApprovalRequired: Boolean
@@ -3043,6 +3042,9 @@ type BankAccount {
 
   # Last four characters of the account identifier
   last4: String!
+
+  # Bank account type
+  type: BankAccountTypes!
 }
 
 # A connection to a list of items.
@@ -3075,6 +3077,11 @@ type BankAccountMutationSuccess {
 union BankAccountMutationType =
     BankAccountMutationFailure
   | BankAccountMutationSuccess
+
+enum BankAccountTypes {
+  SEPA_DEBIT
+  US_BANK_ACCOUNT
+}
 
 type Bidder implements Node {
   createdAt(
@@ -8877,9 +8884,11 @@ type Gene implements Node & Searchable {
 type GeneConnection {
   # A list of edges.
   edges: [GeneEdge]
+  pageCursors: PageCursors!
 
   # Information to aid in pagination.
   pageInfo: PageInfo!
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -9850,6 +9859,27 @@ type LotStanding {
   saleArtwork: SaleArtwork
 }
 
+type MarkAllNotificationsAsReadFailure {
+  mutationError: GravityMutationError
+}
+
+input MarkAllNotificationsAsReadInput {
+  clientMutationId: String
+}
+
+type MarkAllNotificationsAsReadPayload {
+  clientMutationId: String
+  responseOrError: MarkAllNotificationsAsReadResponseOrError
+}
+
+union MarkAllNotificationsAsReadResponseOrError =
+    MarkAllNotificationsAsReadFailure
+  | MarkAllNotificationsAsReadSuccess
+
+type MarkAllNotificationsAsReadSuccess {
+  success: Boolean
+}
+
 type MarketingCollection {
   artworksConnection(
     acquireable: Boolean
@@ -10147,6 +10177,7 @@ type Me implements Node {
     before: String
     first: Int
     last: Int
+    type: BankAccountTypes
   ): BankAccountConnection
 
   # Returns a single bidder position
@@ -10942,6 +10973,11 @@ type Mutation {
     input: LinkAuthenticationMutationInput!
   ): LinkAuthenticationMutationPayload
 
+  # Mark all unread notifications as read
+  markAllNotificationsAsRead(
+    input: MarkAllNotificationsAsReadInput!
+  ): MarkAllNotificationsAsReadPayload
+
   # Merge multiple artist records in order to deduplicate artists
   mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
 
@@ -11387,6 +11423,7 @@ input NotificationPreferenceInput {
 enum NotificationTypesEnum {
   ARTWORK_ALERT
   ARTWORK_PUBLISHED
+  VIEWING_ROOM_PUBLISHED
 }
 
 # Consignment Offer Response
@@ -11572,6 +11609,9 @@ type Partner implements Node {
     displayOnPartnerProfile: Boolean
     hasNotRepresentedArtistWithPublishedArtworks: Boolean
     hasPublishedArtworks: Boolean
+
+    # Include additional fields on artists, requires authentication
+    includeAllFields: Boolean
     representedBy: Boolean
   ): ArtistPartnerConnection
   analytics: AnalyticsPartnerStats
@@ -11606,12 +11646,18 @@ type Partner implements Node {
   artworksConnection(
     after: String
 
+    # Return only artworks by this artist.
+    artistID: String
+
     # Return only artwork(s) included in this list of IDs.
     artworkIDs: [String]
     before: String
     exclude: [String]
     first: Int
     forSale: Boolean
+
+    # If true return both published and unpublished artworks, requires auth
+    includeUnpublished: Boolean
     last: Int
 
     # Return artworks that are missing priority metadata
@@ -11750,6 +11796,9 @@ type Partner implements Node {
   showsConnection(
     after: String
 
+    # If present only return shows including the artist
+    artistID: String
+
     # True for only shows that are part of a fair, false for only shows not part of a fair, blank for all shows
     atAFair: Boolean
     before: String
@@ -11851,6 +11900,11 @@ type PartnerArtistCounts {
     label: String
   ): FormattedNumber
   forSaleArtworks(
+    # Returns a `String` when format is specified. e.g.`'0,0.0000''`
+    format: String
+    label: String
+  ): FormattedNumber
+  managedArtworks(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
     label: String
@@ -12816,9 +12870,6 @@ type Query {
   artwork(
     # The slug or ID of the Artwork
     id: String!
-
-    # Include unlisted artwork or not
-    includeUnlisted: Boolean
   ): Artwork
 
   # List of all artwork attribution classes
@@ -14838,7 +14889,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   # Artists inside the show who do not have artworks present
   artistsWithoutArtworks: [Artist]
 
-  # The artworks featured in the show
+  # The artworks featured in the show.
   artworksConnection(
     after: String
     before: String
@@ -15988,6 +16039,7 @@ input UpdateUserSaleProfileMutationInput {
   clientMutationId: String
   country: String
   id: String!
+  requireBidderApproval: Boolean
   state: String
   zip: String
 }
@@ -16048,13 +16100,11 @@ type UpdateViewingRoomSubsectionsPayload {
 # The `Upload` scalar type represents a file upload.
 scalar Upload
 
-type User {
+type User implements Node {
   # The admin notes associated with the user
   adminNotes: [UserAdminNotes]!
   analytics: AnalyticsUserStats
   cached: Int
-
-  # A collector profile.
   collectorProfile: CollectorProfileType
   createdAt(
     format: String
@@ -16083,6 +16133,12 @@ type User {
 
   # A globally unique ID.
   id: ID!
+  inquiredArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserInquiredArtworksConnection
   interestsConnection(
     after: String
     before: String
@@ -16124,6 +16180,12 @@ type User {
 
   # The Parnter or Profile access granted to the user
   profileAccess: [String]!
+  purchasedArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): UserPurchasesConnection
 
   # This user should receive lot opening notifications
   receiveLotOpeningSoonNotification: Boolean
@@ -16349,6 +16411,47 @@ union UserIconDeletionMutationType =
     UserIconDeleteFailureType
   | UserIconDeleteSuccessType
 
+# A connection to a list of items.
+type UserInquiredArtworksConnection {
+  # A list of edges.
+  edges: [UserInquiredArtworksEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type UserInquiredArtworksEdge {
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # A cursor for use in pagination
+  cursor: String!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  isSentToGallery: Boolean
+
+  # The item at the end of the edge
+  node: Artwork
+  note: String
+  outcome: String
+
+  # This reflects the `title` attribute of the most recent embedded object in `statuses`
+  status: String
+}
+
 type UserInterest {
   body: String
   category: UserInterestCategory!
@@ -16370,9 +16473,11 @@ enum UserInterestCategory {
 type UserInterestConnection {
   # A list of edges.
   edges: [UserInterestEdge]
+  pageCursors: PageCursors!
 
   # Information to aid in pagination.
   pageInfo: PageInfo!
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -16399,6 +16504,35 @@ union UserInterestInterest = Artist | Gene
 enum UserInterestInterestType {
   ARTIST
   GENE
+}
+
+# A connection to a list of items.
+type UserPurchasesConnection {
+  # A list of edges.
+  edges: [UserPurchasesEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type UserPurchasesEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+
+  # The item at the end of the edge
+  node: Artwork
+  ownerType: String
+  salePrice: Float
+  source: String
 }
 
 type UserSaleProfile {
@@ -16607,9 +16741,6 @@ type Viewer {
   artwork(
     # The slug or ID of the Artwork
     id: String!
-
-    # Include unlisted artwork or not
-    includeUnlisted: Boolean
   ): Artwork
 
   # List of all artwork attribution classes
