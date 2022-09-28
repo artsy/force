@@ -492,10 +492,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       setSelectedAddressID(value)
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
-
-      if (checkIfArtsyShipping()) {
-        selectShipping()
-      }
     }
   }
 
