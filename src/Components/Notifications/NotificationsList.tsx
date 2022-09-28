@@ -61,7 +61,12 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
     return (
       <Box textAlign="center" mt={4}>
-        <Button onClick={handleLoadNext} loading={loading}>
+        <Button
+          onClick={handleLoadNext}
+          loading={loading}
+          size="small"
+          variant="secondaryBlack"
+        >
           Show More
         </Button>
       </Box>
