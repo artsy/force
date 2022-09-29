@@ -304,8 +304,10 @@ return {
         "artist.insights.kind": {
           "enumValues": [
             "ACTIVE_SECONDARY_MARKET",
+            "ARTSY_VANGUARD_YEAR",
             "BIENNIAL",
             "COLLECTED",
+            "CRITICALLY_ACCLAIMED",
             "GROUP_SHOW",
             "HIGH_AUCTION_RECORD",
             "REVIEWED",
