@@ -25,13 +25,14 @@ import { useTracking } from "react-tracking"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { openAuthModal } from "Utils/openAuthModal"
+import currency from "currency.js"
 
 interface SaleMessageProps {
   saleMessage: string | null
 }
 
 const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
-  if (!!saleMessage) {
+  if (!saleMessage) {
     return null
   }
 
@@ -87,6 +88,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
   }
 
   const handleCreateOrder = () => {
+    // console.log("I am here!")
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
       flow: DeprecatedSchema.Flow.BuyNow,
@@ -296,7 +298,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       {inquiryComponent}
 
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        artwork.saleMessage && <SaleMessage saleMessage={artwork.saleMessage} />
+        <SaleMessage saleMessage={artwork.saleMessage} />
       ) : (
         <>
           <ArtworkSidebar2EditionSetFragmentContainer
@@ -321,9 +323,8 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         </>
       )}
 
-      {artwork.isSold && renderCreateAlertButton()}
-
       <Flex>
+        {artwork.isSold && renderCreateAlertButton()}
         {artwork.isAcquireable && (
           <Button
             width="100%"
