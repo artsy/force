@@ -35,6 +35,8 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   const [errors, setErrors] = useState<Array<FileRejection>>([])
   const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
 
+  console.log("UploadPhotos", { values })
+
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress
     setFieldValue("photos", values.photos)
@@ -87,7 +89,17 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   }, [artworkPhotos])
  */
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    console.log(
+      "Upload Flow:",
+      "onDrop",
+      "1",
+      "acceptedFiles",
+      acceptedFiles[0]
+    )
+
     const photos = acceptedFiles.map(file => normalizePhoto(file))
+
+    console.log("Upload Flow:", "onDrop", "2", "normalizePhoto", photos[0])
 
     setErrors([])
     setFieldValue("photos", [

@@ -2,9 +2,9 @@ import { Box, Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import {
   createFragmentContainer,
   Environment,
@@ -17,8 +17,8 @@ import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
-import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
 import { UploadPhotos_myCollectionArtwork } from "__generated__/UploadPhotos_myCollectionArtwork.graphql"
+import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
@@ -28,7 +28,6 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { concat } from "lodash"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -48,25 +47,23 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
     (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
   )
 }
-let artworkPhotos = []
+
 export const getUploadPhotosFormInitialValues = (
   submission?: UploadPhotos_submission,
   myCollectionArtwork?: UploadPhotos_myCollectionArtwork
 ): UploadPhotosFormModel => {
-  console.log("================= [LOGD] in getUploadPhotosFormInitialValues")
-  let submissionPhotos = []
-  let artworkPhotos = []
+  let submissionPhotos: Photo[] = []
+  let artworkPhotos: any[] = []
 
   if (myCollectionArtwork) {
     artworkPhotos =
       myCollectionArtwork?.images?.map(image => ({
-        id: image!.internalID!,
         name: "Automatically added",
-        geminiToken: image!.internalID!,
-        url: image!.url!,
-        removed: false,
-        loading: false,
+        path: image?.url!,
       })) || []
+
+    // Needs to be adjusted
+    artworkPhotos = artworkPhotos.map(file => normalizePhoto(file))
   }
   if (submission) {
     submissionPhotos =
@@ -84,7 +81,9 @@ export const getUploadPhotosFormInitialValues = (
         })) || []
   }
 
-  return { photos: concat(submissionPhotos, artworkPhotos) }
+  console.log("UploadPhotos", { artworkPhotos })
+
+  return { photos: [...artworkPhotos] }
 }
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({
@@ -94,22 +93,18 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
-  const [initialValues1, setInitialValues1] = useState({ photos: [] })
   const photosRefetchingCount = useRef(0)
   const {
     submitMutation: removeAsset,
   } = useRemoveAssetFromConsignmentSubmission()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
 
-  useEffect(() => {
-    const initialValue: any = getUploadPhotosFormInitialValues(
-      submission,
-      myCollectionArtwork
-    )
-    setInitialValues1(initialValue)
-  }, [])
+  const initialValue: any = getUploadPhotosFormInitialValues(
+    submission,
+    myCollectionArtwork
+  )
 
-  console.log("initialValues1 = ", initialValues1)
+  console.log("initialValues = ", initialValue)
   /*   if (myCollectionArtwork) {
     artworkPhotos =
       myCollectionArtwork?.images?.map(image => ({
@@ -122,7 +117,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
       })) || []
   } */
 
-  const initialErrors = validate(initialValues1, uploadPhotosValidationSchema)
+  const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
   const artworkId = myCollectionArtwork?.internalID
 
   const handleSubmit = async () => {
@@ -168,7 +163,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={uploadPhotosValidationSchema}
-        initialValues={initialValues1}
+        initialValues={initialValue}
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
