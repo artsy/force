@@ -7,13 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CategoryRail_category = {
     readonly name: string | null;
     readonly href: string | null;
-    readonly avatar: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly filterArtworksConnection: {
+    readonly filterArtworks: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -21,7 +15,7 @@ export type CategoryRail_category = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
     readonly " $refType": "CategoryRail_category";
 };
 export type CategoryRail_category$data = CategoryRail_category;
@@ -53,54 +47,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "avatar",
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 45
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 45
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:45,width:45)"
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
+      "alias": "filterArtworks",
       "args": [
         {
           "kind": "Literal",
@@ -153,11 +100,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
+      "name": "EntityHeaderGene_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '19ffdb49e1438c0acc42b49ded3ad035';
+(node as any).hash = 'db825c6989cbbbd43370acf8c760f4c7';
 export default node;

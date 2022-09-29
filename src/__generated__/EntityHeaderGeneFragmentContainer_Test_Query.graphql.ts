@@ -26,7 +26,6 @@ query EntityHeaderGeneFragmentContainer_Test_Query {
 }
 
 fragment EntityHeaderGene_gene on Gene {
-  ...FollowGeneButton_gene
   internalID
   href
   name
@@ -42,14 +41,6 @@ fragment EntityHeaderGene_gene on Gene {
     }
     id
   }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
 }
 */
 
@@ -127,21 +118,6 @@ return {
         "name": "gene",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -153,14 +129,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isFollowed",
+            "name": "href",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -253,14 +229,15 @@ return {
               (v1/*: any*/)
             ],
             "storageKey": "filterArtworksConnection(first:1)"
-          }
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "gene(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "63747b4d25fec733d070020f937072b4",
+    "cacheID": "01a8ed58b091be0bfc514aaf0039d3c0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -306,19 +283,12 @@ return {
         "gene.href": (v4/*: any*/),
         "gene.id": (v3/*: any*/),
         "gene.internalID": (v3/*: any*/),
-        "gene.isFollowed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "gene.name": (v4/*: any*/),
-        "gene.slug": (v3/*: any*/)
+        "gene.name": (v4/*: any*/)
       }
     },
     "name": "EntityHeaderGeneFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderGeneFragmentContainer_Test_Query {\n  gene(id: \"example\") {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query EntityHeaderGeneFragmentContainer_Test_Query {\n  gene(id: \"example\") {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

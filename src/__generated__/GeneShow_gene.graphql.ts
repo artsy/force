@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_gene = {
+    readonly internalID: string;
     readonly name: string | null;
     readonly displayName: string | null;
     readonly formattedDescription: string | null;
@@ -26,7 +27,7 @@ export type GeneShow_gene = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene">;
     readonly " $refType": "GeneShow_gene";
 };
 export type GeneShow_gene$data = GeneShow_gene;
@@ -42,25 +43,26 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   }
 ],
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  },
+v3 = [
   (v0/*: any*/),
+  (v1/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -92,6 +94,7 @@ return {
   "name": "GeneShow_gene",
   "selections": [
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -114,7 +117,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "GeneConnection",
       "kind": "LinkedField",
       "name": "similar",
@@ -135,7 +138,7 @@ return {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             }
           ],
@@ -146,7 +149,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "ArtistConnection",
       "kind": "LinkedField",
       "name": "artistsConnection",
@@ -167,7 +170,7 @@ return {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             }
           ],
@@ -201,16 +204,11 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "GeneArtworkFilter_gene"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
 })();
-(node as any).hash = '08451d4b8e9ae7f26fd88085b5648485';
+(node as any).hash = 'e8f002f3b327a956207347d0a84533db';
 export default node;
