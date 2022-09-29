@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { EntityHeaderPartner_partner } from "__generated__/EntityHeaderPartner_partner.graphql"
-import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "../FollowButton/FollowProfileButton"
 
 const DISPLAYABLE_BADGES = ["black-owned", "women-owned"]
 
@@ -87,8 +87,8 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
 
       {isFollowable &&
         (FollowButton || (
-          <FollowProfileButtonFragmentContainer
-            profile={partner.profile!}
+          <FollowProfileButtonQueryRenderer
+            id={partner.profile.internalID}
             contextModule={ContextModule.partnerHeader}
             size="small"
             onFollow={onFollow}
@@ -121,7 +121,7 @@ export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
           slug
         }
         profile {
-          ...FollowProfileButton_profile
+          internalID
           avatar: image {
             cropped(width: 45, height: 45) {
               src

@@ -11,7 +11,7 @@ import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/E
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
-import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet
@@ -40,7 +40,7 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                       contextModule={ContextModule.onboardingFlow}
                       size="small"
                       onFollow={() => {
-                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                        dispatch({ type: "FOLLOW", payload: node.internalID })
                       }}
                     />
                   }
@@ -57,13 +57,12 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                   key={node.internalID}
                   partner={partner}
                   FollowButton={
-                    <FollowProfileButtonFragmentContainer
+                    <FollowProfileButtonQueryRenderer
                       id={node.internalID}
                       contextModule={ContextModule.onboardingFlow}
-                      profile={node}
                       size="small"
                       onFollow={() => {
-                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                        dispatch({ type: "FOLLOW", payload: node.internalID })
                       }}
                     />
                   }
@@ -92,7 +91,6 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
               }
               ... on Profile {
                 internalID
-                ...FollowProfileButton_profile
                 owner {
                   __typename
                   ... on Partner {

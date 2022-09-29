@@ -22,7 +22,6 @@ export type OnboardingOrderedSet_orderedSet = {
                     value in case none of the concrete values match.*/
                     readonly __typename: "%other";
                 };
-                readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
             } | {
                 /*This will never be '%other', but we need some
                 value in case none of the concrete values match.*/
@@ -132,11 +131,6 @@ return {
                         }
                       ],
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowProfileButton_profile"
                     }
                   ],
                   "type": "Profile",
@@ -156,5 +150,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b27bcdc1d86f123ff879366341640311';
+(node as any).hash = '833d51a13cbdbf0213aaaacea673e85a';
 export default node;

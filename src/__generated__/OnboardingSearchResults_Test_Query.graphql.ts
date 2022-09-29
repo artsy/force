@@ -64,7 +64,7 @@ fragment EntityHeaderPartner_partner on Partner {
     id
   }
   profile {
-    ...FollowProfileButton_profile
+    internalID
     avatar: image {
       cropped(width: 45, height: 45) {
         src
@@ -81,14 +81,6 @@ fragment EntityHeaderPartner_partner on Partner {
   }
 }
 
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
 fragment OnboardingSearchResults_viewer on Viewer {
   matchConnection(term: "", entities: [], first: 10, mode: AUTOSUGGEST) {
     edges {
@@ -100,7 +92,6 @@ fragment OnboardingSearchResults_viewer on Viewer {
         }
         ... on Profile {
           internalID
-          ...FollowProfileButton_profile
           owner {
             __typename
             ... on Partner {
@@ -232,63 +223,50 @@ v10 = {
   "name": "id",
   "storageKey": null
 },
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isFollowed",
-  "storageKey": null
-},
-v12 = [
+v11 = [
   (v10/*: any*/)
 ],
-v13 = {
+v12 = {
   "kind": "InlineFragment",
-  "selections": (v12/*: any*/),
+  "selections": (v11/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 },
-v14 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v15 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v16 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v17 = {
+v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "FormattedNumber"
 },
-v18 = {
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v19 = {
+v18 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v20 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -426,10 +404,6 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v1/*: any*/),
-                          (v10/*: any*/),
-                          (v3/*: any*/),
-                          (v4/*: any*/),
-                          (v11/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -523,11 +497,7 @@ return {
                                     "name": "profile",
                                     "plural": false,
                                     "selections": [
-                                      (v10/*: any*/),
-                                      (v3/*: any*/),
-                                      (v4/*: any*/),
                                       (v1/*: any*/),
-                                      (v11/*: any*/),
                                       (v9/*: any*/),
                                       {
                                         "alias": null,
@@ -561,7 +531,8 @@ return {
                                           }
                                         ],
                                         "storageKey": null
-                                      }
+                                      },
+                                      (v10/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -569,30 +540,31 @@ return {
                                 "type": "Partner",
                                 "abstractKey": null
                               },
-                              (v13/*: any*/),
+                              (v12/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v12/*: any*/),
+                                "selections": (v11/*: any*/),
                                 "type": "FairOrganizer",
                                 "abstractKey": null
                               }
                             ],
                             "storageKey": null
-                          }
+                          },
+                          (v10/*: any*/)
                         ],
                         "type": "Profile",
                         "abstractKey": null
                       },
-                      (v13/*: any*/),
+                      (v12/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v12/*: any*/),
+                        "selections": (v11/*: any*/),
                         "type": "Feature",
                         "abstractKey": null
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v12/*: any*/),
+                        "selections": (v11/*: any*/),
                         "type": "Page",
                         "abstractKey": null
                       }
@@ -611,7 +583,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4c23c0f2228ac59b7ab1157111e1546a",
+    "cacheID": "eb195ff6a0ee48e79f0f388cf7eb2e29",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -639,48 +611,47 @@ return {
           "plural": false,
           "type": "Match"
         },
-        "viewer.matchConnection.edges.node.__isNode": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.__typename": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.avatar": (v15/*: any*/),
-        "viewer.matchConnection.edges.node.avatar.cropped": (v16/*: any*/),
-        "viewer.matchConnection.edges.node.avatar.cropped.src": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.avatar.cropped.srcSet": (v14/*: any*/),
+        "viewer.matchConnection.edges.node.__isNode": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.__typename": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.avatar": (v14/*: any*/),
+        "viewer.matchConnection.edges.node.avatar.cropped": (v15/*: any*/),
+        "viewer.matchConnection.edges.node.avatar.cropped.src": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.avatar.cropped.srcSet": (v13/*: any*/),
         "viewer.matchConnection.edges.node.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistCounts"
         },
-        "viewer.matchConnection.edges.node.counts.artworks": (v17/*: any*/),
-        "viewer.matchConnection.edges.node.counts.forSaleArtworks": (v17/*: any*/),
-        "viewer.matchConnection.edges.node.formattedNationalityAndBirthday": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.href": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.id": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.initials": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.internalID": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.isFollowed": (v20/*: any*/),
-        "viewer.matchConnection.edges.node.name": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.counts.artworks": (v16/*: any*/),
+        "viewer.matchConnection.edges.node.counts.forSaleArtworks": (v16/*: any*/),
+        "viewer.matchConnection.edges.node.formattedNationalityAndBirthday": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.href": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.id": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.initials": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.internalID": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.name": (v17/*: any*/),
         "viewer.matchConnection.edges.node.owner": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ProfileOwnerType"
         },
-        "viewer.matchConnection.edges.node.owner.__isNode": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.owner.__typename": (v14/*: any*/),
+        "viewer.matchConnection.edges.node.owner.__isNode": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.owner.__typename": (v13/*: any*/),
         "viewer.matchConnection.edges.node.owner.categories": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "PartnerCategory"
         },
-        "viewer.matchConnection.edges.node.owner.categories.id": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.categories.name": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.owner.categories.slug": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.href": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.owner.id": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.initials": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.owner.internalID": (v19/*: any*/),
+        "viewer.matchConnection.edges.node.owner.categories.id": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.categories.name": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.owner.categories.slug": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.href": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.owner.id": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.initials": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.owner.internalID": (v18/*: any*/),
         "viewer.matchConnection.edges.node.owner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -699,36 +670,33 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "viewer.matchConnection.edges.node.owner.locationsConnection.edges.node.city": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.owner.locationsConnection.edges.node.id": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.name": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.locationsConnection.edges.node.city": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.owner.locationsConnection.edges.node.id": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.name": (v17/*: any*/),
         "viewer.matchConnection.edges.node.owner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "viewer.matchConnection.edges.node.owner.profile.avatar": (v15/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped": (v16/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped.src": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped.srcSet": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.icon": (v15/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.icon.cropped": (v16/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.icon.cropped.src": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.icon.cropped.srcSet": (v14/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.id": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.internalID": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.isFollowed": (v20/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.name": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.owner.profile.slug": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.slug": (v19/*: any*/),
-        "viewer.matchConnection.edges.node.owner.type": (v18/*: any*/),
-        "viewer.matchConnection.edges.node.slug": (v19/*: any*/)
+        "viewer.matchConnection.edges.node.owner.profile.avatar": (v14/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped": (v15/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped.src": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.avatar.cropped.srcSet": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.icon": (v14/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.icon.cropped": (v15/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.icon.cropped.src": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.icon.cropped.srcSet": (v13/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.id": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.profile.internalID": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.slug": (v18/*: any*/),
+        "viewer.matchConnection.edges.node.owner.type": (v17/*: any*/),
+        "viewer.matchConnection.edges.node.slug": (v18/*: any*/)
       }
     },
     "name": "OnboardingSearchResults_Test_Query",
     "operationKind": "query",
-    "text": "query OnboardingSearchResults_Test_Query {\n  viewer {\n    ...OnboardingSearchResults_viewer\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment OnboardingSearchResults_viewer on Viewer {\n  matchConnection(term: \"\", entities: [], first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Profile {\n          internalID\n          ...FollowProfileButton_profile\n          owner {\n            __typename\n            ... on Partner {\n              ...EntityHeaderPartner_partner\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query OnboardingSearchResults_Test_Query {\n  viewer {\n    ...OnboardingSearchResults_viewer\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment OnboardingSearchResults_viewer on Viewer {\n  matchConnection(term: \"\", entities: [], first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Profile {\n          internalID\n          owner {\n            __typename\n            ... on Partner {\n              ...EntityHeaderPartner_partner\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
