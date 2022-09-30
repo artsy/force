@@ -117,7 +117,7 @@ module.exports = {
     ],
     "no-relative-import-paths/no-relative-import-paths": [
       "error",
-      { allowSameFolder: true },
+      { allowSameFolder: true, rootDir: "src" },
     ],
   },
   overrides: [
