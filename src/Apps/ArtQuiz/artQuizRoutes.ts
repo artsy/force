@@ -9,6 +9,7 @@ const ArtQuizApp = loadable(
   }
 )
 
+// TODO: Add query to check for quiz template
 export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",

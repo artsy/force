@@ -6,18 +6,18 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext/ArtQuizContext"
+import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import {
   ArtQuizDislikeButton,
   ArtQuizSaveButton,
-} from "Apps/ArtQuiz/ArtQuizInterface/ArtQuizButtons"
+} from "Apps/ArtQuiz/Components/ArtQuizButtons"
 import {
   GridClickable,
   GridFlex,
   GridImage,
   GridResponsiveBox,
   GridText,
-} from "Apps/ArtQuiz/ArtQuizInterface/ArtQuizGridComponents"
+} from "Apps/ArtQuiz/Components/ArtQuizGridComponents"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FC, useEffect, useState } from "react"
 import { useWindowSize } from "Utils/Hooks/useWindowSize"
@@ -27,7 +27,7 @@ const DESKTOP_IMAGE_PY = 40
 const MOBILE_ROW_HEIGHT = 80
 const MOBILE_ADDRESS_BAR_HEIGHT = 55
 
-export const ArtQuizInterface: FC = () => {
+export const ArtQuizMain: FC = () => {
   const { desktop, mobile } = useNavBarHeight()
   const {
     artworksTotalCount,

@@ -1,7 +1,7 @@
-import { ArtQuizContextProvider } from "Apps/ArtQuiz/ArtQuizContext/ArtQuizContext"
-import { ArtQuizWelcome } from "Components/ArtQuiz/Views/ArtQuizWelcome"
+import { ArtQuizContextProvider } from "Apps/ArtQuiz/ArtQuizContext"
+import { ArtQuizWelcome } from "Apps/ArtQuiz/ArtQuizWelcome"
 import { useState } from "react"
-import { ArtQuizInterface } from "./ArtQuizInterface/ArtQuizInterface"
+import { ArtQuizMain } from "./ArtQuizMain"
 
 export const ArtQuizApp = () => {
   const [startQuiz, setStartQuiz] = useState(false)
@@ -13,7 +13,7 @@ export const ArtQuizApp = () => {
   return (
     <ArtQuizContextProvider>
       {startQuiz ? (
-        <ArtQuizInterface />
+        <ArtQuizMain />
       ) : (
         <ArtQuizWelcome onStartQuiz={handleStartQuiz} />
       )}
