@@ -13,11 +13,12 @@ import { getENV } from "Utils/getENV"
 
 interface TrackingMiddlewareOptions {
   excludePaths?: string[]
+  excludeReferrers?: string[]
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
   return store => next => action => {
-    const { excludePaths = [] } = options
+    const { excludePaths = [], excludeReferrers = [] } = options
     const { type, payload } = action
 
     switch (type) {
@@ -68,7 +69,17 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             return foundMatch
           })
 
-          if (!foundExcludedPath) {
+          const foundExcludedReferrer = excludeReferrers.some(
+            excludedReferrer => {
+              const matcher = match(excludedReferrer, {
+                decode: decodeURIComponent,
+              })
+              const foundMatch = !!matcher(clientSideRoutingReferrer)
+              return foundMatch
+            }
+          )
+
+          if (!foundExcludedPath && !foundExcludedReferrer) {
             const url = getENV("APP_URL") + pathname
             const trackingData: {
               path: string
