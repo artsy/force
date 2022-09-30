@@ -144,7 +144,6 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
       fragment Header_artworks on FilterArtworksConnection {
         ...DefaultHeader_headerArtworks
         merchandisableArtists {
-          ...FollowArtistButton_artist
           ...EntityHeaderArtist_artist
           internalID
           name

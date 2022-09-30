@@ -10,11 +10,11 @@ export type PartnerArtistDetails_partnerArtist = {
         readonly credit: string | null;
     } | null;
     readonly node: {
+        readonly internalID: string;
         readonly slug: string;
         readonly name: string | null;
         readonly href: string | null;
         readonly formattedNationalityAndBirthday: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
     readonly " $refType": "PartnerArtistDetails_partnerArtist";
@@ -76,6 +76,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
         },
@@ -99,11 +106,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "formattedNationalityAndBirthday",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
         }
       ],
       "storageKey": null
@@ -117,5 +119,5 @@ const node: ReaderFragment = {
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = 'f070ad2ab63ddc54cae550761f2cde60';
+(node as any).hash = '2f51b36b34ce99bdf0f438ac94c1e7bd';
 export default node;

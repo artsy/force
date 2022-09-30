@@ -4,37 +4,37 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type exampleRoutes_ArtistQueryVariables = {
-    slug: string;
+export type FollowProfileButtonQueryVariables = {
+    id: string;
 };
-export type exampleRoutes_ArtistQueryResponse = {
-    readonly artist: {
-        readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ExampleArtistRoute_artist">;
+export type FollowProfileButtonQueryResponse = {
+    readonly profile: {
+        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
 };
-export type exampleRoutes_ArtistQuery = {
-    readonly response: exampleRoutes_ArtistQueryResponse;
-    readonly variables: exampleRoutes_ArtistQueryVariables;
+export type FollowProfileButtonQuery = {
+    readonly response: FollowProfileButtonQueryResponse;
+    readonly variables: FollowProfileButtonQueryVariables;
 };
 
 
 
 /*
-query exampleRoutes_ArtistQuery(
-  $slug: String!
+query FollowProfileButtonQuery(
+  $id: String!
 ) {
-  artist(id: $slug) @principalField {
+  profile(id: $id) {
+    ...FollowProfileButton_profile
     id
-    ...ExampleArtistRoute_artist
   }
 }
 
-fragment ExampleArtistRoute_artist on Artist {
-  name
-  bio
-  internalID
+fragment FollowProfileButton_profile on Profile {
+  id
   slug
+  name
+  internalID
+  isFollowed
 }
 */
 
@@ -43,43 +43,35 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug"
+    "name": "id"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "slug"
+    "variableName": "id"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "exampleRoutes_ArtistQuery",
+    "name": "FollowProfileButtonQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "Profile",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "profile",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ExampleArtistRoute_artist"
+            "name": "FollowProfileButton_profile"
           }
         ],
         "storageKey": null
@@ -92,29 +84,35 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "exampleRoutes_ArtistQuery",
+    "name": "FollowProfileButtonQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "Profile",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "profile",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "id",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "bio",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -128,7 +126,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "isFollowed",
             "storageKey": null
           }
         ],
@@ -137,14 +135,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f7d15cd5f0d3bb3949bd45c16f88738",
+    "cacheID": "7971aed591abcfab3190859f6b095376",
     "id": null,
     "metadata": {},
-    "name": "exampleRoutes_ArtistQuery",
+    "name": "FollowProfileButtonQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n}\n"
+    "text": "query FollowProfileButtonQuery(\n  $id: String!\n) {\n  profile(id: $id) {\n    ...FollowProfileButton_profile\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'f240123309eb71f60ebf184aef275d94';
+(node as any).hash = '3c0215aa6cff09e5f359eb12f41a9eda';
 export default node;

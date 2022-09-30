@@ -4,7 +4,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderFairOrganizer_fairOrganizer } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
-import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "../FollowButton/FollowProfileButton"
 
 export interface EntityHeaderFairOrganizerProps extends BoxProps {
   fairOrganizer: EntityHeaderFairOrganizer_fairOrganizer
@@ -63,13 +63,14 @@ const EntityHeaderFairOrganizer: FC<EntityHeaderFairOrganizerProps> = ({
         </Flex>
       </Flex>
 
-      {FollowButton || (
-        <FollowProfileButtonFragmentContainer
-          profile={fairOrganizer.profile!}
-          contextModule={ContextModule.fairsHeader}
-          size="small"
-        />
-      )}
+      {FollowButton ||
+        (fairOrganizer.profile && (
+          <FollowProfileButtonQueryRenderer
+            id={fairOrganizer.profile.internalID}
+            contextModule={ContextModule.fairsHeader}
+            size="small"
+          />
+        ))}
     </Flex>
   )
 }
@@ -86,7 +87,7 @@ export const EntityHeaderFairOrganizerFragmentContainer = createFragmentContaine
           totalCount
         }
         profile {
-          ...FollowProfileButton_profile
+          internalID
           href
           initials
           avatar: image {

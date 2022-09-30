@@ -1,5 +1,4 @@
 import {
-  EntityHeader,
   Skeleton,
   SkeletonBox,
   SkeletonText,
@@ -8,17 +7,22 @@ import {
 } from "@artsy/palette"
 import { ArtistInfo_artist } from "__generated__/ArtistInfo_artist.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
-import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
-import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "Components/ArtistMarketInsights"
-import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "Components/SelectedExhibitions"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { ArtistBioFragmentContainer } from "Components/ArtistBio"
+import { ArtistMarketInsightsFragmentContainer } from "Components/ArtistMarketInsights"
+import { SelectedExhibitionFragmentContainer } from "Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
 import { Component } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
 import Events from "Utils/Events"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
+import { useSystemContext } from "System"
+import track from "react-tracking"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { compact } from "lodash"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
@@ -45,34 +49,28 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
 
   render() {
     const { artist } = this.props
-    const { biographyBlurb, image } = this.props.artist
+    const { biographyBlurb } = this.props.artist
     const showArtistBio = !!biographyBlurb?.text
 
     return (
       <>
         <StackableBorderBox flexDirection="column" data-test="artistInfo">
-          <EntityHeader
-            name={artist.name!}
-            href={artist.href!}
-            meta={artist.formatted_nationality_and_birthday!}
-            image={{
-              src: image?.cropped?.src,
-              srcSet: image?.cropped?.srcSet,
-              lazyLoad: true,
-            }}
+          <EntityHeaderArtistFragmentContainer
+            artist={artist}
             FollowButton={
-              <FollowArtistButton
-                artist={artist}
+              <FollowArtistButtonQueryRenderer
+                id={artist.internalID}
                 contextModule={ContextModule.aboutTheWork}
                 size="small"
               />
             }
           />
+
           {showArtistBio && (
             <>
               <Spacer mt={2} />
 
-              <ArtistBio
+              <ArtistBioFragmentContainer
                 bio={artist}
                 onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
               />
@@ -80,20 +78,19 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
           )}
         </StackableBorderBox>
 
-        <ArtistMarketInsights
+        <ArtistMarketInsightsFragmentContainer
           artist={artist}
           border={false}
           Container={Container}
         />
 
-        <SelectedExhibitions
+        <SelectedExhibitionFragmentContainer
           artistID={artist.internalID}
           border={false}
-          totalExhibitions={artist.counts?.partner_shows!}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          exhibitions={artist.exhibition_highlights}
+          totalExhibitions={artist.counts?.partnerShows ?? 0}
+          exhibitions={compact(artist.exhibitionHighlights)}
           ViewAllLink={
-            <a href={`${sd.APP_URL}/artist/${artist.slug}/cv`}>View all</a>
+            <RouterLink to={`/artist/${artist.slug}/cv`}>View all</RouterLink>
           }
           Container={Container}
         />
@@ -102,53 +99,37 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
   }
 }
 
-export const ArtistInfoFragmentContainer = createFragmentContainer(
-  ArtistInfo as React.ComponentType<ArtistInfoProps>,
-  {
-    artist: graphql`
-      fragment ArtistInfo_artist on Artist
-        @argumentDefinitions(
-          partnerCategory: {
-            type: "[String]"
-            defaultValue: ["blue-chip", "top-established", "top-emerging"]
-          }
-        ) {
-        internalID
-        slug
-        name
-        href
-        image {
-          cropped(width: 45, height: 45) {
-            src
-            srcSet
-          }
+export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
+  artist: graphql`
+    fragment ArtistInfo_artist on Artist
+      @argumentDefinitions(
+        partnerCategory: {
+          type: "[String]"
+          defaultValue: ["blue-chip", "top-established", "top-emerging"]
         }
-        formatted_nationality_and_birthday: formattedNationalityAndBirthday
-        counts {
-          partner_shows: partnerShows
+      ) {
+      ...EntityHeaderArtist_artist
+      internalID
+      slug
+      image {
+        cropped(width: 45, height: 45) {
+          src
+          srcSet
         }
-        exhibition_highlights: exhibitionHighlights(size: 3) {
-          ...SelectedExhibitions_exhibitions
-        }
-        collections
-        highlights {
-          partnersConnection(
-            first: 10
-            displayOnPartnerProfile: true
-            representedBy: true
-            partnerCategory: $partnerCategory
-          ) {
-            edges {
-              node {
-                __typename
-              }
-            }
-          }
-        }
-        auctionResultsConnection(
-          recordsTrusted: true
-          first: 1
-          sort: PRICE_AND_DATE_DESC
+      }
+      counts {
+        partnerShows
+      }
+      exhibitionHighlights(size: 3) {
+        ...SelectedExhibitions_exhibitions
+      }
+      collections
+      highlights {
+        partnersConnection(
+          first: 10
+          displayOnPartnerProfile: true
+          representedBy: true
+          partnerCategory: $partnerCategory
         ) {
           edges {
             node {
@@ -156,23 +137,28 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...ArtistBio_bio
-        ...ArtistMarketInsights_artist
-        ...FollowArtistButton_artist
-        # The below data is only used to determine whether a section
-        # should be rendered
-        biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
-          text
+      }
+      auctionResultsConnection(
+        recordsTrusted: true
+        first: 1
+        sort: PRICE_AND_DATE_DESC
+      ) {
+        edges {
+          node {
+            __typename
+          }
         }
       }
-    `,
-  }
-)
-
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
-import { useSystemContext } from "System"
-import track from "react-tracking"
+      ...ArtistBio_bio
+      ...ArtistMarketInsights_artist
+      # The below data is only used to determine whether a section
+      # should be rendered
+      biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
+        text
+      }
+    }
+  `,
+})
 
 const PLACEHOLDER = (
   <Skeleton>

@@ -9,13 +9,13 @@ export type PartnerHeader_partner = {
     readonly type: string | null;
     readonly slug: string;
     readonly profile: {
+        readonly internalID: string;
         readonly icon: {
             readonly resized: {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly locations: {
         readonly totalCount: number | null;
@@ -73,6 +73,13 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "icon",
@@ -121,11 +128,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -187,5 +189,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'fe9cf6f429efc3e64d48822788699330';
+(node as any).hash = '7f0a97c890f8c512b9cf5a8e7837424a';
 export default node;

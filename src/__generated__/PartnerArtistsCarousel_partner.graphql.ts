@@ -8,14 +8,11 @@ export type PartnerArtistsCarousel_partner = {
     readonly slug: string;
     readonly artistsConnection: {
         readonly edges: ReadonlyArray<{
-            readonly counts: {
-                readonly artworks: number | null;
-            } | null;
             readonly node: {
-                readonly id: string;
+                readonly internalID: string;
                 readonly slug: string;
+                readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
             } | null;
-            readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
         } | null> | null;
     } | null;
     readonly " $refType": "PartnerArtistsCarousel_partner";
@@ -78,24 +75,6 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "PartnerArtistCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artworks",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
               "concreteType": "Artist",
               "kind": "LinkedField",
               "name": "node",
@@ -105,17 +84,17 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
                   "storageKey": null
                 },
-                (v0/*: any*/)
+                (v0/*: any*/),
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArtist_artist"
+                }
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "PartnerArtistsCarouselItem_artist"
             }
           ],
           "storageKey": null
@@ -128,5 +107,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b4252ea48c05f4c22efdc890b6891d28';
+(node as any).hash = '29d1837af9e22e88c9fd85a64a7317f2';
 export default node;
