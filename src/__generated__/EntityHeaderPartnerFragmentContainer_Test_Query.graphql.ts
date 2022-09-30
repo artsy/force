@@ -46,7 +46,7 @@ fragment EntityHeaderPartner_partner on Partner {
     id
   }
   profile {
-    internalID
+    ...FollowProfileButton_profile
     avatar: image {
       cropped(width: 45, height: 45) {
         src
@@ -61,6 +61,14 @@ fragment EntityHeaderPartner_partner on Partner {
     }
     id
   }
+}
+
+fragment FollowProfileButton_profile on Profile {
+  id
+  slug
+  name
+  internalID
+  isFollowed
 }
 */
 
@@ -290,7 +298,17 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
+              (v4/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              },
               {
                 "alias": "avatar",
                 "args": null,
@@ -347,8 +365,7 @@ return {
                   }
                 ],
                 "storageKey": null
-              },
-              (v4/*: any*/)
+              }
             ],
             "storageKey": null
           },
@@ -359,7 +376,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb1497b8b7ff8b9706e9b1763404cde8",
+    "cacheID": "70ac7d1fcbece25a5872bea3f52fec2f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -419,13 +436,21 @@ return {
         "partner.profile.icon.cropped.srcSet": (v12/*: any*/),
         "partner.profile.id": (v8/*: any*/),
         "partner.profile.internalID": (v8/*: any*/),
+        "partner.profile.isFollowed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "partner.profile.name": (v9/*: any*/),
+        "partner.profile.slug": (v8/*: any*/),
         "partner.slug": (v8/*: any*/),
         "partner.type": (v9/*: any*/)
       }
     },
     "name": "EntityHeaderPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...EntityHeaderPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query EntityHeaderPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...EntityHeaderPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

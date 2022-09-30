@@ -1,15 +1,13 @@
 import * as React from "react"
-import { Shelf } from "@artsy/palette"
+import { Box, Shelf } from "@artsy/palette"
+import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "__generated__/PartnerArtistsCarousel_partner.graphql"
+import { PartnerArtistsCarouselItemFragmentContainer } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
-import { extractNodes } from "Utils/extractNodes"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ContextModule } from "@artsy/cohesion"
 
 const PAGE_SIZE = 20
 
@@ -28,23 +26,19 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
     return null
   }
 
-  const artists = extractNodes(partner.artistsConnection)
+  const { artistsConnection, slug } = partner
+  const artists = compact(artistsConnection.edges)
 
   return (
     <Shelf alignItems="flex-start">
       {artists.map(artist => (
-        <CellArtistFragmentContainer
-          key={artist.internalID}
-          artist={artist}
-          to={`/partner/${partner.slug}/artists/${artist.slug}`}
-          FollowButton={
-            <FollowArtistButtonQueryRenderer
-              id={artist.internalID}
-              contextModule={ContextModule.recommendedArtistsRail}
-              size="small"
-            />
-          }
-        />
+        <Box maxWidth={320}>
+          <PartnerArtistsCarouselItemFragmentContainer
+            key={artist.node?.id}
+            artist={artist!}
+            partnerArtistHref={`/partner/${slug}/artists/${artist.node?.slug}`}
+          />
+        </Box>
       ))}
     </Shelf>
   )
@@ -62,11 +56,14 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
           displayOnPartnerProfile: true
         ) {
           edges {
+            counts {
+              artworks
+            }
             node {
-              ...CellArtist_artist
-              internalID
+              id
               slug
             }
+            ...PartnerArtistsCarouselItem_artist
           }
         }
       }

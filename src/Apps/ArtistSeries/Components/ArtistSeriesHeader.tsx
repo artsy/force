@@ -117,6 +117,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
           href
           slug
           internalID
+          ...FollowArtistButton_artist
         }
       }
     `,

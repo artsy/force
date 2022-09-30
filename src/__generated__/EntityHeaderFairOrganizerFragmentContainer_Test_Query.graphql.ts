@@ -33,7 +33,7 @@ fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
     totalCount
   }
   profile {
-    internalID
+    ...FollowProfileButton_profile
     href
     initials
     avatar: image {
@@ -44,6 +44,14 @@ fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
     }
     id
   }
+}
+
+fragment FollowProfileButton_profile on Profile {
+  id
+  slug
+  name
+  internalID
+  isFollowed
 }
 */
 
@@ -66,22 +74,36 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -129,20 +151,8 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -169,7 +179,17 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
+              (v4/*: any*/),
+              (v2/*: any*/),
+              (v3/*: any*/),
               (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -230,19 +250,18 @@ return {
                   }
                 ],
                 "storageKey": null
-              },
-              (v2/*: any*/)
+              }
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "2702fd4baf3b159b0c06a5ed7d703e3d",
+    "cacheID": "45e3ed08c81663a6362f98fdb7b9a51d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -264,9 +283,9 @@ return {
           "plural": false,
           "type": "Int"
         },
-        "fairOrganizer.id": (v3/*: any*/),
-        "fairOrganizer.internalID": (v3/*: any*/),
-        "fairOrganizer.name": (v4/*: any*/),
+        "fairOrganizer.id": (v5/*: any*/),
+        "fairOrganizer.internalID": (v5/*: any*/),
+        "fairOrganizer.name": (v6/*: any*/),
         "fairOrganizer.profile": {
           "enumValues": null,
           "nullable": true,
@@ -285,18 +304,26 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "fairOrganizer.profile.avatar.cropped.src": (v5/*: any*/),
-        "fairOrganizer.profile.avatar.cropped.srcSet": (v5/*: any*/),
-        "fairOrganizer.profile.href": (v4/*: any*/),
-        "fairOrganizer.profile.id": (v3/*: any*/),
-        "fairOrganizer.profile.initials": (v4/*: any*/),
-        "fairOrganizer.profile.internalID": (v3/*: any*/),
-        "fairOrganizer.slug": (v3/*: any*/)
+        "fairOrganizer.profile.avatar.cropped.src": (v7/*: any*/),
+        "fairOrganizer.profile.avatar.cropped.srcSet": (v7/*: any*/),
+        "fairOrganizer.profile.href": (v6/*: any*/),
+        "fairOrganizer.profile.id": (v5/*: any*/),
+        "fairOrganizer.profile.initials": (v6/*: any*/),
+        "fairOrganizer.profile.internalID": (v5/*: any*/),
+        "fairOrganizer.profile.isFollowed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "fairOrganizer.profile.name": (v6/*: any*/),
+        "fairOrganizer.profile.slug": (v5/*: any*/),
+        "fairOrganizer.slug": (v5/*: any*/)
       }
     },
     "name": "EntityHeaderFairOrganizerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderFairOrganizerFragmentContainer_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...EntityHeaderFairOrganizer_fairOrganizer\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    internalID\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query EntityHeaderFairOrganizerFragmentContainer_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...EntityHeaderFairOrganizer_fairOrganizer\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

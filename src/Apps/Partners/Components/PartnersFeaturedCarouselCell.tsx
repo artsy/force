@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
+import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Router/RouterLink"
 import { PartnersFeaturedCarouselCell_profile } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
@@ -70,8 +70,8 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
               )}
             </Text>
 
-            <FollowProfileButtonQueryRenderer
-              id={profile.internalID}
+            <FollowProfileButtonFragmentContainer
+              profile={profile}
               contextModule={ContextModule.featuredGalleriesRail}
             />
           </RouterLink>
@@ -107,7 +107,7 @@ export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentConta
   {
     profile: graphql`
       fragment PartnersFeaturedCarouselCell_profile on Profile {
-        internalID
+        ...FollowProfileButton_profile
         owner {
           ... on Partner {
             internalID

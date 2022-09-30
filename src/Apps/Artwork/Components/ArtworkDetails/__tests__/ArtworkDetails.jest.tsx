@@ -11,11 +11,6 @@ jest.unmock("react-relay")
   return {}
 })
 
-jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => ({
-  EntityHeaderPartnerFragmentContainer: () =>
-    "EntityHeaderPartnerFragmentContainer",
-}))
-
 const { getWrapper } = setupTestWrapper<ArtworkDetails_Test_Query>({
   Component: ({ artwork }) => {
     return (
@@ -130,6 +125,7 @@ describe("ArtworkDetails", () => {
       const html = wrapper.html()
 
       expect(html).toContain("About the work")
+      expect(html).toContain("Follow")
       expect(html).toContain("Articles")
       expect(html).toContain("Exhibition history")
       expect(html).toContain("Bibliography")
@@ -138,10 +134,57 @@ describe("ArtworkDetails", () => {
   })
 
   describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
-    it("displays partner additionalInformation for artwork", () => {
+    it("displays partner name", () => {
+      const wrapper = getWrapper({
+        Partner: () => ({ name: "Salon 94" }),
+      })
+
+      expect(wrapper.html()).toContain("Salon 94")
+    })
+
+    it("displays partner Initials when profile is present but icon is not", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({ isBenefit: false, isGalleryAuction: false }),
+        Profile: () => ({ icon: null }),
+        Partner: () => ({ initials: "S9" }),
+      })
+
+      expect(wrapper.find("img").length).toBe(0)
+      expect(wrapper.html()).toContain("S9")
+    })
+
+    it("does not display partner Icon if artwork is from benefit auction", () => {
+      const wrapper = getWrapper({
+        Partner: () => ({ initials: "S9" }),
+        Sale: () => ({
+          id: "opaque-sale-id",
+          isBenefit: true,
+          isGalleryAuction: false,
+        }),
+      })
+
+      expect(wrapper.find("img").length).toBe(0)
+      expect(wrapper.html()).not.toContain("S9")
+    })
+
+    it("does not display partner Icon if artwork is from gallery auction", () => {
+      const wrapper = getWrapper({
+        Partner: () => ({ initials: "S9" }),
+        Sale: () => ({
+          id: "opaque-sale-id",
+          isBenefit: false,
+          isGalleryAuction: true,
+        }),
+      })
+
+      expect(wrapper.find("img").length).toBe(0)
+      expect(wrapper.html()).not.toContain("S9")
+    })
+
+    it("displays partner additional_information for artwork", () => {
       const wrapper = getWrapper({
         Artwork: () => ({
-          additionalInformation: "Here is some additional info for this work",
+          additional_information: "Here is some additional info for this work",
         }),
       })
 
@@ -160,10 +203,29 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("EntityHeader").children.length).toBe(1)
     })
 
-    it("renders the EntityHeaderPartnerFragmentContainer", () => {
-      const wrapper = getWrapper()
+    it("renders truncated list of partner locations", () => {
+      const wrapper = getWrapper({
+        Partner: () => ({
+          locations: [
+            { city: "New York" },
+            { city: "Kharkov" },
+            { city: "Example 1" },
+            { city: "Example 2" },
+          ],
+        }),
+      })
 
-      expect(wrapper.html()).toContain("EntityHeaderPartnerFragmentContainer")
+      expect(wrapper.html()).toContain("New York, Kharkov, +2 more")
+    })
+
+    it("renders partner follow button for regular partner with profile", () => {
+      const wrapper = getWrapper({
+        Partner: () => ({
+          type: "NOT Auction House",
+        }),
+      })
+
+      expect(wrapper.html()).toContain("Follow")
     })
 
     it("does not render partner follow button if artwork is from an auction partner", () => {

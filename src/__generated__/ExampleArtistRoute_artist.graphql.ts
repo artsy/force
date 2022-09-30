@@ -9,6 +9,7 @@ export type ExampleArtistRoute_artist = {
     readonly bio: string | null;
     readonly internalID: string;
     readonly slug: string;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "ExampleArtistRoute_artist";
 };
 export type ExampleArtistRoute_artist$data = ExampleArtistRoute_artist;
@@ -52,10 +53,15 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtistButton_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'c3e11e91b699af66a2aeadf0fc2222b3';
+(node as any).hash = '5c3a5b92ce4c697e1a50a88e461491a2';
 export default node;

@@ -24,12 +24,20 @@ query partnersRoutes_GalleriesRouteQuery {
   }
 }
 
+fragment FollowProfileButton_profile on Profile {
+  id
+  slug
+  name
+  internalID
+  isFollowed
+}
+
 fragment GalleriesRoute_viewer on Viewer {
   ...PartnersFeaturedCarousel_viewer_4uWBz4
 }
 
 fragment PartnersFeaturedCarouselCell_profile on Profile {
-  internalID
+  ...FollowProfileButton_profile
   owner {
     __typename
     ... on Partner {
@@ -112,7 +120,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
@@ -122,22 +130,22 @@ v3 = {
   "name": "name",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
 v6 = [
-  (v5/*: any*/)
+  (v2/*: any*/)
 ],
 v7 = {
   "kind": "InlineFragment",
@@ -235,6 +243,22 @@ return {
                             "kind": "InlineFragment",
                             "selections": [
                               (v1/*: any*/),
+                              (v2/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "slug",
+                                "storageKey": null
+                              },
+                              (v3/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isFollowed",
+                                "storageKey": null
+                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -248,7 +272,7 @@ return {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v1/*: any*/),
-                                      (v2/*: any*/),
+                                      (v4/*: any*/),
                                       (v3/*: any*/),
                                       {
                                         "alias": null,
@@ -258,7 +282,7 @@ return {
                                         "name": "featuredShow",
                                         "plural": false,
                                         "selections": [
-                                          (v2/*: any*/),
+                                          (v4/*: any*/),
                                           (v3/*: any*/),
                                           {
                                             "alias": null,
@@ -276,14 +300,14 @@ return {
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v4/*: any*/),
+                                            "args": (v5/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "startAt",
                                             "storageKey": "startAt(format:\"MMM D\")"
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v4/*: any*/),
+                                            "args": (v5/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "endAt",
                                             "storageKey": "endAt(format:\"MMM D\")"
@@ -310,7 +334,7 @@ return {
                                                 "name": "city",
                                                 "storageKey": null
                                               },
-                                              (v5/*: any*/)
+                                              (v2/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
@@ -365,7 +389,7 @@ return {
                                             ],
                                             "storageKey": null
                                           },
-                                          (v5/*: any*/)
+                                          (v2/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -382,8 +406,7 @@ return {
                                   }
                                 ],
                                 "storageKey": null
-                              },
-                              (v5/*: any*/)
+                              }
                             ],
                             "type": "Profile",
                             "abstractKey": null
@@ -404,7 +427,7 @@ return {
                 ],
                 "storageKey": "orderedItemsConnection(first:50)"
               },
-              (v5/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "orderedSet(id:\"5638fdfb7261690296000031\")"
           }
@@ -414,12 +437,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "408f9937c40febdb474fe0a38de38cae",
+    "cacheID": "04b48eb16b56d63bdae0a30c6341fab6",
     "id": null,
     "metadata": {},
     "name": "partnersRoutes_GalleriesRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

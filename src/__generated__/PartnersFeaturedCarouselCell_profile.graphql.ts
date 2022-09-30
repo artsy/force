@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarouselCell_profile = {
-    readonly internalID: string;
     readonly owner: {
         readonly internalID?: string | undefined;
         readonly href?: string | null | undefined;
@@ -29,6 +28,7 @@ export type PartnersFeaturedCarouselCell_profile = {
             } | null;
         } | null | undefined;
     };
+    readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     readonly " $refType": "PartnersFeaturedCarouselCell_profile";
 };
 export type PartnersFeaturedCarouselCell_profile$data = PartnersFeaturedCarouselCell_profile;
@@ -44,24 +44,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "href",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -74,7 +67,6 @@ return {
   "metadata": null,
   "name": "PartnersFeaturedCarouselCell_profile",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -86,9 +78,15 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
             (v0/*: any*/),
             (v1/*: any*/),
-            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -97,8 +95,8 @@ return {
               "name": "featuredShow",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 (v1/*: any*/),
-                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -115,14 +113,14 @@ return {
                 },
                 {
                   "alias": null,
-                  "args": (v3/*: any*/),
+                  "args": (v2/*: any*/),
                   "kind": "ScalarField",
                   "name": "startAt",
                   "storageKey": "startAt(format:\"MMM D\")"
                 },
                 {
                   "alias": null,
-                  "args": (v3/*: any*/),
+                  "args": (v2/*: any*/),
                   "kind": "ScalarField",
                   "name": "endAt",
                   "storageKey": "endAt(format:\"MMM D\")"
@@ -212,11 +210,16 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowProfileButton_profile"
     }
   ],
   "type": "Profile",
   "abstractKey": null
 };
 })();
-(node as any).hash = '4c89f00625fe836ba767808b0d5941b1';
+(node as any).hash = '96f2438a5e38ecb4f1902def2992ea57';
 export default node;

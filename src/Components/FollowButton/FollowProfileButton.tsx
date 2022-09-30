@@ -8,8 +8,6 @@ import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { Intent, AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery.graphql"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   profile: FollowProfileButton_profile
@@ -104,39 +102,4 @@ export const FollowProfileButtonFragmentContainer = createFragmentContainer(
   }
 )
 
-interface FollowProfileButtonQueryRendererProps
-  extends Omit<FollowProfileButtonProps, "profile"> {
-  id: string
-}
-
-export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQueryRendererProps> = ({
-  id,
-  ...rest
-}) => {
-  return (
-    <SystemQueryRenderer<FollowProfileButtonQuery>
-      lazyLoad
-      query={graphql`
-        query FollowProfileButtonQuery($id: String!) {
-          profile(id: $id) {
-            ...FollowProfileButton_profile
-          }
-        }
-      `}
-      placeholder={<FollowButton {...rest} />}
-      variables={{ id }}
-      render={({ error, props }) => {
-        if (error || !props?.profile) {
-          return <FollowButton {...rest} />
-        }
-
-        return (
-          <FollowProfileButtonFragmentContainer
-            {...rest}
-            profile={props.profile}
-          />
-        )
-      }}
-    />
-  )
-}
+// TODO: QueryRenderer (requires top-level profile field in Metaphysics)

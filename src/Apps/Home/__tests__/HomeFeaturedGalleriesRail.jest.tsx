@@ -46,6 +46,7 @@ describe("HomeFeaturedGalleriesRail", () => {
     expect(wrapper.text()).toContain("Featured Galleries")
     expect(wrapper.text()).toContain("View All Galleries")
     expect(wrapper.text()).toContain("Test Gallery")
+    expect(wrapper.text()).toContain("Following")
     expect(wrapper.html()).toContain("test-href")
   })
 

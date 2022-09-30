@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingGene_gene = {
-    readonly internalID: string;
     readonly name: string | null;
     readonly artworks: {
         readonly edges: ReadonlyArray<{
@@ -15,6 +14,7 @@ export type OnboardingGene_gene = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
     readonly " $refType": "OnboardingGene_gene";
 };
 export type OnboardingGene_gene$data = OnboardingGene_gene;
@@ -25,21 +25,12 @@ export type OnboardingGene_gene$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "OnboardingGene_gene",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -122,7 +113,13 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -136,11 +133,15 @@ return {
         }
       ],
       "storageKey": "filterArtworksConnection(first:50,forSale:true,height:\"*-*\",inquireableOnly:true,marketable:true,offerable:true,page:1,priceRange:\"*-*\",sort:\"-decayed_merch\",width:\"*-*\")"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-})();
-(node as any).hash = '3e738a263393a1812162d68c8845a834';
+(node as any).hash = 'b3e1ab6675c1dadf0befc91eb69b357b';
 export default node;

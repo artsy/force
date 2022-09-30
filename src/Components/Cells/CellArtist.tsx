@@ -14,19 +14,17 @@ import { EntityHeaderArtistFragmentContainer } from "../EntityHeaders/EntityHead
 import { FC } from "react"
 import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
 
-export interface CellArtistProps extends Partial<RouterLinkProps> {
+export interface CellArtistProps extends Omit<RouterLinkProps, "to"> {
   artist: CellArtist_artist
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayCounts?: boolean
-  FollowButton?: JSX.Element
 }
 
 const CellArtist: FC<CellArtistProps> = ({
   artist,
   mode = "RAIL",
   displayCounts,
-  FollowButton,
   ...rest
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
@@ -71,7 +69,6 @@ const CellArtist: FC<CellArtistProps> = ({
         displayAvatar={false}
         displayLink={false}
         displayCounts={displayCounts}
-        FollowButton={FollowButton}
         alignItems="flex-start"
         mt={1}
       />

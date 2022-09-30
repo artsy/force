@@ -10,7 +10,7 @@ import { useRouter } from "System/Router/useRouter"
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
-  FollowProfileButtonQueryRenderer: () => null,
+  FollowProfileButtonFragmentContainer: () => null,
 }))
 jest.mock("react-tracking", () => ({
   useTracking: () => ({}),

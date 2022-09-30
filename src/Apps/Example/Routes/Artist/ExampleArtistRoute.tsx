@@ -4,7 +4,7 @@ import { ExampleArtistRoute_artist } from "__generated__/ExampleArtistRoute_arti
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
 import { AnalyticsContext, useAnalyticsContext } from "System"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ExampleArtistAppProps {
@@ -15,18 +15,15 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
   return (
     <Box>
       <Title>{artist.name} | Artsy</Title>
-
       <Text variant="lg-display" mb={2}>
         {artist.name}
       </Text>
-
       <Box my={2}>
-        <FollowArtistButtonQueryRenderer
-          id={artist.internalID}
+        <FollowArtistButton
+          artist={artist}
           contextModule={ContextModule.artistHeader}
         />
       </Box>
-
       <Text>{artist.bio}</Text>
     </Box>
   )
@@ -61,6 +58,7 @@ export const ExampleArtistRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ExampleArtistRoute_artist on Artist {
+        ...FollowArtistButton_artist
         name
         bio
         internalID

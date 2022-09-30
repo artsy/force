@@ -15,7 +15,7 @@ export const SingleFollowedArtist = {
       formattedNationalityAndBirthday: "formattedNationalityAndBirthday",
     },
   ],
-  culturalMaker: "American 18th Century",
+  cultural_maker: "American 18th Century",
 }
 
 export const SingleNonFollowedArtist = {
@@ -32,7 +32,7 @@ export const SingleNonFollowedArtist = {
       related: null,
     },
   ],
-  culturalMaker: "American 18th Century",
+  cultural_maker: "American 18th Century",
 }
 
 export const MultipleArtists = {
@@ -65,11 +65,11 @@ export const MultipleArtists = {
       formattedNationalityAndBirthday: "formattedNationalityAndBirthday",
     },
   ],
-  culturalMaker: "American 18th Century",
+  cultural_maker: "American 18th Century",
 }
 
 export const CulturalMakerWork = {
   id: "opaque-artwork-id",
   artists: [],
-  culturalMaker: "American 18th Century",
+  cultural_maker: "American 18th Century",
 }

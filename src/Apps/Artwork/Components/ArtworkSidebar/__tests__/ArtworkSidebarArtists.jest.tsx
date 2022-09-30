@@ -9,7 +9,7 @@ import { graphql } from "react-relay"
 import { mockLocation } from "DevTools/mockLocation"
 import { mediator } from "Server/mediator"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen, within } from "@testing-library/react"
+import { screen, within, fireEvent } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -61,6 +61,25 @@ describe("ArtworkSidebarArtists", () => {
       const button = screen.getByRole("button")
       expect(within(button).getByText("Follow")).toBeInTheDocument()
       expect(within(button).getByText("Following")).toHaveStyle("opacity: 0")
+    })
+
+    it("Opens auth with expected args when following an artist", () => {
+      renderWithRelay({
+        Artwork: () => SingleFollowedArtist,
+      })
+      fireEvent.click(screen.getByRole("button"))
+
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
+        afterSignUpAction: {
+          action: "follow",
+          kind: "artist",
+          objectId: "josef-albers",
+        },
+        contextModule: "artworkSidebar",
+        copy: "Sign up to follow Josef Albers",
+        intent: "followArtist",
+        mode: "signup",
+      })
     })
   })
 
