@@ -23,42 +23,25 @@ describe("ArtistInsightPills", () => {
   it("renders artist insight pills", () => {
     renderWithRelay({
       Artist: () => ({
-        insightsList: [
+        insightPills: [
           {
             label: "The FooBar Vanguard",
+            description: "Appeared in 2020 Vangard",
           },
           {
             label: "FooBar Secondary Market",
+            description: "Very active market",
+          },
+          {
+            label: "High Auction Record",
+            description: "US$93.1m, Christies, 2021",
           },
         ],
-        auctionResultsConnection: {
-          edges: [
-            {
-              node: {
-                price_realized: {
-                  display: "US$93.1m",
-                },
-                organization: "Christies",
-                sale_date: "2021",
-              },
-            },
-          ],
-        },
       }),
     })
 
     expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
     expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
     expect(screen.getByText("High Auction Record")).toBeInTheDocument()
-  })
-
-  it("does not render high auction record if not present on artist", () => {
-    renderWithRelay({
-      Artist: () => ({
-        auctionResultsConnection: null,
-      }),
-    })
-
-    expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
   })
 })

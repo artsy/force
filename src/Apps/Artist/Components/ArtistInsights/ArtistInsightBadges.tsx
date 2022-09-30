@@ -7,7 +7,6 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { extractNodes } from "Utils/extractNodes"
 import { ArtistInsightBadges_artist } from "__generated__/ArtistInsightBadges_artist.graphql"
 
 interface ArtistInsightBadgesProps {
@@ -17,13 +16,7 @@ interface ArtistInsightBadgesProps {
 export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
   artist,
 }) => {
-  // The first result is the highest auction result
-  const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
-  const highAuctionRecord = highAuctionResult
-    ? `${highAuctionResult.priceRealized?.display}, ${highAuctionResult.organization}, ${highAuctionResult.saleDate}`
-    : null
-
-  if (artist.insights.length === 0 && !highAuctionResult) {
+  if (artist.insightBadges.length === 0) {
     return null
   }
 
@@ -33,7 +26,7 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
         Achievements
       </Text>
       <GridColumns>
-        {artist.insights.map(insight => {
+        {artist.insightBadges.map(insight => {
           return (
             <Column span={6} key={insight.kind!}>
               <Text variant="sm" color="blue100">
@@ -45,18 +38,6 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
             </Column>
           )
         })}
-
-        {highAuctionRecord && (
-          <Column span={6}>
-            <Text variant="sm" color="blue100">
-              High Auction Record
-            </Text>
-
-            <Text variant="sm" color="black60">
-              {highAuctionRecord}
-            </Text>
-          </Column>
-        )}
       </GridColumns>
     </>
   )
@@ -67,25 +48,17 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistInsightBadges_artist on Artist {
-        insights(kind: [ACTIVE_SECONDARY_MARKET]) {
+        insightBadges: insights(
+          kind: [
+            ACTIVE_SECONDARY_MARKET
+            HIGH_AUCTION_RECORD
+            ARTSY_VANGUARD_YEAR
+            CRITICALLY_ACCLAIMED
+          ]
+        ) {
           kind
           label
           description
-        }
-        auctionResultsConnection(
-          recordsTrusted: true
-          first: 1
-          sort: PRICE_AND_DATE_DESC
-        ) {
-          edges {
-            node {
-              priceRealized {
-                display(format: "0.0a")
-              }
-              organization
-              saleDate(format: "YYYY")
-            }
-          }
         }
       }
     `,

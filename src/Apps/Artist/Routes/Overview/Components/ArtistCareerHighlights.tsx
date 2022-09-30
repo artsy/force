@@ -9,7 +9,6 @@ import { ArtistInsightBadgesFragmentContainer } from "Apps/Artist/Components/Art
 import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
 import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
-import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { getENV } from "Utils/getENV"
 import { useTranslation } from "react-i18next"
@@ -28,11 +27,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   const partnerHref = `${getENV("APP_URL")}/partner${partner?.profile?.href}`
 
   const displayInsightAchievements = artist.insightAchievements.length > 0
-  // TODO: Replace with just `insightBadges.length` check
-  const displayInsightBadges =
-    artist.insightBadges.length > 0 ||
-    (artist.auctionResultsConnection?.totalCount ?? 0) > 0 ||
-    extractNodes(artist.artistHighlights?.partnersConnection).length > 0
+  const displayInsightBadges = artist.insightBadges.length > 0
 
   if (!displayInsightAchievements && !displayInsightBadges) {
     return null
@@ -88,15 +83,15 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ) {
           __typename
         }
-        insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
-          __typename
-        }
-        auctionResultsConnection(
-          recordsTrusted: true
-          first: 1
-          sort: PRICE_AND_DATE_DESC
+        insightBadges: insights(
+          kind: [
+            ACTIVE_SECONDARY_MARKET
+            HIGH_AUCTION_RECORD
+            ARTSY_VANGUARD_YEAR
+            CRITICALLY_ACCLAIMED
+          ]
         ) {
-          totalCount
+          __typename
         }
         artistHighlights: highlights {
           partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {

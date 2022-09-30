@@ -20,64 +20,30 @@ describe("ArtistInsightBadges", () => {
   it("renders artist insight badges", () => {
     renderWithRelay({
       Artist: () => ({
-        insights: [
+        insightBadges: [
           {
             label: "The FooBar Vanguard",
+            description: "Appeared in 2020 Vangard",
           },
           {
             label: "FooBar Secondary Market",
+            description: "Very active market",
+          },
+          {
+            label: "High Auction Record",
+            description: "US$93.1m, Christies, 2021",
           },
         ],
-        auctionResultsConnection: {
-          edges: [
-            {
-              node: {
-                priceRealized: {
-                  display: "US$93.1m",
-                },
-                organization: "Christies",
-                saleDate: "2021",
-              },
-            },
-          ],
-        },
       }),
     })
+
+    expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
+    expect(screen.getByText("Appeared in 2020 Vangard")).toBeInTheDocument()
+
+    expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
+    expect(screen.getByText("Very active market")).toBeInTheDocument()
 
     expect(screen.getByText("High Auction Record")).toBeInTheDocument()
-    expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
-    expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
-  })
-
-  it("renders high auction record correctly", () => {
-    renderWithRelay({
-      Artist: () => ({
-        auctionResultsConnection: {
-          edges: [
-            {
-              node: {
-                priceRealized: {
-                  display: "US$100m",
-                },
-                organization: "Foos",
-                saleDate: "1990",
-              },
-            },
-          ],
-        },
-      }),
-    })
-
-    expect(screen.getByText("US$100m, Foos, 1990")).toBeInTheDocument()
-  })
-
-  it("does not render high auction record if not present on artist", () => {
-    renderWithRelay({
-      Artist: () => ({
-        auctionResultsConnection: null,
-      }),
-    })
-
-    expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
+    expect(screen.getByText("US$93.1m, Christies, 2021")).toBeInTheDocument()
   })
 })

@@ -6,22 +6,10 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 export type ArtistInsightPills_artist = {
-    readonly insightsList: ReadonlyArray<{
+    readonly insightPills: ReadonlyArray<{
         readonly kind: ArtistInsightKind | null;
         readonly label: string;
-        readonly entities: ReadonlyArray<string>;
     }>;
-    readonly auctionResultsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly priceRealized: {
-                    readonly display: string | null;
-                } | null;
-                readonly organization: string | null;
-                readonly sale_date: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
     readonly " $refType": "ArtistInsightPills_artist";
 };
 export type ArtistInsightPills_artist$data = ArtistInsightPills_artist;
@@ -39,13 +27,16 @@ const node: ReaderFragment = {
   "name": "ArtistInsightPills_artist",
   "selections": [
     {
-      "alias": "insightsList",
+      "alias": "insightPills",
       "args": [
         {
           "kind": "Literal",
           "name": "kind",
           "value": [
-            "ACTIVE_SECONDARY_MARKET"
+            "ACTIVE_SECONDARY_MARKET",
+            "HIGH_AUCTION_RECORD",
+            "ARTSY_VANGUARD_YEAR",
+            "CRITICALLY_ACCLAIMED"
           ]
         }
       ],
@@ -67,113 +58,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "label",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "entities",
-          "storageKey": null
         }
       ],
-      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "recordsTrusted",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "PRICE_AND_DATE_DESC"
-        }
-      ],
-      "concreteType": "AuctionResultConnection",
-      "kind": "LinkedField",
-      "name": "auctionResultsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "AuctionResultEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "AuctionResult",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "AuctionResultPriceRealized",
-                  "kind": "LinkedField",
-                  "name": "priceRealized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "format",
-                          "value": "0.0a"
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "display",
-                      "storageKey": "display(format:\"0.0a\")"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "organization",
-                  "storageKey": null
-                },
-                {
-                  "alias": "sale_date",
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "format",
-                      "value": "YYYY"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "saleDate",
-                  "storageKey": "saleDate(format:\"YYYY\")"
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\",\"HIGH_AUCTION_RECORD\",\"ARTSY_VANGUARD_YEAR\",\"CRITICALLY_ACCLAIMED\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '1b42d549e45b1e86f00b6ba9cc322618';
+(node as any).hash = '6925e3836284c99cee84746c41d43b56';
 export default node;
