@@ -136,6 +136,7 @@ export const ArtQuizContextProvider: FC = ({ children }) => {
     ]
   )
 
+  // TODO: pull this out into a named object literal
   return (
     <ArtQuizContext.Provider value={value}>{children}</ArtQuizContext.Provider>
   )

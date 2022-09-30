@@ -5,13 +5,16 @@ import {
   HeartFillIcon,
   HeartIcon,
 } from "@artsy/palette"
-import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext/ArtQuizContext"
+import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC, MouseEvent, useState } from "react"
 
 const BTN_WIDTH = 40
 const BTN_HEIGHT = 40
 
+// TODO: Re-evaluate necessity of this component
+// Maybe just add a size prop to existing button
+// Depends on how animations implementation goes
 export const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
   slug,
   ...rest
@@ -59,6 +62,8 @@ export const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
   )
 }
 
+// TODO: Add mutation and animation
+// Ask lois about possibility of a bold version of this icon
 export const ArtQuizDislikeButton: FC<ClickableProps> = ({ ...rest }) => {
   const { stepBackward } = useArtQuizContext()
   const handleClick = () => {
