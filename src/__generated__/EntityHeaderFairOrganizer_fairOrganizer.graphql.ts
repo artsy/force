@@ -12,7 +12,6 @@ export type EntityHeaderFairOrganizer_fairOrganizer = {
         readonly totalCount: number | null;
     } | null;
     readonly profile: {
-        readonly internalID: string;
         readonly href: string | null;
         readonly initials: string | null;
         readonly avatar: {
@@ -21,6 +20,7 @@ export type EntityHeaderFairOrganizer_fairOrganizer = {
                 readonly srcSet: string;
             } | null;
         } | null;
+        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly " $refType": "EntityHeaderFairOrganizer_fairOrganizer";
 };
@@ -32,21 +32,19 @@ export type EntityHeaderFairOrganizer_fairOrganizer$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "EntityHeaderFairOrganizer_fairOrganizer",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -87,7 +85,6 @@ return {
       "name": "profile",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -148,6 +145,11 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -156,6 +158,5 @@ return {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-})();
-(node as any).hash = '1b091ee93b9da81ade80d2d368113bc3';
+(node as any).hash = '052b967b34d0875f92bf82944cfa0ee2';
 export default node;

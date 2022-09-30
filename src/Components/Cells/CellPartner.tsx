@@ -111,6 +111,7 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
           slug
         }
         profile {
+          ...FollowProfileButton_profile
           image {
             cropped(
               width: 445

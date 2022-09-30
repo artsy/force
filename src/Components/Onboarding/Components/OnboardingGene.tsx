@@ -7,7 +7,7 @@ import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
+import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "../Views/OnboardingThankYou"
 import { ContextModule } from "@artsy/cohesion"
@@ -43,15 +43,15 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           </Text>
         </Box>
 
-        <FollowGeneButtonQueryRenderer
-          id={gene.internalID}
+        <FollowGeneButtonFragmentContainer
+          gene={gene}
           display={["none", "block"]}
           contextModule={ContextModule.onboardingFlow}
         />
       </Flex>
 
-      <FollowGeneButtonQueryRenderer
-        id={gene.internalID}
+      <FollowGeneButtonFragmentContainer
+        gene={gene}
         mt={2}
         display={["block", "none"]}
         size="small"
@@ -84,7 +84,6 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
   {
     gene: graphql`
       fragment OnboardingGene_gene on Gene {
-        internalID
         name
         artworks: filterArtworksConnection(
           first: 50
@@ -105,6 +104,7 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...FollowGeneButton_gene
       }
     `,
   }

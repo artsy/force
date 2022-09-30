@@ -151,7 +151,11 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
   FollowArtistButton,
   {
     artist: graphql`
-      fragment FollowArtistButton_artist on Artist {
+      fragment FollowArtistButton_artist on Artist
+        @argumentDefinitions(
+          showFollowSuggestions: { type: "Boolean", defaultValue: false }
+        ) {
+        ...FollowArtistPopover_artist @include(if: $showFollowSuggestions)
         id
         slug
         name

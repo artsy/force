@@ -5,12 +5,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtists_artwork = {
-    readonly culturalMaker: string | null;
+    readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
         readonly internalID: string;
         readonly slug: string;
         readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist" | "FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtworkSidebarArtists_artwork";
 };
@@ -23,13 +23,19 @@ export type ArtworkSidebarArtists_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "showFollowSuggestions"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSidebarArtists_artwork",
   "selections": [
     {
-      "alias": null,
+      "alias": "cultural_maker",
       "args": null,
       "kind": "ScalarField",
       "name": "culturalMaker",
@@ -68,6 +74,17 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "EntityHeaderArtist_artist"
+        },
+        {
+          "args": [
+            {
+              "kind": "Variable",
+              "name": "showFollowSuggestions",
+              "variableName": "showFollowSuggestions"
+            }
+          ],
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist"
         }
       ],
       "storageKey": null
@@ -76,5 +93,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '02f86e63433eee7f88516a49cc679259';
+(node as any).hash = '7b030820d6156f2b5417ed17d67e09f7';
 export default node;

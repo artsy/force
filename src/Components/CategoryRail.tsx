@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react"
 import {
   Box,
+  EntityHeader,
   Flex,
   Shelf,
   Skeleton,
@@ -14,7 +15,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { CategoryRailQuery } from "__generated__/CategoryRailQuery.graphql"
 import { CategoryRail_category } from "__generated__/CategoryRail_category.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
-import { EntityHeaderGeneFragmentContainer } from "./EntityHeaders/EntityHeaderGene"
+import { FollowGeneButtonFragmentContainer } from "./FollowButton/FollowGeneButton"
 
 interface CategoryRailProps {
   category: CategoryRail_category
@@ -23,11 +24,25 @@ interface CategoryRailProps {
 const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
   if (!category || !category.name) return null
 
-  const artworks = extractNodes(category.filterArtworks)
+  const artworks = extractNodes(category.filterArtworksConnection)
 
   return (
     <>
-      <EntityHeaderGeneFragmentContainer gene={category} />
+      <EntityHeader
+        name={category.name}
+        initials={category.name[0]}
+        href={category.href!}
+        image={{
+          src: category.avatar?.cropped?.src,
+          srcSet: category.avatar?.cropped?.srcSet,
+        }}
+        FollowButton={
+          <FollowGeneButtonFragmentContainer gene={category} size="small">
+            Follow
+          </FollowGeneButtonFragmentContainer>
+        }
+        mb={2}
+      />
 
       {artworks.length > 0 ? (
         <Shelf>
@@ -90,10 +105,16 @@ export const CategoryRailFragmentContainer = createFragmentContainer(
   {
     category: graphql`
       fragment CategoryRail_category on Gene {
-        ...EntityHeaderGene_gene
         name
         href
-        filterArtworks: filterArtworksConnection(first: 10) {
+        avatar: image {
+          cropped(width: 45, height: 45) {
+            src
+            srcSet
+          }
+        }
+        ...FollowGeneButton_gene
+        filterArtworksConnection(first: 10) {
           edges {
             node {
               internalID

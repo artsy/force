@@ -7,7 +7,7 @@ import { CellPartnerFragmentContainer } from "../CellPartner"
 jest.unmock("react-relay")
 
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
-  FollowProfileButtonQueryRenderer: () => null,
+  FollowProfileButtonFragmentContainer: () => null,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<

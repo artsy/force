@@ -6,6 +6,15 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistRail_artist = {
     readonly name: string | null;
+    readonly href: string | null;
+    readonly initials: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly avatar: {
+        readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+    } | null;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -14,7 +23,7 @@ export type ArtistRail_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "ArtistRail_artist";
 };
 export type ArtistRail_artist$data = ArtistRail_artist;
@@ -36,6 +45,74 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "initials",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedNationalityAndBirthday",
+      "storageKey": null
+    },
+    {
+      "alias": "avatar",
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 45
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 45
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:45,width:45)"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -92,11 +169,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "EntityHeaderArtist_artist"
+      "name": "FollowArtistButton_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'b65cc544c0dc2494ef6b51408a48f565';
+(node as any).hash = 'bdc42a5b2d30681b3865ef26be9dff31';
 export default node;

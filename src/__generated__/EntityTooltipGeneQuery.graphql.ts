@@ -30,6 +30,7 @@ query EntityTooltipGeneQuery(
 }
 
 fragment EntityHeaderGene_gene on Gene {
+  ...FollowGeneButton_gene
   internalID
   href
   name
@@ -60,6 +61,14 @@ fragment EntityTooltipGene_gene on Gene {
     }
   }
 }
+
+fragment FollowGeneButton_gene on Gene {
+  id
+  slug
+  name
+  internalID
+  isFollowed
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -78,6 +87,13 @@ v1 = [
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -85,25 +101,18 @@ v2 = {
     "tall"
   ]
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "srcSet",
-  "storageKey": null
-},
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "srcSet",
   "storageKey": null
 };
 return {
@@ -147,6 +156,21 @@ return {
         "name": "gene",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -158,14 +182,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "isFollowed",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -184,7 +208,7 @@ return {
                     "name": "height",
                     "value": 45
                   },
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -196,8 +220,8 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
-                  (v4/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": "cropped(height:45,version:[\"big_and_tall\",\"tall\"],width:45)"
               }
@@ -236,7 +260,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": "filterArtworksConnection(first:1)"
           },
@@ -269,7 +293,7 @@ return {
                     "name": "height",
                     "value": 146
                   },
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -281,8 +305,8 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -302,20 +326,19 @@ return {
               }
             ],
             "storageKey": null
-          },
-          (v5/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "83ae9d8f5f980a726414c0b7c77949d0",
+    "cacheID": "0b11f10f4dc300935eeb02c1084539b1",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipGeneQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipGeneQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityTooltipGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment EntityTooltipGene_gene on Gene {\n  ...EntityHeaderGene_gene\n  href\n  description(format: PLAIN)\n  image {\n    cropped(width: 260, height: 146, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n      height\n      width\n    }\n  }\n}\n"
+    "text": "query EntityTooltipGeneQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityTooltipGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment EntityTooltipGene_gene on Gene {\n  ...EntityHeaderGene_gene\n  href\n  description(format: PLAIN)\n  image {\n    cropped(width: 260, height: 146, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n      height\n      width\n    }\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

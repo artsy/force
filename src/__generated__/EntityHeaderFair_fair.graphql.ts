@@ -17,8 +17,8 @@ export type EntityHeaderFair_fair = {
         } | null;
     } | null;
     readonly profile: {
-        readonly internalID: string;
         readonly initials: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly " $refType": "EntityHeaderFair_fair";
 };
@@ -30,21 +30,19 @@ export type EntityHeaderFair_fair$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "EntityHeaderFair_fair",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -140,13 +138,17 @@ return {
       "name": "profile",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "initials",
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -155,6 +157,5 @@ return {
   "type": "Fair",
   "abstractKey": null
 };
-})();
-(node as any).hash = '28c79791eea6f388f69c43205edd6f93';
+(node as any).hash = 'e4e1a33d028f86d9efa0f3b80e0458cc';
 export default node;

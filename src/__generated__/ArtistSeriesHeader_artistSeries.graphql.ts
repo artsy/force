@@ -26,6 +26,7 @@ export type ArtistSeriesHeader_artistSeries = {
         readonly href: string | null;
         readonly slug: string;
         readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtistSeriesHeader_artistSeries";
 };
@@ -200,7 +201,12 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v1/*: any*/)
+        (v1/*: any*/),
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist"
+        }
       ],
       "storageKey": "artists(size:1)"
     }
@@ -209,5 +215,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1e87201a3cb974b9625f5b9b327b00e4';
+(node as any).hash = '68596204c6cde0509a32283681e33a4d';
 export default node;

@@ -19,6 +19,7 @@ export type EntityHeaderGene_gene = {
             readonly total: number | null;
         } | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
     readonly " $refType": "EntityHeaderGene_gene";
 };
 export type EntityHeaderGene_gene$data = EntityHeaderGene_gene;
@@ -145,10 +146,15 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "filterArtworksConnection(first:1)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '90714ad51091e668d2a1eae00ca3d146';
+(node as any).hash = 'cb9d9de7329f02413194a65fd768cb10';
 export default node;
