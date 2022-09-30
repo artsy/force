@@ -8,17 +8,18 @@ module.exports = {
     "jest",
     "jest-dom",
     "testing-library",
+    "no-relative-import-paths",
   ],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
     "plugin:styled-components-a11y/recommended",
     "plugin:jest/recommended",
     "plugin:jest-dom/recommended",
     "plugin:testing-library/react",
+    "prettier", // prettier should always be last
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -113,6 +114,10 @@ module.exports = {
         name: "react-waypoint",
         message: "Please use `useIntersectionObserver`",
       },
+    ],
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      { allowSameFolder: true },
     ],
   },
   overrides: [
