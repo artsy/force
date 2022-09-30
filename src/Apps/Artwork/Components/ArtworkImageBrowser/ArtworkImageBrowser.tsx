@@ -108,6 +108,7 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
             internalID
             isDefault
           }
+          # FIXME: Figure out why this only works logged-in
           ... on Video {
             type: __typename
           }

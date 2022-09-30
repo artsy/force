@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b001bf20000136ec8440cc8edcbe4311>>
+ * @generated SignedSource<<0dfdeb2c3f10dc3732db6ef3cb6ff1ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -364,6 +364,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "isSetVideoAsCover",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -373,7 +380,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "23b079d1cb2fcdcf0732185b7c68010e",
+    "cacheID": "3da190faefb0f1a5cc9b469ab0534dee",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -460,12 +467,13 @@ return {
         "artwork.images.resized.height": (v8/*: any*/),
         "artwork.images.resized.src": (v6/*: any*/),
         "artwork.images.resized.srcSet": (v6/*: any*/),
-        "artwork.images.resized.width": (v8/*: any*/)
+        "artwork.images.resized.width": (v8/*: any*/),
+        "artwork.isSetVideoAsCover": (v10/*: any*/)
       }
     },
     "name": "ArtworkImageBrowserLarge_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  figures {\n    __typename\n    ... on Image {\n      type: __typename\n      internalID\n      isZoomable\n      ...DeepZoom_image\n    }\n    ... on Video {\n      type: __typename\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  figures {\n    __typename\n    ... on Video {\n      type: __typename\n      url\n      height\n      width\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      type: __typename\n      internalID\n      isZoomable\n      ...DeepZoom_image\n    }\n    ... on Video {\n      type: __typename\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  figures {\n    __typename\n    ... on Video {\n      type: __typename\n      url\n      height\n      width\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();

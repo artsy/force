@@ -93,7 +93,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
             my={2}
             maxHeight={maxHeight}
             artwork={artwork}
-            activeIndex={index}
+            activeIndex={artwork.isSetVideoAsCover ? index - 1 : index}
             onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
           />
         )}
@@ -125,22 +125,6 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   )
 }
 
-const NextPrevious = styled(Clickable)`
-  position: absolute;
-  top: 20%;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${themeGet("colors.black30")};
-  transition: color 250ms;
-  z-index: 1;
-
-  &:hover {
-    color: ${themeGet("colors.black100")};
-  }
-`
-
 export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer(
   ArtworkImageBrowserLarge,
   {
@@ -148,6 +132,7 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
       fragment ArtworkImageBrowserLarge_artwork on Artwork {
         ...ArtworkLightbox_artwork
         ...ArtworkVideoPlayer_artwork
+        isSetVideoAsCover
         figures {
           ... on Image {
             type: __typename
@@ -163,3 +148,19 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
     `,
   }
 )
+
+const NextPrevious = styled(Clickable)`
+  position: absolute;
+  top: 20%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${themeGet("colors.black30")};
+  transition: color 250ms;
+  z-index: 1;
+
+  &:hover {
+    color: ${themeGet("colors.black100")};
+  }
+`

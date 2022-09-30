@@ -54,7 +54,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
                   maxHeight={maxHeight}
                   my={2}
                   artwork={artwork}
-                  activeIndex={i}
+                  activeIndex={artwork.isSetVideoAsCover ? index - 1 : index}
                   lazyLoad={i !== 0}
                   onClick={
                     activeFigure.type === "Image" && activeFigure.isZoomable
@@ -118,6 +118,7 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
       fragment ArtworkImageBrowserSmall_artwork on Artwork {
         ...ArtworkLightbox_artwork
         ...ArtworkVideoPlayer_artwork
+        isSetVideoAsCover
         figures {
           ... on Image {
             ...DeepZoom_image

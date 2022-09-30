@@ -10,5 +10,5 @@ fi
 (
   cd ../metaphysics
   yarn install
-  yarn dump-schema v2 "$OLDPWD/data/"
+  yarn dump-schema "$OLDPWD/data/"
 )
