@@ -1,7 +1,6 @@
 import { FC, Fragment } from "react"
 import {
   Box,
-  EntityHeader,
   Flex,
   Shelf,
   Skeleton,
@@ -15,7 +14,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ArtistRailQuery } from "__generated__/ArtistRailQuery.graphql"
 import { ArtistRail_artist } from "__generated__/ArtistRail_artist.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
-import { FollowArtistButtonFragmentContainer } from "./FollowButton/FollowArtistButton"
+import { EntityHeaderArtistFragmentContainer } from "./EntityHeaders/EntityHeaderArtist"
 
 interface ArtistRailProps {
   artist: ArtistRail_artist
@@ -28,22 +27,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
 
   return (
     <>
-      <EntityHeader
-        name={artist.name}
-        initials={artist.initials!}
-        href={artist.href!}
-        meta={artist.formattedNationalityAndBirthday!}
-        image={{
-          src: artist.avatar?.cropped?.src,
-          srcSet: artist.avatar?.cropped?.srcSet,
-        }}
-        FollowButton={
-          <FollowArtistButtonFragmentContainer artist={artist} size="small">
-            Follow
-          </FollowArtistButtonFragmentContainer>
-        }
-        mb={2}
-      />
+      <EntityHeaderArtistFragmentContainer artist={artist} mb={2} />
 
       {artworks.length > 0 ? (
         <Shelf>
@@ -105,17 +89,8 @@ export const ARTIST_RAIL_PLACEHOLDER = (
 export const ArtistRailFragmentContainer = createFragmentContainer(ArtistRail, {
   artist: graphql`
     fragment ArtistRail_artist on Artist {
+      ...EntityHeaderArtist_artist
       name
-      href
-      initials
-      formattedNationalityAndBirthday
-      avatar: image {
-        cropped(width: 45, height: 45) {
-          src
-          srcSet
-        }
-      }
-      ...FollowArtistButton_artist
       artworksConnection(first: 10) {
         edges {
           node {

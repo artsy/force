@@ -14,7 +14,7 @@ import { Link } from "react-head"
 import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist } from "__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
@@ -89,8 +89,8 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               </Column>
 
               <Column start={avatar ? 3 : undefined} span={4}>
-                <FollowArtistButtonFragmentContainer
-                  artist={artist}
+                <FollowArtistButtonQueryRenderer
+                  id={artist.internalID}
                   contextModule={ContextModule.artistHeader}
                   size="large"
                   width="100%"
@@ -153,9 +153,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist {
-        ...FollowArtistButton_artist
         ...ArtistInsightPills_artist
-
         auctionResultsConnection(
           recordsTrusted: true
           first: 1

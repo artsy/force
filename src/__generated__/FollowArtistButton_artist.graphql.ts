@@ -13,7 +13,6 @@ export type FollowArtistButton_artist = {
     readonly counts: {
         readonly follows: number | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistPopover_artist">;
     readonly " $refType": "FollowArtistButton_artist";
 };
 export type FollowArtistButton_artist$data = FollowArtistButton_artist;
@@ -25,13 +24,7 @@ export type FollowArtistButton_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "showFollowSuggestions"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "FollowArtistButton_artist",
@@ -88,22 +81,10 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "condition": "showFollowSuggestions",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistPopover_artist"
-        }
-      ]
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'a7288a928f5654f43e9b7643dd70ea12';
+(node as any).hash = 'c88c1bc198c4a5e092eb861fbb8b55eb';
 export default node;

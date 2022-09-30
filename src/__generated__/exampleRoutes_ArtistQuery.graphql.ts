@@ -31,22 +31,10 @@ query exampleRoutes_ArtistQuery(
 }
 
 fragment ExampleArtistRoute_artist on Artist {
-  ...FollowArtistButton_artist
   name
   bio
   internalID
   slug
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-  counts {
-    follows
-  }
 }
 */
 
@@ -119,14 +107,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "name",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "bio",
             "storageKey": null
           },
           {
@@ -140,32 +128,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isFollowed",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtistCounts",
-            "kind": "LinkedField",
-            "name": "counts",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "follows",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "bio",
+            "name": "slug",
             "storageKey": null
           }
         ],
@@ -174,12 +137,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fe99d9b7a2465ed74a349bf0f644d8d6",
+    "cacheID": "8f7d15cd5f0d3bb3949bd45c16f88738",
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  bio\n  internalID\n  slug\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n}\n"
   }
 };
 })();
