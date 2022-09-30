@@ -20,7 +20,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 
   return (
     <>
-      <Text mb={2} mt={4} variant="sm-display">
+      <Text mb={0.5} mt={4} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60">
@@ -48,7 +48,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
         </Button>
       </RouterLink>
 
-      <Text mb={2} color="black60">
+      <Text color="black60">
         Learn more about{" "}
         <Clickable
           onClick={() => {
