@@ -223,7 +223,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         throw orderOrError.error
       }
 
-      props.router.push(`/orders/${props.order.internalID}/review`)
+      handlePaymentStepComplete()
     } catch (error) {
       setIsSavingPayment(false)
       logger.error(error)
@@ -247,8 +247,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       ).commerceSetPayment?.orderOrError
 
       if (orderOrError?.error) throw orderOrError.error
-      setIsSavingPayment(false)
-      props.router.push(`/orders/${props.order.internalID}/review`)
+
+      handlePaymentStepComplete()
     } catch (error) {
       setIsSavingPayment(false)
       logger.error(error)

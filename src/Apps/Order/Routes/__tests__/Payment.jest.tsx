@@ -15,7 +15,7 @@ import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import { MockBoot } from "DevTools"
+import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { useOrderPaymentContext } from "../Payment/PaymentContext/OrderPaymentContext"
@@ -128,6 +128,7 @@ class PaymentTestPage extends OrderAppTestPage {
 
 describe("Payment", () => {
   const pushMock = jest.fn()
+  const mockSetIsSavingPayment = jest.fn()
   let isCommittingMutation
 
   const { getWrapper } = setupTestWrapper({
@@ -175,7 +176,7 @@ describe("Payment", () => {
       ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
         return {
           selectedPaymentMethod: "CREDIT_CARD",
-          setIsSavingPayment: jest.fn(),
+          setIsSavingPayment: mockSetIsSavingPayment,
         }
       })
       const mockTracking = useTracking as jest.Mock
@@ -261,10 +262,14 @@ describe("Payment", () => {
       )
     })
 
-    it("takes the user to the review step", async () => {
+    it("terminates spinner and takes the user to the review step", async () => {
       mockCommitMutation.mockResolvedValue({})
       await page.clickSubmit()
+      expect(mockSetIsSavingPayment).toHaveBeenCalledWith(true)
 
+      await flushPromiseQueue()
+
+      expect(mockSetIsSavingPayment).toHaveBeenCalledWith(false)
       expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
     })
 
@@ -494,7 +499,7 @@ describe("Payment", () => {
           selectedPaymentMethod: "WIRE_TRANSFER",
           setSelectedPaymentMethod: jest.fn(),
           setBankAccountSelection: jest.fn(),
-          setIsSavingPayment: jest.fn(),
+          setIsSavingPayment: mockSetIsSavingPayment,
         }
       })
       ;(useSetPayment as jest.Mock).mockImplementation(() => ({
@@ -541,6 +546,8 @@ describe("Payment", () => {
       await page.selectPaymentMethod("WireTransfer")
       await page.clickSubmit()
 
+      expect(mockSetIsSavingPayment).toHaveBeenCalledWith(true)
+
       expect(submitMutationMock).toHaveBeenCalledWith({
         variables: {
           input: {
@@ -550,6 +557,9 @@ describe("Payment", () => {
         },
       })
 
+      await flushPromiseQueue()
+
+      expect(mockSetIsSavingPayment).toHaveBeenCalledWith(false)
       expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
     })
   })
