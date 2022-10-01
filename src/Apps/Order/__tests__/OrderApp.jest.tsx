@@ -52,10 +52,7 @@ jest.mock("@stripe/stripe-js", () => {
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
-  async function render(
-    url: string,
-    mockData: orderRoutes_OrderQuery$rawResponse
-  ): Promise<FarceRedirectResult> {
+  async function render(url: string, mockData): Promise<FarceRedirectResult> {
     const environment = createMockEnvironment()
 
     environment.mock.queueOperationResolver(operation =>
@@ -66,7 +63,6 @@ describe("OrderApp routing redirects", () => {
       render: props => {
         return <div>hello</div>
       },
-      // @ts-expect-error RELAY_UPGRADE
       resolver: new Resolver(environment),
       routeConfig: orderRoutes,
       url,
@@ -75,7 +71,7 @@ describe("OrderApp routing redirects", () => {
     return result as FarceRedirectResult
   }
 
-  const mockResolver = (data: orderRoutes_OrderQuery$rawResponse["order"]) => ({
+  const mockResolver = data => ({
     Me: () => ({
       id: "alice_jane",
       name: "Alice Jane",
@@ -440,7 +436,6 @@ describe("OrderApp routing redirects", () => {
         "/orders/2939023/review/counter",
         mockResolver({
           ...counterOfferOrder,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           myLastOffer: {
             ...counterOfferOrder.myLastOffer,
             createdAt: DateTime.local().minus({ days: 2 }).toString(),
