@@ -1,6 +1,6 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtworkSidebar2LinksFragmentContainer } from "../ArtworkSidebar2Links"
+import { ArtworkSidebar2LinksFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2Links"
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebar2Links_Test_Query } from "__generated__/ArtworkSidebar2Links_Test_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -26,6 +26,7 @@ describe("ArtworkSidebar2Links", () => {
     ArtworkSidebar2Links_Test_Query
   >({
     Component: ({ artwork }) => (
+      // @ts-ignore RELAY_UPGRADE 13
       <ArtworkSidebar2LinksFragmentContainer artwork={artwork!} />
     ),
     query: graphql`
