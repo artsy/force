@@ -114,6 +114,7 @@ export const orderRoutes: AppRouteConfig[] = [
         // loader. Its a weird quirk :/
         return undefined // null
       }
+
       // resolving is true only if this render results from a query initiated by
       // found-relay
       if (resolving) {
@@ -125,6 +126,17 @@ export const orderRoutes: AppRouteConfig[] = [
             match.location.pathname.replace(/order(2|s)\/[^\/]+/, ""),
             { order }
           )
+
+          // FIXME RELAY_UPGRADE
+          if (redirect === null) {
+            // Work around to ensure that all of the "stays on the..." tests
+            // remain valid for Relay 13 upgrade, since with the new approach
+            // the resolver never resolves the data to return the undefined
+            // redirect.
+            if (process.env.NODE_ENV === "test") {
+              throw new Error("No redirect found for order")
+            }
+          }
           if (redirect !== null) {
             if (process.env.NODE_ENV === "development") {
               console.error(
