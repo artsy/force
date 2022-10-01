@@ -15,7 +15,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
@@ -123,11 +123,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       <GridColumns gridRowGap={[2, null]}>
         <Column span={8}>
+          {/* @ts-ignore RELAY_UPGRADE 13  */}
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
+            {/* @ts-ignore RELAY_UPGRADE 13  */}
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isMyCollectionPhase5Enabled && isP1Artist && (
               <Media greaterThanOrEqual="sm">

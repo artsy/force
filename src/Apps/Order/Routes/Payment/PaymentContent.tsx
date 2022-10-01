@@ -112,6 +112,7 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
+        {/* @ts-ignore RELAY_UPGRADE 13  */}
         <CreditCardPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -131,6 +132,7 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
+          // @ts-ignore RELAY_UPGRADE 13
           <BankAccountPickerFragmentContainer me={me} order={order} />
         )}
       </Collapse>
@@ -140,6 +142,7 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "SEPA_DEBIT" && (
+          // @ts-ignore RELAY_UPGRADE 13
           <BankAccountPickerFragmentContainer me={me} order={order} />
         )}
       </Collapse>
