@@ -113,7 +113,6 @@ COPY .env.oss \
   .nvmrc \
   .prettierignore \
   .swcrc.js \
-  apollo.config.js \
   babel.config.js \
   cypress.config.ts \
   dangerfile.ts \
