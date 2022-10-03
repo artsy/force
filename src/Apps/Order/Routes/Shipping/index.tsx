@@ -84,6 +84,7 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { extractNodes } from "Utils/extractNodes"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -129,11 +130,33 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const [phoneNumberTouched, setPhoneNumberTouched] = useState<
     PhoneNumberTouched
   >(false)
+  const addressList = extractNodes(props.me?.addressConnection) ?? []
 
   const [saveAddress, setSaveAddress] = useState(true)
+  const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
   const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
     undefined
   )
+
+  useEffect(() => {
+    const isAddressRemoved = !addressList.find(
+      address => address.internalID === deletedAddressID
+    )
+
+    if (deletedAddressID && isAddressRemoved) {
+      if (!addressList || addressList.length === 0) {
+        setSelectedAddressID(NEW_ADDRESS)
+        setShippingQuotes(null)
+        setShippingQuoteId(undefined)
+      } else if (selectedAddressID == deletedAddressID) {
+        selectSavedAddress(
+          addressList.find(address => address.isDefault)?.internalID!
+        )
+      }
+
+      setDeletedAddressID(undefined)
+    }
+  }, [addressList, deletedAddressID])
 
   const touchedAddress = () => {
     return {
@@ -149,17 +172,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const handleAddressDelete = (deletedAddressID: string) => {
-    const addressList = getAddressList()
-
-    if (!addressList || addressList.length === 0) {
-      setSelectedAddressID(NEW_ADDRESS)
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
-    } else if (selectedAddressID == deletedAddressID) {
-      selectSavedAddress(
-        addressList.find(address => address?.node?.isDefault)?.node?.internalID!
-      )
-    }
+    setDeletedAddressID(deletedAddressID)
   }
 
   useEffect(() => {
@@ -169,22 +182,19 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAddressID])
 
-  const getAddressList = () => props.me.addressConnection?.edges
   const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
   const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
 
   const checkIfArtsyShipping = () => {
-    const addresses = getAddressList()
     const artwork = getOrderArtwork()
     const processWithArtsyShippingDomestic = !!artwork?.processWithArtsyShippingDomestic
     const artsyShippingInternational = !!artwork?.artsyShippingInternational
 
     const shippingCountry = isCreateNewAddress()
       ? address.country
-      : addresses &&
-        addresses.find(
-          address => address?.node?.internalID == selectedAddressID
-        )?.node?.country
+      : addressList &&
+        addressList.find(address => address.internalID == selectedAddressID)
+          ?.country
 
     const isDomesticOrder =
       (COUNTRIES_IN_EUROPEAN_UNION.includes(shippingCountry) &&
@@ -243,15 +253,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       const shipToAddress = isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
-            getAddressList()?.find(
-              address => address?.node?.internalID == selectedAddressID
-            )?.node!
+            addressList.find(
+              address => address.internalID == selectedAddressID
+            )!
           )
       const shipToPhoneNumber = isCreateNewAddress()
         ? phoneNumber
-        : getAddressList()?.find(
-            address => address?.node?.internalID == selectedAddressID
-          )?.node?.phoneNumber
+        : addressList.find(address => address.internalID == selectedAddressID)
+            ?.phoneNumber
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
@@ -459,7 +468,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
 
-      const addressList = getAddressList()
       if (addressList && addressList.length > 0 && checkIfArtsyShipping()) {
         selectShipping()
       }
@@ -539,7 +547,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const { order, isCommittingMutation } = props
   const artwork = getOrderArtwork()
-  const addressList = getAddressList()
   const shippingSelected =
     !artwork?.pickup_available || shippingOption === "SHIP"
   const showAddressForm =
