@@ -1,80 +1,25 @@
+/**
+ * @generated SignedSource<<3b3efc9b3111070b938684ecd5c15e8d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InstitutionPartnershipsShowsQueryVariables = {};
-export type InstitutionPartnershipsShowsQueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"InstitutionPartnershipsShows_orderedSet">;
-    } | null;
+export type InstitutionPartnershipsShowsQuery$variables = {};
+export type InstitutionPartnershipsShowsQuery$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"InstitutionPartnershipsShows_orderedSet">;
+  } | null;
 };
 export type InstitutionPartnershipsShowsQuery = {
-    readonly response: InstitutionPartnershipsShowsQueryResponse;
-    readonly variables: InstitutionPartnershipsShowsQueryVariables;
+  variables: InstitutionPartnershipsShowsQuery$variables;
+  response: InstitutionPartnershipsShowsQuery$data;
 };
-
-
-
-/*
-query InstitutionPartnershipsShowsQuery {
-  orderedSet(id: "62acd180259556000cd9991f") {
-    ...InstitutionPartnershipsShows_orderedSet
-    id
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment InstitutionPartnershipsShows_orderedSet on OrderedSet {
-  items {
-    __typename
-    ... on Show {
-      internalID
-      ...CellShow_show
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -336,5 +281,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6ec5446829adc63cecfdf0ac25f09b06';
+
+(node as any).hash = "6ec5446829adc63cecfdf0ac25f09b06";
+
 export default node;

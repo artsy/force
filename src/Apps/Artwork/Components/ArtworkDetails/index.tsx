@@ -17,7 +17,7 @@ import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkD
 import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromPartner"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
-import { ArtworkDetails_artwork } from "__generated__/ArtworkDetails_artwork.graphql"
+import { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -26,7 +26,7 @@ import { useSystemContext } from "System"
 import track from "react-tracking"
 
 export interface ArtworkDetailsProps {
-  artwork: ArtworkDetails_artwork
+  artwork: ArtworkDetails_artwork$data
 }
 
 @track(
@@ -58,16 +58,20 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
         <Tabs onChange={this.trackTabChange.bind(this)}>
           <Tab name="About the work" data={{ trackingLabel: "about_the_work" }}>
             <ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
             <ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkDetailsAdditionalInfoFragmentContainer artwork={artwork} />
           </Tab>
 
           {artwork.articles && artwork.articles.length && (
             <Tab name="Articles" data={{ trackingLabel: "articles" }}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkDetailsArticlesFragmentContainer artwork={artwork} />
             </Tab>
           )}
@@ -186,6 +190,7 @@ export const ArtworkDetailsQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artwork) {
+          // @ts-ignore RELAY UPGRADE 13
           return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
         }
       }}

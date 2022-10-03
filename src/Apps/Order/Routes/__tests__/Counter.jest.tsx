@@ -1,4 +1,4 @@
-import { CounterTestQueryRawResponse } from "__generated__/CounterTestQuery.graphql"
+import { CounterTestQuery$rawResponse } from "__generated__/CounterTestQuery.graphql"
 import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
@@ -41,7 +41,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const realSetInterval = global.setInterval
 
-const testOrder: CounterTestQueryRawResponse["order"] = {
+const testOrder: CounterTestQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {

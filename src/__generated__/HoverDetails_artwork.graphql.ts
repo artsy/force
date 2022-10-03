@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<9b5e92939d163d4eb6ab9917982e53f2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HoverDetails_artwork = {
-    readonly internalID: string;
-    readonly attributionClass: {
-        readonly name: string | null;
+export type HoverDetails_artwork$data = {
+  readonly internalID: string;
+  readonly attributionClass: {
+    readonly name: string | null;
+  } | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly name: string | null;
     } | null;
-    readonly mediumType: {
-        readonly filterGene: {
-            readonly name: string | null;
-        } | null;
-    } | null;
-    readonly " $refType": "HoverDetails_artwork";
+  } | null;
+  readonly " $fragmentType": "HoverDetails_artwork";
 };
-export type HoverDetails_artwork$data = HoverDetails_artwork;
 export type HoverDetails_artwork$key = {
-    readonly " $data"?: HoverDetails_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
+  readonly " $data"?: HoverDetails_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -83,5 +86,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a38dd2db0f35df2d65cfbb27cdb6e4f8';
+
+(node as any).hash = "a38dd2db0f35df2d65cfbb27cdb6e4f8";
+
 export default node;

@@ -1,41 +1,25 @@
+/**
+ * @generated SignedSource<<ead821c35e6e24ec1105d1c1e95eefb3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DedicatedArticlesBreadcrumbs_Test_QueryVariables = {};
-export type DedicatedArticlesBreadcrumbs_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
-    } | null;
+export type DedicatedArticlesBreadcrumbs_Test_Query$variables = {};
+export type DedicatedArticlesBreadcrumbs_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
+  } | null;
 };
 export type DedicatedArticlesBreadcrumbs_Test_Query = {
-    readonly response: DedicatedArticlesBreadcrumbs_Test_QueryResponse;
-    readonly variables: DedicatedArticlesBreadcrumbs_Test_QueryVariables;
+  variables: DedicatedArticlesBreadcrumbs_Test_Query$variables;
+  response: DedicatedArticlesBreadcrumbs_Test_Query$data;
 };
-
-
-
-/*
-query DedicatedArticlesBreadcrumbs_Test_Query {
-  fairOrganizer(id: "example") {
-    ...DedicatedArticlesBreadcrumbs_fairOrganizer
-    id
-  }
-}
-
-fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    image {
-      url
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -191,5 +175,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'afa30fa8497e508d19f3bc05ee3a7a75';
+
+(node as any).hash = "afa30fa8497e508d19f3bc05ee3a7a75";
+
 export default node;

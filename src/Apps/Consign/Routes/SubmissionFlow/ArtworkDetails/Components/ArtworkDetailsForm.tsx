@@ -24,9 +24,9 @@ import {
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
 import { useState } from "react"
-import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
-import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
-import { redirects_submission } from "__generated__/redirects_submission.graphql"
+import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
+import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
@@ -38,11 +38,11 @@ export enum SubmissionType {
 
 export type getArtworkDetailsFormInitialValuesProps =
   | {
-      values: ArtworkDetails_submission | redirects_submission
+      values: ArtworkDetails_submission$data | redirects_submission$data
       type: SubmissionType.submission
     }
   | {
-      values: ArtworkDetails_myCollectionArtwork
+      values: ArtworkDetails_myCollectionArtwork$data
       type: SubmissionType.myCollectionArtwork
     }
   | {

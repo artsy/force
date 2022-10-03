@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<306f970d9f7881be80ba67978e6667f2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneShow_gene = {
-    readonly name: string | null;
-    readonly displayName: string | null;
-    readonly formattedDescription: string | null;
-    readonly similar: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly href: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly artistsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly name: string | null;
-                readonly href: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
-    readonly " $refType": "GeneShow_gene";
+export type GeneShow_gene$data = {
+  readonly name: string | null;
+  readonly displayName: string | null;
+  readonly formattedDescription: string | null;
+  readonly similar: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly href: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly artistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly href: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
+  readonly " $fragmentType": "GeneShow_gene";
 };
-export type GeneShow_gene$data = GeneShow_gene;
 export type GeneShow_gene$key = {
-    readonly " $data"?: GeneShow_gene$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"GeneShow_gene">;
+  readonly " $data"?: GeneShow_gene$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneShow_gene">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -91,6 +94,37 @@ return {
   "metadata": null,
   "name": "GeneShow_gene",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "GeneMeta_gene"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        },
+        {
+          "kind": "Variable",
+          "name": "shouldFetchCounts",
+          "variableName": "shouldFetchCounts"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "GeneArtworkFilter_gene"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -175,42 +209,13 @@ return {
         }
       ],
       "storageKey": "artistsConnection(first:10)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "GeneMeta_gene"
-    },
-    {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "aggregations",
-          "variableName": "aggregations"
-        },
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        },
-        {
-          "kind": "Variable",
-          "name": "shouldFetchCounts",
-          "variableName": "shouldFetchCounts"
-        }
-      ],
-      "kind": "FragmentSpread",
-      "name": "GeneArtworkFilter_gene"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
 })();
-(node as any).hash = '08451d4b8e9ae7f26fd88085b5648485';
+
+(node as any).hash = "08451d4b8e9ae7f26fd88085b5648485";
+
 export default node;

@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtworkSidebar2Classification_artwork } from "__generated__/ArtworkSidebar2Classification_artwork.graphql"
+import { ArtworkSidebar2Classification_artwork$data } from "__generated__/ArtworkSidebar2Classification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "../ArtworkSidebarClassificationsModal"
 import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 
 interface ArtworkSidebar2ClassificationProps {
-  artwork: ArtworkSidebar2Classification_artwork
+  artwork: ArtworkSidebar2Classification_artwork$data
 }
 
 const ArtworkSidebar2Classification: React.FC<ArtworkSidebar2ClassificationProps> = ({

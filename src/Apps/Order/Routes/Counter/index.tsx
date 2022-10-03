@@ -1,5 +1,5 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
-import { Counter_order } from "__generated__/Counter_order.graphql"
+import { Counter_order$data } from "__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "__generated__/CounterSubmitMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -25,7 +25,7 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export interface CounterProps {
-  order: Counter_order
+  order: Counter_order$data
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -161,8 +161,11 @@ export const CounterRoute: FC<CounterProps> = props => {
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ShippingSummaryItem order={order} locked />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

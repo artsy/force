@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeHeroUnits_homePage } from "__generated__/HomeHeroUnits_homePage.graphql"
+import { HomeHeroUnits_homePage$data } from "__generated__/HomeHeroUnits_homePage.graphql"
 import { useSystemContext } from "System"
 import {
   HomeHeroUnit,
@@ -12,7 +12,7 @@ import { compact } from "lodash"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 
 interface HomeHeroUnitsProps {
-  homePage: HomeHeroUnits_homePage
+  homePage: HomeHeroUnits_homePage$data
 }
 
 const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
@@ -43,6 +43,7 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
           <HomeHeroUnitFragmentContainer
             key={i}
             index={i}
+            // @ts-ignore RELAY UPGRADE 13
             heroUnit={heroUnit}
             layout={i % 2 === 0 ? "b" : "a"}
           />

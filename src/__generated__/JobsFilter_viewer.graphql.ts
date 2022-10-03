@@ -1,45 +1,48 @@
+/**
+ * @generated SignedSource<<212cc2f461f6949913ed841bb6bc0479>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type JobsFilter_viewer = {
+export type JobsFilter_viewer$data = {
+  readonly jobs: ReadonlyArray<{
+    readonly id: string;
+    readonly location: string;
+    readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
+  }>;
+  readonly departments: ReadonlyArray<{
+    readonly id: string;
+    readonly name: string;
     readonly jobs: ReadonlyArray<{
-        readonly id: string;
-        readonly location: string;
-        readonly " $fragmentRefs": FragmentRefs<"JobLink_job">;
+      readonly id: string;
+      readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
     }>;
-    readonly departments: ReadonlyArray<{
-        readonly id: string;
-        readonly name: string;
-        readonly jobs: ReadonlyArray<{
-            readonly id: string;
-            readonly " $fragmentRefs": FragmentRefs<"JobLink_job">;
-        }>;
-    }>;
-    readonly " $refType": "JobsFilter_viewer";
+  }>;
+  readonly " $fragmentType": "JobsFilter_viewer";
 };
-export type JobsFilter_viewer$data = JobsFilter_viewer;
 export type JobsFilter_viewer$key = {
-    readonly " $data"?: JobsFilter_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"JobsFilter_viewer">;
+  readonly " $data"?: JobsFilter_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"JobsFilter_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "JobLink_job"
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v1 = {
-  "args": null,
-  "kind": "FragmentSpread",
-  "name": "JobLink_job"
 };
 return {
   "argumentDefinitions": [],
@@ -56,14 +59,14 @@ return {
       "plural": true,
       "selections": [
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "location",
           "storageKey": null
-        },
-        (v1/*: any*/)
+        }
       ],
       "storageKey": null
     },
@@ -75,7 +78,7 @@ return {
       "name": "departments",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -104,5 +107,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5764dc61fad90d31d46ceb9ba92f41e0';
+
+(node as any).hash = "5764dc61fad90d31d46ceb9ba92f41e0";
+
 export default node;

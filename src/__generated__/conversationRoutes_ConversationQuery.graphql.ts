@@ -1,105 +1,25 @@
+/**
+ * @generated SignedSource<<00809a99e2550b94de964c6d12df119b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type conversationRoutes_ConversationQueryVariables = {};
-export type conversationRoutes_ConversationQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ConversationApp_me">;
-    } | null;
+export type conversationRoutes_ConversationQuery$variables = {};
+export type conversationRoutes_ConversationQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_me">;
+  } | null;
 };
 export type conversationRoutes_ConversationQuery = {
-    readonly response: conversationRoutes_ConversationQueryResponse;
-    readonly variables: conversationRoutes_ConversationQueryVariables;
+  variables: conversationRoutes_ConversationQuery$variables;
+  response: conversationRoutes_ConversationQuery$data;
 };
-
-
-
-/*
-query conversationRoutes_ConversationQuery {
-  me {
-    ...ConversationApp_me
-    id
-  }
-}
-
-fragment ConversationApp_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      node {
-        internalID
-        to {
-          name
-          id
-        }
-        id
-      }
-    }
-  }
-  ...ConversationList_me
-}
-
-fragment ConversationList_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      cursor
-      node {
-        id
-        internalID
-        lastMessage
-        ...ConversationSnippet_conversation
-        __typename
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-
-fragment ConversationSnippet_conversation on Conversation {
-  internalID
-  to {
-    name
-    id
-  }
-  lastMessage
-  lastMessageAt
-  unread
-  items {
-    item {
-      __typename
-      ... on Artwork {
-        date
-        title
-        artistNames
-        image {
-          url
-        }
-      }
-      ... on Show {
-        fair {
-          name
-          id
-        }
-        name
-        coverImage {
-          url
-        }
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -425,5 +345,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fb6d34b19c9d4e8593acd0c22bbbbf6d';
+
+(node as any).hash = "fb6d34b19c9d4e8593acd0c22bbbbf6d";
+
 export default node;

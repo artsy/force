@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<8144a88856ff3c457156fcd7bcb337c2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellShow_show = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
-    readonly isFairBooth: boolean | null;
-    readonly exhibitionPeriod: string | null;
-    readonly partner: {
-        readonly name?: string | null | undefined;
+export type CellShow_show$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly startAt: string | null;
+  readonly endAt: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly exhibitionPeriod: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "CellShow_show";
+  } | null;
+  readonly " $fragmentType": "CellShow_show";
 };
-export type CellShow_show$data = CellShow_show;
 export type CellShow_show$key = {
-    readonly " $data"?: CellShow_show$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
+  readonly " $data"?: CellShow_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -176,5 +179,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9baaf250a0d4304282eae2fc6f46c848';
+
+(node as any).hash = "9baaf250a0d4304282eae2fc6f46c848";
+
 export default node;

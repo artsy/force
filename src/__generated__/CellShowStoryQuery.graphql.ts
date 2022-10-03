@@ -1,64 +1,27 @@
+/**
+ * @generated SignedSource<<f63e123ee7c79f6b78f492575b27cfe9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellShowStoryQueryVariables = {
-    id: string;
+export type CellShowStoryQuery$variables = {
+  id: string;
 };
-export type CellShowStoryQueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
-    } | null;
+export type CellShowStoryQuery$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
+  } | null;
 };
 export type CellShowStoryQuery = {
-    readonly response: CellShowStoryQueryResponse;
-    readonly variables: CellShowStoryQueryVariables;
+  variables: CellShowStoryQuery$variables;
+  response: CellShowStoryQuery$data;
 };
-
-
-
-/*
-query CellShowStoryQuery(
-  $id: String!
-) {
-  show(id: $id) {
-    ...CellShow_show
-    id
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -293,5 +256,7 @@ return {
   }
 };
 })();
-(node as any).hash = '814efe9864827e4d35df8c132508799d';
+
+(node as any).hash = "814efe9864827e4d35df8c132508799d";
+
 export default node;

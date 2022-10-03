@@ -1,145 +1,71 @@
+/**
+ * @generated SignedSource<<b6ab60a93fd87de560bcfca8b87e05dd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarArtists_Test_QueryVariables = {};
-export type ArtworkSidebarArtists_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork">;
-    } | null;
+export type ArtworkSidebarArtists_Test_Query$variables = {};
+export type ArtworkSidebarArtists_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork">;
+  } | null;
 };
-export type ArtworkSidebarArtists_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly cultural_maker: string | null;
-        readonly artists: ReadonlyArray<({
-            readonly internalID: string;
-            readonly href: string | null;
-            readonly slug: string;
-            readonly name: string | null;
-            readonly initials: string | null;
-            readonly formattedNationalityAndBirthday: string | null;
-            readonly counts: ({
-                readonly artworks: number | null;
-                readonly forSaleArtworks: number | null;
-                readonly follows: number | null;
-            }) | null;
-            readonly avatar: ({
-                readonly cropped: ({
-                    readonly src: string;
-                    readonly srcSet: string;
-                }) | null;
-            }) | null;
-            readonly related: ({
-                readonly suggestedConnection: ({
-                    readonly edges: ReadonlyArray<({
-                        readonly node: ({
-                            readonly id: string;
-                            readonly internalID: string;
-                            readonly slug: string;
-                            readonly name: string | null;
-                            readonly formattedNationalityAndBirthday: string | null;
-                            readonly image: ({
-                                readonly cropped: ({
-                                    readonly url: string;
-                                }) | null;
-                            }) | null;
-                        }) | null;
-                    }) | null> | null;
-                }) | null;
-            }) | null;
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-        }) | null> | null;
-        readonly id: string;
-    }) | null;
+export type ArtworkSidebarArtists_Test_Query$rawResponse = {
+  readonly artwork: {
+    readonly cultural_maker: string | null;
+    readonly artists: ReadonlyArray<{
+      readonly internalID: string;
+      readonly href: string | null;
+      readonly slug: string;
+      readonly name: string | null;
+      readonly initials: string | null;
+      readonly formattedNationalityAndBirthday: string | null;
+      readonly counts: {
+        readonly artworks: any | null;
+        readonly forSaleArtworks: any | null;
+        readonly follows: any | null;
+      } | null;
+      readonly avatar: {
+        readonly cropped: {
+          readonly src: string;
+          readonly srcSet: string;
+        } | null;
+      } | null;
+      readonly related: {
+        readonly suggestedConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly id: string;
+              readonly internalID: string;
+              readonly slug: string;
+              readonly name: string | null;
+              readonly formattedNationalityAndBirthday: string | null;
+              readonly image: {
+                readonly cropped: {
+                  readonly url: string;
+                } | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+    } | null> | null;
+    readonly id: string;
+  } | null;
 };
 export type ArtworkSidebarArtists_Test_Query = {
-    readonly response: ArtworkSidebarArtists_Test_QueryResponse;
-    readonly variables: ArtworkSidebarArtists_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarArtists_Test_QueryRawResponse;
+  variables: ArtworkSidebarArtists_Test_Query$variables;
+  response: ArtworkSidebarArtists_Test_Query$data;
+  rawResponse: ArtworkSidebarArtists_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ArtworkSidebarArtists_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebarArtists_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarArtists_artwork on Artwork {
-  cultural_maker: culturalMaker
-  artists {
-    ...EntityHeaderArtist_artist
-    internalID
-    slug
-    name
-    ...FollowArtistButton_artist_2eN9lh
-    id
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FollowArtistButton_artist_2eN9lh on Artist {
-  ...FollowArtistPopover_artist
-  id
-  slug
-  name
-  internalID
-  isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment FollowArtistPopoverRow_artist on Artist {
-  slug
-  internalID
-  name
-  formattedNationalityAndBirthday
-  image {
-    cropped(width: 45, height: 45) {
-      url
-    }
-  }
-}
-
-fragment FollowArtistPopover_artist on Artist {
-  related {
-    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {
-      edges {
-        node {
-          id
-          internalID
-          ...FollowArtistPopoverRow_artist
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -459,5 +385,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9d93389299295dce0d7b038563f6cd0a';
+
+(node as any).hash = "9d93389299295dce0d7b038563f6cd0a";
+
 export default node;

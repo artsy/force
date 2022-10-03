@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<36bd2307941cf180d4969cb9c8c17299>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useRefreshUserDataQueryVariables = {};
-export type useRefreshUserDataQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionBidRoute_me">;
-    } | null;
+export type useRefreshUserDataQuery$variables = {};
+export type useRefreshUserDataQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionBidRoute_me">;
+  } | null;
 };
 export type useRefreshUserDataQuery = {
-    readonly response: useRefreshUserDataQueryResponse;
-    readonly variables: useRefreshUserDataQueryVariables;
+  variables: useRefreshUserDataQuery$variables;
+  response: useRefreshUserDataQuery$data;
 };
-
-
-
-/*
-query useRefreshUserDataQuery {
-  me {
-    ...AuctionBidRoute_me
-    id
-  }
-}
-
-fragment AuctionBidRoute_me on Me {
-  internalID
-  hasQualifiedCreditCards
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -107,5 +97,7 @@ const node: ConcreteRequest = {
     "text": "query useRefreshUserDataQuery {\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n"
   }
 };
-(node as any).hash = '43aae92130e1a27bccb0a9451b12d83b';
+
+(node as any).hash = "43aae92130e1a27bccb0a9451b12d83b";
+
 export default node;

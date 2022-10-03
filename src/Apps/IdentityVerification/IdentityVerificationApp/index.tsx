@@ -6,7 +6,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { IdentityVerificationApp_identityVerification } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
+import { IdentityVerificationApp_identityVerification$data } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { IdentityVerificationAppStartMutation } from "__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useMemo, useState } from "react"
@@ -29,7 +29,7 @@ import { HttpError } from "found"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
-  identityVerification: IdentityVerificationApp_identityVerification
+  identityVerification: IdentityVerificationApp_identityVerification$data
   relay: RelayProp
 }
 
@@ -240,8 +240,7 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   IdentityVerificationApp,
   {
     identityVerification: graphql`
-      fragment IdentityVerificationApp_identityVerification on IdentityVerification
-        @argumentDefinitions(id: { type: "String!" }) {
+      fragment IdentityVerificationApp_identityVerification on IdentityVerification {
         internalID
         state
       }

@@ -6,13 +6,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { useMode } from "Utils/Hooks/useMode"
-import { SettingsPaymentsMethods_me } from "__generated__/SettingsPaymentsMethods_me.graphql"
+import { SettingsPaymentsMethods_me$data } from "__generated__/SettingsPaymentsMethods_me.graphql"
 import { SettingsBankAccountFragmentContainer } from "./SettingsBankAccount"
 import { SettingsCreditCardFragmentContainer } from "./SettingsCreditCard"
 import { SettingsPaymentsMethodForm } from "./SettingsPaymentsMethodForm"
 
 interface SettingsPaymentsMethodsProps {
-  me: SettingsPaymentsMethods_me
+  me: SettingsPaymentsMethods_me$data
 }
 
 type Mode = "Pending" | "Adding"
@@ -56,6 +56,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
           {creditCards.map(creditCard => {
             return (
               <BorderedCell key={creditCard.internalID} span={8} wrap>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <SettingsCreditCardFragmentContainer creditCard={creditCard} />
               </BorderedCell>
             )
@@ -78,6 +79,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
               return (
                 <BorderedCell key={bankAccount.internalID} span={8} wrap>
                   <SettingsBankAccountFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     bankAccount={bankAccount}
                   />
                 </BorderedCell>

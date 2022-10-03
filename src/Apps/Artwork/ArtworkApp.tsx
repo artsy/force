@@ -1,8 +1,8 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-import { ArtworkApp_artwork } from "__generated__/ArtworkApp_artwork.graphql"
-import { ArtworkApp_me } from "__generated__/ArtworkApp_me.graphql"
+import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
+import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -34,12 +34,12 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
 
 export interface Props {
-  artwork: ArtworkApp_artwork
+  artwork: ArtworkApp_artwork$data
   tracking?: TrackingProp
   referrer: string
   routerPathname: string
   shouldTrackPageView: boolean
-  me: ArtworkApp_me
+  me: ArtworkApp_me$data
   router: Router
   match: Match
 }
@@ -47,8 +47,8 @@ export interface Props {
 declare const window: any
 
 interface BelowTheFoldArtworkDetailsProps {
-  artists: ArtworkApp_artwork["artists"]
-  slug: ArtworkApp_artwork["slug"]
+  artists: ArtworkApp_artwork$data["artists"]
+  slug: ArtworkApp_artwork$data["slug"]
 }
 
 const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
@@ -177,15 +177,19 @@ export const ArtworkApp: React.FC<Props> = props => {
       <UseRecordArtworkView />
 
       {artwork.sale && (
+        // @ts-ignore RELAY UPGRADE 13
         <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
       )}
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkMetaFragmentContainer artwork={artwork} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
       <GridColumns>
         <Column span={8}>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           <Media greaterThanOrEqual="sm">
@@ -198,8 +202,10 @@ export const ArtworkApp: React.FC<Props> = props => {
 
         <Column span={4} pt={[0, 2]}>
           {isNewArtworkSidebarEnabled ? (
+            // @ts-ignore RELAY UPGRADE 13
             <ArtworkSidebar2FragmentContainer artwork={artwork} />
           ) : (
+            // @ts-ignore RELAY UPGRADE 13
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
           )}
         </Column>
@@ -233,6 +239,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       <RecentlyViewed />
 
       {shouldRenderSubmittedOrderModal && (
+        // @ts-ignore RELAY UPGRADE 13
         <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
       )}
     </>

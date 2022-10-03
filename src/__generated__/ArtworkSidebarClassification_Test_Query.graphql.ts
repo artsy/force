@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<7bba474f9bfdc0dbe85508d21928e092>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarClassification_Test_QueryVariables = {};
-export type ArtworkSidebarClassification_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassification_artwork">;
-    } | null;
+export type ArtworkSidebarClassification_Test_Query$variables = {};
+export type ArtworkSidebarClassification_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarClassification_artwork">;
+  } | null;
 };
 export type ArtworkSidebarClassification_Test_Query = {
-    readonly response: ArtworkSidebarClassification_Test_QueryResponse;
-    readonly variables: ArtworkSidebarClassification_Test_QueryVariables;
+  variables: ArtworkSidebarClassification_Test_Query$variables;
+  response: ArtworkSidebarClassification_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebarClassification_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebarClassification_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebarClassification_artwork on Artwork {
-  attributionClass {
-    shortArrayDescription
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -153,5 +141,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b0290579f3b2ff6f23b343d8f603b883';
+
+(node as any).hash = "b0290579f3b2ff6f23b343d8f603b883";
+
 export default node;

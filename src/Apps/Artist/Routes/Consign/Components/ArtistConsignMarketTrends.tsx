@@ -6,10 +6,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-import { ArtistConsignMarketTrends_artist } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
+import { ArtistConsignMarketTrends_artist$data } from "__generated__/ArtistConsignMarketTrends_artist.graphql"
 
 interface ArtistConsignMarketTrendsProps {
-  artist: ArtistConsignMarketTrends_artist
+  artist: ArtistConsignMarketTrends_artist$data
 }
 
 export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps> = props => {

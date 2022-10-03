@@ -10,6 +10,7 @@ describe("FairOrganizerPastEventsRail", () => {
   const { getWrapper } = setupTestWrapper<
     FairOrganizerPastEventsRail_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: FairOrganizerPastEventsRail,
     query: graphql`
       query FairOrganizerPastEventsRail_Test_Query @relay_test_operation {

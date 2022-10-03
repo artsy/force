@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<d7c8722a2dc871f5dd8b017e9718efd4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UnreadMessagesToast_conversation = {
-    readonly id: string;
-    readonly internalID: string | null;
-    readonly lastMessageID: string | null;
-    readonly fromLastViewedMessageID: string | null;
-    readonly isLastMessageToUser: boolean | null;
-    readonly activeOrders: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly updatedAt: string;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "UnreadMessagesToast_conversation";
+export type UnreadMessagesToast_conversation$data = {
+  readonly id: string;
+  readonly internalID: string | null;
+  readonly lastMessageID: string | null;
+  readonly fromLastViewedMessageID: string | null;
+  readonly isLastMessageToUser: boolean | null;
+  readonly activeOrders: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly updatedAt: string;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "UnreadMessagesToast_conversation";
 };
-export type UnreadMessagesToast_conversation$data = UnreadMessagesToast_conversation;
 export type UnreadMessagesToast_conversation$key = {
-    readonly " $data"?: UnreadMessagesToast_conversation$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"UnreadMessagesToast_conversation">;
+  readonly " $data"?: UnreadMessagesToast_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UnreadMessagesToast_conversation">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -134,5 +137,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ef9bb7db3acf2ba877700d2442eaf43b';
+
+(node as any).hash = "ef9bb7db3acf2ba877700d2442eaf43b";
+
 export default node;

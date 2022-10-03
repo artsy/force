@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<b2db88fe7034ad1823371031eb41732a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarClassificationsModalQueryVariables = {};
-export type ArtworkSidebarClassificationsModalQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
-    } | null;
+export type ArtworkSidebarClassificationsModalQuery$variables = {};
+export type ArtworkSidebarClassificationsModalQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
+  } | null;
 };
 export type ArtworkSidebarClassificationsModalQuery = {
-    readonly response: ArtworkSidebarClassificationsModalQueryResponse;
-    readonly variables: ArtworkSidebarClassificationsModalQueryVariables;
+  variables: ArtworkSidebarClassificationsModalQuery$variables;
+  response: ArtworkSidebarClassificationsModalQuery$data;
 };
-
-
-
-/*
-query ArtworkSidebarClassificationsModalQuery {
-  viewer {
-    ...ArtworkSidebarClassificationsModal_viewer
-  }
-}
-
-fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
-  artworkAttributionClasses {
-    id
-    name
-    longDescription
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -120,5 +108,7 @@ const node: ConcreteRequest = {
     "text": "query ArtworkSidebarClassificationsModalQuery {\n  viewer {\n    ...ArtworkSidebarClassificationsModal_viewer\n  }\n}\n\nfragment ArtworkSidebarClassificationsModal_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n"
   }
 };
-(node as any).hash = 'a40434b7da7b4a9f4b3e7c4679014df1';
+
+(node as any).hash = "a40434b7da7b4a9f4b3e7c4679014df1";
+
 export default node;

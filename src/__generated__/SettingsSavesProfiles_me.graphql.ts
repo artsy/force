@@ -1,53 +1,56 @@
+/**
+ * @generated SignedSource<<880ab130b9bb1310e555191cdd8ea3f7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesProfiles_me = {
-    readonly followsAndSaves: {
-        readonly profilesConnection: {
-            readonly totalCount: number | null;
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly profile: {
-                        readonly name: string | null;
-                        readonly href: string | null;
-                        readonly avatar: {
-                            readonly cropped: {
-                                readonly src: string;
-                                readonly srcSet: string;
-                            } | null;
-                        } | null;
-                        readonly owner: {
-                            readonly __typename: "Partner";
-                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-                        } | {
-                            readonly __typename: "Fair";
-                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
-                        } | {
-                            readonly __typename: "FairOrganizer";
-                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
-                        } | {
-                            /*This will never be '%other', but we need some
-                            value in case none of the concrete values match.*/
-                            readonly __typename: "%other";
-                        };
-                    };
-                } | null;
-            } | null> | null;
+export type SettingsSavesProfiles_me$data = {
+  readonly followsAndSaves: {
+    readonly profilesConnection: {
+      readonly totalCount: number | null;
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly profile: {
+            readonly name: string | null;
+            readonly href: string | null;
+            readonly avatar: {
+              readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+              } | null;
+            } | null;
+            readonly owner: {
+              readonly __typename: "Partner";
+              readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+            } | {
+              readonly __typename: "Fair";
+              readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
+            } | {
+              readonly __typename: "FairOrganizer";
+              readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
+            } | {
+              // This will never be '%other', but we need some
+              // value in case none of the concrete values match.
+              readonly __typename: "%other";
+            };
+          };
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "SettingsSavesProfiles_me";
+  } | null;
+  readonly " $fragmentType": "SettingsSavesProfiles_me";
 };
-export type SettingsSavesProfiles_me$data = SettingsSavesProfiles_me;
 export type SettingsSavesProfiles_me$key = {
-    readonly " $data"?: SettingsSavesProfiles_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsSavesProfiles_me">;
+  readonly " $data"?: SettingsSavesProfiles_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesProfiles_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -297,5 +300,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'fb6a2df7011e9429e147931780a967eb';
+
+(node as any).hash = "fb6a2df7011e9429e147931780a967eb";
+
 export default node;

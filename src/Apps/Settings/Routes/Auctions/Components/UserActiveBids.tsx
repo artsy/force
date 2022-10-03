@@ -2,11 +2,11 @@ import { Column, Separator } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
-import { UserActiveBids_me } from "__generated__/UserActiveBids_me.graphql"
+import { UserActiveBids_me$data } from "__generated__/UserActiveBids_me.graphql"
 import { SettingsAuctionsLotStandingFragmentContainer } from "./SettingsAuctionsLotStanding"
 
 interface UserActiveBidsProps {
-  me: UserActiveBids_me
+  me: UserActiveBids_me$data
 }
 
 export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
@@ -24,6 +24,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
         return (
           <React.Fragment key={i}>
             <SettingsAuctionsLotStandingFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               lotStanding={lotStanding}
             />
 

@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<90d9bab6bb8ac9d9fddd9f0b53531d3a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellArtist_artist = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly initials: string | null;
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type CellArtist_artist$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly initials: string | null;
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-    readonly " $refType": "CellArtist_artist";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  readonly " $fragmentType": "CellArtist_artist";
 };
-export type CellArtist_artist$data = CellArtist_artist;
 export type CellArtist_artist$key = {
-    readonly " $data"?: CellArtist_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
+  readonly " $data"?: CellArtist_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,6 +36,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "CellArtist_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderArtist_artist"
+    },
     {
       "alias": null,
       "args": null,
@@ -123,15 +131,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "EntityHeaderArtist_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '883c585cb325cbaa008a980afdc40f0c';
+
+(node as any).hash = "883c585cb325cbaa008a980afdc40f0c";
+
 export default node;

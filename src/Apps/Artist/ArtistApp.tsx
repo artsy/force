@@ -2,7 +2,7 @@ import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
-import { ArtistApp_artist } from "__generated__/ArtistApp_artist.graphql"
+import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
 import { AnalyticsContext, useAnalyticsContext, useSystemContext } from "System"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
@@ -18,7 +18,7 @@ import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtis
  */
 
 interface ArtistAppProps {
-  artist: ArtistApp_artist
+  artist: ArtistApp_artist$data
   match: Match
 }
 
@@ -39,6 +39,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
     return (
       <>
         {!isEigen && (
+          // @ts-ignore RELAY UPGRADE 13
           <BackLinkFragmentContainer artist={artist} artworkId={artworkId} />
         )}
 
@@ -54,6 +55,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   // Default page
   return (
     <PageWrapper artist={artist}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtistHeaderFragmentContainer artist={artist} />
 
       <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
@@ -101,6 +103,7 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
       }}
     >
       <Box mt={[2, 4]} {...rest}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistMetaFragmentContainer artist={artist} />
         {children}
       </Box>

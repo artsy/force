@@ -1,33 +1,36 @@
+/**
+ * @generated SignedSource<<d59978454ef93f6c5fef5a2a8f22aa31>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShelfArtwork_artwork = {
-    readonly image: {
-        readonly resized: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
-        readonly aspectRatio: number;
-        readonly height: number | null;
+export type ShelfArtwork_artwork$data = {
+  readonly image: {
+    readonly resized: {
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null;
+      readonly height: number | null;
     } | null;
-    readonly imageTitle: string | null;
-    readonly title: string | null;
-    readonly href: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
-    readonly " $refType": "ShelfArtwork_artwork";
+    readonly aspectRatio: number;
+    readonly height: number | null;
+  } | null;
+  readonly imageTitle: string | null;
+  readonly title: string | null;
+  readonly href: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+  readonly " $fragmentType": "ShelfArtwork_artwork";
 };
-export type ShelfArtwork_artwork$data = ShelfArtwork_artwork;
 export type ShelfArtwork_artwork$key = {
-    readonly " $data"?: ShelfArtwork_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
+  readonly " $data"?: ShelfArtwork_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -148,5 +151,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd1820313035096f06affbbffddc5b748';
+
+(node as any).hash = "d1820313035096f06affbbffddc5b748";
+
 export default node;

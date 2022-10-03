@@ -14,6 +14,7 @@ const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
   setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
     Component: ({ fair }) => (
       <MockBoot breakpoint={breakpoint}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ExhibitorsLetterNavFragmentContainer fair={fair!} />
       </MockBoot>
     ),

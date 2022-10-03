@@ -1,7 +1,7 @@
 import { FullBleed, Join, Separator, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleApp_article } from "__generated__/ArticleApp_article.graphql"
+import { ArticleApp_article$data } from "__generated__/ArticleApp_article.graphql"
 import { ArticleBodyFragmentContainer } from "./Components/ArticleBody"
 import { ArticleChannelRelatedArticlesQueryRenderer } from "./Components/ArticleChannelRelatedArticles"
 import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfiniteScroll"
@@ -16,7 +16,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 
 interface ArticleAppProps {
-  article: ArticleApp_article
+  article: ArticleApp_article$data
 }
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
@@ -40,23 +40,28 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
 
   return (
     <ArticleAdProvider>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArticleMetaTagsFragmentContainer article={article} />
 
       <Join separator={<Spacer mt={4} />}>
         {(() => {
           switch (article.layout) {
             case "SERIES":
+              // @ts-ignore RELAY UPGRADE 13
               return <ArticleSeriesFragmentContainer article={article} />
 
             case "VIDEO":
+              // @ts-ignore RELAY UPGRADE 13
               return <ArticleVideoFragmentContainer article={article} />
 
             case "NEWS":
+              // @ts-ignore RELAY UPGRADE 13
               return <ArticleBodyFragmentContainer article={article} />
 
             case "CLASSIC":
               return (
                 <>
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArticleBodyFragmentContainer article={article} />
 
                   <FullBleed>
@@ -73,7 +78,9 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "STANDARD":
               return (
                 <>
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArticleVisibilityMetadataFragmentContainer article={article}>
+                    {/* @ts-ignore RELAY UPGRADE 13 */}
                     <ArticleBodyFragmentContainer article={article} />
                   </ArticleVisibilityMetadataFragmentContainer>
 

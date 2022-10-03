@@ -2,12 +2,12 @@ import { LotTimer } from "../LotTimer"
 import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import { LotTimer_saleArtwork } from "__generated__/LotTimer_saleArtwork.graphql"
+import { LotTimer_saleArtwork$data } from "__generated__/LotTimer_saleArtwork.graphql"
 
 describe("extendedBiddingInfoCopy", () => {
   describe("when extended bidding feature is on", () => {
     it("shows the extended bidding info label", () => {
-      const saleArtwork: LotTimer_saleArtwork = {
+      const saleArtwork: LotTimer_saleArtwork$data = {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
@@ -18,6 +18,7 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingIntervalMinutes: 2,
           internalID: "sale-id",
         },
+        // @ts-ignore RELAY UPGRADE 13
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -37,7 +38,7 @@ describe("extendedBiddingInfoCopy", () => {
         let startDate = baseDate - 1000 * 60 * 60 // one hour ago
         let endDate = baseDate + 1000 * 60 // one minute from now
         let extendedEndDate = baseDate + 1000 * 60 * 2 // two minutes from now
-        const saleArtwork: LotTimer_saleArtwork = {
+        const saleArtwork: LotTimer_saleArtwork$data = {
           endAt: new Date(endDate).toISOString(),
           formattedStartDateTime: "",
           extendedBiddingEndAt: new Date(extendedEndDate).toISOString(),
@@ -48,6 +49,7 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
           },
+          // @ts-ignore RELAY UPGRADE 13
           " $refType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -60,7 +62,7 @@ describe("extendedBiddingInfoCopy", () => {
         let startDate = new Date()
         const startAt = new Date(startDate.setMonth(startDate.getMonth() - 1))
         let endDate = new Date()
-        const saleArtwork: LotTimer_saleArtwork = {
+        const saleArtwork: LotTimer_saleArtwork$data = {
           endAt: new Date(
             endDate.setMinutes(endDate.getMinutes() + 1)
           ).toISOString(),
@@ -73,6 +75,7 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
           },
+          // @ts-ignore RELAY UPGRADE 13
           " $refType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -84,7 +87,7 @@ describe("extendedBiddingInfoCopy", () => {
 
   describe("when extended bidding feature is off", () => {
     it("doesn't show the extended bidding info label", () => {
-      const saleArtwork: LotTimer_saleArtwork = {
+      const saleArtwork: LotTimer_saleArtwork$data = {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
@@ -95,6 +98,7 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingIntervalMinutes: null,
           internalID: "sale-id",
         },
+        // @ts-ignore RELAY UPGRADE 13
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)

@@ -1,55 +1,39 @@
+/**
+ * @generated SignedSource<<f0d1f1f82206e6f7581fd7edefde3137>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesMeta_TestQueryVariables = {
-    slug: string;
+export type ArtistSeriesMeta_TestQuery$variables = {
+  slug: string;
 };
-export type ArtistSeriesMeta_TestQueryResponse = {
-    readonly artistSeries: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesMeta_artistSeries">;
-    } | null;
+export type ArtistSeriesMeta_TestQuery$data = {
+  readonly artistSeries: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesMeta_artistSeries">;
+  } | null;
 };
-export type ArtistSeriesMeta_TestQueryRawResponse = {
-    readonly artistSeries: ({
-        readonly title: string;
-        readonly description: string | null;
-        readonly slug: string;
-        readonly artists: ReadonlyArray<({
-            readonly name: string | null;
-            readonly id: string;
-        }) | null> | null;
-    }) | null;
+export type ArtistSeriesMeta_TestQuery$rawResponse = {
+  readonly artistSeries: {
+    readonly title: string;
+    readonly description: string | null;
+    readonly slug: string;
+    readonly artists: ReadonlyArray<{
+      readonly name: string | null;
+      readonly id: string;
+    } | null> | null;
+  } | null;
 };
 export type ArtistSeriesMeta_TestQuery = {
-    readonly response: ArtistSeriesMeta_TestQueryResponse;
-    readonly variables: ArtistSeriesMeta_TestQueryVariables;
-    readonly rawResponse: ArtistSeriesMeta_TestQueryRawResponse;
+  variables: ArtistSeriesMeta_TestQuery$variables;
+  response: ArtistSeriesMeta_TestQuery$data;
+  rawResponse: ArtistSeriesMeta_TestQuery$rawResponse;
 };
-
-
-
-/*
-query ArtistSeriesMeta_TestQuery(
-  $slug: ID!
-) {
-  artistSeries(id: $slug) {
-    ...ArtistSeriesMeta_artistSeries
-  }
-}
-
-fragment ArtistSeriesMeta_artistSeries on ArtistSeries {
-  title
-  description
-  slug
-  artists(size: 1) {
-    name
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -211,5 +195,7 @@ return {
   }
 };
 })();
-(node as any).hash = '27c6e0b258d7f3cb315cc33ecabbd839';
+
+(node as any).hash = "27c6e0b258d7f3cb315cc33ecabbd839";
+
 export default node;

@@ -16,12 +16,12 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { HomeTroveArtworksRail_viewer } from "__generated__/HomeTroveArtworksRail_viewer.graphql"
+import { HomeTroveArtworksRail_viewer$data } from "__generated__/HomeTroveArtworksRail_viewer.graphql"
 import { HomeTroveArtworksRailQuery } from "__generated__/HomeTroveArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
 
 interface HomeTroveArtworksRailProps {
-  viewer: HomeTroveArtworksRail_viewer
+  viewer: HomeTroveArtworksRail_viewer$data
 }
 
 export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
@@ -55,6 +55,7 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
       }}
       getItems={() => {
         return artworks.map(artwork => (
+          // @ts-ignore RELAY UPGRADE 13
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={artwork.internalID}
@@ -123,6 +124,7 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <HomeTroveArtworksRailFragmentContainer viewer={props.viewer} />
       }}
     />

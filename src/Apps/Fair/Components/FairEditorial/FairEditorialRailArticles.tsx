@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairEditorialRailArticles_fair } from "__generated__/FairEditorialRailArticles_fair.graphql"
+import { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
 import { Shelf } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
@@ -14,7 +14,7 @@ import {
 } from "@artsy/cohesion"
 
 export interface FairBoothRailArtworksProps {
-  fair: FairEditorialRailArticles_fair
+  fair: FairEditorialRailArticles_fair$data
 }
 
 const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
@@ -48,6 +48,7 @@ const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
         return (
           <CellArticleFragmentContainer
             key={article.internalID}
+            // @ts-ignore RELAY UPGRADE 13
             article={article}
             displayByline={false}
             onClick={() => {

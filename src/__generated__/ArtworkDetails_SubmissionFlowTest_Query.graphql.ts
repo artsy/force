@@ -1,59 +1,27 @@
+/**
+ * @generated SignedSource<<b7cc16b7ece57e0df5686c2a94d99a62>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_SubmissionFlowTest_QueryVariables = {
-    externalId?: string | null | undefined;
+export type ArtworkDetails_SubmissionFlowTest_Query$variables = {
+  externalId?: string | null;
 };
-export type ArtworkDetails_SubmissionFlowTest_QueryResponse = {
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
-    } | null;
+export type ArtworkDetails_SubmissionFlowTest_Query$data = {
+  readonly submission: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
+  } | null;
 };
 export type ArtworkDetails_SubmissionFlowTest_Query = {
-    readonly response: ArtworkDetails_SubmissionFlowTest_QueryResponse;
-    readonly variables: ArtworkDetails_SubmissionFlowTest_QueryVariables;
+  variables: ArtworkDetails_SubmissionFlowTest_Query$variables;
+  response: ArtworkDetails_SubmissionFlowTest_Query$data;
 };
-
-
-
-/*
-query ArtworkDetails_SubmissionFlowTest_Query(
-  $externalId: ID
-) {
-  submission(id: $externalId) {
-    ...ArtworkDetails_submission
-    id
-  }
-}
-
-fragment ArtworkDetails_submission on ConsignmentSubmission {
-  externalId
-  artist {
-    internalID
-    name
-    id
-  }
-  locationCity
-  locationCountry
-  locationState
-  locationPostalCode
-  locationCountryCode
-  year
-  title
-  medium
-  attributionClass
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  dimensionsMetric
-  provenance
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -337,5 +305,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e8762e63c84ab40531fa8b9d4f97893a';
+
+(node as any).hash = "e8762e63c84ab40531fa8b9d4f97893a";
+
 export default node;

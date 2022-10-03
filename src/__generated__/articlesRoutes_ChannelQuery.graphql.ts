@@ -1,82 +1,27 @@
+/**
+ * @generated SignedSource<<04f6d78d33085ff4edc7d9b54cdcbaea>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type articlesRoutes_ChannelQueryVariables = {
-    id: string;
+export type articlesRoutes_ChannelQuery$variables = {
+  id: string;
 };
-export type articlesRoutes_ChannelQueryResponse = {
-    readonly channel: {
-        readonly " $fragmentRefs": FragmentRefs<"ChannelApp_channel">;
-    };
+export type articlesRoutes_ChannelQuery$data = {
+  readonly channel: {
+    readonly " $fragmentSpreads": FragmentRefs<"ChannelApp_channel">;
+  };
 };
 export type articlesRoutes_ChannelQuery = {
-    readonly response: articlesRoutes_ChannelQueryResponse;
-    readonly variables: articlesRoutes_ChannelQueryVariables;
+  variables: articlesRoutes_ChannelQuery$variables;
+  response: articlesRoutes_ChannelQuery$data;
 };
-
-
-
-/*
-query articlesRoutes_ChannelQuery(
-  $id: ID!
-) {
-  channel(id: $id) @principalField {
-    ...ChannelApp_channel
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ChannelApp_channel on Channel {
-  ...ChannelArticles_channel
-  name
-  tagline
-  image {
-    url
-  }
-  links {
-    url
-    text
-  }
-}
-
-fragment ChannelArticles_channel on Channel {
-  articlesConnection(first: 9, sort: PUBLISHED_AT_DESC) {
-    edges {
-      node {
-        ...CellArticle_article
-        internalID
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -421,5 +366,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4a505d5aed0c0342b5a9ad783eccb876';
+
+(node as any).hash = "4a505d5aed0c0342b5a9ad783eccb876";
+
 export default node;

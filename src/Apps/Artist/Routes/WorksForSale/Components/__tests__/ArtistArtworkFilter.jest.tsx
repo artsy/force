@@ -36,6 +36,7 @@ const getWrapper = (props: Props = {}) => {
         return (
           <MockBoot context={context}>
             <ArtistArtworkFilterRefetchContainer
+              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist}
               aggregations={[]}
             />

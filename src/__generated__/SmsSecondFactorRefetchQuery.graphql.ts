@@ -1,43 +1,25 @@
+/**
+ * @generated SignedSource<<805884378116ecb07bcdd74ed993605c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SmsSecondFactorRefetchQueryVariables = {};
-export type SmsSecondFactorRefetchQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SmsSecondFactor_me">;
-    } | null;
+export type SmsSecondFactorRefetchQuery$variables = {};
+export type SmsSecondFactorRefetchQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SmsSecondFactor_me">;
+  } | null;
 };
 export type SmsSecondFactorRefetchQuery = {
-    readonly response: SmsSecondFactorRefetchQueryResponse;
-    readonly variables: SmsSecondFactorRefetchQueryVariables;
+  variables: SmsSecondFactorRefetchQuery$variables;
+  response: SmsSecondFactorRefetchQuery$data;
 };
-
-
-
-/*
-query SmsSecondFactorRefetchQuery {
-  me {
-    ...SmsSecondFactor_me
-    id
-  }
-}
-
-fragment SmsSecondFactor_me on Me {
-  email
-  hasSecondFactorEnabled
-  smsSecondFactors: secondFactors(kinds: [sms]) {
-    __typename
-    ... on SmsSecondFactor {
-      __typename
-      internalID
-      formattedPhoneNumber
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -162,5 +144,7 @@ const node: ConcreteRequest = {
     "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = 'bb3f464bd834c3a55e0098e887384d50';
+
+(node as any).hash = "bb3f464bd834c3a55e0098e887384d50";
+
 export default node;

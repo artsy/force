@@ -1,301 +1,210 @@
+/**
+ * @generated SignedSource<<8bd189509fe1fd16df52bbd1f0e82788>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
-export type orderRoutes_OrderQueryVariables = {
-    orderID: string;
+export type orderRoutes_OrderQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_OrderQueryResponse = {
-    readonly me: {
-        readonly name: string | null;
+export type orderRoutes_OrderQuery$data = {
+  readonly me: {
+    readonly name: string | null;
+  } | null;
+  readonly order: {
+    readonly bankAccountId: string | null;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
     } | null;
-    readonly order: {
-        readonly bankAccountId: string | null;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: {
-            readonly __typename: string;
-        } | null;
-        readonly lineItems: {
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
+          } | null;
+          readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly artwork: {
-                        readonly slug: string;
-                    } | null;
-                    readonly shippingQuoteOptions: {
-                        readonly edges: ReadonlyArray<{
-                            readonly node: {
-                                readonly isSelected: boolean;
-                            } | null;
-                        } | null> | null;
-                    } | null;
-                } | null;
+              readonly node: {
+                readonly isSelected: boolean;
+              } | null;
             } | null> | null;
+          } | null;
         } | null;
-        readonly creditCard: {
-            readonly internalID: string;
-        } | null;
-        readonly paymentMethod: CommercePaymentMethodEnum | null;
-        readonly paymentMethodDetails: ({
-            readonly __typename: "CreditCard";
-            readonly id: string;
-        } | {
-            readonly __typename: "BankAccount";
-            readonly id: string;
-        } | {
-            readonly __typename: "WireTransfer";
-            readonly isManualPayment: boolean;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
-        readonly myLastOffer?: {
-            readonly internalID: string;
-            readonly createdAt: string;
-        } | null | undefined;
-        readonly lastOffer?: {
-            readonly internalID: string;
-            readonly createdAt: string;
-        } | null | undefined;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
-        readonly " $fragmentRefs": FragmentRefs<"OrderApp_order">;
+      } | null> | null;
     } | null;
-};
-export type orderRoutes_OrderQueryRawResponse = {
-    readonly me: ({
-        readonly name: string | null;
-        readonly id: string;
-    }) | null;
-    readonly order: ({
-        readonly __typename: "CommerceOfferOrder";
-        readonly __isCommerceOrder: "CommerceOfferOrder";
-        readonly bankAccountId: string | null;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: ({
-            readonly __typename: string;
-        }) | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly href: string | null;
-                        readonly is_acquireable: boolean | null;
-                        readonly is_offerable: boolean | null;
-                    }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly isSelected: boolean;
-                                readonly id: string;
-                            }) | null;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly creditCard: ({
-            readonly internalID: string;
-            readonly id: string;
-        }) | null;
-        readonly paymentMethod: CommercePaymentMethodEnum | null;
-        readonly paymentMethodDetails: ({
-            readonly __typename: "CreditCard";
-            readonly id: string;
-        } | {
-            readonly __typename: "BankAccount";
-            readonly id: string;
-        } | {
-            readonly __typename: "WireTransfer";
-            readonly isManualPayment: boolean;
-        } | {
-            readonly __typename: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly itemsTotalCents: number | null;
-        readonly id: string;
-        readonly myLastOffer: ({
-            readonly internalID: string;
-            readonly createdAt: string;
-            readonly id: string;
-        }) | null;
-        readonly lastOffer: ({
-            readonly internalID: string;
-            readonly createdAt: string;
-            readonly id: string;
-        }) | null;
-        readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
+    readonly creditCard: {
+      readonly internalID: string;
+    } | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "CreditCard";
+      readonly id: string;
     } | {
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
-        readonly bankAccountId: string | null;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly lastTransactionFailed: boolean | null;
-        readonly requestedFulfillment: ({
-            readonly __typename: string;
-        }) | null;
-        readonly lineItems: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly artwork: ({
-                        readonly slug: string;
-                        readonly id: string;
-                        readonly href: string | null;
-                        readonly is_acquireable: boolean | null;
-                        readonly is_offerable: boolean | null;
-                    }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly isSelected: boolean;
-                                readonly id: string;
-                            }) | null;
-                        }) | null> | null;
-                    }) | null;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly creditCard: ({
-            readonly internalID: string;
+      readonly __typename: "BankAccount";
+      readonly id: string;
+    } | {
+      readonly __typename: "WireTransfer";
+      readonly isManualPayment: boolean;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    } | null;
+    readonly myLastOffer?: {
+      readonly internalID: string;
+      readonly createdAt: string;
+    } | null;
+    readonly lastOffer?: {
+      readonly internalID: string;
+      readonly createdAt: string;
+    } | null;
+    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+    readonly " $fragmentSpreads": FragmentRefs<"OrderApp_order">;
+  } | null;
+};
+export type orderRoutes_OrderQuery$rawResponse = {
+  readonly me: {
+    readonly name: string | null;
+    readonly id: string;
+  } | null;
+  readonly order: {
+    readonly __typename: "CommerceOfferOrder";
+    readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly bankAccountId: string | null;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-        }) | null;
-        readonly paymentMethod: CommercePaymentMethodEnum | null;
-        readonly paymentMethodDetails: ({
-            readonly __typename: "CreditCard";
+            readonly href: string | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
+          } | null;
+          readonly shippingQuoteOptions: {
+            readonly edges: ReadonlyArray<{
+              readonly node: {
+                readonly isSelected: boolean;
+                readonly id: string;
+              } | null;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly creditCard: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "CreditCard";
+      readonly id: string;
+    } | {
+      readonly __typename: "BankAccount";
+      readonly id: string;
+    } | {
+      readonly __typename: "WireTransfer";
+      readonly isManualPayment: boolean;
+    } | {
+      readonly __typename: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
+    readonly id: string;
+    readonly myLastOffer: {
+      readonly internalID: string;
+      readonly createdAt: string;
+      readonly id: string;
+    } | null;
+    readonly lastOffer: {
+      readonly internalID: string;
+      readonly createdAt: string;
+      readonly id: string;
+    } | null;
+    readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
+  } | {
+    readonly __typename: string;
+    readonly __isCommerceOrder: string;
+    readonly bankAccountId: string | null;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly lastTransactionFailed: boolean | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
+    readonly lineItems: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artwork: {
+            readonly slug: string;
             readonly id: string;
-        } | {
-            readonly __typename: "BankAccount";
-            readonly id: string;
-        } | {
-            readonly __typename: "WireTransfer";
-            readonly isManualPayment: boolean;
-        } | {
-            readonly __typename: string;
-        }) | null;
-        readonly currencyCode: string;
-        readonly itemsTotalCents: number | null;
-        readonly id: string;
-    }) | null;
+            readonly href: string | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
+          } | null;
+          readonly shippingQuoteOptions: {
+            readonly edges: ReadonlyArray<{
+              readonly node: {
+                readonly isSelected: boolean;
+                readonly id: string;
+              } | null;
+            } | null> | null;
+          } | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly creditCard: {
+      readonly internalID: string;
+      readonly id: string;
+    } | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "CreditCard";
+      readonly id: string;
+    } | {
+      readonly __typename: "BankAccount";
+      readonly id: string;
+    } | {
+      readonly __typename: "WireTransfer";
+      readonly isManualPayment: boolean;
+    } | {
+      readonly __typename: string;
+    } | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
+    readonly id: string;
+  } | null;
 };
 export type orderRoutes_OrderQuery = {
-    readonly response: orderRoutes_OrderQueryResponse;
-    readonly variables: orderRoutes_OrderQueryVariables;
-    readonly rawResponse: orderRoutes_OrderQueryRawResponse;
+  variables: orderRoutes_OrderQuery$variables;
+  response: orderRoutes_OrderQuery$data;
+  rawResponse: orderRoutes_OrderQuery$rawResponse;
 };
-
-
-
-/*
-query orderRoutes_OrderQuery(
-  $orderID: ID!
-) {
-  me {
-    name
-    id
-  }
-  order: commerceOrder(id: $orderID) @principalField {
-    __typename
-    __isCommerceOrder: __typename
-    bankAccountId
-    internalID
-    mode
-    state
-    lastTransactionFailed
-    ... on CommerceOfferOrder {
-      myLastOffer {
-        internalID
-        createdAt
-        id
-      }
-      lastOffer {
-        internalID
-        createdAt
-        id
-      }
-      awaitingResponseFrom
-    }
-    requestedFulfillment {
-      __typename
-    }
-    lineItems {
-      edges {
-        node {
-          artwork {
-            slug
-            id
-          }
-          shippingQuoteOptions {
-            edges {
-              node {
-                isSelected
-                id
-              }
-            }
-          }
-          id
-        }
-      }
-    }
-    creditCard {
-      internalID
-      id
-    }
-    paymentMethod
-    paymentMethodDetails {
-      __typename
-      ... on CreditCard {
-        id
-      }
-      ... on BankAccount {
-        id
-      }
-      ... on WireTransfer {
-        isManualPayment
-      }
-    }
-    ...OrderApp_order
-    id
-  }
-}
-
-fragment OrderApp_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  mode
-  currencyCode
-  itemsTotalCents
-  lineItems {
-    edges {
-      node {
-        artwork {
-          href
-          slug
-          is_acquireable: isAcquireable
-          is_offerable: isOfferable
-          id
-        }
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -358,10 +267,28 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v9 = [
+  (v4/*: any*/),
+  (v8/*: any*/)
+],
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "awaitingResponseFrom",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v9 = {
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -369,42 +296,42 @@ v9 = {
   "name": "requestedFulfillment",
   "plural": false,
   "selections": [
-    (v8/*: any*/)
+    (v11/*: any*/)
   ],
-  "storageKey": null
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isSelected",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "paymentMethod",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isSelected",
+  "storageKey": null
+},
+v15 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "paymentMethod",
+  "storageKey": null
+},
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v14 = [
-  (v13/*: any*/)
+v17 = [
+  (v16/*: any*/)
 ],
-v15 = {
+v18 = {
   "alias": null,
   "args": null,
   "concreteType": null,
@@ -412,16 +339,16 @@ v15 = {
   "name": "paymentMethodDetails",
   "plural": false,
   "selections": [
-    (v8/*: any*/),
+    (v11/*: any*/),
     {
       "kind": "InlineFragment",
-      "selections": (v14/*: any*/),
+      "selections": (v17/*: any*/),
       "type": "CreditCard",
       "abstractKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v14/*: any*/),
+      "selections": (v17/*: any*/),
       "type": "BankAccount",
       "abstractKey": null
     },
@@ -442,28 +369,10 @@ v15 = {
   ],
   "storageKey": null
 },
-v16 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v17 = [
-  (v4/*: any*/),
-  (v16/*: any*/)
-],
-v18 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "awaitingResponseFrom",
-  "storageKey": null
-},
 v19 = [
   (v4/*: any*/),
-  (v16/*: any*/),
-  (v13/*: any*/)
+  (v8/*: any*/),
+  (v16/*: any*/)
 ];
 return {
   "fragment": {
@@ -497,7 +406,35 @@ return {
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
-          (v9/*: any*/),
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
+                "plural": false,
+                "selections": (v9/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": (v9/*: any*/),
+                "storageKey": null
+              },
+              (v10/*: any*/)
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          (v12/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -530,7 +467,7 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v10/*: any*/)
+                          (v13/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -558,7 +495,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v11/*: any*/)
+                                  (v14/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -589,36 +526,8 @@ return {
             ],
             "storageKey": null
           },
-          (v12/*: any*/),
           (v15/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
-                "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
-              },
-              (v18/*: any*/)
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          },
+          (v18/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -646,7 +555,7 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v13/*: any*/)
+          (v16/*: any*/)
         ],
         "storageKey": null
       },
@@ -658,7 +567,7 @@ return {
         "name": "commerceOrder",
         "plural": false,
         "selections": [
-          (v8/*: any*/),
+          (v11/*: any*/),
           {
             "kind": "TypeDiscriminator",
             "abstractKey": "__isCommerceOrder"
@@ -668,7 +577,35 @@ return {
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
-          (v9/*: any*/),
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
+                "plural": false,
+                "selections": (v19/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
+                "plural": false,
+                "selections": (v19/*: any*/),
+                "storageKey": null
+              },
+              (v10/*: any*/)
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
+          (v12/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -701,8 +638,8 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v10/*: any*/),
                           (v13/*: any*/),
+                          (v16/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -751,8 +688,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v11/*: any*/),
-                                  (v13/*: any*/)
+                                  (v14/*: any*/),
+                                  (v16/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -762,7 +699,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v13/*: any*/)
+                      (v16/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -781,12 +718,12 @@ return {
             "plural": false,
             "selections": [
               (v4/*: any*/),
-              (v13/*: any*/)
+              (v16/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/),
           (v15/*: any*/),
+          (v18/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -801,35 +738,7 @@ return {
             "name": "itemsTotalCents",
             "storageKey": null
           },
-          (v13/*: any*/),
-          {
-            "kind": "InlineFragment",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
-                "plural": false,
-                "selections": (v19/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
-                "plural": false,
-                "selections": (v19/*: any*/),
-                "storageKey": null
-              },
-              (v18/*: any*/)
-            ],
-            "type": "CommerceOfferOrder",
-            "abstractKey": null
-          }
+          (v16/*: any*/)
         ],
         "storageKey": null
       }
@@ -845,5 +754,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9bdd79b212bd6b969f744c45247c5933';
+
+(node as any).hash = "9bdd79b212bd6b969f744c45247c5933";
+
 export default node;

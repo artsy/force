@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ArtworkSidebar2EditionSets_artwork } from "__generated__/ArtworkSidebar2EditionSets_artwork.graphql"
+import { ArtworkSidebar2EditionSets_artwork$data } from "__generated__/ArtworkSidebar2EditionSets_artwork.graphql"
 import React from "react"
 import { ArtworkSidebar2SizeInfoFragmentContainer } from "./ArtworkSidebar2SizeInfo"
 
@@ -20,11 +20,11 @@ const Row: React.FC<FlexProps> = ({ children, ...others }) => (
 )
 
 type EditionSet = NonNullable<
-  ArtworkSidebar2EditionSets_artwork["editionSets"]
+  ArtworkSidebar2EditionSets_artwork$data["editionSets"]
 >[0]
 
 interface ArtworkSidebar2EditionSetsProps {
-  artwork: ArtworkSidebar2EditionSets_artwork
+  artwork: ArtworkSidebar2EditionSets_artwork$data
   selectedEditionSet?: EditionSet
   onSelectEditionSet?: (editionSet: EditionSet) => void
 }
@@ -40,6 +40,7 @@ const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebar2SizeInfoFragmentContainer piece={editionSet!} />
 
         <Text

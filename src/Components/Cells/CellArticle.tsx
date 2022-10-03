@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CellArticle_article } from "__generated__/CellArticle_article.graphql"
+import { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
 import {
   Box,
   Image,
@@ -13,7 +13,7 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
 export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {
-  article: CellArticle_article
+  article: CellArticle_article$data
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
   displayByline?: boolean

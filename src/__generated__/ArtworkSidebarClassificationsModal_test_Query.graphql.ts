@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<57e473bf6c9828af24593e6760ce1a69>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarClassificationsModal_test_QueryVariables = {};
-export type ArtworkSidebarClassificationsModal_test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
-    } | null;
+export type ArtworkSidebarClassificationsModal_test_Query$variables = {};
+export type ArtworkSidebarClassificationsModal_test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
+  } | null;
 };
 export type ArtworkSidebarClassificationsModal_test_Query = {
-    readonly response: ArtworkSidebarClassificationsModal_test_QueryResponse;
-    readonly variables: ArtworkSidebarClassificationsModal_test_QueryVariables;
+  variables: ArtworkSidebarClassificationsModal_test_Query$variables;
+  response: ArtworkSidebarClassificationsModal_test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebarClassificationsModal_test_Query {
-  viewer {
-    ...ArtworkSidebarClassificationsModal_viewer
-  }
-}
-
-fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
-  artworkAttributionClasses {
-    id
-    name
-    longDescription
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -151,5 +139,7 @@ return {
   }
 };
 })();
-(node as any).hash = '760313e00b160715db7dd6991af00dc9';
+
+(node as any).hash = "760313e00b160715db7dd6991af00dc9";
+
 export default node;

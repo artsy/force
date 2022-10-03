@@ -5,7 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { Breakpoint } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
-import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
+import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import {
   MyCollectionArtworkForm,
   MyCollectionArtworkFormFragmentContainer,
@@ -491,6 +491,7 @@ describe("Create artwork", () => {
   })
 })
 
+// @ts-ignore RELAY UPGRADE 13
 const mockArtwork = {
   artist: {
     internalID: "4d8b929e4eb68a1b2c0002f2",
@@ -541,4 +542,4 @@ const mockArtwork = {
   title: "Untitled",
   width: "11",
   " $refType": "MyCollectionArtworkForm_artwork",
-} as MyCollectionArtworkForm_artwork
+} as MyCollectionArtworkForm_artwork$data

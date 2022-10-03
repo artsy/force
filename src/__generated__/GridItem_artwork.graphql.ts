@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<5848e513783bad67a68a969c90c514d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GridItem_artwork = {
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly image_title: string | null;
-    readonly image: {
-        readonly placeholder: string | null;
-        readonly url: string | null;
-        readonly aspect_ratio: number;
-    } | null;
-    readonly artistNames: string | null;
-    readonly href: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
-    readonly " $refType": "GridItem_artwork";
+export type GridItem_artwork$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly image_title: string | null;
+  readonly image: {
+    readonly placeholder: string | null;
+    readonly url: string | null;
+    readonly aspect_ratio: number;
+  } | null;
+  readonly artistNames: string | null;
+  readonly href: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+  readonly " $fragmentType": "GridItem_artwork";
 };
-export type GridItem_artwork$data = GridItem_artwork;
 export type GridItem_artwork$key = {
-    readonly " $data"?: GridItem_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
+  readonly " $data"?: GridItem_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -124,5 +127,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'a93086728692841831fb5b17dd14dd06';
+
+(node as any).hash = "a93086728692841831fb5b17dd14dd06";
+
 export default node;

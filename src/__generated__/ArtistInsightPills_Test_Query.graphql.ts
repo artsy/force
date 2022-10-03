@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<b34c14cc8ca44435dfdce46fd28ff5a1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInsightPills_Test_QueryVariables = {};
-export type ArtistInsightPills_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInsightPills_artist">;
-    } | null;
+export type ArtistInsightPills_Test_Query$variables = {};
+export type ArtistInsightPills_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightPills_artist">;
+  } | null;
 };
 export type ArtistInsightPills_Test_Query = {
-    readonly response: ArtistInsightPills_Test_QueryResponse;
-    readonly variables: ArtistInsightPills_Test_QueryVariables;
+  variables: ArtistInsightPills_Test_Query$variables;
+  response: ArtistInsightPills_Test_Query$data;
 };
-
-
-
-/*
-query ArtistInsightPills_Test_Query {
-  artist(id: "example") {
-    ...ArtistInsightPills_artist
-    id
-  }
-}
-
-fragment ArtistInsightPills_artist on Artist {
-  insightPills: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {
-    kind
-    label
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -183,5 +171,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c09eb27694988de076581701c1828dc7';
+
+(node as any).hash = "c09eb27694988de076581701c1828dc7";
+
 export default node;

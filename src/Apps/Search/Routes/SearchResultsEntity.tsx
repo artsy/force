@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
-import { SearchResultsEntity_viewer } from "__generated__/SearchResultsEntity_viewer.graphql"
+import { SearchResultsEntity_viewer$data } from "__generated__/SearchResultsEntity_viewer.graphql"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { LoadingArea, LoadingAreaState } from "Components/LoadingArea"
@@ -10,7 +10,7 @@ import qs from "qs"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
-  viewer: SearchResultsEntity_viewer
+  viewer: SearchResultsEntity_viewer$data
   relay: RelayRefetchProp
   entities: string[]
   tab: string
@@ -146,6 +146,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })}
         {searchConnection && (
           <Pagination
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={searchConnection.pageCursors}
             onClick={this.loadAfter}
             onNext={this.loadNext}

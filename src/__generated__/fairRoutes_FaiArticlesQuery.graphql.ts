@@ -1,75 +1,27 @@
+/**
+ * @generated SignedSource<<1a267adbb1c57f9029cfb21edc2f5879>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairRoutes_FaiArticlesQueryVariables = {
-    slug: string;
+export type fairRoutes_FaiArticlesQuery$variables = {
+  slug: string;
 };
-export type fairRoutes_FaiArticlesQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairArticles_fair">;
-    } | null;
+export type fairRoutes_FaiArticlesQuery$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
+  } | null;
 };
 export type fairRoutes_FaiArticlesQuery = {
-    readonly response: fairRoutes_FaiArticlesQueryResponse;
-    readonly variables: fairRoutes_FaiArticlesQueryVariables;
+  variables: fairRoutes_FaiArticlesQuery$variables;
+  response: fairRoutes_FaiArticlesQuery$data;
 };
-
-
-
-/*
-query fairRoutes_FaiArticlesQuery(
-  $slug: String!
-) {
-  fair(id: $slug) @principalField {
-    ...FairArticles_fair
-    id
-  }
-}
-
-fragment FairArticles_fair on Fair {
-  slug
-  articlesConnection(first: 7) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        href
-        author {
-          name
-          id
-        }
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailTitle
-        thumbnailImage {
-          large: cropped(width: 733, height: 550) {
-            width
-            height
-            src
-            srcSet
-          }
-          medium: cropped(width: 267, height: 150) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -396,5 +348,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3a804b0eed7cc5ae52329dc763f9773a';
+
+(node as any).hash = "3a804b0eed7cc5ae52329dc763f9773a";
+
 export default node;

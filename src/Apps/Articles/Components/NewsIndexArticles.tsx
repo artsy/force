@@ -8,10 +8,10 @@ import {
 import { ArticleAd } from "Apps/Article/Components/ArticleAd"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
 import { extractNodes } from "Utils/extractNodes"
-import { NewsIndexArticles_viewer } from "__generated__/NewsIndexArticles_viewer.graphql"
+import { NewsIndexArticles_viewer$data } from "__generated__/NewsIndexArticles_viewer.graphql"
 
 interface NewsIndexArticlesProps {
-  viewer: NewsIndexArticles_viewer
+  viewer: NewsIndexArticles_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -44,6 +44,7 @@ export const NewsIndexArticles: FC<NewsIndexArticlesProps> = ({
         {articles.map((article, i) => {
           return (
             <Fragment key={article.internalID}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleBodyFragmentContainer article={article} />
 
               {/* Insert an ad after every 6th, article; beginning with 3rd */}

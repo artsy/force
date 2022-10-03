@@ -1,4 +1,4 @@
-import { Environment, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp } from "react-relay"
 import { useRef, useState } from "react"
 import * as React from "react"
 import {
@@ -21,7 +21,8 @@ import { useTracking } from "react-tracking"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 
-import { Conversation_conversation } from "__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${themeGet("colors.black10")};
@@ -54,10 +55,11 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 `
 
 interface ReplyProps {
-  conversation: Conversation_conversation
-  environment: Environment
+  conversation: Conversation_conversation$data
+  environment: RelayModernEnvironment
   onScroll: () => void
   refetch: RelayRefetchProp["refetch"]
+  // @ts-ignore RELAY UPGRADE 13
   openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
@@ -136,6 +138,7 @@ export const Reply: React.FC<ReplyProps> = props => {
       />
       <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ConversationCTAFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           conversation={conversation}
           openInquiryModal={({ createsOfferOrder }) =>
             openInquiryModal({ createsOfferOrder })

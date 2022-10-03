@@ -1,144 +1,79 @@
+/**
+ * @generated SignedSource<<9467fbc1e3afe8fe05620d381b148055>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsApp_Test_QueryVariables = {};
-export type ViewingRoomsApp_Test_QueryResponse = {
-    readonly allViewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
-    } | null;
-    readonly featuredViewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
-    } | null;
+export type ViewingRoomsApp_Test_Query$variables = {};
+export type ViewingRoomsApp_Test_Query$data = {
+  readonly allViewingRooms: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
+  } | null;
+  readonly featuredViewingRooms: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
+  } | null;
 };
-export type ViewingRoomsApp_Test_QueryRawResponse = {
-    readonly allViewingRooms: ({
-        readonly viewingRoomsConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly slug: string;
-                    readonly status: string;
-                    readonly title: string;
-                    readonly image: ({
-                        readonly imageURLs: ({
-                            readonly normalized: string | null;
-                        }) | null;
-                    }) | null;
-                    readonly distanceToOpen: string | null;
-                    readonly distanceToClose: string | null;
-                    readonly partner: ({
-                        readonly name: string | null;
-                        readonly id: string;
-                    }) | null;
-                    readonly __typename: "ViewingRoom";
-                }) | null;
-                readonly cursor: string;
-            }) | null> | null;
-            readonly pageInfo: {
-                readonly endCursor: string | null;
-                readonly hasNextPage: boolean;
-            };
-        }) | null;
-    }) | null;
-    readonly featuredViewingRooms: ({
-        readonly edges: ReadonlyArray<({
-            readonly node: ({
-                readonly status: string;
-                readonly slug: string;
-                readonly title: string;
-                readonly image: ({
-                    readonly imageURLs: ({
-                        readonly normalized: string | null;
-                    }) | null;
-                }) | null;
-                readonly distanceToOpen: string | null;
-                readonly distanceToClose: string | null;
-                readonly partner: ({
-                    readonly name: string | null;
-                    readonly id: string;
-                }) | null;
-            }) | null;
-        }) | null> | null;
-    }) | null;
+export type ViewingRoomsApp_Test_Query$rawResponse = {
+  readonly allViewingRooms: {
+    readonly viewingRoomsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
+          readonly status: string;
+          readonly title: string;
+          readonly image: {
+            readonly imageURLs: {
+              readonly normalized: string | null;
+            } | null;
+          } | null;
+          readonly distanceToOpen: string | null;
+          readonly distanceToClose: string | null;
+          readonly partner: {
+            readonly name: string | null;
+            readonly id: string;
+          } | null;
+          readonly __typename: "ViewingRoom";
+        } | null;
+        readonly cursor: string;
+      } | null> | null;
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+      };
+    } | null;
+  } | null;
+  readonly featuredViewingRooms: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly status: string;
+        readonly slug: string;
+        readonly title: string;
+        readonly image: {
+          readonly imageURLs: {
+            readonly normalized: string | null;
+          } | null;
+        } | null;
+        readonly distanceToOpen: string | null;
+        readonly distanceToClose: string | null;
+        readonly partner: {
+          readonly name: string | null;
+          readonly id: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type ViewingRoomsApp_Test_Query = {
-    readonly response: ViewingRoomsApp_Test_QueryResponse;
-    readonly variables: ViewingRoomsApp_Test_QueryVariables;
-    readonly rawResponse: ViewingRoomsApp_Test_QueryRawResponse;
+  variables: ViewingRoomsApp_Test_Query$variables;
+  response: ViewingRoomsApp_Test_Query$data;
+  rawResponse: ViewingRoomsApp_Test_Query$rawResponse;
 };
-
-
-
-/*
-query ViewingRoomsApp_Test_Query {
-  allViewingRooms: viewer {
-    ...ViewingRoomsApp_allViewingRooms
-  }
-  featuredViewingRooms: viewingRooms(featured: true) {
-    ...ViewingRoomsApp_featuredViewingRooms
-  }
-}
-
-fragment ViewingRoomsApp_allViewingRooms on Viewer {
-  ...ViewingRoomsLatestGrid_viewingRooms_9Znkm
-}
-
-fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
-  ...ViewingRoomsFeaturedRail_featuredViewingRooms
-}
-
-fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
-  edges {
-    node {
-      status
-      slug
-      title
-      image {
-        imageURLs {
-          normalized
-        }
-      }
-      distanceToOpen(short: true)
-      distanceToClose(short: true)
-      partner {
-        name
-        id
-      }
-    }
-  }
-}
-
-fragment ViewingRoomsLatestGrid_viewingRooms_9Znkm on Viewer {
-  viewingRoomsConnection {
-    edges {
-      node {
-        slug
-        status
-        title
-        image {
-          imageURLs {
-            normalized
-          }
-        }
-        distanceToOpen(short: true)
-        distanceToClose(short: true)
-        partner {
-          name
-          id
-        }
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -558,5 +493,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5e8709a6467d35395b4d7066db2c1669';
+
+(node as any).hash = "5e8709a6467d35395b4d7066db2c1669";
+
 export default node;

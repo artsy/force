@@ -6,7 +6,7 @@ import {
   Image,
   ResponsiveBox,
 } from "@artsy/palette"
-import { ArtistConsignHeader_artist } from "__generated__/ArtistConsignHeader_artist.graphql"
+import { ArtistConsignHeader_artist$data } from "__generated__/ArtistConsignHeader_artist.graphql"
 import { SectionContainer } from "Apps/Artist/Routes/Consign/Components/SectionContainer"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -17,7 +17,7 @@ import { getConsignSubmissionUrl } from "../Utils/getConsignSubmissionUrl"
 import { extractNodes } from "Utils/extractNodes"
 
 interface ArtistConsignHeaderProps {
-  artist: ArtistConsignHeader_artist
+  artist: ArtistConsignHeader_artist$data
 }
 
 export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
@@ -40,12 +40,17 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         >
           {leftArtwork && (
             <ResponsiveBox
+              // @ts-ignore RELAY UPGRADE 13
               aspectWidth={leftArtwork.image.cropped.width}
+              // @ts-ignore RELAY UPGRADE 13
               aspectHeight={leftArtwork.image.cropped.height}
+              // @ts-ignore RELAY UPGRADE 13
               maxWidth={leftArtwork.image.cropped.width}
             >
               <Image
+                // @ts-ignore RELAY UPGRADE 13
                 src={leftArtwork.image.cropped.src}
+                // @ts-ignore RELAY UPGRADE 13
                 srcSet={leftArtwork.image.cropped.srcSet}
                 width="100%"
                 height="100%"
@@ -102,12 +107,17 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         >
           {rightArtwork && (
             <ResponsiveBox
+              // @ts-ignore RELAY UPGRADE 13
               aspectWidth={rightArtwork.image.cropped.width}
+              // @ts-ignore RELAY UPGRADE 13
               aspectHeight={rightArtwork.image.cropped.height}
+              // @ts-ignore RELAY UPGRADE 13
               maxWidth={rightArtwork.image.cropped.width}
             >
               <Image
+                // @ts-ignore RELAY UPGRADE 13
                 src={rightArtwork.image.cropped.src}
+                // @ts-ignore RELAY UPGRADE 13
                 srcSet={rightArtwork.image.cropped.srcSet}
                 width="100%"
                 height="100%"

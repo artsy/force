@@ -5,7 +5,7 @@ import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Compo
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomApp_viewingRoom } from "__generated__/ViewingRoomApp_viewingRoom.graphql"
+import { ViewingRoomApp_viewingRoom$data } from "__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { SystemContext } from "System"
 import { userHasAccessToPartner } from "Utils/user"
@@ -13,7 +13,7 @@ import { FullBleedBanner } from "Components/FullBleedBanner"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
-  viewingRoom: ViewingRoomApp_viewingRoom
+  viewingRoom: ViewingRoomApp_viewingRoom$data
 }
 
 const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
@@ -29,6 +29,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 
   return (
     <>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ViewingRoomMeta viewingRoom={viewingRoom} />
 
       {isPreviewable && (
@@ -39,6 +40,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       )}
 
       <Join separator={<Spacer mt={4} />}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ViewingRoomHeader viewingRoom={viewingRoom} />
 
         {viewingRoom.status === "live" || isPreviewable ? (
@@ -48,6 +50,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
             <div>{children}</div>
           </>
         ) : (
+          // @ts-ignore RELAY UPGRADE 13
           <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
         )}
       </Join>

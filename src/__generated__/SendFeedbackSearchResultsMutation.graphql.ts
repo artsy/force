@@ -1,43 +1,35 @@
+/**
+ * @generated SignedSource<<d3af69a141abe2e07834eb53f1d2aade>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendFeedbackMutationInput = {
-    clientMutationId?: string | null | undefined;
-    email?: string | null | undefined;
-    message: string;
-    name?: string | null | undefined;
-    url?: string | null | undefined;
+  clientMutationId?: string | null;
+  email?: string | null;
+  message: string;
+  name?: string | null;
+  url?: string | null;
 };
-export type SendFeedbackSearchResultsMutationVariables = {
-    input: SendFeedbackMutationInput;
+export type SendFeedbackSearchResultsMutation$variables = {
+  input: SendFeedbackMutationInput;
 };
-export type SendFeedbackSearchResultsMutationResponse = {
-    readonly sendFeedback: {
-        readonly feedbackOrError: {
-            readonly __typename: string;
-        } | null;
+export type SendFeedbackSearchResultsMutation$data = {
+  readonly sendFeedback: {
+    readonly feedbackOrError: {
+      readonly __typename: string;
     } | null;
+  } | null;
 };
 export type SendFeedbackSearchResultsMutation = {
-    readonly response: SendFeedbackSearchResultsMutationResponse;
-    readonly variables: SendFeedbackSearchResultsMutationVariables;
+  variables: SendFeedbackSearchResultsMutation$variables;
+  response: SendFeedbackSearchResultsMutation$data;
 };
-
-
-
-/*
-mutation SendFeedbackSearchResultsMutation(
-  $input: SendFeedbackMutationInput!
-) {
-  sendFeedback(input: $input) {
-    feedbackOrError {
-      __typename
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -111,5 +103,7 @@ return {
   }
 };
 })();
-(node as any).hash = '155a7a2823962b6d892c21c2e6ac2e05';
+
+(node as any).hash = "155a7a2823962b6d892c21c2e6ac2e05";
+
 export default node;

@@ -1,7 +1,7 @@
 import { MockBoot, renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
 
-import { SeoDataForArtwork_Test_QueryRawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
+import { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
 import {
@@ -19,7 +19,7 @@ jest.mock("sharify", () => ({
 
 describe("SeoDataForArtwork", () => {
   const getWrapper = async (
-    artwork: SeoDataForArtwork_Test_QueryRawResponse["artwork"]
+    artwork: SeoDataForArtwork_Test_Query$rawResponse["artwork"]
   ) => {
     return await renderRelayTree({
       Component: SeoDataForArtworkFragmentContainer,
@@ -33,7 +33,7 @@ describe("SeoDataForArtwork", () => {
           }
         }
       `,
-      mockData: { artwork } as SeoDataForArtwork_Test_QueryRawResponse,
+      mockData: { artwork } as SeoDataForArtwork_Test_Query$rawResponse,
     })
   }
 

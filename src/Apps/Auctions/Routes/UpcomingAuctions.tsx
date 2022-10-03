@@ -6,13 +6,13 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { UpcomingAuctions_viewer } from "__generated__/UpcomingAuctions_viewer.graphql"
+import { UpcomingAuctions_viewer$data } from "__generated__/UpcomingAuctions_viewer.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionsZeroState } from "../Components/AuctionsZeroState"
 
 export interface UpcomingAuctionsProps {
-  viewer: UpcomingAuctions_viewer
+  viewer: UpcomingAuctions_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -57,6 +57,7 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
         return (
           <Box my={6} key={index}>
             <AuctionArtworksRailFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               sale={node}
               tabType="upcoming"
             />

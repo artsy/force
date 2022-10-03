@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<3b3f8fcfd87c8419ee8ec13552c51698>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionActiveBids_me = {
-    readonly internalID: string;
-    readonly lotStandings: ReadonlyArray<{
-        readonly isHighestBidder: boolean | null;
-        readonly saleArtwork: {
-            readonly counts: {
-                readonly bidderPositions: number | null;
-            } | null;
-            readonly currentBid: {
-                readonly display: string | null;
-            } | null;
-            readonly slug: string;
-            readonly lotLabel: string | null;
-            readonly reserveStatus: string | null;
-            readonly saleID: string | null;
-            readonly highestBid: {
-                readonly display: string | null;
-            } | null;
-            readonly endedAt: string | null;
-            readonly sale: {
-                readonly slug: string;
-                readonly liveStartAt: string | null;
-                readonly endAt: string | null;
-                readonly isLiveOpen: boolean | null;
-                readonly isClosed: boolean | null;
-            } | null;
-            readonly " $fragmentRefs": FragmentRefs<"AuctionLotInfo_saleArtwork">;
-        } | null;
-    } | null> | null;
-    readonly " $refType": "AuctionActiveBids_me";
+export type AuctionActiveBids_me$data = {
+  readonly internalID: string;
+  readonly lotStandings: ReadonlyArray<{
+    readonly isHighestBidder: boolean | null;
+    readonly saleArtwork: {
+      readonly counts: {
+        readonly bidderPositions: any | null;
+      } | null;
+      readonly currentBid: {
+        readonly display: string | null;
+      } | null;
+      readonly slug: string;
+      readonly lotLabel: string | null;
+      readonly reserveStatus: string | null;
+      readonly saleID: string | null;
+      readonly highestBid: {
+        readonly display: string | null;
+      } | null;
+      readonly endedAt: string | null;
+      readonly sale: {
+        readonly slug: string;
+        readonly liveStartAt: string | null;
+        readonly endAt: string | null;
+        readonly isLiveOpen: boolean | null;
+        readonly isClosed: boolean | null;
+      } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"AuctionLotInfo_saleArtwork">;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentType": "AuctionActiveBids_me";
 };
-export type AuctionActiveBids_me$data = AuctionActiveBids_me;
 export type AuctionActiveBids_me$key = {
-    readonly " $data"?: AuctionActiveBids_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me">;
+  readonly " $data"?: AuctionActiveBids_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -113,6 +116,22 @@ return {
           "name": "saleArtwork",
           "plural": false,
           "selections": [
+            {
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "imageHeight",
+                  "value": 100
+                },
+                {
+                  "kind": "Literal",
+                  "name": "imageWidth",
+                  "value": 100
+                }
+              ],
+              "kind": "FragmentSpread",
+              "name": "AuctionLotInfo_saleArtwork"
+            },
             {
               "alias": null,
               "args": null,
@@ -219,22 +238,6 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "imageHeight",
-                  "value": 100
-                },
-                {
-                  "kind": "Literal",
-                  "name": "imageWidth",
-                  "value": 100
-                }
-              ],
-              "kind": "FragmentSpread",
-              "name": "AuctionLotInfo_saleArtwork"
             }
           ],
           "storageKey": null
@@ -247,5 +250,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '22040b50814763b99b53e2e61d7b1a41';
+
+(node as any).hash = "22040b50814763b99b53e2e61d7b1a41";
+
 export default node;

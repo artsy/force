@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<0afcc86e414d0a6f3785230f14627448>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionBuyersPremiumDialog_Test_QueryVariables = {};
-export type AuctionBuyersPremiumDialog_Test_QueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
-    } | null;
+export type AuctionBuyersPremiumDialog_Test_Query$variables = {};
+export type AuctionBuyersPremiumDialog_Test_Query$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
+  } | null;
 };
 export type AuctionBuyersPremiumDialog_Test_Query = {
-    readonly response: AuctionBuyersPremiumDialog_Test_QueryResponse;
-    readonly variables: AuctionBuyersPremiumDialog_Test_QueryVariables;
+  variables: AuctionBuyersPremiumDialog_Test_Query$variables;
+  response: AuctionBuyersPremiumDialog_Test_Query$data;
 };
-
-
-
-/*
-query AuctionBuyersPremiumDialog_Test_Query {
-  sale(id: "example") {
-    ...AuctionBuyersPremiumDialog_sale
-    id
-  }
-}
-
-fragment AuctionBuyersPremiumDialog_sale on Sale {
-  buyersPremium {
-    amount
-    cents
-    percent
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -176,5 +163,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6fe93d0d301eb094ae71261190b1ca21';
+
+(node as any).hash = "6fe93d0d301eb094ae71261190b1ca21";
+
 export default node;

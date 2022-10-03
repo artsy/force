@@ -1,14 +1,14 @@
 import * as React from "react"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
-import { FairOrganizerLatestArticles_fairOrganizer } from "__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { FairOrganizerLatestArticles_fairOrganizer$data } from "__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { Masonry } from "Components/Masonry"
 
 interface FairOrganizerLatestArticlesProps {
-  fairOrganizer: FairOrganizerLatestArticles_fairOrganizer
+  fairOrganizer: FairOrganizerLatestArticles_fairOrganizer$data
 }
 
 export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesProps> = ({
@@ -35,6 +35,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
       <GridColumns gridRowGap={4}>
         {/* Latest article */}
         <Column span={6}>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CellArticleFragmentContainer article={latestArticle} mode="GRID" />
         </Column>
 
@@ -44,6 +45,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             {otherArticles.map(article => (
               <CellArticleFragmentContainer
                 key={article.internalID}
+                // @ts-ignore RELAY UPGRADE 13
                 article={article}
                 mode="GRID"
                 mb={4}

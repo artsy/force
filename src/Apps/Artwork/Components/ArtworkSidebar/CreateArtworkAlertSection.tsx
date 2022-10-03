@@ -1,7 +1,7 @@
 import React from "react"
 import { Flex, Text, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CreateArtworkAlertSection_artwork } from "__generated__/CreateArtworkAlertSection_artwork.graphql"
+import { CreateArtworkAlertSection_artwork$data } from "__generated__/CreateArtworkAlertSection_artwork.graphql"
 import {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
@@ -16,7 +16,7 @@ import { AuthModalOptions } from "Utils/openAuthModal"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 interface CreateArtworkAlertSectionProps {
-  artwork: CreateArtworkAlertSection_artwork
+  artwork: CreateArtworkAlertSection_artwork$data
 }
 
 export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps> = ({

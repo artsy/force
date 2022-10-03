@@ -1,59 +1,39 @@
+/**
+ * @generated SignedSource<<39c6b4d068273640bf5317a103ec3581>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixturesQueryVariables = {};
-export type MockRelayRendererFixturesQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MockRelayRendererFixtures_artwork">;
-    } | null;
+export type MockRelayRendererFixturesQuery$variables = {};
+export type MockRelayRendererFixturesQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artwork">;
+  } | null;
 };
-export type MockRelayRendererFixturesQueryRawResponse = {
-    readonly artwork: ({
-        readonly image: ({
-            readonly url: string | null;
-        }) | null;
-        readonly artist: ({
-            readonly slug: string;
-            readonly id: string;
-        }) | null;
-        readonly title: string | null;
-        readonly id: string;
-    }) | null;
+export type MockRelayRendererFixturesQuery$rawResponse = {
+  readonly artwork: {
+    readonly image: {
+      readonly url: string | null;
+    } | null;
+    readonly artist: {
+      readonly slug: string;
+      readonly id: string;
+    } | null;
+    readonly title: string | null;
+    readonly id: string;
+  } | null;
 };
 export type MockRelayRendererFixturesQuery = {
-    readonly response: MockRelayRendererFixturesQueryResponse;
-    readonly variables: MockRelayRendererFixturesQueryVariables;
-    readonly rawResponse: MockRelayRendererFixturesQueryRawResponse;
+  variables: MockRelayRendererFixturesQuery$variables;
+  response: MockRelayRendererFixturesQuery$data;
+  rawResponse: MockRelayRendererFixturesQuery$rawResponse;
 };
-
-
-
-/*
-query MockRelayRendererFixturesQuery {
-  artwork(id: "mona-lisa") {
-    ...MockRelayRendererFixtures_artwork
-    id
-  }
-}
-
-fragment MockRelayRendererFixtures_artwork on Artwork {
-  image {
-    url
-  }
-  artist {
-    slug
-    id
-  }
-  ...MockRelayRendererFixtures_artworkMetadata
-}
-
-fragment MockRelayRendererFixtures_artworkMetadata on Artwork {
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -171,5 +151,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4a31d3b3d6964a65983bc5dfd54593de';
+
+(node as any).hash = "4a31d3b3d6964a65983bc5dfd54593de";
+
 export default node;

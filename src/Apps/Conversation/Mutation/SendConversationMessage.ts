@@ -1,4 +1,4 @@
-import { Conversation_conversation } from "__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { SendConversationMessageMutation } from "__generated__/SendConversationMessageMutation.graphql"
 import {
   ConnectionHandler,
@@ -11,7 +11,7 @@ import {
 
 export const SendConversationMessage = (
   environment: Environment,
-  conversation: Conversation_conversation,
+  conversation: Conversation_conversation$data,
   text: string,
   onCompleted: MutationConfig<any>["onCompleted"],
   onError: MutationConfig<any>["onError"]

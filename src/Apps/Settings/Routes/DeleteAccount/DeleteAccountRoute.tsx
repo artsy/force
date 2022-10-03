@@ -16,11 +16,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { logout } from "Utils/auth"
 import * as Yup from "yup"
-import { DeleteAccountRoute_me } from "__generated__/DeleteAccountRoute_me.graphql"
+import { DeleteAccountRoute_me$data } from "__generated__/DeleteAccountRoute_me.graphql"
 import { useDeleteAccount } from "./useDeleteAccount"
 
 interface DeleteAccountRouteProps {
-  me: DeleteAccountRoute_me
+  me: DeleteAccountRoute_me$data
 }
 
 export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({

@@ -1,63 +1,27 @@
+/**
+ * @generated SignedSource<<ad4ab161c2e9cdfc307bd3bd6fb1878e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PurchaseOnInquiryButton_Test_QueryVariables = {};
-export type PurchaseOnInquiryButton_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"PurchaseOnInquiryButton_conversation">;
-        } | null;
+export type PurchaseOnInquiryButton_Test_Query$variables = {};
+export type PurchaseOnInquiryButton_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"PurchaseOnInquiryButton_conversation">;
     } | null;
+  } | null;
 };
 export type PurchaseOnInquiryButton_Test_Query = {
-    readonly response: PurchaseOnInquiryButton_Test_QueryResponse;
-    readonly variables: PurchaseOnInquiryButton_Test_QueryVariables;
+  variables: PurchaseOnInquiryButton_Test_Query$variables;
+  response: PurchaseOnInquiryButton_Test_Query$data;
 };
-
-
-
-/*
-query PurchaseOnInquiryButton_Test_Query {
-  me {
-    conversation(id: "123") {
-      ...PurchaseOnInquiryButton_conversation
-      id
-    }
-    id
-  }
-}
-
-fragment ConfirmArtworkButton_artwork on Artwork {
-  internalID
-}
-
-fragment PurchaseOnInquiryButton_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        isEdition
-        internalID
-        slug
-        editionSets {
-          internalID
-          id
-        }
-        ...ConfirmArtworkButton_artwork
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -300,5 +264,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6aa62e3f37e0913e9e06397acd03afef';
+
+(node as any).hash = "6aa62e3f37e0913e9e06397acd03afef";
+
 export default node;

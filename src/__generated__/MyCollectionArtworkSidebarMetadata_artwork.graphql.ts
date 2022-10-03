@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<e596adbd7e5b865ad9a5be786087895d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarMetadata_artwork = {
-    readonly category: string | null;
-    readonly medium: string | null;
-    readonly metric: string | null;
-    readonly dimensions: {
-        readonly in: string | null;
-        readonly cm: string | null;
-    } | null;
-    readonly provenance: string | null;
-    readonly attributionClass: {
-        readonly shortDescription: string | null;
-    } | null;
-    readonly pricePaid: {
-        readonly display: string | null;
-    } | null;
-    readonly artworkLocation: string | null;
-    readonly " $refType": "MyCollectionArtworkSidebarMetadata_artwork";
+export type MyCollectionArtworkSidebarMetadata_artwork$data = {
+  readonly category: string | null;
+  readonly medium: string | null;
+  readonly metric: string | null;
+  readonly dimensions: {
+    readonly in: string | null;
+    readonly cm: string | null;
+  } | null;
+  readonly provenance: string | null;
+  readonly attributionClass: {
+    readonly shortDescription: string | null;
+  } | null;
+  readonly pricePaid: {
+    readonly display: string | null;
+  } | null;
+  readonly artworkLocation: string | null;
+  readonly " $fragmentType": "MyCollectionArtworkSidebarMetadata_artwork";
 };
-export type MyCollectionArtworkSidebarMetadata_artwork$data = MyCollectionArtworkSidebarMetadata_artwork;
 export type MyCollectionArtworkSidebarMetadata_artwork$key = {
-    readonly " $data"?: MyCollectionArtworkSidebarMetadata_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork">;
+  readonly " $data"?: MyCollectionArtworkSidebarMetadata_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -136,5 +139,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'c250744be463a5dbffca79870782261b';
+
+(node as any).hash = "c250744be463a5dbffca79870782261b";
+
 export default node;

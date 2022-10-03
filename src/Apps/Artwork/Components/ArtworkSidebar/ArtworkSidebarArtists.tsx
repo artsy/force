@@ -2,12 +2,12 @@ import { EntityHeader, Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkSidebarArtists_artwork } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
+import { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 
 export interface ArtistsProps {
-  artwork: ArtworkSidebarArtists_artwork
+  artwork: ArtworkSidebarArtists_artwork$data
 }
 
 export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
@@ -23,9 +23,11 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
         return (
           <EntityHeaderArtistFragmentContainer
             key={artist.internalID}
+            // @ts-ignore RELAY UPGRADE 13
             artist={artist}
             FollowButton={
               <FollowArtistButtonFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artist={artist}
                 contextModule={ContextModule.artworkSidebar}
                 triggerSuggestions

@@ -1,91 +1,31 @@
+/**
+ * @generated SignedSource<<63c742ffbc17444bead59472b7f70146>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Item_Test_QueryVariables = {};
-export type Item_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly items: ReadonlyArray<{
-                readonly item: {
-                    readonly " $fragmentRefs": FragmentRefs<"Item_item">;
-                } | null;
-            } | null> | null;
+export type Item_Test_Query$variables = {};
+export type Item_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly items: ReadonlyArray<{
+        readonly item: {
+          readonly " $fragmentSpreads": FragmentRefs<"Item_item">;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type Item_Test_Query = {
-    readonly response: Item_Test_QueryResponse;
-    readonly variables: Item_Test_QueryVariables;
+  variables: Item_Test_Query$variables;
+  response: Item_Test_Query$data;
 };
-
-
-
-/*
-query Item_Test_Query {
-  me {
-    conversation(id: "test-id") {
-      items {
-        item {
-          __typename
-          ...Item_item
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment Item_item on ConversationItemType {
-  __isConversationItemType: __typename
-  __typename
-  ... on Artwork {
-    internalID
-    id
-    date
-    title
-    artistNames
-    href
-    isOfferableFromInquiry
-    image {
-      url(version: ["large"])
-    }
-    listPrice {
-      __typename
-      ... on Money {
-        display
-      }
-      ... on PriceRange {
-        display
-      }
-    }
-  }
-  ... on Show {
-    id
-    fair {
-      name
-      exhibitionPeriod
-      location {
-        city
-        id
-      }
-      id
-    }
-    href
-    name
-    coverImage {
-      url
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -430,5 +370,7 @@ return {
   }
 };
 })();
-(node as any).hash = '84cbc04ae0a7e0d23f74d6252f349bba';
+
+(node as any).hash = "84cbc04ae0a7e0d23f74d6252f349bba";
+
 export default node;

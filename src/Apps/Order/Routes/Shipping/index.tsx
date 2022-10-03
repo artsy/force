@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { Shipping_order } from "__generated__/Shipping_order.graphql"
+import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -50,7 +50,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { Shipping_me } from "__generated__/Shipping_me.graphql"
+import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
   startingAddress,
@@ -73,8 +73,8 @@ import { compact } from "lodash"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
-import { CreateUserAddressMutationResponse } from "__generated__/CreateUserAddressMutation.graphql"
-import { UpdateUserAddressMutationResponse } from "__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import {
   ActionType,
   ClickedSelectShippingOption,
@@ -88,8 +88,8 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
 export interface ShippingProps {
-  order: Shipping_order
-  me: Shipping_me
+  order: Shipping_order$data
+  me: Shipping_me$data
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -496,7 +496,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const handleAddressEdit = (
-    editedAddress: UpdateUserAddressMutationResponse["updateUserAddress"]
+    editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => {
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
@@ -510,7 +510,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const handleAddressCreate = (
-    createdAddress: CreateUserAddressMutationResponse["createUserAddress"]
+    createdAddress: CreateUserAddressMutation$data["createUserAddress"]
   ) => {
     if (createdAddress?.userAddressOrErrors?.internalID) {
       selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
@@ -617,6 +617,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
               <SavedAddresses
+                // @ts-ignore RELAY UPGRADE 13
                 me={props.me}
                 selectedAddress={selectedAddressID}
                 onSelect={selectSavedAddressWithTracking}
@@ -689,6 +690,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <ShippingQuotesFragmentContainer
                 mb={3}
                 selectedShippingQuoteId={shippingQuoteId}
+                // @ts-ignore RELAY UPGRADE 13
                 shippingQuotes={compact(shippingQuotes)}
                 onSelect={handleShippingQuoteSelected}
               />
@@ -710,6 +712,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}

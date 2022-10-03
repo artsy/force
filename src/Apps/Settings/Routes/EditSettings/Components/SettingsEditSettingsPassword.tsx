@@ -15,11 +15,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { logout } from "Utils/auth"
 import { useMode } from "Utils/Hooks/useMode"
 import * as Yup from "yup"
-import { SettingsEditSettingsPassword_me } from "__generated__/SettingsEditSettingsPassword_me.graphql"
+import { SettingsEditSettingsPassword_me$data } from "__generated__/SettingsEditSettingsPassword_me.graphql"
 import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 
 interface SettingsEditSettingsPasswordProps {
-  me: SettingsEditSettingsPassword_me
+  me: SettingsEditSettingsPassword_me$data
 }
 
 type Mode = "Pending" | "Active"

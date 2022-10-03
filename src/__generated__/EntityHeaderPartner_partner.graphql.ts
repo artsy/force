@@ -1,51 +1,54 @@
+/**
+ * @generated SignedSource<<44850fb4829e999b951ec0f5ea0172bd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderPartner_partner = {
-    readonly internalID: string;
-    readonly type: string | null;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly initials: string | null;
-    readonly locationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly city: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly categories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
+export type EntityHeaderPartner_partner$data = {
+  readonly internalID: string;
+  readonly type: string | null;
+  readonly slug: string;
+  readonly href: string | null;
+  readonly name: string | null;
+  readonly initials: string | null;
+  readonly locationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly city: string | null;
+      } | null;
     } | null> | null;
-    readonly profile: {
-        readonly avatar: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly icon: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly categories: ReadonlyArray<{
+    readonly name: string | null;
+    readonly slug: string;
+  } | null> | null;
+  readonly profile: {
+    readonly avatar: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly " $refType": "EntityHeaderPartner_partner";
+    readonly icon: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+  } | null;
+  readonly " $fragmentType": "EntityHeaderPartner_partner";
 };
-export type EntityHeaderPartner_partner$data = EntityHeaderPartner_partner;
 export type EntityHeaderPartner_partner$key = {
-    readonly " $data"?: EntityHeaderPartner_partner$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
+  readonly " $data"?: EntityHeaderPartner_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -192,6 +195,11 @@ return {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FollowProfileButton_profile"
+        },
+        {
           "alias": "avatar",
           "args": null,
           "concreteType": "Image",
@@ -247,11 +255,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
@@ -261,5 +264,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7f4e8871facf3f86981d91a011a74e42';
+
+(node as any).hash = "7f4e8871facf3f86981d91a011a74e42";
+
 export default node;

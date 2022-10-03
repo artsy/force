@@ -13,14 +13,14 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
-import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
+import { NavBarMobileMenuAuthentication_me$data } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
 import { checkAndSyncIndicatorsCount } from "../helpers"
 import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 
 interface NavBarMobileMenuLoggedInProps {
-  me?: NavBarMobileMenuAuthentication_me | null
+  me?: NavBarMobileMenuAuthentication_me$data | null
 }
 
 export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> = ({
@@ -159,6 +159,7 @@ export const NavBarMobileMenuLoggedInQueryRenderer: React.FC<{}> = () => {
           return <NavBarMobileMenuLoggedIn />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <NavBarMobileMenuLoggedInFragmentContainer me={props.me} />
       }}
     />

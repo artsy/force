@@ -1,11 +1,11 @@
-import { ArtworkTopContextBar_artwork } from "__generated__/ArtworkTopContextBar_artwork.graphql"
+import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
 
 export interface ArtworkTopContextBarProps {
-  artwork: ArtworkTopContextBar_artwork
+  artwork: ArtworkTopContextBar_artwork$data
 }
 
 export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props => {

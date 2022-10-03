@@ -3,11 +3,11 @@ import { AppSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettin
 import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditSettingsTwoFactor_me } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
+import { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 export interface SettingsEditSettingsTwoFactorProps {
-  me: SettingsEditSettingsTwoFactor_me
+  me: SettingsEditSettingsTwoFactor_me$data
 }
 
 export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFactorProps> = ({
@@ -26,11 +26,14 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
           addition to your password to log in to your Artsy account.
         </Text>
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <AppSecondFactorRefetchContainer me={me} />
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SmsSecondFactorRefetchContainer me={me} />
 
         {me.hasSecondFactorEnabled && (
+          // @ts-ignore RELAY UPGRADE 13
           <SettingsEditSettingsTwoFactorBackupCodesFragmentContainer me={me} />
         )}
       </Join>

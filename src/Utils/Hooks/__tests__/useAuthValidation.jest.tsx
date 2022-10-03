@@ -21,11 +21,11 @@ describe("useAuthValidation", () => {
   })
 
   it("does nothing if the status is logged in", async () => {
-    mockFetchQuery.mockImplementation(() =>
-      Promise.resolve({
+    mockFetchQuery.mockImplementation(() => ({
+      toPromise: jest.fn().mockResolvedValue({
         authenticationStatus: "LOGGED_IN",
-      })
-    )
+      }),
+    }))
 
     expect(mockLogout).not.toBeCalled()
 
@@ -36,11 +36,11 @@ describe("useAuthValidation", () => {
   })
 
   it("does nothing if the status is logged out", async () => {
-    mockFetchQuery.mockImplementation(() =>
-      Promise.resolve({
+    mockFetchQuery.mockImplementation(() => ({
+      toPromise: jest.fn().mockResolvedValue({
         authenticationStatus: "LOGGED_OUT",
-      })
-    )
+      }),
+    }))
 
     expect(mockLogout).not.toBeCalled()
 
@@ -51,11 +51,11 @@ describe("useAuthValidation", () => {
   })
 
   it("logs out the user if the status is invalid", async () => {
-    mockFetchQuery.mockImplementation(() =>
-      Promise.resolve({
+    mockFetchQuery.mockImplementation(() => ({
+      toPromise: jest.fn().mockResolvedValue({
         authenticationStatus: "INVALID",
-      })
-    )
+      }),
+    }))
 
     expect(mockLogout).not.toBeCalled()
 

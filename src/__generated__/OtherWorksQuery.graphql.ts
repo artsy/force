@@ -1,325 +1,27 @@
+/**
+ * @generated SignedSource<<3c101a8afd72e2a5e32bc259ee9e4b1f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OtherWorksQueryVariables = {
-    slug: string;
+export type OtherWorksQuery$variables = {
+  slug: string;
 };
-export type OtherWorksQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"OtherWorks_artwork">;
-    } | null;
+export type OtherWorksQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"OtherWorks_artwork">;
+  } | null;
 };
 export type OtherWorksQuery = {
-    readonly response: OtherWorksQueryResponse;
-    readonly variables: OtherWorksQueryVariables;
+  variables: OtherWorksQuery$variables;
+  response: OtherWorksQuery$data;
 };
-
-
-
-/*
-query OtherWorksQuery(
-  $slug: String!
-) {
-  artwork(id: $slug) {
-    ...OtherWorks_artwork
-    id
-  }
-}
-
-fragment ArtistSeriesArtworkRail_artwork on Artwork {
-  internalID
-  slug
-  artistSeriesConnection(first: 1) {
-    edges {
-      node {
-        slug
-        internalID
-        filterArtworksConnection(sort: "-decayed_merch", first: 20) {
-          edges {
-            node {
-              slug
-              internalID
-              ...ShelfArtwork_artwork
-              id
-            }
-          }
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistSeriesItem_artistSeries on ArtistSeries {
-  title
-  slug
-  featured
-  internalID
-  artworksCountMessage
-  image {
-    cropped(width: 325, height: 244) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtistSeriesRail_artist on Artist {
-  artistSeriesConnection(first: 50) {
-    edges {
-      node {
-        internalID
-        ...ArtistSeriesItem_artistSeries
-      }
-    }
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment OtherWorks_artwork on Artwork {
-  contextGrids {
-    __typename
-    title
-    ctaTitle
-    ctaHref
-    artworksConnection(first: 8) {
-      ...ArtworkGrid_artworks
-      edges {
-        node {
-          slug
-          id
-        }
-      }
-    }
-  }
-  ...RelatedWorksArtworkGrid_artwork
-  ...ArtistSeriesArtworkRail_artwork
-  slug
-  internalID
-  sale {
-    is_closed: isClosed
-    id
-  }
-  context {
-    __typename
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  seriesArtist: artist(shallow: true) {
-    ...ArtistSeriesRail_artist
-    id
-  }
-}
-
-fragment RelatedWorksArtworkGrid_artwork on Artwork {
-  layers {
-    name
-    internalID
-    id
-  }
-  slug
-  layer {
-    name
-    artworksConnection(first: 8) {
-      ...ArtworkGrid_artworks
-      edges {
-        node {
-          slug
-          id
-        }
-      }
-    }
-    id
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1300,5 +1002,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2e15a8eb88e3866aaacdeb0cba9b0aad';
+
+(node as any).hash = "2e15a8eb88e3866aaacdeb0cba9b0aad";
+
 export default node;

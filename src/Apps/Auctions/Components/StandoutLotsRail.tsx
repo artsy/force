@@ -7,12 +7,12 @@ import { Rail } from "Components/Rail"
 import { useAnalyticsContext } from "System"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
-import { StandoutLotsRail_viewer } from "__generated__/StandoutLotsRail_viewer.graphql"
+import { StandoutLotsRail_viewer$data } from "__generated__/StandoutLotsRail_viewer.graphql"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 
 export interface StandoutLotsRailProps {
-  viewer: StandoutLotsRail_viewer
+  viewer: StandoutLotsRail_viewer$data
 }
 
 const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
@@ -32,6 +32,7 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
           return artworks.map((artwork, index) => {
             return (
               <ShelfArtworkFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 key={artwork.slug}
                 contextModule={contextModule}

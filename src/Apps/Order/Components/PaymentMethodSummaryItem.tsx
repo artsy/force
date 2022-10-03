@@ -1,4 +1,4 @@
-import { PaymentMethodSummaryItem_order } from "__generated__/PaymentMethodSummaryItem_order.graphql"
+import { PaymentMethodSummaryItem_order$data } from "__generated__/PaymentMethodSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -14,7 +14,7 @@ export const PaymentMethodSummaryItem = ({
   withDescription = true,
   ...others
 }: {
-  order: PaymentMethodSummaryItem_order
+  order: PaymentMethodSummaryItem_order$data
   textColor?: string
   withDescription?: boolean
 } & StepSummaryItemProps) => {

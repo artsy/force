@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<43ff4f8aaf4b02005716059bccf17e4f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionCurrentAuctionsRail_viewer = {
-    readonly salesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"CellSale_sale">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "AuctionCurrentAuctionsRail_viewer";
+export type AuctionCurrentAuctionsRail_viewer$data = {
+  readonly salesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "AuctionCurrentAuctionsRail_viewer";
 };
-export type AuctionCurrentAuctionsRail_viewer$data = AuctionCurrentAuctionsRail_viewer;
 export type AuctionCurrentAuctionsRail_viewer$key = {
-    readonly " $data"?: AuctionCurrentAuctionsRail_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionCurrentAuctionsRail_viewer">;
+  readonly " $data"?: AuctionCurrentAuctionsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionCurrentAuctionsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -91,5 +94,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'f7d578e5e8cc75ca89b3ed7296a74d24';
+
+(node as any).hash = "f7d578e5e8cc75ca89b3ed7296a74d24";
+
 export default node;

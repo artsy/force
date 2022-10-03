@@ -1,57 +1,39 @@
+/**
+ * @generated SignedSource<<c4f7563640eb962c2fbb14727be75cb3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteAccountInput = {
-    clientMutationId?: string | null | undefined;
-    explanation?: string | null | undefined;
-    password?: string | null | undefined;
-    url?: string | null | undefined;
+  clientMutationId?: string | null;
+  explanation?: string | null;
+  password?: string | null;
+  url?: string | null;
 };
-export type useDeleteAccountMutationVariables = {
-    input: DeleteAccountInput;
+export type useDeleteAccountMutation$variables = {
+  input: DeleteAccountInput;
 };
-export type useDeleteAccountMutationResponse = {
-    readonly deleteMyAccountMutation: {
-        readonly userAccountOrError: {
-            readonly success?: boolean | null | undefined;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-            } | null | undefined;
-        } | null;
+export type useDeleteAccountMutation$data = {
+  readonly deleteMyAccountMutation: {
+    readonly userAccountOrError: {
+      readonly success?: boolean | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type useDeleteAccountMutation = {
-    readonly response: useDeleteAccountMutationResponse;
-    readonly variables: useDeleteAccountMutationVariables;
+  variables: useDeleteAccountMutation$variables;
+  response: useDeleteAccountMutation$data;
 };
-
-
-
-/*
-mutation useDeleteAccountMutation(
-  $input: DeleteAccountInput!
-) {
-  deleteMyAccountMutation(input: $input) {
-    userAccountOrError {
-      __typename
-      ... on AccountMutationSuccess {
-        success
-      }
-      ... on AccountMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -205,5 +187,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b0ae491406ec68a04c85c5772175b2de';
+
+(node as any).hash = "b0ae491406ec68a04c85c5772175b2de";
+
 export default node;

@@ -20,6 +20,7 @@ describe("RegisterButton", () => {
   const mockUseRouter = useRouter as jest.Mock
 
   const { getWrapper } = setupTestWrapper<RegisterButton_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: RegisterButtonFragmentContainer,
     query: graphql`
       query RegisterButton_Test_Query {

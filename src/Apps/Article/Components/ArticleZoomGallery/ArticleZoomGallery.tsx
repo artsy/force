@@ -12,7 +12,7 @@ import {
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArticleZoomGallery_article } from "__generated__/ArticleZoomGallery_article.graphql"
+import { ArticleZoomGallery_article$data } from "__generated__/ArticleZoomGallery_article.graphql"
 import { ArticleZoomGalleryQuery } from "__generated__/ArticleZoomGalleryQuery.graphql"
 import { useCursor } from "use-cursor"
 import { compact } from "lodash"
@@ -25,7 +25,7 @@ import { useArticleContext } from "../ArticleContext"
 import { mapCursorToMax } from "map-cursor-to-max"
 
 interface ArticleZoomGalleryProps {
-  article: ArticleZoomGallery_article
+  article: ArticleZoomGallery_article$data
   figureId?: string
   onClose: () => void
 }
@@ -103,6 +103,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
               return (
                 <ArticleZoomGalleryFigureFragmentContainer
                   key={i}
+                  // @ts-ignore RELAY UPGRADE 13
                   figure={figure}
                   active={i === index}
                   preload={
@@ -120,6 +121,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
             justifyContent="space-between"
             alignItems="center"
           >
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArticleZoomGalleryCaptionFragmentContainer figure={activeFigure} />
 
             <Text variant="sm" ml={2} flexShrink={0}>
@@ -245,6 +247,7 @@ export const ArticleZoomGalleryRefetchContainer: FC<ArticleZoomGalleryRefetchCon
 
         return (
           <ArticleZoomGalleryFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             article={props.article}
             onClose={onClose}
             figureId={figureId}

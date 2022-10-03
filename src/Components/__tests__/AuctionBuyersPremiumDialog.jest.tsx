@@ -9,6 +9,7 @@ jest.unmock("react-relay")
 const { renderWithRelay } = setupTestWrapperTL<
   AuctionBuyersPremiumDialog_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: AuctionBuyersPremiumDialogFragmentContainer,
   query: graphql`
     query AuctionBuyersPremiumDialog_Test_Query @relay_test_operation {

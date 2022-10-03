@@ -9,6 +9,7 @@ jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
   Component: props => {
+    // @ts-ignore RELAY UPGRADE 13
     return <HomeCurrentFairsFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`

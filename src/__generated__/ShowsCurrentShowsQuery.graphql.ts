@@ -1,197 +1,28 @@
+/**
+ * @generated SignedSource<<48f5cb812699cc8916ae0fd2a93404a4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsCurrentShowsQueryVariables = {
-    first?: number | null | undefined;
-    after?: string | null | undefined;
+export type ShowsCurrentShowsQuery$variables = {
+  first?: number | null;
+  after?: string | null;
 };
-export type ShowsCurrentShowsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShows_viewer">;
-    } | null;
+export type ShowsCurrentShowsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShows_viewer">;
+  } | null;
 };
 export type ShowsCurrentShowsQuery = {
-    readonly response: ShowsCurrentShowsQueryResponse;
-    readonly variables: ShowsCurrentShowsQueryVariables;
+  variables: ShowsCurrentShowsQuery$variables;
+  response: ShowsCurrentShowsQuery$data;
 };
-
-
-
-/*
-query ShowsCurrentShowsQuery(
-  $first: Int
-  $after: String
-) {
-  viewer {
-    ...ShowsCurrentShows_viewer_2HEEH6
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShowsCurrentShow_show on Show {
-  name
-  href
-  startAt(format: "MMM D")
-  endAt(format: "MMM D")
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  location {
-    city
-    id
-  }
-  artworksConnection(first: 15) {
-    totalCount
-    edges {
-      node {
-        internalID
-        ...GridItem_artwork
-        id
-      }
-    }
-  }
-}
-
-fragment ShowsCurrentShows_viewer_2HEEH6 on Viewer {
-  showsConnection(first: $first, after: $after, displayable: true, atAFair: false, sort: END_AT_ASC, status: CURRENT) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        internalID
-        ...ShowsCurrentShow_show
-        id
-        __typename
-      }
-      cursor
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -880,5 +711,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8597429b17141bd36b066a95a215c43f';
+
+(node as any).hash = "8597429b17141bd36b066a95a215c43f";
+
 export default node;

@@ -1,41 +1,30 @@
+/**
+ * @generated SignedSource<<32c2e0edd3082d9c6f1745042d815be6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type createMockNetworkLayerTestAliasPrecendenceQueryVariables = {};
-export type createMockNetworkLayerTestAliasPrecendenceQueryResponse = {
-    readonly artist: {
-        readonly forSaleArtworks: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                } | null;
-            } | null> | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type createMockNetworkLayerTestAliasPrecendenceQuery$variables = {};
+export type createMockNetworkLayerTestAliasPrecendenceQuery$data = {
+  readonly artist: {
+    readonly forSaleArtworks: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type createMockNetworkLayerTestAliasPrecendenceQuery = {
-    readonly response: createMockNetworkLayerTestAliasPrecendenceQueryResponse;
-    readonly variables: createMockNetworkLayerTestAliasPrecendenceQueryVariables;
+  variables: createMockNetworkLayerTestAliasPrecendenceQuery$variables;
+  response: createMockNetworkLayerTestAliasPrecendenceQuery$data;
 };
-
-
-
-/*
-query createMockNetworkLayerTestAliasPrecendenceQuery {
-  artist(id: "banksy") {
-    forSaleArtworks: artworksConnection(filter: IS_FOR_SALE) {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -146,5 +135,7 @@ return {
   }
 };
 })();
-(node as any).hash = '92c8ccb40dd497258b009d3930532e77';
+
+(node as any).hash = "92c8ccb40dd497258b009d3930532e77";
+
 export default node;

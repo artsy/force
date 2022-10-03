@@ -14,8 +14,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
+import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
@@ -30,7 +30,7 @@ import {
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
 interface MyCollectionArtworkProps {
-  artwork: MyCollectionArtwork_artwork
+  artwork: MyCollectionArtwork_artwork$data
 }
 
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
@@ -106,6 +106,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   return (
     <>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
       {showHowItWorksModal && (
@@ -122,11 +123,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       <GridColumns gridRowGap={[2, null]}>
         <Column span={8}>
+          {/* @ts-ignore RELAY_UPGRADE 13  */}
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
+            {/* @ts-ignore RELAY_UPGRADE 13  */}
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isMyCollectionPhase5Enabled && isP1Artist && (
               <Media greaterThanOrEqual="sm">
@@ -150,12 +153,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
           <Media lessThan="sm">
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     artwork={artwork}
                   />
                   {!!isMyCollectionPhase5Enabled && isP1Artist && (
@@ -177,6 +182,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Tab name="About">
                   <>
                     <MyCollectionArtworkSidebarFragmentContainer
+                      // @ts-ignore RELAY UPGRADE 13
                       artwork={artwork}
                     />
 
@@ -194,6 +200,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             ) : (
               <>
                 <MyCollectionArtworkSidebarFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                 />
 
@@ -214,6 +221,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       <Media greaterThanOrEqual="sm">
         {hasInsights && (
           <>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
             <Spacer m={[4, 6]} />

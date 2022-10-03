@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<d0742082b1a649008f48b21fb92dc67a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UploadPhotos_submission = {
-    readonly externalId: string;
-    readonly assets: ReadonlyArray<{
-        readonly id: string;
-        readonly imageUrls: unknown | null;
-        readonly geminiToken: string | null;
-        readonly size: string | null;
-        readonly filename: string | null;
-    } | null> | null;
-    readonly " $refType": "UploadPhotos_submission";
+export type UploadPhotos_submission$data = {
+  readonly externalId: string;
+  readonly assets: ReadonlyArray<{
+    readonly id: string;
+    readonly imageUrls: any | null;
+    readonly geminiToken: string | null;
+    readonly size: string | null;
+    readonly filename: string | null;
+  } | null> | null;
+  readonly " $fragmentType": "UploadPhotos_submission";
 };
-export type UploadPhotos_submission$data = UploadPhotos_submission;
 export type UploadPhotos_submission$key = {
-    readonly " $data"?: UploadPhotos_submission$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
+  readonly " $data"?: UploadPhotos_submission$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -86,5 +89,7 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '8c71b40126392ffdfdd810306a7f861d';
+
+(node as any).hash = "8c71b40126392ffdfdd810306a7f861d";
+
 export default node;

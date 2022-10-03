@@ -1,54 +1,31 @@
+/**
+ * @generated SignedSource<<091407033e742f90117d4966742aeede>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellSaleStoryQueryVariables = {};
-export type CellSaleStoryQueryResponse = {
-    readonly viewer: {
-        readonly salesConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly " $fragmentRefs": FragmentRefs<"CellSale_sale">;
-                } | null;
-            } | null> | null;
+export type CellSaleStoryQuery$variables = {};
+export type CellSaleStoryQuery$data = {
+  readonly viewer: {
+    readonly salesConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
         } | null;
+      } | null> | null;
     } | null;
+  } | null;
 };
 export type CellSaleStoryQuery = {
-    readonly response: CellSaleStoryQueryResponse;
-    readonly variables: CellSaleStoryQueryVariables;
+  variables: CellSaleStoryQuery$variables;
+  response: CellSaleStoryQuery$data;
 };
-
-
-
-/*
-query CellSaleStoryQuery {
-  viewer {
-    salesConnection(first: 99, published: true, live: true, sort: LICENSED_TIMELY_AT_NAME_DESC) {
-      edges {
-        node {
-          ...CellSale_sale
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment CellSale_sale on Sale {
-  name
-  formattedStartDateTime
-  href
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -279,5 +256,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9ea03b12a5d927b87c70ebdacfd48be3';
+
+(node as any).hash = "9ea03b12a5d927b87c70ebdacfd48be3";
+
 export default node;

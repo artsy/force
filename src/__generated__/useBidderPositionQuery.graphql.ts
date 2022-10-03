@@ -1,199 +1,43 @@
+/**
+ * @generated SignedSource<<1cbe320e98606b95c6ac5bd1ad868c1c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useBidderPositionQueryVariables = {
-    bidderPositionID: string;
+export type useBidderPositionQuery$variables = {
+  bidderPositionID: string;
 };
-export type useBidderPositionQueryResponse = {
-    readonly me: {
-        readonly bidderPosition: {
-            readonly status: string;
-            readonly messageHeader: string | null;
-            readonly position: {
-                readonly internalID: string;
-                readonly suggestedNextBid: {
-                    readonly cents: number | null;
-                    readonly display: string | null;
-                } | null;
-                readonly saleArtwork: {
-                    readonly artwork: {
-                        readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
-                    } | null;
-                } | null;
-            } | null;
+export type useBidderPositionQuery$data = {
+  readonly me: {
+    readonly bidderPosition: {
+      readonly status: string;
+      readonly messageHeader: string | null;
+      readonly position: {
+        readonly internalID: string;
+        readonly suggestedNextBid: {
+          readonly cents: number | null;
+          readonly display: string | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me">;
+        readonly saleArtwork: {
+          readonly artwork: {
+            readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
+          } | null;
+        } | null;
+      } | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
+  } | null;
 };
 export type useBidderPositionQuery = {
-    readonly response: useBidderPositionQueryResponse;
-    readonly variables: useBidderPositionQueryVariables;
+  variables: useBidderPositionQuery$variables;
+  response: useBidderPositionQuery$data;
 };
-
-
-
-/*
-query useBidderPositionQuery(
-  $bidderPositionID: String!
-) {
-  me {
-    ...AuctionActiveBids_me
-    bidderPosition(id: $bidderPositionID) {
-      status
-      messageHeader
-      position {
-        internalID
-        suggestedNextBid {
-          cents
-          display
-        }
-        saleArtwork {
-          artwork {
-            ...Details_artwork
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-    id
-  }
-}
-
-fragment AuctionActiveBids_me on Me {
-  internalID
-  lotStandings(live: true) {
-    isHighestBidder
-    saleArtwork {
-      ...AuctionLotInfo_saleArtwork_4oTW5x
-      counts {
-        bidderPositions
-      }
-      currentBid {
-        display
-      }
-      slug
-      lotLabel
-      reserveStatus
-      saleID
-      highestBid {
-        display
-      }
-      endedAt
-      sale {
-        slug
-        liveStartAt
-        endAt
-        isLiveOpen
-        isClosed
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {
-  counts {
-    bidderPositions
-  }
-  lotLabel
-  currentBid {
-    display
-  }
-  formattedEndDateTime
-  artwork {
-    internalID
-    date
-    title
-    image {
-      resized(width: 100, height: 100, version: "medium") {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    imageUrl
-    artistNames
-    slug
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -350,6 +194,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "AuctionActiveBids_me"
+          },
+          {
             "alias": null,
             "args": (v1/*: any*/),
             "concreteType": "BidderPositionResult",
@@ -401,11 +250,6 @@ return {
               }
             ],
             "storageKey": null
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "AuctionActiveBids_me"
           }
         ],
         "storageKey": null
@@ -932,5 +776,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b3f43b7520d27d3d8051cb407c0392a2';
+
+(node as any).hash = "b3f43b7520d27d3d8051cb407c0392a2";
+
 export default node;

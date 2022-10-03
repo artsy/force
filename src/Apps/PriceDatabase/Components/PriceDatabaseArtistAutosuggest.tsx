@@ -14,7 +14,7 @@ import {
 import { fetchQuery } from "relay-runtime"
 import {
   PriceDatabaseArtistAutosuggest_SearchConnection_Query,
-  PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse,
+  PriceDatabaseArtistAutosuggest_SearchConnection_Query$data,
 } from "__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "System"
 
@@ -24,7 +24,7 @@ type Suggestion =
   | NonNullable<
       NonNullable<
         NonNullable<
-          PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse["searchConnection"]
+          PriceDatabaseArtistAutosuggest_SearchConnection_Query$data["searchConnection"]
         >["edges"]
       >[number]
     >
@@ -206,7 +206,8 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
       }
     `,
     { searchQuery }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   return response.searchConnection?.edges
 }

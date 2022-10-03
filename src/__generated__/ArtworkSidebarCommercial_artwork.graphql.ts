@@ -1,47 +1,50 @@
+/**
+ * @generated SignedSource<<9502a61521b50d75793f85208fed9c8c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCommercial_artwork = {
-    readonly edition_sets: ReadonlyArray<{
-        readonly internalID: string;
-        readonly id: string;
-        readonly is_acquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly sale_message: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
-    } | null> | null;
-    readonly artists: ReadonlyArray<{
-        readonly internalID: string;
-    } | null> | null;
+export type ArtworkSidebarCommercial_artwork$data = {
+  readonly edition_sets: ReadonlyArray<{
     readonly internalID: string;
-    readonly isOfferableFromInquiry: boolean | null;
-    readonly isPriceHidden: boolean | null;
+    readonly id: string;
     readonly is_acquireable: boolean | null;
-    readonly is_for_sale: boolean | null;
-    readonly is_inquireable: boolean | null;
     readonly is_offerable: boolean | null;
-    readonly is_sold: boolean | null;
-    readonly listPrice: {
-        readonly display?: string | null | undefined;
-    } | null;
-    readonly priceIncludesTaxDisplay: string | null;
     readonly sale_message: string | null;
-    readonly shippingInfo: string | null;
-    readonly shippingOrigin: string | null;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
-    readonly " $refType": "ArtworkSidebarCommercial_artwork";
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
+  } | null> | null;
+  readonly artists: ReadonlyArray<{
+    readonly internalID: string;
+  } | null> | null;
+  readonly internalID: string;
+  readonly isOfferableFromInquiry: boolean | null;
+  readonly isPriceHidden: boolean | null;
+  readonly is_acquireable: boolean | null;
+  readonly is_for_sale: boolean | null;
+  readonly is_inquireable: boolean | null;
+  readonly is_offerable: boolean | null;
+  readonly is_sold: boolean | null;
+  readonly listPrice: {
+    readonly display?: string | null;
+  } | null;
+  readonly priceIncludesTaxDisplay: string | null;
+  readonly sale_message: string | null;
+  readonly shippingInfo: string | null;
+  readonly shippingOrigin: string | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentType": "ArtworkSidebarCommercial_artwork";
 };
-export type ArtworkSidebarCommercial_artwork$data = ArtworkSidebarCommercial_artwork;
 export type ArtworkSidebarCommercial_artwork$key = {
-    readonly " $data"?: ArtworkSidebarCommercial_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
+  readonly " $data"?: ArtworkSidebarCommercial_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -226,5 +229,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'fa1b44a872f484b512f07d4f65494d0b';
+
+(node as any).hash = "fa1b44a872f484b512f07d4f65494d0b";
+
 export default node;

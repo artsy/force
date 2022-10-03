@@ -1,81 +1,30 @@
+/**
+ * @generated SignedSource<<9353d50ffe0ed481596afaaa2a8ca447>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
-export type NotificationsListNextQueryVariables = {
-    count: number;
-    cursor?: string | null | undefined;
-    types?: Array<NotificationTypesEnum | null> | null | undefined;
+export type NotificationsListNextQuery$variables = {
+  count: number;
+  cursor?: string | null;
+  types?: ReadonlyArray<NotificationTypesEnum | null> | null;
 };
-export type NotificationsListNextQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
-    } | null;
+export type NotificationsListNextQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
+  } | null;
 };
 export type NotificationsListNextQuery = {
-    readonly response: NotificationsListNextQueryResponse;
-    readonly variables: NotificationsListNextQueryVariables;
+  variables: NotificationsListNextQuery$variables;
+  response: NotificationsListNextQuery$data;
 };
-
-
-
-/*
-query NotificationsListNextQuery(
-  $count: Int!
-  $cursor: String
-  $types: [NotificationTypesEnum]
-) {
-  viewer {
-    ...NotificationsList_viewer_2TJroH
-  }
-}
-
-fragment NotificationItem_item on Notification {
-  title
-  message
-  createdAt
-  targetHref
-  isUnread
-  notificationType
-  artworksConnection(first: 4) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        image {
-          thumb: cropped(width: 58, height: 58) {
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment NotificationsList_viewer_2TJroH on Viewer {
-  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {
-    edges {
-      node {
-        internalID
-        ...NotificationItem_item
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -420,5 +369,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c3f8425fbd367176f113851c58588ee2';
+
+(node as any).hash = "c3f8425fbd367176f113851c58588ee2";
+
 export default node;

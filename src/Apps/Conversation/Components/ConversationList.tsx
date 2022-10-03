@@ -16,7 +16,7 @@ import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
 } from "Components/NavBar"
-import { ConversationList_me } from "__generated__/ConversationList_me.graphql"
+import { ConversationList_me$data } from "__generated__/ConversationList_me.graphql"
 
 const ScrollContainer = styled(Box)`
   overflow-y: auto;
@@ -43,7 +43,7 @@ const ConstrainedHeightContainer = styled(Flex)`
 export const PAGE_SIZE: number = 15
 
 interface ConversationsProps {
-  me: ConversationList_me
+  me: ConversationList_me$data
   relay: RelayPaginationProp
   selectedConversationID: string
 }
@@ -79,6 +79,7 @@ const ConversationList: React.FC<ConversationsProps> = props => {
         {conversations.map(edge => (
           <ConversationSnippet
             isSelected={edge?.node?.internalID === selectedConversationID}
+            // @ts-ignore RELAY UPGRADE 13
             conversation={edge.node!}
             key={edge.cursor}
             hasDivider={

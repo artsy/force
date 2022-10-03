@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<5b8364b293ff7a7c188df5e5041ac616>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentShowsRail_artist = {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly slug: string;
-    readonly showsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly href: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ArtistCurrentShowsRail_artist";
+export type ArtistCurrentShowsRail_artist$data = {
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
+  readonly showsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly href: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistCurrentShowsRail_artist";
 };
-export type ArtistCurrentShowsRail_artist$data = ArtistCurrentShowsRail_artist;
 export type ArtistCurrentShowsRail_artist$key = {
-    readonly " $data"?: ArtistCurrentShowsRail_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentShowsRail_artist">;
+  readonly " $data"?: ArtistCurrentShowsRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentShowsRail_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -98,6 +101,11 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellShow_show"
+                },
                 (v0/*: any*/),
                 (v1/*: any*/),
                 {
@@ -106,11 +114,6 @@ return {
                   "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellShow_show"
                 }
               ],
               "storageKey": null
@@ -126,5 +129,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4c6c269dbc41fb2a6fe08b6946167b7a';
+
+(node as any).hash = "4c6c269dbc41fb2a6fe08b6946167b7a";
+
 export default node;

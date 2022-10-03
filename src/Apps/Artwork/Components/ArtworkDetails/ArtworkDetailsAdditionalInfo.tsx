@@ -8,7 +8,7 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { ArtworkDetailsAdditionalInfo_artwork } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
+import { ArtworkDetailsAdditionalInfo_artwork$data } from "__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -20,7 +20,7 @@ import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
 
 export interface ArtworkDetailsAdditionalInfoProps {
-  artwork: ArtworkDetailsAdditionalInfo_artwork
+  artwork: ArtworkDetailsAdditionalInfo_artwork$data
 }
 
 export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfoProps> = ({
@@ -77,6 +77,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
               </Clickable>
 
               <ArtworkDetailsMediumModalFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 show={open}
                 onClose={() => setOpen(false)}

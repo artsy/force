@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<2bdfc3405c80f02dbd82aca3b8182391>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RssArticlesQuery_artwork = {
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly artists: ReadonlyArray<{
-        readonly name: string | null;
-    } | null> | null;
-    readonly partner: {
-        readonly name: string | null;
+export type RssArticlesQuery_artwork$data = {
+  readonly title: string | null;
+  readonly date: string | null;
+  readonly artists: ReadonlyArray<{
+    readonly name: string | null;
+  } | null> | null;
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly image: {
+    readonly resized: {
+      readonly width: number | null;
+      readonly height: number | null;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly image: {
-        readonly resized: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "RssArticlesQuery_artwork";
+  } | null;
+  readonly " $fragmentType": "RssArticlesQuery_artwork";
 };
-export type RssArticlesQuery_artwork$data = RssArticlesQuery_artwork;
 export type RssArticlesQuery_artwork$key = {
-    readonly " $data"?: RssArticlesQuery_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"RssArticlesQuery_artwork">;
+  readonly " $data"?: RssArticlesQuery_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RssArticlesQuery_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -151,5 +154,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6b22b706b0b17abac5a31e1733c588cd';
+
+(node as any).hash = "6b22b706b0b17abac5a31e1733c588cd";
+
 export default node;

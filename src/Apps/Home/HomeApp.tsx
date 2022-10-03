@@ -1,8 +1,8 @@
 import { Spacer, Join } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeApp_homePage } from "__generated__/HomeApp_homePage.graphql"
-import { HomeApp_featuredEventsOrderedSet } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
+import { HomeApp_homePage$data } from "__generated__/HomeApp_homePage.graphql"
+import { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
 import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
@@ -18,8 +18,8 @@ import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
 
 interface HomeAppProps {
-  homePage: HomeApp_homePage | null
-  featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet | null
+  homePage: HomeApp_homePage$data | null
+  featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
 }
 
 export const HomeApp: React.FC<HomeAppProps> = ({
@@ -34,6 +34,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer mt={[2, 0]} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       {homePage && <HomeHeroUnitsFragmentContainer homePage={homePage} />}
 
       <Spacer mt={[4, 6]} />
@@ -42,6 +43,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         {featuredEventsOrderedSet && (
           <>
             <HomeFeaturedEventsRailFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               orderedSet={featuredEventsOrderedSet}
             />
           </>

@@ -1,80 +1,25 @@
+/**
+ * @generated SignedSource<<e117ff3cf329616c947dfeab56b75f54>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerHeader_Test_QueryVariables = {};
-export type FairOrganizerHeader_Test_QueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
-    } | null;
+export type FairOrganizerHeader_Test_Query$variables = {};
+export type FairOrganizerHeader_Test_Query$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
+  } | null;
 };
 export type FairOrganizerHeader_Test_Query = {
-    readonly response: FairOrganizerHeader_Test_QueryResponse;
-    readonly variables: FairOrganizerHeader_Test_QueryVariables;
+  variables: FairOrganizerHeader_Test_Query$variables;
+  response: FairOrganizerHeader_Test_Query$data;
 };
-
-
-
-/*
-query FairOrganizerHeader_Test_Query {
-  fairOrganizer(id: "example") {
-    ...FairOrganizerHeader_fairOrganizer
-    id
-  }
-}
-
-fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    id
-    internalID
-    isFollowed
-  }
-}
-
-fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
-  name
-  profile {
-    icon {
-      desktop: cropped(width: 80, height: 80, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-      mobile: cropped(width: 60, height: 60, version: "square140") {
-        src
-        srcSet
-        size: width
-      }
-    }
-    id
-  }
-}
-
-fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
-  name
-  fairsConnection(first: 1, sort: START_AT_DESC) {
-    edges {
-      node {
-        href
-        startAt
-        exhibitionPeriod
-        id
-      }
-    }
-  }
-  ...FairOrganizerHeaderIcon_fairOrganizer
-  ...FairOrganizerFollowButton_fairOrganizer
-  ...FairOrganizerInfo_fairOrganizer
-}
-
-fragment FairOrganizerInfo_fairOrganizer on FairOrganizer {
-  about(format: HTML)
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -443,5 +388,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2cad18428ccff76972a555fcc688efda';
+
+(node as any).hash = "2cad18428ccff76972a555fcc688efda";
+
 export default node;

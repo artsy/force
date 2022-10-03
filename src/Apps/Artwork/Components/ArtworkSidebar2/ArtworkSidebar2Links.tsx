@@ -4,10 +4,10 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
-import { ArtworkSidebar2Links_artwork } from "__generated__/ArtworkSidebar2Links_artwork.graphql"
+import { ArtworkSidebar2Links_artwork$data } from "__generated__/ArtworkSidebar2Links_artwork.graphql"
 
 interface ArtworkSidebar2LinksProps {
-  artwork: ArtworkSidebar2Links_artwork
+  artwork: ArtworkSidebar2Links_artwork$data
 }
 
 const ArtworkSidebar2Links: React.FC<ArtworkSidebar2LinksProps> = ({

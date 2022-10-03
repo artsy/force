@@ -1,108 +1,25 @@
+/**
+ * @generated SignedSource<<e3da6b11db9da41be36f1ec1d22db0b4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellPartnerFragmentContainer_Test_QueryVariables = {};
-export type CellPartnerFragmentContainer_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
-    } | null;
+export type CellPartnerFragmentContainer_Test_Query$variables = {};
+export type CellPartnerFragmentContainer_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
+  } | null;
 };
 export type CellPartnerFragmentContainer_Test_Query = {
-    readonly response: CellPartnerFragmentContainer_Test_QueryResponse;
-    readonly variables: CellPartnerFragmentContainer_Test_QueryVariables;
+  variables: CellPartnerFragmentContainer_Test_Query$variables;
+  response: CellPartnerFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query CellPartnerFragmentContainer_Test_Query {
-  partner(id: "example") {
-    ...CellPartner_partner
-    id
-  }
-}
-
-fragment CellPartner_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -532,5 +449,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd9fc9d24a91674df92f0f4af3e11957e';
+
+(node as any).hash = "d9fc9d24a91674df92f0f4af3e11957e";
+
 export default node;

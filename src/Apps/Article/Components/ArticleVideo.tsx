@@ -22,7 +22,7 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleShare } from "Components/ArticleShare"
 import { useMode } from "Utils/Hooks/useMode"
-import { ArticleVideo_article } from "__generated__/ArticleVideo_article.graphql"
+import { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
@@ -31,7 +31,7 @@ import { useArticleTracking } from "../useArticleTracking"
 import { useFullBleedHeaderHeight } from "Components/FullBleedHeader"
 
 interface ArticleVideoProps {
-  article: ArticleVideo_article
+  article: ArticleVideo_article$data
 }
 
 const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
@@ -191,6 +191,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
               return (
                 <Column span={12} key={relatedArticle.internalID}>
                   <ArticleSeriesItemFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     article={relatedArticle}
                   />
                 </Column>
@@ -206,6 +207,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
             {article.seriesArticle?.sponsor && (
               <ArticleSponsorFragmentContainer
                 mt={4}
+                // @ts-ignore RELAY UPGRADE 13
                 sponsor={article.seriesArticle?.sponsor}
               />
             )}

@@ -1,70 +1,43 @@
+/**
+ * @generated SignedSource<<e11f44176f75ac0e20a987f71e32cc0f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairSubApp_QueryVariables = {
-    slug: string;
+export type FairSubApp_Query$variables = {
+  slug: string;
 };
-export type FairSubApp_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairSubApp_fair">;
+export type FairSubApp_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
+  } | null;
+};
+export type FairSubApp_Query$rawResponse = {
+  readonly fair: {
+    readonly name: string | null;
+    readonly slug: string;
+    readonly metaDescription: string | null;
+    readonly metaImage: {
+      readonly src: string | null;
     } | null;
-};
-export type FairSubApp_QueryRawResponse = {
-    readonly fair: ({
-        readonly name: string | null;
-        readonly slug: string;
-        readonly metaDescription: string | null;
-        readonly metaImage: ({
-            readonly src: string | null;
-        }) | null;
-        readonly id: string;
-        readonly profile: ({
-            readonly __typename: "Profile";
-            readonly id: string;
-        }) | null;
-    }) | null;
+    readonly id: string;
+    readonly profile: {
+      readonly __typename: "Profile";
+      readonly id: string;
+    } | null;
+  } | null;
 };
 export type FairSubApp_Query = {
-    readonly response: FairSubApp_QueryResponse;
-    readonly variables: FairSubApp_QueryVariables;
-    readonly rawResponse: FairSubApp_QueryRawResponse;
+  variables: FairSubApp_Query$variables;
+  response: FairSubApp_Query$data;
+  rawResponse: FairSubApp_Query$rawResponse;
 };
-
-
-
-/*
-query FairSubApp_Query(
-  $slug: String!
-) {
-  fair(id: $slug) {
-    ...FairSubApp_fair
-    id
-  }
-}
-
-fragment FairMeta_fair on Fair {
-  name
-  slug
-  metaDescription: summary
-  metaImage: image {
-    src: url(version: "large_rectangle")
-  }
-}
-
-fragment FairSubApp_fair on Fair {
-  ...FairMeta_fair
-  id
-  name
-  slug
-  profile {
-    __typename
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -254,5 +227,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cdf533d4f8f6c8aa7902c511a5cd3e9a';
+
+(node as any).hash = "cdf533d4f8f6c8aa7902c511a5cd3e9a";
+
 export default node;

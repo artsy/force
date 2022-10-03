@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { RecentlyViewed_me } from "__generated__/RecentlyViewed_me.graphql"
+import { RecentlyViewed_me$data } from "__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext } from "System"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
@@ -14,7 +14,7 @@ import { Rail } from "../Rail"
 import { useTracking } from "react-tracking"
 
 export interface RecentlyViewedProps {
-  me: RecentlyViewed_me
+  me: RecentlyViewed_me$data
 }
 
 export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
@@ -43,6 +43,7 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
             <ShelfArtworkFragmentContainer
               key={artwork.id}
               lazyLoad={true}
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               onClick={trackClick}
               contextModule={ContextModule.recentlyViewedRail}
@@ -99,6 +100,7 @@ export const RecentlyViewedQueryRenderer = () => {
           return <RecentlyViewedPlaceholder />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <RecentlyViewedFragmentContainer me={props.me!} />
       }}
       cacheConfig={{

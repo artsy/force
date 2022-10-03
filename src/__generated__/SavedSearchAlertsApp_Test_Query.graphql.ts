@@ -1,86 +1,52 @@
+/**
+ * @generated SignedSource<<5a436002acdd66304df15b2bbdea9677>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsApp_Test_QueryVariables = {};
-export type SavedSearchAlertsApp_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
-    } | null;
+export type SavedSearchAlertsApp_Test_Query$variables = {};
+export type SavedSearchAlertsApp_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
+  } | null;
 };
-export type SavedSearchAlertsApp_Test_QueryRawResponse = {
-    readonly me: ({
-        readonly savedSearchesConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string;
-                    readonly artistIDs: ReadonlyArray<string> | null;
-                    readonly href: string;
-                    readonly labels: ReadonlyArray<{
-                        readonly displayValue: string;
-                    }>;
-                    readonly userAlertSettings: {
-                        readonly name: string | null;
-                    };
-                    readonly __typename: "SearchCriteria";
-                }) | null;
-                readonly cursor: string;
-            }) | null> | null;
-            readonly pageInfo: {
-                readonly endCursor: string | null;
-                readonly hasNextPage: boolean;
-            };
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type SavedSearchAlertsApp_Test_Query$rawResponse = {
+  readonly me: {
+    readonly savedSearchesConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly artistIDs: ReadonlyArray<string> | null;
+          readonly href: string;
+          readonly labels: ReadonlyArray<{
+            readonly displayValue: string;
+          }>;
+          readonly userAlertSettings: {
+            readonly name: string | null;
+          };
+          readonly __typename: "SearchCriteria";
+        } | null;
+        readonly cursor: string;
+      } | null> | null;
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+      };
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type SavedSearchAlertsApp_Test_Query = {
-    readonly response: SavedSearchAlertsApp_Test_QueryResponse;
-    readonly variables: SavedSearchAlertsApp_Test_QueryVariables;
-    readonly rawResponse: SavedSearchAlertsApp_Test_QueryRawResponse;
+  variables: SavedSearchAlertsApp_Test_Query$variables;
+  response: SavedSearchAlertsApp_Test_Query$data;
+  rawResponse: SavedSearchAlertsApp_Test_Query$rawResponse;
 };
-
-
-
-/*
-query SavedSearchAlertsApp_Test_Query {
-  me {
-    ...SavedSearchAlertsApp_me
-    id
-  }
-}
-
-fragment SavedSearchAlertListItem_item on SearchCriteria {
-  internalID
-  artistIDs
-  href
-  labels {
-    displayValue
-  }
-  userAlertSettings {
-    name
-  }
-}
-
-fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {
-    edges {
-      node {
-        internalID
-        ...SavedSearchAlertListItem_item
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -298,5 +264,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f8933a25cbb3db33c342ca5274a84a2b';
+
+(node as any).hash = "f8933a25cbb3db33c342ca5274a84a2b";
+
 export default node;

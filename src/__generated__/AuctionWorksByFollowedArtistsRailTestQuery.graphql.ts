@@ -1,153 +1,25 @@
+/**
+ * @generated SignedSource<<eb9604240a14b4f71b2203790e998280>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionWorksByFollowedArtistsRailTestQueryVariables = {};
-export type AuctionWorksByFollowedArtistsRailTestQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
-    } | null;
+export type AuctionWorksByFollowedArtistsRailTestQuery$variables = {};
+export type AuctionWorksByFollowedArtistsRailTestQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
+  } | null;
 };
 export type AuctionWorksByFollowedArtistsRailTestQuery = {
-    readonly response: AuctionWorksByFollowedArtistsRailTestQueryResponse;
-    readonly variables: AuctionWorksByFollowedArtistsRailTestQueryVariables;
+  variables: AuctionWorksByFollowedArtistsRailTestQuery$variables;
+  response: AuctionWorksByFollowedArtistsRailTestQuery$data;
 };
-
-
-
-/*
-query AuctionWorksByFollowedArtistsRailTestQuery {
-  viewer {
-    ...AuctionWorksByFollowedArtistsRail_viewer
-  }
-}
-
-fragment AuctionWorksByFollowedArtistsRail_viewer on Viewer {
-  saleArtworksConnection(first: 99, aggregations: [TOTAL], includeArtworksByFollowedArtists: true) {
-    edges {
-      node {
-        ...ShelfArtwork_artwork
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -643,5 +515,7 @@ return {
   }
 };
 })();
-(node as any).hash = '34dea3d8899d177bdfdede53c761d5e9';
+
+(node as any).hash = "34dea3d8899d177bdfdede53c761d5e9";
+
 export default node;

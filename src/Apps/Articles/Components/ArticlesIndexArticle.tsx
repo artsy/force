@@ -8,12 +8,12 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { ArticlesIndexArticle_article } from "__generated__/ArticlesIndexArticle_article.graphql"
+import { ArticlesIndexArticle_article$data } from "__generated__/ArticlesIndexArticle_article.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArticleShare } from "Components/ArticleShare"
 
 interface ArticlesIndexArticleProps {
-  article: ArticlesIndexArticle_article
+  article: ArticlesIndexArticle_article$data
 }
 
 const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {

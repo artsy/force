@@ -20,7 +20,7 @@ import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
-import { CreateSmsSecondFactorMutationResponse } from "__generated__/CreateSmsSecondFactorMutation.graphql"
+import { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorModalProps {
@@ -28,7 +28,7 @@ interface SmsSecondFactorModalProps {
   show?: boolean
   onComplete: () => void
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
+  secondFactor: CreateSmsSecondFactorMutation$data["createSmsSecondFactor"]["secondFactorOrErrors"]
   password: string
 }
 
@@ -60,7 +60,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         password: password,
       })
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      // @ts-ignore RELAY UPGRADE 13
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       setShowRecoveryCodes(true)

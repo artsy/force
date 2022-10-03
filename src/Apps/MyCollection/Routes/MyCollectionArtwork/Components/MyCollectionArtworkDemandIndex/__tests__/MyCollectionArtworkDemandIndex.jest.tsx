@@ -16,6 +16,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
         return (
           <MockBoot>
             <MyCollectionArtworkDemandIndexFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               marketPriceInsights={props.artwork.marketPriceInsights}
             />
           </MockBoot>

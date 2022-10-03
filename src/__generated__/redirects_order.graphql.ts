@@ -1,74 +1,77 @@
+/**
+ * @generated SignedSource<<b8f737c56af487674b260fb6ef85cc2b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
-export type redirects_order = {
-    readonly bankAccountId: string | null;
-    readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly state: CommerceOrderStateEnum;
-    readonly lastTransactionFailed: boolean | null;
-    readonly requestedFulfillment: {
-        readonly __typename: string;
-    } | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
+import { FragmentRefs } from "relay-runtime";
+export type redirects_order$data = {
+  readonly bankAccountId: string | null;
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly lastTransactionFailed: boolean | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+        } | null;
+        readonly shippingQuoteOptions: {
+          readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                } | null;
-                readonly shippingQuoteOptions: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly isSelected: boolean;
-                        } | null;
-                    } | null> | null;
-                } | null;
+              readonly isSelected: boolean;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly creditCard: {
-        readonly internalID: string;
-    } | null;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
-    readonly paymentMethodDetails: ({
-        readonly __typename: "CreditCard";
-        readonly id: string;
-    } | {
-        readonly __typename: "BankAccount";
-        readonly id: string;
-    } | {
-        readonly __typename: "WireTransfer";
-        readonly isManualPayment: boolean;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly myLastOffer?: {
-        readonly internalID: string;
-        readonly createdAt: string;
-    } | null | undefined;
-    readonly lastOffer?: {
-        readonly internalID: string;
-        readonly createdAt: string;
-    } | null | undefined;
-    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
-    readonly " $refType": "redirects_order";
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly creditCard: {
+    readonly internalID: string;
+  } | null;
+  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "CreditCard";
+    readonly id: string;
+  } | {
+    readonly __typename: "BankAccount";
+    readonly id: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly myLastOffer?: {
+    readonly internalID: string;
+    readonly createdAt: string;
+  } | null;
+  readonly lastOffer?: {
+    readonly internalID: string;
+    readonly createdAt: string;
+  } | null;
+  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+  readonly " $fragmentType": "redirects_order";
 };
-export type redirects_order$data = redirects_order;
 export type redirects_order$key = {
-    readonly " $data"?: redirects_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"redirects_order">;
+  readonly " $data"?: redirects_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"redirects_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -78,29 +81,29 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "id",
-    "storageKey": null
-  }
-],
-v3 = [
+v1 = [
   (v0/*: any*/),
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "createdAt",
+    "storageKey": null
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "id",
     "storageKey": null
   }
 ];
@@ -140,6 +143,40 @@ return {
       "storageKey": null
     },
     {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "lastOffer",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "awaitingResponseFrom",
+          "storageKey": null
+        }
+      ],
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
+    },
+    {
       "alias": null,
       "args": null,
       "concreteType": null,
@@ -147,7 +184,7 @@ return {
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        (v1/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
@@ -269,16 +306,16 @@ return {
       "name": "paymentMethodDetails",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "CreditCard",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "BankAccount",
           "abstractKey": null
         },
@@ -298,45 +335,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "myLastOffer",
-          "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "lastOffer",
-          "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "awaitingResponseFrom",
-          "storageKey": null
-        }
-      ],
-      "type": "CommerceOfferOrder",
-      "abstractKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'db92b1c01ce47c7377afa9f5670a4ce0';
+
+(node as any).hash = "db92b1c01ce47c7377afa9f5670a4ce0";
+
 export default node;

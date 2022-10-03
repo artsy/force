@@ -2,13 +2,13 @@ import * as React from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorks_viewingRoom } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
+import { ViewingRoomWorks_viewingRoom$data } from "__generated__/ViewingRoomWorks_viewingRoom.graphql"
 import { ViewWorksButton } from "./ViewWorksButton"
 import { extractNodes } from "Utils/extractNodes"
 import { ViewingRoomWorksArtworkFragmentContainer } from "./ViewingRoomWorksArtwork"
 
 interface ViewingRoomWorksProps {
-  viewingRoom: ViewingRoomWorks_viewingRoom
+  viewingRoom: ViewingRoomWorks_viewingRoom$data
 }
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({ viewingRoom }) => {
@@ -32,6 +32,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({ viewingRoom }) => {
           >
             <ViewingRoomWorksArtworkFragmentContainer
               to={`/viewing-room/${slug}/works`}
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
           </Column>

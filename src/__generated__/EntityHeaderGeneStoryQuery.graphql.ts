@@ -1,61 +1,27 @@
+/**
+ * @generated SignedSource<<1fa867dbc91e5124ea9d0bbc8add5351>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderGeneStoryQueryVariables = {
-    id: string;
+export type EntityHeaderGeneStoryQuery$variables = {
+  id: string;
 };
-export type EntityHeaderGeneStoryQueryResponse = {
-    readonly gene: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
-    } | null;
+export type EntityHeaderGeneStoryQuery$data = {
+  readonly gene: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderGene_gene">;
+  } | null;
 };
 export type EntityHeaderGeneStoryQuery = {
-    readonly response: EntityHeaderGeneStoryQueryResponse;
-    readonly variables: EntityHeaderGeneStoryQueryVariables;
+  variables: EntityHeaderGeneStoryQuery$variables;
+  response: EntityHeaderGeneStoryQuery$data;
 };
-
-
-
-/*
-query EntityHeaderGeneStoryQuery(
-  $id: String!
-) {
-  gene(id: $id) {
-    ...EntityHeaderGene_gene
-    id
-  }
-}
-
-fragment EntityHeaderGene_gene on Gene {
-  ...FollowGeneButton_gene
-  internalID
-  href
-  name
-  avatar: image {
-    cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
-      src
-      srcSet
-    }
-  }
-  filterArtworksConnection(first: 1) {
-    counts {
-      total
-    }
-    id
-  }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -262,5 +228,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7e9ecbfe74212e88f0c22eb76b43d2b1';
+
+(node as any).hash = "7e9ecbfe74212e88f0c22eb76b43d2b1";
+
 export default node;

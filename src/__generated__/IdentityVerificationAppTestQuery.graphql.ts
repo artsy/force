@@ -1,43 +1,33 @@
+/**
+ * @generated SignedSource<<a366bedb91bcafbed3ded36abc6aabfe>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type IdentityVerificationAppTestQueryVariables = {};
-export type IdentityVerificationAppTestQueryResponse = {
-    readonly identityVerification: {
-        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_identityVerification">;
-    } | null;
+export type IdentityVerificationAppTestQuery$variables = {};
+export type IdentityVerificationAppTestQuery$data = {
+  readonly identityVerification: {
+    readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_identityVerification">;
+  } | null;
 };
-export type IdentityVerificationAppTestQueryRawResponse = {
-    readonly identityVerification: ({
-        readonly internalID: string;
-        readonly state: string;
-        readonly id: string;
-    }) | null;
+export type IdentityVerificationAppTestQuery$rawResponse = {
+  readonly identityVerification: {
+    readonly internalID: string;
+    readonly state: string;
+    readonly id: string;
+  } | null;
 };
 export type IdentityVerificationAppTestQuery = {
-    readonly response: IdentityVerificationAppTestQueryResponse;
-    readonly variables: IdentityVerificationAppTestQueryVariables;
-    readonly rawResponse: IdentityVerificationAppTestQueryRawResponse;
+  variables: IdentityVerificationAppTestQuery$variables;
+  response: IdentityVerificationAppTestQuery$data;
+  rawResponse: IdentityVerificationAppTestQuery$rawResponse;
 };
-
-
-
-/*
-query IdentityVerificationAppTestQuery {
-  identityVerification(id: "identity-verification-id") {
-    ...IdentityVerificationApp_identityVerification_23LfNj
-    id
-  }
-}
-
-fragment IdentityVerificationApp_identityVerification_23LfNj on IdentityVerification {
-  internalID
-  state
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -69,7 +59,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v0/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "IdentityVerificationApp_identityVerification"
           }
@@ -121,7 +111,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ea8260e0c55e22ddc91992d33ff92c52",
+    "cacheID": "32a844b22ddc9a7eabd07320558d146a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -143,9 +133,11 @@ return {
     },
     "name": "IdentityVerificationAppTestQuery",
     "operationKind": "query",
-    "text": "query IdentityVerificationAppTestQuery {\n  identityVerification(id: \"identity-verification-id\") {\n    ...IdentityVerificationApp_identityVerification_23LfNj\n    id\n  }\n}\n\nfragment IdentityVerificationApp_identityVerification_23LfNj on IdentityVerification {\n  internalID\n  state\n}\n"
+    "text": "query IdentityVerificationAppTestQuery {\n  identityVerification(id: \"identity-verification-id\") {\n    ...IdentityVerificationApp_identityVerification\n    id\n  }\n}\n\nfragment IdentityVerificationApp_identityVerification on IdentityVerification {\n  internalID\n  state\n}\n"
   }
 };
 })();
-(node as any).hash = '9316ff0e3bc38252639859899937ecef';
+
+(node as any).hash = "b908eca38d82488d938f4d14159f7120";
+
 export default node;

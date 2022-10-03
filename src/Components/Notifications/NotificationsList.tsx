@@ -5,7 +5,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { NotificationsList_viewer } from "__generated__/NotificationsList_viewer.graphql"
+import { NotificationsList_viewer$data } from "__generated__/NotificationsList_viewer.graphql"
 import {
   NotificationsListQuery,
   NotificationTypesEnum,
@@ -24,7 +24,7 @@ interface NotificationsListQueryRendererProps {
 }
 
 interface NotificationsListProps extends NotificationsListQueryRendererProps {
-  viewer: NotificationsList_viewer
+  viewer: NotificationsList_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -92,6 +92,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         {nodes.map(node => (
           <NotificationItemFragmentContainer
             key={node.internalID}
+            // @ts-ignore RELAY UPGRADE 13
             item={node}
           />
         ))}
@@ -203,6 +204,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
 
         return (
           <NotificationsListFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
             paginationType={paginationType}
             type={type}

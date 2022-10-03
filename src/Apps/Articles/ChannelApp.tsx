@@ -2,7 +2,7 @@ import { FC } from "react"
 import { Box, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
-import { ChannelApp_channel } from "__generated__/ChannelApp_channel.graphql"
+import { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
 import { ArticleAdProvider } from "../Article/Components/ArticleAd"
 import {
   FullBleedHeader,
@@ -12,7 +12,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { ChannelArticlesPaginationContainer } from "./Components/ChannelArticles"
 
 interface ChannelAppProps {
-  channel: ChannelApp_channel
+  channel: ChannelApp_channel$data
 }
 
 const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
@@ -93,6 +93,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
 
       <Spacer mt={4} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ChannelArticlesPaginationContainer channel={channel} />
     </ArticleAdProvider>
   )

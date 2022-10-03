@@ -1,76 +1,25 @@
+/**
+ * @generated SignedSource<<9e871eb0f6d377d2e5394e96dcb874d7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTrendingArtistsRailQueryVariables = {};
-export type HomeTrendingArtistsRailQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
-    } | null;
+export type HomeTrendingArtistsRailQuery$variables = {};
+export type HomeTrendingArtistsRailQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
+  } | null;
 };
 export type HomeTrendingArtistsRailQuery = {
-    readonly response: HomeTrendingArtistsRailQueryResponse;
-    readonly variables: HomeTrendingArtistsRailQueryVariables;
+  variables: HomeTrendingArtistsRailQuery$variables;
+  response: HomeTrendingArtistsRailQuery$data;
 };
-
-
-
-/*
-query HomeTrendingArtistsRailQuery {
-  viewer {
-    ...HomeTrendingArtistsRail_viewer
-  }
-}
-
-fragment CellArtist_artist on Artist {
-  ...EntityHeaderArtist_artist
-  internalID
-  slug
-  name
-  href
-  initials
-  image {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment HomeTrendingArtistsRail_viewer on Viewer {
-  artistsConnection(sort: TRENDING_DESC, first: 99) {
-    edges {
-      node {
-        ...CellArtist_artist
-        internalID
-        slug
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -336,5 +285,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ba5b4a81fc58c141a3f8c4e5deb9fb8a';
+
+(node as any).hash = "ba5b4a81fc58c141a3f8c4e5deb9fb8a";
+
 export default node;

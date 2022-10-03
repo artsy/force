@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<a85f1f0dc9f53747d704043f78df3550>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2Links_Test_QueryVariables = {};
-export type ArtworkSidebar2Links_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Links_artwork">;
-    } | null;
+export type ArtworkSidebar2Links_Test_Query$variables = {};
+export type ArtworkSidebar2Links_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Links_artwork">;
+  } | null;
 };
 export type ArtworkSidebar2Links_Test_Query = {
-    readonly response: ArtworkSidebar2Links_Test_QueryResponse;
-    readonly variables: ArtworkSidebar2Links_Test_QueryVariables;
+  variables: ArtworkSidebar2Links_Test_Query$variables;
+  response: ArtworkSidebar2Links_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebar2Links_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebar2Links_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebar2Links_artwork on Artwork {
-  isInAuction
-  sale {
-    isClosed
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -163,5 +150,7 @@ return {
   }
 };
 })();
-(node as any).hash = '27c814d23326c44f49f2e3d948f523e4';
+
+(node as any).hash = "27c814d23326c44f49f2e3d948f523e4";
+
 export default node;

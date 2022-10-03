@@ -32,7 +32,8 @@ export const handleShort = async (
       relayEnvironment,
       REDIRECTS_SHORTCUTS_QUERY,
       { id: short }
-    )
+      // @ts-expect-error RELAY_UPGRADE
+    ).toPromise()
 
     if (shortcut) return res.redirect(301, shortcut.long)
 
@@ -56,7 +57,8 @@ export const handleProfile = async (
       relayEnvironment,
       REDIRECTS_PROFILE_QUERY,
       { id: req.params.id }
-    )
+      // @ts-expect-error RELAY_UPGRADE
+    ).toPromise()
 
     res.locals.profile = profile
     res.locals.tab = req.params.tab

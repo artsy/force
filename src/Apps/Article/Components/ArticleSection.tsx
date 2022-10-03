@@ -6,10 +6,10 @@ import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSecti
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
 import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
-import { ArticleSection_section } from "__generated__/ArticleSection_section.graphql"
+import { ArticleSection_section$data } from "__generated__/ArticleSection_section.graphql"
 
 interface ArticleSectionProps {
-  section: ArticleSection_section
+  section: ArticleSection_section$data
   isFirst: boolean
   isLast: boolean
 }
@@ -23,6 +23,7 @@ const ArticleSection: FC<ArticleSectionProps> = ({
     case "ArticleSectionText": {
       return (
         <ArticleSectionTextFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           section={section}
           isFirst={isFirst}
           isLast={isLast}
@@ -32,23 +33,28 @@ const ArticleSection: FC<ArticleSectionProps> = ({
 
     case "ArticleSectionImageCollection": {
       return (
+        // @ts-ignore RELAY UPGRADE 13
         <ArticleSectionImageCollectionFragmentContainer section={section} />
       )
     }
 
     case "ArticleSectionImageSet": {
+      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionImageSetFragmentContainer section={section} />
     }
 
     case "ArticleSectionVideo": {
+      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionVideoFragmentContainer section={section} />
     }
 
     case "ArticleSectionSocialEmbed": {
+      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionSocialEmbedFragmentContainer section={section} />
     }
 
     case "ArticleSectionEmbed": {
+      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionEmbedFragmentContainer section={section} />
     }
 

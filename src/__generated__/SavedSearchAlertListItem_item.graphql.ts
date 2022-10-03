@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<ef64795ff618035bbc7a67968bfa7854>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertListItem_item = {
-    readonly internalID: string;
-    readonly artistIDs: ReadonlyArray<string> | null;
-    readonly href: string;
-    readonly labels: ReadonlyArray<{
-        readonly displayValue: string;
-    }>;
-    readonly userAlertSettings: {
-        readonly name: string | null;
-    };
-    readonly " $refType": "SavedSearchAlertListItem_item";
+export type SavedSearchAlertListItem_item$data = {
+  readonly internalID: string;
+  readonly artistIDs: ReadonlyArray<string> | null;
+  readonly href: string;
+  readonly labels: ReadonlyArray<{
+    readonly displayValue: string;
+  }>;
+  readonly userAlertSettings: {
+    readonly name: string | null;
+  };
+  readonly " $fragmentType": "SavedSearchAlertListItem_item";
 };
-export type SavedSearchAlertListItem_item$data = SavedSearchAlertListItem_item;
 export type SavedSearchAlertListItem_item$key = {
-    readonly " $data"?: SavedSearchAlertListItem_item$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertListItem_item">;
+  readonly " $data"?: SavedSearchAlertListItem_item$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -91,5 +94,7 @@ const node: ReaderFragment = {
   "type": "SearchCriteria",
   "abstractKey": null
 };
-(node as any).hash = 'fe0b5b2fbd78d012e3bbf601026a5ece';
+
+(node as any).hash = "fe0b5b2fbd78d012e3bbf601026a5ece";
+
 export default node;

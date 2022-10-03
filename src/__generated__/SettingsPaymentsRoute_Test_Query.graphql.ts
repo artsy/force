@@ -1,69 +1,25 @@
+/**
+ * @generated SignedSource<<13dc212e2e9c113698a1820f7c60fdf4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsPaymentsRoute_Test_QueryVariables = {};
-export type SettingsPaymentsRoute_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsRoute_me">;
-    } | null;
+export type SettingsPaymentsRoute_Test_Query$variables = {};
+export type SettingsPaymentsRoute_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsRoute_me">;
+  } | null;
 };
 export type SettingsPaymentsRoute_Test_Query = {
-    readonly response: SettingsPaymentsRoute_Test_QueryResponse;
-    readonly variables: SettingsPaymentsRoute_Test_QueryVariables;
+  variables: SettingsPaymentsRoute_Test_Query$variables;
+  response: SettingsPaymentsRoute_Test_Query$data;
 };
-
-
-
-/*
-query SettingsPaymentsRoute_Test_Query {
-  me {
-    ...SettingsPaymentsRoute_me
-    id
-  }
-}
-
-fragment SettingsBankAccount_bankAccount on BankAccount {
-  internalID
-  last4
-}
-
-fragment SettingsCreditCard_creditCard on CreditCard {
-  internalID
-  name
-  brand
-  lastDigits
-  expirationYear
-  expirationMonth
-}
-
-fragment SettingsPaymentsMethods_me on Me {
-  creditCards(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsCreditCard_creditCard
-        id
-      }
-    }
-  }
-  bankAccounts(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsBankAccount_bankAccount
-        id
-      }
-    }
-  }
-}
-
-fragment SettingsPaymentsRoute_me on Me {
-  ...SettingsPaymentsMethods_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -335,5 +291,7 @@ return {
   }
 };
 })();
-(node as any).hash = '73b60cd9c1fbcbb4eb7a82a9168985d9';
+
+(node as any).hash = "73b60cd9c1fbcbb4eb7a82a9168985d9";
+
 export default node;

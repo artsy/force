@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesArtworkRail_artwork } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
+import { ArtistSeriesArtworkRail_artwork$data } from "__generated__/ArtistSeriesArtworkRail_artwork.graphql"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { useTracking } from "react-tracking"
 import {
@@ -13,7 +13,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail"
 
 interface Props {
-  artwork: ArtistSeriesArtworkRail_artwork
+  artwork: ArtistSeriesArtworkRail_artwork$data
 }
 
 export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
@@ -57,6 +57,7 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               contextModule={ContextModule.artistSeriesRail}
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               onClick={() => {
                 const properties: ClickedArtworkGroup = {

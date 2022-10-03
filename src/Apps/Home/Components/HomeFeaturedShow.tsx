@@ -8,10 +8,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 import { useTracking } from "react-tracking"
-import { HomeFeaturedShow_show } from "__generated__/HomeFeaturedShow_show.graphql"
+import { HomeFeaturedShow_show$data } from "__generated__/HomeFeaturedShow_show.graphql"
 
 interface HomeFeaturedShowProps {
-  show: HomeFeaturedShow_show
+  show: HomeFeaturedShow_show$data
 }
 
 const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
@@ -19,6 +19,7 @@ const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
 
   return (
     <CellShowFragmentContainer
+      // @ts-ignore RELAY UPGRADE 13
       show={show}
       displayStatus
       onClick={() => {

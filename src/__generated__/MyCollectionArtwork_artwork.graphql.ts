@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<22c565743fabb854ee2045efb186b2fa>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtwork_artwork = {
-    readonly comparables: {
-        readonly totalCount: number | null;
-    } | null;
-    readonly hasMarketPriceInsights: boolean | null;
-    readonly submissionId: string | null;
-    readonly internalID: string;
+export type MyCollectionArtwork_artwork$data = {
+  readonly comparables: {
+    readonly totalCount: number | null;
+  } | null;
+  readonly hasMarketPriceInsights: boolean | null;
+  readonly submissionId: string | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly artist: {
     readonly slug: string;
-    readonly artist: {
-        readonly slug: string;
-        readonly targetSupply: {
-            readonly isP1: boolean | null;
-        } | null;
-        readonly auctionResults: {
-            readonly totalCount: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
+    readonly targetSupply: {
+      readonly isP1: boolean | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
-    readonly " $refType": "MyCollectionArtwork_artwork";
+    readonly auctionResults: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
+  readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
-export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
 export type MyCollectionArtwork_artwork$key = {
-    readonly " $data"?: MyCollectionArtwork_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtwork_artwork">;
+  readonly " $data"?: MyCollectionArtwork_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtwork_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -56,6 +59,36 @@ return {
   "metadata": null,
   "name": "MyCollectionArtwork_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSidebar_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkMeta_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkInsights_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkImageBrowser_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkComparables_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
+    },
     {
       "alias": "comparables",
       "args": null,
@@ -132,41 +165,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebar_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkMeta_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkInsights_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkImageBrowser_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkComparables_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a9c2824058171c07d83ec1a2656d14cf';
+
+(node as any).hash = "a9c2824058171c07d83ec1a2656d14cf";
+
 export default node;

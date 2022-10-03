@@ -13,12 +13,12 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "Components/Artwork/GridItem"
 import { extractNodes } from "Utils/extractNodes"
-import { ShowsCurrentShow_show } from "__generated__/ShowsCurrentShow_show.graphql"
+import { ShowsCurrentShow_show$data } from "__generated__/ShowsCurrentShow_show.graphql"
 import { Masonry } from "Components/Masonry"
 import { RouterLink } from "System/Router/RouterLink"
 
 interface ShowsCurrentShowProps {
-  show: ShowsCurrentShow_show
+  show: ShowsCurrentShow_show$data
 }
 
 const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
@@ -50,6 +50,7 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
         {artworks.map(artwork => {
           return (
             <React.Fragment key={artwork.internalID}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <GridItem artwork={artwork} />
 
               <Spacer mt={4} />

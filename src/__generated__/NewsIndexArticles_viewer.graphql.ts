@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<c61e28c35eb05b23576d969c374f130e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NewsIndexArticles_viewer = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "NewsIndexArticles_viewer";
+export type NewsIndexArticles_viewer$data = {
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "NewsIndexArticles_viewer";
 };
-export type NewsIndexArticles_viewer$data = NewsIndexArticles_viewer;
 export type NewsIndexArticles_viewer$key = {
-    readonly " $data"?: NewsIndexArticles_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"NewsIndexArticles_viewer">;
+  readonly " $data"?: NewsIndexArticles_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NewsIndexArticles_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -89,16 +92,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArticleBody_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ArticleBody_article"
                 }
               ],
               "storageKey": null
@@ -145,5 +148,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '1b0c1fd7b0a41b8315833a476338e67b';
+
+(node as any).hash = "1b0c1fd7b0a41b8315833a476338e67b";
+
 export default node;

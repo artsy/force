@@ -7,8 +7,8 @@ import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "System/Analytics"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
-import { PriceOptions_artwork } from "__generated__/PriceOptions_artwork.graphql"
-import { PriceOptions_order } from "__generated__/PriceOptions_order.graphql"
+import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
+import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { useTracking } from "react-tracking"
@@ -17,8 +17,8 @@ export interface PriceOptionsProps {
   onChange: (value: number) => void
   onFocus: () => void
   showError?: boolean
-  artwork: PriceOptions_artwork | null | undefined
-  order: PriceOptions_order
+  artwork: PriceOptions_artwork$data | null | undefined
+  order: PriceOptions_order$data
 }
 
 export const PriceOptions: React.FC<PriceOptionsProps> = ({

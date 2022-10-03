@@ -3,7 +3,7 @@ import { Separator, FullBleed, Marquee } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Partner/Components/NavigationTabs"
 import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
-import { PartnerApp_partner } from "__generated__/PartnerApp_partner.graphql"
+import { PartnerApp_partner$data } from "__generated__/PartnerApp_partner.graphql"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "Components/Sticky"
@@ -11,7 +11,7 @@ import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoad
 import { HttpError } from "found"
 
 export interface PartnerAppProps {
-  partner: PartnerApp_partner
+  partner: PartnerApp_partner$data
 }
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({
@@ -45,11 +45,14 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
     <PartnerArtistsLoadingContextProvider>
       <StickyProvider>
         {profile && displayFullPartnerPage && (
+          // @ts-ignore RELAY UPGRADE 13
           <PartnerHeaderImage profile={profile} />
         )}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerMetaFragmentContainer partner={partner} />
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerHeader partner={partner} />
 
         <FullBleed mb={[2, 4]}>
@@ -64,6 +67,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
         </FullBleed>
 
         {(displayFullPartnerPage || partnerType === "Brand") && (
+          // @ts-ignore RELAY UPGRADE 13
           <NavigationTabs partner={partner} />
         )}
 

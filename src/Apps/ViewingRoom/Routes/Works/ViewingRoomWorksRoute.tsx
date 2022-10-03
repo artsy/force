@@ -11,13 +11,13 @@ import {
 } from "@artsy/palette"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomWorksRoute_viewingRoom } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
+import { ViewingRoomWorksRoute_viewingRoom$data } from "__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { compact } from "lodash"
 import { Media } from "Utils/Responsive"
 
 interface WorksRouteProps {
-  viewingRoom: ViewingRoomWorksRoute_viewingRoom
+  viewingRoom: ViewingRoomWorksRoute_viewingRoom$data
 }
 
 const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
@@ -92,6 +92,7 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
                   </ResponsiveBox>
                 )}
 
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ViewingRoomArtworkDetails artwork={artwork} />
               </Box>
             )

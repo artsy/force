@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<3e2bb6eb48bc71bc3ee9cb95975cb972>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
-export type Payment_validation = {
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
-    readonly paymentMethodDetails: ({
-        readonly __typename: "CreditCard";
-        readonly id: string;
-    } | {
-        readonly __typename: "BankAccount";
-        readonly id: string;
-    } | {
-        readonly __typename: "WireTransfer";
-        readonly isManualPayment: boolean;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $refType": "Payment_validation";
+import { FragmentRefs } from "relay-runtime";
+export type Payment_validation$data = {
+  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "CreditCard";
+    readonly id: string;
+  } | {
+    readonly __typename: "BankAccount";
+    readonly id: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly " $fragmentType": "Payment_validation";
 };
-export type Payment_validation$data = Payment_validation;
 export type Payment_validation$key = {
-    readonly " $data"?: Payment_validation$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Payment_validation">;
+  readonly " $data"?: Payment_validation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -103,5 +106,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'b2b71ea7bae825a7fcaa69e08936b58b';
+
+(node as any).hash = "b2b71ea7bae825a7fcaa69e08936b58b";
+
 export default node;

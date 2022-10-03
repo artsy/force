@@ -1,76 +1,25 @@
+/**
+ * @generated SignedSource<<4e302b43403fa1e002924a13ad3d976d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionDetailsTestQueryVariables = {};
-export type AuctionDetailsTestQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_sale">;
-    } | null;
+export type AuctionDetailsTestQuery$variables = {};
+export type AuctionDetailsTestQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionDetails_sale">;
+  } | null;
 };
 export type AuctionDetailsTestQuery = {
-    readonly response: AuctionDetailsTestQueryResponse;
-    readonly variables: AuctionDetailsTestQueryVariables;
+  variables: AuctionDetailsTestQuery$variables;
+  response: AuctionDetailsTestQuery$data;
 };
-
-
-
-/*
-query AuctionDetailsTestQuery {
-  sale(id: "foo") {
-    ...AuctionDetails_sale
-    id
-  }
-}
-
-fragment AuctionDetails_sale on Sale {
-  ...RegisterButton_sale
-  ...AuctionInfoSidebar_sale
-  ...SaleDetailTimer_sale
-  internalID
-  name
-  slug
-  liveStartAt
-  startAt
-  endAt
-  description(format: HTML)
-  href
-  isClosed
-  cascadingEndTimeIntervalMinutes
-}
-
-fragment AuctionInfoSidebar_sale on Sale {
-  liveStartAt
-}
-
-fragment RegisterButton_sale on Sale {
-  bidder {
-    qualifiedForBidding
-    id
-  }
-  isAuction
-  isClosed
-  isLiveOpen
-  isPreview
-  isRegistrationClosed
-  liveURLIfOpen
-  requireIdentityVerification
-  registrationStatus {
-    internalID
-    id
-  }
-  slug
-  status
-}
-
-fragment SaleDetailTimer_sale on Sale {
-  endAt
-  endedAt
-  startAt
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -372,5 +321,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f0e0d3be04977a46d0fa553af2f660b7';
+
+(node as any).hash = "f0e0d3be04977a46d0fa553af2f660b7";
+
 export default node;

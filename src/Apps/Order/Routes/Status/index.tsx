@@ -21,7 +21,7 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../..
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { useSystemContext } from "System/SystemContext"
-import { Status_order } from "__generated__/Status_order.graphql"
+import { Status_order$data } from "__generated__/Status_order.graphql"
 import { getStatusCopy, continueToInboxText } from "../../Utils/getStatusCopy"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
@@ -36,7 +36,7 @@ const declinedStatuses = [
 ]
 
 export interface StatusProps {
-  order: Status_order
+  order: Status_order$data
   match: Match
 }
 
@@ -77,6 +77,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
                 </>
               ) : showTransactionSummary ? (
                 <Flex flexDirection="column">
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArtworkSummaryItem order={order} />
                   <StyledTransactionDetailsSummaryItem
                     order={order}
@@ -106,8 +107,10 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
           !shouldContinueToInbox && (
             <Flex flexDirection="column">
               <Flex flexDirection="column">
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <StyledShippingSummaryItem order={order} />
                 <PaymentMethodSummaryItem
+                  // @ts-ignore RELAY UPGRADE 13
                   order={order}
                   withDescription={false}
                   title="Payment method"

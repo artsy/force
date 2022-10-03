@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<2f5fbb57e7af867d9db7070f5a0edc33>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionInfoSidebarTestQueryVariables = {};
-export type AuctionInfoSidebarTestQueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionInfoSidebar_sale">;
-    } | null;
+export type AuctionInfoSidebarTestQuery$variables = {};
+export type AuctionInfoSidebarTestQuery$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionInfoSidebar_sale">;
+  } | null;
 };
 export type AuctionInfoSidebarTestQuery = {
-    readonly response: AuctionInfoSidebarTestQueryResponse;
-    readonly variables: AuctionInfoSidebarTestQueryVariables;
+  variables: AuctionInfoSidebarTestQuery$variables;
+  response: AuctionInfoSidebarTestQuery$data;
 };
-
-
-
-/*
-query AuctionInfoSidebarTestQuery {
-  sale(id: "foo") {
-    ...AuctionInfoSidebar_sale
-    id
-  }
-}
-
-fragment AuctionInfoSidebar_sale on Sale {
-  liveStartAt
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -129,5 +120,7 @@ return {
   }
 };
 })();
-(node as any).hash = '0a3591616768eea3b40ba01ed8729821';
+
+(node as any).hash = "0a3591616768eea3b40ba01ed8729821";
+
 export default node;

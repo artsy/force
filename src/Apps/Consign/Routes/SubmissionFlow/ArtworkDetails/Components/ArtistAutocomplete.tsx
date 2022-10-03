@@ -14,7 +14,7 @@ import { useSystemContext } from "System"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ArtistAutocomplete_SearchConnection_Query,
-  ArtistAutocomplete_SearchConnection_QueryResponse,
+  ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
@@ -25,7 +25,7 @@ type SubmissionImage =
       NonNullable<
         NonNullable<
           NonNullable<
-            ArtistAutocomplete_SearchConnection_QueryResponse["searchConnection"]
+            ArtistAutocomplete_SearchConnection_Query$data["searchConnection"]
           >["edges"]
         >[number]
       >["node"]
@@ -78,7 +78,8 @@ export const ArtistAutoComplete: React.FC<{
         if (suggestions?.edges?.length) {
           const options = extractNodes(suggestions)
           setSuggestions(
-            options.map(option => ({
+            // RELAY_UPGRADE
+            options.map((option: any) => ({
               text: option.displayLabel!,
               value: option.internalID!,
               image: option?.image,
@@ -208,7 +209,8 @@ const fetchSuggestions = async (
       }
     `,
     { searchQuery }
-  )
+    // @ts-expect-error RELAY_UPGRADE
+  ).toPromise()
 
   return response.searchConnection
 }

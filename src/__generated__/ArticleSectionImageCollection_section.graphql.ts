@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<311f3658018d202dfdd763355e5ed33d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageCollectionLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW_FILLWIDTH" | "%future added value";
-export type ArticleSectionImageCollection_section = {
-    readonly layout: ArticleSectionImageCollectionLayout;
-    readonly figures: ReadonlyArray<{
-        readonly __typename: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionImage_figure" | "ArticleSectionImageCollectionCaption_figure">;
-    }>;
-    readonly " $refType": "ArticleSectionImageCollection_section";
+import { FragmentRefs } from "relay-runtime";
+export type ArticleSectionImageCollection_section$data = {
+  readonly layout: ArticleSectionImageCollectionLayout;
+  readonly figures: ReadonlyArray<{
+    readonly __typename: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollectionImage_figure" | "ArticleSectionImageCollectionCaption_figure">;
+  }>;
+  readonly " $fragmentType": "ArticleSectionImageCollection_section";
 };
-export type ArticleSectionImageCollection_section$data = ArticleSectionImageCollection_section;
 export type ArticleSectionImageCollection_section$key = {
-    readonly " $data"?: ArticleSectionImageCollection_section$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollection_section">;
+  readonly " $data"?: ArticleSectionImageCollection_section$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollection_section">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,5 +69,7 @@ const node: ReaderFragment = {
   "type": "ArticleSectionImageCollection",
   "abstractKey": null
 };
-(node as any).hash = '4a4e89774caeaecfcc5d9993cf6121a4';
+
+(node as any).hash = "4a4e89774caeaecfcc5d9993cf6121a4";
+
 export default node;

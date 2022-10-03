@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<e6b57dbd82aacfb2b1f7af62d0ede972>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2EditionSets_artwork = {
-    readonly isInquireable: boolean | null;
+export type ArtworkSidebar2EditionSets_artwork$data = {
+  readonly isInquireable: boolean | null;
+  readonly isOfferable: boolean | null;
+  readonly isAcquireable: boolean | null;
+  readonly editionSets: ReadonlyArray<{
+    readonly id: string;
     readonly isOfferable: boolean | null;
     readonly isAcquireable: boolean | null;
-    readonly editionSets: ReadonlyArray<{
-        readonly id: string;
-        readonly isOfferable: boolean | null;
-        readonly isAcquireable: boolean | null;
-        readonly saleMessage: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2SizeInfo_piece">;
-    } | null> | null;
-    readonly " $refType": "ArtworkSidebar2EditionSets_artwork";
+    readonly saleMessage: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2SizeInfo_piece">;
+  } | null> | null;
+  readonly " $fragmentType": "ArtworkSidebar2EditionSets_artwork";
 };
-export type ArtworkSidebar2EditionSets_artwork$data = ArtworkSidebar2EditionSets_artwork;
 export type ArtworkSidebar2EditionSets_artwork$key = {
-    readonly " $data"?: ArtworkSidebar2EditionSets_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2EditionSets_artwork">;
+  readonly " $data"?: ArtworkSidebar2EditionSets_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2EditionSets_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -92,5 +95,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7caa0d9ba122d91eaf4ccef5c6ec2741';
+
+(node as any).hash = "7caa0d9ba122d91eaf4ccef5c6ec2741";
+
 export default node;

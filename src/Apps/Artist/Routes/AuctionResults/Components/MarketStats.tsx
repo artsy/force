@@ -12,12 +12,12 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
 import { MarketStatsQuery } from "__generated__/MarketStatsQuery.graphql"
-import { MarketStats_priceInsightsConnection } from "__generated__/MarketStats_priceInsightsConnection.graphql"
+import { MarketStats_priceInsightsConnection$data } from "__generated__/MarketStats_priceInsightsConnection.graphql"
 import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
 import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
 
 interface MarketStatsProps {
-  priceInsightsConnection: MarketStats_priceInsightsConnection
+  priceInsightsConnection: MarketStats_priceInsightsConnection$data
   onRendered?: (visible: boolean) => void
 }
 
@@ -272,6 +272,7 @@ export const MarketStatsQueryRenderer: React.FC<{
 
         return (
           <MarketStatsFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             priceInsightsConnection={props.priceInsightsConnection!}
             onRendered={onRender}
           />

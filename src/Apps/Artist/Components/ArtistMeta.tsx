@@ -1,4 +1,4 @@
-import { ArtistMeta_artist } from "__generated__/ArtistMeta_artist.graphql"
+import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "Components/Seo/Person"
 import { identity, pickBy } from "lodash"
 import { Component } from "react"
@@ -9,7 +9,7 @@ import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } f
 import { getENV } from "Utils/getENV"
 
 interface Props {
-  artist: ArtistMeta_artist
+  artist: ArtistMeta_artist$data
 }
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -54,7 +54,7 @@ export const imageObjectAttributes = (item: ItemWithImage) => {
   )
 }
 
-export const offersAttributes = (artist: ArtistMeta_artist) => {
+export const offersAttributes = (artist: ArtistMeta_artist$data) => {
   if (artist.artworks_connection) {
     const { edges } = artist.artworks_connection
 
@@ -87,7 +87,7 @@ export const offersAttributes = (artist: ArtistMeta_artist) => {
 }
 
 export const productAttributes = (
-  artist: ArtistMeta_artist,
+  artist: ArtistMeta_artist$data,
   artwork: ArtworkNode
 ) => {
   const image = imageObjectAttributes(artwork)
@@ -137,7 +137,7 @@ export const offerAttributes = (artwork: ArtworkNode) => {
   }
 }
 
-export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
+export const structuredDataAttributes = (artist: ArtistMeta_artist$data) => {
   let makesOffer = offersAttributes(artist)
   if (makesOffer && makesOffer.length === 0) {
     makesOffer = undefined
@@ -207,6 +207,7 @@ export class ArtistMeta extends Component<Props> {
 
     return (
       <>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistMetaCanonicalLink artist={artist} />
         <Meta name="description" content={metaContent} />
         <Meta property="og:description" content={metaContent} />

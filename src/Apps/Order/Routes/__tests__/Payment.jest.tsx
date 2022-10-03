@@ -1,5 +1,5 @@
 import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
-import { PaymentTestQueryRawResponse } from "__generated__/PaymentTestQuery.graphql"
+import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
   BuyOrderWithBankDebitDetails,
@@ -89,7 +89,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 }))
 const trackEvent = jest.fn()
 
-const testOrder: PaymentTestQueryRawResponse["order"] = {
+const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   availablePaymentMethods: [
     "CREDIT_CARD",
@@ -97,7 +97,7 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
   ] as CommercePaymentMethodEnum[],
   internalID: "1234",
 }
-const testOrderWithACH: PaymentTestQueryRawResponse["order"] = {
+const testOrderWithACH: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithBankDebitDetails,
   internalID: "1234",
 }

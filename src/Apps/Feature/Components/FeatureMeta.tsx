@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureMeta_feature } from "__generated__/FeatureMeta_feature.graphql"
+import { FeatureMeta_feature$data } from "__generated__/FeatureMeta_feature.graphql"
 import { getENV } from "Utils/getENV"
 
 interface FeatureMetaProps {
-  feature: FeatureMeta_feature
+  feature: FeatureMeta_feature$data
 }
 
 const FeatureMeta: React.FC<FeatureMetaProps> = ({

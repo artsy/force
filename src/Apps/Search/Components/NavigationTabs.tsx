@@ -8,7 +8,7 @@ import {
   SwiperRail,
   SwiperRailProps,
 } from "@artsy/palette"
-import { NavigationTabs_searchableConnection } from "__generated__/NavigationTabs_searchableConnection.graphql"
+import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
@@ -25,7 +25,7 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useTracking } from "react-tracking"
 
 export interface NavigationTabsProps {
-  searchableConnection: NavigationTabs_searchableConnection
+  searchableConnection: NavigationTabs_searchableConnection$data
   term: string
   artworkCount: number
 }
@@ -226,7 +226,7 @@ export interface TabCounts {
 }
 
 export const tabCountMap: (
-  searchableConnection: NavigationTabs_searchableConnection
+  searchableConnection: NavigationTabs_searchableConnection$data
 ) => TabCounts = props => {
   return Object.entries(TAB_NAME_MAP).reduce((acc, [key, val]) => {
     let count = aggregationFor(props, key)?.count ?? 0
@@ -244,7 +244,7 @@ export const tabCountMap: (
 }
 
 const aggregationFor = (
-  searchableConnection: NavigationTabs_searchableConnection,
+  searchableConnection: NavigationTabs_searchableConnection$data,
   type: string
 ) => {
   const { aggregations } = searchableConnection

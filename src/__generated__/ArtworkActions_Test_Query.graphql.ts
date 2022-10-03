@@ -1,105 +1,25 @@
+/**
+ * @generated SignedSource<<51bc08c07f1aede6d7cf2b9b7a6f9c6f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkActions_Test_QueryVariables = {};
-export type ArtworkActions_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork">;
-    } | null;
+export type ArtworkActions_Test_Query$variables = {};
+export type ArtworkActions_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork">;
+  } | null;
 };
 export type ArtworkActions_Test_Query = {
-    readonly response: ArtworkActions_Test_QueryResponse;
-    readonly variables: ArtworkActions_Test_QueryVariables;
+  variables: ArtworkActions_Test_Query$variables;
+  response: ArtworkActions_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkActions_Test_Query {
-  artwork(id: "example") {
-    ...ArtworkActions_artwork
-    id
-  }
-}
-
-fragment ArtworkActionsSaveButton_artwork on Artwork {
-  internalID
-  id
-  slug
-  title
-  sale {
-    isAuction
-    isClosed
-    id
-  }
-  is_saved: isSaved
-}
-
-fragment ArtworkActions_artwork on Artwork {
-  ...ArtworkActionsSaveButton_artwork
-  ...ArtworkSharePanel_artwork
-  ...ViewInRoom_artwork
-  artists {
-    name
-    id
-  }
-  date
-  dimensions {
-    cm
-  }
-  slug
-  image {
-    internalID
-    url(version: "larger")
-    height
-    width
-  }
-  downloadableImageUrl
-  is_downloadable: isDownloadable
-  is_hangable: isHangable
-  partner {
-    slug
-    id
-  }
-  title
-  sale {
-    is_closed: isClosed
-    is_auction: isAuction
-    id
-  }
-  is_saved: isSaved
-}
-
-fragment ArtworkSharePanel_artwork on Artwork {
-  href
-  images {
-    url
-  }
-  artworkMeta: meta {
-    share
-  }
-}
-
-fragment ViewInRoomArtwork_artwork on Artwork {
-  widthCm
-  heightCm
-  image {
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ViewInRoom_artwork on Artwork {
-  ...ViewInRoomArtwork_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -596,5 +516,7 @@ return {
   }
 };
 })();
-(node as any).hash = '104cf66f3d4d189b3c617eef0654c9dd';
+
+(node as any).hash = "104cf66f3d4d189b3c617eef0654c9dd";
+
 export default node;

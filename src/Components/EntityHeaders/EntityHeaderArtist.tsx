@@ -3,11 +3,11 @@ import { Avatar, BoxProps, Text, Flex } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { EntityHeaderArtist_artist } from "__generated__/EntityHeaderArtist_artist.graphql"
+import { EntityHeaderArtist_artist$data } from "__generated__/EntityHeaderArtist_artist.graphql"
 import { FollowArtistButtonQueryRenderer } from "../FollowButton/FollowArtistButton"
 
 export interface EntityHeaderArtistProps extends BoxProps {
-  artist: EntityHeaderArtist_artist
+  artist: EntityHeaderArtist_artist$data
   displayAvatar?: boolean
   displayCounts?: boolean
   displayLink?: boolean

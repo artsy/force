@@ -29,6 +29,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
   Component: ({ gene }) => (
     <MockBoot user={{ id: "percy-z" }}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneArtworkFilterRefetchContainer gene={gene!} />
     </MockBoot>
   ),

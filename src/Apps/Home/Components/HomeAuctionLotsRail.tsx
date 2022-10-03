@@ -9,7 +9,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { HomeAuctionLotsRail_viewer } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
+import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
 import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
@@ -23,7 +23,7 @@ import { useTracking } from "react-tracking"
 import { Rail } from "Components/Rail"
 
 interface HomeAuctionLotsRailProps {
-  viewer: HomeAuctionLotsRail_viewer
+  viewer: HomeAuctionLotsRail_viewer$data
 }
 
 const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
@@ -57,6 +57,7 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
         return artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               key={artwork.slug}
               contextModule={ContextModule.auctionLots}
@@ -155,6 +156,7 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
+          // @ts-ignore RELAY UPGRADE 13
           return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer} />
         }
 

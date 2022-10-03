@@ -1,49 +1,34 @@
+/**
+ * @generated SignedSource<<61fd9cc1c7722c935a5c4f3f5f05c547>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type UploadPhotos_ImageRefetch_QueryVariables = {
-    id: string;
-    sessionID?: string | null | undefined;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type UploadPhotos_ImageRefetch_Query$variables = {
+  id: string;
+  sessionID?: string | null;
 };
-export type UploadPhotos_ImageRefetch_QueryResponse = {
-    readonly submission: {
-        readonly externalId: string;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-    } | null;
+export type UploadPhotos_ImageRefetch_Query$data = {
+  readonly submission: {
+    readonly externalId: string;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+  } | null;
 };
 export type UploadPhotos_ImageRefetch_Query = {
-    readonly response: UploadPhotos_ImageRefetch_QueryResponse;
-    readonly variables: UploadPhotos_ImageRefetch_QueryVariables;
+  variables: UploadPhotos_ImageRefetch_Query$variables;
+  response: UploadPhotos_ImageRefetch_Query$data;
 };
-
-
-
-/*
-query UploadPhotos_ImageRefetch_Query(
-  $id: ID!
-  $sessionID: String
-) {
-  submission(externalId: $id, sessionID: $sessionID) {
-    externalId
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -180,5 +165,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2f7b3686a145a8ea1a718ae0baf9bac3';
+
+(node as any).hash = "2f7b3686a145a8ea1a718ae0baf9bac3";
+
 export default node;

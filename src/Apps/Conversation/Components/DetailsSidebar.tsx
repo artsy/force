@@ -17,7 +17,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import ArtworkDetails from "Components/Artwork/Metadata"
 import { DetailsHeader } from "./DetailsHeader"
-import { DetailsSidebar_conversation } from "__generated__/DetailsSidebar_conversation.graphql"
+import { DetailsSidebar_conversation$data } from "__generated__/DetailsSidebar_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { RouterLink } from "System/Router/RouterLink"
@@ -74,7 +74,7 @@ const TruncatedLine = styled(Text)`
 `
 
 interface DetailsProps extends FlexProps {
-  conversation: DetailsSidebar_conversation
+  conversation: DetailsSidebar_conversation$data
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
 }
@@ -158,6 +158,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
               </a>
               <Flex flexDirection="column" ml={1}>
                 {item.__typename === "Artwork" && (
+                  // @ts-ignore RELAY UPGRADE 13
                   <ArtworkDetails mt="-4px" artwork={item} />
                 )}
               </Flex>
@@ -173,11 +174,13 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             title={`Order No. ${activeOrder.code}`}
           />
           <ShippingSummaryItemFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             order={activeOrder}
             textColor="black60"
           />
           <PaymentMethodSummaryItemFragmentContainer
             title="Payment Method"
+            // @ts-ignore RELAY UPGRADE 13
             order={activeOrder}
             textColor="black60"
           />

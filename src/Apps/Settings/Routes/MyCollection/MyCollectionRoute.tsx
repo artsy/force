@@ -30,11 +30,11 @@ import {
   StoredArtworkWithImages,
   StoredImage,
 } from "Utils/localImagesHelpers"
-import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
+import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
 interface MyCollectionRouteProps {
-  me: MyCollectionRoute_me
+  me: MyCollectionRoute_me$data
   relay: RelayRefetchProp
 }
 
@@ -216,6 +216,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
               return (
                 <Fragment key={artwork.internalID}>
                   <ArtworkGridItemFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     artwork={artwork}
                     localHeroImage={getLocalImageSrcByArtworkID(
                       artwork.internalID
@@ -235,6 +236,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}

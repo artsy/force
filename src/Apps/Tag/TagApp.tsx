@@ -1,17 +1,18 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { TagApp_tag } from "__generated__/TagApp_tag.graphql"
+import { TagApp_tag$data } from "__generated__/TagApp_tag.graphql"
 import { TagMetaFragmentContainer } from "./Components/TagMeta"
 import { TagArtworkFilterRefetchContainer } from "./Components/TagArtworkFilter"
 
 interface TagAppProps {
-  tag: TagApp_tag
+  tag: TagApp_tag$data
 }
 
 const TagApp: React.FC<TagAppProps> = ({ tag }) => {
   return (
     <>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagMetaFragmentContainer tag={tag} />
 
       <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -22,6 +23,7 @@ const TagApp: React.FC<TagAppProps> = ({ tag }) => {
         </Column>
       </GridColumns>
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagArtworkFilterRefetchContainer tag={tag} />
     </>
   )

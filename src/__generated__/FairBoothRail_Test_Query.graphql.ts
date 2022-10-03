@@ -1,53 +1,25 @@
+/**
+ * @generated SignedSource<<fa48e50155a20ec54e1eb41274af61b2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairBoothRail_Test_QueryVariables = {};
-export type FairBoothRail_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
-    } | null;
+export type FairBoothRail_Test_Query$variables = {};
+export type FairBoothRail_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
+  } | null;
 };
 export type FairBoothRail_Test_Query = {
-    readonly response: FairBoothRail_Test_QueryResponse;
-    readonly variables: FairBoothRail_Test_QueryVariables;
+  variables: FairBoothRail_Test_Query$variables;
+  response: FairBoothRail_Test_Query$data;
 };
-
-
-
-/*
-query FairBoothRail_Test_Query {
-  show(id: "show-id") {
-    ...FairBoothRail_show
-    id
-  }
-}
-
-fragment FairBoothRail_show on Show {
-  internalID
-  slug
-  href
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  counts {
-    artworks
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -263,5 +235,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd1cb58a1341d6fc1865e46a7e94d330d';
+
+(node as any).hash = "d1cb58a1341d6fc1865e46a7e94d330d";
+
 export default node;

@@ -11,6 +11,7 @@ const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
   Component: props => {
     return (
       <HomeFeaturedGalleriesRailFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         orderedSet={props.orderedSet!}
       />
     )

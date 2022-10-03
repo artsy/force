@@ -1,7 +1,7 @@
 import { Join, Spacer, Tab, Tabs } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CuritorialRailsTabBar_viewer } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
+import { CuritorialRailsTabBar_viewer$data } from "__generated__/CuritorialRailsTabBar_viewer.graphql"
 import { AuctionsZeroState } from "./AuctionsZeroState"
 import { MyBidsFragmentContainer } from "./MyBids/MyBids"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
@@ -9,7 +9,7 @@ import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./WorksByArtistsYouFollowRail"
 
 interface CuritorialRailsTabBarProps {
-  viewer: CuritorialRailsTabBar_viewer
+  viewer: CuritorialRailsTabBar_viewer$data
 }
 
 export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
@@ -22,15 +22,19 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
       {showWorksForYouTab && (
         <Tab name="Works For You">
           <Join separator={<Spacer mt={2} />}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <MyBidsFragmentContainer me={viewer.me!} />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
       )}
       <Tab name="Current Highlights">
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <StandoutLotsRailFragmentContainer viewer={viewer} />
       </Tab>
       <Tab name="Trending Lots">
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <TrendingLotsRailFragmentContainer viewer={viewer} />
       </Tab>
     </Tabs>

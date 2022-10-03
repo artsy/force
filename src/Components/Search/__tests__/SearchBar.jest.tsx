@@ -1,18 +1,18 @@
-import { SearchBarTestQueryRawResponse } from "__generated__/SearchBarTestQuery.graphql"
+import { SearchBarTestQuery$rawResponse } from "__generated__/SearchBarTestQuery.graphql"
 import { Input } from "@artsy/palette"
 import {
-  SearchBarRefetchContainer as SearchBar,
+  SearchBarRefetchContainer,
   getSearchTerm,
 } from "Components/Search/SearchBar"
-import { renderRelayTree } from "DevTools"
 import { MockBoot } from "DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "DevTools"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
-const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
+const searchResults: SearchBarTestQuery$rawResponse["viewer"] = {
   searchConnection: {
     edges: [
       {
@@ -64,12 +64,16 @@ const simulateTyping = (wrapper: ReactWrapper, text: string) => {
   textArea.simulate("change")
 }
 
-const getWrapper = (
-  viewer: SearchBarTestQueryRawResponse["viewer"],
-  breakpoint = "xl"
-) => {
-  return renderRelayTree({
-    Component: SearchBar,
+describe("SearchBar", () => {
+  let originalWindowLocation: Location
+  let breakpoint
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot breakpoint={breakpoint}>
+        <SearchBarRefetchContainer {...props} />
+      </MockBoot>
+    ),
     query: graphql`
       query SearchBarTestQuery($term: String!, $hasTerm: Boolean!)
         @raw_response_type
@@ -79,21 +83,15 @@ const getWrapper = (
         }
       }
     `,
-    mockData: {
-      viewer,
-    } as SearchBarTestQueryRawResponse,
     variables: {
       term: "perc",
       hasTerm: true,
     },
-    wrapper: children => (
-      <MockBoot breakpoint={breakpoint as any}>{children}</MockBoot>
-    ),
   })
-}
 
-describe("SearchBar", () => {
-  let originalWindowLocation: Location
+  beforeEach(() => {
+    breakpoint = "xl"
+  })
 
   beforeAll(() => {
     originalWindowLocation = window.location
@@ -111,22 +109,26 @@ describe("SearchBar", () => {
   })
 
   it("displays search results", async () => {
-    const component = await getWrapper(searchResults)
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
 
-    simulateTyping(component, "blah") // Any text of non-zero length.
+    simulateTyping(wrapper, "blah") // Any text of non-zero length.
     await flushPromiseQueue()
 
-    expect(component.text()).toContain("Percy Z")
-    expect(component.text()).toContain("Cat")
+    expect(wrapper.text()).toContain("Percy Z")
+    expect(wrapper.text()).toContain("Cat")
   })
 
   it("displays quick navigation links only for artists with artworks or auction results", async () => {
-    const component = await getWrapper(searchResults)
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
 
-    simulateTyping(component, "blah") // Any text of non-zero length.
+    simulateTyping(wrapper, "blah") // Any text of non-zero length.
     await flushPromiseQueue()
 
-    const quickNavigationItems = component.find("QuickNavigationItem")
+    const quickNavigationItems = wrapper.find("QuickNavigationItem")
 
     expect(quickNavigationItems.length).toBe(2)
     expect(quickNavigationItems.at(0).text()).toContain("Artworks")
@@ -134,12 +136,14 @@ describe("SearchBar", () => {
   })
 
   it("navigates when clicking quick navigation items", async () => {
-    const component = await getWrapper(searchResults)
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
 
-    simulateTyping(component, "blah") // Any text of non-zero length.
+    simulateTyping(wrapper, "blah") // Any text of non-zero length.
     await flushPromiseQueue()
 
-    const quickNavigationItems = component.find("QuickNavigationItem")
+    const quickNavigationItems = wrapper.find("QuickNavigationItem")
 
     quickNavigationItems.at(0).simulate("click")
     expect(window.location.assign).toHaveBeenCalledWith(
@@ -153,27 +157,35 @@ describe("SearchBar", () => {
   })
 
   it("displays long placeholder text at sizes greater than xs", async () => {
-    const component = await getWrapper(searchResults)
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
     await flushPromiseQueue()
-    expect(component.find(Input).props().placeholder).toBe(
+
+    expect(wrapper.find(Input).props().placeholder).toBe(
       "Search by artist, gallery, style, theme, tag, etc."
     )
   })
 
   it("displays short placeholder text in the xs breakpoint", async () => {
-    const component = await getWrapper(searchResults, "xs")
+    breakpoint = "xs"
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
     await flushPromiseQueue()
 
-    expect(component.find(Input).props().placeholder).toBe("Search Artsy")
+    expect(wrapper.find(Input).props().placeholder).toBe("Search Artsy")
   })
 
   it("highlights matching parts of suggestions", async () => {
-    const component = await getWrapper(searchResults)
+    const wrapper = getWrapper({
+      Viewer: () => searchResults,
+    })
 
-    simulateTyping(component, "perc") // Matching text w/ suggestion.
+    simulateTyping(wrapper, "perc") // Matching text w/ suggestion.
     await flushPromiseQueue()
 
-    expect(component.html()).toContain("<strong>Perc</strong>y Z")
+    expect(wrapper.html()).toContain("<strong>Perc</strong>y Z")
   })
 })
 

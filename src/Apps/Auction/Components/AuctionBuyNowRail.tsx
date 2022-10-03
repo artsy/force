@@ -2,10 +2,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail"
 import { extractNodes } from "Utils/extractNodes"
-import { AuctionBuyNowRail_sale } from "__generated__/AuctionBuyNowRail_sale.graphql"
+import { AuctionBuyNowRail_sale$data } from "__generated__/AuctionBuyNowRail_sale.graphql"
 
 interface AuctionBuyNowRailProps {
-  sale: AuctionBuyNowRail_sale
+  sale: AuctionBuyNowRail_sale$data
 }
 
 const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
@@ -26,6 +26,7 @@ const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
         return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artwork={node.artwork!}
               key={index}
               lazyLoad

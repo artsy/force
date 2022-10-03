@@ -1,11 +1,11 @@
 import { RouterLink } from "System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomCard_viewingRoom } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
+import { ViewingRoomCard_viewingRoom$data } from "__generated__/ViewingRoomCard_viewingRoom.graphql"
 import { cropped } from "Utils/resized"
 
 interface ViewingRoomCardProps {
-  viewingRoom: ViewingRoomCard_viewingRoom
+  viewingRoom: ViewingRoomCard_viewingRoom$data
 }
 
 const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {

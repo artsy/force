@@ -2,10 +2,10 @@ import { Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { RouterLink } from "System/Router/RouterLink"
-import { MyCollectionArtworkSidebarTitleInfo_artwork } from "__generated__/MyCollectionArtworkSidebarTitleInfo_artwork.graphql"
+import { MyCollectionArtworkSidebarTitleInfo_artwork$data } from "__generated__/MyCollectionArtworkSidebarTitleInfo_artwork.graphql"
 
 interface MyCollectionArtworkSidebarTitleInfoProps {
-  artwork: MyCollectionArtworkSidebarTitleInfo_artwork
+  artwork: MyCollectionArtworkSidebarTitleInfo_artwork$data
 }
 
 const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTitleInfoProps> = ({

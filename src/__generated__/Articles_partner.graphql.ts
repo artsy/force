@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<37c22d1b602e64f2b9a89dc26c6dd499>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Articles_partner = {
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "Articles_partner";
+export type Articles_partner$data = {
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "Articles_partner";
 };
-export type Articles_partner$data = Articles_partner;
 export type Articles_partner$key = {
-    readonly " $data"?: Articles_partner$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Articles_partner">;
+  readonly " $data"?: Articles_partner$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Articles_partner">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -186,5 +189,7 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'cc208c268fbb7fdc3b76662eaf905800';
+
+(node as any).hash = "cc208c268fbb7fdc3b76662eaf905800";
+
 export default node;

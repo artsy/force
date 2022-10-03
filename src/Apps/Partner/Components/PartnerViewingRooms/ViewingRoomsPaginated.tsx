@@ -13,13 +13,13 @@ import createLogger from "Utils/logger"
 import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
 import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
 import { ViewingRoomsPaginatedRendererQuery } from "__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
-import { ViewingRoomsPaginated_partner } from "__generated__/ViewingRoomsPaginated_partner.graphql"
+import { ViewingRoomsPaginated_partner$data } from "__generated__/ViewingRoomsPaginated_partner.graphql"
 
 const logger = createLogger("ViewingRoomsPaginated.tsx")
 
 interface ViewingRoomsProps {
   relay: RelayRefetchProp
-  partner: ViewingRoomsPaginated_partner
+  partner: ViewingRoomsPaginated_partner$data
   scrollTo: string
   eventTitle: string
   offset: number
@@ -89,6 +89,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
     <Box id={scrollTo.substring(1)}>
       <LoadingArea isLoading={isLoading}>
         <ViewingRoomsFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           edges={compact(viewingRooms)}
           eventTitle={eventTitle}
         />
@@ -98,6 +99,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
         <Box mt={6}>
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}
@@ -188,6 +190,7 @@ export const ViewingRoomsPaginatedRenderer: React.FC<
         return (
           <ViewingRoomsRefetchContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
             paramsPage={paramsPage!}
           />

@@ -2,7 +2,7 @@ import * as React from "react"
 import styled from "styled-components"
 import { compact, uniq } from "lodash"
 import { media } from "@artsy/palette"
-import { PartnerHeader_partner } from "__generated__/PartnerHeader_partner.graphql"
+import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 
 export const TextWithNoWrap = styled.span`
   white-space: nowrap;
@@ -12,7 +12,7 @@ export const TextWithNoWrap = styled.span`
   `};
 `
 export const PartnerHeaderAddress: React.FC<
-  PartnerHeader_partner["locations"]
+  PartnerHeader_partner$data["locations"]
 > = ({ edges }) => {
   const cities = uniq(compact(edges?.map(edge => edge?.node?.city?.trim())))
   if (!cities || cities.length === 0) return null

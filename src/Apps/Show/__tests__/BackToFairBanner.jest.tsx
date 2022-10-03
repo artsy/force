@@ -9,6 +9,7 @@ jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<BackToFairBanner_Test_Query>({
+  // @ts-ignore RELAY UPGRADE 13
   Component: BackToFairBannerFragmentContainer,
   query: graphql`
     query BackToFairBanner_Test_Query @relay_test_operation {

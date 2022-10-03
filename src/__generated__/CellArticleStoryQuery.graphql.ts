@@ -1,51 +1,27 @@
+/**
+ * @generated SignedSource<<baba18477b0198128ed3221ba2eaf1f3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellArticleStoryQueryVariables = {
-    id: string;
+export type CellArticleStoryQuery$variables = {
+  id: string;
 };
-export type CellArticleStoryQueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-    } | null;
+export type CellArticleStoryQuery$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+  } | null;
 };
 export type CellArticleStoryQuery = {
-    readonly response: CellArticleStoryQueryResponse;
-    readonly variables: CellArticleStoryQueryVariables;
+  variables: CellArticleStoryQuery$variables;
+  response: CellArticleStoryQuery$data;
 };
-
-
-
-/*
-query CellArticleStoryQuery(
-  $id: String!
-) {
-  article(id: $id) {
-    ...CellArticle_article
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -234,5 +210,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7e2f37bc9b83031c2df36997cfe7749b';
+
+(node as any).hash = "7e2f37bc9b83031c2df36997cfe7749b";
+
 export default node;

@@ -1,208 +1,27 @@
+/**
+ * @generated SignedSource<<52af7c586768ac04417c90c84ed4b7d4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetailsListRendererQueryVariables = {
-    partnerId: string;
+export type PartnerArtistDetailsListRendererQuery$variables = {
+  partnerId: string;
 };
-export type PartnerArtistDetailsListRendererQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetailsList_partner">;
-    } | null;
+export type PartnerArtistDetailsListRendererQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetailsList_partner">;
+  } | null;
 };
 export type PartnerArtistDetailsListRendererQuery = {
-    readonly response: PartnerArtistDetailsListRendererQueryResponse;
-    readonly variables: PartnerArtistDetailsListRendererQueryVariables;
+  variables: PartnerArtistDetailsListRendererQuery$variables;
+  response: PartnerArtistDetailsListRendererQuery$data;
 };
-
-
-
-/*
-query PartnerArtistDetailsListRendererQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...PartnerArtistDetailsList_partner
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-  counts {
-    follows
-  }
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-  artworksConnection(first: 12) {
-    edges {
-      node {
-        id
-        ...FillwidthItem_artwork
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-
-fragment PartnerArtistDetailsList_partner on Partner {
-  slug
-  artists: artistsConnection(first: 3, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
-    edges {
-      id
-      representedBy
-      counts {
-        artworks
-      }
-      ...PartnerArtistDetails_partnerArtist
-      cursor
-      node {
-        __typename
-        id
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-
-fragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {
-  biographyBlurb(format: HTML) {
-    text
-    credit
-  }
-  ...PartnerArtistArtworksRail_partnerArtist
-  node {
-    slug
-    name
-    href
-    formattedNationalityAndBirthday
-    ...FollowArtistButton_artist
-    id
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -880,5 +699,7 @@ return {
   }
 };
 })();
-(node as any).hash = '63e8f6e3061bf02be7c22c67848eca59';
+
+(node as any).hash = "63e8f6e3061bf02be7c22c67848eca59";
+
 export default node;

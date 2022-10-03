@@ -16,6 +16,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserSmall_Test_Query>({
     return (
       <MockBoot>
         <ArtworkImageBrowserSmallFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={props.artwork}
           maxHeight={800}
           index={0}

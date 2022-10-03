@@ -16,10 +16,10 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { SettingsSavesArtworksQuery } from "__generated__/SettingsSavesArtworksQuery.graphql"
-import { SettingsSavesArtworks_me } from "__generated__/SettingsSavesArtworks_me.graphql"
+import { SettingsSavesArtworks_me$data } from "__generated__/SettingsSavesArtworks_me.graphql"
 
 interface SettingsSavesArtworksProps {
-  me: SettingsSavesArtworks_me
+  me: SettingsSavesArtworks_me$data
   relay: RelayRefetchProp
 }
 
@@ -78,6 +78,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
             {artworks.map(artwork => {
               return (
                 <Fragment key={artwork.internalID}>
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                   <Spacer mt={4} />
@@ -88,6 +89,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}
@@ -190,6 +192,7 @@ export const SettingsSavesArtworksQueryRenderer = () => {
           return SETTINGS_SAVES_ARTWORKS_PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesArtworksRefetchContainer me={props.me} />
       }}
     />

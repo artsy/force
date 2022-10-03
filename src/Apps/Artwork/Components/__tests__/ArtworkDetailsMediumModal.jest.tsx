@@ -18,6 +18,7 @@ const { getWrapper } = setupTestWrapper<ArtworkDetailsMediumModal_Test_Query>({
 
     return (
       <ArtworkDetailsMediumModalFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         artwork={props.artwork}
         onClose={jest.fn()}
         show

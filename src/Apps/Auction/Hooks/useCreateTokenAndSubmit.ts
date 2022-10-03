@@ -10,18 +10,18 @@ import {
 } from "Apps/Auction/Components/Form/Utils"
 import createLogger from "Utils/logger"
 import { useAuctionTracking } from "./useAuctionTracking"
-import { AuctionRegistrationRoute_me } from "__generated__/AuctionRegistrationRoute_me.graphql"
-import { AuctionRegistrationRoute_sale } from "__generated__/AuctionRegistrationRoute_sale.graphql"
-import { AuctionBidRoute_me } from "__generated__/AuctionBidRoute_me.graphql"
-import { AuctionBidRoute_sale } from "__generated__/AuctionBidRoute_sale.graphql"
+import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
+import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistrationRoute_sale.graphql"
+import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
+import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import { toStripeAddress } from "Components/AddressForm"
 import { useRefreshUserData } from "../Queries/useRefreshUserData"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 
 export interface UseCreateTokenAndSubmitProps {
-  me: AuctionRegistrationRoute_me | AuctionBidRoute_me
-  sale: AuctionRegistrationRoute_sale | AuctionBidRoute_sale
+  me: AuctionRegistrationRoute_me$data | AuctionBidRoute_me$data
+  sale: AuctionRegistrationRoute_sale$data | AuctionBidRoute_sale$data
   onSuccess?: () => void
 }
 

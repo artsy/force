@@ -15,7 +15,7 @@ import styled, { css } from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { ArtistsByLetter_viewer } from "__generated__/ArtistsByLetter_viewer.graphql"
+import { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "../Components/ArtistsByLetterMeta"
 import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 
@@ -39,7 +39,7 @@ const Name = styled(RouterLink)`
 `
 
 interface ArtistsByLetterProps {
-  viewer: ArtistsByLetter_viewer | null
+  viewer: ArtistsByLetter_viewer$data | null
   relay: RelayRefetchProp
 }
 
@@ -131,6 +131,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
 
       <PaginationFragmentContainer
         hasNextPage={hasNextPage}
+        // @ts-ignore RELAY UPGRADE 13
         pageCursors={pageCursors}
         onNext={handleNext}
         onClick={handleClick}

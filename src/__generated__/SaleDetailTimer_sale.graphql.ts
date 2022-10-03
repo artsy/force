@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<f223c3d46e3176be935233811baeeb2a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SaleDetailTimer_sale = {
-    readonly endAt: string | null;
-    readonly endedAt: string | null;
-    readonly startAt: string | null;
-    readonly " $refType": "SaleDetailTimer_sale";
+export type SaleDetailTimer_sale$data = {
+  readonly endAt: string | null;
+  readonly endedAt: string | null;
+  readonly startAt: string | null;
+  readonly " $fragmentType": "SaleDetailTimer_sale";
 };
-export type SaleDetailTimer_sale$data = SaleDetailTimer_sale;
 export type SaleDetailTimer_sale$key = {
-    readonly " $data"?: SaleDetailTimer_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SaleDetailTimer_sale">;
+  readonly " $data"?: SaleDetailTimer_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SaleDetailTimer_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -49,5 +52,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '451836d3b35263dfccf1a6ff546ca8c0';
+
+(node as any).hash = "451836d3b35263dfccf1a6ff546ca8c0";
+
 export default node;

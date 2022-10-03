@@ -7,13 +7,13 @@ import {
   ModalDialog,
   Button,
 } from "@artsy/palette"
-import { AuthenticityCertificate_artwork } from "__generated__/AuthenticityCertificate_artwork.graphql"
+import { AuthenticityCertificate_artwork$data } from "__generated__/AuthenticityCertificate_artwork.graphql"
 import { useState, FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { shouldRenderAuthenticityCertificate } from "Apps/Artwork/Utils/badges"
 
 interface AuthenticityCertificateProps {
-  artwork: AuthenticityCertificate_artwork
+  artwork: AuthenticityCertificate_artwork$data
 }
 
 export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({

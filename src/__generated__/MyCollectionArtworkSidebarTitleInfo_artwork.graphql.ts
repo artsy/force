@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<aaeee22518b92758efab32b67bb181f2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarTitleInfo_artwork = {
-    readonly artistNames: string | null;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly artist: {
-        readonly href: string | null;
-    } | null;
-    readonly " $refType": "MyCollectionArtworkSidebarTitleInfo_artwork";
+export type MyCollectionArtworkSidebarTitleInfo_artwork$data = {
+  readonly artistNames: string | null;
+  readonly title: string | null;
+  readonly date: string | null;
+  readonly artist: {
+    readonly href: string | null;
+  } | null;
+  readonly " $fragmentType": "MyCollectionArtworkSidebarTitleInfo_artwork";
 };
-export type MyCollectionArtworkSidebarTitleInfo_artwork$data = MyCollectionArtworkSidebarTitleInfo_artwork;
 export type MyCollectionArtworkSidebarTitleInfo_artwork$key = {
-    readonly " $data"?: MyCollectionArtworkSidebarTitleInfo_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork">;
+  readonly " $data"?: MyCollectionArtworkSidebarTitleInfo_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -70,5 +73,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '24af03d4f484b14c3653cb2ed472a822';
+
+(node as any).hash = "24af03d4f484b14c3653cb2ed472a822";
+
 export default node;

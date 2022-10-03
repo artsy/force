@@ -14,11 +14,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEditFormQuery.graphql"
-import { SavedSearchAlertEditForm_me } from "__generated__/SavedSearchAlertEditForm_me.graphql"
-import { SavedSearchAlertEditForm_artistsConnection } from "__generated__/SavedSearchAlertEditForm_artistsConnection.graphql"
-import { SavedSearchAlertEditForm_viewer } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
+import { SavedSearchAlertEditForm_me$data } from "__generated__/SavedSearchAlertEditForm_me.graphql"
+import { SavedSearchAlertEditForm_artistsConnection$data } from "__generated__/SavedSearchAlertEditForm_artistsConnection.graphql"
+import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
 import { EditAlertEntity } from "../types"
-import { SavedSearchAlertEditForm_artworksConnection } from "__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
+import { SavedSearchAlertEditForm_artworksConnection$data } from "__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -61,10 +61,10 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 }
 
 interface SavedSearchAlertEditFormProps {
-  me: SavedSearchAlertEditForm_me
-  viewer: SavedSearchAlertEditForm_viewer
-  artistsConnection: SavedSearchAlertEditForm_artistsConnection
-  artworksConnection?: SavedSearchAlertEditForm_artworksConnection | null
+  me: SavedSearchAlertEditForm_me$data
+  viewer: SavedSearchAlertEditForm_viewer$data
+  artistsConnection: SavedSearchAlertEditForm_artistsConnection$data
+  artworksConnection?: SavedSearchAlertEditForm_artworksConnection$data | null
   editAlertEntity: EditAlertEntity
   shouldFetchLabelsFromMetaphysics?: boolean
   onDeleteClick: () => void
@@ -493,6 +493,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           props.viewer
         ) {
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
               viewer={props.viewer}
@@ -513,6 +514,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           props.viewer
         ) {
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
               viewer={props.viewer}

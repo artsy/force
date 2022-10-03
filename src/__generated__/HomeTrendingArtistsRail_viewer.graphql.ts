@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<8f59faa68298d3dd21e478ca327b092a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTrendingArtistsRail_viewer = {
-    readonly artistsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "HomeTrendingArtistsRail_viewer";
+export type HomeTrendingArtistsRail_viewer$data = {
+  readonly artistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "HomeTrendingArtistsRail_viewer";
 };
-export type HomeTrendingArtistsRail_viewer$data = HomeTrendingArtistsRail_viewer;
 export type HomeTrendingArtistsRail_viewer$key = {
-    readonly " $data"?: HomeTrendingArtistsRail_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
+  readonly " $data"?: HomeTrendingArtistsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,6 +69,11 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArtist_artist"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -78,11 +86,6 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "slug",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArtist_artist"
                 }
               ],
               "storageKey": null
@@ -97,5 +100,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'b7b7d2b5aa747dcbd490ee8e82545413';
+
+(node as any).hash = "b7b7d2b5aa747dcbd490ee8e82545413";
+
 export default node;

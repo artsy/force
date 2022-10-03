@@ -1,43 +1,25 @@
+/**
+ * @generated SignedSource<<d7acc706007fa17a148ef54d97114898>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewInRoomArtwork_Test_QueryVariables = {};
-export type ViewInRoomArtwork_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewInRoomArtwork_artwork">;
-    } | null;
+export type ViewInRoomArtwork_Test_Query$variables = {};
+export type ViewInRoomArtwork_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewInRoomArtwork_artwork">;
+  } | null;
 };
 export type ViewInRoomArtwork_Test_Query = {
-    readonly response: ViewInRoomArtwork_Test_QueryResponse;
-    readonly variables: ViewInRoomArtwork_Test_QueryVariables;
+  variables: ViewInRoomArtwork_Test_Query$variables;
+  response: ViewInRoomArtwork_Test_Query$data;
 };
-
-
-
-/*
-query ViewInRoomArtwork_Test_Query {
-  artwork(id: "example") {
-    ...ViewInRoomArtwork_artwork
-    id
-  }
-}
-
-fragment ViewInRoomArtwork_artwork on Artwork {
-  widthCm
-  heightCm
-  image {
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -245,5 +227,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c0c76955f46c8946a5856d9746b93d73';
+
+(node as any).hash = "c0c76955f46c8946a5856d9746b93d73";
+
 export default node;

@@ -21,6 +21,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowProfileButton_Test_Query>({
   Component: props => {
     return (
       <FollowProfileButtonFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         profile={props.partner!.profile!}
         onFollow={onFollow}
       />

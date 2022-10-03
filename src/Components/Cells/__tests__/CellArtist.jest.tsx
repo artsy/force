@@ -9,6 +9,7 @@ jest.unmock("react-relay")
 const { renderWithRelay } = setupTestWrapperTL<
   CellArtistFragmentContainer_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: CellArtistFragmentContainer,
   query: graphql`
     query CellArtistFragmentContainer_Test_Query @relay_test_operation {

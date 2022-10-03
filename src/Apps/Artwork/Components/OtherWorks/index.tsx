@@ -7,7 +7,7 @@ import {
   SkeletonText,
   Spacer,
 } from "@artsy/palette"
-import { OtherWorks_artwork } from "__generated__/OtherWorks_artwork.graphql"
+import { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
 import { Header } from "Apps/Artwork/Components/OtherWorks/Header"
 import { RelatedWorksArtworkGridRefetchContainer } from "Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
@@ -26,7 +26,7 @@ import { Rail } from "Components/Rail"
 import track, { useTracking } from "react-tracking"
 
 export interface OtherWorksContextProps {
-  artwork: OtherWorks_artwork
+  artwork: OtherWorks_artwork$data
   mediator?: Mediator
 }
 
@@ -37,7 +37,7 @@ export function hideGrid(artworksConnection): boolean {
   return Boolean(get(artworksConnection, p => !p?.edges.length))
 }
 
-const populatedGrids = (grids: OtherWorks_artwork["contextGrids"]) => {
+const populatedGrids = (grids: OtherWorks_artwork$data["contextGrids"]) => {
   if (grids && grids.length > 0) {
     return grids.filter(grid => {
       return (
@@ -89,7 +89,7 @@ const contextGridTypeToV2ContextModule = contextGridType => {
 }
 
 export const OtherWorks = track()(
-  (props: { artwork: OtherWorks_artwork } & SystemContextProps) => {
+  (props: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
     const { context, contextGrids, sale } = props.artwork
     const gridsToShow = populatedGrids(contextGrids)
     const tracking = useTracking()
@@ -141,6 +141,7 @@ export const OtherWorks = track()(
         ) && (
           <>
             <Spacer mt={6} />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <RelatedWorksArtworkGridRefetchContainer artwork={props.artwork} />
           </>
         )}
@@ -156,41 +157,42 @@ export const OtherWorks = track()(
   }
 )
 
-export const OtherWorksFragmentContainer = createFragmentContainer<{
-  artwork: OtherWorks_artwork
-}>(withSystemContext(OtherWorks), {
-  artwork: graphql`
-    fragment OtherWorks_artwork on Artwork {
-      contextGrids {
-        __typename
-        title
-        ctaTitle
-        ctaHref
-        artworksConnection(first: 8) {
-          ...ArtworkGrid_artworks
-          edges {
-            node {
-              slug
+export const OtherWorksFragmentContainer = createFragmentContainer(
+  withSystemContext(OtherWorks),
+  {
+    artwork: graphql`
+      fragment OtherWorks_artwork on Artwork {
+        contextGrids {
+          __typename
+          title
+          ctaTitle
+          ctaHref
+          artworksConnection(first: 8) {
+            ...ArtworkGrid_artworks
+            edges {
+              node {
+                slug
+              }
             }
           }
         }
+        ...RelatedWorksArtworkGrid_artwork
+        ...ArtistSeriesArtworkRail_artwork
+        slug
+        internalID
+        sale {
+          is_closed: isClosed
+        }
+        context {
+          __typename
+        }
+        seriesArtist: artist(shallow: true) {
+          ...ArtistSeriesRail_artist
+        }
       }
-      ...RelatedWorksArtworkGrid_artwork
-      ...ArtistSeriesArtworkRail_artwork
-      slug
-      internalID
-      sale {
-        is_closed: isClosed
-      }
-      context {
-        __typename
-      }
-      seriesArtist: artist(shallow: true) {
-        ...ArtistSeriesRail_artist
-      }
-    }
-  `,
-})
+    `,
+  }
+)
 
 const PLACEHOLDER = (
   <Skeleton>

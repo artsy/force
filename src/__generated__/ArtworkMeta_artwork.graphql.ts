@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<97d0d615701100ea7269facc088669ac>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkMeta_artwork = {
-    readonly href: string | null;
-    readonly isShareable: boolean | null;
-    readonly metaImage: {
-        readonly resized: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly url: string;
-        } | null;
+export type ArtworkMeta_artwork$data = {
+  readonly href: string | null;
+  readonly isShareable: boolean | null;
+  readonly metaImage: {
+    readonly resized: {
+      readonly width: number | null;
+      readonly height: number | null;
+      readonly url: string;
     } | null;
-    readonly meta: {
-        readonly title: string | null;
-        readonly description: string | null;
-        readonly longDescription: string | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork" | "ArtworkZendesk_artwork">;
-    readonly " $refType": "ArtworkMeta_artwork";
+  } | null;
+  readonly meta: {
+    readonly title: string | null;
+    readonly description: string | null;
+    readonly longDescription: string | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork" | "ArtworkZendesk_artwork">;
+  readonly " $fragmentType": "ArtworkMeta_artwork";
 };
-export type ArtworkMeta_artwork$data = ArtworkMeta_artwork;
 export type ArtworkMeta_artwork$key = {
-    readonly " $data"?: ArtworkMeta_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkMeta_artwork">;
+  readonly " $data"?: ArtworkMeta_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkMeta_artwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -36,6 +39,16 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkMeta_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SeoDataForArtwork_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkZendesk_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -156,20 +169,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SeoDataForArtwork_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkZendesk_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '06d9ed8a7f9afd95cb581cb3b5adee60';
+
+(node as any).hash = "06d9ed8a7f9afd95cb581cb3b5adee60";
+
 export default node;

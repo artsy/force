@@ -6,13 +6,13 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtistArtworksRail_partnerArtist } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
+import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import FillwidthItem from "Components/Artwork/FillwidthItem"
 import { PartnerArtistArtworkCarouselItemPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 
 export interface PartnerArtistArtworksRailProps {
-  partnerArtist: PartnerArtistArtworksRail_partnerArtist
+  partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
   partnerId: string
   artistId: string
   relay: RelayPaginationProp
@@ -57,6 +57,7 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
       {artworks
         .map(artwork => {
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <FillwidthItem
               key={artwork.id}
               artwork={artwork}

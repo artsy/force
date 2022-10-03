@@ -4,7 +4,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ViewInRoom_artwork } from "__generated__/ViewInRoom_artwork.graphql"
+import { ViewInRoom_artwork$data } from "__generated__/ViewInRoom_artwork.graphql"
 import { ViewInRoomArtworkFragmentContainer } from "./ViewInRoomArtwork"
 import { ViewInRoomCloseButton } from "./ViewInRoomCloseButton"
 import { ViewInRoomRoom } from "./ViewInRoomRoom"
@@ -12,7 +12,7 @@ import { ViewInRoomScale } from "./ViewInRoomScale"
 import { ViewInRoomTransition } from "./ViewInRoomTransition"
 
 interface ViewInRoomProps {
-  artwork: ViewInRoom_artwork
+  artwork: ViewInRoom_artwork$data
   onClose(): void
 }
 
@@ -24,6 +24,7 @@ const ViewInRoom: React.FC<ViewInRoomProps> = ({ artwork, onClose }) => {
           return (
             <>
               <ViewInRoomRoom onMount={onMount}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ViewInRoomArtworkFragmentContainer artwork={artwork} />
 
                 <ViewInRoomScale />

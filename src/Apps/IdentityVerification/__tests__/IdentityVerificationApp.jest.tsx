@@ -38,7 +38,6 @@ describe("IdentityVerification route", () => {
         @relay_test_operation {
         identityVerification(id: "identity-verification-id") {
           ...IdentityVerificationApp_identityVerification
-            @arguments(id: "identity-verification-id")
         }
       }
     `,

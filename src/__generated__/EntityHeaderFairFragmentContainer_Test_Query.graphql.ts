@@ -1,57 +1,25 @@
+/**
+ * @generated SignedSource<<91bc5089d6fcffd3af49588aeba08cda>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderFairFragmentContainer_Test_QueryVariables = {};
-export type EntityHeaderFairFragmentContainer_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
-    } | null;
+export type EntityHeaderFairFragmentContainer_Test_Query$variables = {};
+export type EntityHeaderFairFragmentContainer_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
+  } | null;
 };
 export type EntityHeaderFairFragmentContainer_Test_Query = {
-    readonly response: EntityHeaderFairFragmentContainer_Test_QueryResponse;
-    readonly variables: EntityHeaderFairFragmentContainer_Test_QueryVariables;
+  variables: EntityHeaderFairFragmentContainer_Test_Query$variables;
+  response: EntityHeaderFairFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query EntityHeaderFairFragmentContainer_Test_Query {
-  fair(id: "example") {
-    ...EntityHeaderFair_fair
-    id
-  }
-}
-
-fragment EntityHeaderFair_fair on Fair {
-  internalID
-  href
-  name
-  startAt(format: "MMM Do")
-  endAt(format: "MMM Do YYYY")
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  profile {
-    ...FollowProfileButton_profile
-    initials
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -320,5 +288,7 @@ return {
   }
 };
 })();
-(node as any).hash = '62371785af84d702486a3c6cca12d32c';
+
+(node as any).hash = "62371785af84d702486a3c6cca12d32c";
+
 export default node;

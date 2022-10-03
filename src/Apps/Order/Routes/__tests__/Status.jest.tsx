@@ -1,5 +1,5 @@
 import { Message } from "@artsy/palette"
-import { StatusQueryRawResponse } from "__generated__/StatusQuery.graphql"
+import { StatusQuery$rawResponse } from "__generated__/StatusQuery.graphql"
 import {
   ArtaShippedWithTrackingIdNoTrackingUrl,
   ArtaShippedWithNoTrackingIdNoTrackingUrl,
@@ -31,7 +31,7 @@ class StatusTestPage extends OrderAppTestPage {
   }
 }
 
-const testOrder: StatusQueryRawResponse["order"] = {
+const testOrder: StatusQuery$rawResponse["order"] = {
   ...OfferOrderWithShippingDetailsAndNote,
   ...CreditCardPaymentDetails,
   state: "SUBMITTED",

@@ -1,36 +1,25 @@
+/**
+ * @generated SignedSource<<f8f9adeb2755dda6f7bbd6dab0faaeca>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type pressRoutes_InTheMediaQueryVariables = {};
-export type pressRoutes_InTheMediaQueryResponse = {
-    readonly page: {
-        readonly " $fragmentRefs": FragmentRefs<"PressApp_page">;
-    };
+export type pressRoutes_InTheMediaQuery$variables = {};
+export type pressRoutes_InTheMediaQuery$data = {
+  readonly page: {
+    readonly " $fragmentSpreads": FragmentRefs<"PressApp_page">;
+  };
 };
 export type pressRoutes_InTheMediaQuery = {
-    readonly response: pressRoutes_InTheMediaQueryResponse;
-    readonly variables: pressRoutes_InTheMediaQueryVariables;
+  variables: pressRoutes_InTheMediaQuery$variables;
+  response: pressRoutes_InTheMediaQuery$data;
 };
-
-
-
-/*
-query pressRoutes_InTheMediaQuery {
-  page(id: "in-the-media") @principalField {
-    ...PressApp_page
-    id
-  }
-}
-
-fragment PressApp_page on Page {
-  internalID
-  name
-  content(format: HTML)
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -130,5 +119,7 @@ return {
   }
 };
 })();
-(node as any).hash = '375038273fedb117d441bffae18b23a5';
+
+(node as any).hash = "375038273fedb117d441bffae18b23a5";
+
 export default node;

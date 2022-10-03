@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ExampleArtistRoute_artist } from "__generated__/ExampleArtistRoute_artist.graphql"
+import { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
 import { AnalyticsContext, useAnalyticsContext } from "System"
@@ -8,7 +8,7 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Compo
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ExampleArtistAppProps {
-  artist: ExampleArtistRoute_artist
+  artist: ExampleArtistRoute_artist$data
 }
 
 const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
@@ -20,6 +20,7 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
       </Text>
       <Box my={2}>
         <FollowArtistButton
+          // @ts-ignore RELAY UPGRADE 13
           artist={artist}
           contextModule={ContextModule.artistHeader}
         />

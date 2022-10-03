@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistConsignSellArt_artist } from "__generated__/ArtistConsignSellArt_artist.graphql"
+import { ArtistConsignSellArt_artist$data } from "__generated__/ArtistConsignSellArt_artist.graphql"
 import { Button, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -9,7 +9,7 @@ import { SectionContainer } from "./SectionContainer"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 
 interface ArtistConsignSellArtProps {
-  artist: ArtistConsignSellArt_artist
+  artist: ArtistConsignSellArt_artist$data
 }
 
 const ArtistConsignSellArt: React.FC<ArtistConsignSellArtProps> = ({

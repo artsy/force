@@ -13,6 +13,7 @@ jest.mock("Components/FollowButton/FollowProfileButton", () => ({
 const { renderWithRelay } = setupTestWrapperTL<
   CellPartnerFragmentContainer_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: CellPartnerFragmentContainer,
   query: graphql`
     query CellPartnerFragmentContainer_Test_Query @relay_test_operation {

@@ -7,11 +7,11 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { FairsPastFairs_viewer } from "__generated__/FairsPastFairs_viewer.graphql"
+import { FairsPastFairs_viewer$data } from "__generated__/FairsPastFairs_viewer.graphql"
 import { FairsFairRowFragmentContainer } from "./FairsFairRow"
 
 interface FairsPastFairsProps {
-  viewer: FairsPastFairs_viewer
+  viewer: FairsPastFairs_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -44,6 +44,7 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
           if (!fair.isPublished && !fair.profile?.isPublished) return null
 
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <FairsFairRowFragmentContainer key={fair.internalID} fair={fair} />
           )
         })}

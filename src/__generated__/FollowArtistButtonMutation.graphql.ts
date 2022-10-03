@@ -1,49 +1,37 @@
+/**
+ * @generated SignedSource<<bf7d13b2f4e705c46aea3ce2703d7384>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null | undefined;
-    unfollow?: boolean | null | undefined;
+  artistID: string;
+  clientMutationId?: string | null;
+  unfollow?: boolean | null;
 };
-export type FollowArtistButtonMutationVariables = {
-    input: FollowArtistInput;
+export type FollowArtistButtonMutation$variables = {
+  input: FollowArtistInput;
 };
-export type FollowArtistButtonMutationResponse = {
-    readonly followArtist: {
-        readonly artist: {
-            readonly id: string;
-            readonly isFollowed: boolean | null;
-            readonly counts: {
-                readonly follows: number | null;
-            } | null;
-        } | null;
+export type FollowArtistButtonMutation$data = {
+  readonly followArtist: {
+    readonly artist: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+      readonly counts: {
+        readonly follows: any | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type FollowArtistButtonMutation = {
-    readonly response: FollowArtistButtonMutationResponse;
-    readonly variables: FollowArtistButtonMutationVariables;
+  variables: FollowArtistButtonMutation$variables;
+  response: FollowArtistButtonMutation$data;
 };
-
-
-
-/*
-mutation FollowArtistButtonMutation(
-  $input: FollowArtistInput!
-) {
-  followArtist(input: $input) {
-    artist {
-      id
-      isFollowed
-      counts {
-        follows
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -142,5 +130,7 @@ return {
   }
 };
 })();
-(node as any).hash = '72cf91568c776907df7dea0194809515';
+
+(node as any).hash = "72cf91568c776907df7dea0194809515";
+
 export default node;

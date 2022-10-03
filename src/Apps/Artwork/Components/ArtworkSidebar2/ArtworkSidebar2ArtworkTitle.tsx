@@ -1,9 +1,9 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkSidebar2ArtworkTitle_artwork } from "__generated__/ArtworkSidebar2ArtworkTitle_artwork.graphql"
+import { ArtworkSidebar2ArtworkTitle_artwork$data } from "__generated__/ArtworkSidebar2ArtworkTitle_artwork.graphql"
 
 interface ArtworkSidebar2ArtworkTitleProps {
-  artwork: ArtworkSidebar2ArtworkTitle_artwork
+  artwork: ArtworkSidebar2ArtworkTitle_artwork$data
 }
 
 const ArtworkSidebar2ArtworkTitle: React.FC<ArtworkSidebar2ArtworkTitleProps> = ({

@@ -2,11 +2,11 @@ import { ChevronIcon, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { ShowsAllCities_viewer } from "__generated__/ShowsAllCities_viewer.graphql"
+import { ShowsAllCities_viewer$data } from "__generated__/ShowsAllCities_viewer.graphql"
 import { ShowsMeta } from "../Components/ShowsMeta"
 
 interface ShowsAllCitiesProps {
-  viewer: ShowsAllCities_viewer
+  viewer: ShowsAllCities_viewer$data
 }
 
 export const ShowsAllCities: React.FC<ShowsAllCitiesProps> = ({

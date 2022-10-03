@@ -1,53 +1,27 @@
+/**
+ * @generated SignedSource<<089e1f09a3d4d68d361e96ad85c5a180>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderArtistStoryQueryVariables = {
-    id: string;
+export type EntityHeaderArtistStoryQuery$variables = {
+  id: string;
 };
-export type EntityHeaderArtistStoryQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-    } | null;
+export type EntityHeaderArtistStoryQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  } | null;
 };
 export type EntityHeaderArtistStoryQuery = {
-    readonly response: EntityHeaderArtistStoryQueryResponse;
-    readonly variables: EntityHeaderArtistStoryQueryVariables;
+  variables: EntityHeaderArtistStoryQuery$variables;
+  response: EntityHeaderArtistStoryQuery$data;
 };
-
-
-
-/*
-query EntityHeaderArtistStoryQuery(
-  $id: String!
-) {
-  artist(id: $id) {
-    ...EntityHeaderArtist_artist
-    id
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -241,5 +215,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dda62c1ab2833db57baf26b1d8d107cc';
+
+(node as any).hash = "dda62c1ab2833db57baf26b1d8d107cc";
+
 export default node;

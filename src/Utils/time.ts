@@ -29,7 +29,8 @@ export async function getOffsetBetweenGravityClock(
       {
         force: true,
       }
-    )
+      // @ts-expect-error RELAY_UPGRADE
+    ).toPromise()
   }
 
   const getGravityTimestampInMilliSeconds = async () => {
@@ -39,7 +40,6 @@ export async function getOffsetBetweenGravityClock(
     const possibleNetworkLatencyInMilliSeconds =
       (getLocalTimestampInMilliSeconds() - startTime) / 2
     const serverTimestampInMilliSeconds =
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       data.system.time.unix * 1e3 + possibleNetworkLatencyInMilliSeconds
 
     return serverTimestampInMilliSeconds

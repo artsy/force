@@ -1,15 +1,16 @@
 import React from "react"
-import { SettingsPurchasesRoute_me } from "__generated__/SettingsPurchasesRoute_me.graphql"
+import { SettingsPurchasesRoute_me$data } from "__generated__/SettingsPurchasesRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsPurchasesFragmentContainer } from "./Components/SettingsPurchases"
 
 interface SettingsPurchasesRouteProps {
-  me: SettingsPurchasesRoute_me
+  me: SettingsPurchasesRoute_me$data
 }
 
 const SettingsPurchasesRoute: React.FC<SettingsPurchasesRouteProps> = ({
   me,
 }) => {
+  // @ts-ignore RELAY UPGRADE 13
   return <SettingsPurchasesFragmentContainer me={me} />
 }
 

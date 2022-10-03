@@ -41,6 +41,7 @@ const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
           materialsTermsAggregation,
           artistNationalityAggregation,
         ]}
+        // @ts-ignore RELAY UPGRADE 13
         collection={collection!}
       />
     </MockBoot>

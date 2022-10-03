@@ -1,12 +1,12 @@
 import React from "react"
-import { SettingsEditProfileRoute_me } from "__generated__/SettingsEditProfileRoute_me.graphql"
+import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
 import { SettingsEditProfileAboutYouFragmentContainer } from "./Components/SettingsEditProfileAboutYou"
 import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "./Components/SettingsEditProfileArtistsYouCollect/SettingsEditProfileArtistsYouCollect"
 
 interface SettingsEditProfileRouteProps {
-  me: SettingsEditProfileRoute_me
+  me: SettingsEditProfileRoute_me$data
 }
 
 const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
@@ -16,8 +16,10 @@ const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditProfileAboutYouFragmentContainer me={me} />
 
+          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditProfileArtistsYouCollectFragmentContainer me={me} />
         </Join>
       </Column>

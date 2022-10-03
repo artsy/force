@@ -15,7 +15,7 @@ import {
 import { DateTime } from "luxon"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleBody_article } from "__generated__/ArticleBody_article.graphql"
+import { ArticleBody_article$data } from "__generated__/ArticleBody_article.graphql"
 import { ArticleShare } from "Components/ArticleShare"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArticleHeroFragmentContainer } from "./ArticleHero"
@@ -31,7 +31,7 @@ import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface ArticleBodyProps {
-  article: ArticleBody_article
+  article: ArticleBody_article$data
 }
 
 const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
@@ -58,6 +58,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </TopContextBar>
         )}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArticleHeroFragmentContainer article={article} />
 
         <Spacer mt={4} />
@@ -102,6 +103,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     "MMM d, yyyy h:mma"
                   )}
 
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
 
@@ -134,10 +136,12 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     <ArticleSectionFragmentContainer
                       isFirst={isFirst}
                       isLast={isLast}
+                      // @ts-ignore RELAY UPGRADE 13
                       section={section}
                     />
 
                     <ArticleSectionAdFragmentContainer
+                      // @ts-ignore RELAY UPGRADE 13
                       article={article}
                       i={i}
                     />
@@ -145,6 +149,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 )
               })}
 
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleBylineFragmentContainer article={article} />
             </Join>
 

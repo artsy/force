@@ -1,12 +1,12 @@
 import { Flex, Text, RadioProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
-import { SavedAddresses_me } from "__generated__/SavedAddresses_me.graphql"
+import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 
 type AddressNode = NonNullable<
   NonNullable<
     NonNullable<
-      NonNullable<SavedAddresses_me["addressConnection"]>["edges"]
+      NonNullable<SavedAddresses_me$data["addressConnection"]>["edges"]
     >[number]
   >["node"]
 >

@@ -9,9 +9,9 @@ import {
 } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { AuctionBidRoute_sale } from "__generated__/AuctionBidRoute_sale.graphql"
-import { AuctionBidRoute_artwork } from "__generated__/AuctionBidRoute_artwork.graphql"
-import { AuctionBidRoute_me } from "__generated__/AuctionBidRoute_me.graphql"
+import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
+import { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artwork.graphql"
+import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "./Components/AuctionLotInfo"
 import { dropWhile } from "lodash"
 import { Form, Formik } from "formik"
@@ -32,10 +32,10 @@ import { ErrorStatus } from "../../Components/Form/ErrorStatus"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 
 interface AuctionBidRouteProps {
-  artwork: AuctionBidRoute_artwork
-  me: AuctionBidRoute_me
+  artwork: AuctionBidRoute_artwork$data
+  me: AuctionBidRoute_me$data
   relay: RelayRefetchProp
-  sale: AuctionBidRoute_sale
+  sale: AuctionBidRoute_sale$data
 }
 
 const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
@@ -120,9 +120,11 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
             <Form>
               <Join separator={<Spacer my={2} />}>
                 <AuctionLotInfoFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   saleArtwork={artwork.saleArtwork!}
                 />
                 <ArtworkSidebarAuctionTimerFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                 />
 
@@ -242,9 +244,9 @@ const computeProps = ({
   match,
   me,
 }: {
-  artwork: AuctionBidRoute_artwork
+  artwork: AuctionBidRoute_artwork$data
   match: Match
-  me: AuctionBidRoute_me
+  me: AuctionBidRoute_me$data
 }) => {
   const artworkSlug = match.params.artworkSlug
   const bidder = artwork.saleArtwork?.sale?.bidder

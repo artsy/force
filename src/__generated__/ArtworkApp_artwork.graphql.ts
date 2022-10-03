@@ -1,43 +1,46 @@
+/**
+ * @generated SignedSource<<4a1b3d27e9b54bafc62bc8acac1ca477>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkApp_artwork = {
-    readonly slug: string;
+export type ArtworkApp_artwork$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly is_acquireable: boolean | null;
+  readonly is_offerable: boolean | null;
+  readonly availability: string | null;
+  readonly listPrice: {
+    readonly display?: string | null;
+  } | null;
+  readonly is_in_auction: boolean | null;
+  readonly sale: {
     readonly internalID: string;
-    readonly is_acquireable: boolean | null;
-    readonly is_offerable: boolean | null;
-    readonly availability: string | null;
-    readonly listPrice: {
-        readonly display?: string | null | undefined;
-    } | null;
-    readonly is_in_auction: boolean | null;
-    readonly sale: {
-        readonly internalID: string;
-        readonly slug: string;
-        readonly extendedBiddingIntervalMinutes: number | null;
-        readonly " $fragmentRefs": FragmentRefs<"CascadingEndTimesBanner_sale">;
-    } | null;
-    readonly artists: ReadonlyArray<{
-        readonly id: string;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
-    } | null> | null;
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkSidebar2_artwork">;
-    readonly " $refType": "ArtworkApp_artwork";
+    readonly slug: string;
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
+  } | null;
+  readonly artists: ReadonlyArray<{
+    readonly id: string;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null> | null;
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkSidebar2_artwork">;
+  readonly " $fragmentType": "ArtworkApp_artwork";
 };
-export type ArtworkApp_artwork$data = ArtworkApp_artwork;
 export type ArtworkApp_artwork$key = {
-    readonly " $data"?: ArtworkApp_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkApp_artwork">;
+  readonly " $data"?: ArtworkApp_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -135,6 +138,11 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CascadingEndTimesBanner_sale"
+        },
         (v1/*: any*/),
         (v0/*: any*/),
         {
@@ -143,11 +151,6 @@ return {
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "CascadingEndTimesBanner_sale"
         }
       ],
       "storageKey": null
@@ -219,5 +222,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '68b7c0e560c96851d12baa864bc0577a';
+
+(node as any).hash = "68b7c0e560c96851d12baa864bc0577a";
+
 export default node;

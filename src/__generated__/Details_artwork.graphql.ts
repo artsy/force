@@ -1,59 +1,62 @@
+/**
+ * @generated SignedSource<<525df884aec7dd00ff92a9db735b9610>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Details_artwork = {
+export type Details_artwork$data = {
+  readonly href: string | null;
+  readonly title: string | null;
+  readonly date: string | null;
+  readonly sale_message: string | null;
+  readonly cultural_maker: string | null;
+  readonly artists: ReadonlyArray<{
+    readonly id: string;
     readonly href: string | null;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly sale_message: string | null;
-    readonly cultural_maker: string | null;
-    readonly artists: ReadonlyArray<{
-        readonly id: string;
-        readonly href: string | null;
-        readonly name: string | null;
-    } | null> | null;
-    readonly collecting_institution: string | null;
-    readonly partner: {
-        readonly name: string | null;
-        readonly href: string | null;
+    readonly name: string | null;
+  } | null> | null;
+  readonly collecting_institution: string | null;
+  readonly partner: {
+    readonly name: string | null;
+    readonly href: string | null;
+  } | null;
+  readonly sale: {
+    readonly endAt: string | null;
+    readonly cascadingEndTimeIntervalMinutes: number | null;
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly startAt: string | null;
+    readonly is_auction: boolean | null;
+    readonly is_closed: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly lotID: string | null;
+    readonly lotLabel: string | null;
+    readonly endAt: string | null;
+    readonly extendedBiddingEndAt: string | null;
+    readonly formattedEndDateTime: string | null;
+    readonly counts: {
+      readonly bidder_positions: any | null;
     } | null;
-    readonly sale: {
-        readonly endAt: string | null;
-        readonly cascadingEndTimeIntervalMinutes: number | null;
-        readonly extendedBiddingIntervalMinutes: number | null;
-        readonly startAt: string | null;
-        readonly is_auction: boolean | null;
-        readonly is_closed: boolean | null;
+    readonly highest_bid: {
+      readonly display: string | null;
     } | null;
-    readonly sale_artwork: {
-        readonly lotID: string | null;
-        readonly lotLabel: string | null;
-        readonly endAt: string | null;
-        readonly extendedBiddingEndAt: string | null;
-        readonly formattedEndDateTime: string | null;
-        readonly counts: {
-            readonly bidder_positions: number | null;
-        } | null;
-        readonly highest_bid: {
-            readonly display: string | null;
-        } | null;
-        readonly opening_bid: {
-            readonly display: string | null;
-        } | null;
+    readonly opening_bid: {
+      readonly display: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"NewSaveButton_artwork" | "HoverDetails_artwork">;
-    readonly " $refType": "Details_artwork";
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"NewSaveButton_artwork" | "HoverDetails_artwork">;
+  readonly " $fragmentType": "Details_artwork";
 };
-export type Details_artwork$data = Details_artwork;
 export type Details_artwork$key = {
-    readonly " $data"?: Details_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
+  readonly " $data"?: Details_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -308,5 +311,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'be3d2becf54d0dfa23d893950bb22d7d';
+
+(node as any).hash = "be3d2becf54d0dfa23d893950bb22d7d";
+
 export default node;

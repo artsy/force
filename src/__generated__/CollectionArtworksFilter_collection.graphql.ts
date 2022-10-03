@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<6b8e9dfebd8be787788c1cde1c2fbcf4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectionArtworksFilter_collection = {
-    readonly slug: string;
-    readonly query: {
-        readonly artistIDs: ReadonlyArray<string> | null;
-    };
-    readonly filtered_artworks: {
-        readonly id: string;
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+export type CollectionArtworksFilter_collection$data = {
+  readonly slug: string;
+  readonly query: {
+    readonly artistIDs: ReadonlyArray<string> | null;
+  };
+  readonly filtered_artworks: {
+    readonly id: string;
+    readonly counts: {
+      readonly total: any | null;
     } | null;
-    readonly " $refType": "CollectionArtworksFilter_collection";
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+  } | null;
+  readonly " $fragmentType": "CollectionArtworksFilter_collection";
 };
-export type CollectionArtworksFilter_collection$data = CollectionArtworksFilter_collection;
 export type CollectionArtworksFilter_collection$key = {
-    readonly " $data"?: CollectionArtworksFilter_collection$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CollectionArtworksFilter_collection">;
+  readonly " $data"?: CollectionArtworksFilter_collection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionArtworksFilter_collection">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -120,5 +123,7 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = '901c750ea2861fa615ef4840b88ca783';
+
+(node as any).hash = "901c750ea2861fa615ef4840b88ca783";
+
 export default node;

@@ -1,60 +1,27 @@
+/**
+ * @generated SignedSource<<553249b2392df75376fec6c56ab2f784>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowArtistPopoverQueryVariables = {
-    artistID: string;
+export type FollowArtistPopoverQuery$variables = {
+  artistID: string;
 };
-export type FollowArtistPopoverQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistPopover_artist">;
-    } | null;
+export type FollowArtistPopoverQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopover_artist">;
+  } | null;
 };
 export type FollowArtistPopoverQuery = {
-    readonly response: FollowArtistPopoverQueryResponse;
-    readonly variables: FollowArtistPopoverQueryVariables;
+  variables: FollowArtistPopoverQuery$variables;
+  response: FollowArtistPopoverQuery$data;
 };
-
-
-
-/*
-query FollowArtistPopoverQuery(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...FollowArtistPopover_artist
-    id
-  }
-}
-
-fragment FollowArtistPopoverRow_artist on Artist {
-  slug
-  internalID
-  name
-  formattedNationalityAndBirthday
-  image {
-    cropped(width: 45, height: 45) {
-      url
-    }
-  }
-}
-
-fragment FollowArtistPopover_artist on Artist {
-  related {
-    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {
-      edges {
-        node {
-          id
-          internalID
-          ...FollowArtistPopoverRow_artist
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -264,5 +231,7 @@ return {
   }
 };
 })();
-(node as any).hash = '364b417ae6a387a733637fd589434356';
+
+(node as any).hash = "364b417ae6a387a733637fd589434356";
+
 export default node;

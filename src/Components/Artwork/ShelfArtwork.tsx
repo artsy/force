@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { ShelfArtwork_artwork } from "__generated__/ShelfArtwork_artwork.graphql"
+import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -18,7 +18,7 @@ export const IMG_HEIGHT = {
 }
 
 interface ShelfArtworkProps {
-  artwork: ShelfArtwork_artwork
+  artwork: ShelfArtwork_artwork$data
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
   lazyLoad?: boolean
@@ -65,6 +65,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 
       {showMetadata && (
         <Metadata
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           extended={showExtended}
           hideSaleInfo={hideSaleInfo}
@@ -79,7 +80,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 }
 
 const getHeight = (
-  artwork: ShelfArtwork_artwork,
+  artwork: ShelfArtwork_artwork$data,
   size: keyof typeof IMG_HEIGHT
 ) => {
   return (artwork.image?.resized?.height ?? 0) > IMG_HEIGHT[size]
@@ -87,7 +88,7 @@ const getHeight = (
     : artwork?.image?.resized?.height
 }
 
-const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
+const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork$data }> = ({
   artwork,
   children,
 }) => {

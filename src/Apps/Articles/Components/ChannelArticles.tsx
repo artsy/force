@@ -7,10 +7,10 @@ import {
 } from "react-relay"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { extractNodes } from "Utils/extractNodes"
-import { ChannelArticles_channel } from "__generated__/ChannelArticles_channel.graphql"
+import { ChannelArticles_channel$data } from "__generated__/ChannelArticles_channel.graphql"
 
 interface ChannelArticlesProps {
-  channel: ChannelArticles_channel
+  channel: ChannelArticles_channel$data
   relay: RelayPaginationProp
 }
 
@@ -43,6 +43,7 @@ export const ChannelArticles: FC<ChannelArticlesProps> = ({
         {articles.map(article => {
           return (
             <Column key={article.internalID} span={4}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <CellArticleFragmentContainer article={article} mode="GRID" />
             </Column>
           )

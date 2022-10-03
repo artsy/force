@@ -1,45 +1,27 @@
+/**
+ * @generated SignedSource<<8c39cdb814c88e98f15827c61e4563b6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UploadPhotos_SubmissionFlowTest_QueryVariables = {
-    externalId?: string | null | undefined;
+export type UploadPhotos_SubmissionFlowTest_Query$variables = {
+  externalId?: string | null;
 };
-export type UploadPhotos_SubmissionFlowTest_QueryResponse = {
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
-    } | null;
+export type UploadPhotos_SubmissionFlowTest_Query$data = {
+  readonly submission: {
+    readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
+  } | null;
 };
 export type UploadPhotos_SubmissionFlowTest_Query = {
-    readonly response: UploadPhotos_SubmissionFlowTest_QueryResponse;
-    readonly variables: UploadPhotos_SubmissionFlowTest_QueryVariables;
+  variables: UploadPhotos_SubmissionFlowTest_Query$variables;
+  response: UploadPhotos_SubmissionFlowTest_Query$data;
 };
-
-
-
-/*
-query UploadPhotos_SubmissionFlowTest_Query(
-  $externalId: ID
-) {
-  submission(externalId: $externalId) {
-    ...UploadPhotos_submission
-    id
-  }
-}
-
-fragment UploadPhotos_submission on ConsignmentSubmission {
-  externalId
-  assets {
-    id
-    imageUrls
-    geminiToken
-    size
-    filename
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -206,5 +188,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cd7943b11af98f793bb6b58f4fe9ed6a';
+
+(node as any).hash = "cd7943b11af98f793bb6b58f4fe9ed6a";
+
 export default node;

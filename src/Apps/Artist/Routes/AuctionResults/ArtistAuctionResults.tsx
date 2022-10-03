@@ -31,7 +31,7 @@ import createLogger from "Utils/logger"
 import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
 import { scrollIntoView } from "Utils/scrollHelpers"
-import { ArtistAuctionResults_artist } from "__generated__/ArtistAuctionResults_artist.graphql"
+import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
@@ -56,7 +56,7 @@ const PAGE_SIZE = 10
 
 interface AuctionResultsProps {
   relay: RelayRefetchProp
-  artist: ArtistAuctionResults_artist
+  artist: ArtistAuctionResults_artist$data
 }
 
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
@@ -277,6 +277,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                   return (
                     <ArtistAuctionResultItemFragmentContainer
                       key={index}
+                      // @ts-ignore RELAY UPGRADE 13
                       auctionResult={result}
                       filtersAtDefault={filtersAtDefault}
                     />
@@ -294,6 +295,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <Pagination
             getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
+            // @ts-ignore RELAY UPGRADE 13
             pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={(_cursor, page) => loadPage(_cursor, page)}
             onNext={() => loadNext()}

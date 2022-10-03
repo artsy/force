@@ -1,4 +1,4 @@
-import { FairArtworks_fair } from "__generated__/FairArtworks_fair.graphql"
+import { FairArtworks_fair$data } from "__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -25,7 +25,7 @@ import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/Active
 import { useSystemContext } from "System"
 
 interface FairArtworksFilterProps {
-  fair: FairArtworks_fair
+  fair: FairArtworks_fair$data
   relay: RelayRefetchProp
 }
 

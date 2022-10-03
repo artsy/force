@@ -1,7 +1,7 @@
 import { groupBy } from "lodash"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistCVGroup_artist } from "__generated__/ArtistCVGroup_artist.graphql"
+import { ArtistCVGroup_artist$data } from "__generated__/ArtistCVGroup_artist.graphql"
 import { Text, Box, GridColumns, Column, Button } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -15,7 +15,7 @@ import "System/i18n/i18n"
 const REFETCH_PAGE_SIZE = 10
 
 interface ArtistCVGroupProps {
-  artist: ArtistCVGroup_artist
+  artist: ArtistCVGroup_artist$data
   relay: RelayPaginationProp
   title: string
 }

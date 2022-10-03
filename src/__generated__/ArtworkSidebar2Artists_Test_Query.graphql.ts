@@ -1,39 +1,25 @@
+/**
+ * @generated SignedSource<<d29236ed9b1696db7e93b8f5b14ed0ec>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2Artists_Test_QueryVariables = {};
-export type ArtworkSidebar2Artists_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Artists_artwork">;
-    } | null;
+export type ArtworkSidebar2Artists_Test_Query$variables = {};
+export type ArtworkSidebar2Artists_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Artists_artwork">;
+  } | null;
 };
 export type ArtworkSidebar2Artists_Test_Query = {
-    readonly response: ArtworkSidebar2Artists_Test_QueryResponse;
-    readonly variables: ArtworkSidebar2Artists_Test_QueryVariables;
+  variables: ArtworkSidebar2Artists_Test_Query$variables;
+  response: ArtworkSidebar2Artists_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebar2Artists_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebar2Artists_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebar2Artists_artwork on Artwork {
-  culturalMaker
-  artists {
-    slug
-    name
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -172,5 +158,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bc66df0094502a3cfab014dbfcbca69b';
+
+(node as any).hash = "bc66df0094502a3cfab014dbfcbca69b";
+
 export default node;

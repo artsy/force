@@ -1,64 +1,27 @@
+/**
+ * @generated SignedSource<<7c26b0ec140a1d3e6442e5245db38396>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryVariables = {
-    artworkId: string;
+export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$variables = {
+  artworkId: string;
 };
-export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryResponse = {
-    readonly myCollectionArtwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
-    } | null;
+export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$data = {
+  readonly myCollectionArtwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+  } | null;
 };
 export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query = {
-    readonly response: ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryResponse;
-    readonly variables: ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryVariables;
+  variables: ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$variables;
+  response: ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$data;
 };
-
-
-
-/*
-query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(
-  $artworkId: String!
-) {
-  myCollectionArtwork: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtwork
-    id
-  }
-}
-
-fragment ArtworkDetails_myCollectionArtwork on Artwork {
-  internalID
-  artist {
-    internalID
-    name
-    id
-  }
-  location {
-    city
-    country
-    state
-    postalCode
-    id
-  }
-  date
-  title
-  medium
-  attributionClass {
-    name
-    id
-  }
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  metric
-  provenance
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -352,5 +315,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'c1eeec6eea9462ac17150645c68e7a85';
+
+(node as any).hash = "c1eeec6eea9462ac17150645c68e7a85";
+
 export default node;

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<968bacab6e7c4f5fc78304493bb9ffec>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UploadPhotos_myCollectionArtwork = {
-    readonly internalID: string;
-    readonly " $refType": "UploadPhotos_myCollectionArtwork";
+export type UploadPhotos_myCollectionArtwork$data = {
+  readonly internalID: string;
+  readonly " $fragmentType": "UploadPhotos_myCollectionArtwork";
 };
-export type UploadPhotos_myCollectionArtwork$data = UploadPhotos_myCollectionArtwork;
 export type UploadPhotos_myCollectionArtwork$key = {
-    readonly " $data"?: UploadPhotos_myCollectionArtwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_myCollectionArtwork">;
+  readonly " $data"?: UploadPhotos_myCollectionArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_myCollectionArtwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'd4227ffb5b0258195c56775669b19c6b';
+
+(node as any).hash = "d4227ffb5b0258195c56775669b19c6b";
+
 export default node;

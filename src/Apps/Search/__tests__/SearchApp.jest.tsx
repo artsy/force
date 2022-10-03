@@ -26,6 +26,7 @@ const { getWrapper } = setupTestWrapper<SearchApp_Test_Query>({
     return (
       <MockBoot breakpoint="lg">
         <SystemContextProvider>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <SearchApp viewer={props.viewer!} />
         </SystemContextProvider>
       </MockBoot>

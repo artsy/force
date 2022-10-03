@@ -1,37 +1,40 @@
+/**
+ * @generated SignedSource<<e2081c4a84a810500593b92f336c94f6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AddToCollectionRoute_viewer = {
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly artistNames: string | null;
-                readonly title: string | null;
-                readonly date: string | null;
-                readonly image: {
-                    readonly cropped: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "AddToCollectionRoute_viewer";
+export type AddToCollectionRoute_viewer$data = {
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly artistNames: string | null;
+        readonly title: string | null;
+        readonly date: string | null;
+        readonly image: {
+          readonly cropped: {
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
+          } | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "AddToCollectionRoute_viewer";
 };
-export type AddToCollectionRoute_viewer$data = AddToCollectionRoute_viewer;
 export type AddToCollectionRoute_viewer$key = {
-    readonly " $data"?: AddToCollectionRoute_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AddToCollectionRoute_viewer">;
+  readonly " $data"?: AddToCollectionRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AddToCollectionRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -181,5 +184,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '0e6d9b5b7d685a055427099be6dc1852';
+
+(node as any).hash = "0e6d9b5b7d685a055427099be6dc1852";
+
 export default node;

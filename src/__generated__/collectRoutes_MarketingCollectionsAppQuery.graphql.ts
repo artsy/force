@@ -1,45 +1,25 @@
+/**
+ * @generated SignedSource<<212cff7b894dedbad3279b8a04d1cce0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectRoutes_MarketingCollectionsAppQueryVariables = {};
-export type collectRoutes_MarketingCollectionsAppQueryResponse = {
-    readonly marketingCategories: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"Collections_marketingCategories">;
-    }>;
+export type collectRoutes_MarketingCollectionsAppQuery$variables = {};
+export type collectRoutes_MarketingCollectionsAppQuery$data = {
+  readonly marketingCategories: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"Collections_marketingCategories">;
+  }>;
 };
 export type collectRoutes_MarketingCollectionsAppQuery = {
-    readonly response: collectRoutes_MarketingCollectionsAppQueryResponse;
-    readonly variables: collectRoutes_MarketingCollectionsAppQueryVariables;
+  variables: collectRoutes_MarketingCollectionsAppQuery$variables;
+  response: collectRoutes_MarketingCollectionsAppQuery$data;
 };
-
-
-
-/*
-query collectRoutes_MarketingCollectionsAppQuery {
-  marketingCategories @principalField {
-    ...Collections_marketingCategories
-  }
-}
-
-fragment CollectionsCategory_category on MarketingCollectionCategory {
-  name
-  collections {
-    internalID
-    slug
-    title
-    headerImage
-    id
-  }
-}
-
-fragment Collections_marketingCategories on MarketingCollectionCategory {
-  name
-  ...CollectionsCategory_category
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -149,5 +129,7 @@ const node: ConcreteRequest = {
     "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment CollectionsCategory_category on MarketingCollectionCategory {\n  name\n  collections {\n    internalID\n    slug\n    title\n    headerImage\n    id\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  ...CollectionsCategory_category\n}\n"
   }
 };
-(node as any).hash = 'fef524f8337c800a5308955689bca0b6';
+
+(node as any).hash = "fef524f8337c800a5308955689bca0b6";
+
 export default node;

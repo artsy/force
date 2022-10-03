@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
-import { Review_order } from "__generated__/Review_order.graphql"
+import { Review_order$data } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -37,7 +37,7 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
-  order: Review_order
+  order: Review_order$data
   relay?: RelayProp
   router: Router
   route: RouteConfig
@@ -392,24 +392,29 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 </>
               )}
               {order.mode === "OFFER" && (
+                // @ts-ignore RELAY UPGRADE 13
                 <OfferSummaryItem order={order} onChange={onChangeOffer} />
               )}
               <ShippingSummaryItem
+                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangeShippingAddress}
               />
               <PaymentMethodSummaryItem
+                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangePayment}
                 title="Payment method"
               />
               <ShippingArtaSummaryItemFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangeShippingMethod}
                 title="Shipping"
               />
             </Flex>
             <Media greaterThan="xs">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
               <Spacer mb={4} />
               <SubmitButton />
@@ -421,6 +426,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}

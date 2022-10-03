@@ -1,12 +1,12 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
-import { FairOrganizerPastEventsRail_fairOrganizer } from "__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
+import { FairOrganizerPastEventsRail_fairOrganizer$data } from "__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Rail } from "Components/Rail"
 
 interface FairOrganizerPastEventsRailProps {
-  fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer
+  fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data
 }
 
 export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailProps> = props => {
@@ -22,6 +22,7 @@ export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailPr
       title="Past Events"
       getItems={() => {
         return pastFairs.map(fair => {
+          // @ts-ignore RELAY UPGRADE 13
           return <FairOrganizerPastEventRailCell key={fair.id} fair={fair} />
         })
       }}

@@ -16,10 +16,10 @@ import { Formik } from "formik"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
-import { SettingsEditProfileAboutYou_me } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
+import { SettingsEditProfileAboutYou_me$data } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 
 interface SettingsEditProfileAboutYouProps {
-  me: SettingsEditProfileAboutYou_me
+  me: SettingsEditProfileAboutYou_me$data
 }
 
 const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({

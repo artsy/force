@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<d7240e6191721e04ca9f35c800a7823a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityTooltipArtist_artist = {
-    readonly href: string | null;
-    readonly blurb: string | null;
-    readonly carousel: {
-        readonly images: ReadonlyArray<{
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly height: number | null;
-                readonly width: number | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-    readonly " $refType": "EntityTooltipArtist_artist";
+export type EntityTooltipArtist_artist$data = {
+  readonly href: string | null;
+  readonly blurb: string | null;
+  readonly carousel: {
+    readonly images: ReadonlyArray<{
+      readonly resized: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly height: number | null;
+        readonly width: number | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+  readonly " $fragmentType": "EntityTooltipArtist_artist";
 };
-export type EntityTooltipArtist_artist$data = EntityTooltipArtist_artist;
 export type EntityTooltipArtist_artist$key = {
-    readonly " $data"?: EntityTooltipArtist_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"EntityTooltipArtist_artist">;
+  readonly " $data"?: EntityTooltipArtist_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipArtist_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -34,6 +37,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityTooltipArtist_artist",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderArtist_artist"
+    },
     {
       "alias": null,
       "args": null,
@@ -120,15 +128,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "EntityHeaderArtist_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '04adc27765f3888ecb9699bed4bd430d';
+
+(node as any).hash = "04adc27765f3888ecb9699bed4bd430d";
+
 export default node;

@@ -1,5 +1,5 @@
 import { Clickable, Spacer } from "@artsy/palette"
-import { ArtworkSidebarCurrentBidInfo_artwork } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
+import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
@@ -19,7 +19,7 @@ import { lotIsClosed } from "../../Utils/lotIsClosed"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
-  artwork: ArtworkSidebarCurrentBidInfo_artwork
+  artwork: ArtworkSidebarCurrentBidInfo_artwork$data
   currentBidChanged: boolean
 }
 
@@ -75,6 +75,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
 
   if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
     return (
+      // @ts-ignore RELAY UPGRADE 13
       <ArtworkSidebarBiddingClosedMessageFragmentContainer artwork={artwork} />
     )
   }

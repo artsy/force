@@ -3,12 +3,12 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useMode } from "Utils/Hooks/useMode"
-import { SettingsShippingAddresses_me } from "__generated__/SettingsShippingAddresses_me.graphql"
+import { SettingsShippingAddresses_me$data } from "__generated__/SettingsShippingAddresses_me.graphql"
 import { SettingsShippingAddressFragmentContainer } from "./SettingsShippingAddress"
 import { SettingsShippingAddressForm } from "./SettingsShippingAddressForm"
 
 interface SettingsShippingAddressesProps {
-  me: SettingsShippingAddresses_me
+  me: SettingsShippingAddresses_me$data
 }
 
 type Mode = "Pending" | "Adding"
@@ -47,6 +47,7 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
           {addresses.map(address => {
             return (
               <Column key={address.internalID} span={4}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <SettingsShippingAddressFragmentContainer address={address} />
               </Column>
             )

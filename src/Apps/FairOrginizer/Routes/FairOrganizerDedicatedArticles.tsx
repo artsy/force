@@ -6,7 +6,7 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { extractNodes } from "Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "../Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
-import { FairOrganizerDedicatedArticles_fairOrganizer } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
+import { FairOrganizerDedicatedArticles_fairOrganizer$data } from "__generated__/FairOrganizerDedicatedArticles_fairOrganizer.graphql"
 import createLogger from "Utils/logger"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "Components/LoadingArea"
@@ -16,7 +16,7 @@ import { MetaTags } from "Components/MetaTags"
 const PAGE_SIZE = 16
 
 interface FairOrganizerDedicatedArticlesProps {
-  fairOrganizer: FairOrganizerDedicatedArticles_fairOrganizer
+  fairOrganizer: FairOrganizerDedicatedArticles_fairOrganizer$data
   relay: RelayRefetchProp
 }
 
@@ -74,6 +74,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
         pathname={`/fair-organizer/${slug}/articles`}
       />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <DedicatedArticlesBreadcrumbs fairOrganizer={fairOrganizer} />
 
       <Text
@@ -91,6 +92,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
         <GridColumns gridRowGap={4}>
           {articles.map(article => (
             <Column key={article.id} span={3}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <CellArticleFragmentContainer article={article} mode="GRID" />
             </Column>
           ))}
@@ -99,6 +101,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
 
       <Pagination
         hasNextPage={hasNextPage}
+        // @ts-ignore RELAY UPGRADE 13
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={loadNext}

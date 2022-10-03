@@ -1,4 +1,4 @@
-import { TransactionDetailsSummaryItem_order } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
+import { TransactionDetailsSummaryItem_order$data } from "__generated__/TransactionDetailsSummaryItem_order.graphql"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -18,7 +18,7 @@ import { RouterLink } from "System/Router/RouterLink"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
-  order: TransactionDetailsSummaryItem_order
+  order: TransactionDetailsSummaryItem_order$data
   offerOverride?: string | null | number
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
@@ -83,7 +83,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   }
 
   const getOffer = ():
-    | TransactionDetailsSummaryItem_order["lastOffer"]
+    | TransactionDetailsSummaryItem_order$data["lastOffer"]
     | null => {
     return useLastSubmittedOffer ? order.lastOffer : order.myLastOffer
   }

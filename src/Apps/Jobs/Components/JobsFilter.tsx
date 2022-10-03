@@ -10,14 +10,14 @@ import {
 import { uniq } from "lodash"
 import { FC, Fragment, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { JobsFilter_viewer } from "__generated__/JobsFilter_viewer.graphql"
+import { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
 import { JobLinkFragmentContainer } from "./JobLink"
 
 const LEADGEN_LOCATION = "Don't See Your Dream Job?"
 const LEADGEN_DEPARTMENT_ID = "84312"
 
 interface JobsFilterProps {
-  viewer: JobsFilter_viewer
+  viewer: JobsFilter_viewer$data
 }
 
 const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
@@ -100,6 +100,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
               <Column span={8}>
                 <Join separator={<Spacer mt={1} />}>
                   {filteredJobs.map(job => (
+                    // @ts-ignore RELAY UPGRADE 13
                     <JobLinkFragmentContainer key={job.id} job={job} />
                   ))}
                 </Join>
@@ -129,6 +130,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
               <Column span={8}>
                 <Join separator={<Spacer mt={2} />}>
                   {department.jobs.map(job => {
+                    // @ts-ignore RELAY UPGRADE 13
                     return <JobLinkFragmentContainer key={job.id} job={job} />
                   })}
                 </Join>

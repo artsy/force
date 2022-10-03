@@ -12,7 +12,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtistIconicCollectionsRail_marketingCollections } from "__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
+import { ArtistIconicCollectionsRail_marketingCollections$data } from "__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
 import currency from "currency.js"
 import { RouterLink } from "System/Router/RouterLink"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -23,7 +23,7 @@ import { ArtistIconicCollectionsRailQuery } from "__generated__/ArtistIconicColl
 import { Rail } from "Components/Rail"
 
 interface ArtistIconicCollectionsRailProps {
-  marketingCollections: ArtistIconicCollectionsRail_marketingCollections
+  marketingCollections: ArtistIconicCollectionsRail_marketingCollections$data
 }
 
 const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = ({
@@ -189,6 +189,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
           if (props.marketingCollections) {
             return (
               <ArtistIconicCollectionsRailFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 marketingCollections={props.marketingCollections}
               />
             )

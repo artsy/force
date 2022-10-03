@@ -3,10 +3,10 @@ import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/Auc
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkComparables_artwork } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
+import { MyCollectionArtworkComparables_artwork$data } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
 
 interface MyCollectionArtworkComparablesProps {
-  artwork: MyCollectionArtworkComparables_artwork
+  artwork: MyCollectionArtworkComparables_artwork$data
 }
 
 const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesProps> = ({
@@ -40,6 +40,7 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
             return (
               <ArtistAuctionResultItemFragmentContainer
                 key={index}
+                // @ts-ignore RELAY UPGRADE 13
                 auctionResult={result}
                 filtersAtDefault={false}
               />

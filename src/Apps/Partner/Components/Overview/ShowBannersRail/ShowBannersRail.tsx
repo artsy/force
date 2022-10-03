@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowBannersRail_partner } from "__generated__/ShowBannersRail_partner.graphql"
+import { ShowBannersRail_partner$data } from "__generated__/ShowBannersRail_partner.graphql"
 import { ShowBannersRailRendererQuery } from "__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
 import { useSystemContext } from "System"
@@ -11,7 +11,7 @@ import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { ShowBannerFragmentContainer } from "../../PartnerShows"
 
 interface ShowBannersRailProps extends BoxProps {
-  partner: ShowBannersRail_partner
+  partner: ShowBannersRail_partner$data
 }
 
 const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
@@ -49,6 +49,7 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
             <ShowBannerFragmentContainer
               pr={[0.5, 0]}
               key={showItem.id}
+              // @ts-ignore RELAY UPGRADE 13
               show={showItem}
             />
           )
@@ -148,6 +149,7 @@ export const ShowBannersRailRenderer: React.FC<
         return (
           <ShowBannersRailFragmentContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

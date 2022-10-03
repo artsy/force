@@ -13,12 +13,12 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { CategoryRailQuery } from "__generated__/CategoryRailQuery.graphql"
-import { CategoryRail_category } from "__generated__/CategoryRail_category.graphql"
+import { CategoryRail_category$data } from "__generated__/CategoryRail_category.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
 import { FollowGeneButtonFragmentContainer } from "./FollowButton/FollowGeneButton"
 
 interface CategoryRailProps {
-  category: CategoryRail_category
+  category: CategoryRail_category$data
 }
 
 const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
@@ -37,6 +37,7 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
           srcSet: category.avatar?.cropped?.srcSet,
         }}
         FollowButton={
+          // @ts-ignore RELAY UPGRADE 13
           <FollowGeneButtonFragmentContainer gene={category} size="small">
             Follow
           </FollowGeneButtonFragmentContainer>
@@ -51,6 +52,7 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
               <ShelfArtworkFragmentContainer
                 key={artwork.internalID}
                 contextModule={{} as any} // TODO:
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 lazyLoad
               />
@@ -155,6 +157,7 @@ export const CategoryRailQueryRenderer: FC<CategoryRailQueryRendererProps> = ({
           return CATEGORY_RAIL_PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <CategoryRailFragmentContainer category={props.category} />
       }}
     />

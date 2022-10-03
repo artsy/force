@@ -1,71 +1,28 @@
+/**
+ * @generated SignedSource<<765a6d66210bf5e871ccf3a3dc8a096a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ChannelArticlesQueryVariables = {
-    id: string;
-    after?: string | null | undefined;
+export type ChannelArticlesQuery$variables = {
+  id: string;
+  after?: string | null;
 };
-export type ChannelArticlesQueryResponse = {
-    readonly channel: {
-        readonly " $fragmentRefs": FragmentRefs<"ChannelArticles_channel">;
-    };
+export type ChannelArticlesQuery$data = {
+  readonly channel: {
+    readonly " $fragmentSpreads": FragmentRefs<"ChannelArticles_channel">;
+  };
 };
 export type ChannelArticlesQuery = {
-    readonly response: ChannelArticlesQueryResponse;
-    readonly variables: ChannelArticlesQueryVariables;
+  variables: ChannelArticlesQuery$variables;
+  response: ChannelArticlesQuery$data;
 };
-
-
-
-/*
-query ChannelArticlesQuery(
-  $id: ID!
-  $after: String
-) {
-  channel(id: $id) {
-    ...ChannelArticles_channel_WGPvJ
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ChannelArticles_channel_WGPvJ on Channel {
-  articlesConnection(first: 9, after: $after, sort: PUBLISHED_AT_DESC) {
-    edges {
-      node {
-        ...CellArticle_article
-        internalID
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -375,5 +332,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4ba65424f0d14752a56b0b3453b537f0';
+
+(node as any).hash = "4ba65424f0d14752a56b0b3453b537f0";
+
 export default node;

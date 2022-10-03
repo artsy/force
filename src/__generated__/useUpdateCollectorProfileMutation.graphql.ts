@@ -1,47 +1,40 @@
+/**
+ * @generated SignedSource<<c5dbb3666ab230b12271f1418bba7b5b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-    affiliatedAuctionHouseIds?: Array<string | null> | null | undefined;
-    affiliatedFairIds?: Array<string | null> | null | undefined;
-    affiliatedGalleryIds?: Array<string | null> | null | undefined;
-    clientMutationId?: string | null | undefined;
-    companyName?: string | null | undefined;
-    companyWebsite?: string | null | undefined;
-    institutionalAffiliations?: string | null | undefined;
-    intents?: Array<Intents | null> | null | undefined;
-    loyaltyApplicant?: boolean | null | undefined;
-    professionalBuyer?: boolean | null | undefined;
-    selfReportedPurchases?: string | null | undefined;
+  affiliatedAuctionHouseIds?: ReadonlyArray<string | null> | null;
+  affiliatedFairIds?: ReadonlyArray<string | null> | null;
+  affiliatedGalleryIds?: ReadonlyArray<string | null> | null;
+  clientMutationId?: string | null;
+  companyName?: string | null;
+  companyWebsite?: string | null;
+  institutionalAffiliations?: string | null;
+  intents?: ReadonlyArray<Intents | null> | null;
+  loyaltyApplicant?: boolean | null;
+  professionalBuyer?: boolean | null;
+  selfReportedPurchases?: string | null;
 };
-export type useUpdateCollectorProfileMutationVariables = {
-    input: UpdateCollectorProfileInput;
+export type useUpdateCollectorProfileMutation$variables = {
+  input: UpdateCollectorProfileInput;
 };
-export type useUpdateCollectorProfileMutationResponse = {
-    readonly updateCollectorProfile: {
-        readonly clientMutationId: string | null;
-    } | null;
+export type useUpdateCollectorProfileMutation$data = {
+  readonly updateCollectorProfile: {
+    readonly clientMutationId: string | null;
+  } | null;
 };
 export type useUpdateCollectorProfileMutation = {
-    readonly response: useUpdateCollectorProfileMutationResponse;
-    readonly variables: useUpdateCollectorProfileMutationVariables;
+  variables: useUpdateCollectorProfileMutation$variables;
+  response: useUpdateCollectorProfileMutation$data;
 };
-
-
-
-/*
-mutation useUpdateCollectorProfileMutation(
-  $input: UpdateCollectorProfileInput!
-) {
-  updateCollectorProfile(input: $input) {
-    clientMutationId
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -125,5 +118,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9e9cfaf31cf4056cc375de3250127037';
+
+(node as any).hash = "9e9cfaf31cf4056cc375de3250127037";
+
 export default node;

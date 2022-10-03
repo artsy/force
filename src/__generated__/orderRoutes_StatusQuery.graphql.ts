@@ -1,295 +1,27 @@
+/**
+ * @generated SignedSource<<dd65b359eb9e288660ed16206f8560d5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type orderRoutes_StatusQueryVariables = {
-    orderID: string;
+export type orderRoutes_StatusQuery$variables = {
+  orderID: string;
 };
-export type orderRoutes_StatusQueryResponse = {
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"Status_order">;
-    } | null;
+export type orderRoutes_StatusQuery$data = {
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Status_order">;
+  } | null;
 };
 export type orderRoutes_StatusQuery = {
-    readonly response: orderRoutes_StatusQueryResponse;
-    readonly variables: orderRoutes_StatusQueryVariables;
+  variables: orderRoutes_StatusQuery$variables;
+  response: orderRoutes_StatusQuery$data;
 };
-
-
-
-/*
-query orderRoutes_StatusQuery(
-  $orderID: ID!
-) {
-  order: commerceOrder(id: $orderID) {
-    __typename
-    ...Status_order
-    id
-  }
-}
-
-fragment ArtworkSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  sellerDetails {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-  currencyCode
-  mode
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        artwork {
-          date
-          shippingOrigin
-          id
-        }
-        artworkVersion {
-          artistNames
-          title
-          image {
-            resized_ArtworkSummaryItem: resized(width: 55) {
-              url
-            }
-          }
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment PaymentMethodSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  paymentMethod
-  paymentMethodDetails {
-    __typename
-    ... on CreditCard {
-      brand
-      lastDigits
-      expirationYear
-      expirationMonth
-      id
-    }
-    ... on BankAccount {
-      last4
-      id
-    }
-    ... on WireTransfer {
-      isManualPayment
-    }
-  }
-}
-
-fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
-  __isCommerceRequestedFulfillmentUnion: __typename
-  ... on CommerceShip {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-  ... on CommerceShipArta {
-    name
-    addressLine1
-    addressLine2
-    city
-    postalCode
-    region
-    country
-    phoneNumber
-  }
-}
-
-fragment ShippingSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  state
-  paymentMethod
-  requestedFulfillment {
-    __typename
-    ...ShippingAddress_ship
-  }
-  lineItems {
-    edges {
-      node {
-        artwork {
-          shippingOrigin
-          id
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment Status_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  internalID
-  code
-  displayState
-  state
-  mode
-  source
-  stateReason
-  stateExpiresAt(format: "MMM D")
-  requestedFulfillment {
-    __typename
-    ... on CommerceShip {
-      __typename
-    }
-    ... on CommercePickup {
-      __typename
-    }
-    ... on CommerceShipArta {
-      __typename
-    }
-  }
-  ...ArtworkSummaryItem_order
-  ...TransactionDetailsSummaryItem_order
-  ...ShippingSummaryItem_order
-  ...PaymentMethodSummaryItem_order
-  lineItems {
-    edges {
-      node {
-        shipment {
-          trackingNumber
-          trackingUrl
-          carrierName
-          estimatedDeliveryWindow
-          id
-        }
-        selectedShippingQuote {
-          typeName
-          id
-        }
-        fulfillments {
-          edges {
-            node {
-              courier
-              trackingId
-              estimatedDelivery(format: "MMM Do, YYYY")
-              id
-            }
-          }
-        }
-        id
-      }
-    }
-  }
-  ... on CommerceOfferOrder {
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      id
-    }
-  }
-}
-
-fragment TransactionDetailsSummaryItem_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  __typename
-  requestedFulfillment {
-    __typename
-  }
-  code
-  lineItems {
-    edges {
-      node {
-        artworkOrEditionSet {
-          __typename
-          ... on Artwork {
-            price
-          }
-          ... on EditionSet {
-            price
-            id
-          }
-          ... on Node {
-            __isNode: __typename
-            id
-          }
-        }
-        selectedShippingQuote {
-          typeName
-          id
-        }
-        id
-      }
-    }
-  }
-  mode
-  shippingTotal(precision: 2)
-  shippingTotalCents
-  taxTotal(precision: 2)
-  taxTotalCents
-  itemsTotal(precision: 2)
-  buyerTotal(precision: 2)
-  currencyCode
-  ... on CommerceOfferOrder {
-    lastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-    myLastOffer {
-      internalID
-      amount(precision: 2)
-      amountCents
-      shippingTotal(precision: 2)
-      shippingTotalCents
-      taxTotal(precision: 2)
-      taxTotalCents
-      buyerTotal(precision: 2)
-      buyerTotalCents
-      fromParticipant
-      note
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1055,5 +787,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'bc650dbaf10679d5ea3eaf8952c81890';
+
+(node as any).hash = "bc650dbaf10679d5ea3eaf8952c81890";
+
 export default node;

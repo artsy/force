@@ -1,35 +1,25 @@
+/**
+ * @generated SignedSource<<c03a9be1a90ae03f6ad8fd8ae4700ad9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuthenticityCertificateTestQueryVariables = {};
-export type AuthenticityCertificateTestQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"AuthenticityCertificate_artwork">;
-    } | null;
+export type AuthenticityCertificateTestQuery$variables = {};
+export type AuthenticityCertificateTestQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuthenticityCertificate_artwork">;
+  } | null;
 };
 export type AuthenticityCertificateTestQuery = {
-    readonly response: AuthenticityCertificateTestQueryResponse;
-    readonly variables: AuthenticityCertificateTestQueryVariables;
+  variables: AuthenticityCertificateTestQuery$variables;
+  response: AuthenticityCertificateTestQuery$data;
 };
-
-
-
-/*
-query AuthenticityCertificateTestQuery {
-  artwork(id: "whatevs") {
-    ...AuthenticityCertificate_artwork
-    id
-  }
-}
-
-fragment AuthenticityCertificate_artwork on Artwork {
-  hasCertificateOfAuthenticity
-  is_biddable: isBiddable
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -139,5 +129,7 @@ return {
   }
 };
 })();
-(node as any).hash = '98c0d0989b6552cd623de66d2336d12c';
+
+(node as any).hash = "98c0d0989b6552cd623de66d2336d12c";
+
 export default node;

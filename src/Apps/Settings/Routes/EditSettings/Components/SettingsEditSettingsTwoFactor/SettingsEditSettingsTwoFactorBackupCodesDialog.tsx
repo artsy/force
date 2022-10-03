@@ -9,11 +9,11 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQuery } from "__generated__/SettingsEditSettingsTwoFactorBackupCodesDialogQuery.graphql"
-import { SettingsEditSettingsTwoFactorBackupCodesDialog_me } from "__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
+import { SettingsEditSettingsTwoFactorBackupCodesDialog_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodesDialog_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesActions } from "./SettingsEditSettingsTwoFactorBackupCodesActions"
 
 interface SettingsEditSettingsTwoFactorBackupCodesDialogProps {
-  me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me | null
+  me?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data | null
 }
 
 const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwoFactorBackupCodesDialogProps> = ({
@@ -102,6 +102,7 @@ export const SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer = () =>
 
         return (
           <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             me={props?.me}
           />
         )

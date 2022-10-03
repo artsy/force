@@ -18,6 +18,7 @@ describe("EntityHeaderFair", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderFairFragmentContainer_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderFairFragmentContainer,
     query: QUERY,
   })

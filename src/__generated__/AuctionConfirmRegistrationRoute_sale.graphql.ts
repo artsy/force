@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<d85d17c067c7e7bfda74c4c0671063e2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionConfirmRegistrationRoute_sale = {
-    readonly slug: string;
-    readonly name: string | null;
-    readonly internalID: string;
-    readonly status: string | null;
-    readonly isClosed: boolean | null;
-    readonly isLiveOpen: boolean | null;
-    readonly requireIdentityVerification: boolean | null;
-    readonly bidder: {
-        readonly qualifiedForBidding: boolean | null;
-    } | null;
-    readonly " $refType": "AuctionConfirmRegistrationRoute_sale";
+export type AuctionConfirmRegistrationRoute_sale$data = {
+  readonly slug: string;
+  readonly name: string | null;
+  readonly internalID: string;
+  readonly status: string | null;
+  readonly isClosed: boolean | null;
+  readonly isLiveOpen: boolean | null;
+  readonly requireIdentityVerification: boolean | null;
+  readonly bidder: {
+    readonly qualifiedForBidding: boolean | null;
+  } | null;
+  readonly " $fragmentType": "AuctionConfirmRegistrationRoute_sale";
 };
-export type AuctionConfirmRegistrationRoute_sale$data = AuctionConfirmRegistrationRoute_sale;
 export type AuctionConfirmRegistrationRoute_sale$key = {
-    readonly " $data"?: AuctionConfirmRegistrationRoute_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
+  readonly " $data"?: AuctionConfirmRegistrationRoute_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -102,5 +105,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '9d07ded3a97b8f23838a0575086ab5de';
+
+(node as any).hash = "9d07ded3a97b8f23838a0575086ab5de";
+
 export default node;

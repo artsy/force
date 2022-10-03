@@ -1,53 +1,25 @@
+/**
+ * @generated SignedSource<<3793ff0ad60bf3b52c07bcb61f81f241>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CreateArtworkAlertSection_Test_QueryVariables = {};
-export type CreateArtworkAlertSection_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"CreateArtworkAlertSection_artwork">;
-    } | null;
+export type CreateArtworkAlertSection_Test_Query$variables = {};
+export type CreateArtworkAlertSection_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"CreateArtworkAlertSection_artwork">;
+  } | null;
 };
 export type CreateArtworkAlertSection_Test_Query = {
-    readonly response: CreateArtworkAlertSection_Test_QueryResponse;
-    readonly variables: CreateArtworkAlertSection_Test_QueryVariables;
+  variables: CreateArtworkAlertSection_Test_Query$variables;
+  response: CreateArtworkAlertSection_Test_Query$data;
 };
-
-
-
-/*
-query CreateArtworkAlertSection_Test_Query {
-  artwork(id: "test-artwork-id") {
-    ...CreateArtworkAlertSection_artwork
-    id
-  }
-}
-
-fragment CreateArtworkAlertSection_artwork on Artwork {
-  internalID
-  title
-  slug
-  artists {
-    internalID
-    name
-    slug
-    id
-  }
-  attributionClass {
-    internalID
-    id
-  }
-  mediumType {
-    filterGene {
-      slug
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -262,5 +234,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8f1fa8f57352b417d20e89451adb83f9';
+
+(node as any).hash = "8f1fa8f57352b417d20e89451adb83f9";
+
 export default node;

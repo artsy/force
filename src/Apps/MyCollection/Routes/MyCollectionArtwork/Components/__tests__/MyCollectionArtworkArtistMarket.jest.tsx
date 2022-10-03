@@ -14,6 +14,7 @@ describe("MyCollectionArtworkArtistMarket", () => {
       if (props?.artwork?.marketPriceInsights) {
         return (
           <MyCollectionArtworkArtistMarketFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             marketPriceInsights={props.artwork.marketPriceInsights}
           />
         )

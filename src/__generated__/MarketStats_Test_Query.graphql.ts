@@ -1,46 +1,27 @@
+/**
+ * @generated SignedSource<<e6b6a2326612d1723da8bf675fe9ceb7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MarketStats_Test_QueryVariables = {
-    artistInternalID: string;
+export type MarketStats_Test_Query$variables = {
+  artistInternalID: string;
 };
-export type MarketStats_Test_QueryResponse = {
-    readonly priceInsightsConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"MarketStats_priceInsightsConnection">;
-    } | null;
+export type MarketStats_Test_Query$data = {
+  readonly priceInsightsConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"MarketStats_priceInsightsConnection">;
+  } | null;
 };
 export type MarketStats_Test_Query = {
-    readonly response: MarketStats_Test_QueryResponse;
-    readonly variables: MarketStats_Test_QueryVariables;
+  variables: MarketStats_Test_Query$variables;
+  response: MarketStats_Test_Query$data;
 };
-
-
-
-/*
-query MarketStats_Test_Query(
-  $artistInternalID: ID!
-) {
-  priceInsightsConnection: priceInsights(artistId: $artistInternalID, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {
-    ...MarketStats_priceInsightsConnection
-  }
-}
-
-fragment MarketStats_priceInsightsConnection on PriceInsightConnection {
-  edges {
-    node {
-      medium
-      annualLotsSold
-      annualValueSoldCents
-      sellThroughRate
-      medianSaleOverEstimatePercentage
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -235,5 +216,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6af6dc9e71ce14051ef8e4af5624d77b';
+
+(node as any).hash = "6af6dc9e71ce14051ef8e4af5624d77b";
+
 export default node;

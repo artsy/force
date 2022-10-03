@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<71a5026df4c61ee4c26c015247c7d7e9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistAuctionResults_artist = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly auctionResultsConnection: {
-        readonly createdYearRange: {
-            readonly startAt: number | null;
-            readonly endAt: number | null;
-        } | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-            } | null;
-        } | null> | null;
+export type ArtistAuctionResults_artist$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly auctionResultsConnection: {
+    readonly createdYearRange: {
+      readonly startAt: number | null;
+      readonly endAt: number | null;
     } | null;
-    readonly " $refType": "ArtistAuctionResults_artist";
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
-export type ArtistAuctionResults_artist$data = ArtistAuctionResults_artist;
 export type ArtistAuctionResults_artist$key = {
-    readonly " $data"?: ArtistAuctionResults_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResults_artist">;
+  readonly " $data"?: ArtistAuctionResults_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -301,5 +304,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'df6ab7baf8f01679243929bd694898ea';
+
+(node as any).hash = "df6ab7baf8f01679243929bd694898ea";
+
 export default node;

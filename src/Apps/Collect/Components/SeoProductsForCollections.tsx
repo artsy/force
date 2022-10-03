@@ -1,21 +1,21 @@
-import { SeoProductsForCollections_ascending_artworks } from "__generated__/SeoProductsForCollections_ascending_artworks.graphql"
-import { SeoProductsForCollections_descending_artworks } from "__generated__/SeoProductsForCollections_descending_artworks.graphql"
+import { SeoProductsForCollections_ascending_artworks$data } from "__generated__/SeoProductsForCollections_ascending_artworks.graphql"
+import { SeoProductsForCollections_descending_artworks$data } from "__generated__/SeoProductsForCollections_descending_artworks.graphql"
 import { Product } from "Components/Seo/Product"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 
 export interface SeoProductsProps {
-  descending_artworks: SeoProductsForCollections_descending_artworks
-  ascending_artworks: SeoProductsForCollections_ascending_artworks
+  descending_artworks: SeoProductsForCollections_descending_artworks$data
+  ascending_artworks: SeoProductsForCollections_ascending_artworks$data
   collectionDescription: string
   collectionURL: string
   collectionName: string
 }
 
 export const getMaxMinPrice = (
-  descending_artworks: SeoProductsForCollections_descending_artworks,
-  ascending_artworks: SeoProductsForCollections_ascending_artworks
+  descending_artworks: SeoProductsForCollections_descending_artworks$data,
+  ascending_artworks: SeoProductsForCollections_ascending_artworks$data
 ) => {
   const leastExpensive = getPriceRange(
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

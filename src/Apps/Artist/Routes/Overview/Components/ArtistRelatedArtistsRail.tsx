@@ -8,7 +8,7 @@ import { Rail } from "Components/Rail"
 import { useAnalyticsContext, useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRelatedArtistsRail_artist } from "__generated__/ArtistRelatedArtistsRail_artist.graphql"
+import { ArtistRelatedArtistsRail_artist$data } from "__generated__/ArtistRelatedArtistsRail_artist.graphql"
 import { ArtistRelatedArtistsRailQuery } from "__generated__/ArtistRelatedArtistsRailQuery.graphql"
 import {
   CellArtistFragmentContainer,
@@ -16,7 +16,7 @@ import {
 } from "Components/Cells/CellArtist"
 
 interface ArtistRelatedArtistsRailProps {
-  artist: ArtistRelatedArtistsRail_artist
+  artist: ArtistRelatedArtistsRail_artist$data
 }
 
 const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
@@ -45,6 +45,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
           return artists.map((artist, index) => {
             return (
               <CellArtistFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artist={artist}
                 onClick={() => {
                   tracking.trackEvent({
@@ -138,6 +139,7 @@ export const ArtistRelatedArtistsRailQueryRenderer: React.FC<{
           if (props.artist) {
             return (
               <ArtistRelatedArtistsRailFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artist={props.artist}
               />
             )

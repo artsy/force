@@ -22,6 +22,7 @@ describe("SavedSearchAlertsApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     SavedSearchAlertsApp_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: SavedSearchAlertsAppPaginationContainer,
     query: graphql`
       query SavedSearchAlertsApp_Test_Query @raw_response_type {

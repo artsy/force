@@ -1,36 +1,25 @@
+/**
+ * @generated SignedSource<<78d484798fef65f02a71eb2c9535ee9b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type pressRoutes_PressReleasesQueryVariables = {};
-export type pressRoutes_PressReleasesQueryResponse = {
-    readonly page: {
-        readonly " $fragmentRefs": FragmentRefs<"PressApp_page">;
-    };
+export type pressRoutes_PressReleasesQuery$variables = {};
+export type pressRoutes_PressReleasesQuery$data = {
+  readonly page: {
+    readonly " $fragmentSpreads": FragmentRefs<"PressApp_page">;
+  };
 };
 export type pressRoutes_PressReleasesQuery = {
-    readonly response: pressRoutes_PressReleasesQueryResponse;
-    readonly variables: pressRoutes_PressReleasesQueryVariables;
+  variables: pressRoutes_PressReleasesQuery$variables;
+  response: pressRoutes_PressReleasesQuery$data;
 };
-
-
-
-/*
-query pressRoutes_PressReleasesQuery {
-  page(id: "news-and-press-releases") @principalField {
-    ...PressApp_page
-    id
-  }
-}
-
-fragment PressApp_page on Page {
-  internalID
-  name
-  content(format: HTML)
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -130,5 +119,7 @@ return {
   }
 };
 })();
-(node as any).hash = '61a3ee7d1b971c6f537512f2539921f0';
+
+(node as any).hash = "61a3ee7d1b971c6f537512f2539921f0";
+
 export default node;

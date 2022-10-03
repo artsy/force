@@ -14,13 +14,13 @@ import {
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavedSearchAlertListItem_item } from "__generated__/SavedSearchAlertListItem_item.graphql"
+import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "../types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
 interface SavedSearchAlertListItemProps {
-  item: SavedSearchAlertListItem_item
+  item: SavedSearchAlertListItem_item$data
   variant?: SavedSearchAlertListItemVariant
   onEditAlertClick: (entity: EditAlertEntity) => void
 }

@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<60411c3459c0adb2be93c3930ca9a2bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BankAccountPicker_me = {
-    readonly bankAccounts: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly last4: string;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "BankAccountPicker_me";
+export type BankAccountPicker_me$data = {
+  readonly bankAccounts: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly last4: string;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "BankAccountPicker_me";
 };
-export type BankAccountPicker_me$data = BankAccountPicker_me;
 export type BankAccountPicker_me$key = {
-    readonly " $data"?: BankAccountPicker_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"BankAccountPicker_me">;
+  readonly " $data"?: BankAccountPicker_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -86,5 +89,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '903c46229440013b8ff64bfcb566b4fe';
+
+(node as any).hash = "903c46229440013b8ff64bfcb566b4fe";
+
 export default node;

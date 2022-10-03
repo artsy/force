@@ -2,10 +2,10 @@ import * as React from "react"
 import { Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
 import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairAbout_fair } from "__generated__/FairAbout_fair.graphql"
+import { FairAbout_fair$data } from "__generated__/FairAbout_fair.graphql"
 
 interface FairAboutProps {
-  fair: FairAbout_fair
+  fair: FairAbout_fair$data
 }
 
 const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
@@ -15,6 +15,7 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
     <>
       <GridColumns mt={[2, 4]}>
         <Column span={6}>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairTimer fair={fair} />
         </Column>
 

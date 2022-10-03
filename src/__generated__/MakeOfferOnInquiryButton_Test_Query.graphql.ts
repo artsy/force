@@ -1,62 +1,27 @@
+/**
+ * @generated SignedSource<<be75680289b90aea6241490bca620d69>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MakeOfferOnInquiryButton_Test_QueryVariables = {};
-export type MakeOfferOnInquiryButton_Test_QueryResponse = {
-    readonly me: {
-        readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
-        } | null;
+export type MakeOfferOnInquiryButton_Test_Query$variables = {};
+export type MakeOfferOnInquiryButton_Test_Query$data = {
+  readonly me: {
+    readonly conversation: {
+      readonly " $fragmentSpreads": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
     } | null;
+  } | null;
 };
 export type MakeOfferOnInquiryButton_Test_Query = {
-    readonly response: MakeOfferOnInquiryButton_Test_QueryResponse;
-    readonly variables: MakeOfferOnInquiryButton_Test_QueryVariables;
+  variables: MakeOfferOnInquiryButton_Test_Query$variables;
+  response: MakeOfferOnInquiryButton_Test_Query$data;
 };
-
-
-
-/*
-query MakeOfferOnInquiryButton_Test_Query {
-  me {
-    conversation(id: "123") {
-      ...MakeOfferOnInquiryButton_conversation
-      id
-    }
-    id
-  }
-}
-
-fragment ConfirmArtworkButton_artwork on Artwork {
-  internalID
-}
-
-fragment MakeOfferOnInquiryButton_conversation on Conversation {
-  internalID
-  items {
-    liveArtwork {
-      __typename
-      ... on Artwork {
-        __typename
-        is_acquireable: isAcquireable
-        isEdition
-        editionSets {
-          internalID
-          id
-        }
-        ...ConfirmArtworkButton_artwork
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -300,5 +265,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f8635b99d18ab7f828182b1ec14da240';
+
+(node as any).hash = "f8635b99d18ab7f828182b1ec14da240";
+
 export default node;

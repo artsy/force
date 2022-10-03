@@ -1,109 +1,29 @@
+/**
+ * @generated SignedSource<<96284d8294840ed00263c401de8ef41d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerDedicatedArticlesQueryVariables = {
-    id: string;
-    first?: number | null | undefined;
-    page?: number | null | undefined;
+export type FairOrganizerDedicatedArticlesQuery$variables = {
+  id: string;
+  first?: number | null;
+  page?: number | null;
 };
-export type FairOrganizerDedicatedArticlesQueryResponse = {
-    readonly fairOrganizer: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerDedicatedArticles_fairOrganizer">;
-    } | null;
+export type FairOrganizerDedicatedArticlesQuery$data = {
+  readonly fairOrganizer: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerDedicatedArticles_fairOrganizer">;
+  } | null;
 };
 export type FairOrganizerDedicatedArticlesQuery = {
-    readonly response: FairOrganizerDedicatedArticlesQueryResponse;
-    readonly variables: FairOrganizerDedicatedArticlesQueryVariables;
+  variables: FairOrganizerDedicatedArticlesQuery$variables;
+  response: FairOrganizerDedicatedArticlesQuery$data;
 };
-
-
-
-/*
-query FairOrganizerDedicatedArticlesQuery(
-  $id: String!
-  $first: Int
-  $page: Int
-) {
-  fairOrganizer(id: $id) {
-    ...FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
-  slug
-  name
-  profile {
-    image {
-      url
-    }
-    id
-  }
-}
-
-fragment FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz on FairOrganizer {
-  slug
-  name
-  articlesConnection(first: $first, page: $page, sort: PUBLISHED_AT_DESC) {
-    totalCount
-    pageInfo {
-      hasNextPage
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        ...CellArticle_article
-        id
-      }
-    }
-  }
-  ...DedicatedArticlesBreadcrumbs_fairOrganizer
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -512,5 +432,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7d5f5fecdb00cb8621f33015d572702a';
+
+(node as any).hash = "7d5f5fecdb00cb8621f33015d572702a";
+
 export default node;

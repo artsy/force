@@ -1,57 +1,25 @@
+/**
+ * @generated SignedSource<<2aff40619970df09380888ddd907af5b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderGeneFragmentContainer_Test_QueryVariables = {};
-export type EntityHeaderGeneFragmentContainer_Test_QueryResponse = {
-    readonly gene: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
-    } | null;
+export type EntityHeaderGeneFragmentContainer_Test_Query$variables = {};
+export type EntityHeaderGeneFragmentContainer_Test_Query$data = {
+  readonly gene: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderGene_gene">;
+  } | null;
 };
 export type EntityHeaderGeneFragmentContainer_Test_Query = {
-    readonly response: EntityHeaderGeneFragmentContainer_Test_QueryResponse;
-    readonly variables: EntityHeaderGeneFragmentContainer_Test_QueryVariables;
+  variables: EntityHeaderGeneFragmentContainer_Test_Query$variables;
+  response: EntityHeaderGeneFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query EntityHeaderGeneFragmentContainer_Test_Query {
-  gene(id: "example") {
-    ...EntityHeaderGene_gene
-    id
-  }
-}
-
-fragment EntityHeaderGene_gene on Gene {
-  ...FollowGeneButton_gene
-  internalID
-  href
-  name
-  avatar: image {
-    cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
-      src
-      srcSet
-    }
-  }
-  filterArtworksConnection(first: 1) {
-    counts {
-      total
-    }
-    id
-  }
-}
-
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -322,5 +290,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9f3eaa15e0b5f7ff66469db07d3ae335';
+
+(node as any).hash = "9f3eaa15e0b5f7ff66469db07d3ae335";
+
 export default node;

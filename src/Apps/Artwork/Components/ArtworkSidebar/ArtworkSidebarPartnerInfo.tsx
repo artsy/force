@@ -2,7 +2,7 @@ import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
 import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FC } from "react"
-import { ArtworkSidebarPartnerInfo_artwork } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -11,7 +11,7 @@ import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 export interface ArtworkSidebarPartnerInfoProps {
-  artwork: ArtworkSidebarPartnerInfo_artwork
+  artwork: ArtworkSidebarPartnerInfo_artwork$data
 }
 
 const PartnerContainer = styled(Box)`

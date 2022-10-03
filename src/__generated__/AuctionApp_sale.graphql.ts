@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<7c3df99ff81ee51808e1a61a23b6e570>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionApp_sale = {
+export type AuctionApp_sale$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly isClosed: boolean | null;
+  readonly eligibleSaleArtworksCount: number | null;
+  readonly coverImage: {
+    readonly url: string | null;
+  } | null;
+  readonly showAssociatedSale: {
     readonly internalID: string;
-    readonly slug: string;
-    readonly isClosed: boolean | null;
-    readonly eligibleSaleArtworksCount: number | null;
-    readonly coverImage: {
-        readonly url: string | null;
-    } | null;
-    readonly showAssociatedSale: {
-        readonly internalID: string;
-    } | null;
-    readonly showBuyNowTab: {
-        readonly internalID: string;
-    } | null;
-    readonly cascadingEndTimeIntervalMinutes: number | null;
-    readonly extendedBiddingIntervalMinutes: number | null;
-    readonly status: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale" | "CascadingEndTimesBanner_sale">;
-    readonly " $refType": "AuctionApp_sale";
+  } | null;
+  readonly showBuyNowTab: {
+    readonly internalID: string;
+  } | null;
+  readonly cascadingEndTimeIntervalMinutes: number | null;
+  readonly extendedBiddingIntervalMinutes: number | null;
+  readonly status: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale" | "CascadingEndTimesBanner_sale">;
+  readonly " $fragmentType": "AuctionApp_sale";
 };
-export type AuctionApp_sale$data = AuctionApp_sale;
 export type AuctionApp_sale$key = {
-    readonly " $data"?: AuctionApp_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionApp_sale">;
+  readonly " $data"?: AuctionApp_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_sale">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -49,6 +52,31 @@ return {
   "metadata": null,
   "name": "AuctionApp_sale",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionMeta_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionAssociatedSale_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionBuyNowRail_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CascadingEndTimesBanner_sale"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -139,36 +167,13 @@ return {
       "kind": "ScalarField",
       "name": "status",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionMeta_sale"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionAssociatedSale_sale"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionBuyNowRail_sale"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_sale"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CascadingEndTimesBanner_sale"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 })();
-(node as any).hash = '2548ffc42b777c1adf49ec5cc14644f3';
+
+(node as any).hash = "2548ffc42b777c1adf49ec5cc14644f3";
+
 export default node;

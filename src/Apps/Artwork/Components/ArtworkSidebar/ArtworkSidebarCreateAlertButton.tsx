@@ -11,10 +11,10 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { AuthModalOptions } from "Utils/openAuthModal"
-import { ArtworkSidebarCreateAlertButton_artwork } from "__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
+import { ArtworkSidebarCreateAlertButton_artwork$data } from "__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
 
 interface ArtworkSidebarCreateAlertButtonProps {
-  artwork: ArtworkSidebarCreateAlertButton_artwork
+  artwork: ArtworkSidebarCreateAlertButton_artwork$data
 }
 
 const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> = ({

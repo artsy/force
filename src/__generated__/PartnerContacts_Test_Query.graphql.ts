@@ -1,98 +1,53 @@
+/**
+ * @generated SignedSource<<137a006572ea6445e18ce3e1696906e1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerContacts_Test_QueryVariables = {};
-export type PartnerContacts_Test_QueryResponse = {
-    readonly partner: {
-        readonly locations: {
-            readonly edges: ReadonlyArray<{
-                readonly " $fragmentRefs": FragmentRefs<"PartnerContacts_edges">;
-            } | null> | null;
-        } | null;
+export type PartnerContacts_Test_Query$variables = {};
+export type PartnerContacts_Test_Query$data = {
+  readonly partner: {
+    readonly locations: {
+      readonly edges: ReadonlyArray<{
+        readonly " $fragmentSpreads": FragmentRefs<"PartnerContacts_edges">;
+      } | null> | null;
     } | null;
+  } | null;
 };
-export type PartnerContacts_Test_QueryRawResponse = {
-    readonly partner: ({
-        readonly locations: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly city: string | null;
-                    readonly phone: string | null;
-                    readonly state: string | null;
-                    readonly address: string | null;
-                    readonly address2: string | null;
-                    readonly postalCode: string | null;
-                    readonly displayCountry: string | null;
-                    readonly coordinates: ({
-                        readonly lat: number | null;
-                        readonly lng: number | null;
-                    }) | null;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type PartnerContacts_Test_Query$rawResponse = {
+  readonly partner: {
+    readonly locations: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+          readonly city: string | null;
+          readonly phone: string | null;
+          readonly state: string | null;
+          readonly address: string | null;
+          readonly address2: string | null;
+          readonly postalCode: string | null;
+          readonly displayCountry: string | null;
+          readonly coordinates: {
+            readonly lat: number | null;
+            readonly lng: number | null;
+          } | null;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type PartnerContacts_Test_Query = {
-    readonly response: PartnerContacts_Test_QueryResponse;
-    readonly variables: PartnerContacts_Test_QueryVariables;
-    readonly rawResponse: PartnerContacts_Test_QueryRawResponse;
+  variables: PartnerContacts_Test_Query$variables;
+  response: PartnerContacts_Test_Query$data;
+  rawResponse: PartnerContacts_Test_Query$rawResponse;
 };
-
-
-
-/*
-query PartnerContacts_Test_Query {
-  partner(id: "white-cube") {
-    locations: locationsConnection(first: 50) {
-      edges {
-        ...PartnerContacts_edges
-      }
-    }
-    id
-  }
-}
-
-fragment PartnerContactAddress_location on Location {
-  city
-  phone
-  state
-  address
-  address2
-  postalCode
-  displayCountry
-}
-
-fragment PartnerContactCard_location on Location {
-  ...PartnerContactAddress_location
-  ...PartnerContactMap_location
-}
-
-fragment PartnerContactMap_location on Location {
-  city
-  phone
-  state
-  address
-  address2
-  postalCode
-  displayCountry
-  coordinates {
-    lat
-    lng
-  }
-}
-
-fragment PartnerContacts_edges on LocationEdge {
-  node {
-    id
-    ...PartnerContactCard_location
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -365,5 +320,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'eea07b8b392182a999f7f230b1b048aa';
+
+(node as any).hash = "eea07b8b392182a999f7f230b1b048aa";
+
 export default node;

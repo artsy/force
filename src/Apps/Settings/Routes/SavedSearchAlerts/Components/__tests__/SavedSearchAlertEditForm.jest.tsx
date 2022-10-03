@@ -58,6 +58,7 @@ describe("SavedSearchAlertEditForm", () => {
     Component: props => {
       return (
         <MockBoot breakpoint="lg">
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
             viewer={props.viewer!}

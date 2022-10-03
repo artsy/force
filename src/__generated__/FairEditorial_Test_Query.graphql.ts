@@ -1,64 +1,25 @@
+/**
+ * @generated SignedSource<<58e396b8798c86d810d95ac6c4d2b8d3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorial_Test_QueryVariables = {};
-export type FairEditorial_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair">;
-    } | null;
+export type FairEditorial_Test_Query$variables = {};
+export type FairEditorial_Test_Query$data = {
+  readonly fair: {
+    readonly " $fragmentSpreads": FragmentRefs<"FairEditorial_fair">;
+  } | null;
 };
 export type FairEditorial_Test_Query = {
-    readonly response: FairEditorial_Test_QueryResponse;
-    readonly variables: FairEditorial_Test_QueryVariables;
+  variables: FairEditorial_Test_Query$variables;
+  response: FairEditorial_Test_Query$data;
 };
-
-
-
-/*
-query FairEditorial_Test_Query {
-  fair(id: "test") {
-    ...FairEditorial_fair
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment FairEditorialRailArticles_fair on Fair {
-  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-    edges {
-      node {
-        ...CellArticle_article
-        internalID
-        slug
-        id
-      }
-    }
-  }
-}
-
-fragment FairEditorial_fair on Fair {
-  ...FairEditorialRailArticles_fair
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -377,5 +338,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd98f3c96f4e8b360107eeda98c019c65';
+
+(node as any).hash = "d98f3c96f4e8b360107eeda98c019c65";
+
 export default node;

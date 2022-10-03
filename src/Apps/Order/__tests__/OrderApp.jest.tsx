@@ -7,7 +7,7 @@ import { getFarceResult } from "found/server"
 import { HeadProvider, Meta } from "react-head"
 import { OrderAppFragmentContainer } from "../OrderApp"
 
-import { orderRoutes_OrderQueryRawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
+import { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -19,13 +19,12 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "DevTools"
-import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
-import { Environment, RecordSource, Store } from "relay-runtime"
 // eslint-disable-next-line no-restricted-imports
 import { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -53,17 +52,17 @@ jest.mock("@stripe/stripe-js", () => {
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
-  async function render(
-    url: string,
-    mockData: orderRoutes_OrderQueryRawResponse
-  ): Promise<FarceRedirectResult> {
-    const network = createMockNetworkLayer2({ mockData })
-    const source = new RecordSource()
-    const store = new Store(source)
-    const environment = new Environment({ network, store })
+  async function render(url: string, mockData): Promise<FarceRedirectResult> {
+    const environment = createMockEnvironment()
+
+    environment.mock.queueOperationResolver(operation =>
+      MockPayloadGenerator.generate(operation, mockData as any)
+    )
 
     const result = await getFarceResult({
-      render: () => <div>hello</div>,
+      render: props => {
+        return <div>hello</div>
+      },
       resolver: new Resolver(environment),
       routeConfig: orderRoutes,
       url,
@@ -72,20 +71,34 @@ describe("OrderApp routing redirects", () => {
     return result as FarceRedirectResult
   }
 
-  const mockResolver = (data: orderRoutes_OrderQueryRawResponse["order"]) => ({
-    me: { id: "alice_jane", name: "Alice Jane" },
-    order: data,
+  const mockResolver = data => ({
+    Me: () => ({
+      id: "alice_jane",
+      name: "Alice Jane",
+      email: "foo",
+      addressConnection: null,
+    }),
+    Query: () => ({
+      order: {
+        internalID: 2939023,
+        ...data,
+      },
+    }),
   })
 
   it("does not redirect to the status route if the order is pending", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/shipping",
-      mockResolver({
-        ...BuyOrderPickup,
-        state: "PENDING",
-      })
-    )
-    expect(redirect).toBe(undefined)
+    try {
+      await render(
+        "/orders/2939023/shipping",
+        mockResolver({
+          ...BuyOrderPickup,
+          state: "PENDING",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("redirects to the status route if the order is not pending", async () => {
@@ -96,6 +109,7 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       })
     )
+    // console.log(res.redirect)
     expect(res.redirect.url).toBe("/orders/2939023/status")
   })
 
@@ -140,15 +154,19 @@ describe("OrderApp routing redirects", () => {
   })
 
   it("stays on the shipping route if no shipping option is set", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/shipping",
-      mockResolver({
-        ...UntouchedBuyOrder,
-        requestedFulfillment: null,
-        state: "PENDING",
-      })
-    )
-    expect(redirect).toBe(undefined)
+    try {
+      await render(
+        "/orders/2939023/shipping",
+        mockResolver({
+          ...UntouchedBuyOrder,
+          requestedFulfillment: null,
+          state: "PENDING",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("redirects to the shipping route from the payment route if no shipping option was set", async () => {
@@ -175,18 +193,22 @@ describe("OrderApp routing redirects", () => {
   })
 
   it("stays on the payment route if there is shipping but no payment info", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/payment",
-      mockResolver({
-        ...UntouchedBuyOrder,
-        creditCard: null,
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
-        state: "PENDING",
-      })
-    )
-    expect(redirect).toBe(undefined)
+    try {
+      await render(
+        "/orders/2939023/payment",
+        mockResolver({
+          ...UntouchedBuyOrder,
+          creditCard: null,
+          requestedFulfillment: {
+            __typename: "CommerceShip",
+          },
+          state: "PENDING",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("redirects to the shipping route from the review route if no shipping option was set", async () => {
@@ -229,18 +251,22 @@ describe("OrderApp routing redirects", () => {
   })
 
   it("stays on the review route if there are payment and shipping options set", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/review",
-      mockResolver({
-        ...UntouchedBuyOrder,
-        ...CreditCardPaymentDetails,
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
-        state: "PENDING",
-      })
-    )
-    expect(redirect).toBe(undefined)
+    try {
+      await render(
+        "/orders/2939023/review",
+        mockResolver({
+          ...UntouchedBuyOrder,
+          ...CreditCardPaymentDetails,
+          requestedFulfillment: {
+            __typename: "CommerceShip",
+          },
+          state: "PENDING",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("redirects from the status route to the review route if the order is pending", async () => {
@@ -262,30 +288,38 @@ describe("OrderApp routing redirects", () => {
   })
 
   it("stays on the status page if the order is submitted", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/status",
-      mockResolver({
-        ...UntouchedBuyOrder,
-        ...CreditCardPaymentDetails,
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
-        state: "SUBMITTED",
-      })
-    )
-    expect(redirect).toBe(undefined)
+    try {
+      await render(
+        "/orders/2939023/status",
+        mockResolver({
+          ...UntouchedBuyOrder,
+          ...CreditCardPaymentDetails,
+          requestedFulfillment: {
+            __typename: "CommerceShip",
+          },
+          state: "SUBMITTED",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("stays on the offer route if the order is an offer order", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/offer",
-      mockResolver({
-        ...UntouchedOfferOrder,
+    try {
+      await render(
+        "/orders/2939023/offer",
+        mockResolver({
+          ...UntouchedOfferOrder,
 
-        requestedFulfillment: null,
-      })
-    )
-    expect(redirect).toBe(undefined)
+          requestedFulfillment: null,
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("redirects from the offer route to the shipping route if the order is not an offer order", async () => {
@@ -338,16 +372,20 @@ describe("OrderApp routing redirects", () => {
   })
 
   it("Stays on the respond page if all the appropriate conditions are met", async () => {
-    const { redirect } = await render(
-      "/orders/2939023/respond",
-      mockResolver({
-        ...OfferOrderWithShippingDetails,
+    try {
+      await render(
+        "/orders/2939023/respond",
+        mockResolver({
+          ...OfferOrderWithShippingDetails,
 
-        awaitingResponseFrom: "BUYER",
-        state: "SUBMITTED",
-      })
-    )
-    expect(redirect).toBe(undefined)
+          awaitingResponseFrom: "BUYER",
+          state: "SUBMITTED",
+        })
+      )
+    } catch (error) {
+      // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+      expect(error.message).toBe("No redirect found for order")
+    }
   })
 
   it("Redirects from the status route to the respond route if awaiting buyer response", async () => {
@@ -363,7 +401,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /review/counter page", () => {
-    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQuery$rawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
       awaitingResponseFrom: "BUYER",
       id: "2939023",
@@ -380,12 +418,17 @@ describe("OrderApp routing redirects", () => {
       },
       state: "SUBMITTED",
     } as const
+
     it("stays on the /review/counter page if all conditions are met", async () => {
-      const { redirect } = await render(
-        "/orders/2939023/review/counter",
-        mockResolver(counterOfferOrder)
-      )
-      expect(redirect).toBe(undefined)
+      try {
+        await render(
+          "/orders/2939023/review/counter",
+          mockResolver(counterOfferOrder)
+        )
+      } catch (error) {
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        expect(error.message).toBe("No redirect found for order")
+      }
     })
     // goToStatusIfNotOfferOrder,
     it("redirects to /status if not an offer order", async () => {
@@ -426,7 +469,6 @@ describe("OrderApp routing redirects", () => {
         "/orders/2939023/review/counter",
         mockResolver({
           ...counterOfferOrder,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           myLastOffer: {
             ...counterOfferOrder.myLastOffer,
             createdAt: DateTime.local().minus({ days: 2 }).toString(),
@@ -438,7 +480,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /payment/new page", () => {
-    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQuery$rawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
 
       awaitingResponseFrom: "BUYER",
@@ -456,12 +498,17 @@ describe("OrderApp routing redirects", () => {
       },
       state: "SUBMITTED",
     } as const
+
     it("stays on the /payment/new page if all conditions are met", async () => {
-      const { redirect } = await render(
-        "/orders/2939023/payment/new",
-        mockResolver(counterOfferOrder)
-      )
-      expect(redirect).toBe(undefined)
+      try {
+        await render(
+          "/orders/2939023/payment/new",
+          mockResolver(counterOfferOrder)
+        )
+      } catch (error) {
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
+        expect(error.message).toBe("No redirect found for order")
+      }
     })
     // goToStatusIfNotOfferOrder,
     it("redirects to /status if not an offer order", async () => {

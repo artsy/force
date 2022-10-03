@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<89e56f194c78665fd6c6387cc993e274>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CuritorialRailsTabBar_viewer = {
-    readonly followedArtistsInAuction: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
+export type CuritorialRailsTabBar_viewer$data = {
+  readonly followedArtistsInAuction: {
+    readonly counts: {
+      readonly total: any | null;
     } | null;
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"MyBids_me">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"WorksByArtistsYouFollowRail_viewer" | "TrendingLotsRail_viewer" | "StandoutLotsRail_viewer">;
-    readonly " $refType": "CuritorialRailsTabBar_viewer";
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyBids_me">;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"WorksByArtistsYouFollowRail_viewer" | "TrendingLotsRail_viewer" | "StandoutLotsRail_viewer">;
+  readonly " $fragmentType": "CuritorialRailsTabBar_viewer";
 };
-export type CuritorialRailsTabBar_viewer$data = CuritorialRailsTabBar_viewer;
 export type CuritorialRailsTabBar_viewer$key = {
-    readonly " $data"?: CuritorialRailsTabBar_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CuritorialRailsTabBar_viewer">;
+  readonly " $data"?: CuritorialRailsTabBar_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CuritorialRailsTabBar_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -30,6 +33,21 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "CuritorialRailsTabBar_viewer",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "WorksByArtistsYouFollowRail_viewer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "TrendingLotsRail_viewer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "StandoutLotsRail_viewer"
+    },
     {
       "alias": "followedArtistsInAuction",
       "args": [
@@ -95,25 +113,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "WorksByArtistsYouFollowRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "TrendingLotsRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "StandoutLotsRail_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'dec059894c8e871c01abce1b469a5827';
+
+(node as any).hash = "dec059894c8e871c01abce1b469a5827";
+
 export default node;

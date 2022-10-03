@@ -1,11 +1,11 @@
 import { Flex, Label } from "@artsy/palette"
-import { Badge_artwork } from "__generated__/Badge_artwork.graphql"
+import { Badge_artwork$data } from "__generated__/Badge_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface BadgeProps {
-  artwork: Badge_artwork
+  artwork: Badge_artwork$data
   width?: number // for smaller images, we have a tweaked layout
 }
 

@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<db8c5fa8eba94a22689abb2535363024>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkAuctionResults_artist = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly auctionResultsConnection: {
-        readonly totalCount: number | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "MyCollectionArtworkAuctionResults_artist";
+export type MyCollectionArtworkAuctionResults_artist$data = {
+  readonly slug: string;
+  readonly internalID: string;
+  readonly auctionResultsConnection: {
+    readonly totalCount: number | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "MyCollectionArtworkAuctionResults_artist";
 };
-export type MyCollectionArtworkAuctionResults_artist$data = MyCollectionArtworkAuctionResults_artist;
 export type MyCollectionArtworkAuctionResults_artist$key = {
-    readonly " $data"?: MyCollectionArtworkAuctionResults_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
+  readonly " $data"?: MyCollectionArtworkAuctionResults_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -146,5 +149,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '2cd7b168dd283fbf308114ce44ad60ba';
+
+(node as any).hash = "2cd7b168dd283fbf308114ce44ad60ba";
+
 export default node;

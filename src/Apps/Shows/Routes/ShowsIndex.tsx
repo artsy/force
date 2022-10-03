@@ -8,16 +8,16 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowsIndex_featuredShows } from "__generated__/ShowsIndex_featuredShows.graphql"
-import { ShowsIndex_viewer } from "__generated__/ShowsIndex_viewer.graphql"
+import { ShowsIndex_featuredShows$data } from "__generated__/ShowsIndex_featuredShows.graphql"
+import { ShowsIndex_viewer$data } from "__generated__/ShowsIndex_viewer.graphql"
 import { ShowsFeaturedShowFragmentContainer } from "../Components/ShowsFeaturedShow"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
 import { ShowsMeta } from "../Components/ShowsMeta"
 import { ShowsCurrentShowsQueryRenderer } from "../Components/ShowsCurrentShows"
 
 interface ShowsIndexProps {
-  featuredShows: ShowsIndex_featuredShows
-  viewer: ShowsIndex_viewer
+  featuredShows: ShowsIndex_featuredShows$data
+  viewer: ShowsIndex_viewer$data
 }
 
 export const ShowsIndex: React.FC<ShowsIndexProps> = ({
@@ -31,6 +31,7 @@ export const ShowsIndex: React.FC<ShowsIndexProps> = ({
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsHeaderFragmentContainer viewer={viewer} />
 
         <Text as="h1" variant="xl">
@@ -44,6 +45,7 @@ export const ShowsIndex: React.FC<ShowsIndexProps> = ({
             return (
               <Column key={show.id} span={i < 2 ? 6 : 4}>
                 <ShowsFeaturedShowFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   show={show}
                   size={i < 2 ? "large" : "small"}
                 />

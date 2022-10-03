@@ -21,10 +21,10 @@ import {
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { SettingsSavesArtistsQuery } from "__generated__/SettingsSavesArtistsQuery.graphql"
-import { SettingsSavesArtists_me } from "__generated__/SettingsSavesArtists_me.graphql"
+import { SettingsSavesArtists_me$data } from "__generated__/SettingsSavesArtists_me.graphql"
 
 interface SettingsSavesArtistsProps {
-  me: SettingsSavesArtists_me
+  me: SettingsSavesArtists_me$data
   relay: RelayPaginationProp
 }
 
@@ -59,6 +59,7 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
               if (!artist) return null
 
               return (
+                // @ts-ignore RELAY UPGRADE 13
                 <ArtistRailFragmentContainer key={internalID} artist={artist} />
               )
             })}
@@ -156,6 +157,7 @@ export const SettingsSavesArtistsQueryRenderer = () => {
           return SETTINGS_SAVES_ARTISTS_PLACEHOLDER
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesArtistsPaginationContainer me={props.me} />
       }}
     />

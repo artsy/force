@@ -15,10 +15,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { ShowsHeader_viewer } from "__generated__/ShowsHeader_viewer.graphql"
+import { ShowsHeader_viewer$data } from "__generated__/ShowsHeader_viewer.graphql"
 
 interface ShowsHeaderProps {
-  viewer: ShowsHeader_viewer
+  viewer: ShowsHeader_viewer$data
 }
 
 const DEFAULT_CITIES = [

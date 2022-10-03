@@ -1,12 +1,12 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebar2Details_artwork } from "__generated__/ArtworkSidebar2Details_artwork.graphql"
+import { ArtworkSidebar2Details_artwork$data } from "__generated__/ArtworkSidebar2Details_artwork.graphql"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { ArtworkSidebar2ClassificationFragmentContainer } from "./ArtworkSidebar2Classification"
 import { ArtworkSidebar2AuthenticityCertificateFragmentContainer } from "./ArtworkSidebar2AuthenticityCertificate"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebar2DetailsProps {
-  artwork: ArtworkSidebar2Details_artwork
+  artwork: ArtworkSidebar2Details_artwork$data
 }
 
 const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
@@ -40,10 +40,12 @@ const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
       <Spacer mt={1} />
 
       {/* classification */}
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2ClassificationFragmentContainer artwork={artwork} />
       <Spacer mt={1} />
       {/* authenticity */}
       <ArtworkSidebar2AuthenticityCertificateFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
       />
       <Spacer mt={2} />

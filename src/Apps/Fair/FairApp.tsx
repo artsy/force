@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairApp_fair } from "__generated__/FairApp_fair.graphql"
+import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
@@ -29,7 +29,7 @@ import styled from "styled-components"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 
 interface FairAppProps {
-  fair: FairApp_fair
+  fair: FairApp_fair$data
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
@@ -68,8 +68,10 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   return (
     <StickyProvider>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairMetaFragmentContainer fair={fair} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairHeaderImageFragmentContainer fair={fair} />
 
       <Spacer mt={[1, 30]} />
@@ -84,6 +86,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             >
               <AppContainer>
                 <HorizontalPadding>
+                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <FairHeaderFragmentContainer fair={fair} stuck={stuck} />
 
                   <RouteTabs textAlign="center" flexGrow={1} fill>
@@ -125,6 +128,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                     </FairRouteTab>
                   </RouteTabs>
                   {match.location.pathname.includes("/exhibitors") && (
+                    // @ts-ignore RELAY UPGRADE 13
                     <ExhibitorsLetterNav fair={fair} />
                   )}
                 </HorizontalPadding>

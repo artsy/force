@@ -1,23 +1,26 @@
+/**
+ * @generated SignedSource<<eb32a9e1dc0444b206ca8cf4dd71f4fe>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InstitutionPartnershipsShows_orderedSet = {
-    readonly items: ReadonlyArray<{
-        readonly internalID?: string | undefined;
-        readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
-    } | null> | null;
-    readonly " $refType": "InstitutionPartnershipsShows_orderedSet";
+export type InstitutionPartnershipsShows_orderedSet$data = {
+  readonly items: ReadonlyArray<{
+    readonly internalID?: string;
+    readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
+  } | null> | null;
+  readonly " $fragmentType": "InstitutionPartnershipsShows_orderedSet";
 };
-export type InstitutionPartnershipsShows_orderedSet$data = InstitutionPartnershipsShows_orderedSet;
 export type InstitutionPartnershipsShows_orderedSet$key = {
-    readonly " $data"?: InstitutionPartnershipsShows_orderedSet$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"InstitutionPartnershipsShows_orderedSet">;
+  readonly " $data"?: InstitutionPartnershipsShows_orderedSet$data;
+  readonly " $fragmentSpreads": FragmentRefs<"InstitutionPartnershipsShows_orderedSet">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -59,5 +62,7 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = '9abad1fb8178f5116a85377d4da39f91';
+
+(node as any).hash = "9abad1fb8178f5116a85377d4da39f91";
+
 export default node;

@@ -2,12 +2,12 @@ import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
-import { ArtistCVRoute_viewer } from "__generated__/ArtistCVRoute_viewer.graphql"
+import { ArtistCVRoute_viewer$data } from "__generated__/ArtistCVRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
 import { useTranslation } from "react-i18next"
 
 interface ArtistCVRouteProps {
-  viewer: ArtistCVRoute_viewer
+  viewer: ArtistCVRoute_viewer$data
 }
 
 const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
@@ -19,16 +19,19 @@ const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mb={4} />}>
         <ArtistCVGroupRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.soloShows!}
           title={t("artistPage.cv.soloTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.groupShows!}
           title={t("artistPage.cv.groupTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.fairBooths!}
           title={t("artistPage.cv.fairTitle")}
         />

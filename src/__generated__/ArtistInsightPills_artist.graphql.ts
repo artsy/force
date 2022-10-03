@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<4a572aee3ef45bbca299196ff14abc2d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
-export type ArtistInsightPills_artist = {
-    readonly insightPills: ReadonlyArray<{
-        readonly kind: ArtistInsightKind | null;
-        readonly label: string;
-    }>;
-    readonly " $refType": "ArtistInsightPills_artist";
+import { FragmentRefs } from "relay-runtime";
+export type ArtistInsightPills_artist$data = {
+  readonly insightPills: ReadonlyArray<{
+    readonly kind: ArtistInsightKind | null;
+    readonly label: string;
+  }>;
+  readonly " $fragmentType": "ArtistInsightPills_artist";
 };
-export type ArtistInsightPills_artist$data = ArtistInsightPills_artist;
 export type ArtistInsightPills_artist$key = {
-    readonly " $data"?: ArtistInsightPills_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightPills_artist">;
+  readonly " $data"?: ArtistInsightPills_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightPills_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -66,5 +69,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '6925e3836284c99cee84746c41d43b56';
+
+(node as any).hash = "6925e3836284c99cee84746c41d43b56";
+
 export default node;

@@ -1,168 +1,27 @@
+/**
+ * @generated SignedSource<<6c7830a1a23373c71e1d958df9eae854>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsSavesProfilesQueryVariables = {
-    after?: string | null | undefined;
+export type SettingsSavesProfilesQuery$variables = {
+  after?: string | null;
 };
-export type SettingsSavesProfilesQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsSavesProfiles_me">;
-    } | null;
+export type SettingsSavesProfilesQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesProfiles_me">;
+  } | null;
 };
 export type SettingsSavesProfilesQuery = {
-    readonly response: SettingsSavesProfilesQueryResponse;
-    readonly variables: SettingsSavesProfilesQueryVariables;
+  variables: SettingsSavesProfilesQuery$variables;
+  response: SettingsSavesProfilesQuery$data;
 };
-
-
-
-/*
-query SettingsSavesProfilesQuery(
-  $after: String
-) {
-  me {
-    ...SettingsSavesProfiles_me_WGPvJ
-    id
-  }
-}
-
-fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
-  internalID
-  slug
-  name
-  fairsConnection {
-    totalCount
-  }
-  profile {
-    ...FollowProfileButton_profile
-    href
-    initials
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderFair_fair on Fair {
-  internalID
-  href
-  name
-  startAt(format: "MMM Do")
-  endAt(format: "MMM Do YYYY")
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-  profile {
-    ...FollowProfileButton_profile
-    initials
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment SettingsSavesProfiles_me_WGPvJ on Me {
-  followsAndSaves {
-    profilesConnection(first: 12, after: $after) {
-      totalCount
-      edges {
-        node {
-          internalID
-          profile {
-            name
-            href
-            avatar: image {
-              cropped(width: 45, height: 45) {
-                src
-                srcSet
-              }
-            }
-            owner {
-              __typename
-              ... on Partner {
-                ...EntityHeaderPartner_partner
-              }
-              ... on Fair {
-                ...EntityHeaderFair_fair
-              }
-              ... on FairOrganizer {
-                ...EntityHeaderFairOrganizer_fairOrganizer
-                id
-              }
-              ... on Node {
-                __isNode: __typename
-                id
-              }
-            }
-            id
-          }
-          id
-          __typename
-        }
-        cursor
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -707,5 +566,7 @@ return {
   }
 };
 })();
-(node as any).hash = '431c2bd98728d785b5cc91550d2f3e8f';
+
+(node as any).hash = "431c2bd98728d785b5cc91550d2f3e8f";
+
 export default node;

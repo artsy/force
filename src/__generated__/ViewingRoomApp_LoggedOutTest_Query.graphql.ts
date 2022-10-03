@@ -1,102 +1,49 @@
+/**
+ * @generated SignedSource<<d99cf3f15437525985f152774fa6d402>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomApp_LoggedOutTest_QueryVariables = {
-    slug: string;
+export type ViewingRoomApp_LoggedOutTest_Query$variables = {
+  slug: string;
 };
-export type ViewingRoomApp_LoggedOutTest_QueryResponse = {
-    readonly viewingRoom: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
+export type ViewingRoomApp_LoggedOutTest_Query$data = {
+  readonly viewingRoom: {
+    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomApp_viewingRoom">;
+  } | null;
+};
+export type ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
+  readonly viewingRoom: {
+    readonly title: string;
+    readonly href: string | null;
+    readonly pullQuote: string | null;
+    readonly image: {
+      readonly imageURLs: {
+        readonly normalized: string | null;
+      } | null;
     } | null;
-};
-export type ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
-    readonly viewingRoom: ({
-        readonly title: string;
-        readonly href: string | null;
-        readonly pullQuote: string | null;
-        readonly image: ({
-            readonly imageURLs: ({
-                readonly normalized: string | null;
-            }) | null;
-        }) | null;
-        readonly partner: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly id: string;
-            readonly internalID: string;
-        }) | null;
-        readonly distanceToOpen: string | null;
-        readonly distanceToClose: string | null;
-        readonly status: string;
-    }) | null;
+    readonly partner: {
+      readonly name: string | null;
+      readonly href: string | null;
+      readonly id: string;
+      readonly internalID: string;
+    } | null;
+    readonly distanceToOpen: string | null;
+    readonly distanceToClose: string | null;
+    readonly status: string;
+  } | null;
 };
 export type ViewingRoomApp_LoggedOutTest_Query = {
-    readonly response: ViewingRoomApp_LoggedOutTest_QueryResponse;
-    readonly variables: ViewingRoomApp_LoggedOutTest_QueryVariables;
-    readonly rawResponse: ViewingRoomApp_LoggedOutTest_QueryRawResponse;
+  variables: ViewingRoomApp_LoggedOutTest_Query$variables;
+  response: ViewingRoomApp_LoggedOutTest_Query$data;
+  rawResponse: ViewingRoomApp_LoggedOutTest_Query$rawResponse;
 };
-
-
-
-/*
-query ViewingRoomApp_LoggedOutTest_Query(
-  $slug: ID!
-) {
-  viewingRoom(id: $slug) {
-    ...ViewingRoomApp_viewingRoom
-  }
-}
-
-fragment ViewingRoomApp_viewingRoom on ViewingRoom {
-  ...ViewingRoomMeta_viewingRoom
-  ...ViewingRoomHeader_viewingRoom
-  ...ViewingRoomContentNotAccessible_viewingRoom
-  partner {
-    internalID
-    id
-  }
-  status
-}
-
-fragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {
-  status
-  partner {
-    href
-    id
-  }
-}
-
-fragment ViewingRoomHeader_viewingRoom on ViewingRoom {
-  image {
-    imageURLs {
-      normalized
-    }
-  }
-  title
-  partner {
-    name
-    href
-    id
-  }
-  distanceToOpen
-  distanceToClose
-  status
-}
-
-fragment ViewingRoomMeta_viewingRoom on ViewingRoom {
-  title
-  href
-  pullQuote
-  image {
-    imageURLs {
-      normalized
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -330,5 +277,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dfc577f53efdcc69719e07452e7cdc94';
+
+(node as any).hash = "dfc577f53efdcc69719e07452e7cdc94";
+
 export default node;

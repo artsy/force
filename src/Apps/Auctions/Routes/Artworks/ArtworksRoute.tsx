@@ -1,9 +1,9 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworksRoute_viewer } from "__generated__/ArtworksRoute_viewer.graphql"
+import { ArtworksRoute_viewer$data } from "__generated__/ArtworksRoute_viewer.graphql"
 
 interface ArtworksRouteProps {
-  viewer: ArtworksRoute_viewer
+  viewer: ArtworksRoute_viewer$data
 }
 
 const ArtworksRoute: React.FC<ArtworksRouteProps> = () => {

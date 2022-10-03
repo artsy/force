@@ -1,4 +1,4 @@
-import { Details_Test_QueryRawResponse } from "__generated__/Details_Test_Query.graphql"
+import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "../Details"
@@ -22,7 +22,7 @@ describe("Details", () => {
   let props
 
   const getWrapper = async (
-    response: Details_Test_QueryRawResponse["artwork"],
+    response: Details_Test_Query$rawResponse["artwork"],
     restProps?: {
       hideSaleInfo: boolean
       hidePartnerName: boolean
@@ -48,7 +48,7 @@ describe("Details", () => {
       `,
       mockData: {
         artwork: response,
-      } as Details_Test_QueryRawResponse,
+      } as Details_Test_Query$rawResponse,
     })
   }
 
@@ -480,7 +480,7 @@ describe("Details", () => {
   })
 })
 
-const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
+const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
   artists: [

@@ -1,39 +1,42 @@
+/**
+ * @generated SignedSource<<3aab1473cd9099a7eae5898314af8ed6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionApp_me = {
-    readonly internalID: string;
-    readonly showActiveBids: ReadonlyArray<{
-        readonly activeBid: {
-            readonly internalID: string;
-        } | null;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me" | "AuctionDetails_me">;
-    readonly " $refType": "AuctionApp_me";
+export type AuctionApp_me$data = {
+  readonly internalID: string;
+  readonly showActiveBids: ReadonlyArray<{
+    readonly activeBid: {
+      readonly internalID: string;
+    } | null;
+  } | null> | null;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me" | "AuctionDetails_me">;
+  readonly " $fragmentType": "AuctionApp_me";
 };
-export type AuctionApp_me$data = AuctionApp_me;
 export type AuctionApp_me$key = {
-    readonly " $data"?: AuctionApp_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionApp_me">;
+  readonly " $data"?: AuctionApp_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "kind": "Variable",
+  "name": "saleID",
+  "variableName": "saleID"
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-},
-v1 = {
-  "kind": "Variable",
-  "name": "saleID",
-  "variableName": "saleID"
 };
 return {
   "argumentDefinitions": [
@@ -47,7 +50,19 @@ return {
   "metadata": null,
   "name": "AuctionApp_me",
   "selections": [
-    (v0/*: any*/),
+    {
+      "args": [
+        (v0/*: any*/)
+      ],
+      "kind": "FragmentSpread",
+      "name": "AuctionActiveBids_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_me"
+    },
+    (v1/*: any*/),
     {
       "alias": "showActiveBids",
       "args": [
@@ -56,7 +71,7 @@ return {
           "name": "live",
           "value": true
         },
-        (v1/*: any*/)
+        (v0/*: any*/)
       ],
       "concreteType": "LotStanding",
       "kind": "LinkedField",
@@ -71,29 +86,19 @@ return {
           "name": "activeBid",
           "plural": false,
           "selections": [
-            (v0/*: any*/)
+            (v1/*: any*/)
           ],
           "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": [
-        (v1/*: any*/)
-      ],
-      "kind": "FragmentSpread",
-      "name": "AuctionActiveBids_me"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionDetails_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a977828908da87c19ce9bf21ddd97164';
+
+(node as any).hash = "a977828908da87c19ce9bf21ddd97164";
+
 export default node;

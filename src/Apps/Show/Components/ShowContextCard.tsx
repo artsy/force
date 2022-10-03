@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowContextCard_show } from "__generated__/ShowContextCard_show.graphql"
+import { ShowContextCard_show$data } from "__generated__/ShowContextCard_show.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "Apps/Fair/Components/FairHeader/FairTiming"
 import { FairCardFragmentContainer as FairCard } from "Components/FairCard"
 import { StyledLink } from "Components/Links/StyledLink"
@@ -27,7 +27,7 @@ import {
 } from "@artsy/cohesion"
 
 interface Props {
-  show: ShowContextCard_show
+  show: ShowContextCard_show$data
 }
 
 const CARD_FULL_MAX_WIDTH = 768

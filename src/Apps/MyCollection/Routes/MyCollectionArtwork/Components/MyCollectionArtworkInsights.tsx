@@ -1,14 +1,14 @@
 import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { MyCollectionArtworkInsights_artwork } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./MyCollectionArtworkDemandIndex"
 
 interface MyCollectionArtworkInsightsProps {
-  artwork: MyCollectionArtworkInsights_artwork
+  artwork: MyCollectionArtworkInsights_artwork$data
 }
 
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
@@ -31,22 +31,26 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
     <Join separator={<Spacer mt={[4, 6]} />}>
       {!!enableMyCollectionPhase4DemandIndex && (
         <MyCollectionArtworkDemandIndexFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
 
       {!!enableMyCollectionPhase4ArtistMarket && (
         <MyCollectionArtworkArtistMarketFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
 
       {!!enableMyCollectionPhase4Comparables && (
+        // @ts-ignore RELAY UPGRADE 13
         <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
       )}
 
       {!!enableMyCollectionPhase4AuctionResults && (
         <MyCollectionArtworkAuctionResultsFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={artwork?.artist!}
         />
       )}

@@ -1,217 +1,25 @@
+/**
+ * @generated SignedSource<<fef3926bb8855405465e0b8062cc569e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkImageBrowserTestQueryVariables = {};
-export type MyCollectionArtworkImageBrowserTestQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkImageBrowser_artwork">;
-    } | null;
+export type MyCollectionArtworkImageBrowserTestQuery$variables = {};
+export type MyCollectionArtworkImageBrowserTestQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkImageBrowser_artwork">;
+  } | null;
 };
 export type MyCollectionArtworkImageBrowserTestQuery = {
-    readonly response: MyCollectionArtworkImageBrowserTestQueryResponse;
-    readonly variables: MyCollectionArtworkImageBrowserTestQueryVariables;
+  variables: MyCollectionArtworkImageBrowserTestQuery$variables;
+  response: MyCollectionArtworkImageBrowserTestQuery$data;
 };
-
-
-
-/*
-query MyCollectionArtworkImageBrowserTestQuery {
-  artwork(id: "artwork-id") {
-    ...MyCollectionArtworkImageBrowser_artwork
-    id
-  }
-}
-
-fragment ArtworkActionsSaveButton_artwork on Artwork {
-  internalID
-  id
-  slug
-  title
-  sale {
-    isAuction
-    isClosed
-    id
-  }
-  is_saved: isSaved
-}
-
-fragment ArtworkActions_artwork on Artwork {
-  ...ArtworkActionsSaveButton_artwork
-  ...ArtworkSharePanel_artwork
-  ...ViewInRoom_artwork
-  artists {
-    name
-    id
-  }
-  date
-  dimensions {
-    cm
-  }
-  slug
-  image {
-    internalID
-    url(version: "larger")
-    height
-    width
-  }
-  downloadableImageUrl
-  is_downloadable: isDownloadable
-  is_hangable: isHangable
-  partner {
-    slug
-    id
-  }
-  title
-  sale {
-    is_closed: isClosed
-    is_auction: isAuction
-    id
-  }
-  is_saved: isSaved
-}
-
-fragment ArtworkImageBrowserLarge_artwork on Artwork {
-  ...ArtworkLightbox_artwork
-  ...ArtworkVideoPlayer_artwork
-  figures {
-    __typename
-    ... on Image {
-      type: __typename
-      internalID
-      isZoomable
-      ...DeepZoom_image
-    }
-    ... on Video {
-      type: __typename
-    }
-  }
-}
-
-fragment ArtworkImageBrowserSmall_artwork on Artwork {
-  ...ArtworkLightbox_artwork
-  ...ArtworkVideoPlayer_artwork
-  figures {
-    __typename
-    ... on Image {
-      ...DeepZoom_image
-      internalID
-      isZoomable
-      type: __typename
-    }
-    ... on Video {
-      type: __typename
-    }
-  }
-}
-
-fragment ArtworkImageBrowser_artwork on Artwork {
-  ...ArtworkActions_artwork
-  ...ArtworkImageBrowserSmall_artwork
-  ...ArtworkImageBrowserLarge_artwork
-  internalID
-  images {
-    width
-    height
-  }
-  figures {
-    __typename
-    ... on Image {
-      internalID
-      isDefault
-    }
-    ... on Video {
-      type: __typename
-    }
-  }
-}
-
-fragment ArtworkLightbox_artwork on Artwork {
-  formattedMetadata
-  images {
-    isDefault
-    placeholder: url(version: ["small", "medium"])
-    fallback: cropped(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      width
-      height
-      src
-      srcSet
-    }
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtworkSharePanel_artwork on Artwork {
-  href
-  images {
-    url
-  }
-  artworkMeta: meta {
-    share
-  }
-}
-
-fragment ArtworkVideoPlayer_artwork on Artwork {
-  figures {
-    __typename
-    ... on Video {
-      type: __typename
-      url
-      height
-      width
-    }
-  }
-}
-
-fragment DeepZoom_image on Image {
-  deepZoom {
-    Image {
-      xmlns
-      Url
-      Format
-      TileSize
-      Overlap
-      Size {
-        Width
-        Height
-      }
-    }
-  }
-}
-
-fragment MyCollectionArtworkImageBrowser_artwork on Artwork {
-  ...ArtworkImageBrowser_artwork
-  internalID
-  images {
-    width
-    height
-  }
-}
-
-fragment ViewInRoomArtwork_artwork on Artwork {
-  widthCm
-  heightCm
-  image {
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-}
-
-fragment ViewInRoom_artwork on Artwork {
-  ...ViewInRoomArtwork_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -973,5 +781,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'fbf148a105c0110b342a7eeb46543ba4';
+
+(node as any).hash = "fbf148a105c0110b342a7eeb46543ba4";
+
 export default node;

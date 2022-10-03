@@ -10,11 +10,11 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesHeader_artistSeries } from "__generated__/ArtistSeriesHeader_artistSeries.graphql"
+import { ArtistSeriesHeader_artistSeries$data } from "__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface ArtistSeriesHeaderProps {
-  artistSeries: ArtistSeriesHeader_artistSeries
+  artistSeries: ArtistSeriesHeader_artistSeries$data
 }
 
 const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({

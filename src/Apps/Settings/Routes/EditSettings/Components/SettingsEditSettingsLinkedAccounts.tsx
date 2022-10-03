@@ -16,12 +16,12 @@ import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
 import {
   AuthenticationProvider,
-  SettingsEditSettingsLinkedAccounts_me,
+  SettingsEditSettingsLinkedAccounts_me$data,
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
 import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
 
 interface SettingsEditSettingsLinkedAccountsProps {
-  me: SettingsEditSettingsLinkedAccounts_me
+  me: SettingsEditSettingsLinkedAccounts_me$data
 }
 
 const providerNames = ["Apple", "Facebook", "Google"]
@@ -101,7 +101,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
   Icon: React.FunctionComponent<IconProps>
-  me: SettingsEditSettingsLinkedAccounts_me
+  me: SettingsEditSettingsLinkedAccounts_me$data
   href?: string
   provider: AuthenticationProvider
 }

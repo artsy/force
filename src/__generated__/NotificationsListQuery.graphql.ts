@@ -1,77 +1,28 @@
+/**
+ * @generated SignedSource<<36061c78f70383dabb3e00d1cf22cb12>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
-export type NotificationsListQueryVariables = {
-    types?: Array<NotificationTypesEnum | null> | null | undefined;
+export type NotificationsListQuery$variables = {
+  types?: ReadonlyArray<NotificationTypesEnum | null> | null;
 };
-export type NotificationsListQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
-    } | null;
+export type NotificationsListQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
+  } | null;
 };
 export type NotificationsListQuery = {
-    readonly response: NotificationsListQueryResponse;
-    readonly variables: NotificationsListQueryVariables;
+  variables: NotificationsListQuery$variables;
+  response: NotificationsListQuery$data;
 };
-
-
-
-/*
-query NotificationsListQuery(
-  $types: [NotificationTypesEnum]
-) {
-  viewer {
-    ...NotificationsList_viewer_1OKkmt
-  }
-}
-
-fragment NotificationItem_item on Notification {
-  title
-  message
-  createdAt
-  targetHref
-  isUnread
-  notificationType
-  artworksConnection(first: 4) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        image {
-          thumb: cropped(width: 58, height: 58) {
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment NotificationsList_viewer_1OKkmt on Viewer {
-  notifications: notificationsConnection(first: 10, notificationTypes: $types) {
-    edges {
-      node {
-        internalID
-        ...NotificationItem_item
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -391,5 +342,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a93775d63acdbaeff5c73aff83d3d5d5';
+
+(node as any).hash = "a93775d63acdbaeff5c73aff83d3d5d5";
+
 export default node;

@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<e6cd0f76cc74b98ab2843672a31e190b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsCarouselCell_featuredLink = {
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly subtitle: string | null;
-    readonly href: string | null;
-    readonly entity: {
-        readonly internalID?: string | undefined;
-        readonly name?: string | null | undefined;
-        readonly formattedNationalityAndBirthday?: string | null | undefined;
+export type ArtistsCarouselCell_featuredLink$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly subtitle: string | null;
+  readonly href: string | null;
+  readonly entity: {
+    readonly internalID?: string;
+    readonly name?: string | null;
+    readonly formattedNationalityAndBirthday?: string | null;
+  } | null;
+  readonly image: {
+    readonly thumb: {
+      readonly width: number;
+      readonly height: number;
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly image: {
-        readonly thumb: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly " $refType": "ArtistsCarouselCell_featuredLink";
+  } | null;
+  readonly " $fragmentType": "ArtistsCarouselCell_featuredLink";
 };
-export type ArtistsCarouselCell_featuredLink$data = ArtistsCarouselCell_featuredLink;
 export type ArtistsCarouselCell_featuredLink$key = {
-    readonly " $data"?: ArtistsCarouselCell_featuredLink$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
+  readonly " $data"?: ArtistsCarouselCell_featuredLink$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -172,5 +175,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '838b882412b896847687e52367d5950f';
+
+(node as any).hash = "838b882412b896847687e52367d5950f";
+
 export default node;

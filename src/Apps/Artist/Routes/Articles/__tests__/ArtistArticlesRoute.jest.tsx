@@ -13,6 +13,7 @@ jest.mock("Components/Pagination", () => ({
 
 describe("ArtistArticlesRoute", () => {
   const { getWrapper } = setupTestWrapper<ArtistArticlesRoute_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistArticlesRouteFragmentContainer,
     query: graphql`
       query ArtistArticlesRoute_Test_Query @relay_test_operation {

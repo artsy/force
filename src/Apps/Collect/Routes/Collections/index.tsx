@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
-import { Collections_marketingCategories } from "__generated__/Collections_marketingCategories.graphql"
+import { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "Components/Seo"
 import { Meta, Title } from "react-head"
@@ -9,7 +9,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { getENV } from "Utils/getENV"
 
 interface CollectionsAppProps {
-  marketingCategories: Collections_marketingCategories
+  marketingCategories: Collections_marketingCategories$data
 }
 
 export const CollectionsApp: React.FC<CollectionsAppProps> = ({
@@ -49,6 +49,7 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
               return (
                 <CollectionsCategoryFragmentContainer
                   key={category.name + i}
+                  // @ts-ignore RELAY UPGRADE 13
                   category={category}
                 />
               )

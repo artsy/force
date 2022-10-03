@@ -7,7 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { Media } from "Utils/Responsive"
 import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-import { ArtworkDetailsAboutTheWorkFromPartner_artwork } from "__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
+import { ArtworkDetailsAboutTheWorkFromPartner_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
@@ -25,7 +25,7 @@ import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import track from "react-tracking"
 
 export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
-  artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork
+  artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork$data
 }
 
 @track(
@@ -120,6 +120,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
                 FollowButton={
                   showPartnerFollow && partner?.profile ? (
                     <FollowProfileButton
+                      // @ts-ignore RELAY UPGRADE 13
                       profile={partner.profile}
                       contextModule={ContextModule.aboutTheWork}
                       size="small"
