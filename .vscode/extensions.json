@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "artsy.artsy-studio-extension-pack",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "meta.relay"
   ]
 }
