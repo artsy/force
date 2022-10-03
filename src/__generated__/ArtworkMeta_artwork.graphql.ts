@@ -4,9 +4,11 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type Visibility = "DRAFT" | "LISTED" | "UNLISTED" | "%future added value";
 export type ArtworkMeta_artwork = {
     readonly href: string | null;
     readonly isShareable: boolean | null;
+    readonly visibilityLevel: Visibility | null;
     readonly metaImage: {
         readonly resized: {
             readonly width: number | null;
@@ -48,6 +50,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isShareable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "visibilityLevel",
       "storageKey": null
     },
     {
@@ -171,5 +180,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '06d9ed8a7f9afd95cb581cb3b5adee60';
+(node as any).hash = '6be028679ee447bd4aee10dab5159d41';
 export default node;
