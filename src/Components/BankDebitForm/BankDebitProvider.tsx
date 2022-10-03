@@ -8,7 +8,7 @@ import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.g
 import createLogger from "Utils/logger"
 import { Payment_order } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
-import { LoadingArea } from "../LoadingArea"
+import { LoadingArea } from "Components/LoadingArea"
 import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
@@ -125,6 +125,10 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
         borderBottom: "1px solid #C82400",
         color: "#000",
         boxShadow: "none",
+      },
+      ".TermsText": {
+        fontSize: "13px",
+        lineHeight: "20px",
       },
     },
   }
