@@ -11,9 +11,6 @@ export type ArtistCareerHighlights_artist = {
     readonly insightBadges: ReadonlyArray<{
         readonly __typename: string;
     }>;
-    readonly auctionResultsConnection: {
-        readonly totalCount: number | null;
-    } | null;
     readonly artistHighlights: {
         readonly partnersConnection: {
             readonly edges: ReadonlyArray<{
@@ -53,12 +50,7 @@ var v0 = [
     "name": "__typename",
     "storageKey": null
   }
-],
-v1 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 1
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -94,7 +86,10 @@ return {
           "kind": "Literal",
           "name": "kind",
           "value": [
-            "ACTIVE_SECONDARY_MARKET"
+            "ACTIVE_SECONDARY_MARKET",
+            "HIGH_AUCTION_RECORD",
+            "ARTSY_VANGUARD_YEAR",
+            "CRITICALLY_ACCLAIMED"
           ]
         }
       ],
@@ -103,37 +98,7 @@ return {
       "name": "insights",
       "plural": true,
       "selections": (v0/*: any*/),
-      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
-    },
-    {
-      "alias": null,
-      "args": [
-        (v1/*: any*/),
-        {
-          "kind": "Literal",
-          "name": "recordsTrusted",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "PRICE_AND_DATE_DESC"
-        }
-      ],
-      "concreteType": "AuctionResultConnection",
-      "kind": "LinkedField",
-      "name": "auctionResultsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\",\"HIGH_AUCTION_RECORD\",\"ARTSY_VANGUARD_YEAR\",\"CRITICALLY_ACCLAIMED\"])"
     },
     {
       "alias": "artistHighlights",
@@ -146,7 +111,11 @@ return {
         {
           "alias": null,
           "args": [
-            (v1/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 1
+            },
             {
               "kind": "Literal",
               "name": "partnerCategory",
@@ -274,5 +243,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a5be3acd46d6516fd2ac44432994b4b9';
+(node as any).hash = '1f04de8c288e1ae6f30a173581a797f5';
 export default node;

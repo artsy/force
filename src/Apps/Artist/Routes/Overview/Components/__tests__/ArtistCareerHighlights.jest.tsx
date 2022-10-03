@@ -40,7 +40,7 @@ describe("ArtistCareerHighlights", () => {
   it("renders Artist Badges correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        insights: [
+        insightBadges: [
           {
             label: "Active Secondary Market",
             entities: [],
