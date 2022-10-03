@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c329815b0fe16b1f222c6d837812d930>>
+ * @generated SignedSource<<6deb559421ed88e1cf5a6f6ec69e8778>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,9 +63,9 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type fairRoutes_FairArtworksQuery$variables = {
-  slug: string;
-  input?: FilterArtworksInput | null;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  input?: FilterArtworksInput | null;
+  slug: string;
 };
 export type fairRoutes_FairArtworksQuery$data = {
   readonly fair: {
@@ -73,8 +73,8 @@ export type fairRoutes_FairArtworksQuery$data = {
   } | null;
 };
 export type fairRoutes_FairArtworksQuery = {
-  variables: fairRoutes_FairArtworksQuery$variables;
   response: fairRoutes_FairArtworksQuery$data;
+  variables: fairRoutes_FairArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a512a9acb784f6197049dee9e3441059>>
+ * @generated SignedSource<<e460d04c0230b65adc72e1dd635a7d84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Badge_artwork$data = {
-  readonly is_biddable: boolean | null;
   readonly href: string | null;
+  readonly is_biddable: boolean | null;
   readonly sale: {
-    readonly is_preview: boolean | null;
     readonly display_timely_at: string | null;
+    readonly is_preview: boolean | null;
   } | null;
   readonly " $fragmentType": "Badge_artwork";
 };

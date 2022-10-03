@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1242615d36262aaf96cc0e2cbb81649e>>
+ * @generated SignedSource<<e19ff9850b7267b5fdc1a287741bde9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OfferHistoryItem_order$data = {
+  readonly currencyCode?: string;
+  readonly lastOffer?: {
+    readonly amount: string | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly internalID: string;
+    readonly note: string | null;
+    readonly shippingTotal: string | null;
+    readonly taxTotal: string | null;
+  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -32,21 +41,12 @@ export type OfferHistoryItem_order$data = {
   readonly offers?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
         readonly amount: string | null;
         readonly createdAt: string;
         readonly fromParticipant: CommerceOrderParticipantEnum | null;
+        readonly internalID: string;
       } | null;
     } | null> | null;
-  } | null;
-  readonly currencyCode?: string;
-  readonly lastOffer?: {
-    readonly internalID: string;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
-    readonly amount: string | null;
-    readonly shippingTotal: string | null;
-    readonly taxTotal: string | null;
-    readonly note: string | null;
   } | null;
   readonly " $fragmentType": "OfferHistoryItem_order";
 };

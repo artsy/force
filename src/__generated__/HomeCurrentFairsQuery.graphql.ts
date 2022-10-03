@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9466dd1a038f9efa59df987b26a06640>>
+ * @generated SignedSource<<b89ce51c4ae508dd92131a1840e62e25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type HomeCurrentFairsQuery$data = {
   } | null;
 };
 export type HomeCurrentFairsQuery = {
-  variables: HomeCurrentFairsQuery$variables;
   response: HomeCurrentFairsQuery$data;
+  variables: HomeCurrentFairsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

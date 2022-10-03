@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48f5cb812699cc8916ae0fd2a93404a4>>
+ * @generated SignedSource<<811fdfb175d63beae04841368e94e703>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShowsQuery$variables = {
-  first?: number | null;
   after?: string | null;
+  first?: number | null;
 };
 export type ShowsCurrentShowsQuery$data = {
   readonly viewer: {
@@ -20,8 +20,8 @@ export type ShowsCurrentShowsQuery$data = {
   } | null;
 };
 export type ShowsCurrentShowsQuery = {
-  variables: ShowsCurrentShowsQuery$variables;
   response: ShowsCurrentShowsQuery$data;
+  variables: ShowsCurrentShowsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

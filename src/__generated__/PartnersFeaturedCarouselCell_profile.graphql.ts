@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bae4b19a5770880608233b94a7d8794a>>
+ * @generated SignedSource<<5d26cc913e9a22a8331055954c3e5e9c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,27 +12,27 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarouselCell_profile$data = {
   readonly owner: {
-    readonly internalID?: string;
-    readonly href?: string | null;
-    readonly name?: string | null;
     readonly featuredShow?: {
-      readonly href: string | null;
-      readonly name: string | null;
-      readonly status: string | null;
-      readonly statusUpdate: string | null;
-      readonly startAt: string | null;
-      readonly endAt: string | null;
-      readonly isOnlineExclusive: boolean;
-      readonly location: {
-        readonly city: string | null;
-      } | null;
       readonly coverImage: {
         readonly resized: {
           readonly src: string;
           readonly srcSet: string;
         } | null;
       } | null;
+      readonly endAt: string | null;
+      readonly href: string | null;
+      readonly isOnlineExclusive: boolean;
+      readonly location: {
+        readonly city: string | null;
+      } | null;
+      readonly name: string | null;
+      readonly startAt: string | null;
+      readonly status: string | null;
+      readonly statusUpdate: string | null;
     } | null;
+    readonly href?: string | null;
+    readonly internalID?: string;
+    readonly name?: string | null;
   };
   readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   readonly " $fragmentType": "PartnersFeaturedCarouselCell_profile";

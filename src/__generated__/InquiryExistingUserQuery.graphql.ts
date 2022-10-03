@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebe99e403e3135b30e2e7c7ab59fbe5b>>
+ * @generated SignedSource<<392a17b4f4ccee1b6cf89db6ae7d4cf2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type InquiryExistingUserQuery$data = {
   } | null;
 };
 export type InquiryExistingUserQuery = {
-  variables: InquiryExistingUserQuery$variables;
   response: InquiryExistingUserQuery$data;
+  variables: InquiryExistingUserQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

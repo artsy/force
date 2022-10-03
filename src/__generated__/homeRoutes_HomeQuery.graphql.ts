@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73e00e105e0d63c4777a18d26cc61675>>
+ * @generated SignedSource<<3b7adf80163a56f792a30d9a2edae043>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type homeRoutes_HomeQuery$variables = {};
 export type homeRoutes_HomeQuery$data = {
-  readonly homePage: {
-    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_homePage">;
-  } | null;
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
   } | null;
+  readonly homePage: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_homePage">;
+  } | null;
 };
 export type homeRoutes_HomeQuery = {
-  variables: homeRoutes_HomeQuery$variables;
   response: homeRoutes_HomeQuery$data;
+  variables: homeRoutes_HomeQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

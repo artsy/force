@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ca1ed8fbb0df7e7bb9916f9ecc4cc73>>
+ * @generated SignedSource<<58fa2c63bcdb0fb995be069faa2ebc39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type FairsIndex_Test_Query$data = {
   } | null;
 };
 export type FairsIndex_Test_Query = {
-  variables: FairsIndex_Test_Query$variables;
   response: FairsIndex_Test_Query$data;
+  variables: FairsIndex_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

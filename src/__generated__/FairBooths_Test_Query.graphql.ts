@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91d6d63408866d8fc5f2b494c60469a9>>
+ * @generated SignedSource<<aa10c6b68c788e2d218d690fca042453>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type FairBooths_Test_Query$variables = {
-  id: string;
   first?: number | null;
+  id: string;
   page?: number | null;
   sort?: ShowSorts | null;
 };
@@ -23,8 +23,8 @@ export type FairBooths_Test_Query$data = {
   } | null;
 };
 export type FairBooths_Test_Query = {
-  variables: FairBooths_Test_Query$variables;
   response: FairBooths_Test_Query$data;
+  variables: FairBooths_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

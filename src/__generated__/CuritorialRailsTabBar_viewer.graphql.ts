@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89e56f194c78665fd6c6387cc993e274>>
+ * @generated SignedSource<<8c56eabf4227d756199f6fcb92a11fac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type CuritorialRailsTabBar_viewer$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"MyBids_me">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"WorksByArtistsYouFollowRail_viewer" | "TrendingLotsRail_viewer" | "StandoutLotsRail_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer" | "TrendingLotsRail_viewer" | "WorksByArtistsYouFollowRail_viewer">;
   readonly " $fragmentType": "CuritorialRailsTabBar_viewer";
 };
 export type CuritorialRailsTabBar_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c35cff711d26c88a69c03ba05cdf7fc5>>
+ * @generated SignedSource<<07db594942ef71d2bc6d8783ded403b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InsightsOverview_info$data = {
-  readonly artworksCount: number;
   readonly artistsCount: number;
+  readonly artworksCount: number;
   readonly " $fragmentType": "InsightsOverview_info";
 };
 export type InsightsOverview_info$key = {

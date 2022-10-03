@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b42e983ebd94d093b27fa643392cc4e>>
+ * @generated SignedSource<<4b24634be63cf09f3db3f3f8fda40a5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtists_fair$data = {
-  readonly internalID: string;
-  readonly slug: string;
   readonly followedArtistArtworks: {
     readonly edges: ReadonlyArray<{
       readonly artwork: {
@@ -22,6 +20,8 @@ export type FairFollowedArtists_fair$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly internalID: string;
+  readonly slug: string;
   readonly " $fragmentType": "FairFollowedArtists_fair";
 };
 export type FairFollowedArtists_fair$key = {

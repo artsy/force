@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf4484ecbcf2790bde4668677351d114>>
+ * @generated SignedSource<<52bb9ddfc72529d44b130a860c55e5ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,9 +19,6 @@ export type useDeleteBankAccountMutation$variables = {
 };
 export type useDeleteBankAccountMutation$data = {
   readonly deleteBankAccount: {
-    readonly me: {
-      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
-    } | null;
     readonly bankAccountOrError: {
       readonly bankAccount?: {
         readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
@@ -30,11 +27,14 @@ export type useDeleteBankAccountMutation$data = {
         readonly message: string;
       } | null;
     } | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
+    } | null;
   } | null;
 };
 export type useDeleteBankAccountMutation = {
-  variables: useDeleteBankAccountMutation$variables;
   response: useDeleteBankAccountMutation$data;
+  variables: useDeleteBankAccountMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

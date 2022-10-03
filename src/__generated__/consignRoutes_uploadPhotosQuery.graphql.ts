@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f6003b9ded4a9d1d521f0004bc8c705>>
+ * @generated SignedSource<<30a12ed647dcbeb7406a0d67f145ef2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,46 +12,46 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type consignRoutes_uploadPhotosQuery$variables = {
-  id?: string | null;
   externalId?: string | null;
+  id?: string | null;
   sessionID?: string | null;
 };
 export type consignRoutes_uploadPhotosQuery$data = {
   readonly submission: {
-    readonly externalId: string;
     readonly artist: {
       readonly internalID: string;
       readonly name: string | null;
     } | null;
-    readonly locationCity: string | null;
-    readonly locationCountry: string | null;
-    readonly locationState: string | null;
-    readonly locationPostalCode: string | null;
-    readonly locationCountryCode: string | null;
-    readonly year: string | null;
-    readonly title: string | null;
-    readonly medium: string | null;
-    readonly attributionClass: ConsignmentAttributionClass | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
-    readonly height: string | null;
-    readonly width: string | null;
-    readonly depth: string | null;
-    readonly dimensionsMetric: string | null;
-    readonly provenance: string | null;
     readonly assets: ReadonlyArray<{
+      readonly filename: string | null;
+      readonly geminiToken: string | null;
       readonly id: string;
       readonly imageUrls: any | null;
-      readonly geminiToken: string | null;
       readonly size: string | null;
-      readonly filename: string | null;
     } | null> | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly externalId: string;
+    readonly height: string | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationCountryCode: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationState: string | null;
+    readonly medium: string | null;
+    readonly provenance: string | null;
+    readonly title: string | null;
+    readonly width: string | null;
+    readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
   } | null;
 };
 export type consignRoutes_uploadPhotosQuery = {
-  variables: consignRoutes_uploadPhotosQuery$variables;
   response: consignRoutes_uploadPhotosQuery$data;
+  variables: consignRoutes_uploadPhotosQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

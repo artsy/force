@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba4ba8c174fde01239de0482cb2b1499>>
+ * @generated SignedSource<<0af300396727fbb7d87775397275033c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,31 +12,31 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = {
   readonly additional_information: string | null;
-  readonly sale: {
-    readonly isBenefit: boolean | null;
-    readonly isGalleryAuction: boolean | null;
-  } | null;
   readonly partner: {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly type: string | null;
     readonly href: string | null;
-    readonly name: string | null;
     readonly initials: string | null;
+    readonly internalID: string;
+    readonly is_default_profile_public: boolean | null;
     readonly locations: ReadonlyArray<{
       readonly city: string | null;
     } | null> | null;
-    readonly is_default_profile_public: boolean | null;
+    readonly name: string | null;
     readonly profile: {
-      readonly slug: string;
       readonly icon: {
         readonly cropped: {
           readonly src: string;
           readonly srcSet: string;
         } | null;
       } | null;
+      readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
+    readonly slug: string;
+    readonly type: string | null;
+  } | null;
+  readonly sale: {
+    readonly isBenefit: boolean | null;
+    readonly isGalleryAuction: boolean | null;
   } | null;
   readonly " $fragmentType": "ArtworkDetailsAboutTheWorkFromPartner_artwork";
 };

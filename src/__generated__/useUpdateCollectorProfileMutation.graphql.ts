@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5dbb3666ab230b12271f1418bba7b5b>>
+ * @generated SignedSource<<e89cde8dc7ac0aa0f8454520b6d6ac6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,8 +32,8 @@ export type useUpdateCollectorProfileMutation$data = {
   } | null;
 };
 export type useUpdateCollectorProfileMutation = {
-  variables: useUpdateCollectorProfileMutation$variables;
   response: useUpdateCollectorProfileMutation$data;
+  variables: useUpdateCollectorProfileMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18953e9953b84c1d2c43a4937c133d36>>
+ * @generated SignedSource<<1d7394fe059492a5a89ab616e5590f21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FairHeader_Test_Query$data = {
   } | null;
 };
 export type FairHeader_Test_Query = {
-  variables: FairHeader_Test_Query$variables;
   response: FairHeader_Test_Query$data;
+  variables: FairHeader_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

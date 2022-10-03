@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d81edb451ccef91358ffe8e1e33302ee>>
+ * @generated SignedSource<<27dd1b785f46826e2a5c846d4b947208>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,27 +11,27 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditFormQuery$variables = {
-  id: string;
   artistIds?: ReadonlyArray<string> | null;
+  id: string;
   withAggregations: boolean;
 };
 export type SavedSearchAlertEditFormQuery$data = {
-  readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
-  } | null;
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_me">;
-  } | null;
   readonly artistsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artistsConnection">;
   } | null;
   readonly artworksConnection?: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
   } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_me">;
+  } | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
+  } | null;
 };
 export type SavedSearchAlertEditFormQuery = {
-  variables: SavedSearchAlertEditFormQuery$variables;
   response: SavedSearchAlertEditFormQuery$data;
+  variables: SavedSearchAlertEditFormQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d13b6e342b12709ceb100aee1acb669>>
+ * @generated SignedSource<<cc3d53c000219ab9cd4b1006f2fd4d2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type artistRoutes_AuctionResultsQuery$variables = {
+  allowEmptyCreatedDates?: boolean | null;
   artistID: string;
-  organizations?: ReadonlyArray<string | null> | null;
   categories?: ReadonlyArray<string | null> | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
   createdAfterYear?: number | null;
   createdBeforeYear?: number | null;
-  allowEmptyCreatedDates?: boolean | null;
+  organizations?: ReadonlyArray<string | null> | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
 };
 export type artistRoutes_AuctionResultsQuery$data = {
   readonly artist: {
@@ -26,8 +26,8 @@ export type artistRoutes_AuctionResultsQuery$data = {
   } | null;
 };
 export type artistRoutes_AuctionResultsQuery = {
-  variables: artistRoutes_AuctionResultsQuery$variables;
   response: artistRoutes_AuctionResultsQuery$data;
+  variables: artistRoutes_AuctionResultsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

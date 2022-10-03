@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07f3dcab68dda23b4e358f076b2aa7f7>>
+ * @generated SignedSource<<6fea37c0f962a27f8dad0e494f07da65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ArtistInsightAchievements_Test_Query$data = {
   } | null;
 };
 export type ArtistInsightAchievements_Test_Query = {
-  variables: ArtistInsightAchievements_Test_Query$variables;
   response: ArtistInsightAchievements_Test_Query$data;
+  variables: ArtistInsightAchievements_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

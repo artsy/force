@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02817e6a7ebcfa51bd0996dfe28ee5ff>>
+ * @generated SignedSource<<adaaffc6589ab5ed2817bf55696f7e81>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditForm_artworksConnection$data = {
   readonly aggregations: ReadonlyArray<{
-    readonly slice: ArtworkAggregation | null;
     readonly counts: ReadonlyArray<{
       readonly count: number;
       readonly name: string;
       readonly value: string;
     } | null> | null;
+    readonly slice: ArtworkAggregation | null;
   } | null> | null;
   readonly " $fragmentType": "SavedSearchAlertEditForm_artworksConnection";
 };

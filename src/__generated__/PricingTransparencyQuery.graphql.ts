@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8881e43ef1c58e1c8f7c198e1b547e8>>
+ * @generated SignedSource<<c912f4830c5c1437946562b43179575c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type PricingTransparencyQuery$variables = {
-  saleId: string;
   artworkId: string;
   bidAmountMinor: number;
+  saleId: string;
 };
 export type PricingTransparencyQuery$data = {
   readonly artwork: {
@@ -32,8 +32,8 @@ export type PricingTransparencyQuery$data = {
   } | null;
 };
 export type PricingTransparencyQuery = {
-  variables: PricingTransparencyQuery$variables;
   response: PricingTransparencyQuery$data;
+  variables: PricingTransparencyQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

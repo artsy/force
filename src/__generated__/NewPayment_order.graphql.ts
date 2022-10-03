@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f211b65da98816e83eb64eb66fffefb6>>
+ * @generated SignedSource<<d3b4884f4776c003950c578a7122d10c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,26 +13,26 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NewPayment_order$data = {
   readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly stateExpiresAt: string | null;
-  readonly lineItems: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly artwork: {
-          readonly slug: string;
-          readonly artists: ReadonlyArray<{
-            readonly slug: string;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
     readonly note: string | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly artists: ReadonlyArray<{
+            readonly slug: string;
+          } | null> | null;
+          readonly slug: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly stateExpiresAt: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "NewPayment_order";
 };
 export type NewPayment_order$key = {

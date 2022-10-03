@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aee06f9dc89f65459281479df2c58412>>
+ * @generated SignedSource<<0557892c300a40896136141750eefd71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,31 +23,31 @@ export type PaymentRouteSetOrderPaymentMutation$variables = {
 export type PaymentRouteSetOrderPaymentMutation$data = {
   readonly commerceSetPayment: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly id: string;
-        readonly creditCard: {
-          readonly internalID: string;
-          readonly name: string | null;
-          readonly street1: string | null;
-          readonly street2: string | null;
-          readonly city: string | null;
-          readonly state: string | null;
-          readonly country: string | null;
-          readonly postal_code: string | null;
-        } | null;
-        readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
-      };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly creditCard: {
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly postal_code: string | null;
+          readonly state: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+        } | null;
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
       };
     };
   } | null;
 };
 export type PaymentRouteSetOrderPaymentMutation = {
-  variables: PaymentRouteSetOrderPaymentMutation$variables;
   response: PaymentRouteSetOrderPaymentMutation$data;
+  variables: PaymentRouteSetOrderPaymentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

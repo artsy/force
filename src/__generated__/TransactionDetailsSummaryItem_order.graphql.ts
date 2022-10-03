@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e172a9881a2cc37e65c16875def5222c>>
+ * @generated SignedSource<<7f3947b1920a76f7c8c798e4641626b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,23 @@ export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added v
 import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItem_order$data = {
   readonly __typename: string;
-  readonly requestedFulfillment: {
-    readonly __typename: string;
-  } | null;
+  readonly buyerTotal: string | null;
   readonly code: string;
+  readonly currencyCode: string;
+  readonly itemsTotal: string | null;
+  readonly lastOffer?: {
+    readonly amount: string | null;
+    readonly amountCents: number;
+    readonly buyerTotal: string | null;
+    readonly buyerTotalCents: number | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly internalID: string;
+    readonly note: string | null;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
+  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -39,39 +52,26 @@ export type TransactionDetailsSummaryItem_order$data = {
     } | null> | null;
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
+  readonly myLastOffer?: {
+    readonly amount: string | null;
+    readonly amountCents: number;
+    readonly buyerTotal: string | null;
+    readonly buyerTotalCents: number | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly internalID: string;
+    readonly note: string | null;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
+  } | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
   readonly shippingTotal: string | null;
   readonly shippingTotalCents: number | null;
   readonly taxTotal: string | null;
   readonly taxTotalCents: number | null;
-  readonly itemsTotal: string | null;
-  readonly buyerTotal: string | null;
-  readonly currencyCode: string;
-  readonly lastOffer?: {
-    readonly internalID: string;
-    readonly amount: string | null;
-    readonly amountCents: number;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-    readonly buyerTotal: string | null;
-    readonly buyerTotalCents: number | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
-    readonly note: string | null;
-  } | null;
-  readonly myLastOffer?: {
-    readonly internalID: string;
-    readonly amount: string | null;
-    readonly amountCents: number;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-    readonly buyerTotal: string | null;
-    readonly buyerTotalCents: number | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
-    readonly note: string | null;
-  } | null;
   readonly " $fragmentType": "TransactionDetailsSummaryItem_order";
 };
 export type TransactionDetailsSummaryItem_order$key = {

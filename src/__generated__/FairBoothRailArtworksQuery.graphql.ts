@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d678fad3f51bff87a5f07239bae6ddb5>>
+ * @generated SignedSource<<d427f51c160c76323d53727250c8eac4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type FairBoothRailArtworksQuery$data = {
   } | null;
 };
 export type FairBoothRailArtworksQuery = {
-  variables: FairBoothRailArtworksQuery$variables;
   response: FairBoothRailArtworksQuery$data;
+  variables: FairBoothRailArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

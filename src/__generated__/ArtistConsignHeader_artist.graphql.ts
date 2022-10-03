@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74bd3e674956456428b1e03d76c4b3c4>>
+ * @generated SignedSource<<416001504fff4b7fa622c36e9fd5ce07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignHeader_artist$data = {
-  readonly name: string | null;
   readonly href: string | null;
+  readonly name: string | null;
   readonly targetSupply: {
     readonly microfunnel: {
       readonly artworksConnection: {
@@ -20,10 +20,10 @@ export type ArtistConsignHeader_artist$data = {
           readonly node: {
             readonly image: {
               readonly cropped: {
-                readonly width: number;
                 readonly height: number;
                 readonly src: string;
                 readonly srcSet: string;
+                readonly width: number;
               } | null;
             } | null;
           } | null;

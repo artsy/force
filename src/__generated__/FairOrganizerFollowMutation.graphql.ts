@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<295a65531884076a5478c48578dd536d>>
+ * @generated SignedSource<<8264b7694a458ad2d36ed971d7a5385b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,8 +26,8 @@ export type FairOrganizerFollowMutation$data = {
   } | null;
 };
 export type FairOrganizerFollowMutation = {
-  variables: FairOrganizerFollowMutation$variables;
   response: FairOrganizerFollowMutation$data;
+  variables: FairOrganizerFollowMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

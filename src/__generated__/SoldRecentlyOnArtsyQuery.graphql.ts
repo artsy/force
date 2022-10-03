@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10241cb13e1c315a50408a2eae7ce768>>
+ * @generated SignedSource<<3f72f912a5a3bbcca2cdf76578f8c755>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SoldRecentlyOnArtsyQuery$data = {
   } | null;
 };
 export type SoldRecentlyOnArtsyQuery = {
-  variables: SoldRecentlyOnArtsyQuery$variables;
   response: SoldRecentlyOnArtsyQuery$data;
+  variables: SoldRecentlyOnArtsyQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

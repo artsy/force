@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fba2c182b143d444fc19dfc37acd4ef1>>
+ * @generated SignedSource<<eb6398c0d6fbb109c78fee07e2787f84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,24 +17,24 @@ export type AuctionCard_sale$data = {
       readonly srcSet: string;
     } | null;
   } | null;
-  readonly isBenefit: boolean | null;
-  readonly isGalleryAuction: boolean | null;
   readonly endAt: string | null;
   readonly href: string | null;
-  readonly slug: string;
+  readonly isBenefit: boolean | null;
+  readonly isClosed: boolean | null;
+  readonly isGalleryAuction: boolean | null;
   readonly isLiveOpen: boolean | null;
   readonly isPreview: boolean | null;
-  readonly liveStartAt: string | null;
-  readonly registrationStatus: {
-    readonly internalID: string;
-  } | null;
   readonly isRegistrationClosed: boolean | null;
+  readonly liveStartAt: string | null;
   readonly name: string | null;
-  readonly startAt: string | null;
-  readonly isClosed: boolean | null;
   readonly partner: {
     readonly name: string | null;
   } | null;
+  readonly registrationStatus: {
+    readonly internalID: string;
+  } | null;
+  readonly slug: string;
+  readonly startAt: string | null;
   readonly " $fragmentType": "AuctionCard_sale";
 };
 export type AuctionCard_sale$key = {

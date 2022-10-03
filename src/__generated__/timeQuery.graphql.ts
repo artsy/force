@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e54814cc8463b3a8fa8d26f1c31aa33>>
+ * @generated SignedSource<<0e7d1bad8bcea01a23160c3dbd702c94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type timeQuery$data = {
   } | null;
 };
 export type timeQuery = {
-  variables: timeQuery$variables;
   response: timeQuery$data;
+  variables: timeQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

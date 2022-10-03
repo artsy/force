@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94403db2e4b8f0f5ecbfded5f224c134>>
+ * @generated SignedSource<<070cd9b6540016b0adbc33727aade9c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,18 +12,28 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Collection_collection$data = {
+  readonly artworksConnection: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: ArtworkAggregation | null;
+    } | null> | null;
+    readonly counts?: {
+      readonly followedArtists: any | null;
+    } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Header_artworks" | "SeoProductsForArtworks_artworks">;
+  } | null;
+  readonly ascending_artworks: {
+    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
+  } | null;
+  readonly descending_artworks: {
+    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_descending_artworks">;
+  } | null;
   readonly description: string | null;
   readonly descriptionMarkdown: string | null;
-  readonly headerImage: string | null;
-  readonly slug: string;
-  readonly id: string;
-  readonly title: string;
-  readonly relatedCollections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"RelatedCollectionsRail_collections">;
-  }>;
-  readonly linkedCollections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubRails_linkedCollections">;
-  }>;
   readonly fallbackHeaderImage: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -33,27 +43,17 @@ export type Collection_collection$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly artworksConnection: {
-    readonly counts?: {
-      readonly followedArtists: any | null;
-    } | null;
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: ArtworkAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly value: string;
-        readonly name: string;
-        readonly count: number;
-      } | null> | null;
-    } | null> | null;
-    readonly " $fragmentSpreads": FragmentRefs<"Header_artworks" | "SeoProductsForArtworks_artworks">;
-  } | null;
-  readonly descending_artworks: {
-    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_descending_artworks">;
-  } | null;
-  readonly ascending_artworks: {
-    readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
-  } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"Header_collection" | "CollectionArtworksFilter_collection">;
+  readonly headerImage: string | null;
+  readonly id: string;
+  readonly linkedCollections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubRails_linkedCollections">;
+  }>;
+  readonly relatedCollections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"RelatedCollectionsRail_collections">;
+  }>;
+  readonly slug: string;
+  readonly title: string;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectionArtworksFilter_collection" | "Header_collection">;
   readonly " $fragmentType": "Collection_collection";
 };
 export type Collection_collection$key = {

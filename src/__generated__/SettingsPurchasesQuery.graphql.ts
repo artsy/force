@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1bf204288f2e1e4fdc99d8939cfc79d>>
+ * @generated SignedSource<<7f1f98d60cf6169609de5d3a4f058f27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type SettingsPurchasesQuery$variables = {
-  states?: ReadonlyArray<CommerceOrderStateEnum> | null;
-  first: number;
   after?: string | null;
+  first: number;
+  states?: ReadonlyArray<CommerceOrderStateEnum> | null;
 };
 export type SettingsPurchasesQuery$data = {
   readonly me: {
@@ -22,8 +22,8 @@ export type SettingsPurchasesQuery$data = {
   } | null;
 };
 export type SettingsPurchasesQuery = {
-  variables: SettingsPurchasesQuery$variables;
   response: SettingsPurchasesQuery$data;
+  variables: SettingsPurchasesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

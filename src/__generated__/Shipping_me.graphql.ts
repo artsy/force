@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50d613f69571c0a5886909e8c9940eaf>>
+ * @generated SignedSource<<4a36125efceb040b027da09caf9ef219>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_me$data = {
-  readonly name: string | null;
-  readonly email: string | null;
-  readonly id: string;
   readonly addressConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly id: string;
-        readonly internalID: string;
         readonly addressLine1: string;
         readonly addressLine2: string | null;
         readonly addressLine3: string | null;
         readonly city: string;
         readonly country: string;
+        readonly id: string;
+        readonly internalID: string;
         readonly isDefault: boolean;
         readonly name: string | null;
         readonly phoneNumber: string | null;
@@ -32,6 +29,9 @@ export type Shipping_me$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly email: string | null;
+  readonly id: string;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
   readonly " $fragmentType": "Shipping_me";
 };

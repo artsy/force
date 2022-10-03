@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cd00c45d5a9e42be57b21427c89442c>>
+ * @generated SignedSource<<765220d6fc61129fbc69f62a7a0ecf0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,71 +11,71 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMeta_artist$data = {
-  readonly slug: string;
-  readonly name: string | null;
-  readonly nationality: string | null;
-  readonly birthday: string | null;
-  readonly deathday: string | null;
-  readonly gender: string | null;
-  readonly href: string | null;
-  readonly meta: {
-    readonly description: string | null;
-  } | null;
   readonly alternate_names: ReadonlyArray<string | null> | null;
-  readonly image: {
-    readonly versions: ReadonlyArray<string | null> | null;
-    readonly large: string | null;
-    readonly square: string | null;
-  } | null;
-  readonly counts: {
-    readonly artworks: any | null;
-  } | null;
-  readonly blurb: string | null;
   readonly artworks_connection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly title: string | null;
+        readonly availability: string | null;
+        readonly category: string | null;
         readonly date: string | null;
         readonly description: string | null;
-        readonly category: string | null;
-        readonly price_currency: string | null;
+        readonly href: string | null;
+        readonly image: {
+          readonly large: string | null;
+          readonly small: string | null;
+        } | null;
         readonly listPrice: {
+          readonly __typename: "Money";
+          readonly currencyCode: string;
+          readonly major: number;
+        } | {
           readonly __typename: "PriceRange";
-          readonly minPrice: {
-            readonly major: number;
-            readonly currencyCode: string;
-          } | null;
           readonly maxPrice: {
             readonly major: number;
           } | null;
-        } | {
-          readonly __typename: "Money";
-          readonly major: number;
-          readonly currencyCode: string;
+          readonly minPrice: {
+            readonly currencyCode: string;
+            readonly major: number;
+          } | null;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
         } | null;
-        readonly availability: string | null;
-        readonly href: string | null;
-        readonly image: {
-          readonly small: string | null;
-          readonly large: string | null;
-        } | null;
         readonly partner: {
-          readonly name: string | null;
           readonly href: string | null;
+          readonly name: string | null;
           readonly profile: {
             readonly image: {
-              readonly small: string | null;
               readonly large: string | null;
+              readonly small: string | null;
             } | null;
           } | null;
         } | null;
+        readonly price_currency: string | null;
+        readonly title: string | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly birthday: string | null;
+  readonly blurb: string | null;
+  readonly counts: {
+    readonly artworks: any | null;
+  } | null;
+  readonly deathday: string | null;
+  readonly gender: string | null;
+  readonly href: string | null;
+  readonly image: {
+    readonly large: string | null;
+    readonly square: string | null;
+    readonly versions: ReadonlyArray<string | null> | null;
+  } | null;
+  readonly meta: {
+    readonly description: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly nationality: string | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
   readonly " $fragmentType": "ArtistMeta_artist";
 };

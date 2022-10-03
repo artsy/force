@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37ce2b2a14b7f032ffad2dfb9edabc87>>
+ * @generated SignedSource<<9ffdfe58f4eaf83f37d8f99b409a64cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar2_artwork$data = {
-  readonly slug: string;
-  readonly isSold: boolean | null;
+  readonly artists: ReadonlyArray<{
+    readonly internalID: string;
+  } | null> | null;
   readonly isAcquireable: boolean | null;
-  readonly isOfferable: boolean | null;
   readonly isInAuction: boolean | null;
-  readonly saleMessage: string | null;
+  readonly isOfferable: boolean | null;
+  readonly isSold: boolean | null;
   readonly sale: {
     readonly startAt: string | null;
   } | null;
   readonly saleArtwork: {
-    readonly lotID: string | null;
-    readonly extendedBiddingEndAt: string | null;
     readonly endAt: string | null;
+    readonly extendedBiddingEndAt: string | null;
+    readonly lotID: string | null;
   } | null;
-  readonly artists: ReadonlyArray<{
-    readonly internalID: string;
-  } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebar2ShippingInformation_artwork" | "ArtworkSidebar2PartnerInfo_artwork" | "ArtworkSidebar2CreateArtworkAlert_artwork" | "ArtworkSidebar2Links_artwork">;
+  readonly saleMessage: string | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2CreateArtworkAlert_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebar2Links_artwork" | "ArtworkSidebar2PartnerInfo_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
   readonly " $fragmentType": "ArtworkSidebar2_artwork";
 };
 export type ArtworkSidebar2_artwork$key = {

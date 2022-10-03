@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<99bd2ad5cc2022a3003134eb9036c509>>
+ * @generated SignedSource<<6e78d9358c27c1928c1adb92c33913ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkArtistSeries_artwork$data = {
   readonly internalID: string;
-  readonly slug: string;
   readonly seriesArtist: {
     readonly artistSeriesConnection: {
       readonly edges: ReadonlyArray<{
@@ -30,6 +29,7 @@ export type ArtworkArtistSeries_artwork$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
   readonly " $fragmentType": "ArtworkArtistSeries_artwork";
 };

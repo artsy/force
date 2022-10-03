@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de41f3c8c5fb01c2b4c91ac62cdf132e>>
+ * @generated SignedSource<<dd19fc1d9e6cbd3d91abd35f84f22b6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,26 +11,26 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner$data = {
-  readonly slug: string;
-  readonly partnerType: string | null;
-  readonly displayArtistsSection: boolean | null;
-  readonly displayWorksSection: boolean | null;
-  readonly counts: {
-    readonly eligibleArtworks: any | null;
-    readonly displayableShows: any | null;
-  } | null;
-  readonly locations: {
-    readonly totalCount: number | null;
-  } | null;
   readonly articles: {
     readonly totalCount: number | null;
   } | null;
-  readonly representedArtists: {
+  readonly counts: {
+    readonly displayableShows: any | null;
+    readonly eligibleArtworks: any | null;
+  } | null;
+  readonly displayArtistsSection: boolean | null;
+  readonly displayWorksSection: boolean | null;
+  readonly locations: {
     readonly totalCount: number | null;
   } | null;
   readonly notRepresentedArtists: {
     readonly totalCount: number | null;
   } | null;
+  readonly partnerType: string | null;
+  readonly representedArtists: {
+    readonly totalCount: number | null;
+  } | null;
+  readonly slug: string;
   readonly viewingRooms: {
     readonly totalCount: number | null;
   } | null;

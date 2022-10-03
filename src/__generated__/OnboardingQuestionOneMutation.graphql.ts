@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c977d1f58bffa3fef6404f2236f4444>>
+ * @generated SignedSource<<1c0ae3c662cb978212163a23ff62baf2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type OnboardingQuestionOneMutation$data = {
   } | null;
 };
 export type OnboardingQuestionOneMutation = {
-  variables: OnboardingQuestionOneMutation$variables;
   response: OnboardingQuestionOneMutation$data;
+  variables: OnboardingQuestionOneMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

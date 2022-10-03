@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c03a9be1a90ae03f6ad8fd8ae4700ad9>>
+ * @generated SignedSource<<ab01707dbef1da6f4a0522c0192c4118>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type AuthenticityCertificateTestQuery$data = {
   } | null;
 };
 export type AuthenticityCertificateTestQuery = {
-  variables: AuthenticityCertificateTestQuery$variables;
   response: AuthenticityCertificateTestQuery$data;
+  variables: AuthenticityCertificateTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

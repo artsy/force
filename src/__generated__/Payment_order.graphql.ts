@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdc99c744e9f7b8a8c3013dba62d8688>>
+ * @generated SignedSource<<dd8913ccea36dcfe2a3d25c0f8cdeb9c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,12 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_order$data = {
-  readonly bankAccountId: string | null;
   readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
-  readonly buyerTotalCents: number | null;
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly currencyCode: string;
+  readonly bankAccountId: string | null;
   readonly buyerTotal: string | null;
+  readonly buyerTotalCents: number | null;
+  readonly currencyCode: string;
+  readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -29,12 +28,13 @@ export type Payment_order$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly mode: CommerceOrderModeEnum | null;
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly paymentMethodDetails: {
-    readonly __typename: "CreditCard";
+    readonly __typename: "BankAccount";
     readonly id: string;
   } | {
-    readonly __typename: "BankAccount";
+    readonly __typename: "CreditCard";
     readonly id: string;
   } | {
     readonly __typename: "WireTransfer";
@@ -44,7 +44,7 @@ export type Payment_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_order" | "BankAccountPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
 export type Payment_order$key = {

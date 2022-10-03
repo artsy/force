@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e705e2d40eadeb219d8e43312b26a44f>>
+ * @generated SignedSource<<c06a3a8869bbb60e1e3fd128fbd4ba5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairCard_fair$data = {
-  readonly name: string | null;
   readonly image: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
   } | null;
+  readonly name: string | null;
   readonly " $fragmentType": "FairCard_fair";
 };
 export type FairCard_fair$key = {

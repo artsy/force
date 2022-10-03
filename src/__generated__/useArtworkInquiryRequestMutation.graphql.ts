@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89fd7baf3b60e01179c735eac7ac7eef>>
+ * @generated SignedSource<<dd6e507dea5adf1278b8e9e903f8129e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,18 +28,18 @@ export type useArtworkInquiryRequestMutation$data = {
   readonly submitInquiryRequestMutation: {
     readonly clientMutationId: string | null;
     readonly inquiryRequest: {
-      readonly internalID: string;
       readonly inquireable: {
         readonly internalID?: string;
-        readonly slug?: string;
         readonly price?: string | null;
+        readonly slug?: string;
       } | null;
+      readonly internalID: string;
     } | null;
   } | null;
 };
 export type useArtworkInquiryRequestMutation = {
-  variables: useArtworkInquiryRequestMutation$variables;
   response: useArtworkInquiryRequestMutation$data;
+  variables: useArtworkInquiryRequestMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

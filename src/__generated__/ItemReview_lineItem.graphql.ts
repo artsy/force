@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e224c06e80e327c04f1642f0678a256>>
+ * @generated SignedSource<<dc851d24abcc67626a6158ef0b56e6bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,28 +13,28 @@ import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem$data = {
   readonly artwork: {
     readonly artistNames: string | null;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly medium: string | null;
-    readonly dimensions: {
-      readonly in: string | null;
-      readonly cm: string | null;
-    } | null;
     readonly attribution_class: {
       readonly shortDescription: string | null;
     } | null;
+    readonly date: string | null;
+    readonly dimensions: {
+      readonly cm: string | null;
+      readonly in: string | null;
+    } | null;
+    readonly edition_sets: ReadonlyArray<{
+      readonly dimensions: {
+        readonly cm: string | null;
+        readonly in: string | null;
+      } | null;
+      readonly internalID: string;
+    } | null> | null;
     readonly image: {
       readonly resized: {
         readonly url: string;
       } | null;
     } | null;
-    readonly edition_sets: ReadonlyArray<{
-      readonly internalID: string;
-      readonly dimensions: {
-        readonly in: string | null;
-        readonly cm: string | null;
-      } | null;
-    } | null> | null;
+    readonly medium: string | null;
+    readonly title: string | null;
   } | null;
   readonly editionSetId: string | null;
   readonly " $fragmentType": "ItemReview_lineItem";

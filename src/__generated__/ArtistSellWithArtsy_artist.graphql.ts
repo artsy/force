@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c282a8b2d1a9d737a56d464c25ad07e>>
+ * @generated SignedSource<<c161f53aca7fc650462b489a956d0f4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSellWithArtsy_artist$data = {
-  readonly internalID: string;
-  readonly slug: string;
   readonly href: string | null;
-  readonly targetSupply: {
-    readonly isInMicrofunnel: boolean | null;
-  } | null;
   readonly image: {
     readonly resized: {
       readonly src: string;
     } | null;
+  } | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly targetSupply: {
+    readonly isInMicrofunnel: boolean | null;
   } | null;
   readonly " $fragmentType": "ArtistSellWithArtsy_artist";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<469214823baa9b3f4e1a9355a20625d4>>
+ * @generated SignedSource<<ccaa0812a41f75546bdf3a375bea7c22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type settingsRoutes_DeleteAccountRouteQuery$data = {
   } | null;
 };
 export type settingsRoutes_DeleteAccountRouteQuery = {
-  variables: settingsRoutes_DeleteAccountRouteQuery$variables;
   response: settingsRoutes_DeleteAccountRouteQuery$data;
+  variables: settingsRoutes_DeleteAccountRouteQuery$variables;
 };
 
 const node: ConcreteRequest = {

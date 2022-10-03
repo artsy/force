@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9c2f8fc00f6cd51ff81d5e4a45e119a>>
+ * @generated SignedSource<<08e835aef40ecbe7024102c4ba1853ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,9 +27,9 @@ export type ConfirmPasswordMutation$rawResponse = {
   } | null;
 };
 export type ConfirmPasswordMutation = {
-  variables: ConfirmPasswordMutation$variables;
-  response: ConfirmPasswordMutation$data;
   rawResponse: ConfirmPasswordMutation$rawResponse;
+  response: ConfirmPasswordMutation$data;
+  variables: ConfirmPasswordMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

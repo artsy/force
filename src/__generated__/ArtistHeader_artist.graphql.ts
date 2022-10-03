@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da2ef02c75b227ceb34e67cd75015253>>
+ * @generated SignedSource<<107ce15c0c1f10090a8c172d6929cbfa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,24 @@ export type ArtistHeader_artist$data = {
   readonly auctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly organization: string | null;
         readonly price_realized: {
           readonly display: string | null;
         } | null;
-        readonly organization: string | null;
         readonly sale_date: string | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly biographyBlurb: {
+    readonly credit: string | null;
+    readonly partnerID: string | null;
+    readonly text: string | null;
+  } | null;
+  readonly counts: {
+    readonly follows: any | null;
+    readonly forSaleArtworks: any | null;
+  } | null;
+  readonly formattedNationalityAndBirthday: string | null;
   readonly image: {
     readonly cropped: {
       readonly src: string;
@@ -29,19 +39,9 @@ export type ArtistHeader_artist$data = {
     } | null;
   } | null;
   readonly internalID: string;
-  readonly slug: string;
   readonly name: string | null;
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly counts: {
-    readonly follows: any | null;
-    readonly forSaleArtworks: any | null;
-  } | null;
-  readonly biographyBlurb: {
-    readonly credit: string | null;
-    readonly partnerID: string | null;
-    readonly text: string | null;
-  } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist" | "ArtistInsightPills_artist">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightPills_artist" | "FollowArtistButton_artist">;
   readonly " $fragmentType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$key = {

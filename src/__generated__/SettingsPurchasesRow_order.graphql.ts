@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbc16c58203390bcfb21a5c93e7844ba>>
+ * @generated SignedSource<<28bbcb1adfb02bcac61a3671d691730b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,34 +13,20 @@ export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchasesRow_order$data = {
-  readonly internalID: string;
-  readonly code: string;
-  readonly displayState: CommerceOrderDisplayStateEnum;
-  readonly state: CommerceOrderStateEnum;
-  readonly requestedFulfillment: {
-    readonly __typename: string;
-  } | null;
-  readonly paymentMethodDetails: {
-    readonly __typename: "CreditCard";
-    readonly lastDigits: string;
-  } | {
-    readonly __typename: "BankAccount";
-    readonly last4: string;
-  } | {
-    readonly __typename: "WireTransfer";
-    readonly isManualPayment: boolean;
-  } | {
-    // This will never be '%other', but we need some
-    // value in case none of the concrete values match.
-    readonly __typename: "%other";
-  } | null;
   readonly buyerTotal: string | null;
+  readonly code: string;
   readonly createdAt: string;
   readonly currencyCode: string;
+  readonly displayState: CommerceOrderDisplayStateEnum;
+  readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
+          readonly artistNames: string | null;
+          readonly artists: ReadonlyArray<{
+            readonly href: string | null;
+          } | null> | null;
           readonly href: string | null;
           readonly image: {
             readonly cropped: {
@@ -63,10 +49,6 @@ export type SettingsPurchasesRow_order$data = {
           } | null;
           readonly shippingOrigin: string | null;
           readonly title: string | null;
-          readonly artistNames: string | null;
-          readonly artists: ReadonlyArray<{
-            readonly href: string | null;
-          } | null> | null;
         } | null;
         readonly fulfillments: {
           readonly edges: ReadonlyArray<{
@@ -78,6 +60,24 @@ export type SettingsPurchasesRow_order$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "BankAccount";
+    readonly last4: string;
+  } | {
+    readonly __typename: "CreditCard";
+    readonly lastDigits: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "SettingsPurchasesRow_order";
 };
 export type SettingsPurchasesRow_order$key = {

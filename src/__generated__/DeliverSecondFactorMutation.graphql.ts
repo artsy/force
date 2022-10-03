@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3dd1cb2bb3961d261f133df43e2f15d>>
+ * @generated SignedSource<<4487b28bb34cf11f0debc6ff0e7c9c8a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,14 +19,14 @@ export type DeliverSecondFactorMutation$variables = {
 export type DeliverSecondFactorMutation$data = {
   readonly deliverSecondFactor: {
     readonly secondFactorOrErrors: {
-      readonly __typename: "SmsSecondFactor";
-      readonly formattedPhoneNumber: string | null;
-    } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
+      readonly formattedPhoneNumber: string | null;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -37,23 +37,23 @@ export type DeliverSecondFactorMutation$data = {
 export type DeliverSecondFactorMutation$rawResponse = {
   readonly deliverSecondFactor: {
     readonly secondFactorOrErrors: {
-      readonly __typename: "SmsSecondFactor";
-      readonly formattedPhoneNumber: string | null;
-    } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
+      readonly formattedPhoneNumber: string | null;
     } | {
       readonly __typename: string;
     };
   } | null;
 };
 export type DeliverSecondFactorMutation = {
-  variables: DeliverSecondFactorMutation$variables;
-  response: DeliverSecondFactorMutation$data;
   rawResponse: DeliverSecondFactorMutation$rawResponse;
+  response: DeliverSecondFactorMutation$data;
+  variables: DeliverSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<889fc3b63fd59a456c006c2a6cdefa8a>>
+ * @generated SignedSource<<47f630b7da4fab5164408613f82aa635>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,42 +20,42 @@ export type EnableSecondFactorMutation$variables = {
 };
 export type EnableSecondFactorMutation$data = {
   readonly enableSecondFactor: {
+    readonly recoveryCodes: ReadonlyArray<string> | null;
     readonly secondFactorOrErrors: {
-      readonly __typename: "SmsSecondFactor";
-    } | {
       readonly __typename: "AppSecondFactor";
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-    readonly recoveryCodes: ReadonlyArray<string> | null;
   } | null;
 };
 export type EnableSecondFactorMutation$rawResponse = {
   readonly enableSecondFactor: {
+    readonly recoveryCodes: ReadonlyArray<string> | null;
     readonly secondFactorOrErrors: {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       readonly __typename: string;
     };
-    readonly recoveryCodes: ReadonlyArray<string> | null;
   } | null;
 };
 export type EnableSecondFactorMutation = {
-  variables: EnableSecondFactorMutation$variables;
-  response: EnableSecondFactorMutation$data;
   rawResponse: EnableSecondFactorMutation$rawResponse;
+  response: EnableSecondFactorMutation$data;
+  variables: EnableSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

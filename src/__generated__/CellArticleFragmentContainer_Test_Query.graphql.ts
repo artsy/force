@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc147ba84cf84bb183f75be985233d2e>>
+ * @generated SignedSource<<870250ccba91bef60e704542255bdc4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type CellArticleFragmentContainer_Test_Query$data = {
   } | null;
 };
 export type CellArticleFragmentContainer_Test_Query = {
-  variables: CellArticleFragmentContainer_Test_Query$variables;
   response: CellArticleFragmentContainer_Test_Query$data;
+  variables: CellArticleFragmentContainer_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

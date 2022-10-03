@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<553249b2392df75376fec6c56ab2f784>>
+ * @generated SignedSource<<61c3c0eeb947812b3c20223f39d8c3c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type FollowArtistPopoverQuery$data = {
   } | null;
 };
 export type FollowArtistPopoverQuery = {
-  variables: FollowArtistPopoverQuery$variables;
   response: FollowArtistPopoverQuery$data;
+  variables: FollowArtistPopoverQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

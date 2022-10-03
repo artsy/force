@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27efc3c8ea9b7d431e3859cf2e1689c3>>
+ * @generated SignedSource<<0dca8669b10bf2610e773955e8a33537>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,8 +30,8 @@ export type addAssetToConsignmentMutation$data = {
   } | null;
 };
 export type addAssetToConsignmentMutation = {
-  variables: addAssetToConsignmentMutation$variables;
   response: addAssetToConsignmentMutation$data;
+  variables: addAssetToConsignmentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

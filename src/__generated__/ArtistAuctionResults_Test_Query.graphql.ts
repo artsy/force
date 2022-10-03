@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eebd8a084367108f4397ea41188a477e>>
+ * @generated SignedSource<<07485f93e5f5d54ce0bbd51930685bc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,87 +20,87 @@ export type ArtistAuctionResults_Test_Query$data = {
 };
 export type ArtistAuctionResults_Test_Query$rawResponse = {
   readonly artist: {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly name: string | null;
     readonly auctionResultsConnection: {
       readonly createdYearRange: {
-        readonly startAt: number | null;
         readonly endAt: number | null;
+        readonly startAt: number | null;
       } | null;
-      readonly pageInfo: {
-        readonly hasNextPage: boolean;
-        readonly endCursor: string | null;
-      };
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly artist: {
+            readonly id: string;
+            readonly name: string | null;
+          } | null;
+          readonly boughtIn: boolean | null;
+          readonly categoryText: string | null;
+          readonly currency: string | null;
+          readonly date_text: string | null;
+          readonly dimension_text: string | null;
+          readonly estimate: {
+            readonly display: string | null;
+          } | null;
+          readonly id: string;
+          readonly images: {
+            readonly larger: {
+              readonly cropped: {
+                readonly height: number;
+                readonly src: string;
+                readonly srcSet: string;
+                readonly width: number;
+              } | null;
+            } | null;
+          } | null;
+          readonly mediumText: string | null;
+          readonly organization: string | null;
+          readonly performance: {
+            readonly mid: string | null;
+          } | null;
+          readonly price_realized: {
+            readonly cents_usd: number | null;
+            readonly display: string | null;
+            readonly display_usd: string | null;
+          } | null;
+          readonly saleDate: string | null;
+          readonly title: string | null;
+        } | null;
+      } | null> | null;
       readonly pageCursors: {
         readonly around: ReadonlyArray<{
           readonly cursor: string;
-          readonly page: number;
           readonly isCurrent: boolean;
+          readonly page: number;
         }>;
         readonly first: {
           readonly cursor: string;
-          readonly page: number;
           readonly isCurrent: boolean;
+          readonly page: number;
         } | null;
         readonly last: {
           readonly cursor: string;
-          readonly page: number;
           readonly isCurrent: boolean;
+          readonly page: number;
         } | null;
         readonly previous: {
           readonly cursor: string;
           readonly page: number;
         } | null;
       };
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+      };
       readonly totalCount: number | null;
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly title: string | null;
-          readonly dimension_text: string | null;
-          readonly organization: string | null;
-          readonly artist: {
-            readonly name: string | null;
-            readonly id: string;
-          } | null;
-          readonly images: {
-            readonly larger: {
-              readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-              } | null;
-            } | null;
-          } | null;
-          readonly mediumText: string | null;
-          readonly categoryText: string | null;
-          readonly date_text: string | null;
-          readonly saleDate: string | null;
-          readonly boughtIn: boolean | null;
-          readonly currency: string | null;
-          readonly price_realized: {
-            readonly display: string | null;
-            readonly display_usd: string | null;
-            readonly cents_usd: number | null;
-          } | null;
-          readonly performance: {
-            readonly mid: string | null;
-          } | null;
-          readonly estimate: {
-            readonly display: string | null;
-          } | null;
-          readonly id: string;
-        } | null;
-      } | null> | null;
     } | null;
     readonly id: string;
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
   } | null;
 };
 export type ArtistAuctionResults_Test_Query = {
-  variables: ArtistAuctionResults_Test_Query$variables;
-  response: ArtistAuctionResults_Test_Query$data;
   rawResponse: ArtistAuctionResults_Test_Query$rawResponse;
+  response: ArtistAuctionResults_Test_Query$data;
+  variables: ArtistAuctionResults_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

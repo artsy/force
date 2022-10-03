@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf3a3e56dfe6ec2356ba47fdd2f8541b>>
+ * @generated SignedSource<<f7149e3f544f84b1f6d945101481be83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPaymentsMethods_me$data = {
-  readonly creditCards: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly bankAccounts: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly creditCards: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
       } | null;
     } | null> | null;
   } | null;

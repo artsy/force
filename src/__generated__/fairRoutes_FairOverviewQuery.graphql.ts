@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82781326a57178c538a5736daba1422c>>
+ * @generated SignedSource<<382108e9078fc5fd0819e2a21b9dc425>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type fairRoutes_FairOverviewQuery$data = {
   } | null;
 };
 export type fairRoutes_FairOverviewQuery = {
-  variables: fairRoutes_FairOverviewQuery$variables;
   response: fairRoutes_FairOverviewQuery$data;
+  variables: fairRoutes_FairOverviewQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

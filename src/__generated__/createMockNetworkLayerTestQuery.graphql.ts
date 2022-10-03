@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6c7611037e3ca803e6f4a7c50440d93>>
+ * @generated SignedSource<<2b97017aca787650d5f01cc9444ea93e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type createMockNetworkLayerTestQuery$data = {
   } | null;
 };
 export type createMockNetworkLayerTestQuery = {
-  variables: createMockNetworkLayerTestQuery$variables;
   response: createMockNetworkLayerTestQuery$data;
+  variables: createMockNetworkLayerTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

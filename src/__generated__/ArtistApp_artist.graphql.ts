@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6861d1216c2bb6c72c5f84e04df030ee>>
+ * @generated SignedSource<<971bd69e1f7fa2b18eaa39b6648b12dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,26 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistApp_artist$data = {
-  readonly slug: string;
-  readonly statuses: {
-    readonly shows: boolean | null;
-    readonly cv: boolean | null;
-    readonly articles: boolean | null;
-    readonly artworks: boolean | null;
-    readonly auctionLots: boolean | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
   } | null;
   readonly counts: {
-    readonly forSaleArtworks: any | null;
     readonly auctionResults: number | null;
-  } | null;
-  readonly related: {
-    readonly genes: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly slug: string;
-        } | null;
-      } | null> | null;
-    } | null;
+    readonly forSaleArtworks: any | null;
   } | null;
   readonly highlights: {
     readonly artistPartnersConnection: {
@@ -46,12 +32,26 @@ export type ArtistApp_artist$data = {
   readonly insights: ReadonlyArray<{
     readonly type: string;
   }>;
-  readonly biographyBlurb: {
-    readonly text: string | null;
-  } | null;
   readonly internalID: string;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist" | "ArtistHeader_artist" | "BackLink_artist">;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly slug: string;
+  readonly statuses: {
+    readonly articles: boolean | null;
+    readonly artworks: boolean | null;
+    readonly auctionLots: boolean | null;
+    readonly cv: boolean | null;
+    readonly shows: boolean | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist" | "BackLink_artist">;
   readonly " $fragmentType": "ArtistApp_artist";
 };
 export type ArtistApp_artist$key = {

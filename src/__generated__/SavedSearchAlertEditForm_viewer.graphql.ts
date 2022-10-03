@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f73e0080612a8a914d94580ceeaefc6e>>
+ * @generated SignedSource<<cb132bb4510fdcdfd661b7c964229b69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,9 @@ export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added valu
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditForm_viewer$data = {
   readonly notificationPreferences: ReadonlyArray<{
-    readonly status: SubGroupStatus;
-    readonly name: string;
     readonly channel: string;
+    readonly name: string;
+    readonly status: SubGroupStatus;
   }>;
   readonly " $fragmentType": "SavedSearchAlertEditForm_viewer";
 };

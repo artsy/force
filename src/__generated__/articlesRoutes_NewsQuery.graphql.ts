@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e74dea5b57f45dfc0c220015de18fdb>>
+ * @generated SignedSource<<56f96255170e45c6aafc93e569d6c153>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type articlesRoutes_NewsQuery$data = {
   } | null;
 };
 export type articlesRoutes_NewsQuery = {
-  variables: articlesRoutes_NewsQuery$variables;
   response: articlesRoutes_NewsQuery$data;
+  variables: articlesRoutes_NewsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f26bdb5ea00177e9e2d0c36b1dba1bbb>>
+ * @generated SignedSource<<6f4dd71020ee7e43c4b60c6fcd55759a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,8 @@ export type useUpdateSettingsPasswordMutation$data = {
   } | null;
 };
 export type useUpdateSettingsPasswordMutation = {
-  variables: useUpdateSettingsPasswordMutation$variables;
   response: useUpdateSettingsPasswordMutation$data;
+  variables: useUpdateSettingsPasswordMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

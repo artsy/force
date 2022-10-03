@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<117f7d42b9f77fd35be3b7c694829d90>>
+ * @generated SignedSource<<e3d9c2829689330ba887b964c4c0d3fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type PollAccountBalanceQuery_Test_Query$data = {
   } | null;
 };
 export type PollAccountBalanceQuery_Test_Query = {
-  variables: PollAccountBalanceQuery_Test_Query$variables;
   response: PollAccountBalanceQuery_Test_Query$data;
+  variables: PollAccountBalanceQuery_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

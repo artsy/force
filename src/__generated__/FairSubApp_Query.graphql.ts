@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e11f44176f75ac0e20a987f71e32cc0f>>
+ * @generated SignedSource<<055802731dbe412c0f087e1645b334bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,23 +20,23 @@ export type FairSubApp_Query$data = {
 };
 export type FairSubApp_Query$rawResponse = {
   readonly fair: {
-    readonly name: string | null;
-    readonly slug: string;
+    readonly id: string;
     readonly metaDescription: string | null;
     readonly metaImage: {
       readonly src: string | null;
     } | null;
-    readonly id: string;
+    readonly name: string | null;
     readonly profile: {
       readonly __typename: "Profile";
       readonly id: string;
     } | null;
+    readonly slug: string;
   } | null;
 };
 export type FairSubApp_Query = {
-  variables: FairSubApp_Query$variables;
-  response: FairSubApp_Query$data;
   rawResponse: FairSubApp_Query$rawResponse;
+  response: FairSubApp_Query$data;
+  variables: FairSubApp_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

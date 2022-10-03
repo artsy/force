@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<434abe32dd73f30f5ff7a8a5a3e0a879>>
+ * @generated SignedSource<<a8384cb1080dec07b2c13d022cfdf587>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,15 +13,15 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesArtists_me$data = {
   readonly followsAndSaves: {
     readonly artistsConnection: {
-      readonly totalCount: number | null;
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly internalID: string;
           readonly artist: {
             readonly " $fragmentSpreads": FragmentRefs<"ArtistRail_artist">;
           } | null;
+          readonly internalID: string;
         } | null;
       } | null> | null;
+      readonly totalCount: number | null;
     } | null;
   } | null;
   readonly " $fragmentType": "SettingsSavesArtists_me";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9642bd3881eeca3cbb57b9abc1df0113>>
+ * @generated SignedSource<<5c9c86bd56d9584b6929b409a97b1fc8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsMediumModal_artwork$data = {
   readonly mediumType: {
-    readonly name: string | null;
     readonly longDescription: string | null;
+    readonly name: string | null;
   } | null;
   readonly " $fragmentType": "ArtworkDetailsMediumModal_artwork";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f46d43de8918954b4dbb1aa839d27632>>
+ * @generated SignedSource<<9599744647b1fbfc17ee3edade18990e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,8 +38,8 @@ export type CreateBankDebitSetupForOrderMutation$data = {
   } | null;
 };
 export type CreateBankDebitSetupForOrderMutation = {
-  variables: CreateBankDebitSetupForOrderMutation$variables;
   response: CreateBankDebitSetupForOrderMutation$data;
+  variables: CreateBankDebitSetupForOrderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

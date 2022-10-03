@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f99dbfd36e9433bc606f18b163f6d645>>
+ * @generated SignedSource<<5fa6c98da391ff659b472e7bcd0e71b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type AuctionApp_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionWorksByFollowedArtistsRail_viewer" | "AuctionCurrentAuctionsRail_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionCurrentAuctionsRail_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
   readonly " $fragmentType": "AuctionApp_viewer";
 };
 export type AuctionApp_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d9d7c7a9a76899481c07fe7821220fb>>
+ * @generated SignedSource<<852609d6f6535bea73a9d68e72065312>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCreateAlertButton_artwork$data = {
-  readonly slug: string;
-  readonly internalID: string;
-  readonly title: string | null;
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
     readonly name: string | null;
@@ -22,12 +19,15 @@ export type ArtworkSidebarCreateAlertButton_artwork$data = {
   readonly attributionClass: {
     readonly internalID: string;
   } | null;
+  readonly internalID: string;
   readonly mediumType: {
     readonly filterGene: {
-      readonly slug: string;
       readonly name: string | null;
+      readonly slug: string;
     } | null;
   } | null;
+  readonly slug: string;
+  readonly title: string | null;
   readonly " $fragmentType": "ArtworkSidebarCreateAlertButton_artwork";
 };
 export type ArtworkSidebarCreateAlertButton_artwork$key = {

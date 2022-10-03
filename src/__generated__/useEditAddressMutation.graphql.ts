@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc1109453d27736af03153c7e3032e8b>>
+ * @generated SignedSource<<8d86b252ff41b950a46e56abbb174758>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,17 +36,17 @@ export type useEditAddressMutation$data = {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
     } | null;
     readonly userAddressOrErrors: {
-      readonly internalID?: string;
       readonly errors?: ReadonlyArray<{
         readonly message: string;
       }>;
+      readonly internalID?: string;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
     };
   } | null;
 };
 export type useEditAddressMutation = {
-  variables: useEditAddressMutation$variables;
   response: useEditAddressMutation$data;
+  variables: useEditAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

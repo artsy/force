@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5a00aec4d7ba0905459bdd2eb70d78e>>
+ * @generated SignedSource<<31b55ebfe71aeb71f2fb8624c662e9fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,12 +16,12 @@ export type UserRegistrationAuctions_me$data = {
       readonly node: {
         readonly isRegistered: boolean | null;
         readonly sale: {
-          readonly id: string;
-          readonly name: string | null;
           readonly href: string | null;
-          readonly startAt: string | null;
+          readonly id: string;
           readonly isClosed: boolean | null;
           readonly isRegistrationClosed: boolean | null;
+          readonly name: string | null;
+          readonly startAt: string | null;
         } | null;
       } | null;
     } | null> | null;

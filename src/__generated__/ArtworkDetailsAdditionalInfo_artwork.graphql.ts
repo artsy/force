@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95ecd2fff0682054d46781a04356099c>>
+ * @generated SignedSource<<f329a8f8d6983db442a3bd100911bb89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,31 +11,31 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAdditionalInfo_artwork$data = {
-  readonly category: string | null;
-  readonly series: string | null;
-  readonly publisher: string | null;
-  readonly manufacturer: string | null;
-  readonly image_rights: string | null;
   readonly canRequestLotConditionsReport: boolean | null;
-  readonly internalID: string;
-  readonly framed: {
-    readonly label: string | null;
+  readonly category: string | null;
+  readonly certificateOfAuthenticity: {
     readonly details: string | null;
-  } | null;
-  readonly signatureInfo: {
     readonly label: string | null;
-    readonly details: string | null;
   } | null;
   readonly conditionDescription: {
-    readonly label: string | null;
     readonly details: string | null;
-  } | null;
-  readonly certificateOfAuthenticity: {
     readonly label: string | null;
-    readonly details: string | null;
   } | null;
+  readonly framed: {
+    readonly details: string | null;
+    readonly label: string | null;
+  } | null;
+  readonly image_rights: string | null;
+  readonly internalID: string;
+  readonly manufacturer: string | null;
   readonly mediumType: {
-    readonly __typename: string;
+    readonly __typename: "ArtworkMedium";
+  } | null;
+  readonly publisher: string | null;
+  readonly series: string | null;
+  readonly signatureInfo: {
+    readonly details: string | null;
+    readonly label: string | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
   readonly " $fragmentType": "ArtworkDetailsAdditionalInfo_artwork";

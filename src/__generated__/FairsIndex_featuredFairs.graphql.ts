@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e22b4ca61a3e1f795f09a77175118a2d>>
+ * @generated SignedSource<<0c116a3c97be57fad4ec846cc71f40b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_featuredFairs$data = ReadonlyArray<{
   readonly items: ReadonlyArray<{
-    readonly internalID?: string;
-    readonly title?: string | null;
     readonly image?: {
       readonly cropped: {
-        readonly width: number;
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
+        readonly width: number;
       } | null;
     } | null;
+    readonly internalID?: string;
+    readonly title?: string | null;
   } | null> | null;
   readonly " $fragmentType": "FairsIndex_featuredFairs";
 }>;

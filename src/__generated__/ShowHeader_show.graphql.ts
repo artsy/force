@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5018294d3246c5348a5e302ff9dffed>>
+ * @generated SignedSource<<cca88f8cdd0bfd2045c8881d12aec4f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowHeader_show$data = {
-  readonly name: string | null;
-  readonly startAt: string | null;
   readonly endAt: string | null;
-  readonly status: string | null;
-  readonly formattedStartAt: string | null;
   readonly formattedEndAt: string | null;
+  readonly formattedStartAt: string | null;
+  readonly name: string | null;
   readonly partner: {
     readonly name?: string | null;
   } | null;
+  readonly startAt: string | null;
+  readonly status: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"ShowContextualLink_show">;
   readonly " $fragmentType": "ShowHeader_show";
 };

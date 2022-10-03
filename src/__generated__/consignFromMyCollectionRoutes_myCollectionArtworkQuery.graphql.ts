@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ba4a1be465a56c8e4b9ed0787aaef36>>
+ * @generated SignedSource<<3c3f01a39671e9abffe39cee0683343b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type consignFromMyCollectionRoutes_myCollectionArtworkQuery$data = {
   } | null;
 };
 export type consignFromMyCollectionRoutes_myCollectionArtworkQuery = {
-  variables: consignFromMyCollectionRoutes_myCollectionArtworkQuery$variables;
   response: consignFromMyCollectionRoutes_myCollectionArtworkQuery$data;
+  variables: consignFromMyCollectionRoutes_myCollectionArtworkQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

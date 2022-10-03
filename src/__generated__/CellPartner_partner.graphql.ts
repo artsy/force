@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61f8c154d13e8043d54430155b07c309>>
+ * @generated SignedSource<<bf2dc0b88b32fcbefb3947ae5c1cfcb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellPartner_partner$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly name: string | null;
+  readonly categories: ReadonlyArray<{
+    readonly name: string | null;
+    readonly slug: string;
+  } | null> | null;
   readonly href: string | null;
   readonly initials: string | null;
+  readonly internalID: string;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -23,10 +25,7 @@ export type CellPartner_partner$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly categories: ReadonlyArray<{
-    readonly name: string | null;
-    readonly slug: string;
-  } | null> | null;
+  readonly name: string | null;
   readonly profile: {
     readonly image: {
       readonly cropped: {
@@ -36,6 +35,7 @@ export type CellPartner_partner$data = {
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   } | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   readonly " $fragmentType": "CellPartner_partner";
 };

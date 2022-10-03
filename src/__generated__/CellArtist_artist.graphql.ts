@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90d9bab6bb8ac9d9fddd9f0b53531d3a>>
+ * @generated SignedSource<<8856ab6e21c415526ff8f302454590b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtist_artist$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly name: string | null;
   readonly href: string | null;
-  readonly initials: string | null;
   readonly image: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
   } | null;
+  readonly initials: string | null;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "CellArtist_artist";
 };

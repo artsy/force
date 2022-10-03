@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6942087351ad901091d164a3a7038ea7>>
+ * @generated SignedSource<<7a13d4384042058ec93f4014dd1a7086>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,22 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FlatGridItem_artwork$data = {
+  readonly artistNames: string | null;
+  readonly href: string | null;
+  readonly image: {
+    readonly resized: {
+      readonly height: number | null;
+      readonly src: string;
+      readonly srcSet: string;
+      readonly width: number | null;
+    } | null;
+  } | null;
+  readonly image_title: string | null;
+  readonly internalID: string;
+  readonly is_saved: boolean | null;
   readonly sale: {
-    readonly extendedBiddingPeriodMinutes: number | null;
     readonly extendedBiddingIntervalMinutes: number | null;
+    readonly extendedBiddingPeriodMinutes: number | null;
     readonly startAt: string | null;
   } | null;
   readonly saleArtwork: {
@@ -21,20 +34,7 @@ export type FlatGridItem_artwork$data = {
     readonly extendedBiddingEndAt: string | null;
     readonly lotID: string | null;
   } | null;
-  readonly internalID: string;
   readonly title: string | null;
-  readonly image_title: string | null;
-  readonly image: {
-    readonly resized: {
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number | null;
-      readonly height: number | null;
-    } | null;
-  } | null;
-  readonly artistNames: string | null;
-  readonly href: string | null;
-  readonly is_saved: boolean | null;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "FlatGridItem_artwork";
 };

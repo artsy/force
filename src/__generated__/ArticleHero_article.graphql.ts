@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc3058c0304e50102388e320ecc7e424>>
+ * @generated SignedSource<<7baa6dffb6a1e7ff6f91db9e5f4b60f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleHero_article$data = {
-  readonly title: string | null;
-  readonly href: string | null;
-  readonly vertical: string | null;
   readonly byline: string | null;
   readonly hero: {
-    readonly layout?: ArticleFeatureSectionType;
     readonly embed?: string | null;
-    readonly media?: string | null;
     readonly image?: {
-      readonly url: string | null;
       readonly split: {
         readonly src: string;
         readonly srcSet: string;
@@ -30,8 +24,14 @@ export type ArticleHero_article$data = {
         readonly src: string;
         readonly srcSet: string;
       } | null;
+      readonly url: string | null;
     } | null;
+    readonly layout?: ArticleFeatureSectionType;
+    readonly media?: string | null;
   } | null;
+  readonly href: string | null;
+  readonly title: string | null;
+  readonly vertical: string | null;
   readonly " $fragmentType": "ArticleHero_article";
 };
 export type ArticleHero_article$key = {

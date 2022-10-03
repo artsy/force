@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70eb804e05d6fe537624b5b2116d98fb>>
+ * @generated SignedSource<<81d76e0308eb9510c6b384ac387898aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,14 @@ import { FragmentRefs } from "relay-runtime";
 export type PaymentMethodSummaryItem_order$data = {
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly paymentMethodDetails: {
-    readonly __typename: "CreditCard";
-    readonly brand: string;
-    readonly lastDigits: string;
-    readonly expirationYear: number;
-    readonly expirationMonth: number;
-  } | {
     readonly __typename: "BankAccount";
     readonly last4: string;
+  } | {
+    readonly __typename: "CreditCard";
+    readonly brand: string;
+    readonly expirationMonth: number;
+    readonly expirationYear: number;
+    readonly lastDigits: string;
   } | {
     readonly __typename: "WireTransfer";
     readonly isManualPayment: boolean;

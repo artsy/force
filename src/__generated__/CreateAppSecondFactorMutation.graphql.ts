@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76a5a2e9187600a7b0be01055498a7d4>>
+ * @generated SignedSource<<4411991557505da030a208f9f43a8575>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,14 +25,14 @@ export type CreateAppSecondFactorMutation$data = {
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
       readonly internalID: string;
-      readonly otpSecret: string | null;
-      readonly otpProvisioningURI: string | null;
       readonly name: string | null;
+      readonly otpProvisioningURI: string | null;
+      readonly otpSecret: string | null;
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       // This will never be '%other', but we need some
@@ -46,14 +46,14 @@ export type CreateAppSecondFactorMutation$rawResponse = {
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
       readonly internalID: string;
-      readonly otpSecret: string | null;
-      readonly otpProvisioningURI: string | null;
       readonly name: string | null;
+      readonly otpProvisioningURI: string | null;
+      readonly otpSecret: string | null;
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       readonly __typename: string;
@@ -61,9 +61,9 @@ export type CreateAppSecondFactorMutation$rawResponse = {
   } | null;
 };
 export type CreateAppSecondFactorMutation = {
-  variables: CreateAppSecondFactorMutation$variables;
-  response: CreateAppSecondFactorMutation$data;
   rawResponse: CreateAppSecondFactorMutation$rawResponse;
+  response: CreateAppSecondFactorMutation$data;
+  variables: CreateAppSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

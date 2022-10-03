@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9ec6fe4090361964f6ae80d61b29561>>
+ * @generated SignedSource<<c2a1d2298aae0cbaa4368651de789b03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,18 +16,47 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 import { FragmentRefs } from "relay-runtime";
 export type Status_order$data = {
   readonly __typename: string;
-  readonly internalID: string;
   readonly code: string;
   readonly displayState: CommerceOrderDisplayStateEnum;
-  readonly state: CommerceOrderStateEnum;
+  readonly internalID: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly fulfillments: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly courier: string;
+              readonly estimatedDelivery: string | null;
+              readonly trackingId: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+        readonly selectedShippingQuote: {
+          readonly typeName: string;
+        } | null;
+        readonly shipment: {
+          readonly carrierName: string | null;
+          readonly estimatedDeliveryWindow: string | null;
+          readonly trackingNumber: string | null;
+          readonly trackingUrl: string | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly mode: CommerceOrderModeEnum | null;
-  readonly source: CommerceOrderSourceEnum;
-  readonly stateReason: string | null;
-  readonly stateExpiresAt: string | null;
+  readonly myLastOffer?: {
+    readonly amount: string | null;
+    readonly amountCents: number;
+    readonly internalID: string;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
+  } | null;
   readonly requestedFulfillment: {
-    readonly __typename: "CommerceShip";
-  } | {
     readonly __typename: "CommercePickup";
+  } | {
+    readonly __typename: "CommerceShip";
   } | {
     readonly __typename: "CommerceShipArta";
   } | {
@@ -35,40 +64,11 @@ export type Status_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly lineItems: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly shipment: {
-          readonly trackingNumber: string | null;
-          readonly trackingUrl: string | null;
-          readonly carrierName: string | null;
-          readonly estimatedDeliveryWindow: string | null;
-        } | null;
-        readonly selectedShippingQuote: {
-          readonly typeName: string;
-        } | null;
-        readonly fulfillments: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly courier: string;
-              readonly trackingId: string | null;
-              readonly estimatedDelivery: string | null;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly myLastOffer?: {
-    readonly internalID: string;
-    readonly amount: string | null;
-    readonly amountCents: number;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-  } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
+  readonly source: CommerceOrderSourceEnum;
+  readonly state: CommerceOrderStateEnum;
+  readonly stateExpiresAt: string | null;
+  readonly stateReason: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Status_order";
 };
 export type Status_order$key = {

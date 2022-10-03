@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f4d654b8fb96e5f030757e72263cb7f>>
+ * @generated SignedSource<<4570c15dd8abfe8f723b29ba3bfb9112>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,19 +13,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkLightbox_artwork$data = {
   readonly formattedMetadata: string | null;
   readonly images: ReadonlyArray<{
-    readonly isDefault: boolean | null;
-    readonly placeholder: string | null;
     readonly fallback: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
+    readonly isDefault: boolean | null;
+    readonly placeholder: string | null;
     readonly resized: {
-      readonly width: number | null;
       readonly height: number | null;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number | null;
     } | null;
   } | null> | null;
   readonly " $fragmentType": "ArtworkLightbox_artwork";

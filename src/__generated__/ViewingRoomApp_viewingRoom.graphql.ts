@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac8d3ff7e058095fbd7c3a7597fa4922>>
+ * @generated SignedSource<<57685ff19f1920eb636289cab73e90c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type ViewingRoomApp_viewingRoom$data = {
     readonly internalID: string;
   } | null;
   readonly status: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomMeta_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomContentNotAccessible_viewingRoom">;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomContentNotAccessible_viewingRoom" | "ViewingRoomHeader_viewingRoom" | "ViewingRoomMeta_viewingRoom">;
   readonly " $fragmentType": "ViewingRoomApp_viewingRoom";
 };
 export type ViewingRoomApp_viewingRoom$key = {

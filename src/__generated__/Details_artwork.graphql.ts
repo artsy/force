@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<525df884aec7dd00ff92a9db735b9610>>
+ * @generated SignedSource<<3f9a1909c4c135824b8bfe42d529ff40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,46 +11,46 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork$data = {
-  readonly href: string | null;
-  readonly title: string | null;
-  readonly date: string | null;
-  readonly sale_message: string | null;
-  readonly cultural_maker: string | null;
   readonly artists: ReadonlyArray<{
-    readonly id: string;
     readonly href: string | null;
+    readonly id: string;
     readonly name: string | null;
   } | null> | null;
   readonly collecting_institution: string | null;
+  readonly cultural_maker: string | null;
+  readonly date: string | null;
+  readonly href: string | null;
   readonly partner: {
-    readonly name: string | null;
     readonly href: string | null;
+    readonly name: string | null;
   } | null;
   readonly sale: {
-    readonly endAt: string | null;
     readonly cascadingEndTimeIntervalMinutes: number | null;
+    readonly endAt: string | null;
     readonly extendedBiddingIntervalMinutes: number | null;
-    readonly startAt: string | null;
     readonly is_auction: boolean | null;
     readonly is_closed: boolean | null;
+    readonly startAt: string | null;
   } | null;
   readonly sale_artwork: {
-    readonly lotID: string | null;
-    readonly lotLabel: string | null;
-    readonly endAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
-    readonly formattedEndDateTime: string | null;
     readonly counts: {
       readonly bidder_positions: any | null;
     } | null;
+    readonly endAt: string | null;
+    readonly extendedBiddingEndAt: string | null;
+    readonly formattedEndDateTime: string | null;
     readonly highest_bid: {
       readonly display: string | null;
     } | null;
+    readonly lotID: string | null;
+    readonly lotLabel: string | null;
     readonly opening_bid: {
       readonly display: string | null;
     } | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"NewSaveButton_artwork" | "HoverDetails_artwork">;
+  readonly sale_message: string | null;
+  readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "NewSaveButton_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {

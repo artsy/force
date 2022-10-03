@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50ee788e1e165bb5712d65b16e2ae93d>>
+ * @generated SignedSource<<1c16a60cdc27939da2dcd047350f2428>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarMobileMenuAuthentication_me$data = {
-  readonly unreadNotificationsCount: number;
   readonly unreadConversationCount: number;
+  readonly unreadNotificationsCount: number;
   readonly " $fragmentType": "NavBarMobileMenuAuthentication_me";
 };
 export type NavBarMobileMenuAuthentication_me$key = {

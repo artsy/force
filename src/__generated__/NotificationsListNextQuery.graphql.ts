@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9353d50ffe0ed481596afaaa2a8ca447>>
+ * @generated SignedSource<<25f30ddc5a6c0dd1b9dfde3b6e5de2b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type NotificationsListNextQuery$data = {
   } | null;
 };
 export type NotificationsListNextQuery = {
-  variables: NotificationsListNextQuery$variables;
   response: NotificationsListNextQuery$data;
+  variables: NotificationsListNextQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

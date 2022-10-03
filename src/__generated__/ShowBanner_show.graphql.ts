@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a5a46a5a779874e3c89604f5b9b0b74>>
+ * @generated SignedSource<<de53e41ddb93299f9d9bbbd7275ed781>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,22 +11,22 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowBanner_show$data = {
-  readonly slug: string;
-  readonly name: string | null;
-  readonly href: string | null;
-  readonly isFairBooth: boolean | null;
-  readonly exhibitionPeriod: string | null;
-  readonly status: string | null;
-  readonly description: string | null;
-  readonly location: {
-    readonly city: string | null;
-  } | null;
   readonly coverImage: {
     readonly medium: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
   } | null;
+  readonly description: string | null;
+  readonly exhibitionPeriod: string | null;
+  readonly href: string | null;
+  readonly isFairBooth: boolean | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly slug: string;
+  readonly status: string | null;
   readonly " $fragmentType": "ShowBanner_show";
 };
 export type ShowBanner_show$key = {

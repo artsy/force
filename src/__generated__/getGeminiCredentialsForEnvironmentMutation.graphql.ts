@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e4d1e4ee9c50a5bb094842c41ebf576>>
+ * @generated SignedSource<<da33d425560534a68bcd3e2a0e8de17e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,24 +20,24 @@ export type getGeminiCredentialsForEnvironmentMutation$variables = {
 export type getGeminiCredentialsForEnvironmentMutation$data = {
   readonly requestCredentialsForAssetUpload: {
     readonly asset: {
-      readonly signature: string;
       readonly credentials: string;
-      readonly policyEncoded: string;
       readonly policyDocument: {
-        readonly expiration: string;
         readonly conditions: {
           readonly acl: string;
           readonly bucket: string;
           readonly geminiKey: string;
           readonly successActionStatus: string;
         };
+        readonly expiration: string;
       };
+      readonly policyEncoded: string;
+      readonly signature: string;
     } | null;
   } | null;
 };
 export type getGeminiCredentialsForEnvironmentMutation = {
-  variables: getGeminiCredentialsForEnvironmentMutation$variables;
   response: getGeminiCredentialsForEnvironmentMutation$data;
+  variables: getGeminiCredentialsForEnvironmentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

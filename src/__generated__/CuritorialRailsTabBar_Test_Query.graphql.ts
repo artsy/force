@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72ed7c3fa9b20ab14bf4b9ee1ad2ac0a>>
+ * @generated SignedSource<<715cfcc4592a53f23a5f41400e112af3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type CuritorialRailsTabBar_Test_Query$data = {
   } | null;
 };
 export type CuritorialRailsTabBar_Test_Query = {
-  variables: CuritorialRailsTabBar_Test_Query$variables;
   response: CuritorialRailsTabBar_Test_Query$data;
+  variables: CuritorialRailsTabBar_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

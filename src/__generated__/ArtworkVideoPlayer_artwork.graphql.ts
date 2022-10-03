@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e1b496c909a5a420f15cf584469db9d>>
+ * @generated SignedSource<<45230a1dccb53c79bfcd87720f7a9f28>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkVideoPlayer_artwork$data = {
   readonly figures: ReadonlyArray<{
+    readonly height: number;
     readonly type: "Video";
     readonly url: string;
-    readonly height: number;
     readonly width: number;
   } | {
     // This will never be '%other', but we need some

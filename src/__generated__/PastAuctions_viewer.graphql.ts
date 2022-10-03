@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80d28f0bbb55b38e496abf15be8d293d>>
+ * @generated SignedSource<<d30f68d7f18471cea5479544f5e1ef95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PastAuctions_viewer$data = {
   readonly salesConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly slug: string;
-        readonly name: string | null;
-        readonly href: string | null;
         readonly endAt: string | null;
+        readonly href: string | null;
+        readonly name: string | null;
+        readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "PastAuctions_viewer";
 };

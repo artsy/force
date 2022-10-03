@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7eac6fec279d2161c396e22d14f8ae5b>>
+ * @generated SignedSource<<f2c39e28f4cc6273b1d04b7804333485>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,8 +26,8 @@ export type useUnlinkSettingsLinkedAccountMutation$data = {
   } | null;
 };
 export type useUnlinkSettingsLinkedAccountMutation = {
-  variables: useUnlinkSettingsLinkedAccountMutation$variables;
   response: useUnlinkSettingsLinkedAccountMutation$data;
+  variables: useUnlinkSettingsLinkedAccountMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

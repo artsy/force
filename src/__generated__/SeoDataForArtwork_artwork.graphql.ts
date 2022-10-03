@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d4e4bb6716a2c73cb210b9414351be6>>
+ * @generated SignedSource<<e30420febb20536ff725dd5d68a6a60d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,42 +11,47 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SeoDataForArtwork_artwork$data = {
-  readonly href: string | null;
+  readonly artistNames: string | null;
+  readonly availability: string | null;
+  readonly category: string | null;
   readonly date: string | null;
+  readonly dimensions: {
+    readonly in: string | null;
+  } | null;
+  readonly href: string | null;
   readonly is_price_hidden: boolean | null;
   readonly is_price_range: boolean | null;
   readonly listPrice: {
+    readonly __typename: "Money";
+    readonly currencyCode: string;
+    readonly major: number;
+  } | {
     readonly __typename: "PriceRange";
-    readonly minPrice: {
-      readonly major: number;
-      readonly currencyCode: string;
-    } | null;
     readonly maxPrice: {
       readonly major: number;
     } | null;
-  } | {
-    readonly __typename: "Money";
-    readonly major: number;
-    readonly currencyCode: string;
+    readonly minPrice: {
+      readonly currencyCode: string;
+      readonly major: number;
+    } | null;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly meta: {
+    readonly description: string | null;
+    readonly title: string | null;
+  } | null;
   readonly meta_image: {
     readonly resized: {
-      readonly width: number | null;
       readonly height: number | null;
       readonly url: string;
+      readonly width: number | null;
     } | null;
-  } | null;
-  readonly meta: {
-    readonly title: string | null;
-    readonly description: string | null;
   } | null;
   readonly partner: {
     readonly name: string | null;
-    readonly type: string | null;
     readonly profile: {
       readonly image: {
         readonly resized: {
@@ -54,12 +59,7 @@ export type SeoDataForArtwork_artwork$data = {
         } | null;
       } | null;
     } | null;
-  } | null;
-  readonly artistNames: string | null;
-  readonly availability: string | null;
-  readonly category: string | null;
-  readonly dimensions: {
-    readonly in: string | null;
+    readonly type: string | null;
   } | null;
   readonly " $fragmentType": "SeoDataForArtwork_artwork";
 };

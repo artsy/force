@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4359d2a652a9a9de50fae7dbfe882c49>>
+ * @generated SignedSource<<fedf3dfffbdf968414044f84d468ad37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,50 +12,50 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables = {
-  id?: string | null;
-  externalId?: string | null;
-  sessionID?: string | null;
   artworkId: string;
+  externalId?: string | null;
+  id?: string | null;
+  sessionID?: string | null;
 };
 export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data = {
+  readonly myCollectionArtwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+  } | null;
   readonly submission: {
-    readonly externalId: string;
     readonly artist: {
       readonly internalID: string;
       readonly name: string | null;
     } | null;
-    readonly locationCity: string | null;
-    readonly locationCountry: string | null;
-    readonly locationState: string | null;
-    readonly locationPostalCode: string | null;
-    readonly locationCountryCode: string | null;
-    readonly year: string | null;
-    readonly title: string | null;
-    readonly medium: string | null;
-    readonly attributionClass: ConsignmentAttributionClass | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
-    readonly height: string | null;
-    readonly width: string | null;
-    readonly depth: string | null;
-    readonly dimensionsMetric: string | null;
-    readonly provenance: string | null;
     readonly assets: ReadonlyArray<{
+      readonly filename: string | null;
+      readonly geminiToken: string | null;
       readonly id: string;
       readonly imageUrls: any | null;
-      readonly geminiToken: string | null;
       readonly size: string | null;
-      readonly filename: string | null;
     } | null> | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly externalId: string;
+    readonly height: string | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationCountryCode: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationState: string | null;
+    readonly medium: string | null;
+    readonly provenance: string | null;
+    readonly title: string | null;
+    readonly width: string | null;
+    readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
-  } | null;
-  readonly myCollectionArtwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
   } | null;
 };
 export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery = {
-  variables: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables;
   response: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data;
+  variables: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

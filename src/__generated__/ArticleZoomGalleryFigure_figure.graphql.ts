@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61552bd8fdaae94fdd621ab9350e983a>>
+ * @generated SignedSource<<0521b546f116daf77e6e723df1189376>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryFigure_figure$data = {
-  readonly __typename: "Artwork";
+  readonly __typename: "ArticleImageSection";
   readonly image: {
-    readonly width: number | null;
     readonly height: number | null;
     readonly url: string | null;
+    readonly width: number | null;
   } | null;
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
-  readonly __typename: "ArticleImageSection";
+  readonly __typename: "Artwork";
   readonly image: {
-    readonly width: number | null;
     readonly height: number | null;
     readonly url: string | null;
+    readonly width: number | null;
   } | null;
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {

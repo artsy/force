@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25281056f5e39e4b484f80d1a1076106>>
+ * @generated SignedSource<<2cbe81f5073d88060705c38f9674c08d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type artistRoutes_CVQuery$data = {
   } | null;
 };
 export type artistRoutes_CVQuery = {
-  variables: artistRoutes_CVQuery$variables;
   response: artistRoutes_CVQuery$data;
+  variables: artistRoutes_CVQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

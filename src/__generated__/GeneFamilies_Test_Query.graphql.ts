@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba017a6039483d91c3f2f78ac3976da2>>
+ * @generated SignedSource<<718a06fe93582af2acf22c613d7e62b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type GeneFamilies_Test_Query$data = {
   } | null;
 };
 export type GeneFamilies_Test_Query = {
-  variables: GeneFamilies_Test_Query$variables;
   response: GeneFamilies_Test_Query$data;
+  variables: GeneFamilies_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

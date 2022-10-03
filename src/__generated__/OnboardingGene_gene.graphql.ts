@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c88ad2d472ee7eb3adb4b73ebad912c>>
+ * @generated SignedSource<<da0b8e87af66d5af2868e953dc735494>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingGene_gene$data = {
-  readonly name: string | null;
   readonly artworks: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -20,6 +19,7 @@ export type OnboardingGene_gene$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   readonly " $fragmentType": "OnboardingGene_gene";
 };

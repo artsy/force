@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1d3b86edb5cf11abbb8078dd28a7a14>>
+ * @generated SignedSource<<a42f46ff7bc2c30d5ac44ff44f49a811>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,70 +15,14 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type DetailsSidebar_conversation$data = {
-  readonly to: {
-    readonly name: string;
-    readonly initials: string | null;
-  };
-  readonly sidebarOrderConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly __typename: string;
-        readonly internalID: string;
-        readonly state: CommerceOrderStateEnum;
-        readonly displayState: CommerceOrderDisplayStateEnum;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly stateReason: string | null;
-        readonly code: string;
-        readonly stateExpiresAt: string | null;
-        readonly creditCard: {
-          readonly brand: string;
-          readonly lastDigits: string;
-          readonly expirationYear: number;
-          readonly expirationMonth: number;
-        } | null;
-        readonly requestedFulfillment: {
-          readonly __typename: string;
-        } | null;
-        readonly lineItems: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly artwork: {
-                readonly shippingOrigin: string | null;
-              } | null;
-              readonly shipment: {
-                readonly trackingNumber: string | null;
-                readonly trackingUrl: string | null;
-                readonly carrierName: string | null;
-                readonly estimatedDeliveryWindow: string | null;
-              } | null;
-              readonly selectedShippingQuote: {
-                readonly typeName: string;
-              } | null;
-              readonly fulfillments: {
-                readonly edges: ReadonlyArray<{
-                  readonly node: {
-                    readonly courier: string;
-                    readonly trackingId: string | null;
-                    readonly estimatedDelivery: string | null;
-                  } | null;
-                } | null> | null;
-              } | null;
-            } | null;
-          } | null> | null;
-        } | null;
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
-        readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly attachmentsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly attachments: ReadonlyArray<{
-          readonly id: string;
           readonly contentType: string;
-          readonly fileName: string;
           readonly downloadURL: string;
+          readonly fileName: string;
+          readonly id: string;
         } | null> | null;
       } | null;
     } | null> | null;
@@ -103,6 +47,62 @@ export type DetailsSidebar_conversation$data = {
       readonly __typename: "%other";
     } | null;
   } | null> | null;
+  readonly sidebarOrderConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly __typename: string;
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly code: string;
+        readonly creditCard: {
+          readonly brand: string;
+          readonly expirationMonth: number;
+          readonly expirationYear: number;
+          readonly lastDigits: string;
+        } | null;
+        readonly displayState: CommerceOrderDisplayStateEnum;
+        readonly internalID: string;
+        readonly lineItems: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly artwork: {
+                readonly shippingOrigin: string | null;
+              } | null;
+              readonly fulfillments: {
+                readonly edges: ReadonlyArray<{
+                  readonly node: {
+                    readonly courier: string;
+                    readonly estimatedDelivery: string | null;
+                    readonly trackingId: string | null;
+                  } | null;
+                } | null> | null;
+              } | null;
+              readonly selectedShippingQuote: {
+                readonly typeName: string;
+              } | null;
+              readonly shipment: {
+                readonly carrierName: string | null;
+                readonly estimatedDeliveryWindow: string | null;
+                readonly trackingNumber: string | null;
+                readonly trackingUrl: string | null;
+              } | null;
+            } | null;
+          } | null> | null;
+        } | null;
+        readonly mode: CommerceOrderModeEnum | null;
+        readonly requestedFulfillment: {
+          readonly __typename: string;
+        } | null;
+        readonly state: CommerceOrderStateEnum;
+        readonly stateExpiresAt: string | null;
+        readonly stateReason: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly to: {
+    readonly initials: string | null;
+    readonly name: string;
+  };
   readonly " $fragmentType": "DetailsSidebar_conversation";
 };
 export type DetailsSidebar_conversation$key = {

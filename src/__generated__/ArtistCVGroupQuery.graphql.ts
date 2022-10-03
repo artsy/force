@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0375672b7ac789f964873a15f6ae416>>
+ * @generated SignedSource<<01f99b10bca5c16442440dc0cd6e5040>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type ArtistCVGroupQuery$variables = {
+  atAFair?: boolean | null;
   count?: number | null;
   cursor?: string | null;
-  slug: string;
-  sort?: ShowSorts | null;
-  atAFair?: boolean | null;
-  soloShow?: boolean | null;
   isReference?: boolean | null;
+  slug: string;
+  soloShow?: boolean | null;
+  sort?: ShowSorts | null;
   visibleToPublic?: boolean | null;
 };
 export type ArtistCVGroupQuery$data = {
@@ -27,8 +27,8 @@ export type ArtistCVGroupQuery$data = {
   } | null;
 };
 export type ArtistCVGroupQuery = {
-  variables: ArtistCVGroupQuery$variables;
   response: ArtistCVGroupQuery$data;
+  variables: ArtistCVGroupQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

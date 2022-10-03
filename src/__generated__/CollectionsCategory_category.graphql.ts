@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2277cf84f73864ce16af98481264e813>>
+ * @generated SignedSource<<b5053e712bccb9365b16075ae1723642>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionsCategory_category$data = {
-  readonly name: string;
   readonly collections: ReadonlyArray<{
+    readonly headerImage: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly title: string;
-    readonly headerImage: string | null;
   }>;
+  readonly name: string;
   readonly " $fragmentType": "CollectionsCategory_category";
 };
 export type CollectionsCategory_category$key = {

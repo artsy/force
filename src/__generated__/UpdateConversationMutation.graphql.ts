@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba263628c3e367cfa0367ec8ca52e717>>
+ * @generated SignedSource<<2f4aff04dd590a87f4719920dc8d61c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,8 +26,8 @@ export type UpdateConversationMutation$data = {
   } | null;
 };
 export type UpdateConversationMutation = {
-  variables: UpdateConversationMutation$variables;
   response: UpdateConversationMutation$data;
+  variables: UpdateConversationMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

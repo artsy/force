@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c07181ec0be48b1cd49603187dfca030>>
+ * @generated SignedSource<<b2afbaebec7f16731e8e6ee0a0599219>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalanceQuery$variables = {
-  setupIntentId?: string | null;
   bankAccountId?: string | null;
+  setupIntentId?: string | null;
 };
 export type PollAccountBalanceQuery$data = {
   readonly commerceBankAccountBalance: {
@@ -20,8 +20,8 @@ export type PollAccountBalanceQuery$data = {
   } | null;
 };
 export type PollAccountBalanceQuery = {
-  variables: PollAccountBalanceQuery$variables;
   response: PollAccountBalanceQuery$data;
+  variables: PollAccountBalanceQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

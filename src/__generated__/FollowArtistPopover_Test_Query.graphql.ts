@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d40deab01f3016da92cb2808e11ca25>>
+ * @generated SignedSource<<f08565ef4b396e24c851d2999c987b0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,31 +20,31 @@ export type FollowArtistPopover_Test_Query$data = {
 };
 export type FollowArtistPopover_Test_Query$rawResponse = {
   readonly artist: {
+    readonly id: string;
     readonly related: {
       readonly suggestedConnection: {
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly id: string;
-            readonly internalID: string;
-            readonly slug: string;
-            readonly name: string | null;
             readonly formattedNationalityAndBirthday: string | null;
+            readonly id: string;
             readonly image: {
               readonly cropped: {
                 readonly url: string;
               } | null;
             } | null;
+            readonly internalID: string;
+            readonly name: string | null;
+            readonly slug: string;
           } | null;
         } | null> | null;
       } | null;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type FollowArtistPopover_Test_Query = {
-  variables: FollowArtistPopover_Test_Query$variables;
-  response: FollowArtistPopover_Test_Query$data;
   rawResponse: FollowArtistPopover_Test_Query$rawResponse;
+  response: FollowArtistPopover_Test_Query$data;
+  variables: FollowArtistPopover_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

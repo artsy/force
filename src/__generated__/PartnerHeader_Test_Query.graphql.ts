@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<104a38f08e2f4669c61921325de80627>>
+ * @generated SignedSource<<197be7c29e113ea0c86f638fd5bb997f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,9 +18,17 @@ export type PartnerHeader_Test_Query$data = {
 };
 export type PartnerHeader_Test_Query$rawResponse = {
   readonly partner: {
+    readonly id: string;
+    readonly locations: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly city: string | null;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+      readonly totalCount: number | null;
+    } | null;
     readonly name: string | null;
-    readonly type: string | null;
-    readonly slug: string;
     readonly profile: {
       readonly icon: {
         readonly resized: {
@@ -29,27 +37,19 @@ export type PartnerHeader_Test_Query$rawResponse = {
         } | null;
       } | null;
       readonly id: string;
-      readonly slug: string;
-      readonly name: string | null;
       readonly internalID: string;
       readonly isFollowed: boolean | null;
+      readonly name: string | null;
+      readonly slug: string;
     } | null;
-    readonly locations: {
-      readonly totalCount: number | null;
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly city: string | null;
-          readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly id: string;
+    readonly slug: string;
+    readonly type: string | null;
   } | null;
 };
 export type PartnerHeader_Test_Query = {
-  variables: PartnerHeader_Test_Query$variables;
-  response: PartnerHeader_Test_Query$data;
   rawResponse: PartnerHeader_Test_Query$rawResponse;
+  response: PartnerHeader_Test_Query$data;
+  variables: PartnerHeader_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

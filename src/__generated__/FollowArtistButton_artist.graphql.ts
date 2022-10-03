@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9986963c7dc086e453876937f94169a2>>
+ * @generated SignedSource<<7fc64706da553da86c37bf2514d939a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowArtistButton_artist$data = {
-  readonly id: string;
-  readonly slug: string;
-  readonly name: string | null;
-  readonly internalID: string;
-  readonly isFollowed: boolean | null;
   readonly counts: {
     readonly follows: any | null;
   } | null;
+  readonly id: string;
+  readonly internalID: string;
+  readonly isFollowed: boolean | null;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopover_artist">;
   readonly " $fragmentType": "FollowArtistButton_artist";
 };

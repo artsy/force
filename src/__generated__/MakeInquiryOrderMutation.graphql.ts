@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<733a58998afbe433a1813b7f5b656286>>
+ * @generated SignedSource<<b134c1b4e3271ea233c702d79bc233ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,17 +23,17 @@ export type MakeInquiryOrderMutation$variables = {
 export type MakeInquiryOrderMutation$data = {
   readonly createInquiryOrder: {
     readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
+    } | {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly order: {
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
-      };
-    } | {
-      readonly __typename: "CommerceOrderWithMutationFailure";
-      readonly error: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
       };
     } | {
       // This will never be '%other', but we need some
@@ -43,8 +43,8 @@ export type MakeInquiryOrderMutation$data = {
   } | null;
 };
 export type MakeInquiryOrderMutation = {
-  variables: MakeInquiryOrderMutation$variables;
   response: MakeInquiryOrderMutation$data;
+  variables: MakeInquiryOrderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

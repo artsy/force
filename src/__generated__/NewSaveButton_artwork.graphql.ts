@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80b865af5c28a9560b419bf76a7e7053>>
+ * @generated SignedSource<<aed220f3214f0b8df4866b593b9b52d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,8 @@ import { FragmentRefs } from "relay-runtime";
 export type NewSaveButton_artwork$data = {
   readonly id: string;
   readonly internalID: string;
-  readonly slug: string;
   readonly is_saved: boolean | null;
+  readonly slug: string;
   readonly title: string | null;
   readonly " $fragmentType": "NewSaveButton_artwork";
 };

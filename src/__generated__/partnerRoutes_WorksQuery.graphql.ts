@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ed40f5ba72d5a22a5c0905e7ee87983>>
+ * @generated SignedSource<<67297cdf9d470ffd75c97881c87af3a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,23 +63,23 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type partnerRoutes_WorksQuery$variables = {
-  partnerId: string;
-  input?: FilterArtworksInput | null;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  input?: FilterArtworksInput | null;
+  partnerId: string;
   shouldFetchCounts: boolean;
 };
 export type partnerRoutes_WorksQuery$data = {
   readonly partner: {
-    readonly displayWorksSection: boolean | null;
     readonly counts: {
       readonly eligibleArtworks: any | null;
     } | null;
+    readonly displayWorksSection: boolean | null;
     readonly " $fragmentSpreads": FragmentRefs<"Works_partner">;
   } | null;
 };
 export type partnerRoutes_WorksQuery = {
-  variables: partnerRoutes_WorksQuery$variables;
   response: partnerRoutes_WorksQuery$data;
+  variables: partnerRoutes_WorksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

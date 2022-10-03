@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a1f0e684e25c6ca6e7ebca967cc944d>>
+ * @generated SignedSource<<7227865f54565deec715aabdb18a341c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,21 +12,21 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRoute_me$data = {
   readonly myCollectionConnection: {
-    readonly totalCount: number | null;
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly startCursor: string | null;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+      readonly startCursor: string | null;
+    };
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "MyCollectionRoute_me";
 };

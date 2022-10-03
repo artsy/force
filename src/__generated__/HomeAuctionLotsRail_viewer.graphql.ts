@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<744af481249fbb213a44318b9b6d6050>>
+ * @generated SignedSource<<7d87450642ef67080f4673ab9356a8a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,9 @@ export type HomeAuctionLotsRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly href: string | null;
         readonly internalID: string;
         readonly slug: string;
-        readonly href: string | null;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;

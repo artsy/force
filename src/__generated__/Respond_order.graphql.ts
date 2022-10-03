@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9bd04d041deae7ceb3f8cf50e1d49102>>
+ * @generated SignedSource<<41da412101bfd424a25e3be86ebf656b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,33 +13,33 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Respond_order$data = {
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly state: CommerceOrderStateEnum;
   readonly currencyCode: string;
+  readonly internalID: string;
+  readonly isInquiryOrder?: boolean;
   readonly itemsTotal: string | null;
   readonly itemsTotalCents: number | null;
-  readonly stateExpiresAt: string | null;
-  readonly lineItems: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly artwork: {
-          readonly slug: string;
-          readonly price: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly isInquiryOrder?: boolean;
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
     readonly note: string | null;
   } | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly price: string | null;
+          readonly slug: string;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly mode: CommerceOrderModeEnum | null;
   readonly myLastOffer?: {
     readonly createdAt: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "OfferHistoryItem_order">;
+  readonly state: CommerceOrderStateEnum;
+  readonly stateExpiresAt: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Respond_order";
 };
 export type Respond_order$key = {

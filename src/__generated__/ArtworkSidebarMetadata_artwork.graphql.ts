@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02a7419339dab80ccf1b79317286aeb9>>
+ * @generated SignedSource<<19da79896aa727d487e3aa87ba815c8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarMetadata_artwork$data = {
-  readonly is_biddable: boolean | null;
   readonly edition_sets: ReadonlyArray<{
-    readonly __typename: string;
+    readonly __typename: "EditionSet";
   } | null> | null;
+  readonly is_biddable: boolean | null;
   readonly sale_artwork: {
     readonly lot_label: string | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarTitleInfo_artwork" | "ArtworkSidebarSizeInfo_piece" | "ArtworkSidebarClassification_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarClassification_artwork" | "ArtworkSidebarSizeInfo_piece" | "ArtworkSidebarTitleInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebarMetadata_artwork";
 };
 export type ArtworkSidebarMetadata_artwork$key = {

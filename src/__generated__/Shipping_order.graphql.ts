@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bf17992f4b54dfd05c789cc15d55a22>>
+ * @generated SignedSource<<9aa9c04c6b6f33c6bd948f4dafcbfbf8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,47 +14,17 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
   readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly state: CommerceOrderStateEnum;
-  readonly requestedFulfillment: {
-    readonly __typename: "CommercePickup";
-    readonly phoneNumber: string | null;
-  } | {
-    readonly __typename: "CommerceShip";
-    readonly name: string | null;
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly region: string | null;
-    readonly country: string | null;
-    readonly postalCode: string | null;
-    readonly phoneNumber: string | null;
-  } | {
-    readonly __typename: "CommerceShipArta";
-    readonly name: string | null;
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly region: string | null;
-    readonly country: string | null;
-    readonly postalCode: string | null;
-    readonly phoneNumber: string | null;
-  } | {
-    // This will never be '%other', but we need some
-    // value in case none of the concrete values match.
-    readonly __typename: "%other";
-  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly slug: string;
-          readonly processWithArtsyShippingDomestic: boolean | null;
           readonly artsyShippingInternational: boolean | null;
-          readonly pickup_available: boolean | null;
-          readonly onlyShipsDomestically: boolean | null;
           readonly euShippingOrigin: boolean | null;
+          readonly onlyShipsDomestically: boolean | null;
+          readonly pickup_available: boolean | null;
+          readonly processWithArtsyShippingDomestic: boolean | null;
           readonly shippingCountry: string | null;
+          readonly slug: string;
         } | null;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
@@ -68,6 +38,36 @@ export type Shipping_order$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly requestedFulfillment: {
+    readonly __typename: "CommercePickup";
+    readonly phoneNumber: string | null;
+  } | {
+    readonly __typename: "CommerceShip";
+    readonly addressLine1: string | null;
+    readonly addressLine2: string | null;
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly name: string | null;
+    readonly phoneNumber: string | null;
+    readonly postalCode: string | null;
+    readonly region: string | null;
+  } | {
+    readonly __typename: "CommerceShipArta";
+    readonly addressLine1: string | null;
+    readonly addressLine2: string | null;
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly name: string | null;
+    readonly phoneNumber: string | null;
+    readonly postalCode: string | null;
+    readonly region: string | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };

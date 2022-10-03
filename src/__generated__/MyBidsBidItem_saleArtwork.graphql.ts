@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<447fa34067891050738f6888281c87ea>>
+ * @generated SignedSource<<1dc43419a3f69e1ac0c5f9c266e541c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,27 +15,27 @@ export type MyBidsBidItem_saleArtwork$data = {
     readonly artistNames: string | null;
     readonly image: {
       readonly cropped: {
+        readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-        readonly height: number;
       } | null;
     } | null;
   } | null;
-  readonly estimate: string | null;
   readonly currentBid: {
     readonly display: string | null;
   } | null;
+  readonly estimate: string | null;
   readonly internalID: string;
   readonly isHighestBidder: boolean | null;
   readonly isWatching: boolean | null;
+  readonly lotLabel: string | null;
   readonly lotState: {
     readonly bidCount: number | null;
     readonly sellingPrice: {
       readonly display: string | null;
     } | null;
   } | null;
-  readonly lotLabel: string | null;
   readonly slug: string;
   readonly " $fragmentType": "MyBidsBidItem_saleArtwork";
 };

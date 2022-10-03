@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<311f3658018d202dfdd763355e5ed33d>>
+ * @generated SignedSource<<4040f2f0b958c35ca90a4b6e3e476b50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageCollectionLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW_FILLWIDTH" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollection_section$data = {
-  readonly layout: ArticleSectionImageCollectionLayout;
   readonly figures: ReadonlyArray<{
     readonly __typename: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollectionImage_figure" | "ArticleSectionImageCollectionCaption_figure">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollectionCaption_figure" | "ArticleSectionImageCollectionImage_figure">;
   }>;
+  readonly layout: ArticleSectionImageCollectionLayout;
   readonly " $fragmentType": "ArticleSectionImageCollection_section";
 };
 export type ArticleSectionImageCollection_section$key = {

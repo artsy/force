@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee14fa3f42ed978695bd52afe1838e4b>>
+ * @generated SignedSource<<7f27b31eb8bc0152362ae7ad2b506d23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,8 +23,8 @@ export type SettingsEditProfileArtistsYouCollectAutocompleteQuery$data = {
   } | null;
 };
 export type SettingsEditProfileArtistsYouCollectAutocompleteQuery = {
-  variables: SettingsEditProfileArtistsYouCollectAutocompleteQuery$variables;
   response: SettingsEditProfileArtistsYouCollectAutocompleteQuery$data;
+  variables: SettingsEditProfileArtistsYouCollectAutocompleteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0bbe6ac67efc6790e0db98e6bf207ab>>
+ * @generated SignedSource<<a4242b815eb8f2cd26bfed23b6cb2a9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,18 +17,18 @@ export type ShowViewingRoom_show$data = {
   readonly viewingRoomsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
-        readonly slug: string;
-        readonly status: string;
-        readonly distanceToOpen: string | null;
         readonly distanceToClose: string | null;
-        readonly title: string;
+        readonly distanceToOpen: string | null;
         readonly href: string | null;
         readonly image: {
           readonly imageURLs: {
             readonly normalized: string | null;
           } | null;
         } | null;
+        readonly internalID: string;
+        readonly slug: string;
+        readonly status: string;
+        readonly title: string;
       } | null;
     } | null> | null;
   } | null;

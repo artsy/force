@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44151dce32fa1106912a4f8709287712>>
+ * @generated SignedSource<<ced57ed40d47a0f72f041438f32f68ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShow_show$data = {
-  readonly name: string | null;
-  readonly href: string | null;
-  readonly startAt: string | null;
-  readonly endAt: string | null;
-  readonly partner: {
-    readonly name?: string | null;
-  } | null;
-  readonly location: {
-    readonly city: string | null;
-  } | null;
   readonly artworksConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly endAt: string | null;
+  readonly href: string | null;
+  readonly location: {
+    readonly city: string | null;
+  } | null;
+  readonly name: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly startAt: string | null;
   readonly " $fragmentType": "ShowsCurrentShow_show";
 };
 export type ShowsCurrentShow_show$key = {

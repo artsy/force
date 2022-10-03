@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44850fb4829e999b951ec0f5ea0172bd>>
+ * @generated SignedSource<<16d22b56f7176bc82edb5f42340cbce9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderPartner_partner$data = {
-  readonly internalID: string;
-  readonly type: string | null;
-  readonly slug: string;
+  readonly categories: ReadonlyArray<{
+    readonly name: string | null;
+    readonly slug: string;
+  } | null> | null;
   readonly href: string | null;
-  readonly name: string | null;
   readonly initials: string | null;
+  readonly internalID: string;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -24,10 +25,7 @@ export type EntityHeaderPartner_partner$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly categories: ReadonlyArray<{
-    readonly name: string | null;
-    readonly slug: string;
-  } | null> | null;
+  readonly name: string | null;
   readonly profile: {
     readonly avatar: {
       readonly cropped: {
@@ -43,6 +41,8 @@ export type EntityHeaderPartner_partner$data = {
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   } | null;
+  readonly slug: string;
+  readonly type: string | null;
   readonly " $fragmentType": "EntityHeaderPartner_partner";
 };
 export type EntityHeaderPartner_partner$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af0701e930a05c9d5b09481dc12ba98c>>
+ * @generated SignedSource<<c79e4d65123b75e36608ac25165c44f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type SettingsSavesCategoriesQuery$data = {
   } | null;
 };
 export type SettingsSavesCategoriesQuery = {
-  variables: SettingsSavesCategoriesQuery$variables;
   response: SettingsSavesCategoriesQuery$data;
+  variables: SettingsSavesCategoriesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

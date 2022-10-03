@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f836d01695320597b56957ab73725f39>>
+ * @generated SignedSource<<1b651e09f48b93949b1a2e7ee69775cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,10 +20,10 @@ export type RegisterButton_sale$data = {
   readonly isPreview: boolean | null;
   readonly isRegistrationClosed: boolean | null;
   readonly liveURLIfOpen: string | null;
-  readonly requireIdentityVerification: boolean | null;
   readonly registrationStatus: {
     readonly internalID: string;
   } | null;
+  readonly requireIdentityVerification: boolean | null;
   readonly slug: string;
   readonly status: string | null;
   readonly " $fragmentType": "RegisterButton_sale";

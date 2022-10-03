@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20f8702850a62af420c70e3918f7bf17>>
+ * @generated SignedSource<<8618292d0293138eefd379d87474ae6b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsShowDates_show$data = {
-  readonly startAt: string | null;
   readonly endAt: string | null;
-  readonly formattedStartAt: string | null;
   readonly formattedEndAt: string | null;
+  readonly formattedStartAt: string | null;
   readonly location: {
     readonly city: string | null;
   } | null;
+  readonly startAt: string | null;
   readonly " $fragmentType": "ShowsShowDates_show";
 };
 export type ShowsShowDates_show$key = {

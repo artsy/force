@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0d1f1f82206e6f7581fd7edefde3137>>
+ * @generated SignedSource<<dc1a38d6163577a44c160b70ad26830a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,19 +20,19 @@ export type ArtistSeriesMeta_TestQuery$data = {
 };
 export type ArtistSeriesMeta_TestQuery$rawResponse = {
   readonly artistSeries: {
-    readonly title: string;
+    readonly artists: ReadonlyArray<{
+      readonly id: string;
+      readonly name: string | null;
+    } | null> | null;
     readonly description: string | null;
     readonly slug: string;
-    readonly artists: ReadonlyArray<{
-      readonly name: string | null;
-      readonly id: string;
-    } | null> | null;
+    readonly title: string;
   } | null;
 };
 export type ArtistSeriesMeta_TestQuery = {
-  variables: ArtistSeriesMeta_TestQuery$variables;
-  response: ArtistSeriesMeta_TestQuery$data;
   rawResponse: ArtistSeriesMeta_TestQuery$rawResponse;
+  response: ArtistSeriesMeta_TestQuery$data;
+  variables: ArtistSeriesMeta_TestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

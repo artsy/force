@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce0940e81f18ef89b3a0f68c78d77001>>
+ * @generated SignedSource<<282625aa57894f655b6f9b05bd54bde5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,53 +21,53 @@ export type ArtworkSidebarBidAction_Test_Query$data = {
 };
 export type ArtworkSidebarBidAction_Test_Query$rawResponse = {
   readonly artwork: {
+    readonly id: string;
+    readonly internalID: string;
     readonly myLotStanding: ReadonlyArray<{
       readonly most_recent_bid: {
+        readonly id: string;
         readonly max_bid: {
           readonly cents: number | null;
         } | null;
-        readonly id: string;
       } | null;
     }> | null;
-    readonly slug: string;
-    readonly internalID: string;
     readonly sale: {
-      readonly slug: string;
-      readonly registrationStatus: {
-        readonly qualified_for_bidding: boolean | null;
-        readonly id: string;
-      } | null;
-      readonly is_preview: boolean | null;
-      readonly is_open: boolean | null;
-      readonly is_live_open: boolean | null;
-      readonly is_closed: boolean | null;
-      readonly is_registration_closed: boolean | null;
-      readonly requireIdentityVerification: boolean | null;
       readonly id: string;
+      readonly is_closed: boolean | null;
+      readonly is_live_open: boolean | null;
+      readonly is_open: boolean | null;
+      readonly is_preview: boolean | null;
+      readonly is_registration_closed: boolean | null;
+      readonly registrationStatus: {
+        readonly id: string;
+        readonly qualified_for_bidding: boolean | null;
+      } | null;
+      readonly requireIdentityVerification: boolean | null;
+      readonly slug: string;
     } | null;
     readonly sale_artwork: {
+      readonly endedAt: string | null;
+      readonly id: string;
       readonly increments: ReadonlyArray<{
         readonly cents: number | null;
         readonly display: string | null;
       } | null> | null;
-      readonly endedAt: string | null;
-      readonly id: string;
     } | null;
-    readonly id: string;
+    readonly slug: string;
   } | null;
   readonly me: {
+    readonly id: string;
     readonly identityVerified: boolean | null;
     readonly pendingIdentityVerification: {
-      readonly internalID: string;
       readonly id: string;
+      readonly internalID: string;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type ArtworkSidebarBidAction_Test_Query = {
-  variables: ArtworkSidebarBidAction_Test_Query$variables;
-  response: ArtworkSidebarBidAction_Test_Query$data;
   rawResponse: ArtworkSidebarBidAction_Test_Query$rawResponse;
+  response: ArtworkSidebarBidAction_Test_Query$data;
+  variables: ArtworkSidebarBidAction_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

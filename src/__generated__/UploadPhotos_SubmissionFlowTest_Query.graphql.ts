@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c39cdb814c88e98f15827c61e4563b6>>
+ * @generated SignedSource<<ac4b5eb31e41b7184b24384778b08ee8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type UploadPhotos_SubmissionFlowTest_Query$data = {
   } | null;
 };
 export type UploadPhotos_SubmissionFlowTest_Query = {
-  variables: UploadPhotos_SubmissionFlowTest_Query$variables;
   response: UploadPhotos_SubmissionFlowTest_Query$data;
+  variables: UploadPhotos_SubmissionFlowTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<931c27de1955a3c45f063d848ec81be2>>
+ * @generated SignedSource<<4530bb248f902dcb9ced782b7ac8047c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type PartnersLocationAutocompleteQuery$data = {
   } | null;
 };
 export type PartnersLocationAutocompleteQuery = {
-  variables: PartnersLocationAutocompleteQuery$variables;
   response: PartnersLocationAutocompleteQuery$data;
+  variables: PartnersLocationAutocompleteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

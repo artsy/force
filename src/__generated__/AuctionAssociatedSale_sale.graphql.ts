@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db275eeb6c212656b692741a70594cbe>>
+ * @generated SignedSource<<a93200a5911d4cc7a86d8b412c01e869>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type AuctionAssociatedSale_sale$data = {
     } | null;
     readonly displayTimelyAt: string | null;
     readonly href: string | null;
-    readonly slug: string;
     readonly name: string | null;
+    readonly slug: string;
   } | null;
   readonly " $fragmentType": "AuctionAssociatedSale_sale";
 };

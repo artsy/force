@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee64cf606c8f721f47ffe71f4e4b12ee>>
+ * @generated SignedSource<<db521480dd4039bf5f26abedda5a0b39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FairEditorialRailArticles_Test_Query$data = {
   } | null;
 };
 export type FairEditorialRailArticles_Test_Query = {
-  variables: FairEditorialRailArticles_Test_Query$variables;
   response: FairEditorialRailArticles_Test_Query$data;
+  variables: FairEditorialRailArticles_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

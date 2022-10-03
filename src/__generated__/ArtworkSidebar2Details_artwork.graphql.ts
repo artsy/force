@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a15401f8ecb30562aab4a07741169dac>>
+ * @generated SignedSource<<9b2b714ce12054a83760f9a4d7b56fe2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar2Details_artwork$data = {
-  readonly medium: string | null;
   readonly dimensions: {
-    readonly in: string | null;
     readonly cm: string | null;
+    readonly in: string | null;
   } | null;
+  readonly editionOf: string | null;
   readonly framed: {
     readonly details: string | null;
   } | null;
-  readonly editionOf: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Classification_artwork" | "ArtworkSidebar2AuthenticityCertificate_artwork">;
+  readonly medium: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2AuthenticityCertificate_artwork" | "ArtworkSidebar2Classification_artwork">;
   readonly " $fragmentType": "ArtworkSidebar2Details_artwork";
 };
 export type ArtworkSidebar2Details_artwork$key = {

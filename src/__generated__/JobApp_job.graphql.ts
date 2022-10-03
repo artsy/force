@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c99172c714c9fcb792d00a0a59a99513>>
+ * @generated SignedSource<<a544e3d5cf4685655d3504d324ac1a73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobApp_job$data = {
-  readonly id: string;
-  readonly title: string;
-  readonly location: string;
   readonly content: string;
   readonly externalURL: string;
+  readonly id: string;
+  readonly location: string;
+  readonly title: string;
   readonly " $fragmentType": "JobApp_job";
 };
 export type JobApp_job$key = {

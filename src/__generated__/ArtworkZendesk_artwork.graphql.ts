@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f8c9b61acc4c8de0f18aa89c7fafc81>>
+ * @generated SignedSource<<cd23932fb5fd12d64bf5bbc19635ffa0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkZendesk_artwork$data = {
   readonly isAcquireable: boolean | null;
+  readonly isInAuction: boolean | null;
   readonly isInquireable: boolean | null;
   readonly isOfferable: boolean | null;
-  readonly isInAuction: boolean | null;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly currencyCode: string;

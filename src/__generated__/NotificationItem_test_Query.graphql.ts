@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75110cae3d6fc1fa64466e5fdf61f41d>>
+ * @generated SignedSource<<592eee5d3ce5ba7843091e628ac25e12>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type NotificationItem_test_Query$data = {
   } | null;
 };
 export type NotificationItem_test_Query = {
-  variables: NotificationItem_test_Query$variables;
   response: NotificationItem_test_Query$data;
+  variables: NotificationItem_test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

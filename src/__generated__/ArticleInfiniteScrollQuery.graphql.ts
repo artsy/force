@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2abd0cc96dbe220b0d90553066ba6f6>>
+ * @generated SignedSource<<a6f99e080a4a6df932a9c1200582f91b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleInfiniteScrollQuery$variables = {
   after?: string | null;
-  channelID: string;
   articleID: string;
+  channelID: string;
 };
 export type ArticleInfiniteScrollQuery$data = {
   readonly viewer: {
@@ -21,8 +21,8 @@ export type ArticleInfiniteScrollQuery$data = {
   } | null;
 };
 export type ArticleInfiniteScrollQuery = {
-  variables: ArticleInfiniteScrollQuery$variables;
   response: ArticleInfiniteScrollQuery$data;
+  variables: ArticleInfiniteScrollQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4f7563640eb962c2fbb14727be75cb3>>
+ * @generated SignedSource<<0a159fac22df0b970f91f88b87e476f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,18 +21,18 @@ export type useDeleteAccountMutation$variables = {
 export type useDeleteAccountMutation$data = {
   readonly deleteMyAccountMutation: {
     readonly userAccountOrError: {
-      readonly success?: boolean | null;
       readonly mutationError?: {
-        readonly type: string | null;
-        readonly message: string;
         readonly detail: string | null;
+        readonly message: string;
+        readonly type: string | null;
       } | null;
+      readonly success?: boolean | null;
     } | null;
   } | null;
 };
 export type useDeleteAccountMutation = {
-  variables: useDeleteAccountMutation$variables;
   response: useDeleteAccountMutation$data;
+  variables: useDeleteAccountMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

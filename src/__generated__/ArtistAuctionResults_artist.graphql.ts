@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71a5026df4c61ee4c26c015247c7d7e9>>
+ * @generated SignedSource<<121770e2b7ad74ea37767e6264429edf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,28 +11,28 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResults_artist$data = {
-  readonly slug: string;
-  readonly internalID: string;
-  readonly name: string | null;
   readonly auctionResultsConnection: {
     readonly createdYearRange: {
-      readonly startAt: number | null;
       readonly endAt: number | null;
+      readonly startAt: number | null;
     } | null;
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
+    readonly totalCount: number | null;
   } | null;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
 export type ArtistAuctionResults_artist$key = {

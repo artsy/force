@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29ccab130b7f5b4c9cd718b145fde956>>
+ * @generated SignedSource<<10fcd83c63c8a6a6a85e62ddc27cc321>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Overview_partner$data = {
-  readonly slug: string;
-  readonly partnerType: string | null;
-  readonly displayFullPartnerPage: boolean | null;
-  readonly profileBannerDisplay: string | null;
   readonly displayArtistsSection: boolean | null;
+  readonly displayFullPartnerPage: boolean | null;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -26,7 +23,10 @@ export type Overview_partner$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner" | "SubscriberBanner_partner" | "ArticlesRail_partner">;
+  readonly partnerType: string | null;
+  readonly profileBannerDisplay: string | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"AboutPartner_partner" | "ArticlesRail_partner" | "ArtistsRail_partner" | "ShowsRail_partner" | "SubscriberBanner_partner">;
   readonly " $fragmentType": "Overview_partner";
 };
 export type Overview_partner$key = {

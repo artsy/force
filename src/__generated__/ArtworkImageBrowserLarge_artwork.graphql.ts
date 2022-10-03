@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ea01dd9e40568d4ee2371ac80b43859>>
+ * @generated SignedSource<<83684f4254de92826452aba19303c67d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserLarge_artwork$data = {
   readonly figures: ReadonlyArray<{
-    readonly type: "Image";
     readonly internalID: string | null;
     readonly isZoomable: boolean | null;
+    readonly type: "Image";
     readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
   } | {
     readonly type: "Video";

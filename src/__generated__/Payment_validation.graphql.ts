@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e2bb6eb48bc71bc3ee9cb95975cb972>>
+ * @generated SignedSource<<89f60ca8e77009e3f59b181509a435ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ import { FragmentRefs } from "relay-runtime";
 export type Payment_validation$data = {
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly paymentMethodDetails: {
-    readonly __typename: "CreditCard";
+    readonly __typename: "BankAccount";
     readonly id: string;
   } | {
-    readonly __typename: "BankAccount";
+    readonly __typename: "CreditCard";
     readonly id: string;
   } | {
     readonly __typename: "WireTransfer";

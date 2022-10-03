@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<235429d5d3ce93cb7ff9f5bfb2a995f2>>
+ * @generated SignedSource<<2ddc0a0e8c16ebb2631b5491cfe93708>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,8 +26,8 @@ export type AuctionBidRouteQuery$data = {
   } | null;
 };
 export type AuctionBidRouteQuery = {
-  variables: AuctionBidRouteQuery$variables;
   response: AuctionBidRouteQuery$data;
+  variables: AuctionBidRouteQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

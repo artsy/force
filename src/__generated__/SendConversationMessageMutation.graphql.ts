@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f52fcec88d1ca55b74c87d14b3cfd0d>>
+ * @generated SignedSource<<ec82e2cc72ea265321c7443ef39630f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,19 +24,19 @@ export type SendConversationMessageMutation$data = {
   readonly sendConversationMessage: {
     readonly messageEdge: {
       readonly node: {
-        readonly impulseID: string;
-        readonly isFromUser: boolean | null;
         readonly body: string | null;
         readonly id: string;
+        readonly impulseID: string;
         readonly internalID: string;
+        readonly isFromUser: boolean | null;
         readonly " $fragmentSpreads": FragmentRefs<"Message_message">;
       } | null;
     } | null;
   } | null;
 };
 export type SendConversationMessageMutation = {
-  variables: SendConversationMessageMutation$variables;
   response: SendConversationMessageMutation$data;
+  variables: SendConversationMessageMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

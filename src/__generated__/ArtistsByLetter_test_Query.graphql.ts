@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<284929cb9b217f8089f08d52ffd0222f>>
+ * @generated SignedSource<<290241f2756e257b92a309b41a9fd877>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsByLetter_test_Query$variables = {
   letter: string;
-  size?: number | null;
   page?: number | null;
+  size?: number | null;
 };
 export type ArtistsByLetter_test_Query$data = {
   readonly viewer: {
@@ -21,8 +21,8 @@ export type ArtistsByLetter_test_Query$data = {
   } | null;
 };
 export type ArtistsByLetter_test_Query = {
-  variables: ArtistsByLetter_test_Query$variables;
   response: ArtistsByLetter_test_Query$data;
+  variables: ArtistsByLetter_test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbd7cd81438733c41aa6ea48e09dc267>>
+ * @generated SignedSource<<4ddde61af7bed9e910062b8dea29f4d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,14 @@ export type partnerRoutes_PartnerQuery$variables = {
 };
 export type partnerRoutes_PartnerQuery$data = {
   readonly partner: {
-    readonly partnerType: string | null;
     readonly displayFullPartnerPage: boolean | null;
+    readonly partnerType: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"PartnerApp_partner">;
   } | null;
 };
 export type partnerRoutes_PartnerQuery = {
-  variables: partnerRoutes_PartnerQuery$variables;
   response: partnerRoutes_PartnerQuery$data;
+  variables: partnerRoutes_PartnerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

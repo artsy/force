@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<606760877c4579b3ed2ee364670eedf4>>
+ * @generated SignedSource<<fbd4cbc7d9e072fdc584fd54ea99db95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SecurePaymentTestQuery$data = {
   } | null;
 };
 export type SecurePaymentTestQuery = {
-  variables: SecurePaymentTestQuery$variables;
   response: SecurePaymentTestQuery$data;
+  variables: SecurePaymentTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

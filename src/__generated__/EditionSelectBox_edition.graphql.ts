@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad1ba98dc0f093a98d7db8963664bb1a>>
+ * @generated SignedSource<<f56ffb51b7072dd5acc6535beac2161e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EditionSelectBox_edition$data = {
-  readonly internalID: string;
-  readonly editionOf: string | null;
-  readonly isOfferableFromInquiry: boolean | null;
-  readonly isOfferable: boolean | null;
-  readonly isAcquireable: boolean | null;
-  readonly listPrice: {
-    readonly display?: string | null;
-  } | null;
   readonly dimensions: {
     readonly cm: string | null;
     readonly in: string | null;
+  } | null;
+  readonly editionOf: string | null;
+  readonly internalID: string;
+  readonly isAcquireable: boolean | null;
+  readonly isOfferable: boolean | null;
+  readonly isOfferableFromInquiry: boolean | null;
+  readonly listPrice: {
+    readonly display?: string | null;
   } | null;
   readonly " $fragmentType": "EditionSelectBox_edition";
 };

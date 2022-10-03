@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03ba0cf654bd36776349e36ac22cf70d>>
+ * @generated SignedSource<<738eba2900fb82afb28e5c7a92223856>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_Test_Query$variables = {};
 export type RegisterButton_Test_Query$data = {
-  readonly sale: {
-    readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_sale">;
-  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_me">;
   } | null;
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_sale">;
+  } | null;
 };
 export type RegisterButton_Test_Query = {
-  variables: RegisterButton_Test_Query$variables;
   response: RegisterButton_Test_Query$data;
+  variables: RegisterButton_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

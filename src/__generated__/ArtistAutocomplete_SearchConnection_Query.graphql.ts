@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<278616fa69178eb4c537f774b0ef835c>>
+ * @generated SignedSource<<23cc7e209648a4b538d1bcf81aa76539>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,6 @@ export type ArtistAutocomplete_SearchConnection_Query$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly displayLabel: string | null;
-        readonly internalID?: string;
         readonly image?: {
           readonly cropped: {
             readonly height: number;
@@ -26,13 +25,14 @@ export type ArtistAutocomplete_SearchConnection_Query$data = {
             readonly width: number;
           } | null;
         } | null;
+        readonly internalID?: string;
       } | null;
     } | null> | null;
   } | null;
 };
 export type ArtistAutocomplete_SearchConnection_Query = {
-  variables: ArtistAutocomplete_SearchConnection_Query$variables;
   response: ArtistAutocomplete_SearchConnection_Query$data;
+  variables: ArtistAutocomplete_SearchConnection_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

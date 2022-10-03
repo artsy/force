@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05e03a2004947d5038dfc65266abbeba>>
+ * @generated SignedSource<<1ac03d363bce2e0947a31d43e501833a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFilteredCells_viewer$data = {
   readonly partnersConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "PartnersFilteredCells_viewer";
 };

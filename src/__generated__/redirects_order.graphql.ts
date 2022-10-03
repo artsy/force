@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8f737c56af487674b260fb6ef85cc2b>>
+ * @generated SignedSource<<82696e88498a6da1ddcc36d8a14aa292>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,17 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type redirects_order$data = {
+  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
   readonly bankAccountId: string | null;
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly state: CommerceOrderStateEnum;
-  readonly lastTransactionFailed: boolean | null;
-  readonly requestedFulfillment: {
-    readonly __typename: string;
+  readonly creditCard: {
+    readonly internalID: string;
   } | null;
+  readonly internalID: string;
+  readonly lastOffer?: {
+    readonly createdAt: string;
+    readonly internalID: string;
+  } | null;
+  readonly lastTransactionFailed: boolean | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -39,15 +42,17 @@ export type redirects_order$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly creditCard: {
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly myLastOffer?: {
+    readonly createdAt: string;
     readonly internalID: string;
   } | null;
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly paymentMethodDetails: {
-    readonly __typename: "CreditCard";
+    readonly __typename: "BankAccount";
     readonly id: string;
   } | {
-    readonly __typename: "BankAccount";
+    readonly __typename: "CreditCard";
     readonly id: string;
   } | {
     readonly __typename: "WireTransfer";
@@ -57,15 +62,10 @@ export type redirects_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly myLastOffer?: {
-    readonly internalID: string;
-    readonly createdAt: string;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
   } | null;
-  readonly lastOffer?: {
-    readonly internalID: string;
-    readonly createdAt: string;
-  } | null;
-  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "redirects_order";
 };
 export type redirects_order$key = {

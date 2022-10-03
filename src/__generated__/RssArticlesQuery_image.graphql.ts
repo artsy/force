@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13cdc7bc4fc3fe18fe04fada4b6e06c1>>
+ * @generated SignedSource<<90f9bd8276f692ea20f05f2d776fc495>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ export type RssArticlesQuery_image$data = {
   readonly image: {
     readonly caption: string | null;
     readonly resized: {
-      readonly width: number | null;
       readonly height: number | null;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number | null;
     } | null;
   } | null;
   readonly " $fragmentType": "RssArticlesQuery_image";

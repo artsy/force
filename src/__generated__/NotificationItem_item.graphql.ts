@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c098f4037c3a794be682f71e04cc5a6>>
+ * @generated SignedSource<<deb44d6f363c4392d9b0c36ac3f8920f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,27 +12,27 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationItem_item$data = {
-  readonly title: string;
-  readonly message: string;
-  readonly createdAt: string | null;
-  readonly targetHref: string;
-  readonly isUnread: boolean;
-  readonly notificationType: NotificationTypesEnum;
   readonly artworksConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
-        readonly title: string | null;
         readonly image: {
           readonly thumb: {
             readonly src: string;
             readonly srcSet: string;
           } | null;
         } | null;
+        readonly internalID: string;
+        readonly title: string | null;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly createdAt: string | null;
+  readonly isUnread: boolean;
+  readonly message: string;
+  readonly notificationType: NotificationTypesEnum;
+  readonly targetHref: string;
+  readonly title: string;
   readonly " $fragmentType": "NotificationItem_item";
 };
 export type NotificationItem_item$key = {

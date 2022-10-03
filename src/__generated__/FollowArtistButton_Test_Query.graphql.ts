@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4fd13ee33f68ba005e78b791fada0f2>>
+ * @generated SignedSource<<8adb1ef74bae0244fd68ffc8f81c98c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FollowArtistButton_Test_Query$data = {
   } | null;
 };
 export type FollowArtistButton_Test_Query = {
-  variables: FollowArtistButton_Test_Query$variables;
   response: FollowArtistButton_Test_Query$data;
+  variables: FollowArtistButton_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

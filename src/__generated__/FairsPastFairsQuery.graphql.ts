@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a603c0ea100711159cf7fa79a4be1e48>>
+ * @generated SignedSource<<f21f3102e645121fc54eb3749474fa89>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsPastFairsQuery$variables = {
-  first: number;
   after?: string | null;
+  first: number;
 };
 export type FairsPastFairsQuery$data = {
   readonly viewer: {
@@ -20,8 +20,8 @@ export type FairsPastFairsQuery$data = {
   } | null;
 };
 export type FairsPastFairsQuery = {
-  variables: FairsPastFairsQuery$variables;
   response: FairsPastFairsQuery$data;
+  variables: FairsPastFairsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

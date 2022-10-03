@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<540ad701710f6d6171af59ea4476edf7>>
+ * @generated SignedSource<<1203e53e0587e09d63d364271f15663c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVGroup_artist$data = {
-  readonly slug: string;
   readonly showsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly city: string | null;
+        readonly href: string | null;
+        readonly id: string;
+        readonly name: string | null;
+        readonly partner: {
+          readonly href?: string | null;
+          readonly name?: string | null;
+        } | null;
+        readonly startAt: string | null;
+      } | null;
+    } | null> | null;
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly id: string;
-        readonly partner: {
-          readonly name?: string | null;
-          readonly href?: string | null;
-        } | null;
-        readonly name: string | null;
-        readonly startAt: string | null;
-        readonly city: string | null;
-        readonly href: string | null;
-      } | null;
-    } | null> | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtistCVGroup_artist";
 };
 export type ArtistCVGroup_artist$key = {

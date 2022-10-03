@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7485fc7ed1eeb528c2b678d967d5d0b5>>
+ * @generated SignedSource<<b05640a5c6f482d8128d3ec5f71ce02c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,17 @@ export type OfferHistoryItemTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly currencyCode: string;
+    readonly id: string;
+    readonly lastOffer: {
+      readonly amount: string | null;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly id: string;
+      readonly internalID: string;
+      readonly note: string | null;
+      readonly shippingTotal: string | null;
+      readonly taxTotal: string | null;
+    } | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -43,31 +54,21 @@ export type OfferHistoryItemTestQuery$rawResponse = {
         } | null;
       } | null> | null;
     } | null;
-    readonly id: string;
     readonly offers: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly internalID: string;
           readonly amount: string | null;
           readonly createdAt: string;
           readonly fromParticipant: CommerceOrderParticipantEnum | null;
           readonly id: string;
+          readonly internalID: string;
         } | null;
       } | null> | null;
-    } | null;
-    readonly currencyCode: string;
-    readonly lastOffer: {
-      readonly internalID: string;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-      readonly amount: string | null;
-      readonly shippingTotal: string | null;
-      readonly taxTotal: string | null;
-      readonly note: string | null;
-      readonly id: string;
     } | null;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
+    readonly id: string;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -90,13 +91,12 @@ export type OfferHistoryItemTestQuery$rawResponse = {
         } | null;
       } | null> | null;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type OfferHistoryItemTestQuery = {
-  variables: OfferHistoryItemTestQuery$variables;
-  response: OfferHistoryItemTestQuery$data;
   rawResponse: OfferHistoryItemTestQuery$rawResponse;
+  response: OfferHistoryItemTestQuery$data;
+  variables: OfferHistoryItemTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

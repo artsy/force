@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<925d26fabe91fbd81a13626c91ef04cd>>
+ * @generated SignedSource<<3e1c02c01e60e79a9632e5f3bc95077b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistApp_sharedMetadata$data = {
-  readonly slug: string;
-  readonly statuses: {
-    readonly shows: boolean | null;
-    readonly cv: boolean | null;
-    readonly articles: boolean | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
   } | null;
   readonly counts: {
-    readonly forSaleArtworks: any | null;
     readonly auctionResults: number | null;
-  } | null;
-  readonly related: {
-    readonly genes: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly slug: string;
-        } | null;
-      } | null> | null;
-    } | null;
+    readonly forSaleArtworks: any | null;
   } | null;
   readonly highlights: {
     readonly artistPartnersConnection: {
@@ -44,8 +32,20 @@ export type ArtistApp_sharedMetadata$data = {
   readonly insights: ReadonlyArray<{
     readonly type: string;
   }>;
-  readonly biographyBlurb: {
-    readonly text: string | null;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly slug: string;
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly slug: string;
+  readonly statuses: {
+    readonly articles: boolean | null;
+    readonly cv: boolean | null;
+    readonly shows: boolean | null;
   } | null;
   readonly " $fragmentType": "ArtistApp_sharedMetadata";
 };

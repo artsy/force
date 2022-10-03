@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c2435c95f4ea4d6c4761e0ce1ee5500>>
+ * @generated SignedSource<<5c8823b5380dbeebd97d29fe69a26ca7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,9 +21,9 @@ export type createMockNetworkLayerTestMutationResultsMutation$data = {
   readonly commerceBuyerAcceptOffer: {
     readonly orderOrError: {
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
       };
       readonly order?: {
         readonly internalID: string;
@@ -33,8 +33,8 @@ export type createMockNetworkLayerTestMutationResultsMutation$data = {
   } | null;
 };
 export type createMockNetworkLayerTestMutationResultsMutation = {
-  variables: createMockNetworkLayerTestMutationResultsMutation$variables;
   response: createMockNetworkLayerTestMutationResultsMutation$data;
+  variables: createMockNetworkLayerTestMutationResultsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

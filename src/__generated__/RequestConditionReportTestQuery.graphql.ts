@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3338d6d943b2346fc8c0f4356f7c7f1>>
+ * @generated SignedSource<<c2a2776e44f9aae5add7b5c33e8f7a9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,33 +12,33 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReportTestQuery$variables = {};
 export type RequestConditionReportTestQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
-  } | null;
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
   } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
+  } | null;
 };
 export type RequestConditionReportTestQuery$rawResponse = {
+  readonly artwork: {
+    readonly id: string;
+    readonly internalID: string;
+    readonly saleArtwork: {
+      readonly id: string;
+      readonly internalID: string;
+    } | null;
+    readonly slug: string;
+  } | null;
   readonly me: {
     readonly email: string | null;
-    readonly internalID: string;
     readonly id: string;
-  } | null;
-  readonly artwork: {
     readonly internalID: string;
-    readonly slug: string;
-    readonly saleArtwork: {
-      readonly internalID: string;
-      readonly id: string;
-    } | null;
-    readonly id: string;
   } | null;
 };
 export type RequestConditionReportTestQuery = {
-  variables: RequestConditionReportTestQuery$variables;
-  response: RequestConditionReportTestQuery$data;
   rawResponse: RequestConditionReportTestQuery$rawResponse;
+  response: RequestConditionReportTestQuery$data;
+  variables: RequestConditionReportTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

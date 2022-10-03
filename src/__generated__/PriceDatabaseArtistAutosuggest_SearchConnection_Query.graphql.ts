@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6327047ad6ac6c6e876e0d7dc6bfd162>>
+ * @generated SignedSource<<60c129fa253fa77696b8c6daa1201dfc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,20 +16,20 @@ export type PriceDatabaseArtistAutosuggest_SearchConnection_Query$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly displayLabel: string | null;
-        readonly slug?: string;
-        readonly internalID?: string;
-        readonly imageUrl?: string | null;
         readonly counts?: {
           readonly auctionResults: number | null;
         } | null;
+        readonly displayLabel: string | null;
+        readonly imageUrl?: string | null;
+        readonly internalID?: string;
+        readonly slug?: string;
       } | null;
     } | null> | null;
   } | null;
 };
 export type PriceDatabaseArtistAutosuggest_SearchConnection_Query = {
-  variables: PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables;
   response: PriceDatabaseArtistAutosuggest_SearchConnection_Query$data;
+  variables: PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

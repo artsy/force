@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75be9eb00dbb1c926478aecded5e5616>>
+ * @generated SignedSource<<dc62be843656986c78487f66301cc9e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,8 +27,8 @@ export type UpdateAppSecondFactorMutation$data = {
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       // This will never be '%other', but we need some
@@ -42,8 +42,8 @@ export type UpdateAppSecondFactorMutation$rawResponse = {
     readonly secondFactorOrErrors: {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       readonly __typename: string;
@@ -51,9 +51,9 @@ export type UpdateAppSecondFactorMutation$rawResponse = {
   } | null;
 };
 export type UpdateAppSecondFactorMutation = {
-  variables: UpdateAppSecondFactorMutation$variables;
-  response: UpdateAppSecondFactorMutation$data;
   rawResponse: UpdateAppSecondFactorMutation$rawResponse;
+  response: UpdateAppSecondFactorMutation$data;
+  variables: UpdateAppSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

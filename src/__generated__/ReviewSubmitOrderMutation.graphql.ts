@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bda6d9d05b59a83741498d3149f36168>>
+ * @generated SignedSource<<28cef5615ad1d54034f51459eacfdc8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,23 +20,23 @@ export type ReviewSubmitOrderMutation$variables = {
 export type ReviewSubmitOrderMutation$data = {
   readonly commerceSubmitOrder: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly state: CommerceOrderStateEnum;
-      };
       readonly actionData?: {
         readonly clientSecret: string;
       };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly state: CommerceOrderStateEnum;
       };
     };
   } | null;
 };
 export type ReviewSubmitOrderMutation = {
-  variables: ReviewSubmitOrderMutation$variables;
   response: ReviewSubmitOrderMutation$data;
+  variables: ReviewSubmitOrderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

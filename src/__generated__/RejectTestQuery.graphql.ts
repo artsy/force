@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<144a8d96bbfc51fae82935977dd16794>>
+ * @generated SignedSource<<4e5f6654ab490a38185fb091a153796d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,18 +21,23 @@ export type RejectTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly currencyCode: string;
+    readonly id: string;
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
+    readonly lastOffer: {
+      readonly createdAt: string;
+      readonly id: string;
+      readonly internalID: string;
+    } | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly slug: string;
-            readonly id: string;
             readonly date: string | null;
+            readonly id: string;
             readonly shippingOrigin: string | null;
+            readonly slug: string;
           } | null;
-          readonly id: string;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
@@ -50,17 +55,19 @@ export type RejectTestQuery$rawResponse = {
           } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
-            readonly title: string | null;
+            readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
               } | null;
             } | null;
-            readonly id: string;
+            readonly title: string | null;
           } | null;
+          readonly id: string;
         } | null;
       } | null> | null;
     } | null;
+    readonly mode: CommerceOrderModeEnum | null;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
@@ -71,29 +78,22 @@ export type RejectTestQuery$rawResponse = {
       readonly __isNode: string;
       readonly id: string;
     } | null;
-    readonly currencyCode: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly id: string;
-    readonly lastOffer: {
-      readonly internalID: string;
-      readonly createdAt: string;
-      readonly id: string;
-    } | null;
+    readonly stateExpiresAt: string | null;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
+    readonly currencyCode: string;
+    readonly id: string;
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly slug: string;
-            readonly id: string;
             readonly date: string | null;
+            readonly id: string;
             readonly shippingOrigin: string | null;
+            readonly slug: string;
           } | null;
-          readonly id: string;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
@@ -111,17 +111,19 @@ export type RejectTestQuery$rawResponse = {
           } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
-            readonly title: string | null;
+            readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
               } | null;
             } | null;
-            readonly id: string;
+            readonly title: string | null;
           } | null;
+          readonly id: string;
         } | null;
       } | null> | null;
     } | null;
+    readonly mode: CommerceOrderModeEnum | null;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
@@ -132,15 +134,13 @@ export type RejectTestQuery$rawResponse = {
       readonly __isNode: string;
       readonly id: string;
     } | null;
-    readonly currencyCode: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly id: string;
+    readonly stateExpiresAt: string | null;
   } | null;
 };
 export type RejectTestQuery = {
-  variables: RejectTestQuery$variables;
-  response: RejectTestQuery$data;
   rawResponse: RejectTestQuery$rawResponse;
+  response: RejectTestQuery$data;
+  variables: RejectTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

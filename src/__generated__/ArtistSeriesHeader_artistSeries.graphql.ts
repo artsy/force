@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b2d62efadec849a22f787e6077facff>>
+ * @generated SignedSource<<d6044b1fb108fa62f34b9dcdaef5d88d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,29 +11,29 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries$data = {
-  readonly title: string;
-  readonly slug: string;
-  readonly internalID: string;
+  readonly artists: ReadonlyArray<{
+    readonly href: string | null;
+    readonly image: {
+      readonly url: string | null;
+    } | null;
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null> | null;
   readonly artworksCountMessage: string | null;
   readonly descriptionFormatted: string | null;
   readonly image: {
     readonly cropped: {
+      readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-      readonly height: number;
     } | null;
   } | null;
-  readonly artists: ReadonlyArray<{
-    readonly name: string | null;
-    readonly image: {
-      readonly url: string | null;
-    } | null;
-    readonly href: string | null;
-    readonly slug: string;
-    readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
-  } | null> | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly title: string;
   readonly " $fragmentType": "ArtistSeriesHeader_artistSeries";
 };
 export type ArtistSeriesHeader_artistSeries$key = {

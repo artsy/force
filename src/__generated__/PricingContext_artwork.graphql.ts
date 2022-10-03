@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2bdb2a6a183dba0002cb88497f900b68>>
+ * @generated SignedSource<<187e6f31af5ff4be9879d0df7a34a082>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,14 @@ export type AnalyticsPricingContextCategoryEnum = "ARCHITECTURE" | "BOOKS_AND_PO
 export type AnalyticsPricingContextDimensionEnum = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PricingContext_artwork$data = {
+  readonly artists: ReadonlyArray<{
+    readonly slug: string;
+  } | null> | null;
+  readonly category: string | null;
   readonly listPrice: {
+    readonly __typename: "Money";
+    readonly minor: number;
+  } | {
     readonly __typename: "PriceRange";
     readonly maxPrice: {
       readonly minor: number;
@@ -22,23 +29,16 @@ export type PricingContext_artwork$data = {
       readonly minor: number;
     } | null;
   } | {
-    readonly __typename: "Money";
-    readonly minor: number;
-  } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly artists: ReadonlyArray<{
-    readonly slug: string;
-  } | null> | null;
-  readonly category: string | null;
   readonly pricingContext: {
-    readonly appliedFiltersDisplay: string | null;
     readonly appliedFilters: {
-      readonly dimension: AnalyticsPricingContextDimensionEnum | null;
       readonly category: AnalyticsPricingContextCategoryEnum | null;
+      readonly dimension: AnalyticsPricingContextDimensionEnum | null;
     };
+    readonly appliedFiltersDisplay: string | null;
     readonly bins: ReadonlyArray<{
       readonly maxPrice: string | null;
       readonly maxPriceCents: number;

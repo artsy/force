@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a5a9110d685af3daec4dd78f7b55731>>
+ * @generated SignedSource<<d99617f891e57572ce6bdf5536714c40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionConfirmRegistrationRoute_me$data = {
-  readonly internalID: string;
-  readonly identityVerified: boolean | null;
   readonly hasQualifiedCreditCards: boolean | null;
+  readonly identityVerified: boolean | null;
+  readonly internalID: string;
   readonly phoneNumber: {
     readonly originalNumber: string | null;
   } | null;

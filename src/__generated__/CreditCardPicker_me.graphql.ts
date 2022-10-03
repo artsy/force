@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30bc860d920f66329038abc7871dcc7b>>
+ * @generated SignedSource<<e89c96ab4a8cbb3f2477e8269406575d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ export type CreditCardPicker_me$data = {
   readonly creditCards: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
         readonly brand: string;
-        readonly lastDigits: string;
         readonly expirationMonth: number;
         readonly expirationYear: number;
+        readonly internalID: string;
+        readonly lastDigits: string;
       } | null;
     } | null> | null;
   } | null;

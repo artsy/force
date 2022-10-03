@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<536f63e8860047da45b03aee6b8a5694>>
+ * @generated SignedSource<<3d7a8085dd1c9e9bbc6f32e07cc779c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionMeta_sale$data = {
-  readonly name: string | null;
   readonly description: string | null;
+  readonly name: string | null;
   readonly slug: string;
   readonly " $fragmentType": "AuctionMeta_sale";
 };

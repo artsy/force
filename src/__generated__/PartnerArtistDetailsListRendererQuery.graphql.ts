@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52af7c586768ac04417c90c84ed4b7d4>>
+ * @generated SignedSource<<f6b42e613e3095a0dde7f5fff1a9a7cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type PartnerArtistDetailsListRendererQuery$data = {
   } | null;
 };
 export type PartnerArtistDetailsListRendererQuery = {
-  variables: PartnerArtistDetailsListRendererQuery$variables;
   response: PartnerArtistDetailsListRendererQuery$data;
+  variables: PartnerArtistDetailsListRendererQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

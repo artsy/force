@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfec5980a2ffe207ee3744d80bde2f2f>>
+ * @generated SignedSource<<76a95c63afb139dff043bab28f28d028>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type CategoryRailQuery$data = {
   } | null;
 };
 export type CategoryRailQuery = {
-  variables: CategoryRailQuery$variables;
   response: CategoryRailQuery$data;
+  variables: CategoryRailQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

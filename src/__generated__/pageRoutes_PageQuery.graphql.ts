@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff8526b6e33200ac322123bdf8a7c7d7>>
+ * @generated SignedSource<<4f95f410cf2aabf97e3ceb69ea1101d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type pageRoutes_PageQuery$data = {
   };
 };
 export type pageRoutes_PageQuery = {
-  variables: pageRoutes_PageQuery$variables;
   response: pageRoutes_PageQuery$data;
+  variables: pageRoutes_PageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a22fa4d27b2083150ba31c9c1029692>>
+ * @generated SignedSource<<15592f3005676799f7a5c9efb00d5165>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ export type MarketingCollectionGroupTypeEnum = "ArtistSeries" | "FeaturedCollect
 import { FragmentRefs } from "relay-runtime";
 export type OtherCollectionsRail_collectionGroup$data = {
   readonly groupType: MarketingCollectionGroupTypeEnum;
-  readonly name: string;
   readonly members: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"OtherCollectionEntity_member">;
   }>;
+  readonly name: string;
   readonly " $fragmentType": "OtherCollectionsRail_collectionGroup";
 };
 export type OtherCollectionsRail_collectionGroup$key = {

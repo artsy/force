@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bc8e4e8e6cc8a16d2451666cd525588>>
+ * @generated SignedSource<<46155c9a8db1b63589c5d4d15866bf16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,23 +14,23 @@ export type ViewingRoomWorksRoute_viewingRoom$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
-        readonly title: string | null;
         readonly images: ReadonlyArray<{
           readonly internalID: string | null;
-          readonly solo: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-          } | null;
           readonly resized: {
+            readonly height: number | null;
             readonly src: string;
             readonly srcSet: string;
             readonly width: number | null;
+          } | null;
+          readonly solo: {
             readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number | null;
           } | null;
         } | null> | null;
+        readonly internalID: string;
+        readonly title: string | null;
         readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomArtworkDetails_artwork">;
       } | null;
     } | null> | null;

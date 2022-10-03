@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa48e50155a20ec54e1eb41274af61b2>>
+ * @generated SignedSource<<20dc22bf826787b84cef44bb2e0a200d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FairBoothRail_Test_Query$data = {
   } | null;
 };
 export type FairBoothRail_Test_Query = {
-  variables: FairBoothRail_Test_Query$variables;
   response: FairBoothRail_Test_Query$data;
+  variables: FairBoothRail_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

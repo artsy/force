@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98227832d5e74656551d6e643798db12>>
+ * @generated SignedSource<<32d45747670a3f6379461ae84b2ad71a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type BuyerGuaranteeTestQuery$data = {
   } | null;
 };
 export type BuyerGuaranteeTestQuery = {
-  variables: BuyerGuaranteeTestQuery$variables;
   response: BuyerGuaranteeTestQuery$data;
+  variables: BuyerGuaranteeTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

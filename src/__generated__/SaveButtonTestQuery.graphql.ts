@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87a6eac4934e2eb9869eaab8fe430889>>
+ * @generated SignedSource<<ffa4e6e9a3f80557e5d38a00c0b1dc2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SaveButtonTestQuery$data = {
   } | null;
 };
 export type SaveButtonTestQuery = {
-  variables: SaveButtonTestQuery$variables;
   response: SaveButtonTestQuery$data;
+  variables: SaveButtonTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef7070d470c2351b763571c5d8c41322>>
+ * @generated SignedSource<<9b0b6b0f988f2beb2989ccef43736dac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,35 +18,35 @@ export type ArtworkSidebarMetadata_Test_Query$data = {
 };
 export type ArtworkSidebarMetadata_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly is_biddable: boolean | null;
-    readonly edition_sets: ReadonlyArray<{
-      readonly __typename: string;
-      readonly id: string;
-    } | null> | null;
-    readonly sale_artwork: {
-      readonly lot_label: string | null;
-      readonly id: string;
-    } | null;
-    readonly title: string | null;
-    readonly date: string | null;
-    readonly medium: string | null;
     readonly __isSellable: "Artwork";
+    readonly attributionClass: {
+      readonly id: string;
+      readonly shortArrayDescription: ReadonlyArray<string | null> | null;
+    } | null;
+    readonly date: string | null;
     readonly dimensions: {
-      readonly in: string | null;
       readonly cm: string | null;
+      readonly in: string | null;
     } | null;
     readonly edition_of: string | null;
-    readonly attributionClass: {
-      readonly shortArrayDescription: ReadonlyArray<string | null> | null;
+    readonly edition_sets: ReadonlyArray<{
+      readonly __typename: "EditionSet";
       readonly id: string;
-    } | null;
+    } | null> | null;
     readonly id: string;
+    readonly is_biddable: boolean | null;
+    readonly medium: string | null;
+    readonly sale_artwork: {
+      readonly id: string;
+      readonly lot_label: string | null;
+    } | null;
+    readonly title: string | null;
   } | null;
 };
 export type ArtworkSidebarMetadata_Test_Query = {
-  variables: ArtworkSidebarMetadata_Test_Query$variables;
-  response: ArtworkSidebarMetadata_Test_Query$data;
   rawResponse: ArtworkSidebarMetadata_Test_Query$rawResponse;
+  response: ArtworkSidebarMetadata_Test_Query$data;
+  variables: ArtworkSidebarMetadata_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

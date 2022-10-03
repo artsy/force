@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<765a6d66210bf5e871ccf3a3dc8a096a>>
+ * @generated SignedSource<<c5e9023538a002f6bd2a26e0252267d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ChannelArticlesQuery$variables = {
-  id: string;
   after?: string | null;
+  id: string;
 };
 export type ChannelArticlesQuery$data = {
   readonly channel: {
@@ -20,8 +20,8 @@ export type ChannelArticlesQuery$data = {
   };
 };
 export type ChannelArticlesQuery = {
-  variables: ChannelArticlesQuery$variables;
   response: ChannelArticlesQuery$data;
+  variables: ChannelArticlesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

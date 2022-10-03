@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<385588dda50551e0c8dbb16b71fb5162>>
+ * @generated SignedSource<<2dc8d43439985e6b7314a2dbc1017672>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,48 +20,48 @@ export type ConversationAppTestQuery$rawResponse = {
   readonly me: {
     readonly conversationsConnection: {
       readonly edges: ReadonlyArray<{
+        readonly cursor: string;
         readonly node: {
-          readonly internalID: string | null;
-          readonly to: {
-            readonly name: string;
-            readonly id: string;
-          };
+          readonly __typename: "Conversation";
           readonly id: string;
-          readonly lastMessage: string | null;
-          readonly lastMessageAt: string | null;
-          readonly unread: boolean | null;
+          readonly internalID: string | null;
           readonly items: ReadonlyArray<{
             readonly item: {
               readonly __typename: "Artwork";
               readonly __isNode: "Artwork";
-              readonly id: string;
-              readonly date: string | null;
-              readonly title: string | null;
               readonly artistNames: string | null;
+              readonly date: string | null;
+              readonly id: string;
               readonly image: {
                 readonly url: string | null;
               } | null;
+              readonly title: string | null;
             } | {
               readonly __typename: "Show";
               readonly __isNode: "Show";
-              readonly id: string;
-              readonly fair: {
-                readonly name: string | null;
-                readonly id: string;
-              } | null;
-              readonly name: string | null;
               readonly coverImage: {
                 readonly url: string | null;
               } | null;
+              readonly fair: {
+                readonly id: string;
+                readonly name: string | null;
+              } | null;
+              readonly id: string;
+              readonly name: string | null;
             } | {
               readonly __typename: string;
               readonly __isNode: string;
               readonly id: string;
             } | null;
           } | null> | null;
-          readonly __typename: "Conversation";
+          readonly lastMessage: string | null;
+          readonly lastMessageAt: string | null;
+          readonly to: {
+            readonly id: string;
+            readonly name: string;
+          };
+          readonly unread: boolean | null;
         } | null;
-        readonly cursor: string;
       } | null> | null;
       readonly pageInfo: {
         readonly endCursor: string | null;
@@ -74,9 +74,9 @@ export type ConversationAppTestQuery$rawResponse = {
   } | null;
 };
 export type ConversationAppTestQuery = {
-  variables: ConversationAppTestQuery$variables;
-  response: ConversationAppTestQuery$data;
   rawResponse: ConversationAppTestQuery$rawResponse;
+  response: ConversationAppTestQuery$data;
+  variables: ConversationAppTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

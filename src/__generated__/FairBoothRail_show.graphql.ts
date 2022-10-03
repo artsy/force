@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c8a5b5a89411064405926f0707ed6ab>>
+ * @generated SignedSource<<1f52d94767780fb86d345661dd36fe4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBoothRail_show$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly href: string | null;
-  readonly partner: {
-    readonly name?: string | null;
-  } | null;
   readonly counts: {
     readonly artworks: number | null;
   } | null;
+  readonly href: string | null;
+  readonly internalID: string;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly slug: string;
   readonly " $fragmentType": "FairBoothRail_show";
 };
 export type FairBoothRail_show$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43b9568476a2184b19ee851229efc9dd>>
+ * @generated SignedSource<<03bebfb548d5ea806cfcd24bee9b550e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistRail_artist$data = {
-  readonly name: string | null;
-  readonly href: string | null;
-  readonly initials: string | null;
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly avatar: {
-    readonly cropped: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
-  } | null;
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -29,6 +19,16 @@ export type ArtistRail_artist$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly avatar: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly formattedNationalityAndBirthday: string | null;
+  readonly href: string | null;
+  readonly initials: string | null;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   readonly " $fragmentType": "ArtistRail_artist";
 };

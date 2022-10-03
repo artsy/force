@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db12e931a092383c5b96d872110a62cc>>
+ * @generated SignedSource<<9f2b50ed269f91a209c26067c538d48c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,8 +31,8 @@ export type useSetDefaultAddressMutation$data = {
   } | null;
 };
 export type useSetDefaultAddressMutation = {
-  variables: useSetDefaultAddressMutation$variables;
   response: useSetDefaultAddressMutation$data;
+  variables: useSetDefaultAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

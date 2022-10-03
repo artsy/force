@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a89a8771b0a0e24ab86f4c08e8a43fd>>
+ * @generated SignedSource<<2226e00ae05684dfda07aac5fdebe5c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,97 +21,97 @@ export type ArtworkGrid_Test_Query$rawResponse = {
     readonly __isArtworkConnectionInterface: "FilterArtworksConnection";
     readonly edges: ReadonlyArray<{
       readonly __typename: string;
+      readonly __isNode: string;
+      readonly id: string;
       readonly node: {
-        readonly id: string;
-        readonly slug: string;
+        readonly artistNames: string | null;
+        readonly artists: ReadonlyArray<{
+          readonly href: string | null;
+          readonly id: string;
+          readonly name: string | null;
+        } | null> | null;
+        readonly attributionClass: {
+          readonly id: string;
+          readonly name: string | null;
+        } | null;
+        readonly collecting_institution: string | null;
+        readonly cultural_maker: string | null;
+        readonly date: string | null;
         readonly href: string | null;
-        readonly internalID: string;
+        readonly id: string;
         readonly image: {
           readonly aspect_ratio: number;
           readonly placeholder: string | null;
-          readonly url: string | null;
           readonly resized: {
+            readonly height: number | null;
             readonly src: string;
             readonly srcSet: string;
             readonly width: number | null;
-            readonly height: number | null;
           } | null;
+          readonly url: string | null;
         } | null;
-        readonly title: string | null;
         readonly image_title: string | null;
-        readonly artistNames: string | null;
-        readonly date: string | null;
-        readonly sale_message: string | null;
-        readonly cultural_maker: string | null;
-        readonly artists: ReadonlyArray<{
-          readonly id: string;
-          readonly href: string | null;
-          readonly name: string | null;
-        } | null> | null;
-        readonly collecting_institution: string | null;
-        readonly partner: {
-          readonly name: string | null;
-          readonly href: string | null;
-          readonly id: string;
-        } | null;
-        readonly sale: {
-          readonly endAt: string | null;
-          readonly cascadingEndTimeIntervalMinutes: number | null;
-          readonly extendedBiddingIntervalMinutes: number | null;
-          readonly startAt: string | null;
-          readonly is_auction: boolean | null;
-          readonly is_closed: boolean | null;
-          readonly id: string;
-          readonly is_preview: boolean | null;
-          readonly display_timely_at: string | null;
-          readonly extendedBiddingPeriodMinutes: number | null;
-        } | null;
-        readonly sale_artwork: {
-          readonly lotID: string | null;
-          readonly lotLabel: string | null;
-          readonly endAt: string | null;
-          readonly extendedBiddingEndAt: string | null;
-          readonly formattedEndDateTime: string | null;
-          readonly counts: {
-            readonly bidder_positions: any | null;
-          } | null;
-          readonly highest_bid: {
-            readonly display: string | null;
-          } | null;
-          readonly opening_bid: {
-            readonly display: string | null;
-          } | null;
-          readonly id: string;
-        } | null;
+        readonly internalID: string;
+        readonly is_biddable: boolean | null;
         readonly is_saved: boolean | null;
-        readonly attributionClass: {
-          readonly name: string | null;
-          readonly id: string;
-        } | null;
         readonly mediumType: {
           readonly filterGene: {
-            readonly name: string | null;
             readonly id: string;
+            readonly name: string | null;
           } | null;
         } | null;
-        readonly is_biddable: boolean | null;
+        readonly partner: {
+          readonly href: string | null;
+          readonly id: string;
+          readonly name: string | null;
+        } | null;
+        readonly sale: {
+          readonly cascadingEndTimeIntervalMinutes: number | null;
+          readonly display_timely_at: string | null;
+          readonly endAt: string | null;
+          readonly extendedBiddingIntervalMinutes: number | null;
+          readonly extendedBiddingPeriodMinutes: number | null;
+          readonly id: string;
+          readonly is_auction: boolean | null;
+          readonly is_closed: boolean | null;
+          readonly is_preview: boolean | null;
+          readonly startAt: string | null;
+        } | null;
         readonly saleArtwork: {
           readonly endAt: string | null;
           readonly extendedBiddingEndAt: string | null;
-          readonly lotID: string | null;
           readonly id: string;
+          readonly lotID: string | null;
         } | null;
+        readonly sale_artwork: {
+          readonly counts: {
+            readonly bidder_positions: any | null;
+          } | null;
+          readonly endAt: string | null;
+          readonly extendedBiddingEndAt: string | null;
+          readonly formattedEndDateTime: string | null;
+          readonly highest_bid: {
+            readonly display: string | null;
+          } | null;
+          readonly id: string;
+          readonly lotID: string | null;
+          readonly lotLabel: string | null;
+          readonly opening_bid: {
+            readonly display: string | null;
+          } | null;
+        } | null;
+        readonly sale_message: string | null;
+        readonly slug: string;
+        readonly title: string | null;
       } | null;
-      readonly __isNode: string;
-      readonly id: string;
     } | null> | null;
     readonly id: string;
   } | null;
 };
 export type ArtworkGrid_Test_Query = {
-  variables: ArtworkGrid_Test_Query$variables;
-  response: ArtworkGrid_Test_Query$data;
   rawResponse: ArtworkGrid_Test_Query$rawResponse;
+  response: ArtworkGrid_Test_Query$data;
+  variables: ArtworkGrid_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

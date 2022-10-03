@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30702b1c4202bfc940e1fd54e03182f0>>
+ * @generated SignedSource<<895d74a11c4758d6d812862bb1ace6de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,15 +13,15 @@ import { FragmentRefs } from "relay-runtime";
 export type DeepZoom_image$data = {
   readonly deepZoom: {
     readonly Image: {
-      readonly xmlns: string | null;
-      readonly Url: string | null;
       readonly Format: string | null;
-      readonly TileSize: number | null;
       readonly Overlap: number | null;
       readonly Size: {
-        readonly Width: number | null;
         readonly Height: number | null;
+        readonly Width: number | null;
       } | null;
+      readonly TileSize: number | null;
+      readonly Url: string | null;
+      readonly xmlns: string | null;
     } | null;
   } | null;
   readonly " $fragmentType": "DeepZoom_image";

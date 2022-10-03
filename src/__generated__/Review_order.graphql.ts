@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f12ce003720758860889df06c1406d9b>>
+ * @generated SignedSource<<c7bd44d97d756c5dd25d6f47133e148a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,32 +13,32 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Review_order$data = {
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
   readonly code: string;
-  readonly source: CommerceOrderSourceEnum;
-  readonly itemsTotal: string | null;
   readonly impulseConversationId: string | null;
-  readonly stateExpiresAt: string | null;
+  readonly internalID: string;
+  readonly itemsTotal: string | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly slug: string;
-          readonly internalID: string;
           readonly artists: ReadonlyArray<{
             readonly slug: string;
           } | null> | null;
+          readonly internalID: string;
+          readonly slug: string;
         } | null;
         readonly " $fragmentSpreads": FragmentRefs<"ItemReview_lineItem">;
       } | null;
     } | null> | null;
   } | null;
+  readonly mode: CommerceOrderModeEnum | null;
   readonly myLastOffer?: {
     readonly hasDefiniteTotal: boolean;
     readonly internalID: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
+  readonly source: CommerceOrderSourceEnum;
+  readonly stateExpiresAt: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
 export type Review_order$key = {

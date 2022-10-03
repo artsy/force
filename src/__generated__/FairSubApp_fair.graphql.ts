@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8710f1c241c0d909d7b068405b76064a>>
+ * @generated SignedSource<<046edc9fab39bb914eb89561d4f68266>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type FairSubApp_fair$data = {
   readonly id: string;
   readonly name: string | null;
-  readonly slug: string;
   readonly profile: {
-    readonly __typename: string;
+    readonly __typename: "Profile";
   } | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FairMeta_fair">;
   readonly " $fragmentType": "FairSubApp_fair";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<635da341f4c7013d278a1185bc580c95>>
+ * @generated SignedSource<<a35ff3a5c5af22315e8874b1e5d1cf3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type useCreateBidderPositionMutation$variables = {
 export type useCreateBidderPositionMutation$data = {
   readonly createBidderPosition: {
     readonly result: {
+      readonly messageHeader: string | null;
       readonly position: {
         readonly internalID: string;
         readonly saleArtwork: {
@@ -33,13 +34,12 @@ export type useCreateBidderPositionMutation$data = {
         } | null;
       } | null;
       readonly status: string;
-      readonly messageHeader: string | null;
     } | null;
   } | null;
 };
 export type useCreateBidderPositionMutation = {
-  variables: useCreateBidderPositionMutation$variables;
   response: useCreateBidderPositionMutation$data;
+  variables: useCreateBidderPositionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29d810c297ec540ada13fcbd7b5c75ed>>
+ * @generated SignedSource<<e6153173bc3f7a21b19a8d741fb7703b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type BackLink_Test_Query$data = {
   } | null;
 };
 export type BackLink_Test_Query = {
-  variables: BackLink_Test_Query$variables;
   response: BackLink_Test_Query$data;
+  variables: BackLink_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

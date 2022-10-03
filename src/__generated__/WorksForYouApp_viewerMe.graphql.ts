@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9583041dbc9daedd4b6eb0bf35bda446>>
+ * @generated SignedSource<<213517e753fc7a8f3a1415d99e1a6555>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type WorksForYouApp_viewerMe$data = {
   readonly me: {
     readonly followsAndSaves: {
       readonly artistsConnection: {
-        readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
           readonly node: {
             readonly artist: {
@@ -23,6 +22,7 @@ export type WorksForYouApp_viewerMe$data = {
             } | null;
           } | null;
         } | null> | null;
+        readonly totalCount: number | null;
       } | null;
       readonly bundledArtworksByArtistConnection: {
         readonly edges: ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<511376f0cc3c8356ec60428a4f69a8a9>>
+ * @generated SignedSource<<4d0233d255bc3c7da0db5a2ec8cc9e23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,14 +16,14 @@ export type fairOrganizerRoutes_FairOrganizerQuery$variables = {
 export type fairOrganizerRoutes_FairOrganizerQuery$data = {
   readonly fairOrganizer: {
     readonly profile: {
-      readonly __typename: string;
+      readonly __typename: "Profile";
     } | null;
     readonly runningFairs: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly href: string | null;
           readonly profile: {
-            readonly __typename: string;
+            readonly __typename: "Profile";
           } | null;
         } | null;
       } | null> | null;
@@ -32,8 +32,8 @@ export type fairOrganizerRoutes_FairOrganizerQuery$data = {
   } | null;
 };
 export type fairOrganizerRoutes_FairOrganizerQuery = {
-  variables: fairOrganizerRoutes_FairOrganizerQuery$variables;
   response: fairOrganizerRoutes_FairOrganizerQuery$data;
+  variables: fairOrganizerRoutes_FairOrganizerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

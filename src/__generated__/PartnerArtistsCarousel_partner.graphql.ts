@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42dd624a7a8cbfa8d0ac4103295eec81>>
+ * @generated SignedSource<<2329a48ed01028626c3a8c11b5c2e65e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistsCarousel_partner$data = {
-  readonly slug: string;
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly counts: {
@@ -24,6 +23,7 @@ export type PartnerArtistsCarousel_partner$data = {
       readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
     } | null> | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "PartnerArtistsCarousel_partner";
 };
 export type PartnerArtistsCarousel_partner$key = {

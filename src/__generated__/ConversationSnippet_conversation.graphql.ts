@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5059b4022a68dc80425e90d4068b33e2>>
+ * @generated SignedSource<<bf9f8b4bbadd214ea82f633b5f8af58f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,36 +12,36 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationSnippet_conversation$data = {
   readonly internalID: string | null;
-  readonly to: {
-    readonly name: string;
-  };
-  readonly lastMessage: string | null;
-  readonly lastMessageAt: string | null;
-  readonly unread: boolean | null;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
-      readonly date: string | null;
-      readonly title: string | null;
       readonly artistNames: string | null;
+      readonly date: string | null;
       readonly image: {
         readonly url: string | null;
       } | null;
+      readonly title: string | null;
     } | {
       readonly __typename: "Show";
+      readonly coverImage: {
+        readonly url: string | null;
+      } | null;
       readonly fair: {
         readonly name: string | null;
       } | null;
       readonly name: string | null;
-      readonly coverImage: {
-        readonly url: string | null;
-      } | null;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null;
   } | null> | null;
+  readonly lastMessage: string | null;
+  readonly lastMessageAt: string | null;
+  readonly to: {
+    readonly name: string;
+  };
+  readonly unread: boolean | null;
   readonly " $fragmentType": "ConversationSnippet_conversation";
 };
 export type ConversationSnippet_conversation$key = {

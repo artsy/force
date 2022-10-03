@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84dcb24e65b744dcbe79106131b8ab94>>
+ * @generated SignedSource<<b1e41dddb1408c76678dd0cf7e262f17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,21 +14,21 @@ export type PartnersSpecialtyAutocomplete_viewer$data = {
   readonly allOptions: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
+        readonly count: number;
         readonly text: string;
         readonly value: string;
-        readonly count: number;
       } | null> | null;
     } | null> | null;
   } | null;
   readonly filterPartners: {
-    readonly total: number | null;
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
+        readonly count: number;
         readonly text: string;
         readonly value: string;
-        readonly count: number;
       } | null> | null;
     } | null> | null;
+    readonly total: number | null;
   } | null;
   readonly " $fragmentType": "PartnersSpecialtyAutocomplete_viewer";
 };

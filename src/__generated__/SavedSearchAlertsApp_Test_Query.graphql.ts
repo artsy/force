@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a436002acdd66304df15b2bbdea9677>>
+ * @generated SignedSource<<7e95b2ff723175497a174201c568d0a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,34 +18,34 @@ export type SavedSearchAlertsApp_Test_Query$data = {
 };
 export type SavedSearchAlertsApp_Test_Query$rawResponse = {
   readonly me: {
+    readonly id: string;
     readonly savedSearchesConnection: {
       readonly edges: ReadonlyArray<{
+        readonly cursor: string;
         readonly node: {
-          readonly internalID: string;
+          readonly __typename: "SearchCriteria";
           readonly artistIDs: ReadonlyArray<string> | null;
           readonly href: string;
+          readonly internalID: string;
           readonly labels: ReadonlyArray<{
             readonly displayValue: string;
           }>;
           readonly userAlertSettings: {
             readonly name: string | null;
           };
-          readonly __typename: "SearchCriteria";
         } | null;
-        readonly cursor: string;
       } | null> | null;
       readonly pageInfo: {
         readonly endCursor: string | null;
         readonly hasNextPage: boolean;
       };
     } | null;
-    readonly id: string;
   } | null;
 };
 export type SavedSearchAlertsApp_Test_Query = {
-  variables: SavedSearchAlertsApp_Test_Query$variables;
-  response: SavedSearchAlertsApp_Test_Query$data;
   rawResponse: SavedSearchAlertsApp_Test_Query$rawResponse;
+  response: SavedSearchAlertsApp_Test_Query$data;
+  variables: SavedSearchAlertsApp_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

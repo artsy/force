@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cdd1d82edfcb6443e01c80d119d996e>>
+ * @generated SignedSource<<afb7d37cc40780bd94067d81c884597d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureHeaderDefault_feature$data = {
-  readonly name: string;
-  readonly subheadline: string | null;
   readonly defaultImage: {
-    readonly sm: {
+    readonly lg: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
@@ -22,11 +20,13 @@ export type FeatureHeaderDefault_feature$data = {
       readonly src: string;
       readonly srcSet: string;
     } | null;
-    readonly lg: {
+    readonly sm: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
   } | null;
+  readonly name: string;
+  readonly subheadline: string | null;
   readonly " $fragmentType": "FeatureHeaderDefault_feature";
 };
 export type FeatureHeaderDefault_feature$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d92242789b2f93274f52d4a39afbc558>>
+ * @generated SignedSource<<afc592a132684cd7cc7a3ae8889fe107>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,9 +29,9 @@ export type PartnerMeta_partner$data = {
     } | null> | null;
   } | null;
   readonly meta: {
+    readonly description: string | null;
     readonly image: string | null;
     readonly title: string | null;
-    readonly description: string | null;
   } | null;
   readonly name: string | null;
   readonly slug: string;

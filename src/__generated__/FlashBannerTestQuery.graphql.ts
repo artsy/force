@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80304810548042d75121dda629fcf0fc>>
+ * @generated SignedSource<<b8d5e1eb3a08c4e0fecb6ffc3cf23bbf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,9 +22,9 @@ export type FlashBannerTestQuery$rawResponse = {
   } | null;
 };
 export type FlashBannerTestQuery = {
-  variables: FlashBannerTestQuery$variables;
-  response: FlashBannerTestQuery$data;
   rawResponse: FlashBannerTestQuery$rawResponse;
+  response: FlashBannerTestQuery$data;
+  variables: FlashBannerTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

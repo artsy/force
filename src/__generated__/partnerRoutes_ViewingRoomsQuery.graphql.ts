@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfb5e36570ed5f755f86e45f631e28e6>>
+ * @generated SignedSource<<26d50ae3d4ddde449a5b16b08577d8a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type partnerRoutes_ViewingRoomsQuery$data = {
   } | null;
 };
 export type partnerRoutes_ViewingRoomsQuery = {
-  variables: partnerRoutes_ViewingRoomsQuery$variables;
   response: partnerRoutes_ViewingRoomsQuery$data;
+  variables: partnerRoutes_ViewingRoomsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

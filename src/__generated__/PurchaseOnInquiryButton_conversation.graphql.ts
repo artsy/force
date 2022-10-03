@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4894d38e6b4f3b9f1384c07d49b25aa7>>
+ * @generated SignedSource<<dcdce315a1e0fb6656dbf14f1e0563e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,12 +15,12 @@ export type PurchaseOnInquiryButton_conversation$data = {
   readonly items: ReadonlyArray<{
     readonly liveArtwork: {
       readonly __typename: "Artwork";
-      readonly isEdition: boolean | null;
-      readonly internalID: string;
-      readonly slug: string;
       readonly editionSets: ReadonlyArray<{
         readonly internalID: string;
       } | null> | null;
+      readonly internalID: string;
+      readonly isEdition: boolean | null;
+      readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
     } | {
       // This will never be '%other', but we need some

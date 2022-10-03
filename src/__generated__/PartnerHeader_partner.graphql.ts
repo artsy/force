@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<639a75c0c367e72ebdb0c36c58a776bb>>
+ * @generated SignedSource<<1e3f9f21e1524b0083ba806706fae3a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerHeader_partner$data = {
+  readonly locations: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly city: string | null;
+      } | null;
+    } | null> | null;
+    readonly totalCount: number | null;
+  } | null;
   readonly name: string | null;
-  readonly type: string | null;
-  readonly slug: string;
   readonly profile: {
     readonly icon: {
       readonly resized: {
@@ -23,14 +29,8 @@ export type PartnerHeader_partner$data = {
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   } | null;
-  readonly locations: {
-    readonly totalCount: number | null;
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly city: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+  readonly slug: string;
+  readonly type: string | null;
   readonly " $fragmentType": "PartnerHeader_partner";
 };
 export type PartnerHeader_partner$key = {

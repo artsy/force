@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65e1fa8df4f623d5fba40ba1ad9ce486>>
+ * @generated SignedSource<<deb7db1e455cfe1e8bebbc87c2abe85c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarClassificationsModal_viewer$data = {
   readonly artworkAttributionClasses: ReadonlyArray<{
     readonly id: string;
-    readonly name: string | null;
     readonly longDescription: string | null;
+    readonly name: string | null;
   } | null> | null;
   readonly " $fragmentType": "ArtworkSidebarClassificationsModal_viewer";
 };

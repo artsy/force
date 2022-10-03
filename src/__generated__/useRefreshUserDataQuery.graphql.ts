@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36bd2307941cf180d4969cb9c8c17299>>
+ * @generated SignedSource<<8b681272d6c785e4ff216b422305bdfd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type useRefreshUserDataQuery$data = {
   } | null;
 };
 export type useRefreshUserDataQuery = {
-  variables: useRefreshUserDataQuery$variables;
   response: useRefreshUserDataQuery$data;
+  variables: useRefreshUserDataQuery$variables;
 };
 
 const node: ConcreteRequest = {

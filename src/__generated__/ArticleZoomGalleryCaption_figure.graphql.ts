@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69076965612fde13cf5863c9239acece>>
+ * @generated SignedSource<<de05f0f8b2939c474661fa6a8f1655e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryCaption_figure$data = {
+  readonly __typename: "ArticleImageSection";
+  readonly caption: string | null;
+  readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
+} | {
   readonly __typename: "Artwork";
   readonly href: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
-  readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
-} | {
-  readonly __typename: "ArticleImageSection";
-  readonly caption: string | null;
   readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
 } | {
   // This will never be '%other', but we need some

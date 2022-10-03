@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe7a9a1637ace5321ca6a20edf6388a9>>
+ * @generated SignedSource<<bc01dd5ab46fabd085e8387d7b589e74>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,8 +64,8 @@ export type FilterArtworksInput = {
 };
 export type searchRoutes_ArtworksViewerQuery$variables = {
   input?: FilterArtworksInput | null;
-  sidebarInput?: FilterArtworksInput | null;
   shouldFetchCounts: boolean;
+  sidebarInput?: FilterArtworksInput | null;
 };
 export type searchRoutes_ArtworksViewerQuery$data = {
   readonly viewer: {
@@ -73,8 +73,8 @@ export type searchRoutes_ArtworksViewerQuery$data = {
   } | null;
 };
 export type searchRoutes_ArtworksViewerQuery = {
-  variables: searchRoutes_ArtworksViewerQuery$variables;
   response: searchRoutes_ArtworksViewerQuery$data;
+  variables: searchRoutes_ArtworksViewerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

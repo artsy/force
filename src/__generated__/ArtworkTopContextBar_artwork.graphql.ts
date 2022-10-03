@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e2d3c6a84a45c43cc22f1954839bb90>>
+ * @generated SignedSource<<8590492df863f6032ea62d6733f4bee0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,34 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBar_artwork$data = {
-  readonly partner: {
-    readonly name: string | null;
-  } | null;
-  readonly sale: {
-    readonly isAuction: boolean | null;
-    readonly isBenefit: boolean | null;
-    readonly isGalleryAuction: boolean | null;
-    readonly coverImage: {
-      readonly url: string | null;
-    } | null;
-  } | null;
   readonly context: {
-    readonly __typename: "Sale";
-    readonly name: string | null;
-    readonly href: string | null;
-  } | {
     readonly __typename: "Fair";
-    readonly name: string | null;
     readonly href: string | null;
+    readonly name: string | null;
     readonly profile: {
       readonly icon: {
         readonly url: string | null;
       } | null;
     } | null;
   } | {
-    readonly __typename: "Show";
-    readonly name: string | null;
+    readonly __typename: "Sale";
     readonly href: string | null;
+    readonly name: string | null;
+  } | {
+    readonly __typename: "Show";
+    readonly href: string | null;
+    readonly name: string | null;
     readonly status: string | null;
     readonly thumbnail: {
       readonly url: string | null;
@@ -47,6 +36,17 @@ export type ArtworkTopContextBar_artwork$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
+  } | null;
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly sale: {
+    readonly coverImage: {
+      readonly url: string | null;
+    } | null;
+    readonly isAuction: boolean | null;
+    readonly isBenefit: boolean | null;
+    readonly isGalleryAuction: boolean | null;
   } | null;
   readonly " $fragmentType": "ArtworkTopContextBar_artwork";
 };

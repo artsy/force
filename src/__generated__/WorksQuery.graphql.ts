@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06b4f2bac92d2f1ffc50b7c27f835177>>
+ * @generated SignedSource<<a6980bd74f32040ef5fac57b40e49615>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,8 +63,8 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type WorksQuery$variables = {
-  partnerId: string;
   input?: FilterArtworksInput | null;
+  partnerId: string;
 };
 export type WorksQuery$data = {
   readonly partner: {
@@ -72,8 +72,8 @@ export type WorksQuery$data = {
   } | null;
 };
 export type WorksQuery = {
-  variables: WorksQuery$variables;
   response: WorksQuery$data;
+  variables: WorksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

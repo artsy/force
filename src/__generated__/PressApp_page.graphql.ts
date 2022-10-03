@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10eddc5b418fd8bb515f01515e76cdbe>>
+ * @generated SignedSource<<6ac23f7464f9ac152f00611e5cb52125>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PressApp_page$data = {
+  readonly content: string | null;
   readonly internalID: string;
   readonly name: string;
-  readonly content: string | null;
   readonly " $fragmentType": "PressApp_page";
 };
 export type PressApp_page$key = {

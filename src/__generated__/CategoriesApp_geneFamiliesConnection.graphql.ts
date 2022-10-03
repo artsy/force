@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f5139648d9a5b0f9268dc2a07a22f6d>>
+ * @generated SignedSource<<534a1fe4aaca28fa9572099e17b54d35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CategoriesApp_geneFamiliesConnection$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"StickyNav_geneFamiliesConnection" | "GeneFamilies_geneFamiliesConnection">;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneFamilies_geneFamiliesConnection" | "StickyNav_geneFamiliesConnection">;
   readonly " $fragmentType": "CategoriesApp_geneFamiliesConnection";
 };
 export type CategoriesApp_geneFamiliesConnection$key = {

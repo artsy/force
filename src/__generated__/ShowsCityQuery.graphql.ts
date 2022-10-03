@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7477678773698ed468e5cb0feced95cb>>
+ * @generated SignedSource<<86fb9b01af1f6abdf1d0aa555874992b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCityQuery$variables = {
-  slug: string;
   after?: string | null;
   page?: number | null;
+  slug: string;
 };
 export type ShowsCityQuery$data = {
   readonly city: {
@@ -21,8 +21,8 @@ export type ShowsCityQuery$data = {
   } | null;
 };
 export type ShowsCityQuery = {
-  variables: ShowsCityQuery$variables;
   response: ShowsCityQuery$data;
+  variables: ShowsCityQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

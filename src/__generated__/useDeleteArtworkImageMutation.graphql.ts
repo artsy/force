@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ab0b5ddb8b8f62c0acde11374d785e6>>
+ * @generated SignedSource<<f8f75420c4a85f8386a6d75967583e72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,16 +20,16 @@ export type useDeleteArtworkImageMutation$variables = {
 export type useDeleteArtworkImageMutation$data = {
   readonly deleteArtworkImage: {
     readonly artworkOrError: {
-      readonly success?: boolean | null;
       readonly mutationError?: {
         readonly message: string;
       } | null;
+      readonly success?: boolean | null;
     } | null;
   } | null;
 };
 export type useDeleteArtworkImageMutation = {
-  variables: useDeleteArtworkImageMutation$variables;
   response: useDeleteArtworkImageMutation$data;
+  variables: useDeleteArtworkImageMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

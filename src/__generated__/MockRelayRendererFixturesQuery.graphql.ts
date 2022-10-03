@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39c6b4d068273640bf5317a103ec3581>>
+ * @generated SignedSource<<61e63cc5e6ad64c47a06391b37c85902>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,21 +18,21 @@ export type MockRelayRendererFixturesQuery$data = {
 };
 export type MockRelayRendererFixturesQuery$rawResponse = {
   readonly artwork: {
+    readonly artist: {
+      readonly id: string;
+      readonly slug: string;
+    } | null;
+    readonly id: string;
     readonly image: {
       readonly url: string | null;
     } | null;
-    readonly artist: {
-      readonly slug: string;
-      readonly id: string;
-    } | null;
     readonly title: string | null;
-    readonly id: string;
   } | null;
 };
 export type MockRelayRendererFixturesQuery = {
-  variables: MockRelayRendererFixturesQuery$variables;
-  response: MockRelayRendererFixturesQuery$data;
   rawResponse: MockRelayRendererFixturesQuery$rawResponse;
+  response: MockRelayRendererFixturesQuery$data;
+  variables: MockRelayRendererFixturesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

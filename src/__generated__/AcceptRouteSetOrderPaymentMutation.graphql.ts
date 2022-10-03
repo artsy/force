@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e169151d573476541bdda828eaf2906f>>
+ * @generated SignedSource<<264c0e1b14652620d04839c69f17927c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,34 +23,34 @@ export type AcceptRouteSetOrderPaymentMutation$variables = {
 export type AcceptRouteSetOrderPaymentMutation$data = {
   readonly commerceFixFailedPayment: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly state: CommerceOrderStateEnum;
-        readonly creditCard: {
-          readonly internalID: string;
-          readonly name: string | null;
-          readonly street1: string | null;
-          readonly street2: string | null;
-          readonly city: string | null;
-          readonly state: string | null;
-          readonly country: string | null;
-          readonly postal_code: string | null;
-        } | null;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-      };
       readonly actionData?: {
         readonly clientSecret: string;
       };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly creditCard: {
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly postal_code: string | null;
+          readonly state: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+        } | null;
+        readonly state: CommerceOrderStateEnum;
       };
     };
   } | null;
 };
 export type AcceptRouteSetOrderPaymentMutation = {
-  variables: AcceptRouteSetOrderPaymentMutation$variables;
   response: AcceptRouteSetOrderPaymentMutation$data;
+  variables: AcceptRouteSetOrderPaymentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

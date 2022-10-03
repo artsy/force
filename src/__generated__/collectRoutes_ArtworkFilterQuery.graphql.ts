@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26f66c874fdede07e7de48d3c34b6b1a>>
+ * @generated SignedSource<<5984dc6a38a2d704ffa54f95b056bee7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,38 +63,38 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type collectRoutes_ArtworkFilterQuery$variables = {
-  sort?: string | null;
-  input?: FilterArtworksInput | null;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  input?: FilterArtworksInput | null;
   shouldFetchCounts: boolean;
+  sort?: string | null;
 };
 export type collectRoutes_ArtworkFilterQuery$data = {
-  readonly marketingCollections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingCollections">;
-  }> | null;
   readonly filterArtworks: {
     readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForArtworks_artworks">;
   } | null;
+  readonly marketingCollections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"Collect_marketingCollections">;
+  }> | null;
   readonly viewer: {
     readonly artworksConnection: {
+      readonly aggregations: ReadonlyArray<{
+        readonly counts: ReadonlyArray<{
+          readonly count: number;
+          readonly name: string;
+          readonly value: string;
+        } | null> | null;
+        readonly slice: ArtworkAggregation | null;
+      } | null> | null;
       readonly counts?: {
         readonly followedArtists: any | null;
       } | null;
-      readonly aggregations: ReadonlyArray<{
-        readonly slice: ArtworkAggregation | null;
-        readonly counts: ReadonlyArray<{
-          readonly value: string;
-          readonly name: string;
-          readonly count: number;
-        } | null> | null;
-      } | null> | null;
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
   } | null;
 };
 export type collectRoutes_ArtworkFilterQuery = {
-  variables: collectRoutes_ArtworkFilterQuery$variables;
   response: collectRoutes_ArtworkFilterQuery$data;
+  variables: collectRoutes_ArtworkFilterQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

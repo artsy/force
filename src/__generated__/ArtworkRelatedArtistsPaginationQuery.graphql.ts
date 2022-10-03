@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0ea9ade4baa878777c90a3cd84fc12b>>
+ * @generated SignedSource<<574925dfec15657f5c2b4c3f216c408b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsPaginationQuery$variables = {
+  artworkID: string;
   count: number;
   cursor?: string | null;
-  artworkID: string;
 };
 export type ArtworkRelatedArtistsPaginationQuery$data = {
   readonly artwork: {
@@ -21,8 +21,8 @@ export type ArtworkRelatedArtistsPaginationQuery$data = {
   } | null;
 };
 export type ArtworkRelatedArtistsPaginationQuery = {
-  variables: ArtworkRelatedArtistsPaginationQuery$variables;
   response: ArtworkRelatedArtistsPaginationQuery$data;
+  variables: ArtworkRelatedArtistsPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

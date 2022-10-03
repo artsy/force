@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9502a61521b50d75793f85208fed9c8c>>
+ * @generated SignedSource<<cf1d01a9b6666e7d11f8cae1ffcc016f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercial_artwork$data = {
-  readonly edition_sets: ReadonlyArray<{
+  readonly artists: ReadonlyArray<{
     readonly internalID: string;
+  } | null> | null;
+  readonly edition_sets: ReadonlyArray<{
     readonly id: string;
+    readonly internalID: string;
     readonly is_acquireable: boolean | null;
     readonly is_offerable: boolean | null;
     readonly sale_message: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
-  } | null> | null;
-  readonly artists: ReadonlyArray<{
-    readonly internalID: string;
   } | null> | null;
   readonly internalID: string;
   readonly isOfferableFromInquiry: boolean | null;

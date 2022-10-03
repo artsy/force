@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8bb5116cd06d84eee6fca38335b7e539>>
+ * @generated SignedSource<<fe1aef666fe47d96886243b33fc20526>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,14 +21,14 @@ export type SaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly slug: string;
       readonly is_saved: boolean | null;
+      readonly slug: string;
     } | null;
   } | null;
 };
 export type SaveArtworkMutation = {
-  variables: SaveArtworkMutation$variables;
   response: SaveArtworkMutation$data;
+  variables: SaveArtworkMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4e6cb8490a7fa21659ea9c81047eefe>>
+ * @generated SignedSource<<6c3c216cbdd8e481a75bbe0366649939>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ShowHours_Test_Query$data = {
   } | null;
 };
 export type ShowHours_Test_Query = {
-  variables: ShowHours_Test_Query$variables;
   response: ShowHours_Test_Query$data;
+  variables: ShowHours_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

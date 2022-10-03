@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ecfddeaaa262d8bae93034c050e4cded>>
+ * @generated SignedSource<<db4b2a35160fc91b700dece602ddd6f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_viewer$data = {
-  readonly runningFairs: ReadonlyArray<{
-    readonly internalID: string;
-    readonly bannerSize: string | null;
-    readonly isPublished: boolean | null;
-    readonly profile: {
-      readonly isPublished: boolean | null;
-    } | null;
-    readonly " $fragmentSpreads": FragmentRefs<"FairsFairBanner_fair" | "FairsFairRow_fair">;
-  } | null> | null;
   readonly closedFairs: ReadonlyArray<{
     readonly internalID: string;
     readonly isPublished: boolean | null;
@@ -28,21 +19,30 @@ export type FairsIndex_viewer$data = {
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
   } | null> | null;
-  readonly upcomingFairs: ReadonlyArray<{
+  readonly runningFairs: ReadonlyArray<{
+    readonly bannerSize: string | null;
     readonly internalID: string;
-    readonly name: string | null;
-    readonly exhibitionPeriod: string | null;
-    readonly location: {
-      readonly city: string | null;
-    } | null;
     readonly isPublished: boolean | null;
     readonly profile: {
       readonly isPublished: boolean | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"FairsFairBanner_fair" | "FairsFairRow_fair">;
+  } | null> | null;
+  readonly upcomingFairs: ReadonlyArray<{
+    readonly exhibitionPeriod: string | null;
+    readonly internalID: string;
+    readonly isPublished: boolean | null;
+    readonly location: {
+      readonly city: string | null;
+    } | null;
+    readonly name: string | null;
     readonly organizer: {
       readonly profile: {
         readonly href: string | null;
       } | null;
+    } | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
   } | null> | null;

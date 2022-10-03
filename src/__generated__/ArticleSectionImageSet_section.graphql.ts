@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a625c23641e7384da8ea39e58353a2a6>>
+ * @generated SignedSource<<de3742ac5170164a3a0d6e2e8183e308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleSectionImageSetLayout = "FULL" | "MINI" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageSet_section$data = {
-  readonly setLayout: ArticleSectionImageSetLayout;
-  readonly title: string | null;
   readonly counts: {
     readonly figures: number;
   };
@@ -21,34 +19,34 @@ export type ArticleSectionImageSet_section$data = {
     readonly __typename: "ArticleImageSection";
     readonly id: string;
     readonly image: {
-      readonly small: {
-        readonly src: string;
-        readonly srcSet: string;
-        readonly height: number;
-        readonly width: number;
-      } | null;
       readonly large: {
+        readonly height: number | null;
         readonly src: string;
         readonly srcSet: string;
-        readonly height: number | null;
         readonly width: number | null;
+      } | null;
+      readonly small: {
+        readonly height: number;
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
       } | null;
     } | null;
   } | {
     readonly __typename: "Artwork";
     readonly id: string;
     readonly image: {
-      readonly small: {
-        readonly src: string;
-        readonly srcSet: string;
-        readonly height: number;
-        readonly width: number;
-      } | null;
       readonly large: {
+        readonly height: number | null;
         readonly src: string;
         readonly srcSet: string;
-        readonly height: number | null;
         readonly width: number | null;
+      } | null;
+      readonly small: {
+        readonly height: number;
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
       } | null;
     } | null;
   } | {
@@ -56,6 +54,8 @@ export type ArticleSectionImageSet_section$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly setLayout: ArticleSectionImageSetLayout;
+  readonly title: string | null;
   readonly " $fragmentType": "ArticleSectionImageSet_section";
 };
 export type ArticleSectionImageSet_section$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<367e77860317b2907c19f5d2fe9f32bc>>
+ * @generated SignedSource<<dd3cfe99b2d392a9682e05577e196f39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionImage_figure$data = {
   readonly id?: string;
   readonly image?: {
+    readonly height: number | null;
     readonly url: string | null;
     readonly width: number | null;
-    readonly height: number | null;
   } | null;
   readonly " $fragmentType": "ArticleSectionImageCollectionImage_figure";
 };

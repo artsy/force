@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ae7894f29d1cbe82faa09d730ec04ee>>
+ * @generated SignedSource<<541e0909ee53569cd9a6dfa987f7b671>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type fetchFollowedArtists_response$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly artist: {
-        readonly slug: string;
         readonly internalID: string;
+        readonly slug: string;
       } | null;
     } | null;
   } | null> | null;

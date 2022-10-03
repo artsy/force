@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e67c6c03254c8fd0ce53397e3bb96804>>
+ * @generated SignedSource<<b8b7bf7f0b25b20acf95ff916c66dc06>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type AuctionFAQRoute_viewer$data = {
   readonly buyersPremiumTaxesAndFees: {
     readonly content: string | null;
   } | null;
-  readonly paymentsAndShipping: {
+  readonly conditionsOfSale: {
     readonly content: string | null;
   } | null;
   readonly emailsAndAlerts: {
     readonly content: string | null;
   } | null;
-  readonly conditionsOfSale: {
+  readonly paymentsAndShipping: {
     readonly content: string | null;
   } | null;
   readonly " $fragmentType": "AuctionFAQRoute_viewer";

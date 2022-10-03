@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3db48f2530ea4566d4c678542049e291>>
+ * @generated SignedSource<<fe8ce89055807d4edc30b6758a32e8aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,27 +11,27 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInstallShots_show$data = {
-  readonly name: string | null;
   readonly images: ReadonlyArray<{
-    readonly internalID: string | null;
     readonly caption: string | null;
-    readonly mobile: {
-      readonly width: number | null;
-      readonly height: number | null;
-    } | null;
     readonly desktop: {
+      readonly height: number | null;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number | null;
+    } | null;
+    readonly internalID: string | null;
+    readonly mobile: {
       readonly height: number | null;
+      readonly width: number | null;
     } | null;
     readonly zoom: {
+      readonly height: number | null;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number | null;
-      readonly height: number | null;
     } | null;
   } | null> | null;
+  readonly name: string | null;
   readonly " $fragmentType": "ShowInstallShots_show";
 };
 export type ShowInstallShots_show$key = {

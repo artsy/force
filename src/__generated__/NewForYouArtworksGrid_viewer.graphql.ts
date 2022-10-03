@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1584786675aa13f7f47d42a716fdbe8>>
+ * @generated SignedSource<<8f2ab5d9934029eb4c478e603823eab5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewForYouArtworksGrid_viewer$data = {
   readonly artworksForUser: {
-    readonly totalCount: number | null;
     readonly pageInfo: {
-      readonly hasNextPage: boolean;
       readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
     };
+    readonly totalCount: number | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
   } | null;
   readonly " $fragmentType": "NewForYouArtworksGrid_viewer";

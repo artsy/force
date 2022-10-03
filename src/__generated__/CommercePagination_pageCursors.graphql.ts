@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2f89417188dd44b4944ad2e5f4e74fd>>
+ * @generated SignedSource<<fd58278d96fed20581a9c03525366b9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,18 +13,18 @@ import { FragmentRefs } from "relay-runtime";
 export type CommercePagination_pageCursors$data = {
   readonly around: ReadonlyArray<{
     readonly cursor: string;
-    readonly page: number;
     readonly isCurrent: boolean;
+    readonly page: number;
   }>;
   readonly first: {
     readonly cursor: string;
-    readonly page: number;
     readonly isCurrent: boolean;
+    readonly page: number;
   } | null;
   readonly last: {
     readonly cursor: string;
-    readonly page: number;
     readonly isCurrent: boolean;
+    readonly page: number;
   } | null;
   readonly previous: {
     readonly cursor: string;

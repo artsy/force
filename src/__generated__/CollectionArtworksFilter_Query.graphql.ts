@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30025e4506b475d60c77317c7eb7c10d>>
+ * @generated SignedSource<<c140dc6da8ec374cd38dcd5fb61e38c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,8 +72,8 @@ export type CollectionArtworksFilter_Query$data = {
   } | null;
 };
 export type CollectionArtworksFilter_Query = {
-  variables: CollectionArtworksFilter_Query$variables;
   response: CollectionArtworksFilter_Query$data;
+  variables: CollectionArtworksFilter_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

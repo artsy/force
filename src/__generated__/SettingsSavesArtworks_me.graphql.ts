@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7a4efeb8d350791e1470d99c6043dd0>>
+ * @generated SignedSource<<411b8ebeb2d8226c1148806620250cc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,20 +13,20 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesArtworks_me$data = {
   readonly followsAndSaves: {
     readonly artworksConnection: {
-      readonly totalCount: number | null;
-      readonly pageInfo: {
-        readonly hasNextPage: boolean;
-        readonly endCursor: string | null;
-      };
-      readonly pageCursors: {
-        readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-      };
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
         } | null;
       } | null> | null;
+      readonly pageCursors: {
+        readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+      };
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+      };
+      readonly totalCount: number | null;
     } | null;
   } | null;
   readonly " $fragmentType": "SettingsSavesArtworks_me";

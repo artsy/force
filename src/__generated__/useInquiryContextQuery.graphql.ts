@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed4fefd5fb2a10b60a5e94d6e2c68ce4>>
+ * @generated SignedSource<<1d7b3bd3a8fd78eec5db951ff77da47a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type useInquiryContextQuery$data = {
   } | null;
 };
 export type useInquiryContextQuery = {
-  variables: useInquiryContextQuery$variables;
   response: useInquiryContextQuery$data;
+  variables: useInquiryContextQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

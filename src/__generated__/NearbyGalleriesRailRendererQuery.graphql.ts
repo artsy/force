@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7785e9eed6c0f7912c9212bb1f5836be>>
+ * @generated SignedSource<<0733cdb40b47aa2d259030e118ea7326>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type NearbyGalleriesRailRendererQuery$data = {
   } | null;
 };
 export type NearbyGalleriesRailRendererQuery = {
-  variables: NearbyGalleriesRailRendererQuery$variables;
   response: NearbyGalleriesRailRendererQuery$data;
+  variables: NearbyGalleriesRailRendererQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

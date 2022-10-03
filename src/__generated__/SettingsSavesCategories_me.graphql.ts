@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ee9858812ac94e7db5b8b57183f4059>>
+ * @generated SignedSource<<297021af544aa4ac5e4625e4289a4ec8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesCategories_me$data = {
   readonly followsAndSaves: {
     readonly categoriesConnection: {
-      readonly totalCount: number | null;
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly internalID: string;
           readonly category: {
             readonly internalID: string;
             readonly " $fragmentSpreads": FragmentRefs<"CategoryRail_category">;
           } | null;
+          readonly internalID: string;
         } | null;
       } | null> | null;
+      readonly totalCount: number | null;
     } | null;
   } | null;
   readonly " $fragmentType": "SettingsSavesCategories_me";

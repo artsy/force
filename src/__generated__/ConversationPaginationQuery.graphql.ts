@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<804eac19f68ae14217994f361a22faec>>
+ * @generated SignedSource<<04cbc96badc9bcdff72397065f8d7a5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationPaginationQuery$variables = {
-  count?: number | null;
   after?: string | null;
   conversationID: string;
+  count?: number | null;
 };
 export type ConversationPaginationQuery$data = {
   readonly node: {
@@ -21,8 +21,8 @@ export type ConversationPaginationQuery$data = {
   } | null;
 };
 export type ConversationPaginationQuery = {
-  variables: ConversationPaginationQuery$variables;
   response: ConversationPaginationQuery$data;
+  variables: ConversationPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

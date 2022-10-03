@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61fd9cc1c7722c935a5c4f3f5f05c547>>
+ * @generated SignedSource<<79df193b9fbd6fb31577c729bdaefc68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,19 +15,19 @@ export type UploadPhotos_ImageRefetch_Query$variables = {
 };
 export type UploadPhotos_ImageRefetch_Query$data = {
   readonly submission: {
-    readonly externalId: string;
     readonly assets: ReadonlyArray<{
+      readonly filename: string | null;
+      readonly geminiToken: string | null;
       readonly id: string;
       readonly imageUrls: any | null;
-      readonly geminiToken: string | null;
       readonly size: string | null;
-      readonly filename: string | null;
     } | null> | null;
+    readonly externalId: string;
   } | null;
 };
 export type UploadPhotos_ImageRefetch_Query = {
-  variables: UploadPhotos_ImageRefetch_Query$variables;
   response: UploadPhotos_ImageRefetch_Query$data;
+  variables: UploadPhotos_ImageRefetch_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

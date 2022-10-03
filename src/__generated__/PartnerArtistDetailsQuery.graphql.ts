@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98a850b3e1d046ad45dc0ea9dbff7815>>
+ * @generated SignedSource<<be50305507a1be3f6fd4f30e64beefb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetailsQuery$variables = {
-  partnerId: string;
   artistId: string;
+  partnerId: string;
 };
 export type PartnerArtistDetailsQuery$data = {
   readonly partner: {
@@ -24,8 +24,8 @@ export type PartnerArtistDetailsQuery$data = {
   } | null;
 };
 export type PartnerArtistDetailsQuery = {
-  variables: PartnerArtistDetailsQuery$variables;
   response: PartnerArtistDetailsQuery$data;
+  variables: PartnerArtistDetailsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae8c5dd4f794d5fd53fb2c52fb7d313e>>
+ * @generated SignedSource<<310b4a6c1ef968a6216e86cc73104f47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,8 @@ export type RequestConditionReportMutation$data = {
   } | null;
 };
 export type RequestConditionReportMutation = {
-  variables: RequestConditionReportMutation$variables;
   response: RequestConditionReportMutation$data;
+  variables: RequestConditionReportMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

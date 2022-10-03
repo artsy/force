@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af38b8850ea5d6dae855014f2a420b62>>
+ * @generated SignedSource<<2872dcccd1ca9f823ad6218c1fc54ca7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsFeaturedShow_show$data = {
-  readonly id: string;
-  readonly name: string | null;
-  readonly href: string | null;
   readonly coverImage: {
-    readonly title: string | null;
     readonly large: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
     readonly small: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
+    readonly title: string | null;
   } | null;
+  readonly href: string | null;
+  readonly id: string;
+  readonly name: string | null;
   readonly partner: {
     readonly name?: string | null;
   } | null;

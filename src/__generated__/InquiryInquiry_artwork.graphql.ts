@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c259c5c576dc07f55ddff93a5174aa5>>
+ * @generated SignedSource<<3e3e9af199c1893fa42d1f21f0dc3046>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type InquiryInquiry_artwork$data = {
-  readonly internalID: string;
-  readonly title: string | null;
-  readonly date: string | null;
   readonly artist: {
     readonly name: string | null;
   } | null;
-  readonly partner: {
-    readonly name: string | null;
-  } | null;
+  readonly date: string | null;
   readonly image: {
     readonly resized: {
       readonly height: number | null;
-      readonly width: number | null;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number | null;
     } | null;
   } | null;
+  readonly internalID: string;
+  readonly partner: {
+    readonly name: string | null;
+  } | null;
+  readonly title: string | null;
   readonly " $fragmentType": "InquiryInquiry_artwork";
 };
 export type InquiryInquiry_artwork$key = {

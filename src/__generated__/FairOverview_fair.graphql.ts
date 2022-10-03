@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3546b317a02a9f9d6ffaca6dbc65a157>>
+ * @generated SignedSource<<48c60eaa84e0517041764e0ae0c9704a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOverview_fair$data = {
-  readonly href: string | null;
-  readonly slug: string;
   readonly articlesConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
-      readonly __typename: string;
+      readonly __typename: "ArticleEdge";
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly href: string | null;
   readonly marketingCollections: ReadonlyArray<{
     readonly id: string;
   } | null>;
-  readonly " $fragmentSpreads": FragmentRefs<"FairEditorial_fair" | "FairCollections_fair" | "FairFollowedArtists_fair" | "FairAbout_fair">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorial_fair" | "FairFollowedArtists_fair">;
   readonly " $fragmentType": "FairOverview_fair";
 };
 export type FairOverview_fair$key = {

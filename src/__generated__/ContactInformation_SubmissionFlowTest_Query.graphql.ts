@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb4932ee1446fa54b70ac8624251ca7e>>
+ * @generated SignedSource<<39c72c0aad7ea1806d94ecc2d45e4f83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type ContactInformation_SubmissionFlowTest_Query$data = {
   } | null;
 };
 export type ContactInformation_SubmissionFlowTest_Query = {
-  variables: ContactInformation_SubmissionFlowTest_Query$variables;
   response: ContactInformation_SubmissionFlowTest_Query$data;
+  variables: ContactInformation_SubmissionFlowTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

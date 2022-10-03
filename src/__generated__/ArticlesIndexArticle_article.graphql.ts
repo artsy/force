@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<faf4b2f68c27741c5b33b0c7ac06cb33>>
+ * @generated SignedSource<<4b9979ace005655954cf2facf93d46cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesIndexArticle_article$data = {
-  readonly href: string | null;
-  readonly thumbnailTitle: string | null;
   readonly byline: string | null;
+  readonly href: string | null;
   readonly publishedAt: string | null;
   readonly thumbnailImage: {
     readonly cropped: {
+      readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-      readonly height: number;
     } | null;
   } | null;
+  readonly thumbnailTitle: string | null;
   readonly " $fragmentType": "ArticlesIndexArticle_article";
 };
 export type ArticlesIndexArticle_article$key = {

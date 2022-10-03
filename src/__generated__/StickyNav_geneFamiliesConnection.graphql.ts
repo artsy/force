@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c2b4bee36efd285eaaae5d9c4eda7a2>>
+ * @generated SignedSource<<61a501b31e481bde076661960b9b7263>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type StickyNav_geneFamiliesConnection$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly internalID: string;
-      readonly slug: string;
       readonly name: string;
+      readonly slug: string;
     } | null;
   } | null> | null;
   readonly " $fragmentType": "StickyNav_geneFamiliesConnection";

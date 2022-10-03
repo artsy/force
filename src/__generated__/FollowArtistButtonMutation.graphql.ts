@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf7d13b2f4e705c46aea3ce2703d7384>>
+ * @generated SignedSource<<02c794ce8a08b2d4dd7c2e58d02a0feb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,17 +20,17 @@ export type FollowArtistButtonMutation$variables = {
 export type FollowArtistButtonMutation$data = {
   readonly followArtist: {
     readonly artist: {
-      readonly id: string;
-      readonly isFollowed: boolean | null;
       readonly counts: {
         readonly follows: any | null;
       } | null;
+      readonly id: string;
+      readonly isFollowed: boolean | null;
     } | null;
   } | null;
 };
 export type FollowArtistButtonMutation = {
-  variables: FollowArtistButtonMutation$variables;
   response: FollowArtistButtonMutation$data;
+  variables: FollowArtistButtonMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

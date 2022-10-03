@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c949cb472f91d386074a00653ac2c9c6>>
+ * @generated SignedSource<<13702d72df91443d070833137086b015>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,49 +13,21 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type CreditCardPicker_order$data = {
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly state: CommerceOrderStateEnum;
   readonly creditCard: {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly street1: string | null;
-    readonly street2: string | null;
+    readonly brand: string;
     readonly city: string | null;
-    readonly state: string | null;
     readonly country: string | null;
-    readonly postalCode: string | null;
     readonly expirationMonth: number;
     readonly expirationYear: number;
+    readonly internalID: string;
     readonly lastDigits: string;
-    readonly brand: string;
-  } | null;
-  readonly requestedFulfillment: {
-    readonly __typename: "CommerceShip";
     readonly name: string | null;
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly region: string | null;
-    readonly country: string | null;
     readonly postalCode: string | null;
-  } | {
-    readonly __typename: "CommerceShipArta";
-    readonly name: string | null;
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly region: string | null;
-    readonly country: string | null;
-    readonly postalCode: string | null;
-  } | {
-    readonly __typename: "CommercePickup";
-    readonly fulfillmentType: string;
-  } | {
-    // This will never be '%other', but we need some
-    // value in case none of the concrete values match.
-    readonly __typename: "%other";
+    readonly state: string | null;
+    readonly street1: string | null;
+    readonly street2: string | null;
   } | null;
+  readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -65,6 +37,34 @@ export type CreditCardPicker_order$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly requestedFulfillment: {
+    readonly __typename: "CommercePickup";
+    readonly fulfillmentType: string;
+  } | {
+    readonly __typename: "CommerceShip";
+    readonly addressLine1: string | null;
+    readonly addressLine2: string | null;
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly name: string | null;
+    readonly postalCode: string | null;
+    readonly region: string | null;
+  } | {
+    readonly __typename: "CommerceShipArta";
+    readonly addressLine1: string | null;
+    readonly addressLine2: string | null;
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly name: string | null;
+    readonly postalCode: string | null;
+    readonly region: string | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "CreditCardPicker_order";
 };
 export type CreditCardPicker_order$key = {

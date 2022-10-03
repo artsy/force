@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ae667fcfea253d94d247f57908b0086>>
+ * @generated SignedSource<<2d485d9c4e7c8f03388253b07ef7a88d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowHours_show$data = {
-  readonly location: {
-    readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
-  } | null;
   readonly fair: {
     readonly location: {
       readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
     } | null;
+  } | null;
+  readonly location: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
   } | null;
   readonly " $fragmentType": "ShowHours_show";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<293240d4acb4acc78a0a38f99e6a569a>>
+ * @generated SignedSource<<d10bccda51b6c3bb4de63c171fd116f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,16 +16,16 @@ export type ArticleZoomGallery_article$data = {
     readonly figures: ReadonlyArray<{
       readonly __typename: string;
       readonly id?: string;
-      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryCaption_figure" | "ArticleZoomGalleryFigure_figure">;
     }>;
   } | {
     readonly __typename: "ArticleSectionImageSet";
-    readonly title: string | null;
     readonly figures: ReadonlyArray<{
       readonly __typename: string;
       readonly id?: string;
-      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryCaption_figure" | "ArticleZoomGalleryFigure_figure">;
     }>;
+    readonly title: string | null;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.

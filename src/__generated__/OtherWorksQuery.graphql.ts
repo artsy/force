@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c101a8afd72e2a5e32bc259ee9e4b1f>>
+ * @generated SignedSource<<458f931e6a18cb3af88f033382256490>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type OtherWorksQuery$data = {
   } | null;
 };
 export type OtherWorksQuery = {
-  variables: OtherWorksQuery$variables;
   response: OtherWorksQuery$data;
+  variables: OtherWorksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
