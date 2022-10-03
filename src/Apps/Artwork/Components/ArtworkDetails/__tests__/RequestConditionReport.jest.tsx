@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { graphql } from "react-relay"
-import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
+import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 import { mediator } from "Server/mediator"
 import { Toasts, ToastsProvider } from "@artsy/palette"
@@ -9,7 +9,7 @@ import { useSystemContext } from "System/useSystemContext"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils"
 import { useTracking } from "react-tracking"
 
@@ -39,7 +39,7 @@ describe("RequestConditionReport", () => {
     slug: "artwork-slug",
     saleArtwork: { internalID: "sale-artwork-id" },
   }
-  let relayEnv: RelayMockEnvironment = createMockEnvironment()
+  let relayEnv: MockEnvironment = createMockEnvironment()
   let trackEvent: jest.Mock
   let trigger
 
