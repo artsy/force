@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22c565743fabb854ee2045efb186b2fa>>
+ * @generated SignedSource<<16142ee2259ff69546bfd88108bf2eff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork$data = {
-  readonly comparables: {
-    readonly totalCount: number | null;
-  } | null;
-  readonly hasMarketPriceInsights: boolean | null;
-  readonly submissionId: string | null;
-  readonly internalID: string;
-  readonly slug: string;
   readonly artist: {
+    readonly auctionResults: {
+      readonly totalCount: number | null;
+    } | null;
     readonly slug: string;
     readonly targetSupply: {
       readonly isP1: boolean | null;
     } | null;
-    readonly auctionResults: {
-      readonly totalCount: number | null;
-    } | null;
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
+  readonly comparables: {
+    readonly totalCount: number | null;
+  } | null;
+  readonly hasMarketPriceInsights: boolean | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly submissionId: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {

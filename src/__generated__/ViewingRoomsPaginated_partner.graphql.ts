@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bec9030bd1654084c130e26a9ddeeac>>
+ * @generated SignedSource<<f277c32620799b5fcf7c38979636af9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsPaginated_partner$data = {
   readonly slug: string;
   readonly viewingRoomsList: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    } | null;
     readonly edges: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_edges">;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    } | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
   } | null;
   readonly " $fragmentType": "ViewingRoomsPaginated_partner";
 };

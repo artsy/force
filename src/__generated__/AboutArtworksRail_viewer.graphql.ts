@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8263f7d0c6d00231136fe8e2bde5ee2b>>
+ * @generated SignedSource<<989da61d7ed690028780ab6f84645bd2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,9 @@ export type AboutArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly href: string | null;
         readonly internalID: string;
         readonly slug: string;
-        readonly href: string | null;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bb9ffe564ce7c4de071eb0a0f235659c>>
+ * @generated SignedSource<<a766e5c1f2df0499409d1d644cc9fff2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork$data = {
-  readonly internalID: string;
-  readonly images: ReadonlyArray<{
-    readonly width: number | null;
-    readonly height: number | null;
-  } | null> | null;
   readonly figures: ReadonlyArray<{
     readonly internalID?: string | null;
     readonly isDefault?: boolean | null;
     readonly type: "Video";
   }>;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
+  readonly images: ReadonlyArray<{
+    readonly height: number | null;
+    readonly width: number | null;
+  } | null> | null;
+  readonly internalID: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserLarge_artwork" | "ArtworkImageBrowserSmall_artwork">;
   readonly " $fragmentType": "ArtworkImageBrowser_artwork";
 };
 export type ArtworkImageBrowser_artwork$key = {

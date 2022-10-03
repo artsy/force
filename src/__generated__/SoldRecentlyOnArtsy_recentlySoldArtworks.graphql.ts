@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de5238727c120ab32a7271a6d55948b8>>
+ * @generated SignedSource<<9982fdc2365737fe7b2a9aa25ec3c83e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,15 +14,15 @@ export type SoldRecentlyOnArtsy_recentlySoldArtworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly artwork: {
-        readonly slug: string;
         readonly href: string | null;
         readonly internalID: string;
+        readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
-      readonly lowEstimate: {
+      readonly highEstimate: {
         readonly display: string | null;
       } | null;
-      readonly highEstimate: {
+      readonly lowEstimate: {
         readonly display: string | null;
       } | null;
       readonly priceRealized: {

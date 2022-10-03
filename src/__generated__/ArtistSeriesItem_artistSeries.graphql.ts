@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a314bbb92aba64745ddcd4318b4f87a>>
+ * @generated SignedSource<<1722ebd250db46f72cbadffc11277b3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesItem_artistSeries$data = {
-  readonly title: string;
-  readonly slug: string;
-  readonly featured: boolean;
-  readonly internalID: string;
   readonly artworksCountMessage: string | null;
+  readonly featured: boolean;
   readonly image: {
     readonly cropped: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
   } | null;
+  readonly internalID: string;
+  readonly slug: string;
+  readonly title: string;
   readonly " $fragmentType": "ArtistSeriesItem_artistSeries";
 };
 export type ArtistSeriesItem_artistSeries$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f1de08a04c89bb1ae29dd80556d966f>>
+ * @generated SignedSource<<1201dc19b0b9a17aac38663de6169bb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsIndex_featuredShows$data = {
-  readonly name: string | null;
   readonly items: ReadonlyArray<{
     readonly id?: string;
     readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
   } | null> | null;
+  readonly name: string | null;
   readonly " $fragmentType": "ShowsIndex_featuredShows";
 };
 export type ShowsIndex_featuredShows$key = {

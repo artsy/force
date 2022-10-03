@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a908b331c2dc54b6d4f0c6ec21ca5d1d>>
+ * @generated SignedSource<<557aa8ddf72c01624345575f05253e41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingArtaSummaryItem_order$data = {
-  readonly requestedFulfillment: {
-    readonly __typename: string;
-  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly selectedShippingQuote: {
-          readonly typeName: string;
           readonly price: string | null;
+          readonly typeName: string;
         } | null;
       } | null;
     } | null> | null;
+  } | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
   } | null;
   readonly " $fragmentType": "ShippingArtaSummaryItem_order";
 };

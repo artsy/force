@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1cbe320e98606b95c6ac5bd1ad868c1c>>
+ * @generated SignedSource<<3d5d976da1c2a1816e789c1aa84cb998>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,27 +16,27 @@ export type useBidderPositionQuery$variables = {
 export type useBidderPositionQuery$data = {
   readonly me: {
     readonly bidderPosition: {
-      readonly status: string;
       readonly messageHeader: string | null;
       readonly position: {
         readonly internalID: string;
-        readonly suggestedNextBid: {
-          readonly cents: number | null;
-          readonly display: string | null;
-        } | null;
         readonly saleArtwork: {
           readonly artwork: {
             readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
           } | null;
         } | null;
+        readonly suggestedNextBid: {
+          readonly cents: number | null;
+          readonly display: string | null;
+        } | null;
       } | null;
+      readonly status: string;
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
   } | null;
 };
 export type useBidderPositionQuery = {
-  variables: useBidderPositionQuery$variables;
   response: useBidderPositionQuery$data;
+  variables: useBidderPositionQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e97c1869b39ecbed25e569669138424b>>
+ * @generated SignedSource<<46346d9840b220d371bf9f02c5068b23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchBarSuggestQuery$variables = {
-  term: string;
   hasTerm: boolean;
+  term: string;
 };
 export type SearchBarSuggestQuery$data = {
   readonly viewer: {
@@ -20,8 +20,8 @@ export type SearchBarSuggestQuery$data = {
   } | null;
 };
 export type SearchBarSuggestQuery = {
-  variables: SearchBarSuggestQuery$variables;
   response: SearchBarSuggestQuery$data;
+  variables: SearchBarSuggestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

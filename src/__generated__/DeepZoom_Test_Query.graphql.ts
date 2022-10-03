@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3072fa6cffcb0b0832ef27542df98ed>>
+ * @generated SignedSource<<70b5e51436d885d2f1b9b32311dc8df2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type DeepZoom_Test_Query$data = {
   } | null;
 };
 export type DeepZoom_Test_Query = {
-  variables: DeepZoom_Test_Query$variables;
   response: DeepZoom_Test_Query$data;
+  variables: DeepZoom_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

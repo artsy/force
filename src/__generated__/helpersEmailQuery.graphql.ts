@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d53e4938ff8e9c3673bb0d1de0f645af>>
+ * @generated SignedSource<<10e5d7a272b20c20436010e4f089b7a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type helpersEmailQuery$data = {
   } | null;
 };
 export type helpersEmailQuery = {
-  variables: helpersEmailQuery$variables;
   response: helpersEmailQuery$data;
+  variables: helpersEmailQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

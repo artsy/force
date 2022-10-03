@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c43bbeb3e9fb13b4af01e3c4670dade>>
+ * @generated SignedSource<<b3db06be3022c2accee71bc9b587c22b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type PartnersSpecialtyAutocomplete_Test_Query$data = {
   } | null;
 };
 export type PartnersSpecialtyAutocomplete_Test_Query = {
-  variables: PartnersSpecialtyAutocomplete_Test_Query$variables;
   response: PartnersSpecialtyAutocomplete_Test_Query$data;
+  variables: PartnersSpecialtyAutocomplete_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

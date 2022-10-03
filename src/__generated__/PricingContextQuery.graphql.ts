@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3123b9b897e2a0ec7fa59ef52cc5f12>>
+ * @generated SignedSource<<394b2d29b3b275bbc743c600b5441421>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type PricingContextQuery$data = {
   } | null;
 };
 export type PricingContextQuery = {
-  variables: PricingContextQuery$variables;
   response: PricingContextQuery$data;
+  variables: PricingContextQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

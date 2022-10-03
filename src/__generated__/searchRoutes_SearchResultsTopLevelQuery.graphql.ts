@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d2fcfa8950bb42a55d2d67e5bddec32>>
+ * @generated SignedSource<<2712bec74b4ab7918c400b749962dffd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type searchRoutes_SearchResultsTopLevelQuery$data = {
   } | null;
 };
 export type searchRoutes_SearchResultsTopLevelQuery = {
-  variables: searchRoutes_SearchResultsTopLevelQuery$variables;
   response: searchRoutes_SearchResultsTopLevelQuery$data;
+  variables: searchRoutes_SearchResultsTopLevelQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

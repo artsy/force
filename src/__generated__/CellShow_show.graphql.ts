@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8144a88856ff3c457156fcd7bcb337c2>>
+ * @generated SignedSource<<4774706ab2920015de5f28c24cda3fbf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellShow_show$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly name: string | null;
-  readonly href: string | null;
-  readonly startAt: string | null;
-  readonly endAt: string | null;
-  readonly isFairBooth: boolean | null;
-  readonly exhibitionPeriod: string | null;
-  readonly partner: {
-    readonly name?: string | null;
-  } | null;
   readonly coverImage: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
   } | null;
+  readonly endAt: string | null;
+  readonly exhibitionPeriod: string | null;
+  readonly href: string | null;
+  readonly internalID: string;
+  readonly isFairBooth: boolean | null;
+  readonly name: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly slug: string;
+  readonly startAt: string | null;
   readonly " $fragmentType": "CellShow_show";
 };
 export type CellShow_show$key = {

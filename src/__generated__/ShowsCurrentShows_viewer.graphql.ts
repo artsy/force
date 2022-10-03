@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7feed4f56d10862e8e1b3b91ccc98eda>>
+ * @generated SignedSource<<a7959494c127ea6c92656e7ea717d3d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShows_viewer$data = {
   readonly showsConnection: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShow_show">;
       } | null;
     } | null> | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
   } | null;
   readonly " $fragmentType": "ShowsCurrentShows_viewer";
 };

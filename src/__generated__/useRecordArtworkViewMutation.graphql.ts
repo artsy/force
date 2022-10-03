@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f1b75fd7bedbe035545fc6b98bd08fb>>
+ * @generated SignedSource<<9653085985c06b8f02065b8989580f6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type useRecordArtworkViewMutation$data = {
   } | null;
 };
 export type useRecordArtworkViewMutation = {
-  variables: useRecordArtworkViewMutation$variables;
   response: useRecordArtworkViewMutation$data;
+  variables: useRecordArtworkViewMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

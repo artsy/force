@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ad561d7b9eee9a1a4292af5248bcfaf4>>
+ * @generated SignedSource<<c3ece8c33f535ae87a95aa46b1ce6677>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type TrendingLotsRail_Test_Query$data = {
   } | null;
 };
 export type TrendingLotsRail_Test_Query = {
-  variables: TrendingLotsRail_Test_Query$variables;
   response: TrendingLotsRail_Test_Query$data;
+  variables: TrendingLotsRail_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12a51389ed31f78becb3d2639659e8d6>>
+ * @generated SignedSource<<402561a672a215ca0fad013ffb8c008c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type GeneArtworkFilter_Query$data = {
   } | null;
 };
 export type GeneArtworkFilter_Query = {
-  variables: GeneArtworkFilter_Query$variables;
   response: GeneArtworkFilter_Query$data;
+  variables: GeneArtworkFilter_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9467fbc1e3afe8fe05620d381b148055>>
+ * @generated SignedSource<<cb2649ab4a898b35af7e7e39385947a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,24 +23,24 @@ export type ViewingRoomsApp_Test_Query$rawResponse = {
   readonly allViewingRooms: {
     readonly viewingRoomsConnection: {
       readonly edges: ReadonlyArray<{
+        readonly cursor: string;
         readonly node: {
-          readonly slug: string;
-          readonly status: string;
-          readonly title: string;
+          readonly __typename: "ViewingRoom";
+          readonly distanceToClose: string | null;
+          readonly distanceToOpen: string | null;
           readonly image: {
             readonly imageURLs: {
               readonly normalized: string | null;
             } | null;
           } | null;
-          readonly distanceToOpen: string | null;
-          readonly distanceToClose: string | null;
           readonly partner: {
-            readonly name: string | null;
             readonly id: string;
+            readonly name: string | null;
           } | null;
-          readonly __typename: "ViewingRoom";
+          readonly slug: string;
+          readonly status: string;
+          readonly title: string;
         } | null;
-        readonly cursor: string;
       } | null> | null;
       readonly pageInfo: {
         readonly endCursor: string | null;
@@ -51,28 +51,28 @@ export type ViewingRoomsApp_Test_Query$rawResponse = {
   readonly featuredViewingRooms: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly status: string;
-        readonly slug: string;
-        readonly title: string;
+        readonly distanceToClose: string | null;
+        readonly distanceToOpen: string | null;
         readonly image: {
           readonly imageURLs: {
             readonly normalized: string | null;
           } | null;
         } | null;
-        readonly distanceToOpen: string | null;
-        readonly distanceToClose: string | null;
         readonly partner: {
-          readonly name: string | null;
           readonly id: string;
+          readonly name: string | null;
         } | null;
+        readonly slug: string;
+        readonly status: string;
+        readonly title: string;
       } | null;
     } | null> | null;
   } | null;
 };
 export type ViewingRoomsApp_Test_Query = {
-  variables: ViewingRoomsApp_Test_Query$variables;
-  response: ViewingRoomsApp_Test_Query$data;
   rawResponse: ViewingRoomsApp_Test_Query$rawResponse;
+  response: ViewingRoomsApp_Test_Query$data;
+  variables: ViewingRoomsApp_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

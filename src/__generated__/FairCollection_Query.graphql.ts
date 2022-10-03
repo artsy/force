@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afd418442a415e31896df99d7107f0ee>>
+ * @generated SignedSource<<6b7edf9e954f3cf3364ab06e2cfc861f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,29 +20,29 @@ export type FairCollection_Query$data = {
 };
 export type FairCollection_Query$rawResponse = {
   readonly marketingCollection: {
-    readonly id: string;
-    readonly slug: string;
-    readonly title: string;
     readonly artworks: {
       readonly counts: {
         readonly total: any | null;
       } | null;
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly id: string;
           readonly image: {
             readonly url: string | null;
           } | null;
-          readonly id: string;
         } | null;
       } | null> | null;
       readonly id: string;
     } | null;
+    readonly id: string;
+    readonly slug: string;
+    readonly title: string;
   } | null;
 };
 export type FairCollection_Query = {
-  variables: FairCollection_Query$variables;
-  response: FairCollection_Query$data;
   rawResponse: FairCollection_Query$rawResponse;
+  response: FairCollection_Query$data;
+  variables: FairCollection_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

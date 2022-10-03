@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e42ffd151a39a944143573bdda15f85>>
+ * @generated SignedSource<<6a20f7d275332962f52b5a4eca05dca0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairApp_fair$data = {
-  readonly internalID: string;
-  readonly href: string | null;
-  readonly slug: string;
   readonly counts: {
     readonly artworks: any | null;
   } | null;
+  readonly href: string | null;
+  readonly internalID: string;
   readonly profile: {
     readonly id: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairHeaderImage_fair" | "ExhibitorsLetterNav_fair">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairMeta_fair">;
   readonly " $fragmentType": "FairApp_fair";
 };
 export type FairApp_fair$key = {

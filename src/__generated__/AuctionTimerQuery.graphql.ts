@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ceb8abc9ffc181f8993fb6f8aedb569>>
+ * @generated SignedSource<<962139d96c9ef0000da37ff4a3118e62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type AuctionTimerQuery$data = {
   } | null;
 };
 export type AuctionTimerQuery = {
-  variables: AuctionTimerQuery$variables;
   response: AuctionTimerQuery$data;
+  variables: AuctionTimerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

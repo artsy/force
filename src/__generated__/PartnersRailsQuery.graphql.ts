@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7db58397a96d5b4938c75ce56512266b>>
+ * @generated SignedSource<<65081fff40eedcea1786d70d976863a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type PartnersRailsQuery$data = {
   } | null;
 };
 export type PartnersRailsQuery = {
-  variables: PartnersRailsQuery$variables;
   response: PartnersRailsQuery$data;
+  variables: PartnersRailsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

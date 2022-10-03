@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69873d7b0bb6ce50245f630c158850a2>>
+ * @generated SignedSource<<36ab45553ca35cf14cf0b9791b031990>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type HomeFeaturedMarketNewsQuery$data = {
   }>;
 };
 export type HomeFeaturedMarketNewsQuery = {
-  variables: HomeFeaturedMarketNewsQuery$variables;
   response: HomeFeaturedMarketNewsQuery$data;
+  variables: HomeFeaturedMarketNewsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

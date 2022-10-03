@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71a7ccbc259eb15a5f8f18f623217f7c>>
+ * @generated SignedSource<<b20b538ccdb1a7698f0a7936351bc635>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,28 +11,28 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBidRoute_artwork$data = {
-  readonly slug: string;
   readonly internalID: string;
   readonly saleArtwork: {
-    readonly minimumNextBid: {
-      readonly cents: number | null;
-    } | null;
     readonly increments: ReadonlyArray<{
       readonly cents: number | null;
       readonly display: string | null;
     } | null> | null;
+    readonly minimumNextBid: {
+      readonly cents: number | null;
+    } | null;
     readonly sale: {
-      readonly internalID: string;
       readonly bidder: {
         readonly id: string;
       } | null;
-      readonly slug: string;
+      readonly internalID: string;
       readonly registrationStatus: {
         readonly qualifiedForBidding: boolean | null;
       } | null;
+      readonly slug: string;
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionLotInfo_saleArtwork">;
   } | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionTimer_artwork">;
   readonly " $fragmentType": "AuctionBidRoute_artwork";
 };

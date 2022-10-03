@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f6ac22703f54815da4577046bc41754>>
+ * @generated SignedSource<<e4927562baaf41e144b12990e05dcb44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExampleArtworkRoute_artwork$data = {
-  readonly title: string | null;
-  readonly artistNames: string | null;
-  readonly medium: string | null;
-  readonly imageUrl: string | null;
-  readonly date: string | null;
-  readonly internalID: string;
-  readonly slug: string;
   readonly artist: {
     readonly related: {
       readonly artistsConnection: {
@@ -29,6 +22,13 @@ export type ExampleArtworkRoute_artwork$data = {
       } | null;
     } | null;
   } | null;
+  readonly artistNames: string | null;
+  readonly date: string | null;
+  readonly imageUrl: string | null;
+  readonly internalID: string;
+  readonly medium: string | null;
+  readonly slug: string;
+  readonly title: string | null;
   readonly " $fragmentType": "ExampleArtworkRoute_artwork";
 };
 export type ExampleArtworkRoute_artwork$key = {

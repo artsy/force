@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f09747e0379a22a63d18c699704e79b>>
+ * @generated SignedSource<<6c405a5fcf6264230f65e869f56fecef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type viewingRoomRoutes_ViewingRoomsAppQuery$variables = {
-  count: number;
   after?: string | null;
+  count: number;
 };
 export type viewingRoomRoutes_ViewingRoomsAppQuery$data = {
   readonly allViewingRooms: {
@@ -23,8 +23,8 @@ export type viewingRoomRoutes_ViewingRoomsAppQuery$data = {
   } | null;
 };
 export type viewingRoomRoutes_ViewingRoomsAppQuery = {
-  variables: viewingRoomRoutes_ViewingRoomsAppQuery$variables;
   response: viewingRoomRoutes_ViewingRoomsAppQuery$data;
+  variables: viewingRoomRoutes_ViewingRoomsAppQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46d406fe64c3b55dc36bc102d1f38190>>
+ * @generated SignedSource<<06856341aed81434c44678d97235553d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery$data = {
   } | null;
 };
 export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery = {
-  variables: SettingsEditSettingsTwoFactorBackupCodesDialogQuery$variables;
   response: SettingsEditSettingsTwoFactorBackupCodesDialogQuery$data;
+  variables: SettingsEditSettingsTwoFactorBackupCodesDialogQuery$variables;
 };
 
 const node: ConcreteRequest = {

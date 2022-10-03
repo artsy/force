@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2beaf3817d9bef36727977708c3c2690>>
+ * @generated SignedSource<<9bf48b685f92ed2ab0a7e5061bf33cd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRooms_partner$data = {
-  readonly slug: string;
   readonly currentViewingRooms: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -20,6 +19,7 @@ export type ViewingRooms_partner$data = {
       readonly " $fragmentSpreads": FragmentRefs<"ViewingRooms_edges">;
     } | null> | null;
   } | null;
+  readonly slug: string;
   readonly upcomingViewingRooms: {
     readonly edges: ReadonlyArray<{
       readonly node: {

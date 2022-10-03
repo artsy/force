@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f2b209c00469fb064a27bc858ae9034>>
+ * @generated SignedSource<<449cd452ac36eac310def245265abc98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type exampleRoutes_ExampleQuery$data = {
   } | null;
 };
 export type exampleRoutes_ExampleQuery = {
-  variables: exampleRoutes_ExampleQuery$variables;
   response: exampleRoutes_ExampleQuery$data;
+  variables: exampleRoutes_ExampleQuery$variables;
 };
 
 const node: ConcreteRequest = {

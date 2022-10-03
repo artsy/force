@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<437be65fc9ed11f71a3b98cbcca641f3>>
+ * @generated SignedSource<<996d9e122d573c587f782dae68ae4a82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,24 +12,24 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleRoute_artist$data = {
-  readonly sidebarAggregations: {
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: ArtworkAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly name: string;
-        readonly value: string;
-        readonly count: number;
-      } | null> | null;
-    } | null> | null;
-  } | null;
   readonly counts: {
     readonly forSaleArtworks: any | null;
   } | null;
-  readonly name: string | null;
-  readonly internalID: string;
-  readonly slug: string;
   readonly id: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist" | "ArtistArtworkFilter_artist">;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: ArtworkAggregation | null;
+    } | null> | null;
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist" | "ArtistSeriesRail_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$key = {

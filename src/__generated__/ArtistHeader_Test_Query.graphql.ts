@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b981ea4c883a32c1a7ff0902482e24b7>>
+ * @generated SignedSource<<c7965231bc8fe85f32e858600ca7d96d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ArtistHeader_Test_Query$data = {
   } | null;
 };
 export type ArtistHeader_Test_Query = {
-  variables: ArtistHeader_Test_Query$variables;
   response: ArtistHeader_Test_Query$data;
+  variables: ArtistHeader_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

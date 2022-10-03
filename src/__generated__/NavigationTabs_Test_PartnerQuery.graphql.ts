@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03ba26c0d559d19f7b3958de84bca184>>
+ * @generated SignedSource<<e26a2c65faf3e390b4a4c7ac2990150e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,36 +18,36 @@ export type NavigationTabs_Test_PartnerQuery$data = {
 };
 export type NavigationTabs_Test_PartnerQuery$rawResponse = {
   readonly partner: {
-    readonly slug: string;
-    readonly partnerType: string | null;
-    readonly displayArtistsSection: boolean | null;
-    readonly displayWorksSection: boolean | null;
-    readonly counts: {
-      readonly eligibleArtworks: any | null;
-      readonly displayableShows: any | null;
-    } | null;
-    readonly locations: {
-      readonly totalCount: number | null;
-    } | null;
     readonly articles: {
       readonly totalCount: number | null;
     } | null;
-    readonly representedArtists: {
+    readonly counts: {
+      readonly displayableShows: any | null;
+      readonly eligibleArtworks: any | null;
+    } | null;
+    readonly displayArtistsSection: boolean | null;
+    readonly displayWorksSection: boolean | null;
+    readonly id: string;
+    readonly locations: {
       readonly totalCount: number | null;
     } | null;
     readonly notRepresentedArtists: {
       readonly totalCount: number | null;
     } | null;
+    readonly partnerType: string | null;
+    readonly representedArtists: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly slug: string;
     readonly viewingRooms: {
       readonly totalCount: number | null;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type NavigationTabs_Test_PartnerQuery = {
-  variables: NavigationTabs_Test_PartnerQuery$variables;
-  response: NavigationTabs_Test_PartnerQuery$data;
   rawResponse: NavigationTabs_Test_PartnerQuery$rawResponse;
+  response: NavigationTabs_Test_PartnerQuery$data;
+  variables: NavigationTabs_Test_PartnerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

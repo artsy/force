@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6af796cedc8c7a512e875acba4c54886>>
+ * @generated SignedSource<<e2224f2c6d8dbdd826ec1d23a52ffbb7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionsRoute_viewer$data = {
   readonly salesConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly slug: string;
-        readonly name: string | null;
         readonly href: string | null;
-        readonly liveStartAt: string | null;
         readonly isLiveOpen: boolean | null;
+        readonly liveStartAt: string | null;
+        readonly name: string | null;
+        readonly slug: string;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "AuctionsRoute_viewer";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b08574e62060767ad3b92ca23a50249f>>
+ * @generated SignedSource<<96809fb7f11f23109179f5f2dd6fe013>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,45 +13,45 @@ import { FragmentRefs } from "relay-runtime";
 export type SeoProductsForArtworks_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly id: string;
+      readonly artists: ReadonlyArray<{
+        readonly name: string | null;
+      } | null> | null;
       readonly availability: string | null;
       readonly category: string | null;
       readonly date: string | null;
       readonly href: string | null;
+      readonly id: string;
+      readonly image: {
+        readonly url: string | null;
+      } | null;
       readonly is_acquireable: boolean | null;
       readonly is_price_range: boolean | null;
       readonly listPrice: {
         readonly display?: string | null;
       } | null;
-      readonly price_currency: string | null;
-      readonly title: string | null;
-      readonly artists: ReadonlyArray<{
-        readonly name: string | null;
-      } | null> | null;
-      readonly image: {
-        readonly url: string | null;
-      } | null;
       readonly meta: {
         readonly description: string | null;
       } | null;
       readonly partner: {
+        readonly locations: ReadonlyArray<{
+          readonly address: string | null;
+          readonly address_2: string | null;
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly phone: string | null;
+          readonly postal_code: string | null;
+          readonly state: string | null;
+        } | null> | null;
         readonly name: string | null;
-        readonly type: string | null;
         readonly profile: {
           readonly icon: {
             readonly url: string | null;
           } | null;
         } | null;
-        readonly locations: ReadonlyArray<{
-          readonly address: string | null;
-          readonly address_2: string | null;
-          readonly city: string | null;
-          readonly state: string | null;
-          readonly country: string | null;
-          readonly postal_code: string | null;
-          readonly phone: string | null;
-        } | null> | null;
+        readonly type: string | null;
       } | null;
+      readonly price_currency: string | null;
+      readonly title: string | null;
     } | null;
   } | null> | null;
   readonly " $fragmentType": "SeoProductsForArtworks_artworks";

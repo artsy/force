@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<137a006572ea6445e18ce3e1696906e1>>
+ * @generated SignedSource<<ed6b2f8eb4b01b718bf9586267bfa667>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,31 +22,31 @@ export type PartnerContacts_Test_Query$data = {
 };
 export type PartnerContacts_Test_Query$rawResponse = {
   readonly partner: {
+    readonly id: string;
     readonly locations: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly id: string;
-          readonly city: string | null;
-          readonly phone: string | null;
-          readonly state: string | null;
           readonly address: string | null;
           readonly address2: string | null;
-          readonly postalCode: string | null;
-          readonly displayCountry: string | null;
+          readonly city: string | null;
           readonly coordinates: {
             readonly lat: number | null;
             readonly lng: number | null;
           } | null;
+          readonly displayCountry: string | null;
+          readonly id: string;
+          readonly phone: string | null;
+          readonly postalCode: string | null;
+          readonly state: string | null;
         } | null;
       } | null> | null;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type PartnerContacts_Test_Query = {
-  variables: PartnerContacts_Test_Query$variables;
-  response: PartnerContacts_Test_Query$data;
   rawResponse: PartnerContacts_Test_Query$rawResponse;
+  response: PartnerContacts_Test_Query$data;
+  variables: PartnerContacts_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

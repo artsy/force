@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c764910ddae14bd352d2923cfb80af8>>
+ * @generated SignedSource<<7a7957c4f447bf7a7208b1139d6a9eaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner$data = {
-  readonly slug: string;
-  readonly featuredEvents: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly isFeatured: boolean | null;
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly currentEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -29,6 +19,16 @@ export type Shows_partner$data = {
       readonly " $fragmentSpreads": FragmentRefs<"ShowEvents_edges">;
     } | null> | null;
   } | null;
+  readonly featuredEvents: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly isFeatured: boolean | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly slug: string;
   readonly upcomingEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {

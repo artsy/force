@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37bab3b553dabaf39299a1c6a2ff00d0>>
+ * @generated SignedSource<<eb05157dc777ffad8284e5bd33907a43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,9 +29,11 @@ export type ShippingQuotes_Test_Query$data = {
 export type ShippingQuotes_Test_Query$rawResponse = {
   readonly order: {
     readonly __typename: string;
+    readonly id: string;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly id: string;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
@@ -43,17 +45,15 @@ export type ShippingQuotes_Test_Query$rawResponse = {
               } | null;
             } | null> | null;
           } | null;
-          readonly id: string;
         } | null;
       } | null> | null;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type ShippingQuotes_Test_Query = {
-  variables: ShippingQuotes_Test_Query$variables;
-  response: ShippingQuotes_Test_Query$data;
   rawResponse: ShippingQuotes_Test_Query$rawResponse;
+  response: ShippingQuotes_Test_Query$data;
+  variables: ShippingQuotes_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

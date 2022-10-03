@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<745fb582580b136b52e8fb53646c8d3a>>
+ * @generated SignedSource<<fe98e077aa1cf0ff2a48df87dca0062e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,17 +15,17 @@ export type AuctionDetailsStartTimeQuery$variables = {
 };
 export type AuctionDetailsStartTimeQuery$data = {
   readonly sale: {
-    readonly cascadingEndTimeIntervalMinutes: number | null;
-    readonly formattedStartDateTime: string | null;
     readonly cascadingEndTime: {
       readonly formattedStartDateTime: string | null;
     } | null;
+    readonly cascadingEndTimeIntervalMinutes: number | null;
+    readonly formattedStartDateTime: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionDetailsStartTime_sale">;
   } | null;
 };
 export type AuctionDetailsStartTimeQuery = {
-  variables: AuctionDetailsStartTimeQuery$variables;
   response: AuctionDetailsStartTimeQuery$data;
+  variables: AuctionDetailsStartTimeQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

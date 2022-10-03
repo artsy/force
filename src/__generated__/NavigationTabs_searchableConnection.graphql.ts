@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2d81ed114e7efe0975e0d38bc74641b>>
+ * @generated SignedSource<<1aead2465e0d58ad59d9c837272bd6f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,11 @@ export type SearchAggregation = "TYPE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_searchableConnection$data = {
   readonly aggregations: ReadonlyArray<{
-    readonly slice: SearchAggregation | null;
     readonly counts: ReadonlyArray<{
       readonly count: number;
       readonly name: string;
     } | null> | null;
+    readonly slice: SearchAggregation | null;
   } | null> | null;
   readonly " $fragmentType": "NavigationTabs_searchableConnection";
 };

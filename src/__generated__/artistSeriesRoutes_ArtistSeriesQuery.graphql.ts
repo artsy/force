@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cbd101b82277a0ef78e2245ba4814e9>>
+ * @generated SignedSource<<eebc0cf60aa8af45665757bf42647482>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,9 +63,9 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type artistSeriesRoutes_ArtistSeriesQuery$variables = {
-  slug: string;
-  input?: FilterArtworksInput | null;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  input?: FilterArtworksInput | null;
+  slug: string;
 };
 export type artistSeriesRoutes_ArtistSeriesQuery$data = {
   readonly artistSeries: {
@@ -73,8 +73,8 @@ export type artistSeriesRoutes_ArtistSeriesQuery$data = {
   } | null;
 };
 export type artistSeriesRoutes_ArtistSeriesQuery = {
-  variables: artistSeriesRoutes_ArtistSeriesQuery$variables;
   response: artistSeriesRoutes_ArtistSeriesQuery$data;
+  variables: artistSeriesRoutes_ArtistSeriesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

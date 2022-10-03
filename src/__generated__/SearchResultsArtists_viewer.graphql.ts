@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b1072ab57a9750edf75d2feb17372d5>>
+ * @generated SignedSource<<5e33b0cd9d2f9fac894262c8570dbe23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,21 +12,21 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsArtists_viewer$data = {
   readonly searchConnection: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly bio?: string | null;
+        readonly href?: string | null;
+        readonly imageUrl?: string | null;
+        readonly internalID?: string;
+        readonly name?: string | null;
+      } | null;
+    } | null> | null;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly name?: string | null;
-        readonly internalID?: string;
-        readonly href?: string | null;
-        readonly imageUrl?: string | null;
-        readonly bio?: string | null;
-      } | null;
-    } | null> | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
   } | null;
   readonly " $fragmentType": "SearchResultsArtists_viewer";
 };

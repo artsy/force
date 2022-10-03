@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb9616184c18d85874e326deba3ffeda>>
+ * @generated SignedSource<<c71ea50d3aad232599192ee81b9b0f26>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowBannersRail_partner$data = {
-  readonly slug: string;
-  readonly featuredShow: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly id: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly currentShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -28,7 +19,7 @@ export type ShowBannersRail_partner$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly upcomingShows: {
+  readonly featuredShow: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
@@ -37,6 +28,15 @@ export type ShowBannersRail_partner$data = {
     } | null> | null;
   } | null;
   readonly pastShows: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly slug: string;
+  readonly upcomingShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;

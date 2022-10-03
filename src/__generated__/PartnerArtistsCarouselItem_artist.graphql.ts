@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e865fed97b5467b05de55842a1da17c7>>
+ * @generated SignedSource<<c5bd15d5b26673b9d55b3d2ce205ebda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type PartnerArtistsCarouselItem_artist$data = {
       readonly node: {
         readonly image: {
           readonly cropped: {
+            readonly height: number;
             readonly src: string;
             readonly srcSet: string;
-            readonly height: number;
             readonly width: number;
           } | null;
         } | null;
@@ -26,14 +26,14 @@ export type PartnerArtistsCarouselItem_artist$data = {
     } | null> | null;
   } | null;
   readonly node: {
-    readonly id: string;
-    readonly name: string | null;
     readonly formattedNationalityAndBirthday: string | null;
+    readonly id: string;
     readonly image: {
       readonly cropped: {
         readonly url: string;
       } | null;
     } | null;
+    readonly name: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null;
   readonly " $fragmentType": "PartnerArtistsCarouselItem_artist";

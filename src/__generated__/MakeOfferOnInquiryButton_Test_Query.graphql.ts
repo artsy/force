@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be75680289b90aea6241490bca620d69>>
+ * @generated SignedSource<<db63512633f3c474ef83a34c359caa78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type MakeOfferOnInquiryButton_Test_Query$data = {
   } | null;
 };
 export type MakeOfferOnInquiryButton_Test_Query = {
-  variables: MakeOfferOnInquiryButton_Test_Query$variables;
   response: MakeOfferOnInquiryButton_Test_Query$data;
+  variables: MakeOfferOnInquiryButton_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

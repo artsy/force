@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4af09d06cdbc0f27ca40563255a81e68>>
+ * @generated SignedSource<<3b9d81bfa8621ae1e6862cb87a3d7920>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,16 +18,16 @@ export type PartnersSearchQuery$variables = {
 };
 export type PartnersSearchQuery$data = {
   readonly filterPartners: {
-    readonly total: number | null;
     readonly hits: ReadonlyArray<{
       readonly text: string | null;
       readonly value: string;
     } | null> | null;
+    readonly total: number | null;
   } | null;
 };
 export type PartnersSearchQuery = {
-  variables: PartnersSearchQuery$variables;
   response: PartnersSearchQuery$data;
+  variables: PartnersSearchQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<590da3df9c7bcb2bfc84a91ef9a35736>>
+ * @generated SignedSource<<36a4cc48553b206f324e963a9aaebf5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ export type markAllNotificationsAsReadMutation$variables = {};
 export type markAllNotificationsAsReadMutation$data = {
   readonly markAllNotificationsAsRead: {
     readonly responseOrError: {
-      readonly success?: boolean | null;
       readonly mutationError?: {
         readonly message: string;
       } | null;
+      readonly success?: boolean | null;
     } | null;
   } | null;
 };
 export type markAllNotificationsAsReadMutation = {
-  variables: markAllNotificationsAsReadMutation$variables;
   response: markAllNotificationsAsReadMutation$data;
+  variables: markAllNotificationsAsReadMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12dad2441ce309e32d9c65b6edf94877>>
+ * @generated SignedSource<<05c451e52d0dd1715091f1cd802e5f05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,19 +13,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultSorts = "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
 export type ArtistAuctionResultsQuery$variables = {
-  first?: number | null;
-  last?: number | null;
   after?: string | null;
-  before?: string | null;
-  sort?: AuctionResultSorts | null;
-  artistID: string;
-  organizations?: ReadonlyArray<string | null> | null;
-  keyword?: string | null;
-  categories?: ReadonlyArray<string | null> | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
-  createdBeforeYear?: number | null;
-  createdAfterYear?: number | null;
   allowEmptyCreatedDates?: boolean | null;
+  artistID: string;
+  before?: string | null;
+  categories?: ReadonlyArray<string | null> | null;
+  createdAfterYear?: number | null;
+  createdBeforeYear?: number | null;
+  first?: number | null;
+  keyword?: string | null;
+  last?: number | null;
+  organizations?: ReadonlyArray<string | null> | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  sort?: AuctionResultSorts | null;
 };
 export type ArtistAuctionResultsQuery$data = {
   readonly artist: {
@@ -33,8 +33,8 @@ export type ArtistAuctionResultsQuery$data = {
   } | null;
 };
 export type ArtistAuctionResultsQuery = {
-  variables: ArtistAuctionResultsQuery$variables;
   response: ArtistAuctionResultsQuery$data;
+  variables: ArtistAuctionResultsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

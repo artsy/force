@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34a897d70465de262e3b819cac136190>>
+ * @generated SignedSource<<17ed1f125684738e7a1921182cd988a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TagMeta_tag$data = {
-  readonly name: string | null;
-  readonly href: string | null;
   readonly description: string | null;
+  readonly href: string | null;
   readonly image: {
     readonly cropped: {
       readonly src: string;
     } | null;
   } | null;
+  readonly name: string | null;
   readonly " $fragmentType": "TagMeta_tag";
 };
 export type TagMeta_tag$key = {

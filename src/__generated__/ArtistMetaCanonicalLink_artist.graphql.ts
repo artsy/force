@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57a3d41264318d5735d4fbdc0862267b>>
+ * @generated SignedSource<<1876ba7e1094581a7cb5b53816a7c8b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,36 +11,36 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMetaCanonicalLink_artist$data = {
-  readonly slug: string;
-  readonly statuses: {
-    readonly shows: boolean | null;
-    readonly cv: boolean | null;
-    readonly articles: boolean | null;
-    readonly auctionLots: boolean | null;
-    readonly artworks: boolean | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
   } | null;
   readonly highlights: {
     readonly partnersConnection: {
       readonly edges: ReadonlyArray<{
-        readonly __typename: string;
-      } | null> | null;
-    } | null;
-  } | null;
-  readonly biographyBlurb: {
-    readonly text: string | null;
-  } | null;
-  readonly related: {
-    readonly genes: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly __typename: string;
-        } | null;
+        readonly __typename: "PartnerArtistEdge";
       } | null> | null;
     } | null;
   } | null;
   readonly insights: ReadonlyArray<{
-    readonly __typename: string;
+    readonly __typename: "ArtistInsight";
   }>;
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: "Gene";
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
+  readonly slug: string;
+  readonly statuses: {
+    readonly articles: boolean | null;
+    readonly artworks: boolean | null;
+    readonly auctionLots: boolean | null;
+    readonly cv: boolean | null;
+    readonly shows: boolean | null;
+  } | null;
   readonly " $fragmentType": "ArtistMetaCanonicalLink_artist";
 };
 export type ArtistMetaCanonicalLink_artist$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a921698d637e3bc4998fab7b61dba4c7>>
+ * @generated SignedSource<<eb8ccf82b68ede33cfd1fbfe22dd6a0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerPastEventRailCell_fair$data = {
-  readonly slug: string;
-  readonly name: string | null;
   readonly image: {
     readonly cropped: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
   } | null;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentType": "FairOrganizerPastEventRailCell_fair";
 };
 export type FairOrganizerPastEventRailCell_fair$key = {

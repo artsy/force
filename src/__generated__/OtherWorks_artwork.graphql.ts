@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fa171912c7fbcbdd4fe0844854478c5>>
+ * @generated SignedSource<<a81f221c361b8ab1c7a249a61018fea1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OtherWorks_artwork$data = {
+  readonly context: {
+    readonly __typename: string;
+  } | null;
   readonly contextGrids: ReadonlyArray<{
     readonly __typename: string;
-    readonly title: string | null;
-    readonly ctaTitle: string | null;
-    readonly ctaHref: string | null;
     readonly artworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -24,19 +24,19 @@ export type OtherWorks_artwork$data = {
       } | null> | null;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
     } | null;
+    readonly ctaHref: string | null;
+    readonly ctaTitle: string | null;
+    readonly title: string | null;
   } | null> | null;
-  readonly slug: string;
   readonly internalID: string;
   readonly sale: {
     readonly is_closed: boolean | null;
   } | null;
-  readonly context: {
-    readonly __typename: string;
-  } | null;
   readonly seriesArtist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"RelatedWorksArtworkGrid_artwork" | "ArtistSeriesArtworkRail_artwork">;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork" | "RelatedWorksArtworkGrid_artwork">;
   readonly " $fragmentType": "OtherWorks_artwork";
 };
 export type OtherWorks_artwork$key = {

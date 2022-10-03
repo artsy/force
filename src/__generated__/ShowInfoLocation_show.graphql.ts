@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b359881489427ff1d679331c68b93fba>>
+ * @generated SignedSource<<9abd1da47dbfd6ecad42abd91e43f81c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,22 +13,22 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowInfoLocation_show$data = {
   readonly fair: {
     readonly location: {
-      readonly display: string | null;
       readonly address: string | null;
       readonly address2: string | null;
       readonly city: string | null;
-      readonly state: string | null;
       readonly country: string | null;
+      readonly display: string | null;
+      readonly state: string | null;
       readonly summary: string | null;
     } | null;
   } | null;
   readonly location: {
-    readonly display: string | null;
     readonly address: string | null;
     readonly address2: string | null;
     readonly city: string | null;
-    readonly state: string | null;
     readonly country: string | null;
+    readonly display: string | null;
+    readonly state: string | null;
     readonly summary: string | null;
   } | null;
   readonly " $fragmentType": "ShowInfoLocation_show";

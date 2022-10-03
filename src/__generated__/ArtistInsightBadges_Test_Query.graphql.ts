@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a13eac3275ae1a7e28ba0566939547d>>
+ * @generated SignedSource<<a012976aa6fe7957e1b87812b6037015>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ArtistInsightBadges_Test_Query$data = {
   } | null;
 };
 export type ArtistInsightBadges_Test_Query = {
-  variables: ArtistInsightBadges_Test_Query$variables;
   response: ArtistInsightBadges_Test_Query$data;
+  variables: ArtistInsightBadges_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

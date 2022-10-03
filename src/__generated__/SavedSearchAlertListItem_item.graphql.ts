@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef64795ff618035bbc7a67968bfa7854>>
+ * @generated SignedSource<<13aea50abff22cb6c2adb8fb12b10633>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertListItem_item$data = {
-  readonly internalID: string;
   readonly artistIDs: ReadonlyArray<string> | null;
   readonly href: string;
+  readonly internalID: string;
   readonly labels: ReadonlyArray<{
     readonly displayValue: string;
   }>;

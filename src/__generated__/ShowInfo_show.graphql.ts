@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dbf95dbac0d6a30381a05760bba7ad3>>
+ * @generated SignedSource<<f440828ca8166c5cc7bd09f6ab119ca3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInfo_show$data = {
-  readonly name: string | null;
   readonly about: string | null;
-  readonly pressRelease: string | null;
-  readonly hasLocation: boolean | null;
   readonly events: ReadonlyArray<{
     readonly dateTimeRange: string | null;
     readonly description: string | null;
     readonly eventType: string | null;
     readonly title: string | null;
   } | null> | null;
+  readonly hasLocation: boolean | null;
+  readonly name: string | null;
   readonly partner: {
     readonly __typename: "Partner";
     readonly type: string | null;
@@ -30,7 +29,8 @@ export type ShowInfo_show$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ShowInfoLocation_show" | "ShowHours_show">;
+  readonly pressRelease: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowHours_show" | "ShowInfoLocation_show">;
   readonly " $fragmentType": "ShowInfo_show";
 };
 export type ShowInfo_show$key = {

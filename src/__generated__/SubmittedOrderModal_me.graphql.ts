@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f7976b496a114ae8c29863f4c89c81a>>
+ * @generated SignedSource<<d51f5f048badd81c58d7899288e03fbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type SubmittedOrderModal_me$data = {
   readonly orders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly stateExpiresAt: string | null;
         readonly lineItems: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -24,6 +23,7 @@ export type SubmittedOrderModal_me$data = {
             } | null;
           } | null> | null;
         } | null;
+        readonly stateExpiresAt: string | null;
       } | null;
     } | null> | null;
   } | null;

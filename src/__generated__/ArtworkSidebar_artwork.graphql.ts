@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58c2a7fd2ce7fa9b75129be816dfc741>>
+ * @generated SignedSource<<14fcb57467d0123d73df05522a23e7d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,20 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork$data = {
-  readonly is_in_auction: boolean | null;
-  readonly is_sold: boolean | null;
-  readonly is_biddable: boolean | null;
-  readonly is_acquireable: boolean | null;
-  readonly is_offerable: boolean | null;
+  readonly artists: ReadonlyArray<{
+    readonly internalID: string;
+  } | null> | null;
   readonly hasCertificateOfAuthenticity: boolean | null;
+  readonly is_acquireable: boolean | null;
+  readonly is_biddable: boolean | null;
+  readonly is_in_auction: boolean | null;
+  readonly is_offerable: boolean | null;
+  readonly is_sold: boolean | null;
   readonly partner: {
     readonly isVerifiedSeller: boolean | null;
   } | null;
   readonly sale: {
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly internalID: string;
     readonly is_closed: boolean | null;
     readonly startAt: string | null;
-    readonly internalID: string;
-    readonly extendedBiddingIntervalMinutes: number | null;
   } | null;
   readonly saleArtwork: {
     readonly endAt: string | null;
@@ -32,10 +35,7 @@ export type ArtworkSidebar_artwork$data = {
     readonly extendedBiddingEndAt: string | null;
     readonly lotID: string | null;
   } | null;
-  readonly artists: ReadonlyArray<{
-    readonly internalID: string;
-  } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarExtraLinks_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$key = {

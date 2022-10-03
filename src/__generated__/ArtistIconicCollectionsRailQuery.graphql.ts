@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa25be07bbf03e67b1f5df876d0ebca2>>
+ * @generated SignedSource<<052438e5c544f1e4da537637db8c437a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistIconicCollectionsRailQuery$variables = {
+  internalID?: string | null;
   isFeaturedArtistContent?: boolean | null;
   size?: number | null;
-  internalID?: string | null;
 };
 export type ArtistIconicCollectionsRailQuery$data = {
   readonly marketingCollections: ReadonlyArray<{
@@ -21,8 +21,8 @@ export type ArtistIconicCollectionsRailQuery$data = {
   }> | null;
 };
 export type ArtistIconicCollectionsRailQuery = {
-  variables: ArtistIconicCollectionsRailQuery$variables;
   response: ArtistIconicCollectionsRailQuery$data;
+  variables: ArtistIconicCollectionsRailQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

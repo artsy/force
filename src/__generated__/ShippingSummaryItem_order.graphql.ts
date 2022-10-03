@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c376c6572c854f0874e554ef3b0cef4>>
+ * @generated SignedSource<<269b7fa6108622215ad2f89bfe9fa389>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,6 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ShippingSummaryItem_order$data = {
-  readonly state: CommerceOrderStateEnum;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
-  readonly requestedFulfillment: {
-    readonly __typename: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ShippingAddress_ship">;
-  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -28,6 +22,12 @@ export type ShippingSummaryItem_order$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ShippingAddress_ship">;
+  } | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "ShippingSummaryItem_order";
 };
 export type ShippingSummaryItem_order$key = {

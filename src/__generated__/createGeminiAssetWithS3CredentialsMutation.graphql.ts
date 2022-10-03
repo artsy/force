@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82ced2849afb204605803e3979e9bd7e>>
+ * @generated SignedSource<<8d4cefb5a393bd27c221e5d22fd2ccb4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,8 +27,8 @@ export type createGeminiAssetWithS3CredentialsMutation$data = {
   } | null;
 };
 export type createGeminiAssetWithS3CredentialsMutation = {
-  variables: createGeminiAssetWithS3CredentialsMutation$variables;
   response: createGeminiAssetWithS3CredentialsMutation$data;
+  variables: createGeminiAssetWithS3CredentialsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

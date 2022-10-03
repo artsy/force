@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c26b0ec140a1d3e6442e5245db38396>>
+ * @generated SignedSource<<9f327826a66c54aecec84ab9347f399d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$data = {
   } | null;
 };
 export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query = {
-  variables: ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$variables;
   response: ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$data;
+  variables: ArtworkDetails_SubmissionFlowPrepopulatedTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

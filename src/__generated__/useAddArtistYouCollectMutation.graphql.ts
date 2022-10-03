@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e62226efcf1185f95c8de567c21da9b6>>
+ * @generated SignedSource<<7a7d655cc8315abdb2e7ce4642e552ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,8 +33,8 @@ export type useAddArtistYouCollectMutation$data = {
   } | null;
 };
 export type useAddArtistYouCollectMutation = {
-  variables: useAddArtistYouCollectMutation$variables;
   response: useAddArtistYouCollectMutation$data;
+  variables: useAddArtistYouCollectMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

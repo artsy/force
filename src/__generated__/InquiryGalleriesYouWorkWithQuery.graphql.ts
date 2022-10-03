@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1697832ae03d2c2a78d05ff5660a1d17>>
+ * @generated SignedSource<<b413fbdf2e639d1fee53faa8a2f2629b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type InquiryGalleriesYouWorkWithQuery$data = {
   };
 };
 export type InquiryGalleriesYouWorkWithQuery = {
-  variables: InquiryGalleriesYouWorkWithQuery$variables;
   response: InquiryGalleriesYouWorkWithQuery$data;
+  variables: InquiryGalleriesYouWorkWithQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

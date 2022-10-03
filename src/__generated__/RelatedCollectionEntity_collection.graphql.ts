@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c78572f31a1f0099f10ba3285f1a79ac>>
+ * @generated SignedSource<<a974e4de30950ddcb16e945e63f1e1f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,29 +11,29 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RelatedCollectionEntity_collection$data = {
-  readonly headerImage: string | null;
-  readonly slug: string;
-  readonly title: string;
-  readonly id: string;
-  readonly priceGuidance: number | null;
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artist: {
           readonly name: string | null;
         } | null;
-        readonly title: string | null;
         readonly image: {
           readonly resized: {
-            readonly width: number | null;
             readonly height: number | null;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number | null;
           } | null;
         } | null;
+        readonly title: string | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly headerImage: string | null;
+  readonly id: string;
+  readonly priceGuidance: number | null;
+  readonly slug: string;
+  readonly title: string;
   readonly " $fragmentType": "RelatedCollectionEntity_collection";
 };
 export type RelatedCollectionEntity_collection$key = {

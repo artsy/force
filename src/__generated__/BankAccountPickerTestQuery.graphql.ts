@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f0bfce35282e661aad8e12efda8307e>>
+ * @generated SignedSource<<568a4b0cd24b4f74d85963f10cab516a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,9 +25,9 @@ export type BankAccountPickerTestQuery$rawResponse = {
     readonly bankAccounts: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly id: string;
           readonly internalID: string;
           readonly last4: string;
-          readonly id: string;
         } | null;
       } | null> | null;
     } | null;
@@ -36,27 +36,27 @@ export type BankAccountPickerTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
+    readonly bankAccountId: string | null;
+    readonly id: string;
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
-    readonly bankAccountId: string | null;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
+      readonly id: string;
       readonly internalID: string;
       readonly last4: string;
-      readonly id: string;
     } | {
       readonly __typename: "CreditCard";
       readonly id: string;
     } | {
       readonly __typename: string;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type BankAccountPickerTestQuery = {
-  variables: BankAccountPickerTestQuery$variables;
-  response: BankAccountPickerTestQuery$data;
   rawResponse: BankAccountPickerTestQuery$rawResponse;
+  response: BankAccountPickerTestQuery$data;
+  variables: BankAccountPickerTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbee3213ff606f551f2ea831478fbe2e>>
+ * @generated SignedSource<<b48fcd33f204341764ef234ce5a86e97>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBidAction_artwork$data = {
+  readonly internalID: string;
   readonly myLotStanding: ReadonlyArray<{
     readonly most_recent_bid: {
       readonly max_bid: {
@@ -18,27 +19,26 @@ export type ArtworkSidebarBidAction_artwork$data = {
       } | null;
     } | null;
   }> | null;
-  readonly slug: string;
-  readonly internalID: string;
   readonly sale: {
-    readonly slug: string;
+    readonly is_closed: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly is_open: boolean | null;
+    readonly is_preview: boolean | null;
+    readonly is_registration_closed: boolean | null;
     readonly registrationStatus: {
       readonly qualified_for_bidding: boolean | null;
     } | null;
-    readonly is_preview: boolean | null;
-    readonly is_open: boolean | null;
-    readonly is_live_open: boolean | null;
-    readonly is_closed: boolean | null;
-    readonly is_registration_closed: boolean | null;
     readonly requireIdentityVerification: boolean | null;
+    readonly slug: string;
   } | null;
   readonly sale_artwork: {
+    readonly endedAt: string | null;
     readonly increments: ReadonlyArray<{
       readonly cents: number | null;
       readonly display: string | null;
     } | null> | null;
-    readonly endedAt: string | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtworkSidebarBidAction_artwork";
 };
 export type ArtworkSidebarBidAction_artwork$key = {

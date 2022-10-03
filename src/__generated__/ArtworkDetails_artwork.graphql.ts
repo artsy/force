@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fb40a9c993297b1a10137e799122192>>
+ * @generated SignedSource<<bfcd480c2b95cf125dc00b817d09831f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type ArtworkDetails_artwork$data = {
   readonly articles: ReadonlyArray<{
     readonly slug: string | null;
   } | null> | null;
-  readonly literature: string | null;
   readonly exhibition_history: string | null;
+  readonly literature: string | null;
   readonly provenance: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork" | "ArtworkDetailsAboutTheWorkFromPartner_artwork" | "ArtworkDetailsAdditionalInfo_artwork" | "ArtworkDetailsArticles_artwork">;
   readonly " $fragmentType": "ArtworkDetails_artwork";

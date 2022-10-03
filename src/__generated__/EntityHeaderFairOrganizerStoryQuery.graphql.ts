@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a69d7ff73b28c3ba64998528d4497861>>
+ * @generated SignedSource<<fe7d9f798b794d484a235d9f7fe726cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type EntityHeaderFairOrganizerStoryQuery$data = {
   } | null;
 };
 export type EntityHeaderFairOrganizerStoryQuery = {
-  variables: EntityHeaderFairOrganizerStoryQuery$variables;
   response: EntityHeaderFairOrganizerStoryQuery$data;
+  variables: EntityHeaderFairOrganizerStoryQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

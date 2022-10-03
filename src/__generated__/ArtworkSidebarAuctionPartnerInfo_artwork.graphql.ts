@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e56cdb603859f710519b1f23494a0eb>>
+ * @generated SignedSource<<36aa07404ef9820d8af58d55be0ba0e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ export type ArtworkSidebarAuctionPartnerInfo_artwork$data = {
   readonly partner: {
     readonly name: string | null;
   } | null;
-  readonly sale_artwork: {
-    readonly estimate: string | null;
-  } | null;
   readonly sale: {
     readonly internalID: string;
     readonly is_closed: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly estimate: string | null;
   } | null;
   readonly " $fragmentType": "ArtworkSidebarAuctionPartnerInfo_artwork";
 };

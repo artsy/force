@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f81daaab9b89c6dc2d5c2d5e8343fc1f>>
+ * @generated SignedSource<<0881457336429a8a2964233ab6fef582>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AppSecondFactor_me$data = {
-  readonly hasSecondFactorEnabled: boolean;
   readonly appSecondFactors: ReadonlyArray<{
     readonly __typename: "AppSecondFactor";
     readonly internalID: string;
@@ -21,6 +20,7 @@ export type AppSecondFactor_me$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null> | null;
+  readonly hasSecondFactorEnabled: boolean;
   readonly " $fragmentType": "AppSecondFactor_me";
 };
 export type AppSecondFactor_me$key = {

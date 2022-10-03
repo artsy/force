@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82c8b1555ce192e84a4ca8b227ddf623>>
+ * @generated SignedSource<<f90e4d08b7170a071b74a2d68e0dcf38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworksRail_partner$data = {
-  readonly slug: string;
   readonly filterArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -20,6 +19,7 @@ export type ArtworksRail_partner$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtworksRail_partner";
 };
 export type ArtworksRail_partner$key = {

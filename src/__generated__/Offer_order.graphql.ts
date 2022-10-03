@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9045bb98c7d00d2498d1c3435bc9b6f>>
+ * @generated SignedSource<<da4c03042146fa7da97ea2e5d50f080a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,17 +13,16 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Offer_order$data = {
-  readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly state: CommerceOrderStateEnum;
-  readonly totalListPriceCents: number;
   readonly currencyCode: string;
+  readonly internalID: string;
+  readonly isInquiryOrder?: boolean;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly slug: string;
-          readonly price: string | null;
+          readonly editionSets: ReadonlyArray<{
+            readonly internalID: string;
+          } | null> | null;
           readonly isPriceRange: boolean | null;
           readonly listPrice: {
             readonly __typename: "Money";
@@ -41,19 +40,18 @@ export type Offer_order$data = {
             // value in case none of the concrete values match.
             readonly __typename: "%other";
           } | null;
-          readonly editionSets: ReadonlyArray<{
-            readonly internalID: string;
-          } | null> | null;
+          readonly price: string | null;
+          readonly slug: string;
           readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
         } | null;
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly price: string | null;
           readonly displayPriceRange: boolean | null;
+          readonly price: string | null;
         } | {
           readonly __typename: "EditionSet";
-          readonly price: string | null;
           readonly displayPriceRange: boolean | null;
+          readonly price: string | null;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
@@ -62,8 +60,10 @@ export type Offer_order$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly isInquiryOrder?: boolean;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "PriceOptions_order">;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly totalListPriceCents: number;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "PriceOptions_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Offer_order";
 };
 export type Offer_order$key = {

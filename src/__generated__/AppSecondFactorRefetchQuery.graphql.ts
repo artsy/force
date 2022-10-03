@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d83bf9adfaa41db06fe4c72e4b0a97c>>
+ * @generated SignedSource<<6f39d9df64ceb1fb8762c075a2339e7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type AppSecondFactorRefetchQuery$data = {
   } | null;
 };
 export type AppSecondFactorRefetchQuery = {
-  variables: AppSecondFactorRefetchQuery$variables;
   response: AppSecondFactorRefetchQuery$data;
+  variables: AppSecondFactorRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = {

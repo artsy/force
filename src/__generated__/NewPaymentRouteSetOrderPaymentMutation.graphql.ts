@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbf6086e99593d0d36e1384c181d5a70>>
+ * @generated SignedSource<<368b1c06250f5cc48f434a3215f4fab6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,34 +23,34 @@ export type NewPaymentRouteSetOrderPaymentMutation$variables = {
 export type NewPaymentRouteSetOrderPaymentMutation$data = {
   readonly commerceFixFailedPayment: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly state: CommerceOrderStateEnum;
-        readonly creditCard: {
-          readonly internalID: string;
-          readonly name: string | null;
-          readonly street1: string | null;
-          readonly street2: string | null;
-          readonly city: string | null;
-          readonly state: string | null;
-          readonly country: string | null;
-          readonly postal_code: string | null;
-        } | null;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-      };
       readonly actionData?: {
         readonly clientSecret: string;
       };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly creditCard: {
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly internalID: string;
+          readonly name: string | null;
+          readonly postal_code: string | null;
+          readonly state: string | null;
+          readonly street1: string | null;
+          readonly street2: string | null;
+        } | null;
+        readonly state: CommerceOrderStateEnum;
       };
     };
   } | null;
 };
 export type NewPaymentRouteSetOrderPaymentMutation = {
-  variables: NewPaymentRouteSetOrderPaymentMutation$variables;
   response: NewPaymentRouteSetOrderPaymentMutation$data;
+  variables: NewPaymentRouteSetOrderPaymentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

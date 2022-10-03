@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98c13c3b94070af1b33b299c133dfb7d>>
+ * @generated SignedSource<<127385d32f12cb450e3f3a4d2de5d168>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCurrentBidInfo_artwork$data = {
-  readonly sale: {
-    readonly is_closed: boolean | null;
-    readonly is_live_open: boolean | null;
-    readonly internalID: string;
-    readonly is_with_buyers_premium: boolean | null;
-  } | null;
-  readonly sale_artwork: {
-    readonly is_with_reserve: boolean | null;
-    readonly reserve_message: string | null;
-    readonly reserve_status: string | null;
-    readonly endedAt: string | null;
-    readonly current_bid: {
-      readonly display: string | null;
-    } | null;
-    readonly counts: {
-      readonly bidder_positions: any | null;
-    } | null;
-  } | null;
   readonly myLotStanding: ReadonlyArray<{
     readonly active_bid: {
       readonly is_winning: boolean | null;
@@ -39,6 +21,24 @@ export type ArtworkSidebarCurrentBidInfo_artwork$data = {
       } | null;
     } | null;
   }> | null;
+  readonly sale: {
+    readonly internalID: string;
+    readonly is_closed: boolean | null;
+    readonly is_live_open: boolean | null;
+    readonly is_with_buyers_premium: boolean | null;
+  } | null;
+  readonly sale_artwork: {
+    readonly counts: {
+      readonly bidder_positions: any | null;
+    } | null;
+    readonly current_bid: {
+      readonly display: string | null;
+    } | null;
+    readonly endedAt: string | null;
+    readonly is_with_reserve: boolean | null;
+    readonly reserve_message: string | null;
+    readonly reserve_status: string | null;
+  } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
   readonly " $fragmentType": "ArtworkSidebarCurrentBidInfo_artwork";
 };

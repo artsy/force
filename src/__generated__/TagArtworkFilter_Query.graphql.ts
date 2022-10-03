@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a3f3ba097c9574aa778f3b8c3ef515d>>
+ * @generated SignedSource<<907ee1bf185a08222df88c46548032dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type TagArtworkFilter_Query$data = {
   } | null;
 };
 export type TagArtworkFilter_Query = {
-  variables: TagArtworkFilter_Query$variables;
   response: TagArtworkFilter_Query$data;
+  variables: TagArtworkFilter_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

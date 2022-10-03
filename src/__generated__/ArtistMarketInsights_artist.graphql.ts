@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be6eaaf1b58596064f01b3b42392eeea>>
+ * @generated SignedSource<<6c7c16de440066ba6e3440ba0c967e76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMarketInsights_artist$data = {
+  readonly auctionResultsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly organization: string | null;
+        readonly price_realized: {
+          readonly display: string | null;
+        } | null;
+        readonly sale_date: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly collections: ReadonlyArray<string | null> | null;
   readonly highlights: {
     readonly partnersConnection: {
@@ -22,17 +33,6 @@ export type ArtistMarketInsights_artist$data = {
         } | null;
       } | null> | null;
     } | null;
-  } | null;
-  readonly auctionResultsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly price_realized: {
-          readonly display: string | null;
-        } | null;
-        readonly organization: string | null;
-        readonly sale_date: string | null;
-      } | null;
-    } | null> | null;
   } | null;
   readonly " $fragmentType": "ArtistMarketInsights_artist";
 };

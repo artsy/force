@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48577a5a704eff7b53f38a43d39bf018>>
+ * @generated SignedSource<<bd68ce1aa5aa170a7df318aaee0daf5d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,8 +63,8 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type FairArtworksQuery$variables = {
-  slug: string;
   input?: FilterArtworksInput | null;
+  slug: string;
 };
 export type FairArtworksQuery$data = {
   readonly fair: {
@@ -72,8 +72,8 @@ export type FairArtworksQuery$data = {
   } | null;
 };
 export type FairArtworksQuery = {
-  variables: FairArtworksQuery$variables;
   response: FairArtworksQuery$data;
+  variables: FairArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

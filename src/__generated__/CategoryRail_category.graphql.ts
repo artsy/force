@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a94225c81eb43580a398e617da177c9>>
+ * @generated SignedSource<<cb2cd6528d3b3247a5e86696e19a54f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CategoryRail_category$data = {
-  readonly name: string | null;
-  readonly href: string | null;
   readonly avatar: {
     readonly cropped: {
       readonly src: string;
@@ -27,6 +25,8 @@ export type CategoryRail_category$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly href: string | null;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   readonly " $fragmentType": "CategoryRail_category";
 };

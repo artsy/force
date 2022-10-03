@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cdd8efdf6db00503865e760061b5fd0>>
+ * @generated SignedSource<<0c4db6c1f849e04d489161053e0b4417>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_artwork$data = {
   readonly internalID: string;
-  readonly slug: string;
   readonly saleArtwork: {
     readonly internalID: string;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "RequestConditionReport_artwork";
 };
 export type RequestConditionReport_artwork$key = {

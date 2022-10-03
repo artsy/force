@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<404266f4a17b0f842932e6908f59c5ad>>
+ * @generated SignedSource<<461bc8cd694a889ee32cf793f46b8cb9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,38 +23,38 @@ export type ViewingRoomWorksRoute_Test_Query$rawResponse = {
     readonly artworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly internalID: string;
-          readonly title: string | null;
-          readonly images: ReadonlyArray<{
-            readonly internalID: string | null;
-            readonly solo: {
-              readonly src: string;
-              readonly srcSet: string;
-              readonly width: number | null;
-              readonly height: number | null;
-            } | null;
-            readonly resized: {
-              readonly src: string;
-              readonly srcSet: string;
-              readonly width: number | null;
-              readonly height: number | null;
-            } | null;
-          } | null> | null;
-          readonly id: string;
           readonly additionalInformation: string | null;
           readonly artistNames: string | null;
           readonly date: string | null;
           readonly href: string | null;
+          readonly id: string;
+          readonly images: ReadonlyArray<{
+            readonly internalID: string | null;
+            readonly resized: {
+              readonly height: number | null;
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+            } | null;
+            readonly solo: {
+              readonly height: number | null;
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+            } | null;
+          } | null> | null;
+          readonly internalID: string;
           readonly saleMessage: string | null;
+          readonly title: string | null;
         } | null;
       } | null> | null;
     } | null;
   } | null;
 };
 export type ViewingRoomWorksRoute_Test_Query = {
-  variables: ViewingRoomWorksRoute_Test_Query$variables;
-  response: ViewingRoomWorksRoute_Test_Query$data;
   rawResponse: ViewingRoomWorksRoute_Test_Query$rawResponse;
+  response: ViewingRoomWorksRoute_Test_Query$data;
+  variables: ViewingRoomWorksRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

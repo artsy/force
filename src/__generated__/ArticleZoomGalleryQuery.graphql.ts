@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97eac08ca4ef96335ab632d192af5665>>
+ * @generated SignedSource<<9113e69edac1107d5938eb8a3f05b195>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type ArticleZoomGalleryQuery$data = {
   } | null;
 };
 export type ArticleZoomGalleryQuery = {
-  variables: ArticleZoomGalleryQuery$variables;
   response: ArticleZoomGalleryQuery$data;
+  variables: ArticleZoomGalleryQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

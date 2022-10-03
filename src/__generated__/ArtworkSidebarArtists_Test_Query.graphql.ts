@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6ab60a93fd87de560bcfca8b87e05dd>>
+ * @generated SignedSource<<cfd515aba0eb4a04ec1a1cbd138e7a50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,53 +18,53 @@ export type ArtworkSidebarArtists_Test_Query$data = {
 };
 export type ArtworkSidebarArtists_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
-      readonly internalID: string;
-      readonly href: string | null;
-      readonly slug: string;
-      readonly name: string | null;
-      readonly initials: string | null;
-      readonly formattedNationalityAndBirthday: string | null;
-      readonly counts: {
-        readonly artworks: any | null;
-        readonly forSaleArtworks: any | null;
-        readonly follows: any | null;
-      } | null;
       readonly avatar: {
         readonly cropped: {
           readonly src: string;
           readonly srcSet: string;
         } | null;
       } | null;
+      readonly counts: {
+        readonly artworks: any | null;
+        readonly follows: any | null;
+        readonly forSaleArtworks: any | null;
+      } | null;
+      readonly formattedNationalityAndBirthday: string | null;
+      readonly href: string | null;
+      readonly id: string;
+      readonly initials: string | null;
+      readonly internalID: string;
+      readonly isFollowed: boolean | null;
+      readonly name: string | null;
       readonly related: {
         readonly suggestedConnection: {
           readonly edges: ReadonlyArray<{
             readonly node: {
-              readonly id: string;
-              readonly internalID: string;
-              readonly slug: string;
-              readonly name: string | null;
               readonly formattedNationalityAndBirthday: string | null;
+              readonly id: string;
               readonly image: {
                 readonly cropped: {
                   readonly url: string;
                 } | null;
               } | null;
+              readonly internalID: string;
+              readonly name: string | null;
+              readonly slug: string;
             } | null;
           } | null> | null;
         } | null;
       } | null;
-      readonly id: string;
-      readonly isFollowed: boolean | null;
+      readonly slug: string;
     } | null> | null;
+    readonly cultural_maker: string | null;
     readonly id: string;
   } | null;
 };
 export type ArtworkSidebarArtists_Test_Query = {
-  variables: ArtworkSidebarArtists_Test_Query$variables;
-  response: ArtworkSidebarArtists_Test_Query$data;
   rawResponse: ArtworkSidebarArtists_Test_Query$rawResponse;
+  response: ArtworkSidebarArtists_Test_Query$data;
+  variables: ArtworkSidebarArtists_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

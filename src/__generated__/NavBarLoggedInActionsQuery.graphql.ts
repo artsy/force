@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<113d73a328266eeba11d0a9072b9e483>>
+ * @generated SignedSource<<04a3b7e7cc31ac700e9702f6a2a2e6e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,30 +12,30 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 export type NavBarLoggedInActionsQuery$variables = {};
 export type NavBarLoggedInActionsQuery$data = {
   readonly me: {
-    readonly unreadNotificationsCount: number;
-    readonly unreadConversationCount: number;
     readonly followsAndSaves: {
       readonly notifications: {
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly href: string | null;
-            readonly summary: string | null;
             readonly artists: string | null;
-            readonly published_at: string | null;
+            readonly href: string | null;
             readonly image: {
               readonly resized: {
                 readonly url: string;
               } | null;
             } | null;
+            readonly published_at: string | null;
+            readonly summary: string | null;
           } | null;
         } | null> | null;
       } | null;
     } | null;
+    readonly unreadConversationCount: number;
+    readonly unreadNotificationsCount: number;
   } | null;
 };
 export type NavBarLoggedInActionsQuery = {
-  variables: NavBarLoggedInActionsQuery$variables;
   response: NavBarLoggedInActionsQuery$data;
+  variables: NavBarLoggedInActionsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84cfb1645d4f497e0690539b7caa7ffa>>
+ * @generated SignedSource<<81ac84a44a91ce0020c5165ecd07c664>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,27 +23,27 @@ export type OfferMutation$data = {
   readonly commerceAddInitialOfferToOrder: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
       readonly order?: {
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
-        readonly totalListPriceCents: number;
         readonly myLastOffer?: {
-          readonly internalID: string;
           readonly amountCents: number;
+          readonly internalID: string;
           readonly note: string | null;
         } | null;
-      };
-      readonly error?: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
+        readonly totalListPriceCents: number;
       };
     };
   } | null;
 };
 export type OfferMutation = {
-  variables: OfferMutation$variables;
   response: OfferMutation$data;
+  variables: OfferMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

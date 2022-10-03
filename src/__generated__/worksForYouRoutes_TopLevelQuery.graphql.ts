@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54861a55cfb10be8a07caeb883464312>>
+ * @generated SignedSource<<28acfb7626f22adc98fe74cdc0d52b7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type worksForYouRoutes_TopLevelQuery$variables = {
-  includeSelectedArtist: boolean;
   artistSlug: string;
+  includeSelectedArtist: boolean;
 };
 export type worksForYouRoutes_TopLevelQuery$data = {
   readonly viewerArtist: {
@@ -26,8 +26,8 @@ export type worksForYouRoutes_TopLevelQuery$data = {
   } | null;
 };
 export type worksForYouRoutes_TopLevelQuery = {
-  variables: worksForYouRoutes_TopLevelQuery$variables;
   response: worksForYouRoutes_TopLevelQuery$data;
+  variables: worksForYouRoutes_TopLevelQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

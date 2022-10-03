@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<274c8cf2dab454d73c214d5462726732>>
+ * @generated SignedSource<<a28f923cb05433eb286187095881f134>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,15 +16,15 @@ export type ArtworkSidebarAuctionInfoPollingQuery$variables = {
 export type ArtworkSidebarAuctionInfoPollingQuery$data = {
   readonly artwork: {
     readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork" | "ArtworkSidebarCurrentBidInfo_artwork">;
   } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
   } | null;
 };
 export type ArtworkSidebarAuctionInfoPollingQuery = {
-  variables: ArtworkSidebarAuctionInfoPollingQuery$variables;
   response: ArtworkSidebarAuctionInfoPollingQuery$data;
+  variables: ArtworkSidebarAuctionInfoPollingQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

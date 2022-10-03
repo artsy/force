@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21d18e6e99aae43c387e3b048aa7adad>>
+ * @generated SignedSource<<994efc5fd60cad463f509e651bfcb647>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,40 +12,40 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ShowApp_show$data = {
-  readonly name: string | null;
-  readonly href: string | null;
-  readonly internalID: string;
-  readonly slug: string;
   readonly about: string | null;
-  readonly isFairBooth: boolean | null;
-  readonly viewingRoomsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly __typename: string;
-    } | null> | null;
-  } | null;
   readonly counts: {
     readonly eligibleArtworks: any | null;
   } | null;
   readonly fair: {
     readonly hasFullFeature: boolean | null;
   } | null;
-  readonly sidebar: {
-    readonly counts?: {
-      readonly followedArtists: any | null;
-    } | null;
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: ArtworkAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly name: string;
-        readonly value: string;
-        readonly count: number;
-      } | null> | null;
-    } | null> | null;
-  } | null;
+  readonly href: string | null;
   readonly images: ReadonlyArray<{
     readonly url: string | null;
   } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+  readonly internalID: string;
+  readonly isFairBooth: boolean | null;
+  readonly name: string | null;
+  readonly sidebar: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: ArtworkAggregation | null;
+    } | null> | null;
+    readonly counts?: {
+      readonly followedArtists: any | null;
+    } | null;
+  } | null;
+  readonly slug: string;
+  readonly viewingRoomsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly __typename: "ViewingRoomsEdge";
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowAbout_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show" | "ShowHeader_show" | "ShowInstallShots_show" | "ShowMeta_show" | "ShowViewingRoom_show">;
   readonly " $fragmentType": "ShowApp_show";
 };
 export type ShowApp_show$key = {

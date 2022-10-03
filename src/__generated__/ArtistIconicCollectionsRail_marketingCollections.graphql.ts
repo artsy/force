@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c92665f6b00a3e59b1166e8905a9a25>>
+ * @generated SignedSource<<3688c154bf841f00e7a72f741b75735b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistIconicCollectionsRail_marketingCollections$data = ReadonlyArray<{
-  readonly headerImage: string | null;
-  readonly thumbnail: string | null;
-  readonly slug: string;
-  readonly title: string;
-  readonly priceGuidance: number | null;
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
           readonly resized: {
-            readonly width: number | null;
             readonly height: number | null;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number | null;
           } | null;
         } | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly headerImage: string | null;
+  readonly priceGuidance: number | null;
+  readonly slug: string;
+  readonly thumbnail: string | null;
+  readonly title: string;
   readonly " $fragmentType": "ArtistIconicCollectionsRail_marketingCollections";
 }>;
 export type ArtistIconicCollectionsRail_marketingCollections$key = ReadonlyArray<{

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b083642aeddddb75b6d6e4adf8cae70a>>
+ * @generated SignedSource<<be1315eb8e2bebe72a3d55ea25201f94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsRoute_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsPassword_me" | "SettingsEditSettingsTwoFactor_me" | "SettingsEditSettingsLinkedAccounts_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsLinkedAccounts_me" | "SettingsEditSettingsPassword_me" | "SettingsEditSettingsTwoFactor_me">;
   readonly " $fragmentType": "SettingsEditSettingsRoute_me";
 };
 export type SettingsEditSettingsRoute_me$key = {

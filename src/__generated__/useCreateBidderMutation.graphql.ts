@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c136dba932d81f3c9e555747049a8637>>
+ * @generated SignedSource<<d1d00e94f0a50516087cc0eeefc6776f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,8 +28,8 @@ export type useCreateBidderMutation$data = {
   } | null;
 };
 export type useCreateBidderMutation = {
-  variables: useCreateBidderMutation$variables;
   response: useCreateBidderMutation$data;
+  variables: useCreateBidderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

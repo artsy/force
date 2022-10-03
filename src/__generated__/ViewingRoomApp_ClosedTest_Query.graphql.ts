@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03b29aa96bf4ee4362166c81cede4a9e>>
+ * @generated SignedSource<<d7dda7bbe47f30989103bf93fde545c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,29 +20,29 @@ export type ViewingRoomApp_ClosedTest_Query$data = {
 };
 export type ViewingRoomApp_ClosedTest_Query$rawResponse = {
   readonly viewingRoom: {
-    readonly title: string;
+    readonly distanceToClose: string | null;
+    readonly distanceToOpen: string | null;
     readonly href: string | null;
-    readonly pullQuote: string | null;
     readonly image: {
       readonly imageURLs: {
         readonly normalized: string | null;
       } | null;
     } | null;
     readonly partner: {
-      readonly name: string | null;
       readonly href: string | null;
       readonly id: string;
       readonly internalID: string;
+      readonly name: string | null;
     } | null;
-    readonly distanceToOpen: string | null;
-    readonly distanceToClose: string | null;
+    readonly pullQuote: string | null;
     readonly status: string;
+    readonly title: string;
   } | null;
 };
 export type ViewingRoomApp_ClosedTest_Query = {
-  variables: ViewingRoomApp_ClosedTest_Query$variables;
-  response: ViewingRoomApp_ClosedTest_Query$data;
   rawResponse: ViewingRoomApp_ClosedTest_Query$rawResponse;
+  response: ViewingRoomApp_ClosedTest_Query$data;
+  variables: ViewingRoomApp_ClosedTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

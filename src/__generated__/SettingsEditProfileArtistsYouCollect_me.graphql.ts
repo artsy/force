@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9021f6cf8ea496809bb91d9c7816fe8e>>
+ * @generated SignedSource<<20300853362d086368ff3742d3db8148>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileArtistsYouCollect_me$data = {
   readonly collectorProfile: {
     readonly userInterests: ReadonlyArray<{
-      readonly internalID: string;
       readonly category: UserInterestCategory;
       readonly interest: {
         readonly __typename: "Artist";
@@ -26,6 +25,7 @@ export type SettingsEditProfileArtistsYouCollect_me$data = {
         // value in case none of the concrete values match.
         readonly __typename: "%other";
       };
+      readonly internalID: string;
     } | null>;
   } | null;
   readonly " $fragmentType": "SettingsEditProfileArtistsYouCollect_me";

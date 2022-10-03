@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bea8d169ef484db24bf3da1f84b03c26>>
+ * @generated SignedSource<<898477593562b5d7e1254e4e5e8dbeab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,31 +64,31 @@ export type useUpdateSettingsInformationMutation$variables = {
 export type useUpdateSettingsInformationMutation$data = {
   readonly updateMyUserProfile: {
     readonly me: {
-      readonly name: string | null;
       readonly email: string | null;
+      readonly name: string | null;
       readonly phone: string | null;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
     } | null;
     readonly userOrError: {
-      readonly user?: {
-        readonly internalID: string;
-      } | null;
       readonly mutationError?: {
-        readonly type: string | null;
-        readonly message: string;
         readonly detail: string | null;
         readonly error: string | null;
         readonly fieldErrors: ReadonlyArray<{
-          readonly name: string;
           readonly message: string;
+          readonly name: string;
         } | null> | null;
+        readonly message: string;
+        readonly type: string | null;
+      } | null;
+      readonly user?: {
+        readonly internalID: string;
       } | null;
     } | null;
   } | null;
 };
 export type useUpdateSettingsInformationMutation = {
-  variables: useUpdateSettingsInformationMutation$variables;
   response: useUpdateSettingsInformationMutation$data;
+  variables: useUpdateSettingsInformationMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

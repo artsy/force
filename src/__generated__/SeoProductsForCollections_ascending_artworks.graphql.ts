@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5b5df4ad552f1b1e0bd0a16e786db2e>>
+ * @generated SignedSource<<456eab11bb5ec01ad0cf3d1dc7ee415f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,22 +13,22 @@ import { FragmentRefs } from "relay-runtime";
 export type SeoProductsForCollections_ascending_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly id: string;
       readonly availability: string | null;
+      readonly id: string;
       readonly listPrice: {
-        readonly __typename: "PriceRange";
-        readonly minPrice: {
-          readonly major: number;
-          readonly currencyCode: string;
-        } | null;
-        readonly maxPrice: {
-          readonly major: number;
-          readonly currencyCode: string;
-        } | null;
-      } | {
         readonly __typename: "Money";
-        readonly major: number;
         readonly currencyCode: string;
+        readonly major: number;
+      } | {
+        readonly __typename: "PriceRange";
+        readonly maxPrice: {
+          readonly currencyCode: string;
+          readonly major: number;
+        } | null;
+        readonly minPrice: {
+          readonly currencyCode: string;
+          readonly major: number;
+        } | null;
       } | {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.

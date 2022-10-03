@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ef24655a5baff0c8da5a01ef9dc6d7d>>
+ * @generated SignedSource<<4b2317577656e8cae75fa0375cae10e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,20 +13,20 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchases_me$data = {
   readonly name: string | null;
   readonly orders: {
-    readonly totalCount: number | null;
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"CommercePagination_pageCursors">;
-    } | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly code: string;
         readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchasesRow_order">;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"CommercePagination_pageCursors">;
+    } | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "SettingsPurchases_me";
 };

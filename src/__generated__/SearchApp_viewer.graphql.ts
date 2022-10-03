@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ac270c9dd11444351de436690063976>>
+ * @generated SignedSource<<c1f55a53a868c75b93afb6845c9a2773>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,27 +12,27 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type SearchAggregation = "TYPE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SearchApp_viewer$data = {
-  readonly searchConnection: {
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: SearchAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly count: number;
-        readonly name: string;
-      } | null> | null;
-    } | null> | null;
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly slug?: string;
-        readonly displayLabel?: string | null;
-        readonly displayType?: string | null;
-      } | null;
-    } | null> | null;
-    readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_searchableConnection">;
-  } | null;
   readonly artworksConnection: {
     readonly counts: {
       readonly total: any | null;
     } | null;
+  } | null;
+  readonly searchConnection: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+      } | null> | null;
+      readonly slice: SearchAggregation | null;
+    } | null> | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly displayLabel?: string | null;
+        readonly displayType?: string | null;
+        readonly slug?: string;
+      } | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_searchableConnection">;
   } | null;
   readonly " $fragmentType": "SearchApp_viewer";
 };

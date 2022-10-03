@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e523a96acbbe68e866863f1ac307a102>>
+ * @generated SignedSource<<c956de3fe651d96f0204e4418552d0f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,10 +22,25 @@ export type TransactionDetailsSummaryItemTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
-    readonly requestedFulfillment: {
-      readonly __typename: string;
-    } | null;
+    readonly buyerTotal: string | null;
     readonly code: string;
+    readonly currencyCode: string;
+    readonly id: string;
+    readonly itemsTotal: string | null;
+    readonly lastOffer: {
+      readonly amount: string | null;
+      readonly amountCents: number;
+      readonly buyerTotal: string | null;
+      readonly buyerTotalCents: number | null;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly id: string;
+      readonly internalID: string;
+      readonly note: string | null;
+      readonly shippingTotal: string | null;
+      readonly shippingTotalCents: number | null;
+      readonly taxTotal: string | null;
+      readonly taxTotalCents: number | null;
+    } | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -44,58 +59,44 @@ export type TransactionDetailsSummaryItemTestQuery$rawResponse = {
             readonly __isNode: string;
             readonly id: string;
           } | null;
-          readonly selectedShippingQuote: {
-            readonly typeName: string;
-            readonly id: string;
-          } | null;
           readonly id: string;
+          readonly selectedShippingQuote: {
+            readonly id: string;
+            readonly typeName: string;
+          } | null;
         } | null;
       } | null> | null;
     } | null;
     readonly mode: CommerceOrderModeEnum | null;
+    readonly myLastOffer: {
+      readonly amount: string | null;
+      readonly amountCents: number;
+      readonly buyerTotal: string | null;
+      readonly buyerTotalCents: number | null;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly id: string;
+      readonly internalID: string;
+      readonly note: string | null;
+      readonly shippingTotal: string | null;
+      readonly shippingTotalCents: number | null;
+      readonly taxTotal: string | null;
+      readonly taxTotalCents: number | null;
+    } | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
-    readonly itemsTotal: string | null;
-    readonly buyerTotal: string | null;
-    readonly currencyCode: string;
-    readonly id: string;
-    readonly lastOffer: {
-      readonly internalID: string;
-      readonly amount: string | null;
-      readonly amountCents: number;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-      readonly note: string | null;
-      readonly id: string;
-    } | null;
-    readonly myLastOffer: {
-      readonly internalID: string;
-      readonly amount: string | null;
-      readonly amountCents: number;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-      readonly note: string | null;
-      readonly id: string;
-    } | null;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
-    readonly requestedFulfillment: {
-      readonly __typename: string;
-    } | null;
+    readonly buyerTotal: string | null;
     readonly code: string;
+    readonly currencyCode: string;
+    readonly id: string;
+    readonly itemsTotal: string | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -114,29 +115,28 @@ export type TransactionDetailsSummaryItemTestQuery$rawResponse = {
             readonly __isNode: string;
             readonly id: string;
           } | null;
-          readonly selectedShippingQuote: {
-            readonly typeName: string;
-            readonly id: string;
-          } | null;
           readonly id: string;
+          readonly selectedShippingQuote: {
+            readonly id: string;
+            readonly typeName: string;
+          } | null;
         } | null;
       } | null> | null;
     } | null;
     readonly mode: CommerceOrderModeEnum | null;
+    readonly requestedFulfillment: {
+      readonly __typename: string;
+    } | null;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
-    readonly itemsTotal: string | null;
-    readonly buyerTotal: string | null;
-    readonly currencyCode: string;
-    readonly id: string;
   } | null;
 };
 export type TransactionDetailsSummaryItemTestQuery = {
-  variables: TransactionDetailsSummaryItemTestQuery$variables;
-  response: TransactionDetailsSummaryItemTestQuery$data;
   rawResponse: TransactionDetailsSummaryItemTestQuery$rawResponse;
+  response: TransactionDetailsSummaryItemTestQuery$data;
+  variables: TransactionDetailsSummaryItemTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc26ec7f5794fccdc2e68a34f5bba016>>
+ * @generated SignedSource<<5ece561b3464e9724a859a1065f3f1d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,12 +26,12 @@ export type CreditCardPickerTestQuery$rawResponse = {
     readonly creditCards: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly internalID: string;
           readonly brand: string;
-          readonly lastDigits: string;
           readonly expirationMonth: number;
           readonly expirationYear: number;
           readonly id: string;
+          readonly internalID: string;
+          readonly lastDigits: string;
         } | null;
       } | null> | null;
     } | null;
@@ -40,66 +40,66 @@ export type CreditCardPickerTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
-    readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly state: CommerceOrderStateEnum;
     readonly creditCard: {
-      readonly internalID: string;
-      readonly name: string | null;
-      readonly street1: string | null;
-      readonly street2: string | null;
+      readonly brand: string;
       readonly city: string | null;
-      readonly state: string | null;
       readonly country: string | null;
-      readonly postalCode: string | null;
       readonly expirationMonth: number;
       readonly expirationYear: number;
-      readonly lastDigits: string;
-      readonly brand: string;
       readonly id: string;
-    } | null;
-    readonly requestedFulfillment: {
-      readonly __typename: "CommerceShip";
+      readonly internalID: string;
+      readonly lastDigits: string;
       readonly name: string | null;
-      readonly addressLine1: string | null;
-      readonly addressLine2: string | null;
-      readonly city: string | null;
-      readonly region: string | null;
-      readonly country: string | null;
       readonly postalCode: string | null;
-    } | {
-      readonly __typename: "CommerceShipArta";
-      readonly name: string | null;
-      readonly addressLine1: string | null;
-      readonly addressLine2: string | null;
-      readonly city: string | null;
-      readonly region: string | null;
-      readonly country: string | null;
-      readonly postalCode: string | null;
-    } | {
-      readonly __typename: "CommercePickup";
-      readonly fulfillmentType: string;
-    } | {
-      readonly __typename: string;
+      readonly state: string | null;
+      readonly street1: string | null;
+      readonly street2: string | null;
     } | null;
+    readonly id: string;
+    readonly internalID: string;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly slug: string;
             readonly id: string;
+            readonly slug: string;
           } | null;
           readonly id: string;
         } | null;
       } | null> | null;
     } | null;
-    readonly id: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly requestedFulfillment: {
+      readonly __typename: "CommercePickup";
+      readonly fulfillmentType: string;
+    } | {
+      readonly __typename: "CommerceShip";
+      readonly addressLine1: string | null;
+      readonly addressLine2: string | null;
+      readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly postalCode: string | null;
+      readonly region: string | null;
+    } | {
+      readonly __typename: "CommerceShipArta";
+      readonly addressLine1: string | null;
+      readonly addressLine2: string | null;
+      readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly postalCode: string | null;
+      readonly region: string | null;
+    } | {
+      readonly __typename: string;
+    } | null;
+    readonly state: CommerceOrderStateEnum;
   } | null;
 };
 export type CreditCardPickerTestQuery = {
-  variables: CreditCardPickerTestQuery$variables;
-  response: CreditCardPickerTestQuery$data;
   rawResponse: CreditCardPickerTestQuery$rawResponse;
+  response: CreditCardPickerTestQuery$data;
+  variables: CreditCardPickerTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6afb147578ab9ee6e39af7d7e5ef18c7>>
+ * @generated SignedSource<<eb28aa7552238fde37006d85fd4535e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type getConvectionGeminiKeyQuery$data = {
   } | null;
 };
 export type getConvectionGeminiKeyQuery = {
-  variables: getConvectionGeminiKeyQuery$variables;
   response: getConvectionGeminiKeyQuery$data;
+  variables: getConvectionGeminiKeyQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

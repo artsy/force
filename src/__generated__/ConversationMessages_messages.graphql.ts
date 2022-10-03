@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b82ad89c257a9f0eeeb542b2afa09462>>
+ * @generated SignedSource<<b5e4b617664a4e397f8d5884fcc9c604>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_messages$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly __typename: string;
+      readonly __typename: "Message";
+      readonly body: string | null;
+      readonly createdAt: string | null;
       readonly id: string;
       readonly internalID: string;
-      readonly createdAt: string | null;
       readonly isFromUser: boolean | null;
-      readonly body: string | null;
       readonly " $fragmentSpreads": FragmentRefs<"Message_message">;
     } | null;
   } | null> | null;

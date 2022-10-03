@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<384d1a215a70f3af3d0b7dc0de50b733>>
+ * @generated SignedSource<<c22b3904e88ac2bac54ede926851df4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type ArtistConsignMarketTrends_artist$data = {
     readonly microfunnel: {
       readonly metadata: {
         readonly highestRealized: string | null;
-        readonly str: string | null;
         readonly realized: string | null;
+        readonly str: string | null;
       } | null;
     } | null;
   } | null;

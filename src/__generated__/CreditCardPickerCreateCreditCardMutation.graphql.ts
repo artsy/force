@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5960edf1ba9b5889f84a6454ca5e9a4a>>
+ * @generated SignedSource<<97928fca345a330d1e839a3f497c6482>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,30 +21,30 @@ export type CreditCardPickerCreateCreditCardMutation$data = {
   readonly createCreditCard: {
     readonly creditCardOrError: {
       readonly creditCard?: {
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly street1: string | null;
-        readonly street2: string | null;
+        readonly brand: string;
         readonly city: string | null;
-        readonly state: string | null;
         readonly country: string | null;
-        readonly postalCode: string | null;
         readonly expirationMonth: number;
         readonly expirationYear: number;
+        readonly internalID: string;
         readonly lastDigits: string;
-        readonly brand: string;
+        readonly name: string | null;
+        readonly postalCode: string | null;
+        readonly state: string | null;
+        readonly street1: string | null;
+        readonly street2: string | null;
       } | null;
       readonly mutationError?: {
-        readonly type: string | null;
-        readonly message: string;
         readonly detail: string | null;
+        readonly message: string;
+        readonly type: string | null;
       } | null;
     } | null;
   } | null;
 };
 export type CreditCardPickerCreateCreditCardMutation = {
-  variables: CreditCardPickerCreateCreditCardMutation$variables;
   response: CreditCardPickerCreateCreditCardMutation$data;
+  variables: CreditCardPickerCreateCreditCardMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

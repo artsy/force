@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f07e77ff18b63354ae98d80ad21f8196>>
+ * @generated SignedSource<<80d515293e6946bf96f6311da5510199>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVideo_article$data = {
-  readonly vertical: string | null;
-  readonly title: string | null;
-  readonly href: string | null;
   readonly description: string | null;
+  readonly href: string | null;
   readonly media: {
     readonly coverImage: {
       readonly url: string | null;
@@ -25,18 +23,20 @@ export type ArticleVideo_article$data = {
     readonly releaseDate: string | null;
     readonly url: string | null;
   } | null;
-  readonly seriesArticle: {
-    readonly title: string | null;
-    readonly href: string | null;
-    readonly description: string | null;
-    readonly sponsor: {
-      readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
-    } | null;
-  } | null;
   readonly moreRelatedArticles: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArticleSeriesItem_article">;
   }>;
+  readonly seriesArticle: {
+    readonly description: string | null;
+    readonly href: string | null;
+    readonly sponsor: {
+      readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
+    } | null;
+    readonly title: string | null;
+  } | null;
+  readonly title: string | null;
+  readonly vertical: string | null;
   readonly " $fragmentType": "ArticleVideo_article";
 };
 export type ArticleVideo_article$key = {

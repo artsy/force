@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aaf2b7d879c20d5f7b6b0b6f552b3681>>
+ * @generated SignedSource<<928930ae66bbb11ab3b18a05475e67cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,16 @@ export type PricingContextTestQuery$data = {
 };
 export type PricingContextTestQuery$rawResponse = {
   readonly artwork: {
+    readonly artists: ReadonlyArray<{
+      readonly id: string;
+      readonly slug: string;
+    } | null> | null;
+    readonly category: string | null;
+    readonly id: string;
     readonly listPrice: {
+      readonly __typename: "Money";
+      readonly minor: number;
+    } | {
       readonly __typename: "PriceRange";
       readonly maxPrice: {
         readonly minor: number;
@@ -29,22 +38,14 @@ export type PricingContextTestQuery$rawResponse = {
         readonly minor: number;
       } | null;
     } | {
-      readonly __typename: "Money";
-      readonly minor: number;
-    } | {
       readonly __typename: string;
     } | null;
-    readonly artists: ReadonlyArray<{
-      readonly slug: string;
-      readonly id: string;
-    } | null> | null;
-    readonly category: string | null;
     readonly pricingContext: {
-      readonly appliedFiltersDisplay: string | null;
       readonly appliedFilters: {
-        readonly dimension: AnalyticsPricingContextDimensionEnum | null;
         readonly category: AnalyticsPricingContextCategoryEnum | null;
+        readonly dimension: AnalyticsPricingContextDimensionEnum | null;
       };
+      readonly appliedFiltersDisplay: string | null;
       readonly bins: ReadonlyArray<{
         readonly maxPrice: string | null;
         readonly maxPriceCents: number;
@@ -53,13 +54,12 @@ export type PricingContextTestQuery$rawResponse = {
         readonly numArtworks: number;
       }>;
     } | null;
-    readonly id: string;
   } | null;
 };
 export type PricingContextTestQuery = {
-  variables: PricingContextTestQuery$variables;
-  response: PricingContextTestQuery$data;
   rawResponse: PricingContextTestQuery$rawResponse;
+  response: PricingContextTestQuery$data;
+  variables: PricingContextTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

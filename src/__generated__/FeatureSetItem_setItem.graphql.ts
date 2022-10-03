@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d38ad24f6afafeecb01b868d187c2014>>
+ * @generated SignedSource<<23a0dd709e8700fb02d626be5cb840d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FeatureSetItem_setItem$data = {
   readonly __typename: string;
   readonly id?: string;
-  readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork" | "FeatureFeaturedLink_featuredLink">;
+  readonly " $fragmentSpreads": FragmentRefs<"FeatureFeaturedLink_featuredLink" | "GridItem_artwork">;
   readonly " $fragmentType": "FeatureSetItem_setItem";
 };
 export type FeatureSetItem_setItem$key = {

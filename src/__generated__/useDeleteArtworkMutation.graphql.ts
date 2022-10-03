@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a9074ac91749b5c925ea611e63e2115>>
+ * @generated SignedSource<<a00151ae5374101722abbf2366a6425a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,8 +29,8 @@ export type useDeleteArtworkMutation$data = {
   } | null;
 };
 export type useDeleteArtworkMutation = {
-  variables: useDeleteArtworkMutation$variables;
   response: useDeleteArtworkMutation$data;
+  variables: useDeleteArtworkMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

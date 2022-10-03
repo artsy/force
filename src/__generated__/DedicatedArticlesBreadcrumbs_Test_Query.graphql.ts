@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ead821c35e6e24ec1105d1c1e95eefb3>>
+ * @generated SignedSource<<d74651686883e9d72fc7e946e6d08c93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type DedicatedArticlesBreadcrumbs_Test_Query$data = {
   } | null;
 };
 export type DedicatedArticlesBreadcrumbs_Test_Query = {
-  variables: DedicatedArticlesBreadcrumbs_Test_Query$variables;
   response: DedicatedArticlesBreadcrumbs_Test_Query$data;
+  variables: DedicatedArticlesBreadcrumbs_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

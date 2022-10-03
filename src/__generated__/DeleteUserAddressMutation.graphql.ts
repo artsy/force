@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b99d0139b539a09c3acacfacf7ab9362>>
+ * @generated SignedSource<<837877b23eec044986a6f938cb5c0a11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,27 +19,27 @@ export type DeleteUserAddressMutation$variables = {
 export type DeleteUserAddressMutation$data = {
   readonly deleteUserAddress: {
     readonly userAddressOrErrors: {
-      readonly id?: string;
-      readonly internalID?: string;
-      readonly name?: string | null;
       readonly addressLine1?: string;
       readonly addressLine2?: string | null;
-      readonly isDefault?: boolean;
-      readonly phoneNumber?: string | null;
       readonly city?: string;
-      readonly region?: string | null;
-      readonly postalCode?: string | null;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
         readonly code: string;
         readonly message: string;
       }>;
+      readonly id?: string;
+      readonly internalID?: string;
+      readonly isDefault?: boolean;
+      readonly name?: string | null;
+      readonly phoneNumber?: string | null;
+      readonly postalCode?: string | null;
+      readonly region?: string | null;
     };
   } | null;
 };
 export type DeleteUserAddressMutation = {
-  variables: DeleteUserAddressMutation$variables;
   response: DeleteUserAddressMutation$data;
+  variables: DeleteUserAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

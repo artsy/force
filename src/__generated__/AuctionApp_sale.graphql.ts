@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c3df99ff81ee51808e1a61a23b6e570>>
+ * @generated SignedSource<<32e70c21ad495fbb08fcd17737111975>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly isClosed: boolean | null;
-  readonly eligibleSaleArtworksCount: number | null;
+  readonly cascadingEndTimeIntervalMinutes: number | null;
   readonly coverImage: {
     readonly url: string | null;
   } | null;
+  readonly eligibleSaleArtworksCount: number | null;
+  readonly extendedBiddingIntervalMinutes: number | null;
+  readonly internalID: string;
+  readonly isClosed: boolean | null;
   readonly showAssociatedSale: {
     readonly internalID: string;
   } | null;
   readonly showBuyNowTab: {
     readonly internalID: string;
   } | null;
-  readonly cascadingEndTimeIntervalMinutes: number | null;
-  readonly extendedBiddingIntervalMinutes: number | null;
+  readonly slug: string;
   readonly status: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale" | "CascadingEndTimesBanner_sale">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale" | "AuctionMeta_sale" | "CascadingEndTimesBanner_sale">;
   readonly " $fragmentType": "AuctionApp_sale";
 };
 export type AuctionApp_sale$key = {

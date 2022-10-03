@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e07b0b3beccb712d33317b479112a3f>>
+ * @generated SignedSource<<e4d172dc08fab95c14bb8c9cf5375e09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,14 @@ export type FairOrganizerHeaderIcon_fairOrganizer$data = {
   readonly profile: {
     readonly icon: {
       readonly desktop: {
+        readonly size: number;
         readonly src: string;
         readonly srcSet: string;
-        readonly size: number;
       } | null;
       readonly mobile: {
+        readonly size: number;
         readonly src: string;
         readonly srcSet: string;
-        readonly size: number;
       } | null;
     } | null;
   } | null;

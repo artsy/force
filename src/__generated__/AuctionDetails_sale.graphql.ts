@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11bd5b778234531f72fd8af2c8e0e962>>
+ * @generated SignedSource<<8c9107b73d1a51edcb71daaaba607c02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionDetails_sale$data = {
+  readonly cascadingEndTimeIntervalMinutes: number | null;
+  readonly description: string | null;
+  readonly endAt: string | null;
+  readonly href: string | null;
   readonly internalID: string;
+  readonly isClosed: boolean | null;
+  readonly liveStartAt: string | null;
   readonly name: string | null;
   readonly slug: string;
-  readonly liveStartAt: string | null;
   readonly startAt: string | null;
-  readonly endAt: string | null;
-  readonly description: string | null;
-  readonly href: string | null;
-  readonly isClosed: boolean | null;
-  readonly cascadingEndTimeIntervalMinutes: number | null;
-  readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale" | "SaleDetailTimer_sale">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionInfoSidebar_sale" | "RegisterButton_sale" | "SaleDetailTimer_sale">;
   readonly " $fragmentType": "AuctionDetails_sale";
 };
 export type AuctionDetails_sale$key = {

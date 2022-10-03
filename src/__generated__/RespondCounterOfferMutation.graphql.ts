@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b04457d85088f89ba17a213ad8f04ce>>
+ * @generated SignedSource<<0aaeac166b5ed57634138a1200ebf84b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,20 +22,20 @@ export type RespondCounterOfferMutation$variables = {
 export type RespondCounterOfferMutation$data = {
   readonly commerceBuyerCounterOffer: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
-      };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
       };
     };
   } | null;
 };
 export type RespondCounterOfferMutation = {
-  variables: RespondCounterOfferMutation$variables;
   response: RespondCounterOfferMutation$data;
+  variables: RespondCounterOfferMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

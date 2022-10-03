@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a9d452f5e20859e4404ac1eab4bef2c>>
+ * @generated SignedSource<<f1d9d2831f33c911610d6f62823429b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,10 +63,10 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type showRoutes_ShowQuery$variables = {
-  slug: string;
-  input?: FilterArtworksInput | null;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  input?: FilterArtworksInput | null;
   shouldFetchCounts: boolean;
+  slug: string;
 };
 export type showRoutes_ShowQuery$data = {
   readonly show: {
@@ -74,8 +74,8 @@ export type showRoutes_ShowQuery$data = {
   } | null;
 };
 export type showRoutes_ShowQuery = {
-  variables: showRoutes_ShowQuery$variables;
   response: showRoutes_ShowQuery$data;
+  variables: showRoutes_ShowQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

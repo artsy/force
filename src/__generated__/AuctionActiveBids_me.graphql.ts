@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b3f8fcfd87c8419ee8ec13552c51698>>
+ * @generated SignedSource<<59ba64bf129f1440546724bddb87b27c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,21 +21,21 @@ export type AuctionActiveBids_me$data = {
       readonly currentBid: {
         readonly display: string | null;
       } | null;
-      readonly slug: string;
-      readonly lotLabel: string | null;
-      readonly reserveStatus: string | null;
-      readonly saleID: string | null;
+      readonly endedAt: string | null;
       readonly highestBid: {
         readonly display: string | null;
       } | null;
-      readonly endedAt: string | null;
+      readonly lotLabel: string | null;
+      readonly reserveStatus: string | null;
       readonly sale: {
-        readonly slug: string;
-        readonly liveStartAt: string | null;
         readonly endAt: string | null;
-        readonly isLiveOpen: boolean | null;
         readonly isClosed: boolean | null;
+        readonly isLiveOpen: boolean | null;
+        readonly liveStartAt: string | null;
+        readonly slug: string;
       } | null;
+      readonly saleID: string | null;
+      readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"AuctionLotInfo_saleArtwork">;
     } | null;
   } | null> | null;

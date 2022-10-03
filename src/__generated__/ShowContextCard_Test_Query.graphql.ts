@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<607ccc656452254a7770ebadf3d7f9eb>>
+ * @generated SignedSource<<aea94399abdae45b9a1202294ebc7602>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ShowContextCard_Test_Query$data = {
   } | null;
 };
 export type ShowContextCard_Test_Query = {
-  variables: ShowContextCard_Test_Query$variables;
   response: ShowContextCard_Test_Query$data;
+  variables: ShowContextCard_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

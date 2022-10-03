@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<490bc1d192ff3b68b526f07951ea7495>>
+ * @generated SignedSource<<b888c3ff071b6d52746c95507edfa2f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type UserBidHistory_Test_Query$data = {
   } | null;
 };
 export type UserBidHistory_Test_Query = {
-  variables: UserBidHistory_Test_Query$variables;
   response: UserBidHistory_Test_Query$data;
+  variables: UserBidHistory_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

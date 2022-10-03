@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7e10d032097680f3b8030c7940ca166>>
+ * @generated SignedSource<<6f8e98049a537846b0d2dbc3d49902e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair$data = {
-  readonly name: string | null;
   readonly exhibitionPeriod: string | null;
+  readonly name: string | null;
   readonly profile: {
     readonly icon: {
       readonly desktop: {
+        readonly size: number;
         readonly src: string;
         readonly srcSet: string;
-        readonly size: number;
       } | null;
       readonly mobile: {
+        readonly size: number;
         readonly src: string;
         readonly srcSet: string;
-        readonly size: number;
       } | null;
       readonly sticky: {
+        readonly size: number;
         readonly src: string;
         readonly srcSet: string;
-        readonly size: number;
       } | null;
     } | null;
   } | null;

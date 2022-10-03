@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a8bbdfd6ed5f1a6a074ea0a1742bcc0>>
+ * @generated SignedSource<<caa303b70013d9331fede791650e64ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type fairsRoutes_FairsQuery$data = {
   } | null;
 };
 export type fairsRoutes_FairsQuery = {
-  variables: fairsRoutes_FairsQuery$variables;
   response: fairsRoutes_FairsQuery$data;
+  variables: fairsRoutes_FairsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

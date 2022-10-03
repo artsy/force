@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57847dc467038e6b3f263ed954e4ad45>>
+ * @generated SignedSource<<a669d7be4d43ff542b87f49ca18a344e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type ArtistCareerHighlightsQuery$data = {
   } | null;
 };
 export type ArtistCareerHighlightsQuery = {
-  variables: ArtistCareerHighlightsQuery$variables;
   response: ArtistCareerHighlightsQuery$data;
+  variables: ArtistCareerHighlightsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

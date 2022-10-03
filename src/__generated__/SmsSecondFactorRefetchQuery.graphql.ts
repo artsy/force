@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<805884378116ecb07bcdd74ed993605c>>
+ * @generated SignedSource<<92770cb4752c5df8a362bc4148053aa4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SmsSecondFactorRefetchQuery$data = {
   } | null;
 };
 export type SmsSecondFactorRefetchQuery = {
-  variables: SmsSecondFactorRefetchQuery$variables;
   response: SmsSecondFactorRefetchQuery$data;
+  variables: SmsSecondFactorRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = {

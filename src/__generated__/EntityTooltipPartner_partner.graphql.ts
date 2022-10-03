@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d32ac55044351324121a6e8fa5651fe0>>
+ * @generated SignedSource<<7abad1a123dca61d9342525190d00a51>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type EntityTooltipPartner_partner$data = {
     readonly fullBio: string | null;
     readonly image: {
       readonly cropped: {
+        readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-        readonly height: number;
       } | null;
     } | null;
   } | null;

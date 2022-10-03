@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da8166f78a01bdee52f457a8a2291ca3>>
+ * @generated SignedSource<<47138a2303e0a01424bc3de999b1f80f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,30 +11,30 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_myCollectionArtwork$data = {
-  readonly internalID: string;
   readonly artist: {
     readonly internalID: string;
     readonly name: string | null;
   } | null;
-  readonly location: {
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly state: string | null;
-    readonly postalCode: string | null;
-  } | null;
-  readonly date: string | null;
-  readonly title: string | null;
-  readonly medium: string | null;
   readonly attributionClass: {
     readonly name: string | null;
   } | null;
+  readonly date: string | null;
+  readonly depth: string | null;
   readonly editionNumber: string | null;
   readonly editionSize: string | null;
   readonly height: string | null;
-  readonly width: string | null;
-  readonly depth: string | null;
+  readonly internalID: string;
+  readonly location: {
+    readonly city: string | null;
+    readonly country: string | null;
+    readonly postalCode: string | null;
+    readonly state: string | null;
+  } | null;
+  readonly medium: string | null;
   readonly metric: string | null;
   readonly provenance: string | null;
+  readonly title: string | null;
+  readonly width: string | null;
   readonly " $fragmentType": "ArtworkDetails_myCollectionArtwork";
 };
 export type ArtworkDetails_myCollectionArtwork$key = {

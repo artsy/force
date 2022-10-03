@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf1d8a5bc587f374c5ba87985889f9b5>>
+ * @generated SignedSource<<aeff4fa32ce51bef804fd5f966f59308>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ArticlesQuery$variables = {
-  partnerId: string;
   page?: number | null;
+  partnerId: string;
 };
 export type partnerRoutes_ArticlesQuery$data = {
   readonly partner: {
@@ -23,8 +23,8 @@ export type partnerRoutes_ArticlesQuery$data = {
   } | null;
 };
 export type partnerRoutes_ArticlesQuery = {
-  variables: partnerRoutes_ArticlesQuery$variables;
   response: partnerRoutes_ArticlesQuery$data;
+  variables: partnerRoutes_ArticlesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

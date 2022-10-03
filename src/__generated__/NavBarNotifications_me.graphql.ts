@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd17380931ec08fb96295ece96d6ed69>>
+ * @generated SignedSource<<17714991e944c9f6b62781832fcdbdfb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarNotifications_me$data = {
-  readonly unreadNotificationsCount: number;
   readonly followsAndSaves: {
     readonly notifications: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly href: string | null;
-          readonly summary: string | null;
           readonly artists: string | null;
-          readonly published_at: string | null;
+          readonly href: string | null;
           readonly image: {
             readonly thumb: {
               readonly url: string;
             } | null;
           } | null;
+          readonly published_at: string | null;
+          readonly summary: string | null;
         } | null;
       } | null> | null;
     } | null;
   } | null;
+  readonly unreadNotificationsCount: number;
   readonly " $fragmentType": "NavBarNotifications_me";
 };
 export type NavBarNotifications_me$key = {

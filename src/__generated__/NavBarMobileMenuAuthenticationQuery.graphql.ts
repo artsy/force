@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ab55ac5ea1ef93601296db802bfd81c>>
+ * @generated SignedSource<<4fb57372670c72191a1934af768b79af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type NavBarMobileMenuAuthenticationQuery$data = {
   } | null;
 };
 export type NavBarMobileMenuAuthenticationQuery = {
-  variables: NavBarMobileMenuAuthenticationQuery$variables;
   response: NavBarMobileMenuAuthenticationQuery$data;
+  variables: NavBarMobileMenuAuthenticationQuery$variables;
 };
 
 const node: ConcreteRequest = {

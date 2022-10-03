@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c455eceab88101703c3a9b7e6bc2755>>
+ * @generated SignedSource<<3a37d571d8e6381684bfcfc4ecf137a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Reject_order$data = {
   readonly internalID: string;
-  readonly stateExpiresAt: string | null;
+  readonly lastOffer?: {
+    readonly createdAt: string;
+    readonly internalID: string;
+  } | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -22,10 +25,7 @@ export type Reject_order$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly lastOffer?: {
-    readonly internalID: string;
-    readonly createdAt: string;
-  } | null;
+  readonly stateExpiresAt: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order">;
   readonly " $fragmentType": "Reject_order";
 };

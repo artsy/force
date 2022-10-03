@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a8dadde08d79b30771c850604df28ad>>
+ * @generated SignedSource<<c45122405f929a2c95c8f3523245c9a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,13 +15,13 @@ export type RedirectsProfileQuery$variables = {
 export type RedirectsProfileQuery$data = {
   readonly profile: {
     readonly owner: {
-      readonly __typename: "Partner";
-      readonly slug: string;
-    } | {
       readonly __typename: "Fair";
       readonly slug: string;
     } | {
       readonly __typename: "FairOrganizer";
+      readonly slug: string;
+    } | {
+      readonly __typename: "Partner";
       readonly slug: string;
     } | {
       // This will never be '%other', but we need some
@@ -31,8 +31,8 @@ export type RedirectsProfileQuery$data = {
   } | null;
 };
 export type RedirectsProfileQuery = {
-  variables: RedirectsProfileQuery$variables;
   response: RedirectsProfileQuery$data;
+  variables: RedirectsProfileQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

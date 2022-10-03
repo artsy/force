@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8bd4ec55598cc41716f98e556ea4a4d>>
+ * @generated SignedSource<<5793465ba540fe5d1b8c502d77881ec7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type ConversationMessages_events$data = {
     readonly node: {
       readonly orderHistory: ReadonlyArray<{
         readonly __typename: string;
+        readonly createdAt?: string;
         readonly state?: CommerceOrderStateEnum;
         readonly stateReason?: string | null;
-        readonly createdAt?: string;
         readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
       }>;
     } | null;

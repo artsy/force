@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b64a0fac923ae798bd0892b5ed989b8d>>
+ * @generated SignedSource<<dddfa4b8eae187e9f0eb2396a6e3f35a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ export type SettingsEditProfileAboutYou_me$data = {
   readonly location: {
     readonly display: string | null;
   } | null;
+  readonly priceRange: string | null;
+  readonly priceRangeMax: number | null;
+  readonly priceRangeMin: number | null;
   readonly profession: string | null;
   readonly shareFollows: boolean;
-  readonly priceRange: string | null;
-  readonly priceRangeMin: number | null;
-  readonly priceRangeMax: number | null;
   readonly " $fragmentType": "SettingsEditProfileAboutYou_me";
 };
 export type SettingsEditProfileAboutYou_me$key = {

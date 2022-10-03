@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aff1c8123fc5fef66f0450245906278e>>
+ * @generated SignedSource<<f3cfbc2909cbae6f54c6c5b60104e9b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,8 +29,8 @@ export type useCreateUserInterestMutation$data = {
   } | null;
 };
 export type useCreateUserInterestMutation = {
-  variables: useCreateUserInterestMutation$variables;
   response: useCreateUserInterestMutation$data;
+  variables: useCreateUserInterestMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

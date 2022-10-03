@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f2bec106f31dd5dd94146dd35b79126>>
+ * @generated SignedSource<<c14041a4ded09b3a0942bb86e41f8600>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,25 +18,25 @@ export type ArtworkActions_artwork$data = {
   readonly dimensions: {
     readonly cm: string | null;
   } | null;
-  readonly slug: string;
+  readonly downloadableImageUrl: string | null;
   readonly image: {
+    readonly height: number | null;
     readonly internalID: string | null;
     readonly url: string | null;
-    readonly height: number | null;
     readonly width: number | null;
   } | null;
-  readonly downloadableImageUrl: string | null;
   readonly is_downloadable: boolean | null;
   readonly is_hangable: boolean | null;
+  readonly is_saved: boolean | null;
   readonly partner: {
     readonly slug: string;
   } | null;
-  readonly title: string | null;
   readonly sale: {
-    readonly is_closed: boolean | null;
     readonly is_auction: boolean | null;
+    readonly is_closed: boolean | null;
   } | null;
-  readonly is_saved: boolean | null;
+  readonly slug: string;
+  readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
   readonly " $fragmentType": "ArtworkActions_artwork";
 };

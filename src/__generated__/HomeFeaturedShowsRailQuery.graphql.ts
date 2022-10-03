@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7d8794424913116b5f3a4b54a26519b>>
+ * @generated SignedSource<<76070a00f9eb0f7fe6f17849b3a3a7c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type HomeFeaturedShowsRailQuery$data = {
   } | null;
 };
 export type HomeFeaturedShowsRailQuery = {
-  variables: HomeFeaturedShowsRailQuery$variables;
   response: HomeFeaturedShowsRailQuery$data;
+  variables: HomeFeaturedShowsRailQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

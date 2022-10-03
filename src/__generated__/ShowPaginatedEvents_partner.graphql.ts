@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5bd09646804996da9a046d25775d0070>>
+ * @generated SignedSource<<c7a2b77dac0d16f7bf5a8a2fda6ea86d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowPaginatedEvents_partner$data = {
-  readonly slug: string;
   readonly showsList: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
     readonly edges: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"ShowEvents_edges">;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ShowPaginatedEvents_partner";
 };
 export type ShowPaginatedEvents_partner$key = {

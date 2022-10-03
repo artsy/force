@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5e525859105c7bc5d3c1f6f662ff714>>
+ * @generated SignedSource<<d53a55ebd741065bfad51078bfeb2fe4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type RelatedWorksArtworkGridRefetchQuery$data = {
   } | null;
 };
 export type RelatedWorksArtworkGridRefetchQuery = {
-  variables: RelatedWorksArtworkGridRefetchQuery$variables;
   response: RelatedWorksArtworkGridRefetchQuery$data;
+  variables: RelatedWorksArtworkGridRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0fe4eaafb7a132b3c4a454ab14ba352>>
+ * @generated SignedSource<<bf7dfc04c45326b422bfd09c21ef7484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkImageBrowser_artwork$data = {
-  readonly internalID: string;
   readonly images: ReadonlyArray<{
-    readonly width: number | null;
     readonly height: number | null;
+    readonly width: number | null;
   } | null> | null;
+  readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkImageBrowser_artwork";
 };

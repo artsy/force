@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b6918b0917fa3bc79a4e493706756e3>>
+ * @generated SignedSource<<7356bbbf853e09241fe415a94743a62c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightAchievements_artist$data = {
-  readonly slug: string;
   readonly insightAchievements: ReadonlyArray<{
-    readonly label: string;
     readonly entities: ReadonlyArray<string>;
+    readonly label: string;
   }>;
+  readonly slug: string;
   readonly " $fragmentType": "ArtistInsightAchievements_artist";
 };
 export type ArtistInsightAchievements_artist$key = {

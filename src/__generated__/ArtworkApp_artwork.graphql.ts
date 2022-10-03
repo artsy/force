@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a1b3d27e9b54bafc62bc8acac1ca477>>
+ * @generated SignedSource<<53666375fe2afeabad6c809fd9a3e23b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,30 +11,30 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {
-  readonly slug: string;
-  readonly internalID: string;
-  readonly is_acquireable: boolean | null;
-  readonly is_offerable: boolean | null;
-  readonly availability: string | null;
-  readonly listPrice: {
-    readonly display?: string | null;
-  } | null;
-  readonly is_in_auction: boolean | null;
-  readonly sale: {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly extendedBiddingIntervalMinutes: number | null;
-    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
   } | null;
   readonly artists: ReadonlyArray<{
     readonly id: string;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
   } | null> | null;
-  readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  readonly availability: string | null;
+  readonly internalID: string;
+  readonly is_acquireable: boolean | null;
+  readonly is_in_auction: boolean | null;
+  readonly is_offerable: boolean | null;
+  readonly listPrice: {
+    readonly display?: string | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkSidebar2_artwork">;
+  readonly sale: {
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly internalID: string;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar2_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62d3ec280b5dea4971597398d3da3e1e>>
+ * @generated SignedSource<<dee00462329699305185feac1f97ee11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type EntityTooltipArtistQuery$data = {
   } | null;
 };
 export type EntityTooltipArtistQuery = {
-  variables: EntityTooltipArtistQuery$variables;
   response: EntityTooltipArtistQuery$data;
+  variables: EntityTooltipArtistQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

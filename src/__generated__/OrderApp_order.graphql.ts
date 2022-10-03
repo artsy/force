@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d94c1d3e568611b7d8ab4d7efc7179b>>
+ * @generated SignedSource<<e49d0cb854fb785d5b21f9f9ae16e0ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order$data = {
-  readonly mode: CommerceOrderModeEnum | null;
   readonly currencyCode: string;
   readonly itemsTotalCents: number | null;
   readonly lineItems: {
@@ -20,13 +19,14 @@ export type OrderApp_order$data = {
       readonly node: {
         readonly artwork: {
           readonly href: string | null;
-          readonly slug: string;
           readonly is_acquireable: boolean | null;
           readonly is_offerable: boolean | null;
+          readonly slug: string;
         } | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly mode: CommerceOrderModeEnum | null;
   readonly " $fragmentType": "OrderApp_order";
 };
 export type OrderApp_order$key = {

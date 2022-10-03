@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83aab634389c3b7ba6e4168fd3ee7f77>>
+ * @generated SignedSource<<68327cc2919148a2ae3f946c4cb572f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,39 +12,39 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleBody_article$data = {
+  readonly byline: string | null;
   readonly hero: {
     readonly __typename: string;
   } | null;
-  readonly seriesArticle: {
-    readonly thumbnailTitle: string | null;
-    readonly href: string | null;
-  } | null;
-  readonly vertical: string | null;
-  readonly byline: string | null;
+  readonly href: string | null;
   readonly internalID: string;
-  readonly slug: string | null;
   readonly layout: ArticleLayout;
   readonly leadParagraph: string | null;
-  readonly title: string | null;
-  readonly href: string | null;
-  readonly publishedAt: string | null;
-  readonly sections: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"ArticleSection_section">;
-  }>;
   readonly postscript: string | null;
+  readonly publishedAt: string | null;
   readonly relatedArticles: ReadonlyArray<{
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly href: string | null;
     readonly byline: string | null;
+    readonly href: string | null;
+    readonly internalID: string;
     readonly thumbnailImage: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
       } | null;
     } | null;
+    readonly title: string | null;
   }>;
-  readonly " $fragmentSpreads": FragmentRefs<"ArticleHero_article" | "ArticleByline_article" | "ArticleSectionAd_article" | "ArticleNewsSource_article">;
+  readonly sections: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleSection_section">;
+  }>;
+  readonly seriesArticle: {
+    readonly href: string | null;
+    readonly thumbnailTitle: string | null;
+  } | null;
+  readonly slug: string | null;
+  readonly title: string | null;
+  readonly vertical: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleByline_article" | "ArticleHero_article" | "ArticleNewsSource_article" | "ArticleSectionAd_article">;
   readonly " $fragmentType": "ArticleBody_article";
 };
 export type ArticleBody_article$key = {

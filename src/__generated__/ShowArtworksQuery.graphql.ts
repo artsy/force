@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<040d340b0252f6d869cd315b4e1c8331>>
+ * @generated SignedSource<<ca80e4748fef8396446bef546d72de05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,8 +63,8 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type ShowArtworksQuery$variables = {
-  slug: string;
   input?: FilterArtworksInput | null;
+  slug: string;
 };
 export type ShowArtworksQuery$data = {
   readonly show: {
@@ -72,8 +72,8 @@ export type ShowArtworksQuery$data = {
   } | null;
 };
 export type ShowArtworksQuery = {
-  variables: ShowArtworksQuery$variables;
   response: ShowArtworksQuery$data;
+  variables: ShowArtworksQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2027e6dcff31f697b777af753402ce6>>
+ * @generated SignedSource<<7513303217bb58ac3525cc997a6a3431>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SaleSorts = "_ID_ASC" | "_ID_DESC" | "CREATED_AT_ASC" | "CREATED_AT_DESC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_ASC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_DESC" | "END_AT_ASC" | "END_AT_DESC" | "LICENSED_TIMELY_AT_NAME_DESC" | "NAME_ASC" | "NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "TIMELY_AT_NAME_ASC" | "TIMELY_AT_NAME_DESC" | "%future added value";
+export type SaleSorts = "CREATED_AT_ASC" | "CREATED_AT_DESC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_ASC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_DESC" | "END_AT_ASC" | "END_AT_DESC" | "LICENSED_TIMELY_AT_NAME_DESC" | "NAME_ASC" | "NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "TIMELY_AT_NAME_ASC" | "TIMELY_AT_NAME_DESC" | "_ID_ASC" | "_ID_DESC" | "%future added value";
 export type OtherAuctionsQuery$variables = {
   first?: number | null;
   sort?: SaleSorts | null;
@@ -21,8 +21,8 @@ export type OtherAuctionsQuery$data = {
   } | null;
 };
 export type OtherAuctionsQuery = {
-  variables: OtherAuctionsQuery$variables;
   response: OtherAuctionsQuery$data;
+  variables: OtherAuctionsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

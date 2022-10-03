@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d12c83e3ea1fdd859e80f26bc28a33ce>>
+ * @generated SignedSource<<7de1ccbde93f4ad737837754409b0f15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowArtistPopoverRow_artist$data = {
-  readonly slug: string;
-  readonly internalID: string;
-  readonly name: string | null;
   readonly formattedNationalityAndBirthday: string | null;
   readonly image: {
     readonly cropped: {
       readonly url: string;
     } | null;
   } | null;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentType": "FollowArtistPopoverRow_artist";
 };
 export type FollowArtistPopoverRow_artist$key = {

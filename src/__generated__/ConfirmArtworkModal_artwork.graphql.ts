@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7fed10042b51150ac4950e09b59f8b4d>>
+ * @generated SignedSource<<b412e7a59b437c10c0559d69a410f489>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConfirmArtworkModal_artwork$data = {
-  readonly internalID: string;
-  readonly isEdition: boolean | null;
   readonly editionSets: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"EditionSelectBox_edition">;
   } | null> | null;
+  readonly internalID: string;
+  readonly isEdition: boolean | null;
   readonly " $fragmentSpreads": FragmentRefs<"CollapsibleArtworkDetails_artwork" | "ConfirmArtworkButton_artwork">;
   readonly " $fragmentType": "ConfirmArtworkModal_artwork";
 };

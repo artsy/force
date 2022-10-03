@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ede0a35046a487ef633fc97c04ff417>>
+ * @generated SignedSource<<aec2f324287f50e564f33f9b4ba5792a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,21 +24,21 @@ export type ArtworkSidebarCommercialOfferOrderMutation$data = {
   readonly commerceCreateOfferOrderWithArtwork: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
       readonly order?: {
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
-      };
-      readonly error?: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
       };
     };
   } | null;
 };
 export type ArtworkSidebarCommercialOfferOrderMutation = {
-  variables: ArtworkSidebarCommercialOfferOrderMutation$variables;
   response: ArtworkSidebarCommercialOfferOrderMutation$data;
+  variables: ArtworkSidebarCommercialOfferOrderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

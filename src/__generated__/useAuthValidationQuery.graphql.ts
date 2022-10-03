@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f41b0d25d37677d87f605402abf74156>>
+ * @generated SignedSource<<c1959dd5f49e4e1f9f20fe4bdcd7a9dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type useAuthValidationQuery$data = {
   readonly authenticationStatus: AuthenticationStatus;
 };
 export type useAuthValidationQuery = {
-  variables: useAuthValidationQuery$variables;
   response: useAuthValidationQuery$data;
+  variables: useAuthValidationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

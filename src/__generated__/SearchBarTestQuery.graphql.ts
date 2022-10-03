@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a817f45682385d4e4bb8ca6a7e1e2282>>
+ * @generated SignedSource<<fa63d5038b59fae3a372c6666645ee98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchBarTestQuery$variables = {
-  term: string;
   hasTerm: boolean;
+  term: string;
 };
 export type SearchBarTestQuery$data = {
   readonly viewer: {
@@ -24,28 +24,28 @@ export type SearchBarTestQuery$rawResponse = {
     readonly searchConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly displayLabel: string | null;
-          readonly href: string | null;
-          readonly __typename: "SearchableItem";
-          readonly __isNode: "SearchableItem";
-          readonly id: string;
-          readonly displayType: string | null;
-          readonly slug: string;
-        } | {
-          readonly displayLabel: string | null;
-          readonly href: string | null;
           readonly __typename: "Artist";
           readonly __isNode: "Artist";
+          readonly displayLabel: string | null;
+          readonly href: string | null;
           readonly id: string;
           readonly statuses: {
             readonly artworks: boolean | null;
             readonly auctionLots: boolean | null;
           } | null;
         } | {
+          readonly __typename: "SearchableItem";
+          readonly __isNode: "SearchableItem";
           readonly displayLabel: string | null;
+          readonly displayType: string | null;
           readonly href: string | null;
+          readonly id: string;
+          readonly slug: string;
+        } | {
           readonly __typename: string;
           readonly __isNode: string;
+          readonly displayLabel: string | null;
+          readonly href: string | null;
           readonly id: string;
         } | null;
       } | null> | null;
@@ -53,9 +53,9 @@ export type SearchBarTestQuery$rawResponse = {
   } | null;
 };
 export type SearchBarTestQuery = {
-  variables: SearchBarTestQuery$variables;
-  response: SearchBarTestQuery$data;
   rawResponse: SearchBarTestQuery$rawResponse;
+  response: SearchBarTestQuery$data;
+  variables: SearchBarTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

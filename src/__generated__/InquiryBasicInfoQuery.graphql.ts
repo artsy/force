@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fee9f9d05372486b65bb1fdd6870bb77>>
+ * @generated SignedSource<<b3162e7b1b22bf3ba0241ab8a711b164>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type InquiryBasicInfoQuery$data = {
   } | null;
 };
 export type InquiryBasicInfoQuery = {
-  variables: InquiryBasicInfoQuery$variables;
   response: InquiryBasicInfoQuery$data;
+  variables: InquiryBasicInfoQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

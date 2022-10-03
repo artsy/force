@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2081c4a84a810500593b92f336c94f6>>
+ * @generated SignedSource<<9642a93c1c87856831f088f378d212c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,18 +14,18 @@ export type AddToCollectionRoute_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
         readonly artistNames: string | null;
-        readonly title: string | null;
         readonly date: string | null;
         readonly image: {
           readonly cropped: {
-            readonly width: number;
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
           } | null;
         } | null;
+        readonly internalID: string;
+        readonly title: string | null;
       } | null;
     } | null> | null;
   } | null;

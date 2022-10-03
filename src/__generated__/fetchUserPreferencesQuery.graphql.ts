@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<424949b999ebf1733ea00cce92491338>>
+ * @generated SignedSource<<4310504e0025a158f134da13b3deaf65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type fetchUserPreferencesQuery$data = {
   } | null;
 };
 export type fetchUserPreferencesQuery = {
-  variables: fetchUserPreferencesQuery$variables;
   response: fetchUserPreferencesQuery$data;
+  variables: fetchUserPreferencesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

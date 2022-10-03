@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de68511994ba257ef5dd60346b0f67f4>>
+ * @generated SignedSource<<b588b7a7d9e35a3b05c21053126b877f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
 export type ShowPaginatedEventsRendererQuery$variables = {
-  partnerId: string;
   first?: number | null;
   page?: number | null;
+  partnerId: string;
   status?: EventStatus | null;
 };
 export type ShowPaginatedEventsRendererQuery$data = {
@@ -23,8 +23,8 @@ export type ShowPaginatedEventsRendererQuery$data = {
   } | null;
 };
 export type ShowPaginatedEventsRendererQuery = {
-  variables: ShowPaginatedEventsRendererQuery$variables;
   response: ShowPaginatedEventsRendererQuery$data;
+  variables: ShowPaginatedEventsRendererQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

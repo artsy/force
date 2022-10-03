@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f08b430c7c7290467d2f6ba733fe5253>>
+ * @generated SignedSource<<6cad4783007f13333deaeb6481afffb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,21 +21,21 @@ export type CounterSubmitMutation$variables = {
 export type CounterSubmitMutation$data = {
   readonly commerceSubmitPendingOffer: {
     readonly orderOrError: {
-      readonly order?: {
-        readonly state: CommerceOrderStateEnum;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-      };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly state: CommerceOrderStateEnum;
       };
     };
   } | null;
 };
 export type CounterSubmitMutation = {
-  variables: CounterSubmitMutation$variables;
   response: CounterSubmitMutation$data;
+  variables: CounterSubmitMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

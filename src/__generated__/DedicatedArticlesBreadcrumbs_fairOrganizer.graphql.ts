@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8930844ff5547d74d874c0fc2b700269>>
+ * @generated SignedSource<<ce47faec60db7b7e4d366c11eb2c02d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$data = {
-  readonly slug: string;
   readonly name: string | null;
   readonly profile: {
     readonly image: {
       readonly url: string | null;
     } | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "DedicatedArticlesBreadcrumbs_fairOrganizer";
 };
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$key = {

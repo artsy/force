@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29efaa8b48e8106881a2c5750e7aa978>>
+ * @generated SignedSource<<cd059b423cf6e7363036fcc3c25e5fb3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,31 +18,31 @@ export type ArtworkSidebarExtraLinks_Test_Query$data = {
 };
 export type ArtworkSidebarExtraLinks_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly internalID: string;
-    readonly is_in_auction: boolean | null;
-    readonly is_for_sale: boolean | null;
-    readonly is_acquireable: boolean | null;
-    readonly is_inquireable: boolean | null;
     readonly artists: ReadonlyArray<{
+      readonly id: string;
       readonly is_consignable: boolean | null;
-      readonly id: string;
     } | null> | null;
-    readonly sale: {
-      readonly is_closed: boolean | null;
-      readonly isBenefit: boolean | null;
-      readonly partner: {
-        readonly name: string | null;
-        readonly id: string;
-      } | null;
-      readonly id: string;
-    } | null;
     readonly id: string;
+    readonly internalID: string;
+    readonly is_acquireable: boolean | null;
+    readonly is_for_sale: boolean | null;
+    readonly is_in_auction: boolean | null;
+    readonly is_inquireable: boolean | null;
+    readonly sale: {
+      readonly id: string;
+      readonly isBenefit: boolean | null;
+      readonly is_closed: boolean | null;
+      readonly partner: {
+        readonly id: string;
+        readonly name: string | null;
+      } | null;
+    } | null;
   } | null;
 };
 export type ArtworkSidebarExtraLinks_Test_Query = {
-  variables: ArtworkSidebarExtraLinks_Test_Query$variables;
-  response: ArtworkSidebarExtraLinks_Test_Query$data;
   rawResponse: ArtworkSidebarExtraLinks_Test_Query$rawResponse;
+  response: ArtworkSidebarExtraLinks_Test_Query$data;
+  variables: ArtworkSidebarExtraLinks_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

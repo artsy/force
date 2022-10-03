@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3af69a141abe2e07834eb53f1d2aade>>
+ * @generated SignedSource<<4cba76942be80e1e74983334e3d3f9b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,8 +27,8 @@ export type SendFeedbackSearchResultsMutation$data = {
   } | null;
 };
 export type SendFeedbackSearchResultsMutation = {
-  variables: SendFeedbackSearchResultsMutation$variables;
   response: SendFeedbackSearchResultsMutation$data;
+  variables: SendFeedbackSearchResultsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

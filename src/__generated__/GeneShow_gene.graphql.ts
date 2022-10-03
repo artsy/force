@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<306f970d9f7881be80ba67978e6667f2>>
+ * @generated SignedSource<<80cd456d6d033fe8f0aa9bad83a4a630>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,28 +11,28 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_gene$data = {
-  readonly name: string | null;
-  readonly displayName: string | null;
-  readonly formattedDescription: string | null;
-  readonly similar: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly href: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly href: string | null;
         readonly internalID: string;
         readonly name: string | null;
-        readonly href: string | null;
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
+  readonly displayName: string | null;
+  readonly formattedDescription: string | null;
+  readonly name: string | null;
+  readonly similar: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly href: string | null;
+        readonly internalID: string;
+        readonly name: string | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene" | "GeneArtworkFilter_gene" | "GeneMeta_gene">;
   readonly " $fragmentType": "GeneShow_gene";
 };
 export type GeneShow_gene$key = {

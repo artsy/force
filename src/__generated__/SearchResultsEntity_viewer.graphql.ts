@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbb5f83acfc3db16daf7dc5a52c39600>>
+ * @generated SignedSource<<d46b05f9de9549be5c8ae551cb6cb331>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,23 +12,23 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsEntity_viewer$data = {
   readonly searchConnection: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly description?: string | null;
         readonly displayLabel?: string | null;
-        readonly href?: string | null;
-        readonly internalID?: string;
-        readonly imageUrl?: string | null;
         readonly displayType?: string | null;
+        readonly href?: string | null;
+        readonly imageUrl?: string | null;
+        readonly internalID?: string;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
   } | null;
   readonly " $fragmentType": "SearchResultsEntity_viewer";
 };

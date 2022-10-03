@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c99ad98247d9531e493489f83e955322>>
+ * @generated SignedSource<<dcae8c72bf9546b677c49574312acaff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,28 +14,28 @@ export type WorksForYouFeed_viewer$data = {
   readonly me: {
     readonly followsAndSaves: {
       readonly bundledArtworksByArtistConnection: {
-        readonly pageInfo: {
-          readonly hasNextPage: boolean;
-          readonly endCursor: string | null;
-        };
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly id: string;
-            readonly href: string | null;
-            readonly summary: string | null;
             readonly artists: string | null;
-            readonly publishedAt: string | null;
             readonly artworksConnection: {
               readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
             } | null;
+            readonly href: string | null;
+            readonly id: string;
             readonly image: {
               readonly resized: {
                 readonly src: string;
                 readonly srcSet: string;
               } | null;
             } | null;
+            readonly publishedAt: string | null;
+            readonly summary: string | null;
           } | null;
         } | null> | null;
+        readonly pageInfo: {
+          readonly endCursor: string | null;
+          readonly hasNextPage: boolean;
+        };
       } | null;
     } | null;
   } | null;

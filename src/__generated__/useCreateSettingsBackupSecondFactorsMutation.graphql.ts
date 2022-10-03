@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c4dcc5e5406d00ebafee2ae47ee1130>>
+ * @generated SignedSource<<036f54c1fa0e7f6b530a04191e46e959>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,8 +31,8 @@ export type useCreateSettingsBackupSecondFactorsMutation$data = {
   } | null;
 };
 export type useCreateSettingsBackupSecondFactorsMutation = {
-  variables: useCreateSettingsBackupSecondFactorsMutation$variables;
   response: useCreateSettingsBackupSecondFactorsMutation$data;
+  variables: useCreateSettingsBackupSecondFactorsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

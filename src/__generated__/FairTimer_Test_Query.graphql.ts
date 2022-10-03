@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c95530729952671bdb460de5ce1469c>>
+ * @generated SignedSource<<c91b99e130fa331251900eb5e39bdb69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FairTimer_Test_Query$data = {
   } | null;
 };
 export type FairTimer_Test_Query = {
-  variables: FairTimer_Test_Query$variables;
   response: FairTimer_Test_Query$data;
+  variables: FairTimer_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

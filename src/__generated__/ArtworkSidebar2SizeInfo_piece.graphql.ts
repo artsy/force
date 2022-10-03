@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35c8b3251f3f82214d795a9942bb8918>>
+ * @generated SignedSource<<fe8c8d53ac8e7edf759b508590c9cab2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar2SizeInfo_piece$data = {
   readonly dimensions: {
-    readonly in: string | null;
     readonly cm: string | null;
+    readonly in: string | null;
   } | null;
   readonly editionOf: string | null;
   readonly " $fragmentType": "ArtworkSidebar2SizeInfo_piece";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1045e8a7b270ba2b85e5ff980fa31dda>>
+ * @generated SignedSource<<668f8cd2f59684ff8514183c170f0375>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type FollowArtistInput = {
   unfollow?: boolean | null;
 };
 export type FollowArtistPopoverRowMutation$variables = {
-  input: FollowArtistInput;
   excludeArtistIds: ReadonlyArray<string | null>;
+  input: FollowArtistInput;
 };
 export type FollowArtistPopoverRowMutation$data = {
   readonly followArtist: {
@@ -26,16 +26,16 @@ export type FollowArtistPopoverRowMutation$data = {
         readonly suggestedConnection: {
           readonly edges: ReadonlyArray<{
             readonly node: {
-              readonly id: string;
-              readonly internalID: string;
-              readonly slug: string;
-              readonly name: string | null;
               readonly formattedNationalityAndBirthday: string | null;
+              readonly id: string;
               readonly image: {
                 readonly cropped: {
                   readonly url: string;
                 } | null;
               } | null;
+              readonly internalID: string;
+              readonly name: string | null;
+              readonly slug: string;
             } | null;
           } | null> | null;
         } | null;
@@ -44,8 +44,8 @@ export type FollowArtistPopoverRowMutation$data = {
   } | null;
 };
 export type FollowArtistPopoverRowMutation = {
-  variables: FollowArtistPopoverRowMutation$variables;
   response: FollowArtistPopoverRowMutation$data;
+  variables: FollowArtistPopoverRowMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

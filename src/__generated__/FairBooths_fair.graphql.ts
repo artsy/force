@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ddef980bf21c8701a62960ed95a8037>>
+ * @generated SignedSource<<f09b15fd18db9ed2e8cdca09969bd2b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,27 +11,27 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairBooths_fair$data = {
-  readonly slug: string;
   readonly exhibitors: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly id: string;
         readonly counts: {
           readonly artworks: number | null;
         } | null;
+        readonly id: string;
         readonly partner: {
           readonly id?: string;
         } | null;
         readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+    };
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "FairBooths_fair";
 };
 export type FairBooths_fair$key = {

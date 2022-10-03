@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64102311150b6bf52d31ec633097a992>>
+ * @generated SignedSource<<9f788637fe067e8ea13b4beb6240d5ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButton_artwork$data = {
-  readonly internalID: string;
   readonly id: string;
-  readonly slug: string;
-  readonly title: string | null;
+  readonly internalID: string;
+  readonly is_saved: boolean | null;
   readonly sale: {
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
   } | null;
-  readonly is_saved: boolean | null;
+  readonly slug: string;
+  readonly title: string | null;
   readonly " $fragmentType": "ArtworkActionsSaveButton_artwork";
 };
 export type ArtworkActionsSaveButton_artwork$key = {

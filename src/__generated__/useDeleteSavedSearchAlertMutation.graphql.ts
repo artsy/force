@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5db28ba4fc0fcb18a858ff1b9e61ad02>>
+ * @generated SignedSource<<fe8ed79c629ddf399cc18a9298aa9b80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,8 @@ export type useDeleteSavedSearchAlertMutation$data = {
   } | null;
 };
 export type useDeleteSavedSearchAlertMutation = {
-  variables: useDeleteSavedSearchAlertMutation$variables;
   response: useDeleteSavedSearchAlertMutation$data;
+  variables: useDeleteSavedSearchAlertMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

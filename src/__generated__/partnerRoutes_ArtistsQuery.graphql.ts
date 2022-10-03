@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<595ca0fbc134077bffacc0f94ce816ef>>
+ * @generated SignedSource<<5590aafee243a6f3bdbbeafc819a42b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,16 +15,16 @@ export type partnerRoutes_ArtistsQuery$variables = {
 };
 export type partnerRoutes_ArtistsQuery$data = {
   readonly partner: {
-    readonly displayArtistsSection: boolean | null;
     readonly allArtistsConnection: {
       readonly totalCount: number | null;
     } | null;
+    readonly displayArtistsSection: boolean | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistsRoute_partner">;
   } | null;
 };
 export type partnerRoutes_ArtistsQuery = {
-  variables: partnerRoutes_ArtistsQuery$variables;
   response: partnerRoutes_ArtistsQuery$data;
+  variables: partnerRoutes_ArtistsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

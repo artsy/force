@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da8b284a2c3cfdbea0045999eb6669ae>>
+ * @generated SignedSource<<42ac93fdc03a9d798f4af9565fa65236>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,33 +11,33 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistShowsGroup_artist$data = {
-  readonly slug: string;
   readonly showsConnection: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly partner: {
-          readonly name?: string | null;
-        } | null;
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly exhibitionPeriod: string | null;
+        readonly city: string | null;
         readonly coverImage: {
           readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
           } | null;
         } | null;
-        readonly city: string | null;
+        readonly exhibitionPeriod: string | null;
+        readonly href: string | null;
+        readonly name: string | null;
+        readonly partner: {
+          readonly name?: string | null;
+        } | null;
       } | null;
     } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtistShowsGroup_artist";
 };
 export type ArtistShowsGroup_artist$key = {

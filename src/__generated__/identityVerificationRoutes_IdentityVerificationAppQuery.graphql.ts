@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0bc186cb3fb2b6ece6cdbc73a140b13c>>
+ * @generated SignedSource<<0e65918496d09f9e92db996631740f16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,15 +20,15 @@ export type identityVerificationRoutes_IdentityVerificationAppQuery$data = {
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse = {
   readonly identityVerification: {
+    readonly id: string;
     readonly internalID: string;
     readonly state: string;
-    readonly id: string;
   } | null;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery = {
-  variables: identityVerificationRoutes_IdentityVerificationAppQuery$variables;
-  response: identityVerificationRoutes_IdentityVerificationAppQuery$data;
   rawResponse: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse;
+  response: identityVerificationRoutes_IdentityVerificationAppQuery$data;
+  variables: identityVerificationRoutes_IdentityVerificationAppQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

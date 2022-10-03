@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b6461c2cdda55998f1d0d368263e125>>
+ * @generated SignedSource<<a5c20b1a37d342ee7314571553ccad40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,34 +36,13 @@ export type SetShippingMutation$data = {
   readonly commerceSetShipping: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
       readonly order?: {
         readonly internalID: string;
-        readonly state: CommerceOrderStateEnum;
-        readonly requestedFulfillment: {
-          readonly __typename: "CommerceShip";
-          readonly name: string | null;
-          readonly addressLine1: string | null;
-          readonly addressLine2: string | null;
-          readonly city: string | null;
-          readonly region: string | null;
-          readonly country: string | null;
-          readonly postalCode: string | null;
-          readonly phoneNumber: string | null;
-        } | {
-          readonly __typename: "CommerceShipArta";
-          readonly name: string | null;
-          readonly addressLine1: string | null;
-          readonly addressLine2: string | null;
-          readonly city: string | null;
-          readonly region: string | null;
-          readonly country: string | null;
-          readonly postalCode: string | null;
-          readonly phoneNumber: string | null;
-        } | {
-          // This will never be '%other', but we need some
-          // value in case none of the concrete values match.
-          readonly __typename: "%other";
-        } | null;
         readonly lineItems: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -75,18 +54,39 @@ export type SetShippingMutation$data = {
             } | null;
           } | null> | null;
         } | null;
-      };
-      readonly error?: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
+        readonly requestedFulfillment: {
+          readonly __typename: "CommerceShip";
+          readonly addressLine1: string | null;
+          readonly addressLine2: string | null;
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly name: string | null;
+          readonly phoneNumber: string | null;
+          readonly postalCode: string | null;
+          readonly region: string | null;
+        } | {
+          readonly __typename: "CommerceShipArta";
+          readonly addressLine1: string | null;
+          readonly addressLine2: string | null;
+          readonly city: string | null;
+          readonly country: string | null;
+          readonly name: string | null;
+          readonly phoneNumber: string | null;
+          readonly postalCode: string | null;
+          readonly region: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        } | null;
+        readonly state: CommerceOrderStateEnum;
       };
     };
   } | null;
 };
 export type SetShippingMutation = {
-  variables: SetShippingMutation$variables;
   response: SetShippingMutation$data;
+  variables: SetShippingMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

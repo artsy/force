@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b67faafc8483432ed4e4a112e56304c9>>
+ * @generated SignedSource<<8aec476bac213ffcc57626a4f5a10191>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,36 +11,36 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairArticles_fair$data = {
-  readonly slug: string;
   readonly articlesConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
-        readonly title: string | null;
-        readonly href: string | null;
         readonly author: {
           readonly name: string | null;
         } | null;
+        readonly href: string | null;
+        readonly internalID: string;
         readonly publishedAt: string | null;
-        readonly thumbnailTitle: string | null;
         readonly thumbnailImage: {
           readonly large: {
-            readonly width: number;
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
           } | null;
           readonly medium: {
-            readonly width: number;
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
           } | null;
         } | null;
+        readonly thumbnailTitle: string | null;
+        readonly title: string | null;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "FairArticles_fair";
 };
 export type FairArticles_fair$key = {

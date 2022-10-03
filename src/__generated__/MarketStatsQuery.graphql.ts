@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83799c4b3cc582d59ffa9f097ade266a>>
+ * @generated SignedSource<<15bdc0c7f2084a4986f965f5c3df540b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type MarketStatsQuery$data = {
   } | null;
 };
 export type MarketStatsQuery = {
-  variables: MarketStatsQuery$variables;
   response: MarketStatsQuery$data;
+  variables: MarketStatsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

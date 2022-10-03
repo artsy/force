@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<620151dd26201e60495f7f85420c1f74>>
+ * @generated SignedSource<<7b3272ecc21bb74f2548dc7a7e658b02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,9 +27,9 @@ export type ArtistBioTestQuery$rawResponse = {
   } | null;
 };
 export type ArtistBioTestQuery = {
-  variables: ArtistBioTestQuery$variables;
-  response: ArtistBioTestQuery$data;
   rawResponse: ArtistBioTestQuery$rawResponse;
+  response: ArtistBioTestQuery$data;
+  variables: ArtistBioTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

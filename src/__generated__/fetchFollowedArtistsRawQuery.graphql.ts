@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0917eee5c70c17513547cf1bf8285c46>>
+ * @generated SignedSource<<4d34595cd3daf96ab664a8846866870e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type fetchFollowedArtistsRawQuery$data = {
         readonly edges: ReadonlyArray<{
           readonly node: {
             readonly artist: {
-              readonly slug: string;
               readonly internalID: string;
+              readonly slug: string;
             } | null;
           } | null;
         } | null> | null;
@@ -27,8 +27,8 @@ export type fetchFollowedArtistsRawQuery$data = {
   } | null;
 };
 export type fetchFollowedArtistsRawQuery = {
-  variables: fetchFollowedArtistsRawQuery$variables;
   response: fetchFollowedArtistsRawQuery$data;
+  variables: fetchFollowedArtistsRawQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

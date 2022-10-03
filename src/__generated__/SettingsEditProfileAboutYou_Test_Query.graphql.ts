@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81dea4836adbae468c9f9c2a0bc8e24a>>
+ * @generated SignedSource<<4859c5dc6eb0d2d7b77afe6ab9bdb1e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SettingsEditProfileAboutYou_Test_Query$data = {
   } | null;
 };
 export type SettingsEditProfileAboutYou_Test_Query = {
-  variables: SettingsEditProfileAboutYou_Test_Query$variables;
   response: SettingsEditProfileAboutYou_Test_Query$data;
+  variables: SettingsEditProfileAboutYou_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2331c3bd46b7608448c1342565ae7ed>>
+ * @generated SignedSource<<2191c19f9fff82052bb9701fb1c2e754>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type BackToFairBanner_show$data = {
   readonly fair: {
-    readonly name: string | null;
     readonly href: string | null;
+    readonly name: string | null;
   } | null;
   readonly " $fragmentType": "BackToFairBanner_show";
 };

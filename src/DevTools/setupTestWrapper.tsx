@@ -7,7 +7,7 @@ import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
-  RelayMockEnvironment,
+  MockEnvironment,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 import i18n from "System/i18n/i18n"
@@ -87,7 +87,7 @@ type RTLRenderResult = RenderResult<
   typeof import("@testing-library/dom/types/queries"),
   HTMLElement
 >
-type RenderWithRelay = RTLRenderResult & { env: RelayMockEnvironment }
+type RenderWithRelay = RTLRenderResult & { env: MockEnvironment }
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,

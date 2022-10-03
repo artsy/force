@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b5e92939d163d4eb6ab9917982e53f2>>
+ * @generated SignedSource<<a06997785c5295c17990ad9a123d682d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HoverDetails_artwork$data = {
-  readonly internalID: string;
   readonly attributionClass: {
     readonly name: string | null;
   } | null;
+  readonly internalID: string;
   readonly mediumType: {
     readonly filterGene: {
       readonly name: string | null;

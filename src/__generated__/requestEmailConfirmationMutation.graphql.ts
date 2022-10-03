@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22d4f92d961438120cf51092ab641cf9>>
+ * @generated SignedSource<<adbcb9c52fa6ae54c1359549b87b63f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,17 +13,17 @@ export type requestEmailConfirmationMutation$variables = {};
 export type requestEmailConfirmationMutation$data = {
   readonly sendConfirmationEmail: {
     readonly confirmationOrError: {
-      readonly unconfirmedEmail?: string | null;
       readonly mutationError?: {
         readonly error: string | null;
         readonly message: string;
       } | null;
+      readonly unconfirmedEmail?: string | null;
     } | null;
   } | null;
 };
 export type requestEmailConfirmationMutation = {
-  variables: requestEmailConfirmationMutation$variables;
   response: requestEmailConfirmationMutation$data;
+  variables: requestEmailConfirmationMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

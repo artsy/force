@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4b20401043da36f4e14a272b021173a>>
+ * @generated SignedSource<<88ca508ffcf0573783a49281290b4b8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type GeneShow_Test_Query$data = {
   } | null;
 };
 export type GeneShow_Test_Query = {
-  variables: GeneShow_Test_Query$variables;
   response: GeneShow_Test_Query$data;
+  variables: GeneShow_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

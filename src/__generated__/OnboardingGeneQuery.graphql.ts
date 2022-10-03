@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27566217c89d474ed2fdeac7999bccc6>>
+ * @generated SignedSource<<be2acc30b71027f10dc706f75852c0c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type OnboardingGeneQuery$data = {
   } | null;
 };
 export type OnboardingGeneQuery = {
-  variables: OnboardingGeneQuery$variables;
   response: OnboardingGeneQuery$data;
+  variables: OnboardingGeneQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

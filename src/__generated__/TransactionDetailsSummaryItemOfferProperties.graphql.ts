@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79bc037a9e8bfb77fda90e4eb180ada6>>
+ * @generated SignedSource<<3910a387a8cdbd3d014117db6ff1e0b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,17 +12,17 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItemOfferProperties$data = {
-  readonly internalID: string;
   readonly amount: string | null;
   readonly amountCents: number;
+  readonly buyerTotal: string | null;
+  readonly buyerTotalCents: number | null;
+  readonly fromParticipant: CommerceOrderParticipantEnum | null;
+  readonly internalID: string;
+  readonly note: string | null;
   readonly shippingTotal: string | null;
   readonly shippingTotalCents: number | null;
   readonly taxTotal: string | null;
   readonly taxTotalCents: number | null;
-  readonly buyerTotal: string | null;
-  readonly buyerTotalCents: number | null;
-  readonly fromParticipant: CommerceOrderParticipantEnum | null;
-  readonly note: string | null;
   readonly " $fragmentType": "TransactionDetailsSummaryItemOfferProperties";
 };
 export type TransactionDetailsSummaryItemOfferProperties$key = {

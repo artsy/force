@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ac429813dacc6f096e5c683cd3fc596>>
+ * @generated SignedSource<<51d200f8b335dcfcab3a7f8c99d99c38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type showsRoutes_ShowsAllCitiesQuery$data = {
   } | null;
 };
 export type showsRoutes_ShowsAllCitiesQuery = {
-  variables: showsRoutes_ShowsAllCitiesQuery$variables;
   response: showsRoutes_ShowsAllCitiesQuery$data;
+  variables: showsRoutes_ShowsAllCitiesQuery$variables;
 };
 
 const node: ConcreteRequest = {

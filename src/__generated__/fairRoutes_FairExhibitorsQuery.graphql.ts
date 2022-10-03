@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3cef45087a5de21f0c6c78bf8a06da65>>
+ * @generated SignedSource<<94422bad72297d0fe6914e38a4eee1e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type fairRoutes_FairExhibitorsQuery$data = {
   } | null;
 };
 export type fairRoutes_FairExhibitorsQuery = {
-  variables: fairRoutes_FairExhibitorsQuery$variables;
   response: fairRoutes_FairExhibitorsQuery$data;
+  variables: fairRoutes_FairExhibitorsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

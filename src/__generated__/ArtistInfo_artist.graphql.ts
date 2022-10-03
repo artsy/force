@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc2e9b9f5bfdf7ea30c6cb46df248520>>
+ * @generated SignedSource<<7ea4584c2fe87363cdf9ff048df02bc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,33 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInfo_artist$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly name: string | null;
+  readonly auctionResultsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly __typename: "AuctionResult";
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly biographyBlurb: {
+    readonly text: string | null;
+  } | null;
+  readonly collections: ReadonlyArray<string | null> | null;
+  readonly counts: {
+    readonly partner_shows: any | null;
+  } | null;
+  readonly exhibition_highlights: ReadonlyArray<{
+    readonly " $fragmentSpreads": FragmentRefs<"SelectedExhibitions_exhibitions">;
+  } | null> | null;
+  readonly formatted_nationality_and_birthday: string | null;
+  readonly highlights: {
+    readonly partnersConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: "Partner";
+        } | null;
+      } | null> | null;
+    } | null;
+  } | null;
   readonly href: string | null;
   readonly image: {
     readonly cropped: {
@@ -21,33 +45,9 @@ export type ArtistInfo_artist$data = {
       readonly srcSet: string;
     } | null;
   } | null;
-  readonly formatted_nationality_and_birthday: string | null;
-  readonly counts: {
-    readonly partner_shows: any | null;
-  } | null;
-  readonly exhibition_highlights: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"SelectedExhibitions_exhibitions">;
-  } | null> | null;
-  readonly collections: ReadonlyArray<string | null> | null;
-  readonly highlights: {
-    readonly partnersConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly __typename: string;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
-  readonly auctionResultsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly __typename: string;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly biographyBlurb: {
-    readonly text: string | null;
-  } | null;
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistBio_bio" | "ArtistMarketInsights_artist" | "FollowArtistButton_artist">;
   readonly " $fragmentType": "ArtistInfo_artist";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<199f22fa0f7ca58f043f4784e7872b7f>>
+ * @generated SignedSource<<ce242e1ebd38d997983974ff5f1c8344>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type RedirectsShortcutsQuery$data = {
   } | null;
 };
 export type RedirectsShortcutsQuery = {
-  variables: RedirectsShortcutsQuery$variables;
   response: RedirectsShortcutsQuery$data;
+  variables: RedirectsShortcutsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

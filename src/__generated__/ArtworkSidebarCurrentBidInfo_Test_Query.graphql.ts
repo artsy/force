@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a4b27c11d1c6c355d2bc18d0caa98c4>>
+ * @generated SignedSource<<daf791b32ad96e3c73bdc2d35c0348a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,65 +18,65 @@ export type ArtworkSidebarCurrentBidInfo_Test_Query$data = {
 };
 export type ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly sale: {
-      readonly is_closed: boolean | null;
-      readonly is_live_open: boolean | null;
-      readonly internalID: string;
-      readonly is_with_buyers_premium: boolean | null;
-      readonly id: string;
-    } | null;
-    readonly sale_artwork: {
-      readonly is_with_reserve: boolean | null;
-      readonly reserve_message: string | null;
-      readonly reserve_status: string | null;
-      readonly endedAt: string | null;
-      readonly current_bid: {
-        readonly display: string | null;
-      } | null;
-      readonly counts: {
-        readonly bidder_positions: any | null;
-      } | null;
-      readonly id: string;
-    } | null;
-    readonly myLotStanding: ReadonlyArray<{
-      readonly active_bid: {
-        readonly is_winning: boolean | null;
-        readonly id: string;
-      } | null;
-      readonly most_recent_bid: {
-        readonly max_bid: {
-          readonly display: string | null;
-        } | null;
-        readonly id: string;
-      } | null;
-    }> | null;
     readonly artists: ReadonlyArray<{
-      readonly internalID: string;
       readonly id: string;
+      readonly internalID: string;
       readonly name: string | null;
       readonly slug: string;
     } | null> | null;
-    readonly slug: string;
-    readonly internalID: string;
-    readonly title: string | null;
     readonly attributionClass: {
-      readonly internalID: string;
       readonly id: string;
-    } | null;
-    readonly mediumType: {
-      readonly filterGene: {
-        readonly slug: string;
-        readonly name: string | null;
-        readonly id: string;
-      } | null;
+      readonly internalID: string;
     } | null;
     readonly id: string;
+    readonly internalID: string;
+    readonly mediumType: {
+      readonly filterGene: {
+        readonly id: string;
+        readonly name: string | null;
+        readonly slug: string;
+      } | null;
+    } | null;
+    readonly myLotStanding: ReadonlyArray<{
+      readonly active_bid: {
+        readonly id: string;
+        readonly is_winning: boolean | null;
+      } | null;
+      readonly most_recent_bid: {
+        readonly id: string;
+        readonly max_bid: {
+          readonly display: string | null;
+        } | null;
+      } | null;
+    }> | null;
+    readonly sale: {
+      readonly id: string;
+      readonly internalID: string;
+      readonly is_closed: boolean | null;
+      readonly is_live_open: boolean | null;
+      readonly is_with_buyers_premium: boolean | null;
+    } | null;
+    readonly sale_artwork: {
+      readonly counts: {
+        readonly bidder_positions: any | null;
+      } | null;
+      readonly current_bid: {
+        readonly display: string | null;
+      } | null;
+      readonly endedAt: string | null;
+      readonly id: string;
+      readonly is_with_reserve: boolean | null;
+      readonly reserve_message: string | null;
+      readonly reserve_status: string | null;
+    } | null;
+    readonly slug: string;
+    readonly title: string | null;
   } | null;
 };
 export type ArtworkSidebarCurrentBidInfo_Test_Query = {
-  variables: ArtworkSidebarCurrentBidInfo_Test_Query$variables;
-  response: ArtworkSidebarCurrentBidInfo_Test_Query$data;
   rawResponse: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse;
+  response: ArtworkSidebarCurrentBidInfo_Test_Query$data;
+  variables: ArtworkSidebarCurrentBidInfo_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c20a43e3020e944e0cd63cfd5be020e>>
+ * @generated SignedSource<<d78437c2c69fc7ddff55df616194bcd6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,10 +20,10 @@ export type Header_collection$data = {
   readonly query: {
     readonly artistIDs: ReadonlyArray<string> | null;
   };
+  readonly showFeaturedArtists: boolean;
+  readonly showHeaderArtworksRail: boolean;
   readonly slug: string;
   readonly title: string;
-  readonly showHeaderArtworksRail: boolean;
-  readonly showFeaturedArtists: boolean;
   readonly " $fragmentType": "Header_collection";
 };
 export type Header_collection$key = {

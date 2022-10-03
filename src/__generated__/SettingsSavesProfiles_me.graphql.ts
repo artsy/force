@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<880ab130b9bb1310e555191cdd8ea3f7>>
+ * @generated SignedSource<<d31579ce09ce8ffae7a0f4b3cd5fab6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,28 +13,27 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesProfiles_me$data = {
   readonly followsAndSaves: {
     readonly profilesConnection: {
-      readonly totalCount: number | null;
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly internalID: string;
           readonly profile: {
-            readonly name: string | null;
-            readonly href: string | null;
             readonly avatar: {
               readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
               } | null;
             } | null;
+            readonly href: string | null;
+            readonly name: string | null;
             readonly owner: {
-              readonly __typename: "Partner";
-              readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
-            } | {
               readonly __typename: "Fair";
               readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
             } | {
               readonly __typename: "FairOrganizer";
               readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
+            } | {
+              readonly __typename: "Partner";
+              readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
             } | {
               // This will never be '%other', but we need some
               // value in case none of the concrete values match.
@@ -43,6 +42,7 @@ export type SettingsSavesProfiles_me$data = {
           };
         } | null;
       } | null> | null;
+      readonly totalCount: number | null;
     } | null;
   } | null;
   readonly " $fragmentType": "SettingsSavesProfiles_me";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae3fc42447dbe497712404f67c044463>>
+ * @generated SignedSource<<d0eb24c8517b0776e9a549fe7931b958>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type MetadataTestQuery$data = {
   } | null;
 };
 export type MetadataTestQuery = {
-  variables: MetadataTestQuery$variables;
   response: MetadataTestQuery$data;
+  variables: MetadataTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ed8fc0e56063eee3c95b65bc1609e8a>>
+ * @generated SignedSource<<7e9ff1bedab46990e9c3686c4c0ce05a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsAuctionsLotStanding_lotStanding$data = {
   readonly isLeadingBidder: boolean | null;
   readonly saleArtwork: {
-    readonly lotLabel: string | null;
-    readonly sale: {
-      readonly isClosed: boolean | null;
-    } | null;
     readonly artwork: {
       readonly href: string | null;
       readonly image: {
@@ -26,6 +22,10 @@ export type SettingsAuctionsLotStanding_lotStanding$data = {
         } | null;
       } | null;
       readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
+    } | null;
+    readonly lotLabel: string | null;
+    readonly sale: {
+      readonly isClosed: boolean | null;
     } | null;
   } | null;
   readonly " $fragmentType": "SettingsAuctionsLotStanding_lotStanding";

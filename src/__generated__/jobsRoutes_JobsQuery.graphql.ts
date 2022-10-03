@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8eae37ed3d058512bda744f0ab0ab632>>
+ * @generated SignedSource<<e4b52346f2d593d1e739313cb9d7f517>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type jobsRoutes_JobsQuery$data = {
   } | null;
 };
 export type jobsRoutes_JobsQuery = {
-  variables: jobsRoutes_JobsQuery$variables;
   response: jobsRoutes_JobsQuery$data;
+  variables: jobsRoutes_JobsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

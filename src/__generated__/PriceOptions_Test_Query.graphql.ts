@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77826b3cd69860d36b6816abcc9d22b1>>
+ * @generated SignedSource<<8fce92b76afddd5fe7d7fd684e965a82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type PriceOptions_Test_Query$data = {
   } | null;
 };
 export type PriceOptions_Test_Query = {
-  variables: PriceOptions_Test_Query$variables;
   response: PriceOptions_Test_Query$data;
+  variables: PriceOptions_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

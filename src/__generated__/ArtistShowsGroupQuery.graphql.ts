@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<725f853d05e9dc141363d05080bfde09>>
+ * @generated SignedSource<<2f6c621cfbc4b276cb9228abc46ed9fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,11 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type ArtistShowsGroupQuery$variables = {
+  after?: string | null;
+  artistID: string;
+  before?: string | null;
   first?: number | null;
   last?: number | null;
-  after?: string | null;
-  before?: string | null;
-  artistID: string;
   sort?: ShowSorts | null;
   status: string;
 };
@@ -26,8 +26,8 @@ export type ArtistShowsGroupQuery$data = {
   } | null;
 };
 export type ArtistShowsGroupQuery = {
-  variables: ArtistShowsGroupQuery$variables;
   response: ArtistShowsGroupQuery$data;
+  variables: ArtistShowsGroupQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

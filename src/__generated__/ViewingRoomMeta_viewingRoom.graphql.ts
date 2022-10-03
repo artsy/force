@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2453fe3191c895cec4b3b78a7a95edf6>>
+ * @generated SignedSource<<2d465acf6c7450b7ab7d4c70215c363a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomMeta_viewingRoom$data = {
-  readonly title: string;
   readonly href: string | null;
-  readonly pullQuote: string | null;
   readonly image: {
     readonly imageURLs: {
       readonly normalized: string | null;
     } | null;
   } | null;
+  readonly pullQuote: string | null;
+  readonly title: string;
   readonly " $fragmentType": "ViewingRoomMeta_viewingRoom";
 };
 export type ViewingRoomMeta_viewingRoom$key = {

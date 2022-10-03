@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56f0b07ebe51335b1efe23207c52f3e6>>
+ * @generated SignedSource<<4098c1099bc5549adc1a05a3ea4e2612>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignMeta_artist$data = {
-  readonly name: string | null;
   readonly href: string | null;
+  readonly name: string | null;
   readonly targetSupply: {
     readonly microfunnel: {
       readonly artworksConnection: {

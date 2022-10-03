@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5aa2b8b18cca54a9df458ec6fcead507>>
+ * @generated SignedSource<<a8941768bfa00d24be0e31bc7f8eb147>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SavedAddressesRefetchQuery$data = {
   } | null;
 };
 export type SavedAddressesRefetchQuery = {
-  variables: SavedAddressesRefetchQuery$variables;
   response: SavedAddressesRefetchQuery$data;
+  variables: SavedAddressesRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

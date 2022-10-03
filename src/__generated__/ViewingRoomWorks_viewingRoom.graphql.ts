@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c584b6a76def86d6d26407a561fd68d>>
+ * @generated SignedSource<<d3b22413e6c68ed8007eb78755174d38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomWorks_viewingRoom$data = {
   readonly artworksConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "ViewingRoomWorks_viewingRoom";
 };

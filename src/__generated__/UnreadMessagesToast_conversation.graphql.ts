@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7c8722a2dc871f5dd8b017e9718efd4>>
+ * @generated SignedSource<<4af5c822b9480768827670de945a2743>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UnreadMessagesToast_conversation$data = {
-  readonly id: string;
-  readonly internalID: string | null;
-  readonly lastMessageID: string | null;
-  readonly fromLastViewedMessageID: string | null;
-  readonly isLastMessageToUser: boolean | null;
   readonly activeOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -24,6 +19,11 @@ export type UnreadMessagesToast_conversation$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly fromLastViewedMessageID: string | null;
+  readonly id: string;
+  readonly internalID: string | null;
+  readonly isLastMessageToUser: boolean | null;
+  readonly lastMessageID: string | null;
   readonly " $fragmentType": "UnreadMessagesToast_conversation";
 };
 export type UnreadMessagesToast_conversation$key = {

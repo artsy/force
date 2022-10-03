@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77fab22b73f84905d3d9e907c1819bdc>>
+ * @generated SignedSource<<5c1b922c4fa345acbeb3abbdc21d227f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type HomeHeroUnit_Test_Query$data = {
   } | null;
 };
 export type HomeHeroUnit_Test_Query = {
-  variables: HomeHeroUnit_Test_Query$variables;
   response: HomeHeroUnit_Test_Query$data;
+  variables: HomeHeroUnit_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

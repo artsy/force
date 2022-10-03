@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<674d00879d61209f7ff116ba97eca4cf>>
+ * @generated SignedSource<<023450cc01c2f353b7e34f211b14ef99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type useScrollToOpenArtistAuthModalQuery$variables = {
 };
 export type useScrollToOpenArtistAuthModalQuery$data = {
   readonly artist: {
-    readonly name: string | null;
     readonly filterArtworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -26,11 +25,12 @@ export type useScrollToOpenArtistAuthModalQuery$data = {
         } | null;
       } | null> | null;
     } | null;
+    readonly name: string | null;
   } | null;
 };
 export type useScrollToOpenArtistAuthModalQuery = {
-  variables: useScrollToOpenArtistAuthModalQuery$variables;
   response: useScrollToOpenArtistAuthModalQuery$data;
+  variables: useScrollToOpenArtistAuthModalQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48c37e7df459eea67fb28e1f722f033e>>
+ * @generated SignedSource<<3db162b028324353b5f688c2b7347982>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type BackToFairBanner_Test_Query$data = {
   } | null;
 };
 export type BackToFairBanner_Test_Query = {
-  variables: BackToFairBanner_Test_Query$variables;
   response: BackToFairBanner_Test_Query$data;
+  variables: BackToFairBanner_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

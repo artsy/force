@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97d0d615701100ea7269facc088669ac>>
+ * @generated SignedSource<<02335225aa49e89871fc0517fe976631>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,19 +13,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
   readonly href: string | null;
   readonly isShareable: boolean | null;
-  readonly metaImage: {
-    readonly resized: {
-      readonly width: number | null;
-      readonly height: number | null;
-      readonly url: string;
-    } | null;
-  } | null;
   readonly meta: {
-    readonly title: string | null;
     readonly description: string | null;
     readonly longDescription: string | null;
+    readonly title: string | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork" | "ArtworkZendesk_artwork">;
+  readonly metaImage: {
+    readonly resized: {
+      readonly height: number | null;
+      readonly url: string;
+      readonly width: number | null;
+    } | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkZendesk_artwork" | "SeoDataForArtwork_artwork">;
   readonly " $fragmentType": "ArtworkMeta_artwork";
 };
 export type ArtworkMeta_artwork$key = {

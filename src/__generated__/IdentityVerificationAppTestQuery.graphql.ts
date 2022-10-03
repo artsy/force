@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a366bedb91bcafbed3ded36abc6aabfe>>
+ * @generated SignedSource<<605780b46a48f427299fc88400483640>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,15 +18,15 @@ export type IdentityVerificationAppTestQuery$data = {
 };
 export type IdentityVerificationAppTestQuery$rawResponse = {
   readonly identityVerification: {
+    readonly id: string;
     readonly internalID: string;
     readonly state: string;
-    readonly id: string;
   } | null;
 };
 export type IdentityVerificationAppTestQuery = {
-  variables: IdentityVerificationAppTestQuery$variables;
-  response: IdentityVerificationAppTestQuery$data;
   rawResponse: IdentityVerificationAppTestQuery$rawResponse;
+  response: IdentityVerificationAppTestQuery$data;
+  variables: IdentityVerificationAppTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

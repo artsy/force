@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b6a874047809e8d1cd795d988328025>>
+ * @generated SignedSource<<2524dbfaf6a2d83b3e6365d925fe65c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,8 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkArtistMarket_marketPriceInsights$data = {
   readonly annualLotsSold: number | null;
   readonly annualValueSoldDisplayText: string | null;
-  readonly medianSaleOverEstimatePercentage: number | null;
   readonly liquidityRankDisplayText: string | null;
+  readonly medianSaleOverEstimatePercentage: number | null;
   readonly sellThroughRate: number | null;
   readonly " $fragmentType": "MyCollectionArtworkArtistMarket_marketPriceInsights";
 };

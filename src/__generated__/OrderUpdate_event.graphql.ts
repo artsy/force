@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4515eb185a7ca9d40e4e4ad300ca328>>
+ * @generated SignedSource<<17ddbe3a2c7e22f09ee9e8ab1ee8c137>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,24 +13,24 @@ export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added v
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderUpdate_event$data = {
-  readonly __typename: "CommerceOrderStateChangedEvent";
-  readonly createdAt: string;
-  readonly orderUpdateState: string | null;
-  readonly state: CommerceOrderStateEnum;
-  readonly stateReason: string | null;
-  readonly " $fragmentType": "OrderUpdate_event";
-} | {
   readonly __typename: "CommerceOfferSubmittedEvent";
   readonly createdAt: string;
   readonly offer: {
     readonly amount: string | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
     readonly definesTotal: boolean;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null;
     readonly offerAmountChanged: boolean;
     readonly respondsTo: {
       readonly fromParticipant: CommerceOrderParticipantEnum | null;
     } | null;
   };
+  readonly " $fragmentType": "OrderUpdate_event";
+} | {
+  readonly __typename: "CommerceOrderStateChangedEvent";
+  readonly createdAt: string;
+  readonly orderUpdateState: string | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly stateReason: string | null;
   readonly " $fragmentType": "OrderUpdate_event";
 } | {
   // This will never be '%other', but we need some

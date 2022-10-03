@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<444a8a78a3881aba0f1d98bba182685e>>
+ * @generated SignedSource<<8f162a78a59cf573dc7a4a1244ddfd83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipGene_gene$data = {
-  readonly href: string | null;
   readonly description: string | null;
+  readonly href: string | null;
   readonly image: {
     readonly cropped: {
+      readonly height: number;
       readonly src: string;
       readonly srcSet: string;
-      readonly height: number;
       readonly width: number;
     } | null;
   } | null;

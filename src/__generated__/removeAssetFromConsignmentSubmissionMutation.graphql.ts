@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4c8cbf0eb3a84f9c8fc262d0b5a38e2>>
+ * @generated SignedSource<<179409f8ccabf14d53318de92d29624c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,8 +25,8 @@ export type removeAssetFromConsignmentSubmissionMutation$data = {
   } | null;
 };
 export type removeAssetFromConsignmentSubmissionMutation = {
-  variables: removeAssetFromConsignmentSubmissionMutation$variables;
   response: removeAssetFromConsignmentSubmissionMutation$data;
+  variables: removeAssetFromConsignmentSubmissionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f72730db1611025cf72e3aceea2820ad>>
+ * @generated SignedSource<<ac1a24a0816ac606b87956f3ec48fb3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type ArtistConsignPageViews_artist$data = {
   readonly targetSupply: {
     readonly microfunnel: {
       readonly metadata: {
-        readonly roundedViews: string | null;
         readonly roundedUniqueVisitors: string | null;
+        readonly roundedViews: string | null;
       } | null;
     } | null;
   } | null;

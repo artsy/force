@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<062b2ce7694997e52428807d02f44451>>
+ * @generated SignedSource<<bbd5022e03ede963daffada6da16a128>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -67,11 +67,6 @@ export type useAddCreditCardAndUpdateProfileMutation$variables = {
   profileInput: UpdateMyProfileInput;
 };
 export type useAddCreditCardAndUpdateProfileMutation$data = {
-  readonly updateMyUserProfile: {
-    readonly user: {
-      readonly internalID: string;
-    } | null;
-  } | null;
   readonly createCreditCard: {
     readonly creditCardOrError: {
       readonly creditCardEdge?: {
@@ -80,16 +75,21 @@ export type useAddCreditCardAndUpdateProfileMutation$data = {
         } | null;
       } | null;
       readonly mutationError?: {
-        readonly type: string | null;
-        readonly message: string;
         readonly detail: string | null;
+        readonly message: string;
+        readonly type: string | null;
       } | null;
+    } | null;
+  } | null;
+  readonly updateMyUserProfile: {
+    readonly user: {
+      readonly internalID: string;
     } | null;
   } | null;
 };
 export type useAddCreditCardAndUpdateProfileMutation = {
-  variables: useAddCreditCardAndUpdateProfileMutation$variables;
   response: useAddCreditCardAndUpdateProfileMutation$data;
+  variables: useAddCreditCardAndUpdateProfileMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

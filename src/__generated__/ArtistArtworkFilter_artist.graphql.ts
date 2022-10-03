@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9cf069905101d0b3f80c6e93302e8392>>
+ * @generated SignedSource<<c7355b34e5519fc57b35ea32d29aa16c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,24 +11,24 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArtworkFilter_artist$data = {
-  readonly name: string | null;
   readonly counts: {
-    readonly partner_shows: any | null;
-    readonly for_sale_artworks: any | null;
-    readonly ecommerce_artworks: any | null;
-    readonly auction_artworks: any | null;
     readonly artworks: any | null;
+    readonly auction_artworks: any | null;
+    readonly ecommerce_artworks: any | null;
+    readonly for_sale_artworks: any | null;
     readonly has_make_offer_artworks: boolean | null;
+    readonly partner_shows: any | null;
   } | null;
   readonly filtered_artworks: {
-    readonly id: string;
     readonly counts: {
       readonly total: any | null;
     } | null;
+    readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
   } | null;
   readonly internalID: string;
   readonly isFollowed: boolean | null;
+  readonly name: string | null;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";

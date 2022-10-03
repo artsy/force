@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73514d90550c1b704e2a0e76a4520093>>
+ * @generated SignedSource<<41ebb0cc95be1cc542a7699f1b6709f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,15 +15,15 @@ export type phoneNumberUtils_PhoneNumber_Query$variables = {
 };
 export type phoneNumberUtils_PhoneNumber_Query$data = {
   readonly phoneNumber: {
-    readonly isValid: boolean | null;
     readonly international: string | null;
+    readonly isValid: boolean | null;
     readonly national: string | null;
     readonly originalNumber: string | null;
   } | null;
 };
 export type phoneNumberUtils_PhoneNumber_Query = {
-  variables: phoneNumberUtils_PhoneNumber_Query$variables;
   response: phoneNumberUtils_PhoneNumber_Query$data;
+  variables: phoneNumberUtils_PhoneNumber_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

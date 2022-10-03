@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<212cc2f461f6949913ed841bb6bc0479>>
+ * @generated SignedSource<<636911e58f2a19e401555b178dd6c2ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type JobsFilter_viewer$data = {
-  readonly jobs: ReadonlyArray<{
-    readonly id: string;
-    readonly location: string;
-    readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
-  }>;
   readonly departments: ReadonlyArray<{
     readonly id: string;
-    readonly name: string;
     readonly jobs: ReadonlyArray<{
       readonly id: string;
       readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
     }>;
+    readonly name: string;
+  }>;
+  readonly jobs: ReadonlyArray<{
+    readonly id: string;
+    readonly location: string;
+    readonly " $fragmentSpreads": FragmentRefs<"JobLink_job">;
   }>;
   readonly " $fragmentType": "JobsFilter_viewer";
 };

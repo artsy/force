@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95073e3fb3ae63063470178d466aa97e>>
+ * @generated SignedSource<<c20fa9398a5170005141e953cbe5475b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,8 +29,8 @@ export type commitMutationTest1Mutation$data = {
   } | null;
 };
 export type commitMutationTest1Mutation = {
-  variables: commitMutationTest1Mutation$variables;
   response: commitMutationTest1Mutation$data;
+  variables: commitMutationTest1Mutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

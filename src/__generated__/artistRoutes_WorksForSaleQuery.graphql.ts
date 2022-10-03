@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc85718b3c547510b3389c64b54280a8>>
+ * @generated SignedSource<<9f16e3120e09ab136db2de253382e4aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,9 +63,9 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type artistRoutes_WorksForSaleQuery$variables = {
+  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
   artistID: string;
   input?: FilterArtworksInput | null;
-  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
 };
 export type artistRoutes_WorksForSaleQuery$data = {
   readonly artist: {
@@ -73,8 +73,8 @@ export type artistRoutes_WorksForSaleQuery$data = {
   } | null;
 };
 export type artistRoutes_WorksForSaleQuery = {
-  variables: artistRoutes_WorksForSaleQuery$variables;
   response: artistRoutes_WorksForSaleQuery$data;
+  variables: artistRoutes_WorksForSaleQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

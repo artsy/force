@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4dcf1fd4f7197ec454bd29502592269>>
+ * @generated SignedSource<<9637bdb699e6a10728c074894954d58e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,22 +13,22 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedEventsRail_orderedSet$data = {
   readonly items: ReadonlyArray<{
     readonly __typename: "FeaturedLink";
-    readonly internalID: string;
-    readonly title: string | null;
-    readonly subtitle: string | null;
     readonly href: string | null;
     readonly image: {
-      readonly small: {
-        readonly src: string;
-        readonly srcSet: string;
-        readonly width: number;
-        readonly height: number;
-      } | null;
       readonly large: {
         readonly src: string;
         readonly srcSet: string;
       } | null;
+      readonly small: {
+        readonly height: number;
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+      } | null;
     } | null;
+    readonly internalID: string;
+    readonly subtitle: string | null;
+    readonly title: string | null;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.

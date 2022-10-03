@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c1a0c46baca480e902483c263929f4c>>
+ * @generated SignedSource<<d8980d91c8d3f7c793d8f0fa99de37b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,24 +15,12 @@ export type artistRoutes_TopLevelQuery$variables = {
 };
 export type artistRoutes_TopLevelQuery$data = {
   readonly artist: {
-    readonly slug: string;
-    readonly statuses: {
-      readonly shows: boolean | null;
-      readonly cv: boolean | null;
-      readonly articles: boolean | null;
+    readonly biographyBlurb: {
+      readonly text: string | null;
     } | null;
     readonly counts: {
-      readonly forSaleArtworks: any | null;
       readonly auctionResults: number | null;
-    } | null;
-    readonly related: {
-      readonly genes: {
-        readonly edges: ReadonlyArray<{
-          readonly node: {
-            readonly slug: string;
-          } | null;
-        } | null> | null;
-      } | null;
+      readonly forSaleArtworks: any | null;
     } | null;
     readonly highlights: {
       readonly artistPartnersConnection: {
@@ -48,15 +36,27 @@ export type artistRoutes_TopLevelQuery$data = {
     readonly insights: ReadonlyArray<{
       readonly type: string;
     }>;
-    readonly biographyBlurb: {
-      readonly text: string | null;
+    readonly related: {
+      readonly genes: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly slug: string;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+    readonly slug: string;
+    readonly statuses: {
+      readonly articles: boolean | null;
+      readonly cv: boolean | null;
+      readonly shows: boolean | null;
     } | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
   } | null;
 };
 export type artistRoutes_TopLevelQuery = {
-  variables: artistRoutes_TopLevelQuery$variables;
   response: artistRoutes_TopLevelQuery$data;
+  variables: artistRoutes_TopLevelQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

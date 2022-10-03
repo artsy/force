@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c2e67693fc5031eeb5f6b6f9d7f82b1>>
+ * @generated SignedSource<<51127039bd04f1f357acf8111f2ecda0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,8 +28,8 @@ export type useEditNotificationPreferencesMutation$data = {
   } | null;
 };
 export type useEditNotificationPreferencesMutation = {
-  variables: useEditNotificationPreferencesMutation$variables;
   response: useEditNotificationPreferencesMutation$data;
+  variables: useEditNotificationPreferencesMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

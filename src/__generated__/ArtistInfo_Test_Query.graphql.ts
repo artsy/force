@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a0452a979a14bf9d9d5ffed34f657e3>>
+ * @generated SignedSource<<55c1e45a5ed1709bd62859a84903167b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,22 +18,38 @@ export type ArtistInfo_Test_Query$data = {
 };
 export type ArtistInfo_Test_Query$rawResponse = {
   readonly artist: {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly image: {
-      readonly cropped: {
-        readonly src: string;
-        readonly srcSet: string;
-      } | null;
+    readonly auctionResultsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly __typename: "AuctionResult";
+          readonly id: string;
+          readonly organization: string | null;
+          readonly price_realized: {
+            readonly display: string | null;
+          } | null;
+          readonly sale_date: string | null;
+        } | null;
+      } | null> | null;
     } | null;
-    readonly formatted_nationality_and_birthday: string | null;
+    readonly biographyBlurb: {
+      readonly credit: string | null;
+      readonly partnerID: string | null;
+      readonly text: string | null;
+    } | null;
+    readonly collections: ReadonlyArray<string | null> | null;
     readonly counts: {
-      readonly partner_shows: any | null;
       readonly follows: any | null;
+      readonly partner_shows: any | null;
     } | null;
     readonly exhibition_highlights: ReadonlyArray<{
+      readonly city: string | null;
+      readonly cover_image: {
+        readonly cropped: {
+          readonly url: string;
+        } | null;
+      } | null;
+      readonly id: string;
+      readonly name: string | null;
       readonly partner: {
         readonly __typename: "ExternalPartner";
         readonly __isNode: "ExternalPartner";
@@ -49,58 +65,42 @@ export type ArtistInfo_Test_Query$rawResponse = {
         readonly __isNode: string;
         readonly id: string;
       } | null;
-      readonly name: string | null;
       readonly start_at: string | null;
-      readonly cover_image: {
-        readonly cropped: {
-          readonly url: string;
-        } | null;
-      } | null;
-      readonly city: string | null;
-      readonly id: string;
     } | null> | null;
-    readonly collections: ReadonlyArray<string | null> | null;
+    readonly formatted_nationality_and_birthday: string | null;
     readonly highlights: {
       readonly partnersConnection: {
         readonly edges: ReadonlyArray<{
+          readonly id: string;
           readonly node: {
             readonly __typename: "Partner";
-            readonly id: string;
             readonly categories: ReadonlyArray<{
-              readonly slug: string;
               readonly id: string;
+              readonly slug: string;
             } | null> | null;
+            readonly id: string;
           } | null;
-          readonly id: string;
         } | null> | null;
       } | null;
     } | null;
-    readonly auctionResultsConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly __typename: "AuctionResult";
-          readonly id: string;
-          readonly price_realized: {
-            readonly display: string | null;
-          } | null;
-          readonly organization: string | null;
-          readonly sale_date: string | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly biographyBlurb: {
-      readonly credit: string | null;
-      readonly partnerID: string | null;
-      readonly text: string | null;
-    } | null;
+    readonly href: string | null;
     readonly id: string;
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+    readonly internalID: string;
     readonly isFollowed: boolean | null;
+    readonly name: string | null;
+    readonly slug: string;
   } | null;
 };
 export type ArtistInfo_Test_Query = {
-  variables: ArtistInfo_Test_Query$variables;
-  response: ArtistInfo_Test_Query$data;
   rawResponse: ArtistInfo_Test_Query$rawResponse;
+  response: ArtistInfo_Test_Query$data;
+  variables: ArtistInfo_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5210de745ccaef5361311d3978316d87>>
+ * @generated SignedSource<<9b0d2e9bb34651319af9766a5d272b69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type MyBids_Test_Query$data = {
   } | null;
 };
 export type MyBids_Test_Query = {
-  variables: MyBids_Test_Query$variables;
   response: MyBids_Test_Query$data;
+  variables: MyBids_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

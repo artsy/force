@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f68820da4755ae2aea373abfdd1d7545>>
+ * @generated SignedSource<<5620e9d1dd8c400be79cf9f49558977d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,9 +20,6 @@ export type useAddCreditCardMutation$variables = {
 };
 export type useAddCreditCardMutation$data = {
   readonly createCreditCard: {
-    readonly me: {
-      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
-    } | null;
     readonly creditCardOrError: {
       readonly creditCard?: {
         readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
@@ -31,11 +28,14 @@ export type useAddCreditCardMutation$data = {
         readonly message: string;
       } | null;
     } | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
+    } | null;
   } | null;
 };
 export type useAddCreditCardMutation = {
-  variables: useAddCreditCardMutation$variables;
   response: useAddCreditCardMutation$data;
+  variables: useAddCreditCardMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60cae6ac9e6f69460954c5f097545720>>
+ * @generated SignedSource<<8f3c1f64cdfdf14c00f0aad56f076583>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FillwidthItem_artwork$data = {
+  readonly href: string | null;
   readonly image: {
-    readonly url: string | null;
     readonly aspectRatio: number;
+    readonly url: string | null;
   } | null;
   readonly imageTitle: string | null;
-  readonly title: string | null;
-  readonly href: string | null;
   readonly is_saved: boolean | null;
-  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+  readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "FillwidthItem_artwork";
 };
 export type FillwidthItem_artwork$key = {

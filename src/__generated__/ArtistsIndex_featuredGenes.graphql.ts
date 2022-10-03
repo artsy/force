@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4147e996d2506871d253170ba8e4cf75>>
+ * @generated SignedSource<<58e0462b53ab9539275227f276f63d34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsIndex_featuredGenes$data = ReadonlyArray<{
-  readonly name: string | null;
   readonly genes: ReadonlyArray<{
+    readonly href?: string | null;
     readonly internalID?: string;
     readonly name?: string | null;
-    readonly href?: string | null;
     readonly trendingArtists?: ReadonlyArray<{
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
     } | null> | null;
   } | null> | null;
+  readonly name: string | null;
   readonly " $fragmentType": "ArtistsIndex_featuredGenes";
 }>;
 export type ArtistsIndex_featuredGenes$key = ReadonlyArray<{

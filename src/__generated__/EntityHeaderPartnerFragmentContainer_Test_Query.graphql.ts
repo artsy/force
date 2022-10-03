@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<991680b5698aa0df66c588d2abf36b2a>>
+ * @generated SignedSource<<a02ba4c2bb3574d6b15149dec6def256>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type EntityHeaderPartnerFragmentContainer_Test_Query$data = {
   } | null;
 };
 export type EntityHeaderPartnerFragmentContainer_Test_Query = {
-  variables: EntityHeaderPartnerFragmentContainer_Test_Query$variables;
   response: EntityHeaderPartnerFragmentContainer_Test_Query$data;
+  variables: EntityHeaderPartnerFragmentContainer_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

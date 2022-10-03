@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<adcd876f99341ed877f14a07b64518b6>>
+ * @generated SignedSource<<e963247a3ea6ef619f7b3f33b70d5845>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,32 +11,32 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist$data = {
-  readonly insightAchievements: ReadonlyArray<{
-    readonly __typename: string;
-  }>;
-  readonly insightBadges: ReadonlyArray<{
-    readonly __typename: string;
-  }>;
   readonly artistHighlights: {
     readonly partnersConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly __typename: string;
+          readonly __typename: "Partner";
         } | null;
       } | null> | null;
     } | null;
   } | null;
   readonly biographyBlurb: {
+    readonly credit: string | null;
     readonly partner: {
       readonly profile: {
         readonly href: string | null;
       } | null;
     } | null;
-    readonly credit: string | null;
     readonly text: string | null;
   } | null;
+  readonly insightAchievements: ReadonlyArray<{
+    readonly __typename: "ArtistInsight";
+  }>;
+  readonly insightBadges: ReadonlyArray<{
+    readonly __typename: "ArtistInsight";
+  }>;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightAchievements_artist" | "ArtistInsightBadges_artist">;
   readonly " $fragmentType": "ArtistCareerHighlights_artist";
 };
 export type ArtistCareerHighlights_artist$key = {

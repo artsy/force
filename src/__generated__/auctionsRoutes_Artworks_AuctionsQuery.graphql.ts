@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b197377f20387ce09b7a0c01ef66be1e>>
+ * @generated SignedSource<<d86df0afd71ac792af3ecf3b2ff95151>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type auctionsRoutes_Artworks_AuctionsQuery$data = {
   } | null;
 };
 export type auctionsRoutes_Artworks_AuctionsQuery = {
-  variables: auctionsRoutes_Artworks_AuctionsQuery$variables;
   response: auctionsRoutes_Artworks_AuctionsQuery$data;
+  variables: auctionsRoutes_Artworks_AuctionsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e382c978aeffd3adfc24af2d2b2ccbfc>>
+ * @generated SignedSource<<5f8af90232da16ab852d1de3afdf72c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,21 +23,21 @@ export type useSetPaymentMutation$variables = {
 export type useSetPaymentMutation$data = {
   readonly commerceSetPayment: {
     readonly orderOrError: {
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
       readonly order?: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
-      };
-      readonly error?: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
       };
     };
   } | null;
 };
 export type useSetPaymentMutation = {
-  variables: useSetPaymentMutation$variables;
   response: useSetPaymentMutation$data;
+  variables: useSetPaymentMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

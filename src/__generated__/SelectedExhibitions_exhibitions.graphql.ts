@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b641db1134ce5e901cd8b4d4a0c14a73>>
+ * @generated SignedSource<<69d0f70b87e086926e6ea9df64ceccb9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectedExhibitions_exhibitions$data = ReadonlyArray<{
-  readonly partner: {
-    readonly name?: string | null;
-  } | null;
-  readonly name: string | null;
-  readonly start_at: string | null;
+  readonly city: string | null;
   readonly cover_image: {
     readonly cropped: {
       readonly url: string;
     } | null;
   } | null;
-  readonly city: string | null;
+  readonly name: string | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly start_at: string | null;
   readonly " $fragmentType": "SelectedExhibitions_exhibitions";
 }>;
 export type SelectedExhibitions_exhibitions$key = ReadonlyArray<{

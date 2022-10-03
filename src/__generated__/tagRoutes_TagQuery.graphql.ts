@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fc32856157ab8d0384d97ffcb8f2495>>
+ * @generated SignedSource<<03f7e573876839801c94619e107f0995>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,10 +63,10 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type tagRoutes_TagQuery$variables = {
-  slug: string;
   aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
   input?: FilterArtworksInput | null;
   shouldFetchCounts: boolean;
+  slug: string;
 };
 export type tagRoutes_TagQuery$data = {
   readonly tag: {
@@ -74,8 +74,8 @@ export type tagRoutes_TagQuery$data = {
   } | null;
 };
 export type tagRoutes_TagQuery = {
-  variables: tagRoutes_TagQuery$variables;
   response: tagRoutes_TagQuery$data;
+  variables: tagRoutes_TagQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

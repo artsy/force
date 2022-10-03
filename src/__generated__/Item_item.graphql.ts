@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a7fb4c939c2d7bda76e6da0e77236d4>>
+ * @generated SignedSource<<a76155b72a988e0711181ea03b90c314>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Item_item$data = {
   readonly __typename: "Artwork";
-  readonly internalID: string;
-  readonly id: string;
-  readonly date: string | null;
-  readonly title: string | null;
   readonly artistNames: string | null;
+  readonly date: string | null;
   readonly href: string | null;
-  readonly isOfferableFromInquiry: boolean | null;
+  readonly id: string;
   readonly image: {
     readonly url: string | null;
   } | null;
+  readonly internalID: string;
+  readonly isOfferableFromInquiry: boolean | null;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly display: string | null;
@@ -33,22 +32,23 @@ export type Item_item$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly title: string | null;
   readonly " $fragmentType": "Item_item";
 } | {
   readonly __typename: "Show";
-  readonly id: string;
+  readonly coverImage: {
+    readonly url: string | null;
+  } | null;
   readonly fair: {
-    readonly name: string | null;
     readonly exhibitionPeriod: string | null;
     readonly location: {
       readonly city: string | null;
     } | null;
+    readonly name: string | null;
   } | null;
   readonly href: string | null;
+  readonly id: string;
   readonly name: string | null;
-  readonly coverImage: {
-    readonly url: string | null;
-  } | null;
   readonly " $fragmentType": "Item_item";
 } | {
   // This will never be '%other', but we need some

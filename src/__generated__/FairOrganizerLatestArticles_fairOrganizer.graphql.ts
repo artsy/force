@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bff42855fecb25abfe9923d517fe416>>
+ * @generated SignedSource<<117071ea73461974a80764bbc766c5cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerLatestArticles_fairOrganizer$data = {
-  readonly name: string | null;
-  readonly slug: string;
   readonly articlesConnection: {
-    readonly totalCount: number | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentType": "FairOrganizerLatestArticles_fairOrganizer";
 };
 export type FairOrganizerLatestArticles_fairOrganizer$key = {

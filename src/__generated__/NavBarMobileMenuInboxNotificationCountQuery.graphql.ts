@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77ae776f7a9669c7775bf4a5dda0ad91>>
+ * @generated SignedSource<<74f4303741f6a61a885a28e29c64f337>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type NavBarMobileMenuInboxNotificationCountQuery$data = {
   } | null;
 };
 export type NavBarMobileMenuInboxNotificationCountQuery = {
-  variables: NavBarMobileMenuInboxNotificationCountQuery$variables;
   response: NavBarMobileMenuInboxNotificationCountQuery$data;
+  variables: NavBarMobileMenuInboxNotificationCountQuery$variables;
 };
 
 const node: ConcreteRequest = {

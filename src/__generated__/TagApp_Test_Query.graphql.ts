@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<973c40fa07333810782bd89df867d108>>
+ * @generated SignedSource<<79c14ae571245984280ac2b22be133fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type TagApp_Test_Query$data = {
   } | null;
 };
 export type TagApp_Test_Query = {
-  variables: TagApp_Test_Query$variables;
   response: TagApp_Test_Query$data;
+  variables: TagApp_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

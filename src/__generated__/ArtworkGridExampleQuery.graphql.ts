@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ff5e5792c36de7323d9a6f90add7f99>>
+ * @generated SignedSource<<c2ca924d1fe72456807eb459c65560fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type ArtworkGridExampleQuery$data = {
   } | null;
 };
 export type ArtworkGridExampleQuery = {
-  variables: ArtworkGridExampleQuery$variables;
   response: ArtworkGridExampleQuery$data;
+  variables: ArtworkGridExampleQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

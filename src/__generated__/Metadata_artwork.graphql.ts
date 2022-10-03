@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f199ef3b6181a24d206b594803496fe1>>
+ * @generated SignedSource<<3c14073167f8adac9b9ea59827b7339f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Metadata_artwork$data = {
-  readonly internalID: string;
   readonly href: string | null;
+  readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "Metadata_artwork";
 };

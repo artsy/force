@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3122a271ba3a340a88edf3e8d57e4ae4>>
+ * @generated SignedSource<<5c3e7ac946cf1f0a8ad348a16e07395b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsCreditCard_creditCard$data = {
-  readonly internalID: string;
-  readonly name: string | null;
   readonly brand: string;
-  readonly lastDigits: string;
-  readonly expirationYear: number;
   readonly expirationMonth: number;
+  readonly expirationYear: number;
+  readonly internalID: string;
+  readonly lastDigits: string;
+  readonly name: string | null;
   readonly " $fragmentType": "SettingsCreditCard_creditCard";
 };
 export type SettingsCreditCard_creditCard$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b88e3fb9a5e86da3c3340f835d3fc2ca>>
+ * @generated SignedSource<<f8f8687328f57b0f0ef3d19e2e21b65e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type Payment_me$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_me" | "BankAccountPicker_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_me" | "CreditCardPicker_me">;
   readonly " $fragmentType": "Payment_me";
 };
 export type Payment_me$key = {

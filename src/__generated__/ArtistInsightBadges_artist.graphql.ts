@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51ba62a696726115094f8165709ec736>>
+ * @generated SignedSource<<65cceff324b46a4931b3486093eee021>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,9 @@ export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightBadges_artist$data = {
   readonly insightBadges: ReadonlyArray<{
+    readonly description: string | null;
     readonly kind: ArtistInsightKind | null;
     readonly label: string;
-    readonly description: string | null;
   }>;
   readonly " $fragmentType": "ArtistInsightBadges_artist";
 };

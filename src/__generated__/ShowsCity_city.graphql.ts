@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe218cc86360525096198d29406e0638>>
+ * @generated SignedSource<<88936aca0aac87c0aaa53728b2f204ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,37 +11,37 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCity_city$data = {
+  readonly currentShows: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
+      } | null;
+    } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+    };
+    readonly totalCount: number | null;
+  } | null;
   readonly name: string;
+  readonly pastShows: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly slug: string;
   readonly upcomingShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly startAt: string | null;
-        readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly currentShows: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly totalCount: number | null;
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly pastShows: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
       } | null;
     } | null> | null;

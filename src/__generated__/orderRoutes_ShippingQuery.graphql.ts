@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29ce804a120ef6aaf257bec2aadbc266>>
+ * @generated SignedSource<<989b1adc2d46090f56457ad1d3e6a311>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,16 +14,16 @@ export type orderRoutes_ShippingQuery$variables = {
   orderID: string;
 };
 export type orderRoutes_ShippingQuery$data = {
-  readonly order: {
-    readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
-  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
   } | null;
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
+  } | null;
 };
 export type orderRoutes_ShippingQuery = {
-  variables: orderRoutes_ShippingQuery$variables;
   response: orderRoutes_ShippingQuery$data;
+  variables: orderRoutes_ShippingQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

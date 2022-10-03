@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdf859d3f5df8f1c68529113c780c384>>
+ * @generated SignedSource<<705342c31080cef71fba90e0419627f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type ArtworkSidebarAuctionInfoPolling_artwork$data = {
       readonly display: string | null;
     } | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork" | "ArtworkSidebarCurrentBidInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebarAuctionInfoPolling_artwork";
 };
 export type ArtworkSidebarAuctionInfoPolling_artwork$key = {

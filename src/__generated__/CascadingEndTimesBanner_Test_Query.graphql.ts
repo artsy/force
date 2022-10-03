@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03687caea32ff8fcfdf5321afb44c461>>
+ * @generated SignedSource<<4b6be75e76e2da7d40e0a551bac592af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type CascadingEndTimesBanner_Test_Query$data = {
   } | null;
 };
 export type CascadingEndTimesBanner_Test_Query = {
-  variables: CascadingEndTimesBanner_Test_Query$variables;
   response: CascadingEndTimesBanner_Test_Query$data;
+  variables: CascadingEndTimesBanner_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

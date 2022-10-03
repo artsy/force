@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36061c78f70383dabb3e00d1cf22cb12>>
+ * @generated SignedSource<<88fe41ad01c3b2ee4edc07b14c351706>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type NotificationsListQuery$data = {
   } | null;
 };
 export type NotificationsListQuery = {
-  variables: NotificationsListQuery$variables;
   response: NotificationsListQuery$data;
+  variables: NotificationsListQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

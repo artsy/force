@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dd4890e4f56c42a58a2df3892b436eb>>
+ * @generated SignedSource<<2ca6674a44034206d9f0e2c2ec6336bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,26 +12,26 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeCurrentFairs_viewer$data = {
   readonly fairs: ReadonlyArray<{
-    readonly internalID: string;
-    readonly slug: string;
     readonly bannerSize: string | null;
-    readonly isPublished: boolean | null;
-    readonly profile: {
-      readonly isPublished: boolean | null;
-    } | null;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly startAt: string | null;
     readonly endAt: string | null;
     readonly exhibitionPeriod: string | null;
+    readonly href: string | null;
     readonly image: {
       readonly cropped: {
+        readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-        readonly height: number;
       } | null;
     } | null;
+    readonly internalID: string;
+    readonly isPublished: boolean | null;
+    readonly name: string | null;
+    readonly profile: {
+      readonly isPublished: boolean | null;
+    } | null;
+    readonly slug: string;
+    readonly startAt: string | null;
   } | null> | null;
   readonly " $fragmentType": "HomeCurrentFairs_viewer";
 };

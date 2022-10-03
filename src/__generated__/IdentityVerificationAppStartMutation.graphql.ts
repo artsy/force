@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31ca8481210d967f3a53fe6b933096d1>>
+ * @generated SignedSource<<fcd4146dcd1424fc71773659e8217606>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,8 +29,8 @@ export type IdentityVerificationAppStartMutation$data = {
   } | null;
 };
 export type IdentityVerificationAppStartMutation = {
-  variables: IdentityVerificationAppStartMutation$variables;
   response: IdentityVerificationAppStartMutation$data;
+  variables: IdentityVerificationAppStartMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

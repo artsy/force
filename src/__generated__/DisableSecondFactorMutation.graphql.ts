@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a81562f7c0889468c039a6c3e107c329>>
+ * @generated SignedSource<<bffeded7af45ead31649b9644e1b3dcb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,13 +22,13 @@ export type DisableSecondFactorMutation$data = {
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
     } | {
-      readonly __typename: "SmsSecondFactor";
-    } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -41,8 +41,8 @@ export type DisableSecondFactorMutation$rawResponse = {
     readonly secondFactorOrErrors: {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
     } | {
       readonly __typename: string;
@@ -50,9 +50,9 @@ export type DisableSecondFactorMutation$rawResponse = {
   } | null;
 };
 export type DisableSecondFactorMutation = {
-  variables: DisableSecondFactorMutation$variables;
-  response: DisableSecondFactorMutation$data;
   rawResponse: DisableSecondFactorMutation$rawResponse;
+  response: DisableSecondFactorMutation$data;
+  variables: DisableSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

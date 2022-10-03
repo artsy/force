@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48a5dba6a73bb090e9ce433a7d3b1f64>>
+ * @generated SignedSource<<2f818990ccc5e5797eb35fe48be6ed94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,8 +33,8 @@ export type CCPARequestMutation$data = {
   } | null;
 };
 export type CCPARequestMutation = {
-  variables: CCPARequestMutation$variables;
   response: CCPARequestMutation$data;
+  variables: CCPARequestMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

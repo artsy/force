@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9bb06f1f2b688b76da1a4d28c22ce6d>>
+ * @generated SignedSource<<e3bfc9c3ede5d2c9a92e97b5976cc5f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type searchRoutes_SearchResultsArtistsQuery$data = {
   } | null;
 };
 export type searchRoutes_SearchResultsArtistsQuery = {
-  variables: searchRoutes_SearchResultsArtistsQuery$variables;
   response: searchRoutes_SearchResultsArtistsQuery$data;
+  variables: searchRoutes_SearchResultsArtistsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

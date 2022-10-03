@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<525c3c84de3fadff7858fad057cbedf7>>
+ * @generated SignedSource<<509cdc86640030bb750f6b4b4db15fae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,30 +17,44 @@ export type SavedSearchAlertEditForm_Test_Query$variables = {
   artistIDs?: ReadonlyArray<string> | null;
 };
 export type SavedSearchAlertEditForm_Test_Query$data = {
-  readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
-  } | null;
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_me">;
-  } | null;
   readonly artistsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artistsConnection">;
   } | null;
   readonly artworksConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
   } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_me">;
+  } | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
+  } | null;
 };
 export type SavedSearchAlertEditForm_Test_Query$rawResponse = {
-  readonly viewer: {
-    readonly notificationPreferences: ReadonlyArray<{
-      readonly status: SubGroupStatus;
-      readonly name: string;
-      readonly channel: string;
-    }>;
+  readonly artistsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly slug: string;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly artworksConnection: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: ArtworkAggregation | null;
+    } | null> | null;
+    readonly id: string;
   } | null;
   readonly me: {
+    readonly id: string;
     readonly savedSearch: {
-      readonly internalID: string;
       readonly acquireable: boolean | null;
       readonly additionalGeneIDs: ReadonlyArray<string>;
       readonly artistIDs: ReadonlyArray<string> | null;
@@ -48,51 +62,37 @@ export type SavedSearchAlertEditForm_Test_Query$rawResponse = {
       readonly attributionClass: ReadonlyArray<string>;
       readonly colors: ReadonlyArray<string>;
       readonly dimensionRange: string | null;
-      readonly sizes: ReadonlyArray<string>;
-      readonly width: string | null;
       readonly height: string | null;
       readonly inquireableOnly: boolean | null;
+      readonly internalID: string;
       readonly locationCities: ReadonlyArray<string>;
       readonly majorPeriods: ReadonlyArray<string>;
       readonly materialsTerms: ReadonlyArray<string>;
       readonly offerable: boolean | null;
       readonly partnerIDs: ReadonlyArray<string>;
       readonly priceRange: string | null;
+      readonly sizes: ReadonlyArray<string>;
       readonly userAlertSettings: {
-        readonly name: string | null;
         readonly email: boolean;
-        readonly push: boolean;
         readonly frequency: UserSearchCriteriaFrequency;
-      };
-    } | null;
-    readonly id: string;
-  } | null;
-  readonly artistsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
         readonly name: string | null;
-        readonly slug: string;
-        readonly id: string;
-      } | null;
-    } | null> | null;
+        readonly push: boolean;
+      };
+      readonly width: string | null;
+    } | null;
   } | null;
-  readonly artworksConnection: {
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: ArtworkAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly count: number;
-        readonly name: string;
-        readonly value: string;
-      } | null> | null;
-    } | null> | null;
-    readonly id: string;
+  readonly viewer: {
+    readonly notificationPreferences: ReadonlyArray<{
+      readonly channel: string;
+      readonly name: string;
+      readonly status: SubGroupStatus;
+    }>;
   } | null;
 };
 export type SavedSearchAlertEditForm_Test_Query = {
-  variables: SavedSearchAlertEditForm_Test_Query$variables;
-  response: SavedSearchAlertEditForm_Test_Query$data;
   rawResponse: SavedSearchAlertEditForm_Test_Query$rawResponse;
+  response: SavedSearchAlertEditForm_Test_Query$data;
+  variables: SavedSearchAlertEditForm_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

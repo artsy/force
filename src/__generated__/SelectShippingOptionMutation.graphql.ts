@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf74ed13c78b7940d6690e1f778e32d4>>
+ * @generated SignedSource<<933b93fa51d0314e7c661c348c7bf754>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,11 @@ export type SelectShippingOptionMutation$data = {
   readonly commerceSelectShippingOption: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
       readonly order?: {
         readonly lineItems: {
           readonly edges: ReadonlyArray<{
@@ -35,17 +40,12 @@ export type SelectShippingOptionMutation$data = {
           } | null> | null;
         } | null;
       };
-      readonly error?: {
-        readonly type: string;
-        readonly code: string;
-        readonly data: string | null;
-      };
     };
   } | null;
 };
 export type SelectShippingOptionMutation = {
-  variables: SelectShippingOptionMutation$variables;
   response: SelectShippingOptionMutation$data;
+  variables: SelectShippingOptionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

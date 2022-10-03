@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa12f4f0ba23d7224ab04a000f6d65cf>>
+ * @generated SignedSource<<82e169b181db3a72b1bee800883e7c2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type ConversationCTA_Test_Query$data = {
   } | null;
 };
 export type ConversationCTA_Test_Query = {
-  variables: ConversationCTA_Test_Query$variables;
   response: ConversationCTA_Test_Query$data;
+  variables: ConversationCTA_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

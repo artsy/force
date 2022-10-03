@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f85bd9494c4fb6068c55b933ed3f4e5>>
+ * @generated SignedSource<<cf0dd47cceec507619465ecf43f44e4e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Message_message$data = {
-  readonly internalID: string;
+  readonly __typename: "Message";
+  readonly attachments: ReadonlyArray<{
+    readonly contentType: string;
+    readonly downloadURL: string;
+    readonly fileName: string;
+    readonly id: string;
+  } | null> | null;
   readonly body: string | null;
   readonly createdAt: string | null;
-  readonly isFromUser: boolean | null;
   readonly from: {
-    readonly name: string | null;
     readonly email: string | null;
+    readonly name: string | null;
   } | null;
-  readonly attachments: ReadonlyArray<{
-    readonly id: string;
-    readonly contentType: string;
-    readonly fileName: string;
-    readonly downloadURL: string;
-  } | null> | null;
-  readonly __typename: "Message";
+  readonly internalID: string;
+  readonly isFromUser: boolean | null;
   readonly " $fragmentType": "Message_message";
 };
 export type Message_message$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08904e464db92a236aa0b8c7e3f0d4c2>>
+ * @generated SignedSource<<8adbf6adf01099d5f28b9e8999633547>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type InquiryAuctionHousesYouWorkWithQuery$data = {
   };
 };
 export type InquiryAuctionHousesYouWorkWithQuery = {
-  variables: InquiryAuctionHousesYouWorkWithQuery$variables;
   response: InquiryAuctionHousesYouWorkWithQuery$data;
+  variables: InquiryAuctionHousesYouWorkWithQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

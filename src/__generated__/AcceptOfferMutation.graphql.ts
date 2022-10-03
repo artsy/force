@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ef510a6166e3a9a2f7354154329e44d>>
+ * @generated SignedSource<<edea735cee6f1d24f346dbca38db616d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,21 +21,21 @@ export type AcceptOfferMutation$data = {
   readonly commerceBuyerAcceptOffer: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
-      readonly order?: {
-        readonly internalID: string;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-      };
       readonly error?: {
-        readonly type: string;
         readonly code: string;
         readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly internalID: string;
       };
     };
   } | null;
 };
 export type AcceptOfferMutation = {
-  variables: AcceptOfferMutation$variables;
   response: AcceptOfferMutation$data;
+  variables: AcceptOfferMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

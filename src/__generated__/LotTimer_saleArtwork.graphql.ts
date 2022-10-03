@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2db55fe298beacb37fff00367480dd9c>>
+ * @generated SignedSource<<1d09ac14c5178f4775c55dd23fa51880>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type LotTimer_saleArtwork$data = {
   readonly endAt: string | null;
-  readonly formattedStartDateTime: string | null;
   readonly extendedBiddingEndAt: string | null;
+  readonly formattedStartDateTime: string | null;
   readonly lotID: string | null;
   readonly sale: {
-    readonly startAt: string | null;
-    readonly extendedBiddingPeriodMinutes: number | null;
     readonly extendedBiddingIntervalMinutes: number | null;
+    readonly extendedBiddingPeriodMinutes: number | null;
     readonly internalID: string;
+    readonly startAt: string | null;
   } | null;
   readonly " $fragmentType": "LotTimer_saleArtwork";
 };

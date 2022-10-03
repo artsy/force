@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf44c7b6c3c4821d3adef8065f3d7537>>
+ * @generated SignedSource<<e1df729f01bb2b4a177ff0f054b0b8d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type FairOrganizerApp_Test_Query$data = {
   } | null;
 };
 export type FairOrganizerApp_Test_Query = {
-  variables: FairOrganizerApp_Test_Query$variables;
   response: FairOrganizerApp_Test_Query$data;
+  variables: FairOrganizerApp_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

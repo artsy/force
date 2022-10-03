@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b506bd1f7efe5303193d3e4f402b5a1>>
+ * @generated SignedSource<<0acecd7ca27e37f9bf0a8d6ba93cd8a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerApp_partner$data = {
-  readonly partnerType: string | null;
-  readonly displayFullPartnerPage: boolean | null;
-  readonly partnerPageEligible: boolean | null;
-  readonly isDefaultProfilePublic: boolean | null;
   readonly categories: ReadonlyArray<{
     readonly id: string;
     readonly name: string | null;
   } | null> | null;
+  readonly displayFullPartnerPage: boolean | null;
+  readonly isDefaultProfilePublic: boolean | null;
+  readonly partnerPageEligible: boolean | null;
+  readonly partnerType: string | null;
   readonly profile: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerHeaderImage_profile">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"PartnerMeta_partner" | "PartnerHeader_partner" | "NavigationTabs_partner">;
+  readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_partner" | "PartnerHeader_partner" | "PartnerMeta_partner">;
   readonly " $fragmentType": "PartnerApp_partner";
 };
 export type PartnerApp_partner$key = {

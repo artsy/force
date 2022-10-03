@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2b4cf56bf20ab5d0a601f2e09705e1c>>
+ * @generated SignedSource<<fa4a68d9fad47d4257951e1d60799287>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type InstitutionPartnershipsProfilesQuery$data = {
   } | null;
 };
 export type InstitutionPartnershipsProfilesQuery = {
-  variables: InstitutionPartnershipsProfilesQuery$variables;
   response: InstitutionPartnershipsProfilesQuery$data;
+  variables: InstitutionPartnershipsProfilesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

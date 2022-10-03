@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8520899b40a219eae14b7a8c00e0892f>>
+ * @generated SignedSource<<9f336a8836f4f622683c8dfa721b1787>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type UnreadMessagesToastQuery$data = {
   } | null;
 };
 export type UnreadMessagesToastQuery = {
-  variables: UnreadMessagesToastQuery$variables;
   response: UnreadMessagesToastQuery$data;
+  variables: UnreadMessagesToastQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

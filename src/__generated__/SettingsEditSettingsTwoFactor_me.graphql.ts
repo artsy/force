@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afeca887b73c2acd456e845c196b28b3>>
+ * @generated SignedSource<<115186e4fc8a515f3144958eb341ca83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactor_me$data = {
   readonly hasSecondFactorEnabled: boolean;
-  readonly " $fragmentSpreads": FragmentRefs<"AppSecondFactor_me" | "SmsSecondFactor_me" | "SettingsEditSettingsTwoFactorBackupCodes_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"AppSecondFactor_me" | "SettingsEditSettingsTwoFactorBackupCodes_me" | "SmsSecondFactor_me">;
   readonly " $fragmentType": "SettingsEditSettingsTwoFactor_me";
 };
 export type SettingsEditSettingsTwoFactor_me$key = {

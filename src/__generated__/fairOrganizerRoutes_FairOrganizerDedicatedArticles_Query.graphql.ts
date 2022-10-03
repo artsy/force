@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8223638291f4bd388fd771f267cd227>>
+ * @generated SignedSource<<e898c8e52f115964710158c5d6639d3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$variables = {
-  slug: string;
   page?: number | null;
+  slug: string;
 };
 export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$data = {
   readonly fairOrganizer: {
@@ -20,8 +20,8 @@ export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$data = {
   } | null;
 };
 export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query = {
-  variables: fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$variables;
   response: fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$data;
+  variables: fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

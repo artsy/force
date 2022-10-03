@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0b575d63523a60d49c008bac2a46d08>>
+ * @generated SignedSource<<092a1007aecd144522c356cc722c9c01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,63 +18,63 @@ export type SeoDataForArtwork_Test_Query$data = {
 };
 export type SeoDataForArtwork_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly href: string | null;
+    readonly artistNames: string | null;
+    readonly availability: string | null;
+    readonly category: string | null;
     readonly date: string | null;
+    readonly dimensions: {
+      readonly in: string | null;
+    } | null;
+    readonly href: string | null;
+    readonly id: string;
     readonly is_price_hidden: boolean | null;
     readonly is_price_range: boolean | null;
     readonly listPrice: {
+      readonly __typename: "Money";
+      readonly currencyCode: string;
+      readonly major: number;
+    } | {
       readonly __typename: "PriceRange";
-      readonly minPrice: {
-        readonly major: number;
-        readonly currencyCode: string;
-      } | null;
       readonly maxPrice: {
         readonly major: number;
       } | null;
-    } | {
-      readonly __typename: "Money";
-      readonly major: number;
-      readonly currencyCode: string;
+      readonly minPrice: {
+        readonly currencyCode: string;
+        readonly major: number;
+      } | null;
     } | {
       readonly __typename: string;
     } | null;
+    readonly meta: {
+      readonly description: string | null;
+      readonly title: string | null;
+    } | null;
     readonly meta_image: {
       readonly resized: {
-        readonly width: number | null;
         readonly height: number | null;
         readonly url: string;
+        readonly width: number | null;
       } | null;
     } | null;
-    readonly meta: {
-      readonly title: string | null;
-      readonly description: string | null;
-    } | null;
     readonly partner: {
+      readonly id: string;
       readonly name: string | null;
-      readonly type: string | null;
       readonly profile: {
+        readonly id: string;
         readonly image: {
           readonly resized: {
             readonly url: string;
           } | null;
         } | null;
-        readonly id: string;
       } | null;
-      readonly id: string;
+      readonly type: string | null;
     } | null;
-    readonly artistNames: string | null;
-    readonly availability: string | null;
-    readonly category: string | null;
-    readonly dimensions: {
-      readonly in: string | null;
-    } | null;
-    readonly id: string;
   } | null;
 };
 export type SeoDataForArtwork_Test_Query = {
-  variables: SeoDataForArtwork_Test_Query$variables;
-  response: SeoDataForArtwork_Test_Query$data;
   rawResponse: SeoDataForArtwork_Test_Query$rawResponse;
+  response: SeoDataForArtwork_Test_Query$data;
+  variables: SeoDataForArtwork_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

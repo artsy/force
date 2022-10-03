@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f0dcc4da6bc238701be634e02f46687>>
+ * @generated SignedSource<<85de34de69a5f8d1a329cf02f99cec2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,19 +13,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsFeaturedRail_featuredViewingRooms$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly status: string;
-      readonly slug: string;
-      readonly title: string;
+      readonly distanceToClose: string | null;
+      readonly distanceToOpen: string | null;
       readonly image: {
         readonly imageURLs: {
           readonly normalized: string | null;
         } | null;
       } | null;
-      readonly distanceToOpen: string | null;
-      readonly distanceToClose: string | null;
       readonly partner: {
         readonly name: string | null;
       } | null;
+      readonly slug: string;
+      readonly status: string;
+      readonly title: string;
     } | null;
   } | null> | null;
   readonly " $fragmentType": "ViewingRoomsFeaturedRail_featuredViewingRooms";

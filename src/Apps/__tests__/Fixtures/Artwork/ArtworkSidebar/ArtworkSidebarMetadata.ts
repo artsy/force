@@ -55,7 +55,7 @@ export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_Query$r
   edition_of: "Edition of 3000",
   edition_sets: [
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "RWRpdGlvblNldDo1NzIzYTIzNTEzOWIyMTEyNzEwMDAzNzY=",
       // dimensions: { in: "14 × 18 in", cm: "35.6 × 45.7 cm" },
       // edition_of: "Edition of 3000",
@@ -82,7 +82,7 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
   edition_of: "Edition of 3000",
   edition_sets: [
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "RWRpdGlvblNldDo1YjIyOWFkNmE2Y2E2ZDEzNjkxOWZkZTY=",
       // dimensions: { in: "24 × 26 in", cm: "61 × 66 cm" },
       // edition_of: "",
@@ -90,7 +90,7 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
       // is_acquireable: true,
     },
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "RWRpdGlvblNldDo1YjIyOWFkNjViMmZiYTE3NmZjOTliZmU=",
       // dimensions: { in: "40 × 42 in", cm: "101.6 × 106.7 cm" },
       // edition_of: "Edition of 3000",
@@ -129,7 +129,7 @@ export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_Query$rawRe
   edition_of: "",
   edition_sets: [
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "5b1fff790923cc00205152fe",
       // is_offerable: false,
       // is_acquireable: true,
@@ -151,13 +151,13 @@ export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query
   edition_of: "",
   edition_sets: [
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "5b1ffd455405ff0020d933bb",
       // is_offerable: false,
       // is_acquireable: true,
     },
     {
-      __typename: "Artwork",
+      __typename: "EditionSet",
       id: "5b1ffdb20923cc00205152d3",
       // is_offerable: false,
       // is_acquireable: true,

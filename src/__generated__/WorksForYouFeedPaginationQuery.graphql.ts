@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05eddeded7305e9a0fcbe8c13e70bbe0>>
+ * @generated SignedSource<<77317aeb8535272f37656b585c80dab8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type WorksForYouFeedPaginationQuery$data = {
   } | null;
 };
 export type WorksForYouFeedPaginationQuery = {
-  variables: WorksForYouFeedPaginationQuery$variables;
   response: WorksForYouFeedPaginationQuery$data;
+  variables: WorksForYouFeedPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5d37c4ee674539994c719e897f9349c>>
+ * @generated SignedSource<<d8e6debe8613508c9e94f8972aadf7f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsPaginatedRendererQuery$variables = {
-  partnerId: string;
-  first?: number | null;
   after?: string | null;
+  first?: number | null;
+  partnerId: string;
 };
 export type ViewingRoomsPaginatedRendererQuery$data = {
   readonly partner: {
@@ -21,8 +21,8 @@ export type ViewingRoomsPaginatedRendererQuery$data = {
   } | null;
 };
 export type ViewingRoomsPaginatedRendererQuery = {
-  variables: ViewingRoomsPaginatedRendererQuery$variables;
   response: ViewingRoomsPaginatedRendererQuery$data;
+  variables: ViewingRoomsPaginatedRendererQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7240e6191721e04ca9f35c800a7823a>>
+ * @generated SignedSource<<e7c071f3b5b34c57de43c5c9e606a4cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipArtist_artist$data = {
-  readonly href: string | null;
   readonly blurb: string | null;
   readonly carousel: {
     readonly images: ReadonlyArray<{
       readonly resized: {
+        readonly height: number | null;
         readonly src: string;
         readonly srcSet: string;
-        readonly height: number | null;
         readonly width: number | null;
       } | null;
     } | null> | null;
   } | null;
+  readonly href: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "EntityTooltipArtist_artist";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8983c48c6d5e5d6f90efb4db479200d>>
+ * @generated SignedSource<<c309a3d4ba5310d2f9b36a008076c16a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkFilterArtworkGrid_filtered_artworks$data = {
-  readonly id: string;
-  readonly pageInfo: {
-    readonly hasNextPage: boolean;
-    readonly endCursor: string | null;
-  };
-  readonly pageCursors: {
-    readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-  };
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly id: string;
     } | null;
   } | null> | null;
+  readonly id: string;
+  readonly pageCursors: {
+    readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+  };
+  readonly pageInfo: {
+    readonly endCursor: string | null;
+    readonly hasNextPage: boolean;
+  };
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
   readonly " $fragmentType": "ArtworkFilterArtworkGrid_filtered_artworks";
 };

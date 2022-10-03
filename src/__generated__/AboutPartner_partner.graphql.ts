@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e32b5aecc6736e1219430f8944531fe3>>
+ * @generated SignedSource<<a2b042bc883ed48a7173c2df070690cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AboutPartner_partner$data = {
-  readonly profile: {
-    readonly fullBio: string | null;
-    readonly bio: string | null;
-  } | null;
-  readonly website: string | null;
-  readonly vatNumber: string | null;
   readonly displayFullPartnerPage: boolean | null;
-  readonly slug: string;
   readonly internalID: string;
+  readonly profile: {
+    readonly bio: string | null;
+    readonly fullBio: string | null;
+  } | null;
+  readonly slug: string;
+  readonly vatNumber: string | null;
+  readonly website: string | null;
   readonly " $fragmentType": "AboutPartner_partner";
 };
 export type AboutPartner_partner$key = {

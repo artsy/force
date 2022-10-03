@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<503346264ad9faf94479e5198e12546a>>
+ * @generated SignedSource<<7048d4086eb64151d045599085abdc17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,18 +12,18 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
-  readonly slug: string;
   readonly isInquireable: boolean | null;
   readonly is_in_auction: boolean | null;
   readonly partner: {
-    readonly name: string | null;
-    readonly href: string | null;
     readonly cities: ReadonlyArray<string | null> | null;
+    readonly href: string | null;
+    readonly name: string | null;
   } | null;
   readonly sale: {
-    readonly name: string | null;
     readonly href: string | null;
+    readonly name: string | null;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "ArtworkSidebarPartnerInfo_artwork";
 };
 export type ArtworkSidebarPartnerInfo_artwork$key = {

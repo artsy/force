@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b05cf441ce27ea280eb767306e39646>>
+ * @generated SignedSource<<75905bd484486a3be0407db503eae1c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeHeroUnit_heroUnit$data = {
   readonly backgroundImageURL: string | null;
-  readonly heading: string | null;
-  readonly title: string | null;
-  readonly subtitle: string | null;
-  readonly linkText: string | null;
-  readonly href: string | null;
   readonly creditLine: string | null;
+  readonly heading: string | null;
+  readonly href: string | null;
+  readonly linkText: string | null;
+  readonly subtitle: string | null;
+  readonly title: string | null;
   readonly " $fragmentType": "HomeHeroUnit_heroUnit";
 };
 export type HomeHeroUnit_heroUnit$key = {

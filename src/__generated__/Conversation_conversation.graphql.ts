@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<100c251b6bb244947bcfd90f608848ff>>
+ * @generated SignedSource<<4c842b9b3f3e08fa1ddbe3ede9b40a98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,66 +12,66 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Conversation_conversation$data = {
-  readonly id: string;
-  readonly internalID: string | null;
   readonly from: {
     readonly email: string;
   };
-  readonly to: {
-    readonly name: string;
-    readonly initials: string | null;
-  };
-  readonly initialMessage: string;
-  readonly lastMessageID: string | null;
   readonly fromLastViewedMessageID: string | null;
+  readonly id: string;
+  readonly initialMessage: string;
+  readonly internalID: string | null;
   readonly isLastMessageToUser: boolean | null;
-  readonly unread: boolean | null;
-  readonly orderConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly internalID: string;
-        readonly updatedAt: string;
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
-      } | null;
-    } | null> | null;
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_events">;
-  } | null;
-  readonly messagesConnection: {
-    readonly pageInfo: {
-      readonly startCursor: string | null;
-      readonly endCursor: string | null;
-      readonly hasPreviousPage: boolean;
-      readonly hasNextPage: boolean;
-    };
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly id: string;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_messages">;
-  } | null;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: string;
       readonly id?: string;
+      readonly internalID?: string;
       readonly isOfferable?: boolean | null;
       readonly isOfferableFromInquiry?: boolean | null;
-      readonly internalID?: string;
       readonly " $fragmentSpreads": FragmentRefs<"Item_item">;
     } | null;
     readonly liveArtwork: {
+      readonly __typename: "Artwork";
+      readonly internalID: string;
+      readonly isAcquireable: boolean | null;
       readonly isOfferable: boolean | null;
       readonly isOfferableFromInquiry: boolean | null;
-      readonly isAcquireable: boolean | null;
-      readonly internalID: string;
-      readonly __typename: "Artwork";
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null;
   } | null> | null;
+  readonly lastMessageID: string | null;
+  readonly messagesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+      } | null;
+    } | null> | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null;
+    };
+    readonly totalCount: number | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_messages">;
+  } | null;
+  readonly orderConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly internalID: string;
+        readonly updatedAt: string;
+      } | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_events">;
+  } | null;
+  readonly to: {
+    readonly initials: string | null;
+    readonly name: string;
+  };
+  readonly unread: boolean | null;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation">;
   readonly " $fragmentType": "Conversation_conversation";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83fbcea62f79835ec667d217f77119fd>>
+ * @generated SignedSource<<b3000920c0c5d4adfefa33a29415022c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,10 @@ export type TrendingLotsRail_viewer$data = {
       } | null;
       readonly node: {
         readonly internalID: string;
-        readonly slug: string;
         readonly sale: {
           readonly isClosed: boolean | null;
         } | null;
+        readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;

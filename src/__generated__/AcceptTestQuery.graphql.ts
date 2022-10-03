@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<679114c007dd9978783d4136bb277b32>>
+ * @generated SignedSource<<5bdd2b5a491b419c38447fdc2d2d697e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,22 +24,41 @@ export type AcceptTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly buyerTotal: string | null;
+    readonly code: string;
+    readonly creditCardId: string | null;
+    readonly currencyCode: string;
+    readonly id: string;
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
+    readonly itemsTotal: string | null;
+    readonly lastOffer: {
+      readonly amount: string | null;
+      readonly amountCents: number;
+      readonly buyerTotal: string | null;
+      readonly buyerTotalCents: number | null;
+      readonly createdAt: string;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly id: string;
+      readonly internalID: string;
+      readonly note: string | null;
+      readonly shippingTotal: string | null;
+      readonly shippingTotalCents: number | null;
+      readonly taxTotal: string | null;
+      readonly taxTotalCents: number | null;
+    } | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly slug: string;
             readonly artists: ReadonlyArray<{
-              readonly slug: string;
               readonly id: string;
+              readonly slug: string;
             } | null> | null;
-            readonly id: string;
             readonly date: string | null;
+            readonly id: string;
             readonly shippingOrigin: string | null;
+            readonly slug: string;
           } | null;
-          readonly id: string;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
@@ -55,59 +74,83 @@ export type AcceptTestQuery$rawResponse = {
             readonly __isNode: string;
             readonly id: string;
           } | null;
-          readonly selectedShippingQuote: {
-            readonly typeName: string;
-            readonly id: string;
-          } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
-            readonly title: string | null;
+            readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
               } | null;
             } | null;
+            readonly title: string | null;
+          } | null;
+          readonly id: string;
+          readonly selectedShippingQuote: {
             readonly id: string;
+            readonly typeName: string;
           } | null;
         } | null;
       } | null> | null;
     } | null;
-    readonly creditCardId: string | null;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly myLastOffer: {
+      readonly amount: string | null;
+      readonly amountCents: number;
+      readonly buyerTotal: string | null;
+      readonly buyerTotalCents: number | null;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly id: string;
+      readonly internalID: string;
+      readonly note: string | null;
+      readonly shippingTotal: string | null;
+      readonly shippingTotalCents: number | null;
+      readonly taxTotal: string | null;
+      readonly taxTotalCents: number | null;
+    } | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "BankAccount";
+      readonly id: string;
+      readonly last4: string;
+    } | {
+      readonly __typename: "CreditCard";
+      readonly brand: string;
+      readonly expirationMonth: number;
+      readonly expirationYear: number;
+      readonly id: string;
+      readonly lastDigits: string;
+    } | {
+      readonly __typename: "WireTransfer";
+      readonly isManualPayment: boolean;
+    } | {
+      readonly __typename: string;
+    } | null;
     readonly requestedFulfillment: {
       readonly __typename: "CommerceShip";
       readonly __isCommerceRequestedFulfillmentUnion: "CommerceShip";
-      readonly name: string | null;
       readonly addressLine1: string | null;
       readonly addressLine2: string | null;
       readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly phoneNumber: string | null;
       readonly postalCode: string | null;
       readonly region: string | null;
-      readonly country: string | null;
-      readonly phoneNumber: string | null;
     } | {
       readonly __typename: "CommerceShipArta";
       readonly __isCommerceRequestedFulfillmentUnion: "CommerceShipArta";
-      readonly name: string | null;
       readonly addressLine1: string | null;
       readonly addressLine2: string | null;
       readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly phoneNumber: string | null;
       readonly postalCode: string | null;
       readonly region: string | null;
-      readonly country: string | null;
-      readonly phoneNumber: string | null;
     } | {
       readonly __typename: string;
       readonly __isCommerceRequestedFulfillmentUnion: string;
     } | null;
-    readonly code: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-    readonly itemsTotal: string | null;
-    readonly buyerTotal: string | null;
-    readonly currencyCode: string;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
@@ -118,74 +161,35 @@ export type AcceptTestQuery$rawResponse = {
       readonly __isNode: string;
       readonly id: string;
     } | null;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
     readonly state: CommerceOrderStateEnum;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
-    readonly paymentMethodDetails: {
-      readonly __typename: "CreditCard";
-      readonly brand: string;
-      readonly lastDigits: string;
-      readonly expirationYear: number;
-      readonly expirationMonth: number;
-      readonly id: string;
-    } | {
-      readonly __typename: "BankAccount";
-      readonly last4: string;
-      readonly id: string;
-    } | {
-      readonly __typename: "WireTransfer";
-      readonly isManualPayment: boolean;
-    } | {
-      readonly __typename: string;
-    } | null;
-    readonly id: string;
-    readonly lastOffer: {
-      readonly internalID: string;
-      readonly createdAt: string;
-      readonly id: string;
-      readonly amount: string | null;
-      readonly amountCents: number;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-      readonly note: string | null;
-    } | null;
-    readonly myLastOffer: {
-      readonly internalID: string;
-      readonly amount: string | null;
-      readonly amountCents: number;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-      readonly note: string | null;
-      readonly id: string;
-    } | null;
+    readonly stateExpiresAt: string | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
+    readonly buyerTotal: string | null;
+    readonly code: string;
+    readonly creditCardId: string | null;
+    readonly currencyCode: string;
+    readonly id: string;
     readonly internalID: string;
-    readonly stateExpiresAt: string | null;
+    readonly itemsTotal: string | null;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly slug: string;
             readonly artists: ReadonlyArray<{
-              readonly slug: string;
               readonly id: string;
+              readonly slug: string;
             } | null> | null;
-            readonly id: string;
             readonly date: string | null;
+            readonly id: string;
             readonly shippingOrigin: string | null;
+            readonly slug: string;
           } | null;
-          readonly id: string;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
@@ -201,59 +205,69 @@ export type AcceptTestQuery$rawResponse = {
             readonly __isNode: string;
             readonly id: string;
           } | null;
-          readonly selectedShippingQuote: {
-            readonly typeName: string;
-            readonly id: string;
-          } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
-            readonly title: string | null;
+            readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
               } | null;
             } | null;
+            readonly title: string | null;
+          } | null;
+          readonly id: string;
+          readonly selectedShippingQuote: {
             readonly id: string;
+            readonly typeName: string;
           } | null;
         } | null;
       } | null> | null;
     } | null;
-    readonly creditCardId: string | null;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "BankAccount";
+      readonly id: string;
+      readonly last4: string;
+    } | {
+      readonly __typename: "CreditCard";
+      readonly brand: string;
+      readonly expirationMonth: number;
+      readonly expirationYear: number;
+      readonly id: string;
+      readonly lastDigits: string;
+    } | {
+      readonly __typename: "WireTransfer";
+      readonly isManualPayment: boolean;
+    } | {
+      readonly __typename: string;
+    } | null;
     readonly requestedFulfillment: {
       readonly __typename: "CommerceShip";
       readonly __isCommerceRequestedFulfillmentUnion: "CommerceShip";
-      readonly name: string | null;
       readonly addressLine1: string | null;
       readonly addressLine2: string | null;
       readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly phoneNumber: string | null;
       readonly postalCode: string | null;
       readonly region: string | null;
-      readonly country: string | null;
-      readonly phoneNumber: string | null;
     } | {
       readonly __typename: "CommerceShipArta";
       readonly __isCommerceRequestedFulfillmentUnion: "CommerceShipArta";
-      readonly name: string | null;
       readonly addressLine1: string | null;
       readonly addressLine2: string | null;
       readonly city: string | null;
+      readonly country: string | null;
+      readonly name: string | null;
+      readonly phoneNumber: string | null;
       readonly postalCode: string | null;
       readonly region: string | null;
-      readonly country: string | null;
-      readonly phoneNumber: string | null;
     } | {
       readonly __typename: string;
       readonly __isCommerceRequestedFulfillmentUnion: string;
     } | null;
-    readonly code: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-    readonly itemsTotal: string | null;
-    readonly buyerTotal: string | null;
-    readonly currencyCode: string;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
@@ -264,32 +278,18 @@ export type AcceptTestQuery$rawResponse = {
       readonly __isNode: string;
       readonly id: string;
     } | null;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
     readonly state: CommerceOrderStateEnum;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
-    readonly paymentMethodDetails: {
-      readonly __typename: "CreditCard";
-      readonly brand: string;
-      readonly lastDigits: string;
-      readonly expirationYear: number;
-      readonly expirationMonth: number;
-      readonly id: string;
-    } | {
-      readonly __typename: "BankAccount";
-      readonly last4: string;
-      readonly id: string;
-    } | {
-      readonly __typename: "WireTransfer";
-      readonly isManualPayment: boolean;
-    } | {
-      readonly __typename: string;
-    } | null;
-    readonly id: string;
+    readonly stateExpiresAt: string | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
   } | null;
 };
 export type AcceptTestQuery = {
-  variables: AcceptTestQuery$variables;
-  response: AcceptTestQuery$data;
   rawResponse: AcceptTestQuery$rawResponse;
+  response: AcceptTestQuery$data;
+  variables: AcceptTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

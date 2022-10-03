@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4b2c6c7f2bd3b38c5adfdcfb561c424>>
+ * @generated SignedSource<<4b17034946e872bda97454b9d66959b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type AuctionAssociatedSaleTestQuery$data = {
   } | null;
 };
 export type AuctionAssociatedSaleTestQuery = {
-  variables: AuctionAssociatedSaleTestQuery$variables;
   response: AuctionAssociatedSaleTestQuery$data;
+  variables: AuctionAssociatedSaleTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e0512f32e028611514c948c7bc03ccc>>
+ * @generated SignedSource<<cad23a3f0b35d11ed3bc6110c9c43ae1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type SmsSecondFactor_me$data = {
   readonly hasSecondFactorEnabled: boolean;
   readonly smsSecondFactors: ReadonlyArray<{
     readonly __typename: "SmsSecondFactor";
-    readonly internalID: string;
     readonly formattedPhoneNumber: string | null;
+    readonly internalID: string;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.

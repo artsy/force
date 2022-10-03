@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3557bd59776ed54737c9ec8cc293e27e>>
+ * @generated SignedSource<<7ee2fd481e03388894aaee54d0c49b56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,14 +24,14 @@ export type CreateSmsSecondFactorMutation$variables = {
 export type CreateSmsSecondFactorMutation$data = {
   readonly createSmsSecondFactor: {
     readonly secondFactorOrErrors: {
-      readonly __typename: "SmsSecondFactor";
-      readonly internalID: string;
-    } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
+      readonly internalID: string;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -42,23 +42,23 @@ export type CreateSmsSecondFactorMutation$data = {
 export type CreateSmsSecondFactorMutation$rawResponse = {
   readonly createSmsSecondFactor: {
     readonly secondFactorOrErrors: {
-      readonly __typename: "SmsSecondFactor";
-      readonly internalID: string;
-    } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
-        readonly message: string;
         readonly code: string;
+        readonly message: string;
       }>;
+    } | {
+      readonly __typename: "SmsSecondFactor";
+      readonly internalID: string;
     } | {
       readonly __typename: string;
     };
   } | null;
 };
 export type CreateSmsSecondFactorMutation = {
-  variables: CreateSmsSecondFactorMutation$variables;
-  response: CreateSmsSecondFactorMutation$data;
   rawResponse: CreateSmsSecondFactorMutation$rawResponse;
+  response: CreateSmsSecondFactorMutation$data;
+  variables: CreateSmsSecondFactorMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

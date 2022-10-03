@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a85e93faa3c2fc390ecff47ccb109ef>>
+ * @generated SignedSource<<86b3c6a89281483811ae04bd09dd87db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show$data = {
+  readonly fair: {
+    readonly href: string | null;
+    readonly internalID: string;
+    readonly isActive: boolean | null;
+    readonly name: string | null;
+    readonly slug: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FairCard_fair" | "FairTiming_fair">;
+  } | null;
   readonly isFairBooth: boolean | null;
   readonly partner: {
-    readonly internalID?: string;
-    readonly slug?: string;
-    readonly href?: string | null;
-    readonly name?: string | null;
-    readonly locations?: ReadonlyArray<{
-      readonly city: string | null;
-    } | null> | null;
     readonly artworksConnection?: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -29,14 +30,13 @@ export type ShowContextCard_show$data = {
         } | null;
       } | null> | null;
     } | null;
-  } | null;
-  readonly fair: {
-    readonly internalID: string;
-    readonly isActive: boolean | null;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"FairTiming_fair" | "FairCard_fair">;
+    readonly href?: string | null;
+    readonly internalID?: string;
+    readonly locations?: ReadonlyArray<{
+      readonly city: string | null;
+    } | null> | null;
+    readonly name?: string | null;
+    readonly slug?: string;
   } | null;
   readonly " $fragmentType": "ShowContextCard_show";
 };

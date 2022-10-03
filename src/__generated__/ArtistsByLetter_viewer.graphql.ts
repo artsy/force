@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<739d3dfd7c38e9c8ba58fe36277e6699>>
+ * @generated SignedSource<<4113218d8e0a51c917efec6d49358a82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,20 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsByLetter_viewer$data = {
   readonly artistsConnection: {
+    readonly artists: ReadonlyArray<{
+      readonly artist: {
+        readonly href: string | null;
+        readonly internalID: string;
+        readonly name: string | null;
+      } | null;
+    } | null> | null;
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
     readonly pageInfo: {
       readonly endCursor: string | null;
       readonly hasNextPage: boolean;
     };
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly artists: ReadonlyArray<{
-      readonly artist: {
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly href: string | null;
-      } | null;
-    } | null> | null;
   } | null;
   readonly " $fragmentType": "ArtistsByLetter_viewer";
 };

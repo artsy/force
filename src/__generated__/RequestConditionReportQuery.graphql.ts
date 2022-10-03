@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7f8b8f19bd87f1f022d4f9cc1fd9c97>>
+ * @generated SignedSource<<ebe4d8e7789e333418d98e0bee08709f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,16 +14,16 @@ export type RequestConditionReportQuery$variables = {
   artworkID: string;
 };
 export type RequestConditionReportQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
-  } | null;
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
   } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
+  } | null;
 };
 export type RequestConditionReportQuery = {
-  variables: RequestConditionReportQuery$variables;
   response: RequestConditionReportQuery$data;
+  variables: RequestConditionReportQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

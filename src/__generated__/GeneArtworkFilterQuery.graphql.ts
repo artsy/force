@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77b194fcc2cff9c68432ec7f46ff0a17>>
+ * @generated SignedSource<<f7eb6a6af43e3fe5f968cd3e75d6db5c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,8 +63,8 @@ export type FilterArtworksInput = {
   width?: string | null;
 };
 export type GeneArtworkFilterQuery$variables = {
-  slug: string;
   input?: FilterArtworksInput | null;
+  slug: string;
 };
 export type GeneArtworkFilterQuery$data = {
   readonly gene: {
@@ -72,8 +72,8 @@ export type GeneArtworkFilterQuery$data = {
   } | null;
 };
 export type GeneArtworkFilterQuery = {
-  variables: GeneArtworkFilterQuery$variables;
   response: GeneArtworkFilterQuery$data;
+  variables: GeneArtworkFilterQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

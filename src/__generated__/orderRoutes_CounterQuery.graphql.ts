@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42ec85675f74053fd1bfda54c9ff0cc9>>
+ * @generated SignedSource<<c88f9f86fc32b8585528d10b44aef0be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type orderRoutes_CounterQuery$data = {
   } | null;
 };
 export type orderRoutes_CounterQuery = {
-  variables: orderRoutes_CounterQuery$variables;
   response: orderRoutes_CounterQuery$data;
+  variables: orderRoutes_CounterQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

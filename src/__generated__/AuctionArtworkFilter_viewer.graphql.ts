@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f905772d875d7fbd19c9114c1be967e3>>
+ * @generated SignedSource<<ac4727a0c147708ce622af5850164517>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,17 +13,17 @@ export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_
 import { FragmentRefs } from "relay-runtime";
 export type AuctionArtworkFilter_viewer$data = {
   readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: ArtworkAggregation | null;
+    } | null> | null;
     readonly counts: {
       readonly followedArtists: any | null;
     } | null;
-    readonly aggregations: ReadonlyArray<{
-      readonly slice: ArtworkAggregation | null;
-      readonly counts: ReadonlyArray<{
-        readonly name: string;
-        readonly value: string;
-        readonly count: number;
-      } | null> | null;
-    } | null> | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
   readonly " $fragmentType": "AuctionArtworkFilter_viewer";

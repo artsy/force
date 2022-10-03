@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7def8f0bb66ae30ca3f3e1e5f4f269f>>
+ * @generated SignedSource<<cf6f4c6a2e2c97249c0178f497be6e48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ export type SearchBar_viewer$data = {
   readonly searchConnection?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly displayLabel: string | null;
-        readonly href: string | null;
         readonly __typename: string;
+        readonly displayLabel: string | null;
         readonly displayType?: string | null;
+        readonly href: string | null;
         readonly slug?: string;
         readonly statuses?: {
           readonly artworks: boolean | null;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebff149ba0f9c8d2ae5600c1204a177f>>
+ * @generated SignedSource<<7da9a7ca284597ccce7e4eb2825b6d56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type orderRoutes_PaymentQuery$data = {
   } | null;
 };
 export type orderRoutes_PaymentQuery = {
-  variables: orderRoutes_PaymentQuery$variables;
   response: orderRoutes_PaymentQuery$data;
+  variables: orderRoutes_PaymentQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

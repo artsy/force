@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65de54135ffd1eac8b3750f2a6264cdc>>
+ * @generated SignedSource<<bf21c38688a16da931edd6c0cd4d3503>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,27 +31,27 @@ export type CreateUserAddressMutation$variables = {
 export type CreateUserAddressMutation$data = {
   readonly createUserAddress: {
     readonly userAddressOrErrors: {
-      readonly id?: string;
-      readonly internalID?: string;
       readonly addressLine1?: string;
       readonly addressLine2?: string | null;
       readonly addressLine3?: string | null;
       readonly city?: string;
       readonly country?: string;
+      readonly errors?: ReadonlyArray<{
+        readonly message: string;
+      }>;
+      readonly id?: string;
+      readonly internalID?: string;
       readonly isDefault?: boolean;
       readonly name?: string | null;
       readonly phoneNumber?: string | null;
       readonly postalCode?: string | null;
       readonly region?: string | null;
-      readonly errors?: ReadonlyArray<{
-        readonly message: string;
-      }>;
     };
   } | null;
 };
 export type CreateUserAddressMutation = {
-  variables: CreateUserAddressMutation$variables;
   response: CreateUserAddressMutation$data;
+  variables: CreateUserAddressMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){

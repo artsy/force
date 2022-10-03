@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd524e90c672da7793b09f985739e351>>
+ * @generated SignedSource<<1bce0e320705434c769c16a3b9835480>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderFairOrganizer_fairOrganizer$data = {
-  readonly internalID: string;
-  readonly slug: string;
-  readonly name: string | null;
   readonly fairsConnection: {
     readonly totalCount: number | null;
   } | null;
+  readonly internalID: string;
+  readonly name: string | null;
   readonly profile: {
-    readonly href: string | null;
-    readonly initials: string | null;
     readonly avatar: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
       } | null;
     } | null;
+    readonly href: string | null;
+    readonly initials: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   } | null;
+  readonly slug: string;
   readonly " $fragmentType": "EntityHeaderFairOrganizer_fairOrganizer";
 };
 export type EntityHeaderFairOrganizer_fairOrganizer$key = {

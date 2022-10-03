@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c996cfa535670db20827cb8aca0be973>>
+ * @generated SignedSource<<8f9734aac6d66823966cd899abb73d11>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,31 +12,31 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type WorksForYouArtistFeed_viewer$data = {
   readonly artist: {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly href: string | null;
+    readonly artworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly id: string;
+        } | null;
+      } | null> | null;
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+      };
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
+    } | null;
     readonly counts: {
       readonly artworks: any | null;
       readonly forSaleArtworks: any | null;
     } | null;
+    readonly href: string | null;
     readonly image: {
       readonly resized: {
         readonly src: string;
         readonly srcSet: string;
       } | null;
     } | null;
-    readonly artworksConnection: {
-      readonly pageInfo: {
-        readonly hasNextPage: boolean;
-        readonly endCursor: string | null;
-      };
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly id: string;
-        } | null;
-      } | null> | null;
-      readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-    } | null;
+    readonly internalID: string;
+    readonly name: string | null;
   } | null;
   readonly " $fragmentType": "WorksForYouArtistFeed_viewer";
 };

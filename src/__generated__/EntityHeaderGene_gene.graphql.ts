@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46ab9f6cc8e2da74d36f31c18a9666e9>>
+ * @generated SignedSource<<7f104dd219bd6b88f92de82ccb5bc5fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderGene_gene$data = {
-  readonly internalID: string;
-  readonly href: string | null;
-  readonly name: string | null;
   readonly avatar: {
     readonly cropped: {
       readonly src: string;
@@ -25,6 +22,9 @@ export type EntityHeaderGene_gene$data = {
       readonly total: any | null;
     } | null;
   } | null;
+  readonly href: string | null;
+  readonly internalID: string;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   readonly " $fragmentType": "EntityHeaderGene_gene";
 };

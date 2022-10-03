@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db4f6d8d5794d7d4f307daee4de48e57>>
+ * @generated SignedSource<<eabebbb34aba0ab6a185ff633d0cad10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignRoute_artist$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignMeta_artist" | "ArtistConsignHeader_artist" | "ArtistConsignRecentlySold_artist" | "ArtistConsignPageViews_artist" | "ArtistConsignMarketTrends_artist" | "ArtistConsignHowToSell_artist" | "ArtistConsignFAQ_artist" | "ArtistConsignSellArt_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignFAQ_artist" | "ArtistConsignHeader_artist" | "ArtistConsignHowToSell_artist" | "ArtistConsignMarketTrends_artist" | "ArtistConsignMeta_artist" | "ArtistConsignPageViews_artist" | "ArtistConsignRecentlySold_artist" | "ArtistConsignSellArt_artist">;
   readonly " $fragmentType": "ArtistConsignRoute_artist";
 };
 export type ArtistConsignRoute_artist$key = {

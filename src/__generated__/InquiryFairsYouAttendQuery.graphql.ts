@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aef52fd7ee84e200c916777d3570398e>>
+ * @generated SignedSource<<02780ed86029befe715b6154bdbc1de3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,8 +21,8 @@ export type InquiryFairsYouAttendQuery$data = {
   };
 };
 export type InquiryFairsYouAttendQuery = {
-  variables: InquiryFairsYouAttendQuery$variables;
   response: InquiryFairsYouAttendQuery$data;
+  variables: InquiryFairsYouAttendQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

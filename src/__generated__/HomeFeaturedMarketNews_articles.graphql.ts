@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f4d0287ca510e1649d9377413d95d42>>
+ * @generated SignedSource<<f1b0a1637514a5bc5ef264e0e5531433>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,22 +11,22 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedMarketNews_articles$data = ReadonlyArray<{
-  readonly internalID: string;
-  readonly href: string | null;
   readonly byline: string | null;
-  readonly slug: string | null;
-  readonly title: string | null;
+  readonly href: string | null;
+  readonly internalID: string;
   readonly publishedAt: string | null;
-  readonly vertical: string | null;
-  readonly thumbnailTitle: string | null;
+  readonly slug: string | null;
   readonly thumbnailImage: {
     readonly large: {
-      readonly width: number;
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
+      readonly width: number;
     } | null;
   } | null;
+  readonly thumbnailTitle: string | null;
+  readonly title: string | null;
+  readonly vertical: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
   readonly " $fragmentType": "HomeFeaturedMarketNews_articles";
 }>;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef4c8567506500a6bc7346f3f1e2cd87>>
+ * @generated SignedSource<<7bcf3e09153a9fcf675dd21c0b07bef4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,8 @@ export type ArtistsIndexFragmentContainer_Test_Query$data = {
   } | null> | null;
 };
 export type ArtistsIndexFragmentContainer_Test_Query = {
-  variables: ArtistsIndexFragmentContainer_Test_Query$variables;
   response: ArtistsIndexFragmentContainer_Test_Query$data;
+  variables: ArtistsIndexFragmentContainer_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

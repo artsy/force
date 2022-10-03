@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9966c10729541fbfed306428c547bbe>>
+ * @generated SignedSource<<7102afab30882e07d6a2b897d8fa9ac4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type SavedAddressesMutation_Test_Query$data = {
   } | null;
 };
 export type SavedAddressesMutation_Test_Query = {
-  variables: SavedAddressesMutation_Test_Query$variables;
   response: SavedAddressesMutation_Test_Query$data;
+  variables: SavedAddressesMutation_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

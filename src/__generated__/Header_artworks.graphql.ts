@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9632ba7bfc7ca8a9935629c96a71406a>>
+ * @generated SignedSource<<d928060ac663acac4dc095ebca0d8421>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type Header_artworks$data = {
   readonly merchandisableArtists: ReadonlyArray<{
     readonly internalID: string;
     readonly name: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist" | "EntityHeaderArtist_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist" | "FollowArtistButton_artist">;
   } | null> | null;
   readonly " $fragmentSpreads": FragmentRefs<"DefaultHeader_headerArtworks">;
   readonly " $fragmentType": "Header_artworks";

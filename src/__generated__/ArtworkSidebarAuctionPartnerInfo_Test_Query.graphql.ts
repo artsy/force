@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8318895f9992f01079b524a1b90a678f>>
+ * @generated SignedSource<<fbbdeb137594c8a2fc49cce1f793da18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,26 +18,26 @@ export type ArtworkSidebarAuctionPartnerInfo_Test_Query$data = {
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse = {
   readonly artwork: {
+    readonly id: string;
     readonly partner: {
-      readonly name: string | null;
       readonly id: string;
+      readonly name: string | null;
+    } | null;
+    readonly sale: {
+      readonly id: string;
+      readonly internalID: string;
+      readonly is_closed: boolean | null;
     } | null;
     readonly sale_artwork: {
       readonly estimate: string | null;
       readonly id: string;
     } | null;
-    readonly sale: {
-      readonly internalID: string;
-      readonly is_closed: boolean | null;
-      readonly id: string;
-    } | null;
-    readonly id: string;
   } | null;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query = {
-  variables: ArtworkSidebarAuctionPartnerInfo_Test_Query$variables;
-  response: ArtworkSidebarAuctionPartnerInfo_Test_Query$data;
   rawResponse: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse;
+  response: ArtworkSidebarAuctionPartnerInfo_Test_Query$data;
+  variables: ArtworkSidebarAuctionPartnerInfo_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){

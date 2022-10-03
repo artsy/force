@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ed9496568e0a5227de5ef48fc2a2d62>>
+ * @generated SignedSource<<793a4e5c0193efb5a93a13bb5db1c969>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type RecentlyViewedQuery$data = {
   } | null;
 };
 export type RecentlyViewedQuery = {
-  variables: RecentlyViewedQuery$variables;
   response: RecentlyViewedQuery$data;
+  variables: RecentlyViewedQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

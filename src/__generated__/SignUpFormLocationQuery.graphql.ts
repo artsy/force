@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5eeb9d27e0cdac4c17096a567ce51d6f>>
+ * @generated SignedSource<<bebdf44403e0b0604318b3be61053f92>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type SignUpFormLocationQuery$data = {
   } | null;
 };
 export type SignUpFormLocationQuery = {
-  variables: SignUpFormLocationQuery$variables;
   response: SignUpFormLocationQuery$data;
+  variables: SignUpFormLocationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
