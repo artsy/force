@@ -131,12 +131,16 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      <Separator />
-      <SidebarExpandable
-        label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
-      >
-        <ArtworkSidebar2ArtsyGuarantee />
-      </SidebarExpandable>
+      {!checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage) && (
+        <>
+          <Separator />
+          <SidebarExpandable
+            label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
+          >
+            <ArtworkSidebar2ArtsyGuarantee />
+          </SidebarExpandable>
+        </>
+      )}
       <Separator />
       <Spacer mt={2} />
 
