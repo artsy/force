@@ -65,7 +65,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 
       {showMetadata && (
         <Metadata
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           extended={showExtended}
           hideSaleInfo={hideSaleInfo}

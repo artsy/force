@@ -22,8 +22,8 @@ import { UploadPhotos_myCollectionArtwork$data } from "__generated__/UploadPhoto
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
-} from "../Mutations"
-import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
+} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { uploadPhotosValidationSchema, validate } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import {
   UploadPhotosForm,
   UploadPhotosFormModel,
@@ -288,7 +288,6 @@ const refetchSubmissionAssets = async (
     {
       force: true,
     }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
   return response.submission?.assets || []

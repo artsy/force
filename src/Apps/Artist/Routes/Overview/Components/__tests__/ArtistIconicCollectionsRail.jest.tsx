@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistIconicCollectionsRailFragmentContainer } from "../ArtistIconicCollectionsRail"
+import { ArtistIconicCollectionsRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail"
 import { ArtistIconicCollectionsRail_Test_Query } from "__generated__/ArtistIconicCollectionsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -14,7 +14,6 @@ describe("ArtistIconicCollectionsRail", () => {
   const { getWrapper } = setupTestWrapper<
     ArtistIconicCollectionsRail_Test_Query
   >({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistIconicCollectionsRailFragmentContainer,
     query: graphql`
       query ArtistIconicCollectionsRail_Test_Query(

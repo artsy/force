@@ -14,10 +14,10 @@ import QRCode from "qrcode.react"
 import { useState } from "react"
 import * as React from "react"
 import * as Yup from "yup"
-import { ApiError } from "../../ApiError"
-import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
+import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
-import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
 import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
 export interface FormValues {
@@ -100,7 +100,6 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         password: password,
       })
 
-      // @ts-ignore RELAY UPGRADE 13
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       actions.setSubmitting(false)

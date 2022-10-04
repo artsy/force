@@ -20,22 +20,17 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
     <GridColumns gridRowGap={4}>
       <Column span={6} start={4}>
         <Join separator={<Spacer mt={4} />}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomIntro viewingRoom={viewingRoom} />
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomWorks viewingRoom={viewingRoom} />
 
           <Separator />
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomPullQuote viewingRoom={viewingRoom} />
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomBody viewingRoom={viewingRoom} />
 
           {viewingRoom.subsections.length > 0 && (
-            // @ts-ignore RELAY UPGRADE 13
             <ViewingRoomSubsections viewingRoom={viewingRoom} />
           )}
         </Join>

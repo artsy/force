@@ -92,7 +92,6 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         {nodes.map(node => (
           <NotificationItemFragmentContainer
             key={node.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             item={node}
           />
         ))}
@@ -204,7 +203,6 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
 
         return (
           <NotificationsListFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
             paginationType={paginationType}
             type={type}

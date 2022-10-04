@@ -15,7 +15,6 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
     <>
       <GridColumns mt={[2, 4]}>
         <Column span={6}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairTimer fair={fair} />
         </Column>
 

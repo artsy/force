@@ -1,4 +1,4 @@
-import { ArtistsByLetterFragmentContainer } from "../Routes/ArtistsByLetter"
+import { ArtistsByLetterFragmentContainer } from "Apps/Artists/Routes/ArtistsByLetter"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistsByLetterQuery } from "__generated__/ArtistsByLetterQuery.graphql"
 import { MockBoot } from "DevTools"
@@ -15,7 +15,6 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
   Component: props => {
     return (
       <MockBoot>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistsByLetterFragmentContainer {...props} />
       </MockBoot>
     )

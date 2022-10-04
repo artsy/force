@@ -19,7 +19,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation$data
-  // @ts-ignore RELAY UPGRADE 13
+
   openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
@@ -82,7 +82,6 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: false })
                 }
-                // @ts-ignore RELAY UPGRADE 13
                 conversation={conversation}
               />
             )}
@@ -91,7 +90,6 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: true })
                 }
-                // @ts-ignore RELAY UPGRADE 13
                 conversation={conversation}
               />
             )}

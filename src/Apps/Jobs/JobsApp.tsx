@@ -92,7 +92,6 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 
       <Separator my={4} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <JobsFilterFragmentContainer viewer={viewer} />
     </>
   )

@@ -8,7 +8,6 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeFeaturedMarketNews_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: HomeFeaturedMarketNewsFragmentContainer,
   query: graphql`
     query HomeFeaturedMarketNews_Test_Query @relay_test_operation {

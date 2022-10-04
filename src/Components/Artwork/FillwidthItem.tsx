@@ -99,13 +99,11 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
           />
         </RouterLink>
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         {showExtended && <Badge artwork={artwork} width={imageWidth} />}
 
         {isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
           />
         )}
@@ -113,7 +111,6 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
 
       {showMetadata && (
         <Metadata
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           extended={showExtended}
           hidePartnerName={hidePartnerName}

@@ -77,7 +77,6 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           <Spacer mt={6} />
 
           <CollectionDefaultHeaderFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             headerArtworks={artworks}
             collectionId={collection.id}
             collectionSlug={collection.slug}
@@ -96,20 +95,17 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
           <GridColumns>
             {featuredArtists.map(artist => {
-              // @ts-ignore RELAY UPGRADE 13
               if (!artist.name) return
 
               return (
                 <Column
                   span={[12, 6, 3, 3]}
-                  // @ts-ignore RELAY UPGRADE 13
                   key={artist.internalID}
                   data-test={ContextModule.featuredArtistsRail}
                   display="flex"
                   alignItems="center"
                 >
                   <EntityHeaderArtistFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     artist={artist}
                     width="100%"
                     alignItems="flex-start"

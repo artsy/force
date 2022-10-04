@@ -44,7 +44,6 @@ const HomeRecentlyViewedRail: React.FC<HomeRecentlyViewedRailProps> = ({
 
         return (
           <ShelfArtworkFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             key={index}
             // TODO: Add home type to cohesion once we have tracking
@@ -135,7 +134,6 @@ export const HomeRecentlyViewedRailQueryRenderer: React.FC = () => {
         if (props.homePage) {
           return (
             <HomeRecentlyViewedRailFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               homePage={props.homePage}
             />
           )

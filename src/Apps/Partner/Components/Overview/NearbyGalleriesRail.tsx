@@ -33,7 +33,6 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
           return (
             <CellPartnerFragmentContainer
               key={node.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               partner={node}
             />
           )
@@ -94,7 +93,6 @@ export const NearbyGalleriesRailRenderer: React.FC<
           <NearbyGalleriesRailFragmentContainer
             {...rest}
             {...props}
-            // @ts-ignore RELAY UPGRADE 13
             partners={compact(props?.partnersConnection?.edges)}
           />
         )

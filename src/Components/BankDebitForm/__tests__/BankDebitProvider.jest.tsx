@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
-import { BankDebitProvider } from "../BankDebitProvider"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import React from "react"
-import { BankDebitForm } from "../BankDebitForm"
+import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
@@ -31,7 +31,7 @@ describe("BankDebitProvider", () => {
           mode: "BUY",
           bankAccountId: "bank-id-1",
           paymentMethodDetails: null,
-          // @ts-ignore RELAY UPGRADE 13
+
           " $refType": "BankAccountPicker_order",
         }}
       />

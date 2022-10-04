@@ -8,7 +8,7 @@ import { useSystemContext } from "System"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { ShowBannerFragmentContainer } from "../../PartnerShows"
+import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 
 interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner$data
@@ -49,7 +49,6 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
             <ShowBannerFragmentContainer
               pr={[0.5, 0]}
               key={showItem.id}
-              // @ts-ignore RELAY UPGRADE 13
               show={showItem}
             />
           )
@@ -149,7 +148,6 @@ export const ShowBannersRailRenderer: React.FC<
         return (
           <ShowBannersRailFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

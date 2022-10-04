@@ -71,7 +71,6 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
 
   return (
     <ArtworkImageBrowserFragmentContainer
-      // @ts-ignore RELAY UPGRADE 13
       artwork={artwork}
       isMyCollectionArtwork
     />

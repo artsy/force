@@ -16,8 +16,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
-import { ArtistsByLetterMeta } from "../Components/ArtistsByLetterMeta"
-import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
+import { ArtistsByLetterMeta } from "Apps/Artists/Components/ArtistsByLetterMeta"
+import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 
 const Columns = styled(Box)<{ isLoading: boolean }>`
   column-count: 4;
@@ -131,7 +131,6 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
 
       <PaginationFragmentContainer
         hasNextPage={hasNextPage}
-        // @ts-ignore RELAY UPGRADE 13
         pageCursors={pageCursors}
         onNext={handleNext}
         onClick={handleClick}

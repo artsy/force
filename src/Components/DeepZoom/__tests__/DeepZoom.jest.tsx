@@ -10,7 +10,7 @@ const handleClose = jest.fn()
 const { getWrapper } = setupTestWrapper<DeepZoom_Test_Query>({
   Component: ({ artwork }) => {
     const image = artwork!.images![0]!
-    // @ts-ignore RELAY UPGRADE 13
+
     return <DeepZoomFragmentContainer image={image} onClose={handleClose} />
   },
   query: graphql`

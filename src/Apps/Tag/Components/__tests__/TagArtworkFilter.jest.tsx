@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { TagArtworkFilterRefetchContainer } from "../TagArtworkFilter"
+import { TagArtworkFilterRefetchContainer } from "Apps/Tag/Components/TagArtworkFilter"
 import { graphql } from "react-relay"
 import { TagArtworkFilter_Query } from "__generated__/TagArtworkFilter_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -29,7 +29,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
   Component: ({ tag }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagArtworkFilterRefetchContainer tag={tag!} />
     </MockBoot>
   ),

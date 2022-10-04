@@ -65,7 +65,6 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
               </Text>
             )}
 
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <DetailsFragmentContainer includeLinks={false} artwork={artwork} />
           </Flex>
         </RouterLink>

@@ -27,7 +27,6 @@ const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
   return (
     <>
       <ConversationList
-        // @ts-ignore RELAY UPGRADE 13
         me={me}
         selectedConversationID={selectedConversation.internalID}
       />

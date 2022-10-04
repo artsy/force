@@ -3,7 +3,7 @@ import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
-import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "../../Components/FairOrganizerFollowButton"
+import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
 import { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
@@ -69,7 +69,6 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
 
             <GridColumns>
               <Column span={[12, 8, 6]}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
               </Column>
             </GridColumns>
@@ -79,7 +78,6 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         </Column>
 
         <Column span={6}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairOrganizerInfo fairOrganizer={fairOrganizer} />
         </Column>
       </GridColumns>

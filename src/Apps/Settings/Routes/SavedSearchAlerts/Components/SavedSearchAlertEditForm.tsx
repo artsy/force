@@ -17,9 +17,9 @@ import { SavedSearchAlertEditFormQuery } from "__generated__/SavedSearchAlertEdi
 import { SavedSearchAlertEditForm_me$data } from "__generated__/SavedSearchAlertEditForm_me.graphql"
 import { SavedSearchAlertEditForm_artistsConnection$data } from "__generated__/SavedSearchAlertEditForm_artistsConnection.graphql"
 import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
-import { EditAlertEntity } from "../types"
+import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditForm_artworksConnection$data } from "__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
-import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
+import { useEditSavedSearchAlert } from "Apps/Settings/Routes/SavedSearchAlerts/useEditSavedSearchAlert"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
@@ -493,7 +493,6 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           props.viewer
         ) {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
               viewer={props.viewer}
@@ -514,7 +513,6 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           props.viewer
         ) {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
               viewer={props.viewer}

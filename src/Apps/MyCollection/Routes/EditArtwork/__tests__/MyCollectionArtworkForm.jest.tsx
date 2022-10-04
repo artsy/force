@@ -491,7 +491,6 @@ describe("Create artwork", () => {
   })
 })
 
-// @ts-ignore RELAY UPGRADE 13
 const mockArtwork = {
   artist: {
     internalID: "4d8b929e4eb68a1b2c0002f2",

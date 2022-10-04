@@ -169,7 +169,6 @@ export const ArtistSellWithArtsyQueryRenderer: FC<ArtistSellWithArtsyQueryRender
           return <ArtistSellWithArtsy />
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <ArtistSellWithArtsyFragmentContainer artist={props.artist} />
       }}
     />

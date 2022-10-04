@@ -29,22 +29,18 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
         title={`${name} | Artsy`}
       />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
 
       <Spacer mt={4} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
       <Spacer mt={6} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairOrganizerPastEventsRail fairOrganizer={fairOrganizer} />
 
       <Spacer mt={12} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
     </>
   )

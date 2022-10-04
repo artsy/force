@@ -45,7 +45,6 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
           return artists.map((artist, index) => {
             return (
               <CellArtistFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 artist={artist}
                 onClick={() => {
                   tracking.trackEvent({
@@ -139,7 +138,6 @@ export const ArtistRelatedArtistsRailQueryRenderer: React.FC<{
           if (props.artist) {
             return (
               <ArtistRelatedArtistsRailFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 artist={props.artist}
               />
             )

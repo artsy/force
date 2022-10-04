@@ -207,7 +207,6 @@ export class ArtistMeta extends Component<Props> {
 
     return (
       <>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistMetaCanonicalLink artist={artist} />
         <Meta name="description" content={metaContent} />
         <Meta property="og:description" content={metaContent} />

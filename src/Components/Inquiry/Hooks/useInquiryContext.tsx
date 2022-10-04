@@ -8,14 +8,14 @@ import {
 } from "react"
 import * as React from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
-import { useEngine } from "../config"
+import { useEngine } from "Components/Inquiry/config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
 import { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System"
-import { Visited } from "../Visited"
-import { logger } from "../util"
+import { Visited } from "Components/Inquiry/Visited"
+import { logger } from "Components/Inquiry/util"
 import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
@@ -243,7 +243,6 @@ export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
         }
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <InquiryContextContextFragmentContainer me={props.me}>
             {children}
           </InquiryContextContextFragmentContainer>

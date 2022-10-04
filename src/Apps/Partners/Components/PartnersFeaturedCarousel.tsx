@@ -22,7 +22,6 @@ const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
         return (
           <PartnersFeaturedCarouselCellFragmentContainer
             key={profile.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             profile={profile}
           />
         )

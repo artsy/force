@@ -68,7 +68,6 @@ const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
       <Spacer mt={1} />
 
       <ShowsShowDatesFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         show={show}
         variant={variants.secondary}
       />

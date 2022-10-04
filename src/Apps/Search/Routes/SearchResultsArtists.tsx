@@ -133,7 +133,6 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           )
         })}
         <Pagination
-          // @ts-ignore RELAY UPGRADE 13
           pageCursors={searchConnection!.pageCursors}
           onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}

@@ -48,7 +48,6 @@ export const CellPartner = () => {
 
               return (
                 <CellPartnerFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   partner={props.partner}
                   {...rest}
                 />

@@ -222,7 +222,6 @@ export const RequestConditionReportQueryRenderer: React.FC<{
       render={({ props }) => {
         if (props && props.artwork) {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <RequestConditionReportFragmentContainer
               artwork={props.artwork}
               me={props.me}

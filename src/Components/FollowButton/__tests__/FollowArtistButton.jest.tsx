@@ -21,7 +21,6 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   Component: props => {
     return (
       <FollowArtistButtonFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artist={props.artist!}
         onFollow={onFollow}
       />

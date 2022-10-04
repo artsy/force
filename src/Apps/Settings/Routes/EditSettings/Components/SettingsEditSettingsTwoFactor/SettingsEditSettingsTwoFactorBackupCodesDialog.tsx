@@ -102,7 +102,6 @@ export const SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer = () =>
 
         return (
           <SettingsEditSettingsTwoFactorBackupCodesDialogFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             me={props?.me}
           />
         )

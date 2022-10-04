@@ -57,7 +57,6 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
           return (
             <CellPartnerFragmentContainer
               key={index}
-              // @ts-ignore RELAY UPGRADE 13
               partner={node.owner}
               onClick={() => {
                 const trackingEvent: ClickedGalleryGroup = {
@@ -149,7 +148,6 @@ export const HomeFeaturedGalleriesRailQueryRenderer: React.FC = () => {
         if (props.orderedSet) {
           return (
             <HomeFeaturedGalleriesRailFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               orderedSet={props.orderedSet}
             />
           )

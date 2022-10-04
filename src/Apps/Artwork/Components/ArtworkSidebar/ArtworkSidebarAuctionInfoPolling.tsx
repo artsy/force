@@ -53,7 +53,6 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
     <>
       <ArtworkSidebarCurrentBidInfoFragmentContainer
         currentBidChanged={currentBidChanged}
-        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
       />
       <Spacer mt={2} />

@@ -33,7 +33,6 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
             return (
               <ArtistAuctionResultItemFragmentContainer
                 key={index}
-                // @ts-ignore RELAY UPGRADE 13
                 auctionResult={result}
                 filtersAtDefault={false}
                 showArtistName

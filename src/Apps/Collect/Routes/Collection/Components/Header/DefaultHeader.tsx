@@ -25,7 +25,6 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
       {artworks.map((artwork, i) => (
         <DefaultHeaderArtwork
           key={i}
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           collectionId={collectionId}
           collectionSlug={collectionSlug}

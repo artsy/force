@@ -48,7 +48,6 @@ export const EntityHeaderArtist = () => {
 
               return (
                 <EntityHeaderArtistFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   artist={props.artist}
                   {...rest}
                 />

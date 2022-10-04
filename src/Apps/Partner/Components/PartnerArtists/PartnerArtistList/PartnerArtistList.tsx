@@ -2,7 +2,7 @@ import * as React from "react"
 import { PartnerArtistList_artists$data } from "__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
-import { groupArtists } from "../partnerArtistsUtils"
+import { groupArtists } from "Apps/Partner/Components/PartnerArtists/partnerArtistsUtils"
 import { ColumnSpan } from "@artsy/palette/dist/elements/GridColumns/calculateGridColumn"
 import { Media } from "Utils/Responsive"
 import { PartnerArtistItemFragmentContainer as PartnerArtistItem } from "./PartnerArtistItem"
@@ -54,14 +54,11 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
-                      // @ts-ignore RELAY UPGRADE 13
                       key={node.internalID}
-                      // @ts-ignore RELAY UPGRADE 13
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}

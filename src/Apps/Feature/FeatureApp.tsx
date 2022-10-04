@@ -15,9 +15,8 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FeatureMeta feature={feature} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <FeatureHeader feature={feature} />
 
       {(feature.description || feature.callout) && (
@@ -42,7 +41,6 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
         feature.sets.edges.length > 0 &&
         feature.sets.edges.map(
           edge =>
-            // @ts-ignore RELAY UPGRADE 13
             edge?.node && <FeatureSet key={edge.node.id} set={edge.node} />
         )}
     </>

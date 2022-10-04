@@ -12,7 +12,6 @@ const SettingsShippingRoute: React.FC<SettingsShippingRouteProps> = ({
 }) => {
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <SettingsShippingAddressesFragmentContainer me={me} />
     </>
   )

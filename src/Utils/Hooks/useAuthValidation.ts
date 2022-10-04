@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System"
-import { logout } from "../auth"
+import { logout } from "Utils/auth"
 import { useAuthValidationQuery } from "__generated__/useAuthValidationQuery.graphql"
 
 export const useAuthValidation = () => {
@@ -17,7 +17,6 @@ export const useAuthValidation = () => {
           }
         `,
         {}
-        // @ts-expect-error RELAY_UPGRADE
       ).toPromise()
 
       if (authenticationStatus === "INVALID") {

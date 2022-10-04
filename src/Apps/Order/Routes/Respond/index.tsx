@@ -26,12 +26,12 @@ import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
-import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "../../Components/OfferHistoryItem"
-import { counterofferFlowSteps } from "../../Components/OrderStepper"
-import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "Apps/Order/Components/OfferHistoryItem"
+import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
+import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { useTracking } from "react-tracking"
@@ -225,7 +225,7 @@ export const RespondRoute: FC<RespondProps> = ({
               countdownStart={order.lastOffer?.createdAt!}
               countdownEnd={order.stateExpiresAt!}
             />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <OfferHistoryItem order={order} />
             <TransactionDetailsSummaryItem
               order={order}
@@ -307,11 +307,10 @@ export const RespondRoute: FC<RespondProps> = ({
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <ShippingSummaryItem order={order} locked />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

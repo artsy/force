@@ -49,7 +49,6 @@ export const EntityHeaderFair = () => {
 
               return (
                 <EntityHeaderFairFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   fair={props.fair}
                   {...rest}
                 />

@@ -10,11 +10,9 @@ export interface FeatureHeaderProps {
 
 export const FeatureHeader: React.FC<FeatureHeaderProps> = ({ feature }) => {
   if (feature.layout === "FULL") {
-    // @ts-ignore RELAY UPGRADE 13
     return <FeatureHeaderFull feature={feature} />
   }
 
-  // @ts-ignore RELAY UPGRADE 13
   return <FeatureHeaderDefault feature={feature} />
 }
 

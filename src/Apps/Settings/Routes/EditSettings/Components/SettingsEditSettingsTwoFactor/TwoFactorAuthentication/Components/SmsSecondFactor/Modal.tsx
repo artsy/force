@@ -15,11 +15,11 @@ import { useSystemContext } from "System"
 import { CountrySelect } from "Components/CountrySelect"
 import { Step, Wizard } from "Components/Wizard"
 import { FormValues, StepElement } from "Components/Wizard/types"
-import { ApiError } from "../../ApiError"
-import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
+import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
-import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
 import { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
@@ -60,7 +60,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         password: password,
       })
 
-      // @ts-ignore RELAY UPGRADE 13
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       setShowRecoveryCodes(true)

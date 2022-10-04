@@ -44,7 +44,6 @@ export const ArticlesIndexArticles: FC<ArticlesIndexArticlesProps> = ({
           return (
             <ArticlesIndexArticleFragmentContainer
               key={article.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               article={article}
             />
           )

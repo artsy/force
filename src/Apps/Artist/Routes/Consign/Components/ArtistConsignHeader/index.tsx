@@ -13,7 +13,7 @@ import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getConsignSubmissionUrl } from "../Utils/getConsignSubmissionUrl"
+import { getConsignSubmissionUrl } from "Apps/Artist/Routes/Consign/Components/Utils/getConsignSubmissionUrl"
 import { extractNodes } from "Utils/extractNodes"
 
 interface ArtistConsignHeaderProps {
@@ -40,17 +40,12 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         >
           {leftArtwork && (
             <ResponsiveBox
-              // @ts-ignore RELAY UPGRADE 13
               aspectWidth={leftArtwork.image.cropped.width}
-              // @ts-ignore RELAY UPGRADE 13
               aspectHeight={leftArtwork.image.cropped.height}
-              // @ts-ignore RELAY UPGRADE 13
               maxWidth={leftArtwork.image.cropped.width}
             >
               <Image
-                // @ts-ignore RELAY UPGRADE 13
                 src={leftArtwork.image.cropped.src}
-                // @ts-ignore RELAY UPGRADE 13
                 srcSet={leftArtwork.image.cropped.srcSet}
                 width="100%"
                 height="100%"
@@ -107,17 +102,12 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         >
           {rightArtwork && (
             <ResponsiveBox
-              // @ts-ignore RELAY UPGRADE 13
               aspectWidth={rightArtwork.image.cropped.width}
-              // @ts-ignore RELAY UPGRADE 13
               aspectHeight={rightArtwork.image.cropped.height}
-              // @ts-ignore RELAY UPGRADE 13
               maxWidth={rightArtwork.image.cropped.width}
             >
               <Image
-                // @ts-ignore RELAY UPGRADE 13
                 src={rightArtwork.image.cropped.src}
-                // @ts-ignore RELAY UPGRADE 13
                 srcSet={rightArtwork.image.cropped.srcSet}
                 width="100%"
                 height="100%"

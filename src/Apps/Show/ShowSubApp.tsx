@@ -18,7 +18,6 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ShowMeta show={show} />
 
       <AnalyticsContext.Provider

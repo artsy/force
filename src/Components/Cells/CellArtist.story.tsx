@@ -48,7 +48,6 @@ export const CellArtist = () => {
               }
 
               return (
-                // @ts-ignore RELAY UPGRADE 13
                 <CellArtistFragmentContainer artist={props.artist} {...rest} />
               )
             }}

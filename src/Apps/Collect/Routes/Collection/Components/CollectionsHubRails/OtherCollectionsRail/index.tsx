@@ -18,7 +18,6 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
           return (
             <OtherCollectionEntity
               key={index}
-              // @ts-ignore RELAY UPGRADE 13
               member={slide}
               itemNumber={index}
             />

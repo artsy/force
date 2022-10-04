@@ -19,7 +19,6 @@ const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
 
   return (
     <CellShowFragmentContainer
-      // @ts-ignore RELAY UPGRADE 13
       show={show}
       displayStatus
       onClick={() => {

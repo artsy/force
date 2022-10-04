@@ -21,7 +21,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryFigure"
 import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGalleryCaption"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { useArticleContext } from "../ArticleContext"
+import { useArticleContext } from "Apps/Article/Components/ArticleContext"
 import { mapCursorToMax } from "map-cursor-to-max"
 
 interface ArticleZoomGalleryProps {
@@ -103,7 +103,6 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
               return (
                 <ArticleZoomGalleryFigureFragmentContainer
                   key={i}
-                  // @ts-ignore RELAY UPGRADE 13
                   figure={figure}
                   active={i === index}
                   preload={
@@ -121,7 +120,6 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
             justifyContent="space-between"
             alignItems="center"
           >
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArticleZoomGalleryCaptionFragmentContainer figure={activeFigure} />
 
             <Text variant="sm" ml={2} flexShrink={0}>
@@ -247,7 +245,6 @@ export const ArticleZoomGalleryRefetchContainer: FC<ArticleZoomGalleryRefetchCon
 
         return (
           <ArticleZoomGalleryFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             article={props.article}
             onClose={onClose}
             figureId={figureId}

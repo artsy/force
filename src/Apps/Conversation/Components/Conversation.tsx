@@ -94,7 +94,6 @@ const Conversation: React.FC<ConversationProps> = props => {
 
     return (
       <ItemFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         item={i.item!}
         key={isValidType ? i.item?.id : idx}
       />
@@ -247,9 +246,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
               <ConversationMessages
-                // @ts-ignore RELAY UPGRADE 13
                 messages={conversation.messagesConnection!}
-                // @ts-ignore RELAY UPGRADE 13
                 events={conversation.orderConnection}
                 lastViewedMessageID={conversation?.fromLastViewedMessageID}
                 setShowDetails={setShowDetails}

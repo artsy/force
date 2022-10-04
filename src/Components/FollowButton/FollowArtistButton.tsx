@@ -194,7 +194,6 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
         return (
           <FollowArtistButtonFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             artist={props.artist}
           />
         )

@@ -18,6 +18,5 @@ export const getConvectionGeminiKey = (relayEnvironment: Environment) =>
     {},
     { force: true }
   )
-    // @ts-expect-error RELAY_UPGRADE
     .toPromise()
     .then(data => data.system!.services!.convection.geminiTemplateKey)

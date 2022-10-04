@@ -27,7 +27,6 @@ const InstitutionPartnershipsShows: FC<InstitutionPartnershipsShowsProps> = ({
 
         return (
           <Column key={show.internalID} span={6}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <CellShowFragmentContainer mode="GRID" show={show} />
           </Column>
         )
@@ -90,7 +89,6 @@ export const InstitutionPartnershipsShowsQueryRenderer: FC = () => {
 
         return (
           <InstitutionPartnershipsShowsFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             orderedSet={props.orderedSet}
           />
         )

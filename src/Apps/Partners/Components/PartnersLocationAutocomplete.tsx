@@ -7,7 +7,7 @@ import { PartnersLocationAutocomplete_viewer$data } from "__generated__/Partners
 import { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"
 import { useRouter } from "System/Router/useRouter"
 import { omit } from "lodash"
-import { filterCities } from "../Utils/filterUtils"
+import { filterCities } from "Apps/Partners/Utils/filterUtils"
 
 interface PartnersLocationAutocompleteProps {
   viewer: PartnersLocationAutocomplete_viewer$data
@@ -144,7 +144,6 @@ export const PartnersLocationAutocompleteQueryRenderer: FC = () => {
         if (props?.viewer) {
           return (
             <PartnersLocationAutocompleteFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               viewer={props.viewer}
             />
           )

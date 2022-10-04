@@ -32,7 +32,6 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({ viewingRoom }) => {
           >
             <ViewingRoomWorksArtworkFragmentContainer
               to={`/viewing-room/${slug}/works`}
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
           </Column>

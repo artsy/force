@@ -90,7 +90,6 @@ export const ArtistRelatedGeneCategoriesQueryRenderer: FC<{ slug: string }> = ({
         if (props?.artist) {
           return (
             <ArtistRelatedGeneCategoriesFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist}
             />
           )

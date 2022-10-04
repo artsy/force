@@ -78,7 +78,6 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
       >
         {partner && (
           <EntityHeaderPartnerFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             partner={partner}
             FollowButton={
               partner.profile ? (

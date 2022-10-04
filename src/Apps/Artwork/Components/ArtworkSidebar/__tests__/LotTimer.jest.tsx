@@ -1,4 +1,4 @@
-import { LotTimer } from "../LotTimer"
+import { LotTimer } from "Apps/Artwork/Components/ArtworkSidebar/LotTimer"
 import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
 import "jest-styled-components"
@@ -18,7 +18,7 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingIntervalMinutes: 2,
           internalID: "sale-id",
         },
-        // @ts-ignore RELAY UPGRADE 13
+
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -49,7 +49,7 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
           },
-          // @ts-ignore RELAY UPGRADE 13
+
           " $refType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -75,7 +75,7 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
           },
-          // @ts-ignore RELAY UPGRADE 13
+
           " $refType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -98,7 +98,7 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingIntervalMinutes: null,
           internalID: "sale-id",
         },
-        // @ts-ignore RELAY UPGRADE 13
+
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)

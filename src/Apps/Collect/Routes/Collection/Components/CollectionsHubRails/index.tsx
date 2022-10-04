@@ -19,14 +19,12 @@ export const CollectionsHubRails: React.FC<CollectionsHubRailsProps> = ({
         switch (collectionGroup.groupType) {
           case "ArtistSeries":
             return (
-              // @ts-ignore RELAY UPGRADE 13
               <ArtistSeriesRail key={index} collectionGroup={collectionGroup} />
             )
           case "FeaturedCollections":
             return (
               <FeaturedCollectionsRails
                 key={index}
-                // @ts-ignore RELAY UPGRADE 13
                 collectionGroup={collectionGroup}
               />
             )
@@ -34,7 +32,6 @@ export const CollectionsHubRails: React.FC<CollectionsHubRailsProps> = ({
             return (
               <OtherCollectionsRail
                 key={index}
-                // @ts-ignore RELAY UPGRADE 13
                 collectionGroup={collectionGroup}
               />
             )

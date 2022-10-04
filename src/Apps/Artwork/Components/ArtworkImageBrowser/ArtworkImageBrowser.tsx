@@ -60,7 +60,6 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     >
       <Media at="xs">
         <ArtworkImageBrowserSmallFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           index={index}
           setIndex={setCursor}
@@ -70,7 +69,6 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 
       <Media greaterThan="xs">
         <ArtworkImageBrowserLargeFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           index={index}
           onNext={handleNext}
@@ -83,7 +81,6 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           <Spacer mt={2} />
 
           <ArtworkActions
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             selectDefaultSlide={handleSelectDefaultSlide}
           />

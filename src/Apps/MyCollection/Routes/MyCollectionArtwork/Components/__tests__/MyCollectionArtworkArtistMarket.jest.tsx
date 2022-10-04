@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MyCollectionArtworkArtistMarket_Test_Query } from "../../../../../../__generated__/MyCollectionArtworkArtistMarket_Test_Query.graphql"
-import { MyCollectionArtworkArtistMarketFragmentContainer } from "../MyCollectionArtworkArtistMarket"
+import { MyCollectionArtworkArtistMarket_Test_Query } from "__generated__/MyCollectionArtworkArtistMarket_Test_Query.graphql"
+import { MyCollectionArtworkArtistMarketFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkArtistMarket"
 
 jest.unmock("react-relay")
 
@@ -14,7 +14,6 @@ describe("MyCollectionArtworkArtistMarket", () => {
       if (props?.artwork?.marketPriceInsights) {
         return (
           <MyCollectionArtworkArtistMarketFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             marketPriceInsights={props.artwork.marketPriceInsights}
           />
         )

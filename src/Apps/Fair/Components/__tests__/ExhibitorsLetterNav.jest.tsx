@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ExhibitorsLetterNavFragmentContainer } from "../ExhibitorsLetterNav"
+import { ExhibitorsLetterNavFragmentContainer } from "Apps/Fair/Components/ExhibitorsLetterNav"
 import { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
 import { Breakpoint } from "Utils/Responsive"
 
@@ -14,7 +14,6 @@ const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
   setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
     Component: ({ fair }) => (
       <MockBoot breakpoint={breakpoint}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ExhibitorsLetterNavFragmentContainer fair={fair!} />
       </MockBoot>
     ),

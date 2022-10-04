@@ -4,14 +4,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
-} from "../Components/FairEditorial"
-import { FairCollectionsFragmentContainer } from "../Components/FairCollections"
-import { FairFollowedArtistsFragmentContainer } from "../Components/FairOverview/FairFollowedArtists"
+} from "Apps/Fair/Components/FairEditorial"
+import { FairCollectionsFragmentContainer } from "Apps/Fair/Components/FairCollections"
+import { FairFollowedArtistsFragmentContainer } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
-import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
-import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
+import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
+import { FairBoothsQueryRenderer as FairBooths } from "Apps/Fair/Components/FairBooths"
 import { useRouter } from "System/Router/useRouter"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 
@@ -47,7 +47,6 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
   return (
     <Box>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairAbout fair={fair} />
 
       {hasArticles && (
@@ -61,7 +60,6 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
             )}
           </Box>
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairEditorialFragmentContainer fair={fair} />
         </Box>
       )}
@@ -72,12 +70,10 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
             Curated Highlights
           </Text>
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairCollectionsFragmentContainer fair={fair} />
         </Box>
       )}
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
 
       <Box id="jump--BoothsSection">

@@ -41,7 +41,6 @@ export const CellSale = () => {
 
         return (
           <CellSaleFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             sale={props.viewer?.salesConnection?.edges?.[0]?.node!}
           />
         )

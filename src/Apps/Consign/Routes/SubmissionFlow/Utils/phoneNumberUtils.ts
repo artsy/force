@@ -22,7 +22,6 @@ export const getPhoneNumberInformation = async (
       }
     `,
     { phoneNumber, regionCode }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
   return response.phoneNumber

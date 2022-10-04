@@ -13,7 +13,7 @@ import { formatIsoDateNoZoneOffset } from "./helpers"
 import { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
 import { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
-import { RegisterButtonFragmentContainer } from "../RegisterButton"
+import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
 import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
 import { getENV } from "Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
@@ -42,7 +42,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           </Text>
         </Column>
         <Column span={3}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
@@ -50,7 +49,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       <Flex alignItems="center" justifyContent="space-between">
         {!!sale.cascadingEndTimeIntervalMinutes && (
           <>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <SaleDetailTimerFragmentContainer sale={sale} />
             <Spacer my={2} />
           </>
@@ -89,7 +87,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <HTML html={sale.description!} />
         </Column>
         <Column span={3}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <AuctionInfoSidebarFragmentContainer sale={sale} />
         </Column>
       </GridColumns>

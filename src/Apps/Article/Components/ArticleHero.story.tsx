@@ -67,7 +67,6 @@ export const ArticleHero = () => {
 
               return (
                 <ArticleHeroFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   article={props.article}
                   fixed={false}
                 />

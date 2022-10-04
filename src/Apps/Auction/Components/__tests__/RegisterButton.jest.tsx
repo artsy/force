@@ -1,5 +1,5 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { RegisterButtonFragmentContainer } from "../RegisterButton"
+import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
 import { RegisterButton_Test_Query } from "__generated__/RegisterButton_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -20,7 +20,6 @@ describe("RegisterButton", () => {
   const mockUseRouter = useRouter as jest.Mock
 
   const { getWrapper } = setupTestWrapper<RegisterButton_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: RegisterButtonFragmentContainer,
     query: graphql`
       query RegisterButton_Test_Query {

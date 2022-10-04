@@ -51,7 +51,6 @@ export const EntityHeaderFairOrganizer = () => {
 
               return (
                 <EntityHeaderFairOrganizerFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   fairOrganizer={props.fairOrganizer}
                   {...rest}
                 />

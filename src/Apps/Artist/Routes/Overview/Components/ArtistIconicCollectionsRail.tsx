@@ -189,7 +189,6 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
           if (props.marketingCollections) {
             return (
               <ArtistIconicCollectionsRailFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 marketingCollections={props.marketingCollections}
               />
             )

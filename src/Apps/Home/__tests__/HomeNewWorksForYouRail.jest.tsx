@@ -11,7 +11,6 @@ const { getWrapper } = setupTestWrapper<HomeNewWorksForYouRail_Test_Query>({
   Component: props => {
     return (
       <HomeNewWorksForYouRailFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artworksForUser={props.artworksForUser!}
       />
     )

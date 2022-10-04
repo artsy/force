@@ -159,7 +159,6 @@ export const NavBarMobileMenuLoggedInQueryRenderer: React.FC<{}> = () => {
           return <NavBarMobileMenuLoggedIn />
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <NavBarMobileMenuLoggedInFragmentContainer me={props.me} />
       }}
     />

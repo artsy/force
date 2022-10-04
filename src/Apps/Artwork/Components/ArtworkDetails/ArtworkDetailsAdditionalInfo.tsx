@@ -13,10 +13,10 @@ import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
-import { ArtworkDetailsMediumModalFragmentContainer } from "../ArtworkDetailsMediumModal"
+import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { useAnalyticsContext } from "System/Analytics"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
+import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
 
 export interface ArtworkDetailsAdditionalInfoProps {
@@ -77,7 +77,6 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
               </Clickable>
 
               <ArtworkDetailsMediumModalFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 show={open}
                 onClose={() => setOpen(false)}

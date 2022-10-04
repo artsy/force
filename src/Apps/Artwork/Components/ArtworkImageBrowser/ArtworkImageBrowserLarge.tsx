@@ -9,11 +9,11 @@ import { themeGet } from "@styled-system/theme-get"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
-import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
+import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data
@@ -46,7 +46,6 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
     <>
       {activeFigure.type === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           image={activeFigure}
           onClose={hideDeepZoom}
         />
@@ -93,7 +92,6 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           <ArtworkLightboxFragmentContainer
             my={2}
             maxHeight={maxHeight}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             activeIndex={index}
             onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
@@ -105,7 +103,6 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
             my={2}
             maxHeight={maxHeight}
             activeIndex={index}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
           />
         )}

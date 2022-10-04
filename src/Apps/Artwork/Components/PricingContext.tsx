@@ -259,7 +259,6 @@ export const PricingContextQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artwork) {
-          // @ts-ignore RELAY UPGRADE 13
           return <PricingContextFragmentContainer artwork={props.artwork} />
         }
       }}

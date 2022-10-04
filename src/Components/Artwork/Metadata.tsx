@@ -48,7 +48,6 @@ export const Metadata: React.FC<MetadataProps> = ({
     >
       <Details
         includeLinks={false}
-        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
         hideSaleInfo={hideSaleInfo}
         hidePartnerName={hidePartnerName}

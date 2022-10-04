@@ -13,7 +13,7 @@ import {
   Store,
   fetchQuery,
 } from "relay-runtime"
-import { createMockNetworkLayer2 } from "../index"
+import { createMockNetworkLayer2 } from "DevTools/index"
 jest.unmock("react-relay")
 
 describe("createMockNetworkLayer", () => {
@@ -27,7 +27,6 @@ describe("createMockNetworkLayer", () => {
     const store = new Store(source)
     const environment = new Environment({ network, store })
 
-    // @ts-expect-error RELAY_UPGRADE
     return await fetchQuery<T>(environment, query, {}).toPromise()
   }
 

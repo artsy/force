@@ -15,11 +15,9 @@ export const PartnerContactCard: React.FC<PartnerContactCardProps> = ({
   return (
     <GridColumns gridRowGap={2}>
       <Column span={[12, 6]}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerContactAddress location={location} />
       </Column>
       <Column span={[12, 6]}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerContactMap location={location} />
       </Column>
     </GridColumns>

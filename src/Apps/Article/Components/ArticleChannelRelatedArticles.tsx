@@ -29,7 +29,6 @@ const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
           return (
             <CellArticleFragmentContainer
               key={article.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               article={article}
             />
           )
@@ -85,7 +84,6 @@ export const ArticleChannelRelatedArticlesQueryRenderer: FC<ArticleChannelRelate
 
         return (
           <ArticleChannelRelatedArticlesFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             article={props.article}
           />
         )

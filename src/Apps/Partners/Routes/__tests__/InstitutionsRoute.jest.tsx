@@ -35,7 +35,6 @@ const { renderWithRelay } = setupTestWrapperTL<
   Component: ({ viewer }) => {
     return (
       <MockBoot>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <InstitutionsRouteFragmentContainer viewer={viewer!} />
       </MockBoot>
     )

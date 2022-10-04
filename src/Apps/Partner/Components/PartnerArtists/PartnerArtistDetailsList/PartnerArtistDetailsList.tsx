@@ -10,7 +10,7 @@ import {
 import { PartnerArtistDetailsList_partner$data } from "__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
-import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
+import { PartnerArtistDetailsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistDetailsListProps {
@@ -68,7 +68,6 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
         return (
           <PartnerArtistDetailsFragmentContainer
             key={edge.id}
-            // @ts-ignore RELAY UPGRADE 13
             partnerArtist={edge}
             partnerId={partner.slug}
           />
@@ -159,7 +158,6 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
         return (
           <PartnerArtistDetailsListPaginationContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

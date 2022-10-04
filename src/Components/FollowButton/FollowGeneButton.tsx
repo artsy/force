@@ -130,7 +130,6 @@ export const FollowGeneButtonQueryRenderer: React.FC<FollowGeneButtonQueryRender
           return <FollowButton {...rest} />
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <FollowGeneButtonFragmentContainer {...rest} gene={props.gene} />
       }}
     />

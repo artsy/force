@@ -35,7 +35,6 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
       <GridColumns gridRowGap={4}>
         {/* Latest article */}
         <Column span={6}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CellArticleFragmentContainer article={latestArticle} mode="GRID" />
         </Column>
 
@@ -45,7 +44,6 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             {otherArticles.map(article => (
               <CellArticleFragmentContainer
                 key={article.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 article={article}
                 mode="GRID"
                 mb={4}

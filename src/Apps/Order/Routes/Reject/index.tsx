@@ -8,7 +8,7 @@ import { FC } from "react"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { Media } from "Utils/Responsive"
-import { logger } from "../Respond"
+import { logger } from "Apps/Order/Routes/Respond"
 import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -100,7 +100,6 @@ export const Reject: FC<RejectProps> = ({
         >
           <Media at="xs">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />
@@ -141,7 +140,6 @@ export const Reject: FC<RejectProps> = ({
         <Flex flexDirection="column">
           <Media greaterThan="xs">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />

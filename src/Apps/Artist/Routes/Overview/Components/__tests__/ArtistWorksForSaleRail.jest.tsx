@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistWorksForSaleRailFragmentContainer } from "../ArtistWorksForSaleRail"
+import { ArtistWorksForSaleRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistWorksForSaleRail"
 import { ArtistWorksForSaleRail_Test_Query } from "__generated__/ArtistWorksForSaleRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -9,7 +9,6 @@ jest.mock("react-tracking")
 
 describe("ArtistWorksForSaleRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistWorksForSaleRail_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistWorksForSaleRailFragmentContainer,
     query: graphql`
       query ArtistWorksForSaleRail_Test_Query @relay_test_operation {

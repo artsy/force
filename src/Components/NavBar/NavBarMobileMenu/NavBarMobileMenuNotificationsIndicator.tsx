@@ -70,7 +70,6 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
         if (props?.me) {
           return (
             <NavBarMobileMenuNotificationsIndicatorFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               me={props.me}
             />
           )

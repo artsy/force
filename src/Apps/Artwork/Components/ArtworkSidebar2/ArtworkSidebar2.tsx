@@ -71,17 +71,15 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
 
   return (
     <Flex flexDirection="column">
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
       <Separator />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2EditionSetFragmentContainer artwork={artwork} />
 
       {!isSold && artworkEcommerceAvailable && (
@@ -91,7 +89,6 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
           >
             <ArtworkSidebar2ShippingInformationFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
           </SidebarExpandable>
@@ -107,13 +104,11 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       <Separator />
       <Spacer mt={2} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
       {(!shouldHideDetailsCreateAlertCTA ||
         checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
-        // @ts-ignore RELAY UPGRADE 13
         <ArtworkSidebar2CreateArtworkAlertFragmentContainer artwork={artwork} />
       )}
       <Separator />

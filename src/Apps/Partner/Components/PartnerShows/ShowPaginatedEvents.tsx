@@ -96,7 +96,6 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
       <Box mt={6}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
-          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
           onClick={handleClick}
           onNext={handleNext}
@@ -211,7 +210,6 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         return (
           <ShowEventsRefetchContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
             paramsPage={page!}
           />

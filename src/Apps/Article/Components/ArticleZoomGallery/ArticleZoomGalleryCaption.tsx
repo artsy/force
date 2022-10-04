@@ -22,7 +22,6 @@ const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({
           flex={1}
           maxWidth={["75%", "100%"]}
         >
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <Metadata mt={0} artwork={figure} width="100%" />
 
           <Button

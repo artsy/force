@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "../SearchResultsArtworks"
+import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "Apps/Search/Routes/SearchResultsArtworks"
 import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "__generated__/SearchResultsArtworks_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -30,7 +30,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { renderWithRelay } = setupTestWrapperTL<SearchResultsArtworks_Query>({
   Component: ({ viewer }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <SearchResultsArtworks viewer={viewer!} />
     </MockBoot>
   ),

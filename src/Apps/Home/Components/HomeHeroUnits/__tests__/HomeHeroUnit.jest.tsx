@@ -14,7 +14,6 @@ const { getWrapper } = setupTestWrapper<HomeHeroUnit_Test_Query>({
   Component: props => {
     return (
       <HomeHeroUnitFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         heroUnit={props.homePage!.heroUnits?.[0]!}
         layout="a"
         index={0}

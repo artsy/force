@@ -141,7 +141,7 @@ export const OtherWorks = track()(
         ) && (
           <>
             <Spacer mt={6} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <RelatedWorksArtworkGridRefetchContainer artwork={props.artwork} />
           </>
         )}

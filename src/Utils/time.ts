@@ -29,7 +29,6 @@ export async function getOffsetBetweenGravityClock(
       {
         force: true,
       }
-      // @ts-expect-error RELAY_UPGRADE
     ).toPromise()
   }
 

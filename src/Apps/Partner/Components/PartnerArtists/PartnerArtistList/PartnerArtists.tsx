@@ -38,7 +38,6 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
 
   return (
     <Box mt={4}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <PartnerArtistListFragmentContainer
         partnerSlug={slug}
         scrollTo={scrollTo}
@@ -94,7 +93,6 @@ export const PartnerArtistsRenderer: React.FC<{
         if (error || !props) return <PartnerArtistListPlaceholder />
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <PartnerArtistsFragmentContainer {...rest} partner={props.partner!} />
         )
       }}

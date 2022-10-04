@@ -1,5 +1,5 @@
 import { commitMutation as _commitMutation } from "react-relay"
-import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "../AddressModal"
+import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
 import {
@@ -7,7 +7,7 @@ import {
   updateAddressFailure,
 } from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { Dialog } from "@artsy/palette"
-import { SavedAddressType } from "../../Utils/shippingUtils"
+import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -57,7 +57,7 @@ describe("AddressModal", () => {
           totalCount: 0,
           edges: [],
         },
-        // @ts-ignore RELAY UPGRADE 13
+
         " $refType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
@@ -307,7 +307,7 @@ describe("AddressModal feature flag", () => {
           totalCount: 0,
           edges: [],
         },
-        // @ts-ignore RELAY UPGRADE 13
+
         " $refType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),

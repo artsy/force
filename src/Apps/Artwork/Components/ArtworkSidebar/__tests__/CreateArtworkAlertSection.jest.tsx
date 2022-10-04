@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { CreateArtworkAlertSectionFragmentContainer } from "../CreateArtworkAlertSection"
+import { CreateArtworkAlertSectionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/CreateArtworkAlertSection"
 import { CreateArtworkAlertSection_Test_Query } from "__generated__/CreateArtworkAlertSection_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -13,7 +13,6 @@ jest.mock("System/useSystemContext")
 const { renderWithRelay } = setupTestWrapperTL<
   CreateArtworkAlertSection_Test_Query
 >({
-  // @ts-ignore RELAY UPGRADE 13
   Component: CreateArtworkAlertSectionFragmentContainer,
   query: graphql`
     query CreateArtworkAlertSection_Test_Query @relay_test_operation {

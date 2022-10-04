@@ -7,7 +7,7 @@ import { CategoriesApp_geneFamiliesConnection$data } from "__generated__/Categor
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { StickyProvider, Sticky } from "Components/Sticky"
-import { AppContainer } from "../Components/AppContainer"
+import { AppContainer } from "Apps/Components/AppContainer"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { Media } from "Utils/Responsive"
 
@@ -38,14 +38,12 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
                   <Media at="xs">
                     <StickyNavFragmentContainer
                       navBarHeight={mobile}
-                      // @ts-ignore RELAY UPGRADE 13
                       geneFamiliesConnection={geneFamiliesConnection}
                     />
                   </Media>
                   <Media greaterThan="xs">
                     <StickyNavFragmentContainer
                       navBarHeight={desktop}
-                      // @ts-ignore RELAY UPGRADE 13
                       geneFamiliesConnection={geneFamiliesConnection}
                     />
                   </Media>
@@ -58,7 +56,6 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
       </StickyProvider>
       <Spacer mt={6} />
       <GeneFamiliesFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         geneFamiliesConnection={geneFamiliesConnection}
       />
     </>

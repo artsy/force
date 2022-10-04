@@ -17,12 +17,12 @@ import { RouterLink } from "System/Router/RouterLink"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import createLogger from "Utils/logger"
-import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
-import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
+import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { useSystemContext } from "System/SystemContext"
 import { Status_order$data } from "__generated__/Status_order.graphql"
-import { getStatusCopy, continueToInboxText } from "../../Utils/getStatusCopy"
+import { getStatusCopy, continueToInboxText } from "Apps/Order/Utils/getStatusCopy"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -77,7 +77,6 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
                 </>
               ) : showTransactionSummary ? (
                 <Flex flexDirection="column">
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArtworkSummaryItem order={order} />
                   <StyledTransactionDetailsSummaryItem
                     order={order}
@@ -107,10 +106,8 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
           !shouldContinueToInbox && (
             <Flex flexDirection="column">
               <Flex flexDirection="column">
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <StyledShippingSummaryItem order={order} />
                 <PaymentMethodSummaryItem
-                  // @ts-ignore RELAY UPGRADE 13
                   order={order}
                   withDescription={false}
                   title="Payment method"

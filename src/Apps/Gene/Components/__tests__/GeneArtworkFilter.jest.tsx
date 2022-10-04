@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
+import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { graphql } from "react-relay"
 import { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -29,7 +29,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
   Component: ({ gene }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneArtworkFilterRefetchContainer gene={gene!} />
     </MockBoot>
   ),

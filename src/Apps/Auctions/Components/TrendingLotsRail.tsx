@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
-import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
 import { useAnalyticsContext } from "System"
 import { trackHelpers } from "Utils/cohesionHelpers"
@@ -34,7 +34,6 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
         return openLots.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={node}
               key={node.slug}
               contextModule={contextModule}

@@ -31,16 +31,13 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
       }}
     >
       <>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistSeriesMeta artistSeries={artistSeries} />
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistSeriesHeader artistSeries={artistSeries} />
 
         <Spacer mt={6} />
 
         <ArtistSeriesArtworksFilter
-          // @ts-ignore RELAY UPGRADE 13
           artistSeries={artistSeries}
           aggregations={
             sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
@@ -52,7 +49,6 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
             <Spacer mt={6} />
 
             <OtherArtistSeriesRail
-              // @ts-ignore RELAY UPGRADE 13
               artist={(railArtist ?? [])[0]!}
               title="Series by this artist"
               contextModule={ContextModule.moreSeriesByThisArtist}

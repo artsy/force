@@ -49,7 +49,6 @@ export const CellArticle = () => {
 
               return (
                 <CellArticleFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   article={props.article}
                   {...rest}
                 />

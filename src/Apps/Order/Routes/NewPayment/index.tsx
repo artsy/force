@@ -21,7 +21,7 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import { get } from "Utils/get"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
@@ -237,7 +237,6 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
             </>
           )}
           <Join separator={<Spacer mb={4} />}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <CreditCardPickerFragmentContainer
               order={order}
               me={me}
@@ -253,7 +252,6 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
             <TransactionDetailsSummaryItem order={order} />
           </Flex>

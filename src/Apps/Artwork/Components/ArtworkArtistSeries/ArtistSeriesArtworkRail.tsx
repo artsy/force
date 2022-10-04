@@ -57,7 +57,6 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               contextModule={ContextModule.artistSeriesRail}
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               onClick={() => {
                 const properties: ClickedArtworkGroup = {

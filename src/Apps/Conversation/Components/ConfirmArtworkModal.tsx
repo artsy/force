@@ -59,7 +59,6 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           </Button>
           <Spacer m={1} />
           <ConfirmArtworkButtonFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             disabled={!!isEdition && !selectedEdition}
             conversationID={conversationID}
@@ -77,14 +76,12 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
         </Flex>
       }
     >
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <CollapsibleArtworkDetailsFragmentContainer artwork={artwork} />
       <Separator mb={2} />
       {!!isEdition && editionSets?.length && (
         <Flex flexDirection="column">
           {editionSets?.map(edition => (
             <EditionSelectBoxFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               edition={edition!}
               selected={edition!.internalID === selectedEdition}
               onSelect={selectEdition}
@@ -139,7 +136,6 @@ export const ConfirmArtworkModalQueryRenderer: React.FC<{
       }}
       render={renderWithLoadProgress<ConfirmArtworkModalQuery$data>(
         ({ artwork }) => (
-          // @ts-ignore RELAY UPGRADE 13
           <ConfirmArtworkModalFragmentContainer artwork={artwork!} {...rest} />
         )
       )}

@@ -51,7 +51,6 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <EntityHeaderPartnerFragmentContainer
-      // @ts-ignore RELAY UPGRADE 13
       partner={exhibitor.partner}
       displayAvatar={false}
       alignItems="flex-start"

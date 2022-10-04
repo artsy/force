@@ -64,15 +64,12 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
           (key: keyof Omit<typeof viewer, " $refType">) => {
             const page = viewer[key]
 
-            // @ts-ignore RELAY UPGRADE 13
             if (!page.content) return null
 
-            // @ts-ignore RELAY UPGRADE 13
             const name = page.name.replace("How Auctions Work: ", "")
 
             return (
               <Tab key={key} name={name}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <HTML variant="sm" html={page.content} />
               </Tab>
             )
@@ -151,7 +148,6 @@ export const AuctionFAQsDialogQueryRenderer: React.FC<AuctionFAQsDialogQueryRend
           return (
             <AuctionFAQsDialogFragmentContainer
               onClose={onClose}
-              // @ts-ignore RELAY UPGRADE 13
               viewer={props.viewer}
             />
           )

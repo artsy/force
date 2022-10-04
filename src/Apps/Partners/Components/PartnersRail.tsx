@@ -32,7 +32,6 @@ const PartnersRail: React.FC<PartnersRailProps> = ({ partnerCategory }) => {
           return (
             <CellPartnerFragmentContainer
               key={partner.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               partner={partner}
             />
           )
@@ -141,7 +140,6 @@ export const PartnersRailQueryRenderer: React.FC<PartnersRailQueryRendererProps>
 
         return (
           <PartnersRailFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             partnerCategory={props.partnerCategory}
           />
         )

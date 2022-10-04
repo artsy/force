@@ -67,7 +67,6 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                 <Spacer mb={2} />
@@ -158,7 +157,6 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
 
         return (
           <OnboardingGeneFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             gene={props.gene}
             description={description}
           />

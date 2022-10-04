@@ -89,7 +89,6 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
     <Box id={scrollTo.substring(1)}>
       <LoadingArea isLoading={isLoading}>
         <ViewingRoomsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           edges={compact(viewingRooms)}
           eventTitle={eventTitle}
         />
@@ -99,7 +98,6 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
         <Box mt={6}>
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
-            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}
@@ -190,7 +188,6 @@ export const ViewingRoomsPaginatedRenderer: React.FC<
         return (
           <ViewingRoomsRefetchContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
             paramsPage={paramsPage!}
           />

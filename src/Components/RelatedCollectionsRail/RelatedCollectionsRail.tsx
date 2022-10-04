@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Rail } from "../Rail"
+import { Rail } from "Components/Rail"
 import { useTracking } from "react-tracking"
 
 interface RelatedCollectionsRailProps {
@@ -50,7 +50,6 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
                 <RelatedCollectionEntity
                   key={i}
                   lazyLoad={lazyLoadImages}
-                  // @ts-ignore RELAY UPGRADE 13
                   collection={slide}
                   slideIndex={i}
                 />

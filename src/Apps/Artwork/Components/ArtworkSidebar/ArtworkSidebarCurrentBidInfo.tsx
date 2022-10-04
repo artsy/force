@@ -15,7 +15,7 @@ import {
 import { useDialog } from "Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
-import { lotIsClosed } from "../../Utils/lotIsClosed"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
@@ -75,7 +75,6 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
 
   if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
     return (
-      // @ts-ignore RELAY UPGRADE 13
       <ArtworkSidebarBiddingClosedMessageFragmentContainer artwork={artwork} />
     )
   }

@@ -27,7 +27,6 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <EntityHeaderArtistFragmentContainer artist={artist} mb={2} />
       {artworks.length > 0 ? (
         <Shelf>
@@ -36,7 +35,6 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
               <ShelfArtworkFragmentContainer
                 key={artwork.internalID}
                 contextModule={{} as any} // TODO:
-                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 lazyLoad
               />
@@ -132,7 +130,6 @@ export const ArtistRailQueryRenderer: FC<ArtistRailQueryRendererProps> = ({
           return ARTIST_RAIL_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <ArtistRailFragmentContainer artist={props.artist} />
       }}
     />

@@ -73,7 +73,6 @@ export const NavBarMobileMenuInboxNotificationCountQueryRenderer: React.FC<{}> =
 
         return (
           <NavBarMobileMenuInboxNotificationCountFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             me={props.me}
           />
         )

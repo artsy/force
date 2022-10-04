@@ -29,7 +29,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ViewingRoomMeta viewingRoom={viewingRoom} />
 
       {isPreviewable && (
@@ -40,7 +39,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       )}
 
       <Join separator={<Spacer mt={4} />}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ViewingRoomHeader viewingRoom={viewingRoom} />
 
         {viewingRoom.status === "live" || isPreviewable ? (
@@ -50,7 +48,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
             <div>{children}</div>
           </>
         ) : (
-          // @ts-ignore RELAY UPGRADE 13
           <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
         )}
       </Join>

@@ -169,7 +169,6 @@ export const AuctionBuyersPremiumDialogQueryRenderer: React.FC<AuctionBuyersPrem
           return (
             <AuctionBuyersPremiumDialogFragmentContainer
               onClose={onClose}
-              // @ts-ignore RELAY UPGRADE 13
               sale={props.sale}
             />
           )

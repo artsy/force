@@ -56,7 +56,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
       <>
         <StackableBorderBox flexDirection="column" data-test="artistInfo">
           <EntityHeaderArtistFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artist={artist}
             FollowButton={
               <FollowArtistButtonQueryRenderer
@@ -72,7 +71,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
               <Spacer mt={2} />
 
               <ArtistBioFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 bio={artist}
                 onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
               />
@@ -81,7 +79,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
         </StackableBorderBox>
 
         <ArtistMarketInsightsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={artist}
           border={false}
           Container={Container}
@@ -91,7 +88,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
           artistID={artist.internalID}
           border={false}
           totalExhibitions={artist.counts?.partnerShows ?? 0}
-          // @ts-ignore RELAY UPGRADE 13
           exhibitions={compact(artist.exhibitionHighlights)}
           ViewAllLink={
             <RouterLink to={`/artist/${artist.slug}/cv`}>View all</RouterLink>
@@ -215,7 +211,6 @@ export const ArtistInfoQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artist) {
-          // @ts-ignore RELAY UPGRADE 13
           return <ArtistInfoFragmentContainer artist={props.artist} />
         }
       }}

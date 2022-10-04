@@ -11,10 +11,10 @@ import ReactDOM from "react-dom"
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
-import GridItem from "../Artwork/GridItem"
+import GridItem from "Components/Artwork/GridItem"
 import { withArtworkGridContext } from "./ArtworkGridContext"
 import { extractNodes } from "Utils/extractNodes"
-import { FlatGridItemFragmentContainer } from "../Artwork/FlatGridItem"
+import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type Artwork = ArtworkGrid_artworks$data["edges"][0]["node"]
@@ -178,7 +178,6 @@ export class ArtworkGridContainer extends React.Component<
         {nodes.map(artwork => {
           return (
             <Column span={[6, 4]} key={artwork.internalID} minWidth={0}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <FlatGridItemFragmentContainer artwork={artwork} />
             </Column>
           )

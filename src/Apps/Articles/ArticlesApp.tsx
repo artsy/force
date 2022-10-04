@@ -53,7 +53,6 @@ const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
 
       <Spacer mt={6} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArticlesIndexArticlesPaginationContainer viewer={viewer} />
     </>
   )

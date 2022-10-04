@@ -26,7 +26,6 @@ describe("HomeApp", () => {
   const { getWrapper } = setupTestWrapper<HomeApp_Test_Query>({
     Component: props => (
       <MockBoot>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <HomeAppFragmentContainer {...props} />
       </MockBoot>
     ),

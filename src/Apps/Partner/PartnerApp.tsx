@@ -45,14 +45,11 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
     <PartnerArtistsLoadingContextProvider>
       <StickyProvider>
         {profile && displayFullPartnerPage && (
-          // @ts-ignore RELAY UPGRADE 13
           <PartnerHeaderImage profile={profile} />
         )}
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerMetaFragmentContainer partner={partner} />
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerHeader partner={partner} />
 
         <FullBleed mb={[2, 4]}>
@@ -67,7 +64,6 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
         </FullBleed>
 
         {(displayFullPartnerPage || partnerType === "Brand") && (
-          // @ts-ignore RELAY UPGRADE 13
           <NavigationTabs partner={partner} />
         )}
 

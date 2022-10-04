@@ -7,9 +7,9 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { PastAuctions_viewer$data } from "__generated__/PastAuctions_viewer.graphql"
-import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail"
+import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { extractNodes } from "Utils/extractNodes"
-import { AuctionsZeroState } from "../Components/AuctionsZeroState"
+import { AuctionsZeroState } from "Apps/Auctions/Components/AuctionsZeroState"
 
 export interface PastAuctionsProps {
   viewer: PastAuctions_viewer$data
@@ -53,7 +53,6 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
       {nodes.map((node, index) => {
         return (
           <Box my={6} key={index}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <AuctionArtworksRailFragmentContainer sale={node} tabType="past" />
           </Box>
         )

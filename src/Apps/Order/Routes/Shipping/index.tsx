@@ -617,7 +617,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
               <SavedAddresses
-                // @ts-ignore RELAY UPGRADE 13
                 me={props.me}
                 selectedAddress={selectedAddressID}
                 onSelect={selectSavedAddressWithTracking}
@@ -690,7 +689,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <ShippingQuotesFragmentContainer
                 mb={3}
                 selectedShippingQuoteId={shippingQuoteId}
-                // @ts-ignore RELAY UPGRADE 13
                 shippingQuotes={compact(shippingQuotes)}
                 onSelect={handleShippingQuoteSelected}
               />
@@ -712,7 +710,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}

@@ -98,7 +98,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
         <BreadCrumbList items={items} />
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
         <Box mt={4}>
@@ -118,7 +117,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
           <Separator my={4} />
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CollectionsHubsNav marketingCollections={marketingCollections} />
 
           <Spacer my={6} />

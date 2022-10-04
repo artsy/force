@@ -66,7 +66,6 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
               return (
                 <CategoryRailFragmentContainer
                   key={internalID}
-                  // @ts-ignore RELAY UPGRADE 13
                   category={category}
                 />
               )
@@ -166,7 +165,6 @@ export const SettingsSavesCategoriesQueryRenderer = () => {
           return SETTINGS_SAVES_CATEGORIES_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesCategoriesPaginationContainer me={props.me} />
       }}
     />

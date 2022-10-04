@@ -1,4 +1,4 @@
-import { ArtworkDetailsMediumModalFragmentContainer } from "../ArtworkDetailsMediumModal"
+import { ArtworkDetailsMediumModalFragmentContainer } from "Apps/Artwork/Components/ArtworkDetailsMediumModal"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkDetailsMediumModal_Test_Query } from "__generated__/ArtworkDetailsMediumModal_Test_Query.graphql"
@@ -18,7 +18,6 @@ const { getWrapper } = setupTestWrapper<ArtworkDetailsMediumModal_Test_Query>({
 
     return (
       <ArtworkDetailsMediumModalFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artwork={props.artwork}
         onClose={jest.fn()}
         show

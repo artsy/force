@@ -21,7 +21,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairMeta fair={fair} />
 
       <BackLink my={2} to={`/fair/${fair.slug}`}>
