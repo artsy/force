@@ -25,22 +25,22 @@ const howItWorksImage3 = resized(
 
 const DATA: Array<StepsWithImageDataType> = [
   {
-    title: "Download the Artsy app",
-    text:
-      "Find the full range of My Collection features on the Artsy app, and look out for it coming soon to web.",
-    src: howItWorksImage1.src,
-    srcSet: howItWorksImage1.srcSet,
-  },
-  {
     title: "Add your artworks",
     text: "Upload images and details about your artworks to My Collection.",
     src: howItWorksImage2.src,
     srcSet: howItWorksImage2.srcSet,
   },
   {
-    title: "See insights",
+    title: "Check for insights",
     text:
       "Get free insights into the markets and careers of the artists in your collection.",
+    src: howItWorksImage1.src,
+    srcSet: howItWorksImage1.srcSet,
+  },
+  {
+    title: "Sell with Ease",
+    text:
+      "Our team of experts will give you a free price estimate on eligible artworks and find you the right buyer.",
     src: howItWorksImage3.src,
     srcSet: howItWorksImage3.srcSet,
   },
