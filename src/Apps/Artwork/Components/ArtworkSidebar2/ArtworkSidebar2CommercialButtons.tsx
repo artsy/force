@@ -290,6 +290,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
     return (
       <>
         <Spacer mt={2} />
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </>
     )
@@ -304,6 +305,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       ) : (
         <>
           <ArtworkSidebar2EditionSetFragmentContainer
+            /* @ts-ignore RELAY UPGRADE 13 */
             artwork={artwork}
             selectedEditionSet={selectedEditionSet as EditionSet}
             onSelectEditionSet={setSelectedEditionSet}
