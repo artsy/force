@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03bebfb548d5ea806cfcd24bee9b550e>>
+ * @generated SignedSource<<231878b886f7232a1b989ac3fefd09ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,17 +19,8 @@ export type ArtistRail_artist$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly avatar: {
-    readonly cropped: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly href: string | null;
-  readonly initials: string | null;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "ArtistRail_artist";
 };
 export type ArtistRail_artist$key = {
@@ -44,84 +35,16 @@ const node: ReaderFragment = {
   "name": "ArtistRail_artist",
   "selections": [
     {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderArtist_artist"
+    },
+    {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "initials",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedNationalityAndBirthday",
-      "storageKey": null
-    },
-    {
-      "alias": "avatar",
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 45
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 45
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:45,width:45)"
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
     },
     {
       "alias": null,
@@ -179,6 +102,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bdc42a5b2d30681b3865ef26be9dff31";
+(node as any).hash = "b65cc544c0dc2494ef6b51408a48f565";
 
 export default node;

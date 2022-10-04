@@ -8,6 +8,8 @@ import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { Intent, ContextModule, AuthContextModule } from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene$data
@@ -102,4 +104,35 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
   }
 )
 
-// TODO: QueryRenderer
+interface FollowGeneButtonQueryRendererProps
+  extends Omit<FollowGeneButtonProps, "gene"> {
+  id: string
+}
+
+export const FollowGeneButtonQueryRenderer: React.FC<FollowGeneButtonQueryRendererProps> = ({
+  id,
+  ...rest
+}) => {
+  return (
+    <SystemQueryRenderer<FollowGeneButtonQuery>
+      lazyLoad
+      query={graphql`
+        query FollowGeneButtonQuery($id: String!) {
+          gene(id: $id) {
+            ...FollowGeneButton_gene
+          }
+        }
+      `}
+      placeholder={<FollowButton {...rest} />}
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props?.gene) {
+          return <FollowButton {...rest} />
+        }
+
+        // @ts-ignore RELAY UPGRADE 13
+        return <FollowGeneButtonFragmentContainer {...rest} gene={props.gene} />
+      }}
+    />
+  )
+}

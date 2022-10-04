@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa4a68d9fad47d4257951e1d60799287>>
+ * @generated SignedSource<<287e920450c426d6bfa3b578c70b3e0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -258,17 +258,7 @@ return {
                             "name": "profile",
                             "plural": false,
                             "selections": [
-                              (v5/*: any*/),
-                              (v3/*: any*/),
-                              (v4/*: any*/),
                               (v2/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "isFollowed",
-                                "storageKey": null
-                              },
                               {
                                 "alias": "avatar",
                                 "args": null,
@@ -326,6 +316,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
+                              (v5/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -407,12 +398,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c3ab4627a3e7a229083917b5e63258fc",
+    "cacheID": "f070677a5e86cad29e475bc85017ba4c",
     "id": null,
     "metadata": {},
     "name": "InstitutionPartnershipsProfilesQuery",
     "operationKind": "query",
-    "text": "query InstitutionPartnershipsProfilesQuery {\n  orderedSet(id: \"62ace82dd1b5bd000b4e674e\") {\n    ...InstitutionPartnershipsProfiles_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Profile {\n      internalID\n      owner {\n        __typename\n        ... on Partner {\n          ...CellPartner_partner\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FairOrganizer {\n          id\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
+    "text": "query InstitutionPartnershipsProfilesQuery {\n  orderedSet(id: \"62ace82dd1b5bd000b4e674e\") {\n    ...InstitutionPartnershipsProfiles_orderedSet\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InstitutionPartnershipsProfiles_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Profile {\n      internalID\n      owner {\n        __typename\n        ... on Partner {\n          ...CellPartner_partner\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FairOrganizer {\n          id\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

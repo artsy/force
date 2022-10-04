@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { InstitutionsRouteFragmentContainer } from "../InstitutionsRoute"
+import { InstitutionsRouteFragmentContainer } from "Apps/Partners/Routes/InstitutionsRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { InstitutionsRouteFragmentContainer_Test_Query } from "__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "DevTools"
@@ -10,7 +10,7 @@ import { useRouter } from "System/Router/useRouter"
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
-  FollowProfileButtonFragmentContainer: () => null,
+  FollowProfileButtonQueryRenderer: () => null,
 }))
 jest.mock("react-tracking", () => ({
   useTracking: () => ({}),

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<912bb7583795551e2c55bf7f5018615b>>
+ * @generated SignedSource<<11d04dc2d87a7f6579de8a618a2e218c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,6 @@ export type OnboardingSearchResults_viewer$data = {
           // value in case none of the concrete values match.
           readonly __typename: "%other";
         };
-        readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
       } | {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
@@ -139,11 +138,6 @@ return {
                   "selections": [
                     (v1/*: any*/),
                     {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowProfileButton_profile"
-                    },
-                    {
                       "alias": null,
                       "args": null,
                       "concreteType": null,
@@ -186,6 +180,6 @@ return {
 };
 })();
 
-(node as any).hash = "7f56c00baf526e9d490ab6e2413c0567";
+(node as any).hash = "6308eedc3c65cbc97ef33cc1e3d1970e";
 
 export default node;

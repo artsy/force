@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7355b34e5519fc57b35ea32d29aa16c>>
+ * @generated SignedSource<<bd9354ce5a783e5d65594d8e42355b65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,10 +27,8 @@ export type ArtistArtworkFilter_artist$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
   } | null;
   readonly internalID: string;
-  readonly isFollowed: boolean | null;
   readonly name: string | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
 };
 export type ArtistArtworkFilter_artist$key = {
@@ -50,11 +48,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistArtworkFilter_artist",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
-    },
     {
       "alias": null,
       "args": null,
@@ -184,13 +177,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isFollowed",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
     }
@@ -199,6 +185,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2deb3c44274322bd01c9b579d39c0a4f";
+(node as any).hash = "44474a8e0f69fe658c8e8df3e2bc4ceb";
 
 export default node;

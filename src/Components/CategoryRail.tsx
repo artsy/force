@@ -1,7 +1,6 @@
 import { FC, Fragment } from "react"
 import {
   Box,
-  EntityHeader,
   Flex,
   Shelf,
   Skeleton,
@@ -15,7 +14,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { CategoryRailQuery } from "__generated__/CategoryRailQuery.graphql"
 import { CategoryRail_category$data } from "__generated__/CategoryRail_category.graphql"
 import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
-import { FollowGeneButtonFragmentContainer } from "./FollowButton/FollowGeneButton"
+import { EntityHeaderGeneFragmentContainer } from "./EntityHeaders/EntityHeaderGene"
 
 interface CategoryRailProps {
   category: CategoryRail_category$data
@@ -24,27 +23,12 @@ interface CategoryRailProps {
 const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
   if (!category || !category.name) return null
 
-  const artworks = extractNodes(category.filterArtworksConnection)
+  const artworks = extractNodes(category.filterArtworks)
 
   return (
     <>
-      <EntityHeader
-        name={category.name}
-        initials={category.name[0]}
-        href={category.href!}
-        image={{
-          src: category.avatar?.cropped?.src,
-          srcSet: category.avatar?.cropped?.srcSet,
-        }}
-        FollowButton={
-          // @ts-ignore RELAY UPGRADE 13
-          <FollowGeneButtonFragmentContainer gene={category} size="small">
-            Follow
-          </FollowGeneButtonFragmentContainer>
-        }
-        mb={2}
-      />
-
+      {/* @ts-ignore RELAY UPGRADE 13 */}
+      <EntityHeaderGeneFragmentContainer gene={category} />
       {artworks.length > 0 ? (
         <Shelf>
           {artworks.map(artwork => {
@@ -107,16 +91,10 @@ export const CategoryRailFragmentContainer = createFragmentContainer(
   {
     category: graphql`
       fragment CategoryRail_category on Gene {
+        ...EntityHeaderGene_gene
         name
         href
-        avatar: image {
-          cropped(width: 45, height: 45) {
-            src
-            srcSet
-          }
-        }
-        ...FollowGeneButton_gene
-        filterArtworksConnection(first: 10) {
+        filterArtworks: filterArtworksConnection(first: 10) {
           edges {
             node {
               internalID

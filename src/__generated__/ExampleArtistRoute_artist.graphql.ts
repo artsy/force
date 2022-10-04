@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2db3c5f9fc0ade0d02e9c835a444d900>>
+ * @generated SignedSource<<55a9a38a78b2875619b8e79ec515bed6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ExampleArtistRoute_artist$data = {
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   readonly " $fragmentType": "ExampleArtistRoute_artist";
 };
 export type ExampleArtistRoute_artist$key = {
@@ -29,11 +28,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ExampleArtistRoute_artist",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
-    },
     {
       "alias": null,
       "args": null,
@@ -67,6 +61,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5c3a5b92ce4c697e1a50a88e461491a2";
+(node as any).hash = "c3e11e91b699af66a2aeadf0fc2222b3";
 
 export default node;

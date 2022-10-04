@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b9d2bcc3f9857134a3726977d407d66>>
+ * @generated SignedSource<<a17f0f21d67ccdfdf3b9f225bcbca2ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type ArtworkSidebarArtists_artwork$data = {
     readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist" | "FollowArtistButton_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   } | null> | null;
-  readonly cultural_maker: string | null;
+  readonly culturalMaker: string | null;
   readonly " $fragmentType": "ArtworkSidebarArtists_artwork";
 };
 export type ArtworkSidebarArtists_artwork$key = {
@@ -26,19 +26,13 @@ export type ArtworkSidebarArtists_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "showFollowSuggestions"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSidebarArtists_artwork",
   "selections": [
     {
-      "alias": "cultural_maker",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "culturalMaker",
@@ -77,17 +71,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "name",
           "storageKey": null
-        },
-        {
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "showFollowSuggestions",
-              "variableName": "showFollowSuggestions"
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
         }
       ],
       "storageKey": null
@@ -97,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7b030820d6156f2b5417ed17d67e09f7";
+(node as any).hash = "02f86e63433eee7f88516a49cc679259";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6044b1fb108fa62f34b9dcdaef5d88d>>
+ * @generated SignedSource<<f2175bf388e79affb38a5ac8568558af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type ArtistSeriesHeader_artistSeries$data = {
     readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null> | null;
   readonly artworksCountMessage: string | null;
   readonly descriptionFormatted: string | null;
@@ -204,12 +203,7 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v1/*: any*/),
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
-        }
+        (v1/*: any*/)
       ],
       "storageKey": "artists(size:1)"
     }
@@ -219,6 +213,6 @@ return {
 };
 })();
 
-(node as any).hash = "68596204c6cde0509a32283681e33a4d";
+(node as any).hash = "1e87201a3cb974b9625f5b9b327b00e4";
 
 export default node;

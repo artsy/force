@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d3c132048a2efb4c9ccf8704c03f414>>
+ * @generated SignedSource<<bc0e4a3b31c89234adf98f752be16c35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,6 @@ export type OnboardingOrderedSet_orderedSet$data = {
           // value in case none of the concrete values match.
           readonly __typename: "%other";
         };
-        readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
       } | {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
@@ -113,11 +112,6 @@ return {
                   "selections": [
                     (v1/*: any*/),
                     {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowProfileButton_profile"
-                    },
-                    {
                       "alias": null,
                       "args": null,
                       "concreteType": null,
@@ -160,6 +154,6 @@ return {
 };
 })();
 
-(node as any).hash = "b27bcdc1d86f123ff879366341640311";
+(node as any).hash = "833d51a13cbdbf0213aaaacea673e85a";
 
 export default node;

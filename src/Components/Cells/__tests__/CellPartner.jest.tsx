@@ -2,12 +2,12 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { CellPartnerFragmentContainer_Test_Query } from "__generated__/CellPartnerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { CellPartnerFragmentContainer } from "../CellPartner"
+import { CellPartnerFragmentContainer } from "Components/Cells/CellPartner"
 
 jest.unmock("react-relay")
 
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
-  FollowProfileButtonFragmentContainer: () => null,
+  FollowProfileButtonQueryRenderer: () => null,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<
