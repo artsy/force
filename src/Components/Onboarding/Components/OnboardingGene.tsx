@@ -7,11 +7,11 @@ import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingThankYou } from "../Views/OnboardingThankYou"
+import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
 import { ContextModule } from "@artsy/cohesion"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene$data
@@ -43,17 +43,15 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           </Text>
         </Box>
 
-        <FollowGeneButtonFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
-          gene={gene}
+        <FollowGeneButtonQueryRenderer
+          id={gene.internalID}
           display={["none", "block"]}
           contextModule={ContextModule.onboardingFlow}
         />
       </Flex>
 
-      <FollowGeneButtonFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
-        gene={gene}
+      <FollowGeneButtonQueryRenderer
+        id={gene.internalID}
         mt={2}
         display={["block", "none"]}
         size="small"
@@ -87,6 +85,7 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
   {
     gene: graphql`
       fragment OnboardingGene_gene on Gene {
+        internalID
         name
         artworks: filterArtworksConnection(
           first: 50
@@ -107,7 +106,6 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...FollowGeneButton_gene
       }
     `,
   }

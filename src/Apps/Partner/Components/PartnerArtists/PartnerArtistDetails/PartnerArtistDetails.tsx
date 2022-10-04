@@ -2,15 +2,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
-import {
-  Box,
-  Column,
-  GridColumns,
-  ReadMore,
-  Separator,
-  Text,
-} from "@artsy/palette"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
+import { Column, GridColumns, ReadMore, Separator, Text } from "@artsy/palette"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
@@ -34,8 +27,9 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   } = partnerArtist
 
   return (
-    <Box>
+    <>
       <Separator id="jump--PartnerArtistDetails" mt={4} />
+
       <GridColumns gridRowGap={[2, 4]} my={4}>
         <Column span={6}>
           <GridColumns gridRowGap={2}>
@@ -43,45 +37,46 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
               <RouterLink to={href} textDecoration="none">
                 <Text variant="xl">{name}</Text>
               </RouterLink>
+
               <Text color="black60" variant="lg-display">
                 {formattedNationalityAndBirthday}
               </Text>
             </Column>
+
             <Column span={[12, 6]}>
-              <FollowArtistButton
-                // @ts-ignore RELAY UPGRADE 13
-                artist={partnerArtist.node}
+              <FollowArtistButtonQueryRenderer
+                id={partnerArtist.node.internalID}
                 contextModule={ContextModule.artistHeader}
                 width="100%"
               />
             </Column>
           </GridColumns>
         </Column>
+
         <Column span={6}>
           {biographyBlurb?.text && (
             <Text>
               <ReadMore maxChars={320} content={biographyBlurb.text}></ReadMore>
             </Text>
           )}
+
           {biographyBlurb?.credit && (
             <Text mt={1} color="black60">
-              <ReadMore
-                maxChars={320}
-                content={`— ${biographyBlurb.credit}`}
-              ></ReadMore>
+              <ReadMore maxChars={320} content={`— ${biographyBlurb.credit}`} />
             </Text>
           )}
         </Column>
+
         <Column span={12} maxWidth="100%">
           <PartnerArtistArtworksRailPaginationContainer
             partnerId={partnerId}
             artistId={partnerArtist.node.slug}
             // @ts-ignore RELAY UPGRADE 13
             partnerArtist={partnerArtist}
-          ></PartnerArtistArtworksRailPaginationContainer>
+          />
         </Column>
       </GridColumns>
-    </Box>
+    </>
   )
 }
 
@@ -96,11 +91,11 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
         }
         ...PartnerArtistArtworksRail_partnerArtist
         node {
+          internalID
           slug
           name
           href
           formattedNationalityAndBirthday
-          ...FollowArtistButton_artist
         }
       }
     `,

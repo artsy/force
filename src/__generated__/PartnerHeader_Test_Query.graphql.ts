@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<197be7c29e113ea0c86f638fd5bb997f>>
+ * @generated SignedSource<<55000f2161f4ff2f575e7389a49c0f34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,9 +38,6 @@ export type PartnerHeader_Test_Query$rawResponse = {
       } | null;
       readonly id: string;
       readonly internalID: string;
-      readonly isFollowed: boolean | null;
-      readonly name: string | null;
-      readonly slug: string;
     } | null;
     readonly slug: string;
     readonly type: string | null;
@@ -64,36 +61,22 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -140,7 +123,13 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -148,7 +137,13 @@ return {
             "name": "type",
             "storageKey": null
           },
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -157,6 +152,13 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -209,23 +211,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/),
-              (v2/*: any*/),
-              (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isFollowed",
-                "storageKey": null
-              }
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -273,7 +259,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -283,14 +269,14 @@ return {
             ],
             "storageKey": "locationsConnection(first:20)"
           },
-          (v3/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"white-cube\")"
       }
     ]
   },
   "params": {
-    "cacheID": "3a44ba6e8ebb3ad8bbd00dadda34cc8a",
+    "cacheID": "795f99676da85f6dcccaacde39350304",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -300,7 +286,7 @@ return {
           "plural": false,
           "type": "Partner"
         },
-        "partner.id": (v4/*: any*/),
+        "partner.id": (v2/*: any*/),
         "partner.locations": {
           "enumValues": null,
           "nullable": true,
@@ -319,15 +305,15 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "partner.locations.edges.node.city": (v5/*: any*/),
-        "partner.locations.edges.node.id": (v4/*: any*/),
+        "partner.locations.edges.node.city": (v3/*: any*/),
+        "partner.locations.edges.node.id": (v2/*: any*/),
         "partner.locations.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "partner.name": (v5/*: any*/),
+        "partner.name": (v3/*: any*/),
         "partner.profile": {
           "enumValues": null,
           "nullable": true,
@@ -346,25 +332,17 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "partner.profile.icon.resized.src": (v6/*: any*/),
-        "partner.profile.icon.resized.srcSet": (v6/*: any*/),
-        "partner.profile.id": (v4/*: any*/),
-        "partner.profile.internalID": (v4/*: any*/),
-        "partner.profile.isFollowed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "partner.profile.name": (v5/*: any*/),
-        "partner.profile.slug": (v4/*: any*/),
-        "partner.slug": (v4/*: any*/),
-        "partner.type": (v5/*: any*/)
+        "partner.profile.icon.resized.src": (v4/*: any*/),
+        "partner.profile.icon.resized.srcSet": (v4/*: any*/),
+        "partner.profile.id": (v2/*: any*/),
+        "partner.profile.internalID": (v2/*: any*/),
+        "partner.slug": (v2/*: any*/),
+        "partner.type": (v3/*: any*/)
       }
     },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

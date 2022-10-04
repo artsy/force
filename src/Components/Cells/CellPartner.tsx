@@ -4,8 +4,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
-import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
-import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 
 export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
   partner: CellPartner_partner$data
@@ -112,7 +112,6 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
           slug
         }
         profile {
-          ...FollowProfileButton_profile
           image {
             cropped(
               width: 445

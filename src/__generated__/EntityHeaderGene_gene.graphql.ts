@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f104dd219bd6b88f92de82ccb5bc5fb>>
+ * @generated SignedSource<<f4f6588a18ac558b5b909639b16ed536>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,6 @@ export type EntityHeaderGene_gene$data = {
   readonly href: string | null;
   readonly internalID: string;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   readonly " $fragmentType": "EntityHeaderGene_gene";
 };
 export type EntityHeaderGene_gene$key = {
@@ -39,11 +38,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityHeaderGene_gene",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
-    },
     {
       "alias": null,
       "args": null,
@@ -160,6 +154,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cb9d9de7329f02413194a65fd768cb10";
+(node as any).hash = "90714ad51091e668d2a1eae00ca3d146";
 
 export default node;

@@ -1,120 +1,39 @@
-import { ArtistInfoFixture } from "Apps/__tests__/Fixtures/Artwork/ArtistInfo"
-import { SystemContextProvider } from "System"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
-import { mount } from "enzyme"
-import { RelayProp, graphql } from "react-relay"
-import { ArtistInfo } from "../ArtistInfo"
-import { EntityHeader } from "@artsy/palette"
+import { graphql } from "react-relay"
+import { ArtistInfoFragmentContainer } from "Apps/Artwork/Components/ArtistInfo"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 
-jest.unmock("react-tracking")
+jest.unmock("react-relay")
 
-graphql`
-  query ArtistInfo_Test_Query @raw_response_type {
-    artist(id: "banksy") {
-      ...ArtistInfo_artist
+jest.mock("Components/ArtistMarketInsights", () => ({
+  ArtistMarketInsightsFragmentContainer: () =>
+    "ArtistMarketInsightsFragmentContainer",
+}))
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtistInfoFragmentContainer,
+  query: graphql`
+    query ArtistInfo_Test_Query @relay_test_operation {
+      artist(id: "example") {
+        ...ArtistInfo_artist
+      }
     }
-  }
-`
+  `,
+})
 
 describe("ArtistInfo", () => {
-  let props
-  let context
-  const getWrapper = (passedProps = props) => {
-    return mount(
-      <SystemContextProvider {...context}>
-        <ArtistInfo {...passedProps} />
-      </SystemContextProvider>
-    )
-  }
-
-  beforeAll(() => {
-    context = {
-      mediator: { ready: () => true, trigger: jest.fn() },
-      relay: { environment: {} } as RelayProp,
-      user: null,
-    }
-    props = { artist: ArtistInfoFixture }
-  })
-
-  describe("ArtistInfo for artwork with complete artist info", () => {
-    it("renders a correct component tree", () => {
-      const component = getWrapper()
-      expect(component.find(EntityHeader).length).toBe(1)
-      expect(component.find("ArtistBio").length).toBe(1)
-      expect(component.find("MarketInsights").length).toBe(1)
-      expect(component.find("SelectedExhibitions").length).toBe(1)
-    })
-  })
-
-  describe("ArtistInfo for artwork with incomplete artist info", () => {
-    it("Hides 'Show artist insights' button if exhibition count does not meet minimum", async () => {
-      const artist = {
-        ...ArtistInfoFixture,
-        highlights: {
-          ...ArtistInfoFixture?.highlights,
-          partnersConnection: null,
-        },
-        collections: null,
-        auctionResultsConnection: null,
-        exhibition_highlights: {
-          ...ArtistInfoFixture?.exhibition_highlights,
-          length: 1,
-        },
-      }
-      const component = getWrapper({ artist })
-      expect(component.find("Button").length).toBe(1)
+  it("renders correctly", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "Example Artist",
+        formattedNationalityAndBirthday: "American, b. 1980",
+      }),
     })
 
-    it("hides ArtistBio if no data", async () => {
-      const artist = {
-        ...ArtistInfoFixture,
-        biographyBlurb: {
-          ...ArtistInfoFixture?.biographyBlurb,
-          text: null,
-        },
-      }
-      const component = getWrapper({ artist })
-      expect(component.find("ArtistBio").length).toBe(0)
-    })
-
-    it("hides MarketInsights if no data", async () => {
-      const artist = {
-        ...ArtistInfoFixture,
-        highlights: {
-          ...ArtistInfoFixture?.highlights,
-          partnersConnection: null,
-        },
-        collections: null,
-        auctionResultsConnection: null,
-      }
-      const component = getWrapper({ artist })
-      expect(component.find("MarketInsights").html()).toBe(null)
-    })
-
-    it("hides SelectedExhibitions if no data", async () => {
-      const artist = {
-        ...ArtistInfoFixture,
-        exhibition_highlights: [],
-      }
-      const component = getWrapper({ artist })
-      expect(component.find("SelectedExhibitions").html()).toBe(null)
-    })
-  })
-
-  it("opens auth modal with expected args when following an artist", () => {
-    const component = getWrapper()
-    component.find(FollowArtistButton).find("button").first().simulate("click")
-    expect(context.mediator.trigger).toBeCalledWith("open:auth", {
-      mode: "signup",
-      contextModule: "aboutTheWork",
-      copy: "Sign up to follow Pablo Picasso",
-      intent: "followArtist",
-      afterSignUpAction: {
-        action: "follow",
-        kind: "artist",
-        objectId: "pablo-picasso",
-      },
-      redirectTo: "http://localhost/",
-    })
+    expect(screen.getByText("Example Artist")).toBeInTheDocument()
+    expect(screen.getByText("American, b. 1980")).toBeInTheDocument()
+    expect(
+      screen.getByText("ArtistMarketInsightsFragmentContainer")
+    ).toBeInTheDocument()
   })
 })

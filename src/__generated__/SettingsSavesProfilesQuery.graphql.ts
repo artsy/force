@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95bc48063b9182e19401a0884fb644b1>>
+ * @generated SignedSource<<7ce3208ae624514c64a3897ab0e3daa5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -148,13 +148,6 @@ v14 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v15 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isFollowed",
   "storageKey": null
 };
 return {
@@ -338,11 +331,7 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v14/*: any*/),
-                                          (v12/*: any*/),
-                                          (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v15/*: any*/),
                                           (v10/*: any*/),
                                           {
                                             "alias": null,
@@ -376,7 +365,8 @@ return {
                                               }
                                             ],
                                             "storageKey": null
-                                          }
+                                          },
+                                          (v14/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -425,12 +415,9 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v14/*: any*/),
-                                          (v12/*: any*/),
-                                          (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v15/*: any*/),
-                                          (v13/*: any*/)
+                                          (v13/*: any*/),
+                                          (v14/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -464,14 +451,11 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v14/*: any*/),
-                                          (v12/*: any*/),
-                                          (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v15/*: any*/),
                                           (v6/*: any*/),
                                           (v13/*: any*/),
-                                          (v10/*: any*/)
+                                          (v10/*: any*/),
+                                          (v14/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -557,12 +541,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "035d604bf1e2380afaa1429dede21ec6",
+    "cacheID": "b77583e2678bbe77e676070a68f80dcb",
     "id": null,
     "metadata": {},
     "name": "SettingsSavesProfilesQuery",
     "operationKind": "query",
-    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...EntityHeaderPartner_partner\n              }\n              ... on Fair {\n                ...EntityHeaderFair_fair\n              }\n              ... on FairOrganizer {\n                ...EntityHeaderFairOrganizer_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    internalID\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    internalID\n    initials\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...EntityHeaderPartner_partner\n              }\n              ... on Fair {\n                ...EntityHeaderFair_fair\n              }\n              ... on FairOrganizer {\n                ...EntityHeaderFairOrganizer_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();

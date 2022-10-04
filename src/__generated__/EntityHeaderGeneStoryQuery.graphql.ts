@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73f294ec6c5ea544495f3a0c2a38abf3>>
+ * @generated SignedSource<<3e06b48347bdd1f9e8923f360b648270>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -86,21 +86,6 @@ return {
         "name": "gene",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -112,14 +97,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isFollowed",
+            "name": "href",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -212,19 +197,20 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": "filterArtworksConnection(first:1)"
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4ba967064bce8d7607449106b38e21b1",
+    "cacheID": "85950cb0e2b64569fe90a62dcf601e15",
     "id": null,
     "metadata": {},
     "name": "EntityHeaderGeneStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderGeneStoryQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
+    "text": "query EntityHeaderGeneStoryQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

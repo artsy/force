@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80cd456d6d033fe8f0aa9bad83a4a630>>
+ * @generated SignedSource<<1f209c20ef01ef71796440620a7a06a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type GeneShow_gene$data = {
   } | null;
   readonly displayName: string | null;
   readonly formattedDescription: string | null;
+  readonly internalID: string;
   readonly name: string | null;
   readonly similar: {
     readonly edges: ReadonlyArray<{
@@ -32,7 +33,7 @@ export type GeneShow_gene$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene" | "GeneArtworkFilter_gene" | "GeneMeta_gene">;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene" | "GeneMeta_gene">;
   readonly " $fragmentType": "GeneShow_gene";
 };
 export type GeneShow_gene$key = {
@@ -45,25 +46,26 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   }
 ],
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  },
+v3 = [
   (v0/*: any*/),
+  (v1/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -120,12 +122,8 @@ return {
       "kind": "FragmentSpread",
       "name": "GeneArtworkFilter_gene"
     },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
-    },
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,7 +146,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "GeneConnection",
       "kind": "LinkedField",
       "name": "similar",
@@ -169,7 +167,7 @@ return {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             }
           ],
@@ -180,7 +178,7 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "ArtistConnection",
       "kind": "LinkedField",
       "name": "artistsConnection",
@@ -201,7 +199,7 @@ return {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             }
           ],
@@ -216,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "08451d4b8e9ae7f26fd88085b5648485";
+(node as any).hash = "e8f002f3b327a956207347d0a84533db";
 
 export default node;

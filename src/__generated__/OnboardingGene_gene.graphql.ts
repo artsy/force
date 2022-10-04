@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da0b8e87af66d5af2868e953dc735494>>
+ * @generated SignedSource<<ff10f17f0d421a768c85c137fbd5fd8a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,8 @@ export type OnboardingGene_gene$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly internalID: string;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
   readonly " $fragmentType": "OnboardingGene_gene";
 };
 export type OnboardingGene_gene$key = {
@@ -28,12 +28,21 @@ export type OnboardingGene_gene$key = {
   readonly " $fragmentSpreads": FragmentRefs<"OnboardingGene_gene">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "OnboardingGene_gene",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -116,13 +125,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -136,17 +139,13 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "filterArtworksConnection(first:50,forSale:true,height:\"*-*\",inquireableOnly:true,marketable:true,offerable:true,page:1,priceRange:\"*-*\",sort:\"-decayed_merch\",width:\"*-*\")"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "b3e1ab6675c1dadf0befc91eb69b357b";
+(node as any).hash = "3e738a263393a1812162d68c8845a834";
 
 export default node;

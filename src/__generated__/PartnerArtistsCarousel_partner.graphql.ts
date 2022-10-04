@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2329a48ed01028626c3a8c11b5c2e65e>>
+ * @generated SignedSource<<736e947799c840b8ef0d535bd4854ba2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistsCarousel_partner$data = {
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
-      readonly counts: {
-        readonly artworks: any | null;
-      } | null;
       readonly node: {
-        readonly id: string;
+        readonly internalID: string;
         readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
       } | null;
-      readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
     } | null> | null;
   } | null;
   readonly slug: string;
@@ -81,44 +78,26 @@ return {
             {
               "alias": null,
               "args": null,
-              "concreteType": "PartnerArtistCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artworks",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
               "concreteType": "Artist",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArtist_artist"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
                   "storageKey": null
                 },
                 (v0/*: any*/)
               ],
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "PartnerArtistsCarouselItem_artist"
             }
           ],
           "storageKey": null
@@ -132,6 +111,6 @@ return {
 };
 })();
 
-(node as any).hash = "b4252ea48c05f4c22efdc890b6891d28";
+(node as any).hash = "29d1837af9e22e88c9fd85a64a7317f2";
 
 export default node;
