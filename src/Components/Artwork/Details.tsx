@@ -2,7 +2,7 @@ import { Link, Text, LinkProps, Flex, Spacer, Box, Join } from "@artsy/palette"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
@@ -209,7 +209,6 @@ export const Details: React.FC<DetailsProps> = ({
         {showSaveButton && (
           <NewSaveButtonFragmentContainer
             contextModule={contextModule!}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={rest.artwork}
           />
         )}
@@ -218,7 +217,6 @@ export const Details: React.FC<DetailsProps> = ({
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && showHoverDetails && (
-          // @ts-ignore RELAY UPGRADE 13
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>

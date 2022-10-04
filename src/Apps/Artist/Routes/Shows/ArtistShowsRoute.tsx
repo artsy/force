@@ -16,14 +16,12 @@ const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mb={4} />}>
         <ArtistShowsGroupRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.currentShows!}
           title="Current Shows"
           sort="END_AT_ASC"
           status="running"
         />
         <ArtistShowsGroupRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.upcomingShows!}
           title="Upcoming Shows"
           sort="START_AT_ASC"

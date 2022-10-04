@@ -57,7 +57,6 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
       {artworks
         .map(artwork => {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <FillwidthItem
               key={artwork.id}
               artwork={artwork}

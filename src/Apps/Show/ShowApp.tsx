@@ -43,7 +43,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ShowMeta show={show} />
 
       <>
@@ -55,7 +54,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
           }}
         >
           {show.fair?.hasFullFeature && isFairBooth && (
-            // @ts-ignore RELAY UPGRADE 13
             <BackToFairBanner show={show} />
           )}
 
@@ -63,7 +61,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Join separator={<Spacer mt={4} />}>
             {Number(show?.images?.length) > 0 && (
-              // @ts-ignore RELAY UPGRADE 13
               <ShowInstallShots show={show} />
             )}
 
@@ -72,7 +69,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                 span={hasWideHeader ? [12, 8, 6] : 6}
                 wrap={hasWideHeader}
               >
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ShowHeader show={show} />
 
                 {!hasAbout && show.href && (
@@ -88,7 +84,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
               {hasAbout && (
                 <Column span={6}>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ShowAbout show={show} />
 
                   {show.href && (
@@ -101,7 +96,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
               {hasViewingRoom && (
                 <Column span={5} start={8}>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ShowViewingRoom show={show} />
                 </Column>
               )}
@@ -113,13 +107,12 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                   sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
                 }
                 counts={sidebar?.counts as Counts}
-                // @ts-ignore RELAY UPGRADE 13
                 show={show}
               />
             ) : (
               <>
                 <Separator as="hr" />
-                {/* @ts-ignore RELAY UPGRADE 13 */}
+
                 <ShowArtworksEmptyState show={show} />
               </>
             )}
@@ -127,7 +120,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             {!show.fair?.hasFullFeature && (
               <>
                 <Separator as="hr" />
-                {/* @ts-ignore RELAY UPGRADE 13 */}
+
                 <ShowContextCard show={show} />
               </>
             )}

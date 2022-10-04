@@ -22,19 +22,16 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
       {showWorksForYouTab && (
         <Tab name="Works For You">
           <Join separator={<Spacer mt={2} />}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <MyBidsFragmentContainer me={viewer.me!} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
       )}
       <Tab name="Current Highlights">
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <StandoutLotsRailFragmentContainer viewer={viewer} />
       </Tab>
       <Tab name="Trending Lots">
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <TrendingLotsRailFragmentContainer viewer={viewer} />
       </Tab>
     </Tabs>

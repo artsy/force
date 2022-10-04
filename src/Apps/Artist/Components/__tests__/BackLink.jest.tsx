@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BackLinkFragmentContainer } from "../BackLink"
+import { BackLinkFragmentContainer } from "Apps/Artist/Components/BackLink"
 import { BackLink_Test_Query } from "__generated__/BackLink_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools"
@@ -37,7 +37,6 @@ describe("BackLink", () => {
       Component: props => {
         return (
           <MockBoot>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <BackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
@@ -77,7 +76,6 @@ describe("BackLink", () => {
         return (
           <MockBoot>
             <BackLinkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist!}
               artworkId={artworkId}
             />

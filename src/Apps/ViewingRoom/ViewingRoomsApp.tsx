@@ -28,14 +28,12 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
         <Text variant="lg-display">Featured</Text>
 
         <ViewingRoomsFeaturedRailFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           featuredViewingRooms={featuredViewingRooms}
         />
 
         <Text variant="lg-display">Latest</Text>
 
         <ViewingRoomsLatestGridFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           viewingRooms={allViewingRooms}
         />
       </Join>

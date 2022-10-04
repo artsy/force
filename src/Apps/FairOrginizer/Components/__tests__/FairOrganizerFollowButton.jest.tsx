@@ -1,10 +1,10 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
-import { FairOrganizerFollowButtonFragmentContainer } from "../FairOrganizerFollowButton"
+import { FairOrganizerFollowButtonFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { useSystemContext } from "System/useSystemContext"
-import { fairOrganizerFollowMutation } from "../../Mutations/FairOrganizerFollowMutation"
+import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 
 jest.unmock("react-relay")
 jest.mock("Utils/openAuthModal")
@@ -14,7 +14,6 @@ jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation.ts")
 describe("FairOrganizerFollowButton", () => {
   const { getWrapper } = setupTestWrapper<FairOrganizerFollowButton_Test_Query>(
     {
-      // @ts-ignore RELAY UPGRADE 13
       Component: FairOrganizerFollowButtonFragmentContainer,
       query: graphql`
         query FairOrganizerFollowButton_Test_Query($id: String!)

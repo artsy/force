@@ -21,7 +21,6 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 
         return (
           <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <FairExhibitorCard exhibitor={exhibitor} fair={fair} />
           </Column>
         )

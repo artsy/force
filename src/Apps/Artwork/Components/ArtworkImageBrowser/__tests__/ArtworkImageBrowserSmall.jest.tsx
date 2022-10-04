@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtworkImageBrowserSmallFragmentContainer } from "../ArtworkImageBrowserSmall"
+import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
 import { ArtworkImageBrowserSmall_Test_Query } from "__generated__/ArtworkImageBrowserSmall_Test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -16,7 +16,6 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserSmall_Test_Query>({
     return (
       <MockBoot>
         <ArtworkImageBrowserSmallFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={props.artwork}
           maxHeight={800}
           index={0}

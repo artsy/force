@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { ArtworksRefetchContainer } from "../Works"
+import { ArtworksRefetchContainer } from "Apps/Partner/Routes/Works"
 import { graphql } from "react-relay"
 import { Works_Query } from "__generated__/Works_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -27,7 +27,6 @@ jest.mock("Utils/getENV", () => ({
 const { getWrapper } = setupTestWrapper<Works_Query>({
   Component: ({ partner }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworksRefetchContainer partner={partner!} />
     </MockBoot>
   ),
@@ -44,7 +43,6 @@ const { getWrapper } = setupTestWrapper<Works_Query>({
 const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
   Component: ({ partner }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworksRefetchContainer partner={partner!} />
     </MockBoot>
   ),

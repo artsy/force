@@ -40,12 +40,11 @@ const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
       <Spacer mt={1} />
 
       {/* classification */}
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtworkSidebar2ClassificationFragmentContainer artwork={artwork} />
       <Spacer mt={1} />
       {/* authenticity */}
       <ArtworkSidebar2AuthenticityCertificateFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
       />
       <Spacer mt={2} />

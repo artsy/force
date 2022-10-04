@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0e02a10e52a812a7df27314af0f299e>>
+ * @generated SignedSource<<aecf1197fe3e8cb6cfccad5afd9203b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type AuthIntentFollowArtistMutation$data = {
     } | null;
   } | null;
 };
+export type AuthIntentFollowArtistMutation$rawResponse = {
+  readonly followArtist: {
+    readonly artist: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+    } | null;
+  } | null;
+};
 export type AuthIntentFollowArtistMutation = {
+  rawResponse: AuthIntentFollowArtistMutation$rawResponse;
   response: AuthIntentFollowArtistMutation$data;
   variables: AuthIntentFollowArtistMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "7dbf0de1cae972b061dabe439ae5b14a";
+(node as any).hash = "e1a0f96930c3d1fdb8afd7778b282975";
 
 export default node;

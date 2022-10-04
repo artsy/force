@@ -15,11 +15,11 @@ import { useSystemContext } from "System"
 import { CountrySelect } from "Components/CountrySelect"
 import { Step, Wizard } from "Components/Wizard"
 import { FormValues, StepElement } from "Components/Wizard/types"
-import { ApiError } from "../../ApiError"
-import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
+import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { EnableSecondFactor } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
-import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
+import { BackupSecondFactorReminder } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/BackupSecondFactorReminder"
 import { CreateSmsSecondFactorMutation$data } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { redirectMessage } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
@@ -39,7 +39,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   const [isDelivering, setDelivering] = useState(false)
 
   const [showRecoveryCodes, setShowRecoveryCodes] = useState(false)
-  const [recoveryCodes, setRecoveryCodes] = useState(null)
+  const [recoveryCodes, setRecoveryCodes] = useState<any>(null)
 
   if (!secondFactor || secondFactor.__typename !== "SmsSecondFactor") {
     return null
@@ -52,16 +52,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const response = await EnableSecondFactor(relayEnvironment, {
+      const response = await EnableSecondFactor(relayEnvironment!, {
         secondFactorID: secondFactor.internalID,
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: values.code,
         password: password,
       })
 
-      // @ts-ignore RELAY UPGRADE 13
-      setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
+      setRecoveryCodes(response?.enableSecondFactor?.recoveryCodes!)
 
       setShowRecoveryCodes(true)
     } catch (error) {
@@ -297,7 +295,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
           }
         >
           <BackupSecondFactorReminder
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             backupSecondFactors={recoveryCodes}
             factorTypeName={secondFactor.__typename}
           />

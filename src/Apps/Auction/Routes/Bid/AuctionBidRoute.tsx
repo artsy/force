@@ -28,7 +28,7 @@ import {
 } from "Apps/Auction/Components/Form/Utils"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
-import { ErrorStatus } from "../../Components/Form/ErrorStatus"
+import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 
 interface AuctionBidRouteProps {
@@ -120,11 +120,9 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
             <Form>
               <Join separator={<Spacer my={2} />}>
                 <AuctionLotInfoFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   saleArtwork={artwork.saleArtwork!}
                 />
                 <ArtworkSidebarAuctionTimerFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                 />
 

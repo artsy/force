@@ -1,12 +1,13 @@
 import { commitMutation, Environment, graphql } from "relay-runtime"
 import { AuthIntentMutation } from "./types"
+import { AuthIntentSaveArtworkMutation } from "__generated__/AuthIntentSaveArtworkMutation.graphql"
 
 export const saveArtworkMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string
 ) => {
   return new Promise((resolve, reject) => {
-    commitMutation(relayEnvironment, {
+    commitMutation<AuthIntentSaveArtworkMutation>(relayEnvironment, {
       onCompleted: (res, errors) => {
         if (errors !== null) {
           reject(errors)
@@ -16,7 +17,8 @@ export const saveArtworkMutation: AuthIntentMutation = (
         resolve(res)
       },
       mutation: graphql`
-        mutation AuthIntentSaveArtworkMutation($input: SaveArtworkInput!) {
+        mutation AuthIntentSaveArtworkMutation($input: SaveArtworkInput!)
+          @raw_response_type {
           saveArtwork(input: $input) {
             artwork {
               id

@@ -27,7 +27,6 @@ const ShippingSummaryItem = ({
   return requestedFulfillment.__typename === "CommerceShip" ||
     requestedFulfillment.__typename === "CommerceShipArta" ? (
     <StepSummaryItem title="Ship to" {...others}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ShippingAddress ship={requestedFulfillment} textColor={textColor} />
     </StepSummaryItem>
   ) : (

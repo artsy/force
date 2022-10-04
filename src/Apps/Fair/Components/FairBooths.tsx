@@ -23,7 +23,7 @@ import {
 } from "./BoothFilterContext"
 import { FairBoothSortFilter } from "./FairBoothSortFilter"
 import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
-import { defaultSort, isValidSort } from "../Utils/IsValidSort"
+import { defaultSort, isValidSort } from "Apps/Fair/Utils/IsValidSort"
 import { extractNodes } from "Utils/extractNodes"
 
 const logger = createLogger("FairBooths.tsx")
@@ -135,7 +135,6 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
 
           return (
             <Box my={6} key={index}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <FairBoothRail key={show.id} show={show} />
             </Box>
           )
@@ -146,7 +145,6 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
 
       <Pagination
         hasNextPage={hasNextPage}
-        // @ts-ignore RELAY UPGRADE 13
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={() => loadNext()}
@@ -273,7 +271,6 @@ export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
         }
 
         if (props?.fair) {
-          // @ts-ignore RELAY UPGRADE 13
           return <FairBoothsFragmentContainer fair={props.fair!} />
         }
 

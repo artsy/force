@@ -30,7 +30,6 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
           return nodes.map((node, index) => {
             return (
               <ShelfArtworkFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 artwork={node}
                 key={index}
                 lazyLoad

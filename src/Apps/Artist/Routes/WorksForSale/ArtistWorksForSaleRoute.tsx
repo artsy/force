@@ -49,14 +49,12 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       <Title>{title}</Title>
 
       <ArtistSeriesRailFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         contextModule={ContextModule.artistSeriesRail}
         showProgress
         mb={6}
       />
       <ArtistArtworkFilterRefetchContainer
-        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         aggregations={
           artist.sidebarAggregations

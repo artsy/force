@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useCreateArtworkMutation } from "__generated__/useCreateArtworkMutation.graphql"
 

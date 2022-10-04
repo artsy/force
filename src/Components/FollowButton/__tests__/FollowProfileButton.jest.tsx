@@ -1,13 +1,13 @@
 import { useSystemContext } from "System/useSystemContext"
 import "jest-styled-components"
-import { graphql } from "relay-runtime"
-import { FollowProfileButtonFragmentContainer } from "../FollowProfileButton"
+import { graphql } from "react-relay"
+import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
 import * as openAuthModal from "Utils/openAuthModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { FollowProfileButton_Test_Query } from "__generated__/FollowProfileButton_Test_Query.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useFollowButtonTracking } from "../useFollowButtonTracking"
+import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 
 jest.unmock("react-relay")
 
@@ -21,7 +21,6 @@ const { renderWithRelay } = setupTestWrapperTL<FollowProfileButton_Test_Query>({
   Component: props => {
     return (
       <FollowProfileButtonFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         profile={props.partner!.profile!}
         onFollow={onFollow}
       />

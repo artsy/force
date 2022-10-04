@@ -20,9 +20,9 @@ export const userPreferencesMiddleware = async (
     try {
       const user = getUser(req.user)
       const relayEnvironment = createRelaySSREnvironment({ user })
-      const { me } = await fetchUserPreferences(relayEnvironment)
+      const data = await fetchUserPreferences(relayEnvironment)
 
-      metric = me?.lengthUnitPreference
+      metric = data?.me?.lengthUnitPreference
     } catch (error) {
       console.error("[Force] Error getting user preferences:", error)
     }

@@ -216,7 +216,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
               return (
                 <Fragment key={artwork.internalID}>
                   <ArtworkGridItemFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     artwork={artwork}
                     localHeroImage={getLocalImageSrcByArtworkID(
                       artwork.internalID
@@ -236,7 +235,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
-            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}

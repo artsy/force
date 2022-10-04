@@ -7,7 +7,7 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistNotableWorksRail_artist$data } from "__generated__/ArtistNotableWorksRail_artist.graphql"
 import { ArtistNotableWorksRailQuery } from "__generated__/ArtistNotableWorksRailQuery.graphql"
-import { scrollToTop } from "../Utils/scrollToTop"
+import { scrollToTop } from "Apps/Artist/Routes/Overview/Utils/scrollToTop"
 import { Rail } from "Components/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -63,7 +63,6 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
         return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={node}
               contextModule={ContextModule.topWorksRail}
               key={index}
@@ -166,7 +165,6 @@ export const ArtistNotableWorksRailQueryRenderer: React.FC<{
           }
           if (props.artist) {
             return (
-              // @ts-ignore RELAY UPGRADE 13
               <ArtistNotableWorksRailFragmentContainer artist={props.artist} />
             )
           }

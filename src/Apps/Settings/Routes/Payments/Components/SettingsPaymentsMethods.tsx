@@ -56,7 +56,6 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
           {creditCards.map(creditCard => {
             return (
               <BorderedCell key={creditCard.internalID} span={8} wrap>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <SettingsCreditCardFragmentContainer creditCard={creditCard} />
               </BorderedCell>
             )
@@ -79,7 +78,6 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
               return (
                 <BorderedCell key={bankAccount.internalID} span={8} wrap>
                   <SettingsBankAccountFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     bankAccount={bankAccount}
                   />
                 </BorderedCell>

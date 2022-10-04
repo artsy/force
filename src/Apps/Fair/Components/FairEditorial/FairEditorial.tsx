@@ -18,7 +18,6 @@ export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
       </Text>
 
       <Box>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <FairEditorialRailArticles fair={fair} />
       </Box>
     </>

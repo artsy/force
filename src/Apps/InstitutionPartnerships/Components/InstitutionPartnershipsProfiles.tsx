@@ -32,7 +32,6 @@ const InstitutionPartnershipsProfiles: FC<InstitutionPartnershipsProfilesProps> 
             display="flex"
             alignItems="flex-end"
           >
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <CellPartnerFragmentContainer partner={profile.owner} mode="GRID" />
           </Column>
         )
@@ -99,7 +98,6 @@ export const InstitutionPartnershipsProfilesQueryRenderer: FC = () => {
 
         return (
           <InstitutionPartnershipsProfilesFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             orderedSet={props.orderedSet}
           />
         )

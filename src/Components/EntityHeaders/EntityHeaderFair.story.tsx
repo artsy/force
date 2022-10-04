@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -49,7 +49,6 @@ export const EntityHeaderFair = () => {
 
               return (
                 <EntityHeaderFairFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   fair={props.fair}
                   {...rest}
                 />

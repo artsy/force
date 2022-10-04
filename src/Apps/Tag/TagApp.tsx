@@ -12,7 +12,6 @@ interface TagAppProps {
 const TagApp: React.FC<TagAppProps> = ({ tag }) => {
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagMetaFragmentContainer tag={tag} />
 
       <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -23,7 +22,6 @@ const TagApp: React.FC<TagAppProps> = ({ tag }) => {
         </Column>
       </GridColumns>
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <TagArtworkFilterRefetchContainer tag={tag} />
     </>
   )

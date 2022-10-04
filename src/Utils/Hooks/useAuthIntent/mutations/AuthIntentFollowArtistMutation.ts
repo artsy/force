@@ -17,7 +17,8 @@ export const followArtistMutation: AuthIntentMutation = (
         resolve(res)
       },
       mutation: graphql`
-        mutation AuthIntentFollowArtistMutation($input: FollowArtistInput!) {
+        mutation AuthIntentFollowArtistMutation($input: FollowArtistInput!)
+          @raw_response_type {
           followArtist(input: $input) {
             artist {
               id

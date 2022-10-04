@@ -13,7 +13,8 @@ export const SaveArtwork = (
   return new Promise<SaveArtworkMutation$data>(async (resolve, reject) => {
     commitMutation<SaveArtworkMutation>(environment, {
       mutation: graphql`
-        mutation SaveArtworkMutation($input: SaveArtworkInput!) {
+        mutation SaveArtworkMutation($input: SaveArtworkInput!)
+          @raw_response_type {
           saveArtwork(input: $input) {
             artwork {
               id

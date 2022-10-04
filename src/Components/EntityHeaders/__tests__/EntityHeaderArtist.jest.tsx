@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { EntityHeaderArtistFragmentContainer_Test_Query } from "__generated__/EntityHeaderArtistFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { EntityHeaderArtistFragmentContainer } from "../EntityHeaderArtist"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 
 jest.unmock("react-relay")
 
@@ -18,7 +18,6 @@ describe("EntityHeaderArtist", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderArtistFragmentContainer_Test_Query
   >({
-    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderArtistFragmentContainer,
     query: QUERY,
   })
@@ -52,7 +51,6 @@ describe("EntityHeaderArtist", () => {
         if (!props.artist) return null
         return (
           <EntityHeaderArtistFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artist={props.artist}
             displayCounts
           />

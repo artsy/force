@@ -79,7 +79,6 @@ const ConversationList: React.FC<ConversationsProps> = props => {
         {conversations.map(edge => (
           <ConversationSnippet
             isSelected={edge?.node?.internalID === selectedConversationID}
-            // @ts-ignore RELAY UPGRADE 13
             conversation={edge.node!}
             key={edge.cursor}
             hasDivider={

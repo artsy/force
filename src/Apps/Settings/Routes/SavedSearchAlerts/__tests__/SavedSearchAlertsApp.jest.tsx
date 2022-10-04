@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SavedSearchAlertsAppPaginationContainer } from "../SavedSearchAlertsApp"
+import { SavedSearchAlertsAppPaginationContainer } from "Apps/Settings/Routes/SavedSearchAlerts/SavedSearchAlertsApp"
 import { SavedSearchAlertsApp_Test_Query } from "__generated__/SavedSearchAlertsApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -22,7 +22,6 @@ describe("SavedSearchAlertsApp", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     SavedSearchAlertsApp_Test_Query
   >({
-    // @ts-ignore RELAY UPGRADE 13
     Component: SavedSearchAlertsAppPaginationContainer,
     query: graphql`
       query SavedSearchAlertsApp_Test_Query @raw_response_type {

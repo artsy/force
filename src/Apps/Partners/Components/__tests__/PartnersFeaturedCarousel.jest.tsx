@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { PartnersFeaturedCarouselFragmentContainer } from "../PartnersFeaturedCarousel"
+import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
 import { PartnersFeaturedCarousel_Test_Query } from "__generated__/PartnersFeaturedCarousel_Test_Query.graphql"
 import { useRouter } from "System/Router/useRouter"
 
@@ -14,7 +14,6 @@ jest.mock("Utils/Hooks/useStableShuffle", () => ({
 const { renderWithRelay } = setupTestWrapperTL<
   PartnersFeaturedCarousel_Test_Query
 >({
-  // @ts-ignore RELAY UPGRADE 13
   Component: PartnersFeaturedCarouselFragmentContainer,
   query: graphql`
     query PartnersFeaturedCarousel_Test_Query @relay_test_operation {

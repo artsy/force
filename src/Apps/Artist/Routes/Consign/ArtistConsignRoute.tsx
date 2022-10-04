@@ -22,21 +22,20 @@ const ArtistConsignRoute: React.FC<ConsignRouteProps> = ({ artist }) => {
       {/* Offset needed to combat the spacer that exists in the Artist page layout */}
       <Spacer mt={[-2, -4]} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtistConsignMetaFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignHeaderFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignRecentlySoldFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignPageViewsFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignMarketTrendsFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignHowtoSellFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignFAQFragmentContainer artist={artist} />
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       <ArtistConsignSellArtFragmentContainer artist={artist} />
     </>
   )

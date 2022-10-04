@@ -222,7 +222,6 @@ export const HomeCurrentFairsQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
-          // @ts-ignore RELAY UPGRADE 13
           return <HomeCurrentFairsFragmentContainer viewer={props.viewer} />
         }
 

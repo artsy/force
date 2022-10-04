@@ -97,7 +97,6 @@ export const AuctionTimerQueryRenderer = ({ saleID }: { saleID: string }) => {
         }
       `}
       render={({ props }) => {
-        // @ts-ignore RELAY UPGRADE 13
         return props && <AuctionTimerFragmentContainer sale={props.sale!} />
       }}
     />

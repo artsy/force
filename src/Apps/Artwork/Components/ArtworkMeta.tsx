@@ -65,12 +65,10 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
           content={`${sd.FACEBOOK_APP_NAMESPACE}:artwork`}
         />
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SeoDataForArtwork artwork={artwork} />
 
         {this.renderImageMetaTags()}
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkZendeskFragmentContainer artwork={artwork} />
       </>
     )

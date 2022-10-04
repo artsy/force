@@ -82,7 +82,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       />
 
       {artworksConnection && (
-        // @ts-ignore RELAY UPGRADE 13
         <SeoProductsForArtworks artworks={artworksConnection} />
       )}
 
@@ -108,7 +107,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
             <Spacer mt={6} />
 
             <CollectionsHubRails
-              // @ts-ignore RELAY UPGRADE 13
               linkedCollections={collection.linkedCollections}
             />
           </>
@@ -117,7 +115,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
         <Spacer mt={6} />
 
         <CollectionArtworksFilterRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           collection={collection}
           aggregations={
             collection.artworksConnection
@@ -137,7 +134,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
               <Spacer mt={6} />
 
               <RelatedCollectionsRail
-                // @ts-ignore RELAY UPGRADE 13
                 collections={collection.relatedCollections}
                 title={collection.title}
                 lazyLoadImages

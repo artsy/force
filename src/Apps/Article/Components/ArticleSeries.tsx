@@ -33,7 +33,6 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
       </Text>
 
       {article.sponsor && (
-        // @ts-ignore RELAY UPGRADE 13
         <ArticleSponsorFragmentContainer sponsor={article.sponsor} mt={4} />
       )}
 
@@ -44,7 +43,6 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
           return (
             <ArticleSeriesItemFragmentContainer
               key={relatedArticle.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               article={relatedArticle}
             />
           )
@@ -68,7 +66,6 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
             {article.sponsor && (
               <ArticleSponsorFragmentContainer
                 mt={4}
-                // @ts-ignore RELAY UPGRADE 13
                 sponsor={article.sponsor}
               />
             )}

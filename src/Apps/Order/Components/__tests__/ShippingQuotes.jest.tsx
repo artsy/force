@@ -7,7 +7,7 @@ import {
   shippingQuoteDescriptions,
   shippingQuoteDisplayNames,
   ShippingQuotesFragmentContainer,
-} from "../ShippingQuotes"
+} from "Apps/Order/Components/ShippingQuotes"
 import { cloneDeep, compact } from "lodash"
 import { ReactWrapper } from "enzyme"
 
@@ -19,7 +19,6 @@ const render = (extraOrderProps?: ShippingQuotes_Test_Query$data["order"]) =>
   renderRelayTree({
     Component: (props: ShippingQuotes_Test_Query$data) => (
       <ShippingQuotesFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         shippingQuotes={compact(
           props.order?.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges
         )}

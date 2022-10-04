@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
-import { NavBarMobileMenuNotificationsIndicatorFragmentContainer } from "../NavBarMobileMenuNotificationsIndicator"
+import { graphql } from "react-relay"
+import { NavBarMobileMenuNotificationsIndicatorFragmentContainer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 
 jest.unmock("react-relay")
 

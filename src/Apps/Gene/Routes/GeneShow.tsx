@@ -18,7 +18,6 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneMetaFragmentContainer gene={gene} />
 
       <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -81,7 +80,6 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
       <Spacer mt={12} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneArtworkFilterRefetchContainer gene={gene} />
     </>
   )

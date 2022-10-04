@@ -15,7 +15,7 @@ import { themeGet } from "@styled-system/theme-get"
 import { ConversationPaginationContainer as Conversation } from "Apps/Conversation/Components/Conversation"
 import { ConversationListPaginationContainer as ConversationList } from "Apps/Conversation/Components/ConversationList"
 import { Conversation_me$data } from "__generated__/Conversation_me.graphql"
-import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
+import { DetailsSidebarFragmentContainer } from "Apps/Conversation/Components/DetailsSidebar"
 import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
@@ -74,14 +74,12 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
                 />
               </ConversationListWrapper>
               <Conversation
-                // @ts-ignore RELAY UPGRADE 13
                 conversation={me.conversation!}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
                 refetch={props.relay.refetch}
               />
               <DetailsSidebarFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 conversation={me.conversation!}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}

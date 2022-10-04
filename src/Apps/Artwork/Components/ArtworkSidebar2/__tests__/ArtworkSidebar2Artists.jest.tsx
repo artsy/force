@@ -1,6 +1,6 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtworkSidebar2ArtistsFragmentContainer } from "../ArtworkSidebar2Artists"
+import { ArtworkSidebar2ArtistsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2Artists"
 import { ArtworkSidebar2Artists_Test_Query } from "__generated__/ArtworkSidebar2Artists_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 
@@ -10,7 +10,6 @@ const { renderWithRelay } = setupTestWrapperTL<
   ArtworkSidebar2Artists_Test_Query
 >({
   Component: ({ artwork }) => {
-    // @ts-ignore RELAY UPGRADE 13
     return <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork!} />
   },
   query: graphql`

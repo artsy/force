@@ -27,7 +27,6 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <EntityHeaderGeneFragmentContainer gene={category} />
       {artworks.length > 0 ? (
         <Shelf>
@@ -36,7 +35,6 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
               <ShelfArtworkFragmentContainer
                 key={artwork.internalID}
                 contextModule={{} as any} // TODO:
-                // @ts-ignore RELAY UPGRADE 13
                 artwork={artwork}
                 lazyLoad
               />
@@ -135,7 +133,6 @@ export const CategoryRailQueryRenderer: FC<CategoryRailQueryRendererProps> = ({
           return CATEGORY_RAIL_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <CategoryRailFragmentContainer category={props.category} />
       }}
     />

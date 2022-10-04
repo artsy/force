@@ -22,8 +22,11 @@ import { UploadPhotos_myCollectionArtwork$data } from "__generated__/UploadPhoto
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
-} from "../Mutations"
-import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
+} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import {
+  uploadPhotosValidationSchema,
+  validate,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import {
   UploadPhotosForm,
   UploadPhotosFormModel,
@@ -286,12 +289,11 @@ const refetchSubmissionAssets = async (
     `,
     { id: submissionId, sessionID: getENV("SESSION_ID") },
     {
-      force: true,
+      fetchPolicy: "network-only",
     }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
-  return response.submission?.assets || []
+  return response?.submission?.assets || []
 }
 
 export const UploadPhotosFragmentContainer = createFragmentContainer(

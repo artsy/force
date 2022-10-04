@@ -54,7 +54,6 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       ) : (
         // Creates an offer and redirects to the checkout flow
         <ConfirmArtworkButtonFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           conversationID={conversationID}
           editionSetID={editionSets?.[0]?.internalID || null}

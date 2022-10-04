@@ -40,7 +40,6 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
             return (
               <ArtistAuctionResultItemFragmentContainer
                 key={index}
-                // @ts-ignore RELAY UPGRADE 13
                 auctionResult={result}
                 filtersAtDefault={false}
               />

@@ -116,7 +116,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (

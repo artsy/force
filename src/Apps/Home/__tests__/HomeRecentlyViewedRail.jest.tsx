@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeRecentlyViewedRailFragmentContainer } from "../Components/HomeRecentlyViewedRail"
+import { HomeRecentlyViewedRailFragmentContainer } from "Apps/Home/Components/HomeRecentlyViewedRail"
 import { HomeRecentlyViewedRail_Test_Query } from "__generated__/HomeRecentlyViewedRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -10,7 +10,6 @@ jest.mock("react-tracking")
 const { getWrapper } = setupTestWrapper<HomeRecentlyViewedRail_Test_Query>({
   Component: props => {
     return (
-      // @ts-ignore RELAY UPGRADE 13
       <HomeRecentlyViewedRailFragmentContainer homePage={props.homePage!} />
     )
   },

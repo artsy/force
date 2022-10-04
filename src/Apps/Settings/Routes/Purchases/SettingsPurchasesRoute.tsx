@@ -10,7 +10,6 @@ interface SettingsPurchasesRouteProps {
 const SettingsPurchasesRoute: React.FC<SettingsPurchasesRouteProps> = ({
   me,
 }) => {
-  // @ts-ignore RELAY UPGRADE 13
   return <SettingsPurchasesFragmentContainer me={me} />
 }
 

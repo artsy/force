@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeFeaturedGalleriesRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedGalleriesRail"
 import { HomeFeaturedGalleriesRail_Test_Query } from "__generated__/HomeFeaturedGalleriesRail_Test_Query.graphql"
@@ -11,7 +11,6 @@ const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
   Component: props => {
     return (
       <HomeFeaturedGalleriesRailFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         orderedSet={props.orderedSet!}
       />
     )

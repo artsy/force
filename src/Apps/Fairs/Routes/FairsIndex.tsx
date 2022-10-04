@@ -20,12 +20,12 @@ import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
 import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
-import { FairsFairBannerFragmentContainer } from "../Components/FairsFairBanner"
-import { FairsFairRowFragmentContainer } from "../Components/FairsFairRow"
-import { FairsPhonePromo } from "../Components/FairsPhonePromo"
-import { FairsPromoCarousel } from "../Components/FairsPromoCarousel"
-import { FairsMeta } from "../Components/FairsMeta"
-import { FairsPastFairsPaginationContainer } from "../Components/FairsPastFairs"
+import { FairsFairBannerFragmentContainer } from "Apps/Fairs/Components/FairsFairBanner"
+import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
+import { FairsPhonePromo } from "Apps/Fairs/Components/FairsPhonePromo"
+import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
+import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
+import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
 import { mediator } from "Server/mediator"
 import { useSystemContext } from "System"
 import { compact } from "lodash"
@@ -133,7 +133,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {currentFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
-                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -144,7 +143,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {upcomingFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
-                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -156,7 +154,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {closedFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
-                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -245,7 +242,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                       key={fair.internalID}
                       span={fair.bannerSize === "x-large" ? 12 : 6}
                     >
-                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <FairsFairBannerFragmentContainer fair={fair} />
                     </Column>
                   )
@@ -277,7 +273,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               Past Events
             </Text>
 
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <FairsPastFairsPaginationContainer viewer={viewer} />
           </Column>
 

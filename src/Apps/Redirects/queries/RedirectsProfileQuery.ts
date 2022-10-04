@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 
 export const REDIRECTS_PROFILE_QUERY = graphql`
   query RedirectsProfileQuery($id: String!) {

@@ -68,7 +68,6 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
         {orders.map(order => (
           <SettingsPurchasesRowFragmentContainer
             key={order.code}
-            // @ts-ignore RELAY UPGRADE 13
             order={order}
           />
         ))}
@@ -79,7 +78,6 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
           hasNextPage={hasNextPage}
           onClick={handleClick}
           onNext={handleNext}
-          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
         />
       )}

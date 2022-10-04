@@ -6,7 +6,7 @@ import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistS
 import { ContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { SpaceProps } from "styled-system"
-import { Rail } from "../Rail"
+import { Rail } from "Components/Rail"
 
 interface Props extends SpaceProps {
   artist: ArtistSeriesRail_artist$data
@@ -39,9 +39,7 @@ const ArtistSeriesRail: React.FC<Props> = ({
           return series.map((node, index) => {
             return (
               <ArtistSeriesItem
-                // @ts-ignore RELAY UPGRADE 13
                 key={node.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 artistSeries={node}
                 index={index}
                 contextModule={contextModule}

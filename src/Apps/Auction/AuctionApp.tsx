@@ -80,10 +80,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           }}
           enabled={websocketEnabled}
         >
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CascadingEndTimesBannerFragmentContainer sale={sale} />
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <AuctionMetaFragmentContainer sale={sale} />
 
           <Join separator={<Spacer my={4} />}>
@@ -96,7 +94,6 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
               <Spacer my={2} />
             )}
 
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
             {tabBar.isVisible && (
@@ -107,27 +104,23 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                 <Tabs key={sale.internalID} mb={4}>
                   {tabBar.showAssociatedSale && (
                     <Tab name="Associated Sale">
-                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionAssociatedSaleFragmentContainer sale={sale} />
                     </Tab>
                   )}
                   {tabBar.showActiveBids && (
                     <Tab name="Your Active Bids">
-                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionActiveBidsRefetchContainer me={me} />
                     </Tab>
                   )}
                   {tabBar.showFollowedArtistsTab && (
                     <Tab name="Works By Artists You Follow">
                       <AuctionWorksByFollowedArtistsRailFragmentContainer
-                        // @ts-ignore RELAY UPGRADE 13
                         viewer={viewer}
                       />
                     </Tab>
                   )}
                   {tabBar.showBuyNowTab && (
                     <Tab name="Buy Now">
-                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionBuyNowRailFragmentContainer sale={sale} />
                     </Tab>
                   )}
@@ -149,11 +142,9 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
                 <Spacer my={2} />
 
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
               </>
             ) : (
-              // @ts-ignore RELAY UPGRADE 13
               <AuctionArtworkFilterRefetchContainer viewer={viewer} />
             )}
 

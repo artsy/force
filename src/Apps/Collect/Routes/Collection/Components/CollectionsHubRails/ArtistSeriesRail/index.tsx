@@ -18,7 +18,6 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
           return (
             <ArtistSeriesEntity
               key={slide.slug || slideIndex}
-              // @ts-ignore RELAY UPGRADE 13
               member={slide}
               itemNumber={slideIndex}
             />

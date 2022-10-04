@@ -19,7 +19,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import { useTracking } from "react-tracking"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
-import { SendConversationMessage } from "../Mutation/SendConversationMessage"
+import { SendConversationMessage } from "Apps/Conversation/Mutation/SendConversationMessage"
 
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
@@ -59,7 +59,7 @@ interface ReplyProps {
   environment: RelayModernEnvironment
   onScroll: () => void
   refetch: RelayRefetchProp["refetch"]
-  // @ts-ignore RELAY UPGRADE 13
+
   openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
@@ -138,7 +138,6 @@ export const Reply: React.FC<ReplyProps> = props => {
       />
       <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ConversationCTAFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           conversation={conversation}
           openInquiryModal={({ createsOfferOrder }) =>
             openInquiryModal({ createsOfferOrder })

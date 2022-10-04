@@ -1,7 +1,7 @@
 import { BackToFairBanner_Test_Query } from "__generated__/BackToFairBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { BackToFairBannerFragmentContainer } from "../Components/BackToFairBanner"
+import { BackToFairBannerFragmentContainer } from "Apps/Show/Components/BackToFairBanner"
 import { screen } from "@testing-library/react"
 import { useRouter } from "System/Router/useRouter"
 
@@ -9,7 +9,6 @@ jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<BackToFairBanner_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: BackToFairBannerFragmentContainer,
   query: graphql`
     query BackToFairBanner_Test_Query @relay_test_operation {

@@ -219,7 +219,6 @@ export const NavBarNotificationsQueryRenderer: React.FC = () => {
             return <NavBarNotificationsPlaceholder />
           }
 
-          // @ts-ignore RELAY UPGRADE 13
           return <NavBarNotificationsFragmentContainer me={props.me} />
         }}
       />

@@ -59,7 +59,6 @@ const MyBids: React.FC<MyBidsProps> = props => {
             // TODO: Re-assess width
             <Box width={330} key={index}>
               <StackableBorderBox flexDirection="column" p={0} pb={1}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <MyBidsBidHeaderFragmentContainer sale={sale} />
               </StackableBorderBox>
 
@@ -74,7 +73,6 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           <Box py={1} px={2} key={saleArtworkIndex}>
                             <MyBidsBidItemFragmentContainer
                               horizontalSlidePosition={saleArtworkIndex}
-                              // @ts-ignore RELAY UPGRADE 13
                               saleArtwork={saleArtwork}
                             />
                           </Box>
@@ -236,7 +234,6 @@ export const MyBidsQueryRenderer: React.FC = () => {
         }
 
         if (props.me) {
-          // @ts-ignore RELAY UPGRADE 13
           return <MyBidsFragmentContainer me={props.me} />
         }
       }}

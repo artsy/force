@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeAppFragmentContainer } from "../HomeApp"
+import { HomeAppFragmentContainer } from "Apps/Home/HomeApp"
 import { HomeApp_Test_Query } from "__generated__/HomeApp_Test_Query.graphql"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
@@ -26,7 +26,6 @@ describe("HomeApp", () => {
   const { getWrapper } = setupTestWrapper<HomeApp_Test_Query>({
     Component: props => (
       <MockBoot>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <HomeAppFragmentContainer {...props} />
       </MockBoot>
     ),

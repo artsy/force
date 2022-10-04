@@ -63,9 +63,7 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
         {articles.map(article => {
           return (
             <Fragment key={article.internalID}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleVisibilityMetadataFragmentContainer article={article}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArticleBodyFragmentContainer article={article} />
               </ArticleVisibilityMetadataFragmentContainer>
 
@@ -183,7 +181,6 @@ export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRe
           }
 
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <ArticleInfiniteScrollPaginationContainer viewer={props.viewer} />
           )
         }}

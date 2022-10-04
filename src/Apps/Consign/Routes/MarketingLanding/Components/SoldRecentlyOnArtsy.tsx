@@ -66,7 +66,6 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   textDecoration="none"
                   onClick={trackArtworkItemClick(artwork, index)}
                 >
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ShelfArtworkFragmentContainer
                     artwork={artwork!}
                     key={artwork!.internalID}
@@ -209,7 +208,6 @@ export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
 
         return (
           <SoldRecentlyOnArtsyFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             recentlySoldArtworks={props.recentlySoldArtworks}
           />
         )

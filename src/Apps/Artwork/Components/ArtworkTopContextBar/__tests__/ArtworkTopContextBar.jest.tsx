@@ -7,7 +7,6 @@ jest.unmock("react-relay")
 
 describe("ArtworkTopContextBar", () => {
   const { getWrapper } = setupTestWrapper<ArtworkTopContextBar_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtworkTopContextBarFragmentContainer,
     query: graphql`
       query ArtworkTopContextBar_Test_Query @relay_test_operation {

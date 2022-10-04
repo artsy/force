@@ -3,7 +3,7 @@ import { useAnalyticsContext } from "System"
 import { WorksByArtistsYouFollowRail_viewer$data } from "__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
-import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { trackHelpers } from "Utils/cohesionHelpers"
@@ -35,7 +35,6 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
         return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={node}
               key={node.slug}
               contextModule={contextModule}

@@ -191,7 +191,6 @@ export const PartnersSpecialtyAutocompleteQueryRenderer: FC<PartnersSpecialtyAut
         if (props?.viewer) {
           return (
             <PartnersSpecialtyAutocompleteFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               viewer={props.viewer}
             />
           )

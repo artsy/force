@@ -1,8 +1,8 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { FairBoothRailFragmentContainer } from "../FairBoothRail"
+import { FairBoothRailFragmentContainer } from "Apps/Fair/Components/FairBoothRail"
 import { graphql } from "react-relay"
 import { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
-import { BoothFilterContextProvider } from "../BoothFilterContext"
+import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { AnalyticsContext } from "System"
 import { OwnerType } from "@artsy/cohesion"
@@ -25,7 +25,6 @@ const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
           }}
         >
           <BoothFilterContextProvider filters={{ sort: "NAME_ASC", page: 2 }}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <FairBoothRailFragmentContainer show={props.show} />
           </BoothFilterContextProvider>
         </AnalyticsContext.Provider>

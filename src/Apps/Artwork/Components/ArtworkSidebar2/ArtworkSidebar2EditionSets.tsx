@@ -40,7 +40,6 @@ const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebar2SizeInfoFragmentContainer piece={editionSet!} />
 
         <Text

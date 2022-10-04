@@ -36,7 +36,7 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
           <Spacer mt={4} />
         </>
       )}
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+
       {viewer && <NewForYouArtworksGridFragmentContainer viewer={viewer} />}
     </>
   )

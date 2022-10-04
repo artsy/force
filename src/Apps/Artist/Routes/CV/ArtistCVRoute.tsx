@@ -19,19 +19,16 @@ const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mb={4} />}>
         <ArtistCVGroupRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.soloShows!}
           title={t("artistPage.cv.soloTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.groupShows!}
           title={t("artistPage.cv.groupTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.fairBooths!}
           title={t("artistPage.cv.fairTitle")}
         />

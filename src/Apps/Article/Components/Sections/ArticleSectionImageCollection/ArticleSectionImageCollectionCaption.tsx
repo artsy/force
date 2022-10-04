@@ -12,7 +12,6 @@ const ArticleSectionImageCollectionCaption: FC<ArticleSectionImageCollectionCapt
   figure,
 }) => {
   if (figure.__typename === "Artwork") {
-    // @ts-ignore RELAY UPGRADE 13
     return <Metadata mt={0} artwork={figure} />
   }
 

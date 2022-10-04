@@ -19,7 +19,7 @@ import { FC } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
@@ -161,11 +161,10 @@ export const CounterRoute: FC<CounterProps> = props => {
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <ShippingSummaryItem order={order} locked />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

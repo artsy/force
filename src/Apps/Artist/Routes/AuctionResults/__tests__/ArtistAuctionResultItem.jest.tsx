@@ -1,6 +1,6 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
-import { ArtistAuctionResultItemFragmentContainer } from "../ArtistAuctionResultItem"
+import { graphql } from "react-relay"
+import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
 import { screen } from "@testing-library/react"
 

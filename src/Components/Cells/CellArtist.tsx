@@ -67,7 +67,6 @@ const CellArtist: FC<CellArtistProps> = ({
       </ResponsiveBox>
 
       <EntityHeaderArtistFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         displayAvatar={false}
         displayLink={false}

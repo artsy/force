@@ -44,7 +44,6 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
           if (!fair.isPublished && !fair.profile?.isPublished) return null
 
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <FairsFairRowFragmentContainer key={fair.internalID} fair={fair} />
           )
         })}

@@ -9,7 +9,7 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Sticky } from "../Sticky"
+import { Sticky } from "Components/Sticky"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -84,7 +84,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
 
         <Pagination
           hasNextPage={hasNextPage}
-          // @ts-ignore RELAY UPGRADE 13
           pageCursors={pageCursors}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}

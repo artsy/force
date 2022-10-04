@@ -59,7 +59,6 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
               if (!artist) return null
 
               return (
-                // @ts-ignore RELAY UPGRADE 13
                 <ArtistRailFragmentContainer key={internalID} artist={artist} />
               )
             })}
@@ -157,7 +156,6 @@ export const SettingsSavesArtistsQueryRenderer = () => {
           return SETTINGS_SAVES_ARTISTS_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesArtistsPaginationContainer me={props.me} />
       }}
     />

@@ -13,9 +13,9 @@ import {
 import { ArtistsIndex_featuredArtists$data } from "__generated__/ArtistsIndex_featuredArtists.graphql"
 import { ArtistsIndex_featuredGenes$data } from "__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "System/Router/RouterLink"
-import { ArtistsIndexMeta } from "../Components/ArtistsIndexMeta"
-import { ArtistsCarouselCellFragmentContainer } from "../Components/ArtistsCarouselCell"
-import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
+import { ArtistsIndexMeta } from "Apps/Artists/Components/ArtistsIndexMeta"
+import { ArtistsCarouselCellFragmentContainer } from "Apps/Artists/Components/ArtistsCarouselCell"
+import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
 import { Media } from "Utils/Responsive"
 import { compact } from "lodash"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
@@ -64,7 +64,6 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 return (
                   <ArtistsCarouselCellFragmentContainer
                     key={featuredLink.internalID}
-                    // @ts-ignore RELAY UPGRADE 13
                     featuredLink={featuredLink}
                     index={index}
                   />
@@ -111,7 +110,6 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
                         <CellArtistFragmentContainer
                           mode="GRID"
-                          // @ts-ignore RELAY UPGRADE 13
                           artist={artist}
                         />
                       </Column>

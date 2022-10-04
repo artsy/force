@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistAppFragmentContainer } from "../ArtistApp"
+import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
 import { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 
@@ -21,7 +21,6 @@ describe("ArtistApp", () => {
   let mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistAppFragmentContainer,
     query: graphql`
       query ArtistApp_Test_Query @relay_test_operation {

@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 
 export const RSS_ARTICLES_QUERY = graphql`
   query RssArticlesQuery($channelId: String!) {

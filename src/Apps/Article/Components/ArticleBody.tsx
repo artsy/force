@@ -58,7 +58,6 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </TopContextBar>
         )}
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArticleHeroFragmentContainer article={article} />
 
         <Spacer mt={4} />
@@ -103,7 +102,6 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     "MMM d, yyyy h:mma"
                   )}
 
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
 
@@ -136,12 +134,10 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     <ArticleSectionFragmentContainer
                       isFirst={isFirst}
                       isLast={isLast}
-                      // @ts-ignore RELAY UPGRADE 13
                       section={section}
                     />
 
                     <ArticleSectionAdFragmentContainer
-                      // @ts-ignore RELAY UPGRADE 13
                       article={article}
                       i={i}
                     />
@@ -149,7 +145,6 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 )
               })}
 
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleBylineFragmentContainer article={article} />
             </Join>
 

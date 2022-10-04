@@ -12,10 +12,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { GalleriesRoute_viewer$data } from "__generated__/GalleriesRoute_viewer.graphql"
-import { PartnersFilters } from "../Components/PartnersFilters"
-import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
-import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
-import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
+import { PartnersFilters } from "Apps/Partners/Components/PartnersFilters"
+import { PartnersFeaturedCarouselFragmentContainer } from "Apps/Partners/Components/PartnersFeaturedCarousel"
+import { PartnersFilteredCellsQueryRenderer } from "Apps/Partners/Components/PartnersFilteredCells"
+import { PartnersRailsQueryRenderer } from "Apps/Partners/Components/PartnersRails"
 import { useRouter } from "System/Router/useRouter"
 
 interface GalleriesRouteProps {
@@ -38,7 +38,6 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
       />
 
       <Join separator={<Spacer mt={4} />}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex

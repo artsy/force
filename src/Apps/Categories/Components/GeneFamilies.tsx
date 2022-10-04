@@ -18,7 +18,6 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
       {geneFamilies.map(geneFamily => {
         return (
           <Box key={geneFamily.internalID}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <GeneFamilyFragmentContainer geneFamily={geneFamily} />
             <Spacer mt={6} />
           </Box>

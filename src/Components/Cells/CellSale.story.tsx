@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { CellSaleStoryQuery } from "__generated__/CellSaleStoryQuery.graphql"
 import { CellSaleFragmentContainer, CellSalePlaceholder } from "./CellSale"
@@ -41,7 +41,6 @@ export const CellSale = () => {
 
         return (
           <CellSaleFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             sale={props.viewer?.salesConnection?.edges?.[0]?.node!}
           />
         )

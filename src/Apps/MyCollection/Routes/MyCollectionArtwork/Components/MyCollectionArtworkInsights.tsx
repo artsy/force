@@ -31,26 +31,22 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
     <Join separator={<Spacer mt={[4, 6]} />}>
       {!!enableMyCollectionPhase4DemandIndex && (
         <MyCollectionArtworkDemandIndexFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
 
       {!!enableMyCollectionPhase4ArtistMarket && (
         <MyCollectionArtworkArtistMarketFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
 
       {!!enableMyCollectionPhase4Comparables && (
-        // @ts-ignore RELAY UPGRADE 13
         <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
       )}
 
       {!!enableMyCollectionPhase4AuctionResults && (
         <MyCollectionArtworkAuctionResultsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={artwork?.artist!}
         />
       )}

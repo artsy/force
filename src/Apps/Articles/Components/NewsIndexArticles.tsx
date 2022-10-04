@@ -44,7 +44,6 @@ export const NewsIndexArticles: FC<NewsIndexArticlesProps> = ({
         {articles.map((article, i) => {
           return (
             <Fragment key={article.internalID}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleBodyFragmentContainer article={article} />
 
               {/* Insert an ad after every 6th, article; beginning with 3rd */}

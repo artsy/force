@@ -26,7 +26,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
             Be notified when a similar work is available
           </Text>
           <Spacer my={2} />
-          {/* @ts-ignore RELAY UPGRADE 13 */}
+
           <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
         </>
       )}

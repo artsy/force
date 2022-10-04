@@ -23,7 +23,6 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
         return (
           <EntityHeaderArtistFragmentContainer
             key={artist.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             artist={artist}
             FollowButton={
               <FollowArtistButtonQueryRenderer

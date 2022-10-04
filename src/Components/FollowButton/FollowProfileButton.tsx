@@ -133,7 +133,6 @@ export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQuery
         return (
           <FollowProfileButtonFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             profile={props.profile}
           />
         )

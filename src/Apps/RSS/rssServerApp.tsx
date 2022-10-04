@@ -20,14 +20,13 @@ rssServerApp.get("/rss/news", async (req, res) => {
     userAgent: req.header("User-Agent"),
   })
 
-  const { articlesConnection } = await fetchQuery<RssArticlesQuery>(
+  const data = await fetchQuery<RssArticlesQuery>(
     relayEnvironment,
     RSS_ARTICLES_QUERY,
     { channelId: ARTSY_EDITORIAL_CHANNEL }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
-  const articles = extractNodes(articlesConnection)
+  const articles = extractNodes(data?.articlesConnection)
 
   res.set("Content-Type", "application/rss+xml")
   res.render("news", {
@@ -41,14 +40,13 @@ rssServerApp.get("/rss/partner-updates", async (req, res) => {
     userAgent: req.header("User-Agent"),
   })
 
-  const { articlesConnection } = await fetchQuery<RssArticlesQuery>(
+  const data = await fetchQuery<RssArticlesQuery>(
     relayEnvironment,
     RSS_ARTICLES_QUERY,
     { channelId: GALLERY_PARTNER_UPDATES_CHANNEL }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
-  const articles = extractNodes(articlesConnection)
+  const articles = extractNodes(data?.articlesConnection)
 
   res.set("Content-Type", "application/rss+xml")
   res.render("partnerUpdates", {

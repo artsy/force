@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArticleHeroFragmentContainer } from "./ArticleHero"
@@ -67,7 +67,6 @@ export const ArticleHero = () => {
 
               return (
                 <ArticleHeroFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   article={props.article}
                   fixed={false}
                 />

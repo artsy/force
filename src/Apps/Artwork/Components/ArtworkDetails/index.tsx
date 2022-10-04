@@ -58,20 +58,17 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
         <Tabs onChange={this.trackTabChange.bind(this)}>
           <Tab name="About the work" data={{ trackingLabel: "about_the_work" }}>
             <ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
             <ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <ArtworkDetailsAdditionalInfoFragmentContainer artwork={artwork} />
           </Tab>
 
           {artwork.articles && artwork.articles.length && (
             <Tab name="Articles" data={{ trackingLabel: "articles" }}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkDetailsArticlesFragmentContainer artwork={artwork} />
             </Tab>
           )}
@@ -190,7 +187,6 @@ export const ArtworkDetailsQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artwork) {
-          // @ts-ignore RELAY UPGRADE 13
           return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
         }
       }}

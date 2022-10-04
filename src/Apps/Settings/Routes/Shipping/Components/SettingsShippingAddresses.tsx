@@ -47,7 +47,6 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
           {addresses.map(address => {
             return (
               <Column key={address.internalID} span={4}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <SettingsShippingAddressFragmentContainer address={address} />
               </Column>
             )

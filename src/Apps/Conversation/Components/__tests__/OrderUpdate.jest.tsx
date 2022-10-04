@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { OrderUpdateFragmentContainer } from "../OrderUpdate"
+import { OrderUpdateFragmentContainer } from "Apps/Conversation/Components/OrderUpdate"
 import { OrderUpdate_Test_Query } from "__generated__/OrderUpdate_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 import { DateTime } from "luxon"
@@ -16,7 +16,6 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
 
     return (
       <OrderUpdateFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         event={event}
         setShowDetails={setShowDetailsSpy}
       />

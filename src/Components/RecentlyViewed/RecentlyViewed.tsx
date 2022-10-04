@@ -8,9 +8,9 @@ import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "../Artwork/ShelfArtwork"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
-import { Rail } from "../Rail"
+import { Rail } from "Components/Rail"
 import { useTracking } from "react-tracking"
 
 export interface RecentlyViewedProps {
@@ -43,7 +43,6 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
             <ShelfArtworkFragmentContainer
               key={artwork.id}
               lazyLoad={true}
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               onClick={trackClick}
               contextModule={ContextModule.recentlyViewedRail}
@@ -100,7 +99,6 @@ export const RecentlyViewedQueryRenderer = () => {
           return <RecentlyViewedPlaceholder />
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <RecentlyViewedFragmentContainer me={props.me!} />
       }}
       cacheConfig={{

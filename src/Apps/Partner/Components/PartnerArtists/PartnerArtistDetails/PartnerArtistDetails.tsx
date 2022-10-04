@@ -71,7 +71,6 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           <PartnerArtistArtworksRailPaginationContainer
             partnerId={partnerId}
             artistId={partnerArtist.node.slug}
-            // @ts-ignore RELAY UPGRADE 13
             partnerArtist={partnerArtist}
           />
         </Column>
@@ -136,7 +135,6 @@ export const PartnerArtistDetailsRenderer: React.FC<{
             {...rest}
             {...props}
             partnerId={partnerId}
-            // @ts-ignore RELAY UPGRADE 13
             partnerArtist={props?.partner?.artistsConnection?.edges?.[0]!}
           />
         )

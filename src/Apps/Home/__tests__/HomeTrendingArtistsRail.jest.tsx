@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeTrendingArtistsRailFragmentContainer } from "../Components/HomeTrendingArtistsRail"
+import { HomeTrendingArtistsRailFragmentContainer } from "Apps/Home/Components/HomeTrendingArtistsRail"
 import { HomeTrendingArtistsRail_Test_Query } from "__generated__/HomeTrendingArtistsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -12,7 +12,6 @@ jest.mock("Components/FollowButton/FollowArtistButton", () => ({
 
 const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
   Component: props => {
-    // @ts-ignore RELAY UPGRADE 13
     return <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`

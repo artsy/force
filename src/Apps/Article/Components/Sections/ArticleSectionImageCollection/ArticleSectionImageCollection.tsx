@@ -13,7 +13,7 @@ import { ArticleSectionImageCollection_section$data } from "__generated__/Articl
 import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
 import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { CENTERED_LAYOUT_COLUMNS } from "../../ArticleBody"
+import { CENTERED_LAYOUT_COLUMNS } from "Apps/Article/Components/ArticleBody"
 
 const FULLBLEED_IMAGE_WIDTH = 2000
 const MAX_IMAGE_WIDTH = 910
@@ -57,7 +57,6 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
             return (
               <ArticleSectionImageCollectionImageFragmentContainer
                 key={i}
-                // @ts-ignore RELAY UPGRADE 13
                 figure={figure}
                 targetWidth={targetWidth}
               />
@@ -75,7 +74,6 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
               <Box key={i} flex={1} overflow="hidden">
                 <Caption>
                   <ArticleSectionImageCollectionCaptionFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     figure={figure}
                   />
                 </Caption>

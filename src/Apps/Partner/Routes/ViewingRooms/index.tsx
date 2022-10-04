@@ -2,8 +2,8 @@ import * as React from "react"
 import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRooms_partner$data } from "__generated__/ViewingRooms_partner.graphql"
-import { ViewingRoomsFragmentContainer } from "../../Components/PartnerViewingRooms/ViewingRooms"
-import { ViewingRoomsPaginatedRenderer } from "../../Components/PartnerViewingRooms/ViewingRoomsPaginated"
+import { ViewingRoomsFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRooms"
+import { ViewingRoomsPaginatedRenderer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRoomsPaginated"
 
 interface PartnerShowsProps {
   partner: ViewingRooms_partner$data
@@ -20,7 +20,6 @@ export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
     <>
       {isCurrentViewingRoomsExist && (
         <ViewingRoomsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           edges={filteredCurrentViewingRooms}
           eventTitle="Current Viewing Rooms"
         />
@@ -28,7 +27,6 @@ export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
 
       {isUpcomingViewingRoomsExist && (
         <ViewingRoomsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           edges={filteredUpcomingViewingRooms}
           eventTitle="Upcoming Viewing Rooms"
         />

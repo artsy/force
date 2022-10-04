@@ -126,7 +126,6 @@ export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
         return (
           <ArtworkSidebarClassificationsModalFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
           />
         )

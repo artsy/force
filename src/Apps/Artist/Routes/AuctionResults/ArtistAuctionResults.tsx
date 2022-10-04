@@ -32,7 +32,7 @@ import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
 import { scrollIntoView } from "Utils/scrollHelpers"
 import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
-import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
+import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
@@ -277,7 +277,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                   return (
                     <ArtistAuctionResultItemFragmentContainer
                       key={index}
-                      // @ts-ignore RELAY UPGRADE 13
                       auctionResult={result}
                       filtersAtDefault={filtersAtDefault}
                     />
@@ -295,7 +294,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <Pagination
             getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
-            // @ts-ignore RELAY UPGRADE 13
             pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={(_cursor, page) => loadPage(_cursor, page)}
             onNext={() => loadNext()}

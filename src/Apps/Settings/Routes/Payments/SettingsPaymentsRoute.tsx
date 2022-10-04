@@ -10,7 +10,6 @@ interface SettingsPaymentsRouteProps {
 const SettingsPaymentsRoute: React.FC<SettingsPaymentsRouteProps> = ({
   me,
 }) => {
-  // @ts-ignore RELAY UPGRADE 13
   return <SettingsPaymentsMethodsFragmentContainer me={me} />
 }
 

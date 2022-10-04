@@ -26,7 +26,6 @@ const AuctionCurrentAuctionsRail: React.FC<AuctionCurrentAuctionsRailProps> = ({
         alignItems="flex-start"
         getItems={() => {
           return nodes.map((node, index) => {
-            // @ts-ignore RELAY UPGRADE 13
             return <CellSaleFragmentContainer sale={node} key={index} />
           })
         }}

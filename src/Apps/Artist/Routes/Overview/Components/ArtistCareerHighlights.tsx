@@ -57,14 +57,12 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
       <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
         {displayInsightAchievements && (
           <Column span={6}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightAchievementsFragmentContainer artist={artist} />
           </Column>
         )}
 
         {displayInsightBadges && (
           <Column span={6}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightBadgesFragmentContainer artist={artist} />
           </Column>
         )}
@@ -160,7 +158,6 @@ export const ArtistCareerHighlightsQueryRenderer: React.FC<{
 
         if (props.artist) {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <ArtistCareerHighlightsFragmentContainer artist={props.artist} />
           )
         }

@@ -23,8 +23,8 @@ import { userIsAdmin } from "Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 import { Sticky, StickyProvider } from "Components/Sticky"
-import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import styled from "styled-components"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
 
@@ -68,10 +68,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   return (
     <StickyProvider>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairMetaFragmentContainer fair={fair} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FairHeaderImageFragmentContainer fair={fair} />
 
       <Spacer mt={[1, 30]} />
@@ -86,7 +84,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             >
               <AppContainer>
                 <HorizontalPadding>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <FairHeaderFragmentContainer fair={fair} stuck={stuck} />
 
                   <RouteTabs textAlign="center" flexGrow={1} fill>
@@ -128,7 +125,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                     </FairRouteTab>
                   </RouteTabs>
                   {match.location.pathname.includes("/exhibitors") && (
-                    // @ts-ignore RELAY UPGRADE 13
                     <ExhibitorsLetterNav fair={fair} />
                   )}
                 </HorizontalPadding>

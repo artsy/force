@@ -41,7 +41,6 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderArtistFragmentContainer
                 key={node.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 artist={node}
                 FollowButton={
                   <FollowArtistButtonQueryRenderer
@@ -64,7 +63,6 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderPartnerFragmentContainer
                 key={node.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 partner={partner}
                 FollowButton={
                   <FollowProfileButtonQueryRenderer
@@ -168,7 +166,6 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
         return (
           <OnboardingSearchResultsFragmentContainer
             term={term}
-            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
           />
         )

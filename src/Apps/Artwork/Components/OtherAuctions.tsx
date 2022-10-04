@@ -30,7 +30,6 @@ export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
         {sales.map(sale => {
           return (
             <Column key={sale.internalID} span={3}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <AuctionCardFragmentContainer sale={sale} />
             </Column>
           )

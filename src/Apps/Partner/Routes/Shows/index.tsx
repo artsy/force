@@ -2,9 +2,9 @@ import * as React from "react"
 import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner$data } from "__generated__/Shows_partner.graphql"
-import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowEvents"
-import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
-import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
+import { ShowEventsFragmentContainer } from "Apps/Partner/Components/PartnerShows/ShowEvents"
+import { ShowPaginatedEventsRenderer } from "Apps/Partner/Components/PartnerShows/ShowPaginatedEvents"
+import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 import { useRouter } from "System/Router/useRouter"
 
 interface PartnerShowsProps {
@@ -38,19 +38,16 @@ export const Shows: React.FC<PartnerShowsProps> = ({
   return (
     <>
       {isEventFeatured && (
-        // @ts-ignore RELAY UPGRADE 13
         <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
       )}
       {isCurrentEventsExist && (
         <ShowEventsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           edges={filteredCurrentEvents}
           eventTitle="Current Events"
         />
       )}
       {isUpcomingEventsExist && (
         <ShowEventsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           edges={compact(upcomingEvents?.edges)}
           eventTitle="Upcoming Events"
         />

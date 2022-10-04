@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -61,7 +61,6 @@ export const CellShow = () => {
                 return <CellShowPlaceholder {...rest} />
               }
 
-              // @ts-ignore RELAY UPGRADE 13
               return <CellShowFragmentContainer show={props.show} {...rest} />
             }}
           />

@@ -1,4 +1,4 @@
-import { ShowsCityRefetchContainer } from "../ShowsCity"
+import { ShowsCityRefetchContainer } from "Apps/Shows/Routes/ShowsCity"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ShowsCity_Test_Query } from "__generated__/ShowsCity_Test_Query.graphql"
@@ -22,7 +22,6 @@ const { getWrapper } = setupTestWrapper<ShowsCity_Test_Query>({
   Component: ({ viewer, city }) => {
     return (
       <MockBoot>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsCityRefetchContainer viewer={viewer!} city={city!} />
       </MockBoot>
     )

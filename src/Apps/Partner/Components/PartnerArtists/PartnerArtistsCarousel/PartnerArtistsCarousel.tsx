@@ -35,7 +35,6 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
       {artists.map(artist => (
         <CellArtistFragmentContainer
           key={artist.internalID}
-          // @ts-ignore RELAY UPGRADE 13
           artist={artist}
           to={`/partner/${partner.slug}/artists/${artist.slug}`}
           FollowButton={
@@ -100,7 +99,6 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         return (
           <PartnerArtistsCarouselFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

@@ -51,7 +51,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <Spacer mt={4} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <CuritorialRailsTabBarFragmentContainer viewer={viewer} />
 
       <Spacer my={12} />

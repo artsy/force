@@ -1,12 +1,15 @@
 import { Banner, Box, Button, Text } from "@artsy/palette"
 import * as React from "react"
-import { graphql } from "relay-runtime"
-import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
-import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
-import { Mode, useInquiryAffiliated } from "../Hooks/useInquiryAffiliated"
+import { graphql } from "react-relay"
+import { InquiryAffiliatedAutocomplete } from "Components/Inquiry/Components/InquiryAffiliatedAutocomplete"
+import { InquiryAffiliatedSelectedOptions } from "Components/Inquiry/Components/InquiryAffiliatedSelectedOptions"
+import {
+  Mode,
+  useInquiryAffiliated,
+} from "Components/Inquiry/Hooks/useInquiryAffiliated"
 import { InquiryArtistsInCollectionQuery } from "__generated__/InquiryArtistsInCollectionQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { useCreateUserInterest } from "../Hooks/useCreateUserInterest"
+import { useCreateUserInterest } from "Components/Inquiry/Hooks/useCreateUserInterest"
 
 export const InquiryArtistsInCollection: React.FC = () => {
   const {

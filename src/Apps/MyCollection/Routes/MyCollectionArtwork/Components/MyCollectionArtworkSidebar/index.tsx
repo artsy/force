@@ -18,12 +18,10 @@ export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProp
     <MyCollectionArtworkSidebarContainer>
       <Media greaterThanOrEqual="sm">
         <MyCollectionArtworkSidebarTitleInfoFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
         />
       </Media>
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <MyCollectionArtworkSidebarMetadataFragmentContainer artwork={artwork} />
     </MyCollectionArtworkSidebarContainer>
   )

@@ -34,7 +34,6 @@ const CellPartner: React.FC<CellPartnerProps> = ({
       {...rest}
     >
       <EntityHeaderPartnerFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         partner={partner}
         displayAvatar={false}
         displayLink={false}

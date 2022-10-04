@@ -24,12 +24,9 @@ export async function getOffsetBetweenGravityClock(
       relayEnvironment,
       query,
       {},
-      // FIXME: Update after definitely-typed and relay docs are updated
-      // @ts-ignore
       {
-        force: true,
+        fetchPolicy: "network-only",
       }
-      // @ts-expect-error RELAY_UPGRADE
     ).toPromise()
   }
 
@@ -40,7 +37,7 @@ export async function getOffsetBetweenGravityClock(
     const possibleNetworkLatencyInMilliSeconds =
       (getLocalTimestampInMilliSeconds() - startTime) / 2
     const serverTimestampInMilliSeconds =
-      data.system.time.unix * 1e3 + possibleNetworkLatencyInMilliSeconds
+      data?.system?.time?.unix! * 1e3 + possibleNetworkLatencyInMilliSeconds
 
     return serverTimestampInMilliSeconds
   }

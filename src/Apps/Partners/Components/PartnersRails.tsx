@@ -106,7 +106,6 @@ export const PartnersRailsQueryRenderer: FC<PartnersRailsQueryRendererProps> = (
         }
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <PartnersRailsFragmentContainer type={type} viewer={props.viewer} />
         )
       }}

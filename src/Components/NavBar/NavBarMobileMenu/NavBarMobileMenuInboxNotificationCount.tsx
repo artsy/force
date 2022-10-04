@@ -1,12 +1,15 @@
 import { useContext } from "react"
 import * as React from "react"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { isServer } from "Server/isServer"
 import styled from "styled-components"
 import { NavBarMobileMenuInboxNotificationCountQuery } from "__generated__/NavBarMobileMenuInboxNotificationCountQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { getConversationCount, updateConversationCache } from "../helpers"
+import {
+  getConversationCount,
+  updateConversationCache,
+} from "Components/NavBar/helpers"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuInboxNotificationCount_me$data } from "__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
@@ -70,7 +73,6 @@ export const NavBarMobileMenuInboxNotificationCountQueryRenderer: React.FC<{}> =
 
         return (
           <NavBarMobileMenuInboxNotificationCountFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             me={props.me}
           />
         )

@@ -1,13 +1,13 @@
 import { useSystemContext } from "System/useSystemContext"
 import "jest-styled-components"
-import { graphql } from "relay-runtime"
-import { FollowArtistButtonFragmentContainer } from "../FollowArtistButton"
+import { graphql } from "react-relay"
+import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
 import * as openAuthModal from "Utils/openAuthModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { FollowArtistButton_Test_Query } from "__generated__/FollowArtistButton_Test_Query.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useFollowButtonTracking } from "../useFollowButtonTracking"
+import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
 
 jest.unmock("react-relay")
 
@@ -21,7 +21,6 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   Component: props => {
     return (
       <FollowArtistButtonFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artist={props.artist!}
         onFollow={onFollow}
       />

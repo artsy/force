@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "../MyCollectionArtworkImageBrowser"
+import { MyCollectionArtworkImageBrowserFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")

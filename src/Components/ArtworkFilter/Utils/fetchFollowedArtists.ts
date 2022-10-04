@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
 import { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
 import { compact, isString } from "lodash"
-import { FollowedArtists } from "../ArtworkFilterContext"
+import { FollowedArtists } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 graphql`
   fragment fetchFollowedArtists_response on FollowArtistConnection {
@@ -62,10 +62,9 @@ export async function fetchFollowedArtists(
   try {
     const data = await fetchQuery<
       fetchFollowedArtistsByFairIdQuery | fetchFollowedArtistsRawQuery
-      // @ts-expect-error RELAY_UPGRADE
     >(relayEnvironment, query, props).toPromise()
 
-    const edges = data.me?.followsAndSaves?.artistsConnection?.edges ?? []
+    const edges = data?.me?.followsAndSaves?.artistsConnection?.edges ?? []
     const artists = edges.map(edge => edge?.node?.artist)
 
     return compact(artists)

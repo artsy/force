@@ -8,7 +8,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
 import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
-import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
@@ -92,7 +92,6 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
           {isSaveButtonVisible && (
             <SaveButtonFragmentContainer
               contextModule={ContextModule.artworkGrid}
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
           )}
@@ -110,7 +109,6 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
         />
       )}
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <Metadata artwork={artwork} />
     </Flex>
   )

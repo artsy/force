@@ -1,6 +1,6 @@
 import { useTracking } from "react-tracking"
-import { graphql } from "relay-runtime"
-import { ArtistConsignRouteFragmentContainer } from "../ArtistConsignRoute"
+import { graphql } from "react-relay"
+import { ArtistConsignRouteFragmentContainer } from "Apps/Artist/Routes/Consign/ArtistConsignRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
 

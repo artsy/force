@@ -55,7 +55,6 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
           return (
             <CellArtistFragmentContainer
               key={artist.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               artist={artist}
               onClick={() => {
                 const trackingEvent: ClickedArtistGroup = {
@@ -138,7 +137,6 @@ export const HomeTrendingArtistsRailQueryRenderer: React.FC = () => {
 
         if (props.viewer) {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer} />
           )
         }

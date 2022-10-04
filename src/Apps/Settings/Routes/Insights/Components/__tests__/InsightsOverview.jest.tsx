@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQuery.graphql"
-import { InsightsOverviewFragmentContainer } from "../InsightsOverview"
+import { InsightsOverviewFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsOverview"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")

@@ -48,7 +48,6 @@ const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
         return (
           <CellArticleFragmentContainer
             key={article.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             article={article}
             displayByline={false}
             onClick={() => {

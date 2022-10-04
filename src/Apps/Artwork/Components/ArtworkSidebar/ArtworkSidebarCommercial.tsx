@@ -107,7 +107,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SizeInfo piece={editionSet!} />
 
         <Text ml={1} variant="xs" data-test="SaleMessage">
@@ -392,7 +391,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           Be notified when a similar work is available
         </Text>
         <Spacer mt={2} />
-        {/* @ts-ignore RELAY UPGRADE 13 */}
+
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </>
     )

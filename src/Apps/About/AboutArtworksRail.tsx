@@ -27,7 +27,6 @@ export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             key={artwork.internalID}
           />

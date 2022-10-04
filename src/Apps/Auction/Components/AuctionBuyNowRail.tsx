@@ -26,7 +26,6 @@ const AuctionBuyNowRail: React.FC<AuctionBuyNowRailProps> = ({ sale }) => {
         return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={node.artwork!}
               key={index}
               lazyLoad

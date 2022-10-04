@@ -55,7 +55,6 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
       }}
       getItems={() => {
         return artworks.map(artwork => (
-          // @ts-ignore RELAY UPGRADE 13
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={artwork.internalID}
@@ -124,7 +123,6 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <HomeTroveArtworksRailFragmentContainer viewer={props.viewer} />
       }}
     />

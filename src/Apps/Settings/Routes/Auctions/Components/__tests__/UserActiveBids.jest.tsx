@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { UserActiveBidsFragmentContainer } from "../UserActiveBids"
+import { UserActiveBidsFragmentContainer } from "Apps/Settings/Routes/Auctions/Components/UserActiveBids"
 import { UserActiveBids_Test_Query } from "__generated__/UserActiveBids_Test_Query.graphql"
 import { screen } from "@testing-library/react"
 
@@ -8,7 +8,6 @@ jest.unmock("react-relay")
 
 describe("UserActiveBids", () => {
   const { renderWithRelay } = setupTestWrapperTL<UserActiveBids_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: UserActiveBidsFragmentContainer,
     query: graphql`
       query UserActiveBids_Test_Query @relay_test_operation {
