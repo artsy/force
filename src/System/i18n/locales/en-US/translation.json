@@ -82,6 +82,11 @@
       "auction": {
         "biddingClosed": "Bidding closed",
         "estimatedValue": "Estimated value: {{value}}"
+      },
+      "commercialButtons": {
+        "buyNow": "Purchase",
+        "makeOffer": "Make an Offer",
+        "contactGallery": "Contact Gallery"
       }
     }
   },

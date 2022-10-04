@@ -26,6 +26,7 @@ import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { openAuthModal } from "Utils/openAuthModal"
 import currency from "currency.js"
+import { useTranslation } from "react-i18next"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -51,6 +52,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
   artwork,
 }) => {
   const { relayEnvironment, mediator, router, user } = useSystemContext()
+  const { t } = useTranslation()
 
   const tracking = useTracking()
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
@@ -332,7 +334,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
             loading={isCommitingCreateOrderMutation}
             onClick={handleCreateOrder}
           >
-            Purchase
+            {t("artworkPage.sidebar.commercialButtons.buyNow")}
           </Button>
         )}
         {artwork.isOfferable && (
@@ -347,7 +349,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
               loading={isCommittingCreateOfferOrderMutation}
               onClick={handleCreateOfferOrder}
             >
-              Make an Offer
+              {t("artworkPage.sidebar.commercialButtons.makeOffer")}
             </Button>
           </>
         )}
@@ -364,7 +366,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
                   : "primaryBlack"
               }
             >
-              Contact Gallery
+              {t("artworkPage.sidebar.commercialButtons.contactGallery")}
             </Button>
           </>
         )}
