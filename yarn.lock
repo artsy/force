@@ -4520,10 +4520,15 @@
   dependencies:
     graphql "^14.5.3"
 
-"@types/relay-runtime@*", "@types/relay-runtime@9.1.6":
-  version "9.1.6"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-9.1.6.tgz#5a9afc37552d7e5b7966779d33ab26dce7da6771"
-  integrity sha512-rdylQOGAoqjDjtzC2uKdjIqeDRcAvUsjONQB+FZld3cAP9qU4eEwTfMKJ7MdZSw2YbWRcTphczT4OpKKlLxY3Q==
+"@types/relay-runtime@*", "@types/relay-runtime@14.1.1":
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-14.1.1.tgz#32c961161fbdc3010f336535321c7f23676f4a45"
+  integrity sha512-LNse8cKDXGQ1XNOc5nxP0SkxXX11vSCkumpjWrAMqWu6fCDYa4QLb/83NLwb/cXmfAdsJrd1lhir5hzNtOxHdg==
+
+"@types/relay-runtime@14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-14.1.0.tgz#0be283418ca20bfe9ccaac7229284fbecfed00a5"
+  integrity sha512-BT0iqH6f5agLTKrBA2/VKOEgH0N92MKdkkMds06jVkac/rcFHqNSUh9WVFaDE6rSX3n5GvFIrYs8MmA8rsCXFw==
 
 "@types/relay-test-utils@^14.1.0":
   version "14.1.0"
