@@ -25,7 +25,8 @@ export const fairOrganizerFollowMutation: FollowFairOrganizerMutationProps = (
         resolve(response)
       },
       mutation: graphql`
-        mutation FairOrganizerFollowMutation($input: FollowProfileInput!) {
+        mutation FairOrganizerFollowMutation($input: FollowProfileInput!)
+          @raw_response_type {
           followProfile(input: $input) {
             profile {
               id

@@ -51,7 +51,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
 
   const [showForm, setShowForm] = useState(true)
   const [showRecoveryCodes, setShowRecoveryCodes] = useState(false)
-  const [recoveryCodes, setRecoveryCodes] = useState(null)
+  const [recoveryCodes, setRecoveryCodes] = useState<any>(null)
 
   if (!secondFactor || secondFactor.__typename !== "AppSecondFactor") {
     return null
@@ -93,14 +93,13 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         },
       })
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const response = await EnableSecondFactor(relayEnvironment, {
+      const response = await EnableSecondFactor(relayEnvironment!, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
         password: password,
       })
 
-      setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
+      setRecoveryCodes(response?.enableSecondFactor?.recoveryCodes)
 
       actions.setSubmitting(false)
 
@@ -144,7 +143,6 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
           }
         >
           <BackupSecondFactorReminder
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             backupSecondFactors={recoveryCodes}
             factorTypeName={secondFactor.__typename}
           />

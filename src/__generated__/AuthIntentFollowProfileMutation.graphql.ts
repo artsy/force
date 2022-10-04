@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb04ef630f3d2251f1e3dc5eedc600a1>>
+ * @generated SignedSource<<bdb59b1ded2458b753d9ca703890dd21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type AuthIntentFollowProfileMutation$data = {
     } | null;
   } | null;
 };
+export type AuthIntentFollowProfileMutation$rawResponse = {
+  readonly followProfile: {
+    readonly profile: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+    } | null;
+  } | null;
+};
 export type AuthIntentFollowProfileMutation = {
+  rawResponse: AuthIntentFollowProfileMutation$rawResponse;
   response: AuthIntentFollowProfileMutation$data;
   variables: AuthIntentFollowProfileMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "567bc4b1dea32242bc6a8eb0d9b51f90";
+(node as any).hash = "aecf1a9e59ed2ca93594e3cecc4aaa00";
 
 export default node;

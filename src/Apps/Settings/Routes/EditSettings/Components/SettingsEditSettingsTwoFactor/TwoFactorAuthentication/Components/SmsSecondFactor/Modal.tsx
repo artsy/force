@@ -39,7 +39,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   const [isDelivering, setDelivering] = useState(false)
 
   const [showRecoveryCodes, setShowRecoveryCodes] = useState(false)
-  const [recoveryCodes, setRecoveryCodes] = useState(null)
+  const [recoveryCodes, setRecoveryCodes] = useState<any>(null)
 
   if (!secondFactor || secondFactor.__typename !== "SmsSecondFactor") {
     return null
@@ -52,15 +52,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      const response = await EnableSecondFactor(relayEnvironment, {
+      const response = await EnableSecondFactor(relayEnvironment!, {
         secondFactorID: secondFactor.internalID,
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: values.code,
         password: password,
       })
 
-      setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
+      setRecoveryCodes(response?.enableSecondFactor?.recoveryCodes!)
 
       setShowRecoveryCodes(true)
     } catch (error) {
@@ -296,7 +295,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
           }
         >
           <BackupSecondFactorReminder
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             backupSecondFactors={recoveryCodes}
             factorTypeName={secondFactor.__typename}
           />

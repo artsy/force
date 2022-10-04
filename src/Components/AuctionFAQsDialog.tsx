@@ -62,7 +62,7 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
       <Tabs>
         {Object.keys(viewer).map(
           (key: keyof Omit<typeof viewer, " $refType">) => {
-            const page = viewer[key]
+            const page = viewer[key] as any
 
             if (!page.content) return null
 

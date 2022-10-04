@@ -40,8 +40,9 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
     <Box mt={4}>
       <PartnerArtistListFragmentContainer
         partnerSlug={slug}
-        scrollTo={scrollTo}
-        artists={artists}
+        scrollTo={scrollTo!}
+        // FIXME: RELAY UPGRADE
+        artists={artists as any}
         distinguishRepresentedArtists={!!distinguishRepresentedArtists}
         displayFullPartnerPage={!!displayFullPartnerPage}
       />

@@ -28,13 +28,13 @@ export const handleShort = async (
   })
 
   try {
-    const { shortcut } = await fetchQuery<RedirectsShortcutsQuery>(
+    const data = await fetchQuery<RedirectsShortcutsQuery>(
       relayEnvironment,
       REDIRECTS_SHORTCUTS_QUERY,
       { id: short }
     ).toPromise()
 
-    if (shortcut) return res.redirect(301, shortcut.long)
+    if (data?.shortcut) return res.redirect(301, data?.shortcut.long)
 
     next()
   } catch {
@@ -52,13 +52,13 @@ export const handleProfile = async (
   })
 
   try {
-    const { profile } = await fetchQuery<RedirectsProfileQuery>(
+    const data = await fetchQuery<RedirectsProfileQuery>(
       relayEnvironment,
       REDIRECTS_PROFILE_QUERY,
       { id: req.params.id }
     ).toPromise()
 
-    res.locals.profile = profile
+    res.locals.profile = data?.profile
     res.locals.tab = req.params.tab
 
     next()

@@ -540,5 +540,5 @@ const mockArtwork = {
   slug: "62fc96c48d3ff8000b556c3a",
   title: "Untitled",
   width: "11",
-  " $refType": "MyCollectionArtworkForm_artwork",
+  " $fragmentType": "MyCollectionArtworkForm_artwork",
 } as MyCollectionArtworkForm_artwork$data

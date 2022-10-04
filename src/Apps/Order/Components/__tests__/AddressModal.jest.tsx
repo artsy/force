@@ -1,5 +1,9 @@
 import { commitMutation as _commitMutation } from "react-relay"
-import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "Apps/Order/Components/AddressModal"
+import {
+  AddressModal,
+  Props,
+  GENERIC_FAIL_MESSAGE,
+} from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
 import {
@@ -58,7 +62,7 @@ describe("AddressModal", () => {
           edges: [],
         },
 
-        " $refType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
     }
@@ -308,7 +312,7 @@ describe("AddressModal feature flag", () => {
           edges: [],
         },
 
-        " $refType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
     }

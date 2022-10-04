@@ -86,7 +86,7 @@ describe("createMockNetworkLayer", () => {
           artwork: { title: "Untitled", id: "untitled" },
         },
       })
-      expect(data.artwork.title).toEqual("Untitled")
+      expect(data?.artwork?.title).toEqual("Untitled")
     })
 
     it("returns null for nullable fields which are given as null", async () => {
@@ -95,7 +95,7 @@ describe("createMockNetworkLayer", () => {
           artwork: { title: null, id: "null" },
         },
       })
-      expect(data.artwork.title).toEqual(null)
+      expect(data?.artwork?.title).toEqual(null)
     })
   })
 
@@ -168,7 +168,7 @@ describe("createMockNetworkLayer", () => {
       },
     })
 
-    expect(data.artwork).toBeNull()
+    expect(data?.artwork).toBeNull()
   })
 
   it("uses data provided with an aliased name", async () => {
@@ -207,10 +207,10 @@ describe("createMockNetworkLayer", () => {
         }
       `
     )
-    expect(data.artist.forSaleArtworks.edges[0].node).toEqual({
+    expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "for-sale-work",
     })
-    expect(data.artist.notForSaleArtworks.edges[0].node).toEqual({
+    expect(data?.artist?.notForSaleArtworks?.edges?.[0]?.node).toEqual({
       id: "no-for-sale-work",
     })
   })
@@ -242,7 +242,7 @@ describe("createMockNetworkLayer", () => {
         }
       `
     )
-    expect(data.artist.forSaleArtworks.edges[0].node).toEqual({
+    expect(data?.artist?.forSaleArtworks?.edges?.[0]?.node!).toEqual({
       id: "for-sale-work",
     })
   })

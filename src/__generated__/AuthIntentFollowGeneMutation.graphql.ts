@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<434d183ee20623afa9185fb0ce83533a>>
+ * @generated SignedSource<<ee98363308497186fb714a6b957cd44e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type AuthIntentFollowGeneMutation$data = {
     } | null;
   } | null;
 };
+export type AuthIntentFollowGeneMutation$rawResponse = {
+  readonly followGene: {
+    readonly gene: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+    } | null;
+  } | null;
+};
 export type AuthIntentFollowGeneMutation = {
+  rawResponse: AuthIntentFollowGeneMutation$rawResponse;
   response: AuthIntentFollowGeneMutation$data;
   variables: AuthIntentFollowGeneMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "067e148f5eedd5e8193dadfce447ebbf";
+(node as any).hash = "a18fa8a41ff3cec0a7d85580bb398906";
 
 export default node;

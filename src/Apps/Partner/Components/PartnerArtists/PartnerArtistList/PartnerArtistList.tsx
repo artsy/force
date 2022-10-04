@@ -54,14 +54,14 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
-                {group.artists.map(({ node, counts: { artworks } }) => {
+                {group.artists.map(({ node, counts }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
-                      key={node.internalID}
-                      artist={node}
+                      key={node!.internalID}
+                      artist={node!}
                       partnerSlug={partnerSlug}
-                      hasPublishedArtworks={artworks > 0}
+                      hasPublishedArtworks={counts?.artworks > 0}
                       displayFullPartnerPage={displayFullPartnerPage}
                     />
                   )

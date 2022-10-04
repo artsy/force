@@ -19,7 +19,7 @@ describe("extendedBiddingInfoCopy", () => {
           internalID: "sale-id",
         },
 
-        " $refType": "LotTimer_saleArtwork",
+        " $fragmentType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
@@ -50,7 +50,7 @@ describe("extendedBiddingInfoCopy", () => {
             internalID: "sale-id",
           },
 
-          " $refType": "LotTimer_saleArtwork",
+          " $fragmentType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
@@ -76,7 +76,7 @@ describe("extendedBiddingInfoCopy", () => {
             internalID: "sale-id",
           },
 
-          " $refType": "LotTimer_saleArtwork",
+          " $fragmentType": "LotTimer_saleArtwork",
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
@@ -99,7 +99,7 @@ describe("extendedBiddingInfoCopy", () => {
           internalID: "sale-id",
         },
 
-        " $refType": "LotTimer_saleArtwork",
+        " $fragmentType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()

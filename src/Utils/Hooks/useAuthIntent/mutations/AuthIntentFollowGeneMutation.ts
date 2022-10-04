@@ -1,12 +1,13 @@
 import { commitMutation, Environment, graphql } from "relay-runtime"
 import { AuthIntentMutation } from "./types"
+import { AuthIntentFollowGeneMutation } from "__generated__/AuthIntentFollowGeneMutation.graphql"
 
 export const followGeneMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string
 ) => {
   return new Promise((resolve, reject) => {
-    commitMutation(relayEnvironment, {
+    commitMutation<AuthIntentFollowGeneMutation>(relayEnvironment, {
       onCompleted: (res, errors) => {
         if (errors !== null) {
           reject(errors)
@@ -16,7 +17,8 @@ export const followGeneMutation: AuthIntentMutation = (
         resolve(res)
       },
       mutation: graphql`
-        mutation AuthIntentFollowGeneMutation($input: FollowGeneInput!) {
+        mutation AuthIntentFollowGeneMutation($input: FollowGeneInput!)
+          @raw_response_type {
           followGene(input: $input) {
             gene {
               id

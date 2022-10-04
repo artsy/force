@@ -208,5 +208,5 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
     { searchQuery }
   ).toPromise()
 
-  return response.searchConnection?.edges
+  return response?.searchConnection?.edges
 }

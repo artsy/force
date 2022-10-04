@@ -9,7 +9,7 @@ export const useAuthValidation = () => {
 
   useEffect(() => {
     const exec = async () => {
-      const { authenticationStatus } = await fetchQuery<useAuthValidationQuery>(
+      const data = await fetchQuery<useAuthValidationQuery>(
         relayEnvironment!,
         graphql`
           query useAuthValidationQuery {
@@ -19,7 +19,7 @@ export const useAuthValidation = () => {
         {}
       ).toPromise()
 
-      if (authenticationStatus === "INVALID") {
+      if (data?.authenticationStatus === "INVALID") {
         await logout()
         window.location.reload()
         return

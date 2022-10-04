@@ -16,7 +16,9 @@ export const getConvectionGeminiKey = (relayEnvironment: Environment) =>
       }
     `,
     {},
-    { force: true }
+    {
+      fetchPolicy: "network-only",
+    }
   )
     .toPromise()
-    .then(data => data.system!.services!.convection.geminiTemplateKey)
+    .then(data => data?.system!.services!.convection.geminiTemplateKey)

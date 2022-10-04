@@ -31,8 +31,7 @@ describe("BankDebitProvider", () => {
           mode: "BUY",
           bankAccountId: "bank-id-1",
           paymentMethodDetails: null,
-
-          " $refType": "BankAccountPicker_order",
+          " $fragmentType": "BankAccountPicker_order",
         }}
       />
     )

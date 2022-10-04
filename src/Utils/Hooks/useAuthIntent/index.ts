@@ -1,7 +1,6 @@
 import Cookies from "cookies-js"
 import { mediator } from "Server/mediator"
 import { useEffect } from "react"
-import { Environment } from "react-relay"
 import { useSystemContext } from "System"
 import { triggerEvent } from "Utils/openAuthModal"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
@@ -9,6 +8,7 @@ import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { useConnectUserToSubmission } from "Apps/Consign/Hooks/useConnectUserToSubmission"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -41,7 +41,7 @@ const parse = (value: any): AfterAuthAction | null => {
 
 export const runAuthIntent = async (
   user: User,
-  relayEnvironment: Environment
+  relayEnvironment: RelayModernEnvironment
 ) => {
   if (!user) return
 
