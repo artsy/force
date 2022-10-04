@@ -5,7 +5,7 @@ import { Media } from "Utils/Responsive"
 export const MyCollectionBenefits: React.FC = () => {
   const infos = [
     {
-      title: "Manage your collection online",
+      title: "Create a private record of your artworks",
       subtitle: "View your collection online easily and securely in one place.",
     },
     {
@@ -57,11 +57,11 @@ export const MyCollectionBenefits: React.FC = () => {
   )
 
   const MobileLayout = () => (
-    <GridColumns gridRowGap={[4, 6]}>
+    <GridColumns gridRowGap={[0, 6]}>
       <Column span={6}>
         {infos.map(info => (
           <>
-            <Text variant="xl">{info.title}</Text>
+            <Text variant="lg-display">{info.title}</Text>
 
             <Text variant="sm" mt={0.5} mb={4}>
               {info.subtitle}
