@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { MyCollectionArtworkDemandIndexTestQuery } from "__generated__/MyCollectionArtworkDemandIndexTestQuery.graphql"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from ".."
 

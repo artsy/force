@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
-import { CuritorialRailsTabBarFragmentContainer } from "../CuritorialRailsTabBar"
+import { CuritorialRailsTabBarFragmentContainer } from "Apps/Auctions/Components/CuritorialRailsTabBar"
 
 jest.unmock("react-relay")
 

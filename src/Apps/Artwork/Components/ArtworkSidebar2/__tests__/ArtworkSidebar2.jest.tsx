@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ArtworkSidebar2FragmentContainer } from "../ArtworkSidebar2"
+import { ArtworkSidebar2FragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2"
 
 jest.unmock("react-relay")
 

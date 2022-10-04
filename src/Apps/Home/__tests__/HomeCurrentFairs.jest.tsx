@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeCurrentFairsFragmentContainer } from "../Components/HomeCurrentFairs"
+import { HomeCurrentFairsFragmentContainer } from "Apps/Home/Components/HomeCurrentFairs"
 import { HomeCurrentFairs_Test_Query } from "__generated__/HomeCurrentFairs_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 

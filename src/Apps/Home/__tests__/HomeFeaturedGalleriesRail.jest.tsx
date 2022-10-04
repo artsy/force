@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeFeaturedGalleriesRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedGalleriesRail"
 import { HomeFeaturedGalleriesRail_Test_Query } from "__generated__/HomeFeaturedGalleriesRail_Test_Query.graphql"

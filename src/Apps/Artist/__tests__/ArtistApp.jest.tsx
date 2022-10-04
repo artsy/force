@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistAppFragmentContainer } from "../ArtistApp"
+import { ArtistAppFragmentContainer } from "Apps/Artist/ArtistApp"
 import { ArtistApp_Test_Query } from "__generated__/ArtistApp_Test_Query.graphql"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 

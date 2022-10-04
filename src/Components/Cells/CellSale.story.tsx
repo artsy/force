@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { CellSaleStoryQuery } from "__generated__/CellSaleStoryQuery.graphql"
 import { CellSaleFragmentContainer, CellSalePlaceholder } from "./CellSale"

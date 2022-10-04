@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { MyCollectionArtworkSidebarTestQuery } from "__generated__/MyCollectionArtworkSidebarTestQuery.graphql"
 import { MyCollectionArtworkSidebarFragmentContainer } from ".."
 

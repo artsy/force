@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeAuctionLotsRailFragmentContainer } from "../Components/HomeAuctionLotsRail"
+import { HomeAuctionLotsRailFragmentContainer } from "Apps/Home/Components/HomeAuctionLotsRail"
 import { HomeAuctionLotsRail_Test_Query } from "__generated__/HomeAuctionLotsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 

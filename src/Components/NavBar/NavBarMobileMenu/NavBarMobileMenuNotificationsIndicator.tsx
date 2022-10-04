@@ -1,14 +1,14 @@
 import { useContext } from "react"
 import * as React from "react"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { isServer } from "Server/isServer"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { checkAndSyncIndicatorsCount } from "../helpers"
+import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
-import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
+import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null

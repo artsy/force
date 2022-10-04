@@ -1,5 +1,5 @@
 import { addAssetToConsignmentMutation } from "__generated__/addAssetToConsignmentMutation.graphql"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 export const useAddAssetToConsignmentSubmission = () => {

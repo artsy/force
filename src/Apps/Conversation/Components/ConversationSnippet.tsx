@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import styled from "styled-components"
 import { Box, Flex, Link, Text, Separator } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"

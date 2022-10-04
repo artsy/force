@@ -1,10 +1,10 @@
-import { InquiryBasicInfoFragmentContainer } from "../../Views/InquiryBasicInfo"
-import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
-import { useInquiryContext } from "../../Hooks/useInquiryContext"
+import { InquiryBasicInfoFragmentContainer } from "Components/Inquiry/Views/InquiryBasicInfo"
+import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { flushPromiseQueue } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
-import { fill } from "../util"
+import { graphql } from "react-relay"
+import { fill } from "Components/Inquiry/__tests__/util"
 
 jest.unmock("react-relay")
 jest.mock("../../Hooks/useUpdateMyUserProfile")

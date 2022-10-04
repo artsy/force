@@ -2,9 +2,9 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { MBSize, uploadPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fetchQuery } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { SystemContextProvider } from "System"
-import { UploadPhotosFragmentContainer } from "../UploadPhotos"
+import { UploadPhotosFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
 
 jest.unmock("react-relay")
 

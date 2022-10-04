@@ -5,7 +5,9 @@ import {
   RelayRefetchProp,
   createPaginationContainer,
 } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
+// FIXME:
+// eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
 import {
   Banner,
@@ -24,11 +26,11 @@ import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
-import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
+import { returnOrderModalDetails } from "Apps/Conversation/Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
-import useOnScreen from "../Utils/useOnScreen"
-import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import useOnScreen from "Apps/Conversation/Utils/useOnScreen"
+import { UpdateConversation } from "Apps/Conversation/Mutation/UpdateConversationMutation"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"

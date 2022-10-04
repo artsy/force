@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { DeepZoomFragmentContainer } from "../DeepZoom"
+import { DeepZoomFragmentContainer } from "Components/DeepZoom/DeepZoom"
 import { DeepZoom_Test_Query } from "__generated__/DeepZoom_Test_Query.graphql"
 
 jest.unmock("react-relay")

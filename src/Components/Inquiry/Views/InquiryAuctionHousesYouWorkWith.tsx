@@ -1,11 +1,14 @@
 import { Banner, Box, Button, Text } from "@artsy/palette"
 import * as React from "react"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { InquiryAuctionHousesYouWorkWithQuery } from "__generated__/InquiryAuctionHousesYouWorkWithQuery.graphql"
-import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
-import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
-import { useInquiryAffiliated, Mode } from "../Hooks/useInquiryAffiliated"
-import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
+import { InquiryAffiliatedAutocomplete } from "Components/Inquiry/Components/InquiryAffiliatedAutocomplete"
+import { InquiryAffiliatedSelectedOptions } from "Components/Inquiry/Components/InquiryAffiliatedSelectedOptions"
+import {
+  useInquiryAffiliated,
+  Mode,
+} from "Components/Inquiry/Hooks/useInquiryAffiliated"
+import { useUpdateCollectorProfile } from "Components/Inquiry/Hooks/useUpdateCollectorProfile"
 
 export const InquiryAuctionHousesYouWorkWith: React.FC = () => {
   const {

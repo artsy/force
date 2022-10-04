@@ -2,14 +2,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { Breakpoint } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
 import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import {
   MyCollectionArtworkForm,
   MyCollectionArtworkFormFragmentContainer,
-} from "../MyCollectionArtworkForm"
+} from "Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()

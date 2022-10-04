@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
 const PreferencesApp = loadable(

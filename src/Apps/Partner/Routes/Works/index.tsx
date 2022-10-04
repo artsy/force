@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { Works_partner$data } from "__generated__/Works_partner.graphql"
 import {
   ArtworkFilterContextProvider,

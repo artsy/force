@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail"
+import { AuctionArtworksRailFragmentContainer } from "Apps/Auctions/Components/AuctionArtworksRail"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.unmock("react-relay")
