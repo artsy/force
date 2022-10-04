@@ -2,11 +2,12 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkSidebar2CommercialButtons_Test_Query } from "__generated__/ArtworkSidebar2CommercialButtons_Test_Query.graphql"
-import { ArtworkSidebar2CommercialButtonsFragmentContainer } from "../ArtworkSidebar2CommercialButtons"
+
 import { mediator } from "Server/mediator"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { createMockEnvironment } from "relay-test-utils"
 import { MockBoot } from "DevTools"
+import { ArtworkSidebar2CommercialButtonsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2CommercialButtons"
 
 jest.unmock("react-relay")
 
@@ -26,6 +27,7 @@ describe("ArtworkSidebar2CommercialButtons", () => {
         <ToastsProvider>
           <Toasts />
           <ArtworkSidebar2CommercialButtonsFragmentContainer
+            /* @ts-ignore RELAY UPGRADE 13 */
             artwork={artwork!}
           />
         </ToastsProvider>
