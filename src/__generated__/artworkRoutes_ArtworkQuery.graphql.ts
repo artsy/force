@@ -1446,6 +1446,13 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "visibilityLevel",
+            "storageKey": null
+          },
+          {
             "alias": "metaImage",
             "args": null,
             "concreteType": "Image",

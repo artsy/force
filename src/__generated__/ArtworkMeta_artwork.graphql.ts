@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02335225aa49e89871fc0517fe976631>>
+ * @generated SignedSource<<5d6f49be28023b05c02619b6fb19a3c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type Visibility = "DRAFT" | "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
   readonly href: string | null;
@@ -25,6 +26,7 @@ export type ArtworkMeta_artwork$data = {
       readonly width: number | null;
     } | null;
   } | null;
+  readonly visibilityLevel: Visibility | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkZendesk_artwork" | "SeoDataForArtwork_artwork">;
   readonly " $fragmentType": "ArtworkMeta_artwork";
 };
@@ -61,6 +63,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isShareable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "visibilityLevel",
       "storageKey": null
     },
     {
@@ -175,6 +184,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "06d9ed8a7f9afd95cb581cb3b5adee60";
+(node as any).hash = "6be028679ee447bd4aee10dab5159d41";
 
 export default node;
