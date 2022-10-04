@@ -5,13 +5,15 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
-import { DetailsFragmentContainer as Details } from "./Details"
+import {
+  DetailsFragmentContainer,
+  DetailsPlaceholder,
+} from "Components/Artwork/Details"
 
 export interface MetadataProps
   extends BoxProps,
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
   artwork: Metadata_artwork$data
-  extended?: boolean
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hidePartnerName?: boolean
@@ -27,7 +29,6 @@ export const Metadata: React.FC<MetadataProps> = ({
   artwork,
   contextModule,
   disableRouterLinking,
-  extended = true,
   hidePartnerName,
   hideArtistName,
   hideSaleInfo,
@@ -46,7 +47,7 @@ export const Metadata: React.FC<MetadataProps> = ({
       isMyCollectionArtwork={isMyCollectionArtwork}
       {...rest}
     >
-      <Details
+      <DetailsFragmentContainer
         includeLinks={false}
         artwork={artwork}
         hideSaleInfo={hideSaleInfo}
@@ -97,7 +98,6 @@ const DisabledLink = styled(Box)`
   display: block;
   text-decoration: none;
   text-align: left;
-  cursor: default;
 `
 
 export default createFragmentContainer(Metadata, {
@@ -109,3 +109,27 @@ export default createFragmentContainer(Metadata, {
     }
   `,
 })
+
+type MetadataPlaceholderProps = Pick<
+  MetadataProps,
+  "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
+> &
+  BoxProps
+
+export const MetadataPlaceholder: React.FC<MetadataPlaceholderProps> = ({
+  mt = 1,
+  hidePartnerName,
+  hideArtistName,
+  hideSaleInfo,
+  ...rest
+}) => {
+  return (
+    <Box mt={mt} {...rest}>
+      <DetailsPlaceholder
+        hidePartnerName={hidePartnerName}
+        hideArtistName={hideArtistName}
+        hideSaleInfo={hideSaleInfo}
+      />
+    </Box>
+  )
+}

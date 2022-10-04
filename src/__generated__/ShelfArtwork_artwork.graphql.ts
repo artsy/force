@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cab57ea7d26a46fa8b7e22af5aa68d1a>>
+ * @generated SignedSource<<7e00bd8bc5b9f363e842334ac8af12fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,18 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ShelfArtwork_artwork$data = {
   readonly href: string | null;
   readonly image: {
-    readonly aspectRatio: number;
     readonly height: number | null;
-    readonly resized: {
-      readonly height: number | null;
-      readonly src: string;
-      readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
+    readonly src: string | null;
+    readonly width: number | null;
   } | null;
-  readonly imageTitle: string | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork" | "SaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "ShelfArtwork_artwork";
 };
 export type ShelfArtwork_artwork$key = {
@@ -32,90 +26,21 @@ export type ShelfArtwork_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "height",
-  "storageKey": null
-};
-return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": 200,
-      "kind": "LocalArgument",
-      "name": "width"
-    }
-  ],
+const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShelfArtwork_artwork",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "width",
-              "variableName": "width"
-            }
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "aspectRatio",
-          "storageKey": null
-        },
-        (v0/*: any*/)
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "Metadata_artwork"
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "imageTitle",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "SaveButton_artwork"
     },
     {
       "alias": null,
@@ -132,26 +57,52 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "Metadata_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SaveButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Badge_artwork"
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": "src",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "normalized",
+                "larger",
+                "large"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "d1820313035096f06affbbffddc5b748";
+(node as any).hash = "b21e439bd4b7d6cb70e0113af36b5138";
 
 export default node;
