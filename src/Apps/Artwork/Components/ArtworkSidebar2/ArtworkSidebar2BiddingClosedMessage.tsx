@@ -1,11 +1,11 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "../ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
 import { useTranslation } from "react-i18next"
-import { ArtworkSidebar2BiddingClosedMessage_artwork } from "__generated__/ArtworkSidebar2BiddingClosedMessage_artwork.graphql"
+import { ArtworkSidebar2BiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebar2BiddingClosedMessage_artwork.graphql"
 
 interface BiddingClosedMessageProps {
-  artwork: ArtworkSidebar2BiddingClosedMessage_artwork
+  artwork: ArtworkSidebar2BiddingClosedMessage_artwork$data
 }
 
 const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({

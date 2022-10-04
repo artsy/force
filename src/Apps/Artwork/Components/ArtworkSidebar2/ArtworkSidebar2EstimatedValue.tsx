@@ -1,10 +1,10 @@
 import { Text } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebar2EstimatedValue_artwork } from "__generated__/ArtworkSidebar2EstimatedValue_artwork.graphql"
+import { ArtworkSidebar2EstimatedValue_artwork$data } from "__generated__/ArtworkSidebar2EstimatedValue_artwork.graphql"
 
 interface ArtworkSidebar2EstimatedValueProps {
-  artwork: ArtworkSidebar2EstimatedValue_artwork
+  artwork: ArtworkSidebar2EstimatedValue_artwork$data
 }
 
 const ArtworkSidebar2EstimatedValue: React.FC<ArtworkSidebar2EstimatedValueProps> = ({

@@ -13,12 +13,12 @@ import {
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useCallback, useEffect, useState } from "react"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "../ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { useSystemContext } from "System"
-import { ArtworkSidebar2CommercialButtons_artwork } from "__generated__/ArtworkSidebar2CommercialButtons_artwork.graphql"
+import { ArtworkSidebar2CommercialButtons_artwork$data } from "__generated__/ArtworkSidebar2CommercialButtons_artwork.graphql"
 import { ArtworkSidebar2CommercialButtonsOrderMutation } from "__generated__/ArtworkSidebar2CommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebar2CommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebar2CommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
@@ -45,7 +45,7 @@ const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
 }
 
 interface ArtworkSidebar2CommercialButtonsProps {
-  artwork: ArtworkSidebar2CommercialButtons_artwork
+  artwork: ArtworkSidebar2CommercialButtons_artwork$data
 }
 
 const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtonsProps> = ({
