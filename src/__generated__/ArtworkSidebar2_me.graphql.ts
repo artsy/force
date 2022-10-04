@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<ddc42aacbb923c0036ef9a03f22bcdaf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2_me = {
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
-    readonly " $refType": "ArtworkSidebar2_me";
+export type ArtworkSidebar2_me$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
+  readonly " $fragmentType": "ArtworkSidebar2_me";
 };
-export type ArtworkSidebar2_me$data = ArtworkSidebar2_me;
 export type ArtworkSidebar2_me$key = {
-    readonly " $data"?: ArtworkSidebar2_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2_me">;
+  readonly " $data"?: ArtworkSidebar2_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -31,5 +34,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '46b16aa388fe1db74245364d2f94228b';
+
+(node as any).hash = "46b16aa388fe1db74245364d2f94228b";
+
 export default node;

@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<fc96db177b5cd0b97e02b4e405fc8123>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2CommercialButtons_artwork = {
-    readonly artists: ReadonlyArray<{
-        readonly internalID: string;
-    } | null> | null;
+export type ArtworkSidebar2CommercialButtons_artwork$data = {
+  readonly artists: ReadonlyArray<{
     readonly internalID: string;
-    readonly slug: string;
-    readonly saleMessage: string | null;
-    readonly isInquireable: boolean | null;
+  } | null> | null;
+  readonly editionSets: ReadonlyArray<{
+    readonly id: string;
+    readonly internalID: string;
     readonly isAcquireable: boolean | null;
     readonly isOfferable: boolean | null;
-    readonly isSold: boolean | null;
-    readonly listPrice: {
-        readonly display?: string | null | undefined;
-    } | null;
-    readonly editionSets: ReadonlyArray<{
-        readonly id: string;
-        readonly internalID: string;
-        readonly isAcquireable: boolean | null;
-        readonly isOfferable: boolean | null;
-        readonly saleMessage: string | null;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebarCreateAlertButton_artwork">;
-    readonly " $refType": "ArtworkSidebar2CommercialButtons_artwork";
+    readonly saleMessage: string | null;
+  } | null> | null;
+  readonly internalID: string;
+  readonly isAcquireable: boolean | null;
+  readonly isInquireable: boolean | null;
+  readonly isOfferable: boolean | null;
+  readonly isSold: boolean | null;
+  readonly listPrice: {
+    readonly display?: string | null;
+  } | null;
+  readonly saleMessage: string | null;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentType": "ArtworkSidebar2CommercialButtons_artwork";
 };
-export type ArtworkSidebar2CommercialButtons_artwork$data = ArtworkSidebar2CommercialButtons_artwork;
 export type ArtworkSidebar2CommercialButtons_artwork$key = {
-    readonly " $data"?: ArtworkSidebar2CommercialButtons_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2CommercialButtons_artwork">;
+  readonly " $data"?: ArtworkSidebar2CommercialButtons_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2CommercialButtons_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -80,6 +83,16 @@ return {
   "metadata": null,
   "name": "ArtworkSidebar2CommercialButtons_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2EditionSets_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -161,21 +174,13 @@ return {
         (v1/*: any*/)
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebar2EditionSets_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '3e875d951c5403f0de3c289b5684a28f';
+
+(node as any).hash = "3e875d951c5403f0de3c289b5684a28f";
+
 export default node;

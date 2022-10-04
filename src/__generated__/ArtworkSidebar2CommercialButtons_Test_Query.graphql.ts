@@ -1,108 +1,25 @@
+/**
+ * @generated SignedSource<<c8f571483a8438018b47def3b646db71>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2CommercialButtons_Test_QueryVariables = {};
-export type ArtworkSidebar2CommercialButtons_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2CommercialButtons_artwork">;
-    } | null;
+export type ArtworkSidebar2CommercialButtons_Test_Query$variables = {};
+export type ArtworkSidebar2CommercialButtons_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2CommercialButtons_artwork">;
+  } | null;
 };
 export type ArtworkSidebar2CommercialButtons_Test_Query = {
-    readonly response: ArtworkSidebar2CommercialButtons_Test_QueryResponse;
-    readonly variables: ArtworkSidebar2CommercialButtons_Test_QueryVariables;
+  response: ArtworkSidebar2CommercialButtons_Test_Query$data;
+  variables: ArtworkSidebar2CommercialButtons_Test_Query$variables;
 };
-
-
-
-/*
-query ArtworkSidebar2CommercialButtons_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebar2CommercialButtons_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebar2CommercialButtons_artwork on Artwork {
-  ...ArtworkSidebar2EditionSets_artwork
-  ...ArtworkSidebarCreateAlertButton_artwork
-  artists {
-    internalID
-    id
-  }
-  internalID
-  slug
-  saleMessage
-  isInquireable
-  isAcquireable
-  isOfferable
-  isSold
-  listPrice {
-    __typename
-    ... on PriceRange {
-      display
-    }
-    ... on Money {
-      display
-    }
-  }
-  editionSets {
-    id
-    internalID
-    isAcquireable
-    isOfferable
-    saleMessage
-  }
-}
-
-fragment ArtworkSidebar2EditionSets_artwork on Artwork {
-  isInquireable
-  isOfferable
-  isAcquireable
-  editionSets {
-    id
-    internalID
-    isOfferable
-    isAcquireable
-    saleMessage
-    ...ArtworkSidebar2SizeInfo_piece
-  }
-}
-
-fragment ArtworkSidebar2SizeInfo_piece on Sellable {
-  __isSellable: __typename
-  dimensions {
-    in
-    cm
-  }
-  editionOf
-}
-
-fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
-  slug
-  internalID
-  title
-  artists {
-    internalID
-    name
-    slug
-    id
-  }
-  attributionClass {
-    internalID
-    id
-  }
-  mediumType {
-    filterGene {
-      slug
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -495,5 +412,7 @@ return {
   }
 };
 })();
-(node as any).hash = '48c3e590b179ac60a91ece7f67431142';
+
+(node as any).hash = "48c3e590b179ac60a91ece7f67431142";
+
 export default node;

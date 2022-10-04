@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<127385d32f12cb450e3f3a4d2de5d168>>
+ * @generated SignedSource<<8065c2389ce870eab2046068ff39961d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,7 @@ export type ArtworkSidebarCurrentBidInfo_artwork$data = {
     readonly reserve_message: string | null;
     readonly reserve_status: string | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2BiddingClosedMessage_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
   readonly " $fragmentType": "ArtworkSidebarCurrentBidInfo_artwork";
 };
 export type ArtworkSidebarCurrentBidInfo_artwork$key = {
@@ -241,6 +241,6 @@ return {
 };
 })();
 
-(node as any).hash = "9a308c73b8de6ab64f191f6f8ecbe54c";
+(node as any).hash = "abe03909bd62c3e2254110fe7b3fd147";
 
 export default node;

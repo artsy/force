@@ -1,69 +1,45 @@
+/**
+ * @generated SignedSource<<02e173c3a77b03e8d82ee73fdccbd552>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOfferOrderWithArtworkInput = {
-    artworkId: string;
-    clientMutationId?: string | null | undefined;
-    editionSetId?: string | null | undefined;
-    findActiveOrCreate?: boolean | null | undefined;
-    quantity?: number | null | undefined;
+  artworkId: string;
+  clientMutationId?: string | null;
+  editionSetId?: string | null;
+  findActiveOrCreate?: boolean | null;
+  quantity?: number | null;
 };
-export type ArtworkSidebar2CommercialButtonsOfferOrderMutationVariables = {
-    input: CommerceCreateOfferOrderWithArtworkInput;
+export type ArtworkSidebar2CommercialButtonsOfferOrderMutation$variables = {
+  input: CommerceCreateOfferOrderWithArtworkInput;
 };
-export type ArtworkSidebar2CommercialButtonsOfferOrderMutationResponse = {
-    readonly commerceCreateOfferOrderWithArtwork: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order?: {
-                readonly internalID: string;
-                readonly mode: CommerceOrderModeEnum | null;
-            } | undefined;
-            readonly error?: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            } | undefined;
-        };
-    } | null;
+export type ArtworkSidebar2CommercialButtonsOfferOrderMutation$data = {
+  readonly commerceCreateOfferOrderWithArtwork: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly error?: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
+      readonly order?: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+      };
+    };
+  } | null;
 };
 export type ArtworkSidebar2CommercialButtonsOfferOrderMutation = {
-    readonly response: ArtworkSidebar2CommercialButtonsOfferOrderMutationResponse;
-    readonly variables: ArtworkSidebar2CommercialButtonsOfferOrderMutationVariables;
+  response: ArtworkSidebar2CommercialButtonsOfferOrderMutation$data;
+  variables: ArtworkSidebar2CommercialButtonsOfferOrderMutation$variables;
 };
-
-
-
-/*
-mutation ArtworkSidebar2CommercialButtonsOfferOrderMutation(
-  $input: CommerceCreateOfferOrderWithArtworkInput!
-) {
-  commerceCreateOfferOrderWithArtwork(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        __typename
-        order {
-          __typename
-          internalID
-          mode
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -265,5 +241,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7e67ab48e542c4e23c191637a6274c96';
+
+(node as any).hash = "7e67ab48e542c4e23c191637a6274c96";
+
 export default node;
