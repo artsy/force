@@ -84,7 +84,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
   return (
     <>
       <Separator my={2} />
-      <Text mb={2} variant="sm-display">
+      <Text mb={0.5} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60">
