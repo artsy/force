@@ -10,7 +10,7 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkSidebar2EditionSets_artwork$data } from "__generated__/ArtworkSidebar2EditionSets_artwork.graphql"
-import React from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { ArtworkSidebar2SizeInfoFragmentContainer } from "./ArtworkSidebar2SizeInfo"
 
 const Row: React.FC<FlexProps> = ({ children, ...others }) => (
@@ -19,18 +19,20 @@ const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   </Flex>
 )
 
-type EditionSet = NonNullable<
+export type EditionSet = NonNullable<
   ArtworkSidebar2EditionSets_artwork$data["editionSets"]
 >[0]
 
 interface ArtworkSidebar2EditionSetsProps {
   artwork: ArtworkSidebar2EditionSets_artwork$data
   selectedEditionSet?: EditionSet
-  onSelectEditionSet?: (editionSet: EditionSet) => void
+  onSelectEditionSet?: Dispatch<SetStateAction<EditionSet>>
 }
 
 const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
   artwork,
+  selectedEditionSet,
+  onSelectEditionSet,
 }) => {
   const { editionSets, isInquireable, isOfferable, isAcquireable } = artwork
 
@@ -59,13 +61,9 @@ const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
           <Radio
             flex={1}
             onSelect={() => {
-              // TODO: will be added in the next pr
-              // this.setState({ selectedEditionSet: editionSet })
+              onSelectEditionSet?.(editionSet)
             }}
-            selected={
-              // TODO: will be added in the next pr
-              false
-            }
+            selected={selectedEditionSet?.id === editionSet?.id}
             disabled={!editionEcommerceAvailable}
             label={editionFragment}
           />
@@ -100,6 +98,7 @@ export const ArtworkSidebar2EditionSetFragmentContainer = createFragmentContaine
         isAcquireable
         editionSets {
           id
+          internalID
           isOfferable
           isAcquireable
           saleMessage

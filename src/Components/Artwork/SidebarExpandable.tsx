@@ -5,6 +5,7 @@ import {
   Flex,
   ChevronIcon,
   Text,
+  Spacer,
 } from "@artsy/palette"
 import { useState } from "react"
 
@@ -67,6 +68,7 @@ export const SidebarExpandable: React.FC<ExpandableProps> = ({
         (typeof children === "function"
           ? children({ setExpanded, expanded })
           : children)}
+      <Spacer mt={2} />
     </Box>
   )
 }
