@@ -115,9 +115,15 @@
       "getStartedButton": "Start the Quiz",
       "skipButton": "Skip"
     },
-    "loadingScreen": {
-      "calculatingResults": "Calculating Results...",
-      "resultsComplete": "Results Complete"
+    "results": {
+      "emailButton": "Email My Results",
+      "title": "Taste Profile",
+      "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
+      "tabs": {
+        "worksYouLiked": "Works You Liked",
+        "recommendedCollections": "Recommended Collections",
+        "recommendedArtists": "Recommended Artists"
+      }
     }
   },
   "onboarding": {
