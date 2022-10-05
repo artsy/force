@@ -15,13 +15,10 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
 }) => {
   return (
     <Join separator={<Separator my={4} />}>
-      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserActiveBidsFragmentContainer me={me} />
 
-      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserBidHistoryFragmentContainer me={me} />
 
-      {/* @ts-ignore RELAY UPGRADE 13  */}
       <UserRegistrationAuctionsFragmentContainer me={me} />
     </Join>
   )

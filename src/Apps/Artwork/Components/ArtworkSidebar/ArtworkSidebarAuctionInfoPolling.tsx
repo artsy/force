@@ -56,7 +56,6 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
         artwork={artwork}
       />
       <Spacer mt={2} />
-      {/* @ts-ignore RELAY UPGRADE 13  */}
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
     </>
   )

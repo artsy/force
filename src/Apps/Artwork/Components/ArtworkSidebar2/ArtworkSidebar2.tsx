@@ -93,7 +93,6 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
           Lot {lotLabel}
         </Text>
       )}
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
 
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />

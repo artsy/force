@@ -27,7 +27,6 @@ describe("ArtworkSidebar2CommercialButtons", () => {
         <ToastsProvider>
           <Toasts />
           <ArtworkSidebar2CommercialButtonsFragmentContainer
-            /* @ts-ignore RELAY UPGRADE 13 */
             artwork={artwork!}
           />
         </ToastsProvider>

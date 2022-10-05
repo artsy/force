@@ -23,13 +23,11 @@ export const ArtworkSidebar2AuctionTimer: React.FC<ArtworkSidebar2AuctionTimerPr
         (sale?.cascadingEndTimeIntervalMinutes ? (
           <>
             <Spacer mt={2} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <LotTimerFragmentContainer saleArtwork={saleArtwork} />
           </>
         ) : (
           <>
             <Spacer mt={2} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <AuctionTimerFragmentContainer sale={sale} />
           </>
         ))}
