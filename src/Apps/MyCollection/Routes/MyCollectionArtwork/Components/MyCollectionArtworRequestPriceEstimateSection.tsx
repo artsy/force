@@ -26,14 +26,13 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<{}> = () =
             This artwork is eligible for a free evaluation from an Artsy
             specialist.
           </Text>
-          <RouterLink
+          <Button
+            variant="primaryBlack"
+            width="100%"
             onClick={() => setIsPriceEstimteRequested(true)}
-            to={null}
           >
-            <Button variant="primaryBlack" width="100%">
-              Request a Price Estimate
-            </Button>
-          </RouterLink>
+            Request a Price Estimate
+          </Button>
         </>
       )}
       <Media lessThan="sm">
