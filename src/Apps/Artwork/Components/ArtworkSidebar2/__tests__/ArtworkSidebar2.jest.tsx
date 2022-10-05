@@ -116,7 +116,7 @@ describe("ArtworkSidebar2Artists", () => {
     it("should be hidden when artwork is not incquireable", () => {
       renderWithRelay({
         Artwork: () => ({
-          isInquireable: true,
+          isOfferableFromInquiry: false,
         }),
       })
 
