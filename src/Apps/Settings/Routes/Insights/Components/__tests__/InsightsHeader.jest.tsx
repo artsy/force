@@ -3,7 +3,7 @@ import { MockBoot } from "DevTools"
 import { render } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System"
 import { Breakpoint } from "Utils/Responsive"
-import { InsightsHeader } from "../InsightsHeader"
+import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
 
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -22,7 +22,6 @@ describe("InsightsHeader", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: {
         "my-collection-web-phase-7-insights": { flagEnabled: true },
-        "my-collection-web-phase-3": { flagEnabled: true },
       },
     }))
   })

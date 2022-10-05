@@ -41,10 +41,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const isMyCollectionPhase3Enabled = useFeatureFlag(
-    "my-collection-web-phase-3"
-  )
-
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
@@ -117,7 +113,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
         <MyCollectionArtworkBackButton />
 
-        {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
+        <EditArtworkButton />
       </Flex>
 
       <GridColumns gridRowGap={[2, null]}>

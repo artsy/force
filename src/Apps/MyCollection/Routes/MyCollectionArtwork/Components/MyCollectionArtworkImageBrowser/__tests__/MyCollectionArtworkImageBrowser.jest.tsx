@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 
@@ -65,11 +64,6 @@ describe("MyCollectionArtworkImageBrowser", () => {
 
   describe("when there are no images", () => {
     describe("when the artwork is a My Collection artwork", () => {
-      // Enable my-collection-web-phase-3 feature flag
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: { "my-collection-web-phase-3": { flagEnabled: true } },
-      }))
-
       it("renders the Upload Photo button", () => {
         renderWithRelay(
           {
