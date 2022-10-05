@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67decb3589baadafdad29b9df8f3f09a>>
+ * @generated SignedSource<<d958bd89526a735a716d30602a2a5b41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -68,13 +68,7 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 210
-                }
-              ],
+              "args": null,
               "kind": "FragmentSpread",
               "name": "ShelfArtwork_artwork"
             }
@@ -89,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d634f76b1ad38b0e9b9a866f101dd741";
+(node as any).hash = "5ca2f80b75469ad3c89c9b929518718b";
 
 export default node;

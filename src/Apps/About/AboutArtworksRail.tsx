@@ -44,7 +44,7 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
         artworksConnection(first: 50, geneIDs: "trending-this-week") {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href
