@@ -73,7 +73,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
             node {
               internalID
               slug
-              ...ShelfArtwork_artwork @arguments(width: 325)
+              ...ShelfArtwork_artwork
             }
           }
         }

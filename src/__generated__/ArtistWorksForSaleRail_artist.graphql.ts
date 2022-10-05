@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02dfcd4e23ebe9d490948f43b8a39129>>
+ * @generated SignedSource<<c2d687cecf4772a5ced2e3967d84406e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -88,13 +88,7 @@ return {
                 (v0/*: any*/),
                 (v1/*: any*/),
                 {
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 200
-                    }
-                  ],
+                  "args": null,
                   "kind": "FragmentSpread",
                   "name": "ShelfArtwork_artwork"
                 }
@@ -115,6 +109,6 @@ return {
 };
 })();
 
-(node as any).hash = "9b55c55367bdc0d1a2e6d05e14534f3f";
+(node as any).hash = "67f0c44c49040adff0455f06b2ec214d";
 
 export default node;

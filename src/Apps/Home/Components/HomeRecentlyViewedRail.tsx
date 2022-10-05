@@ -98,7 +98,7 @@ export const HomeRecentlyViewedRailFragmentContainer = createFragmentContainer(
           results {
             internalID
             slug
-            ...ShelfArtwork_artwork @arguments(width: 210)
+            ...ShelfArtwork_artwork
           }
         }
       }

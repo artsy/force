@@ -35,7 +35,6 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               artwork={artwork}
-              showExtended={false}
               contextModule={ContextModule.artistRecentlySold}
             />
 

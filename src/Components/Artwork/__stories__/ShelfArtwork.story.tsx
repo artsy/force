@@ -63,7 +63,6 @@ export const Default = () => {
 
               return (
                 <ShelfArtworkFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   artwork={props.artwork}
                   {...rest}
                 />

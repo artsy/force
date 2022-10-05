@@ -117,7 +117,7 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href

@@ -89,7 +89,7 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
         artworksConnection(first: 12, geneIDs: "trove") {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href
