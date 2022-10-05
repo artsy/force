@@ -1,6 +1,5 @@
 import { Button, Flex, Separator, Text, WinningBidIcon } from "@artsy/palette"
 import { useState } from "react"
-import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<{}> = () => {
