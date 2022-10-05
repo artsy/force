@@ -48,6 +48,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     isSold,
     isAcquireable,
     isInAuction,
+    isOfferableFromInquiry,
     isOfferable,
     saleArtwork,
     sale,
@@ -78,6 +79,12 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     isSold
 
   const lotLabel = artwork.isBiddable ? artwork.saleArtwork?.lotLabel : null
+
+  const shouldDisplayArtsyGuarantee =
+    !checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage) &&
+    !isSold &&
+    !isInAuction &&
+    isOfferableFromInquiry
 
   return (
     <Flex flexDirection="column">
@@ -131,7 +138,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {!checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage) && (
+      {shouldDisplayArtsyGuarantee && (
         <>
           <Separator />
           <SidebarExpandable
@@ -171,6 +178,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         isInAuction
         saleMessage
         isBiddable
+        isOfferableFromInquiry
         ...ArtworkSidebar2ArtworkTitle_artwork
         ...ArtworkSidebar2Artists_artwork
         ...ArtworkSidebar2Details_artwork
