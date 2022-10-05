@@ -1,17 +1,11 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import {
-  Box,
-  Flex,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Flex, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { shuffle } from "lodash"
-import { Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -58,29 +52,32 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
             if (!artwork) return <></>
 
             return (
-              <Fragment key={artwork.internalID}>
-                <ShelfArtworkFragmentContainer
-                  artwork={artwork}
-                  hideSaleInfo
-                  lazyLoad
-                  width={[325]}
-                  data-testid="soldRecentlyItem"
-                  onClick={trackArtworkItemClick(artwork, i)}
-                  // FIXME:
-                  contextModule={ContextModule.artworkRecentlySoldGrid as any}
-                />
+              <ShelfArtworkFragmentContainer
+                key={artwork.internalID}
+                artwork={artwork}
+                hideSaleInfo
+                lazyLoad
+                area={60000}
+                maxImageHeight={300}
+                data-testid="soldRecentlyItem"
+                onClick={trackArtworkItemClick(artwork, i)}
+                // FIXME:
+                contextModule={ContextModule.artworkRecentlySoldGrid as any}
+              >
+                <Spacer mt={4} />
 
                 <Flex
-                  mt={4}
                   flexDirection="row"
                   alignItems="center"
                   justifyContent="space-between"
                   color="black60"
                 >
-                  <Text variant="xs">Estimate</Text>
+                  <Text variant="xs" overflowEllipsis>
+                    Estimate
+                  </Text>
 
-                  <Text variant="xs">
-                    {lowEstimate?.display}—{highEstimate?.display}
+                  <Text variant="xs" overflowEllipsis>
+                    {lowEstimate?.display}–{highEstimate?.display}
                   </Text>
                 </Flex>
 
@@ -90,11 +87,15 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   justifyContent="space-between"
                   color="blue100"
                 >
-                  <Text variant="xs">Sold for (incl. premium)</Text>
+                  <Text variant="xs" overflowEllipsis>
+                    Sold for (incl. premium)
+                  </Text>
 
-                  <Text variant="xs">{priceRealized?.display}</Text>
+                  <Text variant="xs" overflowEllipsis>
+                    {priceRealized?.display}
+                  </Text>
                 </Flex>
-              </Fragment>
+              </ShelfArtworkFragmentContainer>
             )
           }
         )
@@ -139,11 +140,12 @@ const PLACEHOLDER = (
       getItems={() => {
         return [...new Array(20)].map((_, i) => {
           return (
-            <Box width={325} key={i}>
-              <SkeletonBox width={325} height={[200, 300, 250, 275][i % 4]} />
-              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-
+            <ShelfArtworkPlaceholder
+              index={i}
+              area={60000}
+              maxImageHeight={300}
+              hideSaleInfo
+            >
               <Spacer mt={4} />
 
               <Flex
@@ -151,9 +153,13 @@ const PLACEHOLDER = (
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <SkeletonText variant="xs">Estimate</SkeletonText>
+                <SkeletonText variant="xs" overflowEllipsis>
+                  Estimate
+                </SkeletonText>
 
-                <SkeletonText variant="xs">USD 100,000 - 100,000</SkeletonText>
+                <SkeletonText variant="xs" overflowEllipsis>
+                  USD 100,000–100,000
+                </SkeletonText>
               </Flex>
 
               <Flex
@@ -161,13 +167,15 @@ const PLACEHOLDER = (
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <SkeletonText variant="xs">
+                <SkeletonText variant="xs" overflowEllipsis>
                   Sold for (incl. premium)
                 </SkeletonText>
 
-                <SkeletonText variant="xs">USD 100,000</SkeletonText>
+                <SkeletonText variant="xs" overflowEllipsis>
+                  USD 100,000
+                </SkeletonText>
               </Flex>
-            </Box>
+            </ShelfArtworkPlaceholder>
           )
         })
       }}

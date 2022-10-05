@@ -4,14 +4,11 @@ import { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.gra
 import { AboutArtworksRail_viewer$data } from "__generated__/AboutArtworksRail_viewer.graphql"
 import { Rail } from "Components/Rail"
 import { extractNodes } from "Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-} from "@artsy/palette"
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
+import { Skeleton } from "@artsy/palette"
 
 interface AboutArtworksRailProps {
   viewer: AboutArtworksRail_viewer$data
@@ -77,7 +74,6 @@ export const AboutArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRDE 13
         return <AboutArtworksRailFragmentContainer viewer={props.viewer} />
       }}
     />
@@ -92,16 +88,7 @@ const PLACEHOLDER = (
       viewAllHref="/gene/trending-this-week"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={200} key={i}>
-              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <Spacer mt={1} />
-              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-              <SkeletonText variant="xs">Partner</SkeletonText>
-              <SkeletonText variant="xs">Price</SkeletonText>
-            </Box>
-          )
+          return <ShelfArtworkPlaceholder key={i} index={i} />
         })
       }}
     />
