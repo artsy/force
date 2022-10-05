@@ -26,7 +26,7 @@ import {
   getInitialBankAccountSelection,
 } from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
-import { useSetPayment } from "../../Mutations/useSetPayment"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
@@ -355,7 +355,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13  */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 transactionStep="payment"

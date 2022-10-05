@@ -74,7 +74,6 @@ export const PaymentContent: FC<Props> = props => {
   if (order.availablePaymentMethods.length === 1) {
     return (
       <>
-        {/* @ts-ignore RELAY UPGRADE 13  */}
         <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}
