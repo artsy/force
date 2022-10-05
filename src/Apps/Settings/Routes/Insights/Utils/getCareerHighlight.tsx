@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { FC, Fragment } from "react"
 
-type CareerHighlightKind =
+export type CareerHighlightKind =
   | "SOLO_SHOW"
   | "GROUP_SHOW"
   | "COLLECTED"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<843ebc658f9fc57c0e1fcd272a2c350e>>
+ * @generated SignedSource<<a81966588b419866f8cd1e88e27b3fab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type InsightsRoute_me$data = {
     readonly artworksCount: number;
     readonly " $fragmentSpreads": FragmentRefs<"InsightsOverview_info">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"InsightsAuctionResults_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"InsightsAuctionResults_me" | "InsightsCareerHighlightRail_me">;
   readonly " $fragmentType": "InsightsRoute_me";
 };
 export type InsightsRoute_me$key = {
@@ -64,12 +64,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "InsightsAuctionResults_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "InsightsCareerHighlightRail_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "52f7c13c0f5d5b900a11b8252d44798c";
+(node as any).hash = "4d476e9988812fa11e4233426cc970b0";
 
 export default node;

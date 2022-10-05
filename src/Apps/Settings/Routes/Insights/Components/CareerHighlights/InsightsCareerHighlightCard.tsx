@@ -1,8 +1,19 @@
 import { Flex, Text } from "@artsy/palette"
-import { getCareerHighlight } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import {
+  CareerHighlightKind,
+  getCareerHighlight,
+} from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 
-export const InsightsCareerHighlightCard: React.FC<{}> = () => {
-  const { label, Icon } = getCareerHighlight("SOLO_SHOW", 12)
+interface InsightsCareerHighlightCardProps {
+  kind: CareerHighlightKind
+  count: number
+}
+
+export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardProps> = ({
+  count,
+  kind,
+}) => {
+  const { label, Icon } = getCareerHighlight(kind, count)
 
   return (
     <Flex
@@ -24,13 +35,13 @@ export const InsightsCareerHighlightCard: React.FC<{}> = () => {
           borderColor="black100"
           borderRadius="50%"
         >
-          <Icon fill="black100" />
+          <Icon fill="black100" height={20} width={20} />
         </Flex>
       </Flex>
 
       <Flex flexDirection="column">
         <Text variant="xl" color="blue100" mb={1}>
-          12
+          {count}
         </Text>
 
         <Text variant="sm-display">{label}</Text>
