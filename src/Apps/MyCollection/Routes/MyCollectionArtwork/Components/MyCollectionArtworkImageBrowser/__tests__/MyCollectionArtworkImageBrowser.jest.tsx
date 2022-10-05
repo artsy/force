@@ -4,6 +4,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
+import { useSystemContext } from "System/SystemContext"
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
@@ -29,6 +30,11 @@ describe("MyCollectionArtworkImageBrowser", () => {
   })
 
   describe("when there are images", () => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        user: {},
+      }
+    })
     it("renders correctly", () => {
       renderWithRelay(
         {
