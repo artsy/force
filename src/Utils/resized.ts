@@ -94,3 +94,15 @@ export const cropped = (
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }
 }
+
+export const maxWidthByArea = ({
+  width,
+  height,
+  area,
+}: {
+  width: number
+  height: number
+  area: number
+}) => {
+  return Math.round(width * Math.sqrt(area / (width * height)))
+}

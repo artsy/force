@@ -1,4 +1,4 @@
-import { cropped, resized } from "../resized"
+import { cropped, resized, maxWidthByArea } from "Utils/resized"
 
 jest.mock("sharify", () => ({
   data: {
@@ -50,5 +50,41 @@ describe("#resized", () => {
     expect(srcSet).toContain("&height=100&quality=80")
     expect(srcSet).toContain("2x")
     expect(srcSet).toContain("&height=200&quality=80")
+  })
+})
+
+describe("maxWidthByArea", () => {
+  it("sets a max width for a proportional box", () => {
+    expect(
+      maxWidthByArea({
+        width: 100,
+        height: 100,
+        area: 10000,
+      })
+    ).toEqual(100)
+
+    expect(
+      maxWidthByArea({
+        width: 200,
+        height: 100,
+        area: 10000,
+      })
+    ).toEqual(141)
+
+    expect(
+      maxWidthByArea({
+        width: 100,
+        height: 200,
+        area: 10000,
+      })
+    ).toEqual(71)
+
+    expect(
+      maxWidthByArea({
+        width: 10,
+        height: 200,
+        area: 10000,
+      })
+    ).toEqual(22)
   })
 })
