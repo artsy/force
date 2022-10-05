@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<053d8a6d2f2b5db3a3891dd65f19bc49>>
+ * @generated SignedSource<<67fd61dea9b5e06085a4255d5e3dc0b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArtworkSidebar2_artwork$data = {
   readonly isAcquireable: boolean | null;
   readonly isBiddable: boolean | null;
   readonly isInAuction: boolean | null;
+  readonly isInquireable: boolean | null;
   readonly isOfferable: boolean | null;
   readonly isSold: boolean | null;
   readonly sale: {
@@ -91,6 +92,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isBiddable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInquireable",
       "storageKey": null
     },
     {
@@ -233,6 +241,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f5bdb0b3f0c2e57340dc662d508c722b";
+(node as any).hash = "87e492eb557462456fb82ae02015717a";
 
 export default node;
