@@ -6,35 +6,50 @@ import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
-import { resized } from "Utils/resized"
+import { maxWidthByArea, resized } from "Utils/resized"
+
+const DEFAULT_AREA = 200 * 200
+const DEFAULT_MAX_IMG_HEIGHT = 250
+const DEFAULT_MAX_WIDTH = 500
 
 export interface ShelfArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
+  // Target number of pixels for image to occupy
+  area?: number
   artwork: ShelfArtwork_artwork$data
+  children?: React.ReactNode
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  showMetadata?: boolean
+  maxImageHeight?: number
   onClick?: () => void
-  width?: number[]
 }
 
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
+  area = DEFAULT_AREA,
   artwork,
+  children,
   contextModule,
   hideSaleInfo,
   lazyLoad,
+  maxImageHeight = DEFAULT_MAX_IMG_HEIGHT,
+  maxWidth = DEFAULT_MAX_WIDTH,
   onClick,
-  showMetadata = true,
-  width = [150, 175, 200],
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
-  // Resize image to largest width expected
-  const image = artwork.image?.src
-    ? resized(artwork.image.src, { width: width[width.length - 1] })
-    : null
+  if (!artwork.image?.src || !artwork.image.width || !artwork.image.height) {
+    return null
+  }
+
+  const width = maxWidthByArea({
+    area,
+    height: artwork.image.height,
+    width: artwork.image.width,
+  })
+
+  const image = resized(artwork.image.src, { width })
 
   return (
     <RouterLink
@@ -50,12 +65,12 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       data-testid="ShelfArtwork"
       aria-label={artwork.title ?? "Artwork"}
       width={width}
+      maxWidth={maxWidth}
       {...rest}
     >
-      {image ? (
+      <Box height={maxImageHeight} display="flex" alignItems="flex-end">
         <Box
-          maxHeight={[250, 320]}
-          maxWidth="100%"
+          width="100%"
           style={{
             aspectRatio: `${artwork.image?.width ?? 1} / ${
               artwork.image?.height ?? 1
@@ -69,25 +84,23 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             width="100%"
             height="100%"
             lazyLoad={lazyLoad}
-            style={{ objectFit: "contain" }}
+            style={{ display: "block", objectFit: "cover" }}
             alt=""
           />
         </Box>
-      ) : (
-        <Box style={{ aspectRatio: "1 / 1" }} maxWidth="100%" bg="black10" />
-      )}
+      </Box>
 
-      {showMetadata && (
-        <Metadata
-          artwork={artwork}
-          hideSaleInfo={hideSaleInfo}
-          isHovered={isHovered}
-          contextModule={contextModule}
-          showSaveButton
-          disableRouterLinking
-          maxWidth="100%"
-        />
-      )}
+      <Metadata
+        artwork={artwork}
+        isHovered={isHovered}
+        contextModule={contextModule}
+        hideSaleInfo={hideSaleInfo}
+        showSaveButton
+        disableRouterLinking
+        maxWidth="100%"
+      />
+
+      {children}
     </RouterLink>
   )
 }
@@ -111,26 +124,45 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
   }
 )
 
-interface ShelfArtworkPlaceholderProps {
+type ShelfArtworkPlaceholderProps = {
   // Used to cycle through a set of placeholder heights
   index: number
-  width?: number[]
-}
+} & Pick<
+  ShelfArtworkProps,
+  "area" | "hideSaleInfo" | "children" | "maxImageHeight"
+>
 
 export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = ({
   index,
-  width = [150, 175, 200],
+  hideSaleInfo,
+  area = DEFAULT_AREA,
+  maxImageHeight = DEFAULT_MAX_IMG_HEIGHT,
+  children,
 }) => {
+  const width = [275, 200, 300, 250][index % 4]
+  const height = [200, 300, 250, 275][index % 4]
+
+  const maxWidth = maxWidthByArea({
+    area,
+    height,
+    width,
+  })
+  const scaledHeight = Math.round((height / width) * maxWidth)
+
   return (
     <Box
       display="flex"
       flexDirection="column"
       justifyContent="flex-end"
-      width={width}
+      width={maxWidth}
     >
-      <SkeletonBox width="100W%" height={[200, 300, 250, 275][index % 4]} />
+      <Box height={maxImageHeight} display="flex" alignItems="flex-end">
+        <SkeletonBox width={maxWidth} height={scaledHeight} />
+      </Box>
 
-      <MetadataPlaceholder />
+      <MetadataPlaceholder hideSaleInfo={hideSaleInfo} />
+
+      {children}
     </Box>
   )
 }
