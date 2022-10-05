@@ -2,6 +2,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkRequestPriceEstimateSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworRequestPriceEstimateSection"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
@@ -38,9 +39,11 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
-      {!!enableMyCollectionPhase6RequestPreiceEstimate && (
-        <MyCollectionArtworkRequestPriceEstimateSection />
-      )}
+      <Media lessThan="sm">
+        {!!enableMyCollectionPhase6RequestPreiceEstimate && (
+          <MyCollectionArtworkRequestPriceEstimateSection />
+        )}
+      </Media>
       {!!enableMyCollectionPhase4ArtistMarket && (
         <MyCollectionArtworkArtistMarketFragmentContainer
           marketPriceInsights={artwork.marketPriceInsights!}
