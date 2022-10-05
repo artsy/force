@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7048d4086eb64151d045599085abdc17>>
+ * @generated SignedSource<<124b55bd8251c63154885d8354995010>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ArtworkSidebarPartnerInfo_artwork$data = {
     readonly cities: ReadonlyArray<string | null> | null;
     readonly href: string | null;
     readonly name: string | null;
+    readonly partnerType: string | null;
   } | null;
   readonly sale: {
     readonly href: string | null;
@@ -96,6 +97,13 @@ return {
           "kind": "ScalarField",
           "name": "cities",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "partnerType",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -119,6 +127,6 @@ return {
 };
 })();
 
-(node as any).hash = "89e75b59fa3207f21b480085f4ec725f";
+(node as any).hash = "d4a0fbfae7699f4289c0af2a0cd4f7a3";
 
 export default node;

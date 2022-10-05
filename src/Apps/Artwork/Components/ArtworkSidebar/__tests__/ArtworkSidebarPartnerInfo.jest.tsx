@@ -170,6 +170,19 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
+    it("institution partner doesn't display button", () => {
+      const { partner } = ArtworkFromPartnerWithLocations
+
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          partner: { ...partner, partnerType: "Institution" },
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
     it("tracks the right event when clicked", () => {
       renderWithRelay({
         Artwork: () => ({

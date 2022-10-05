@@ -82,16 +82,19 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {isCBNEnabled && !isInquireable && !is_in_auction && (
-          <Button
-            variant="secondaryBlack"
-            size="small"
-            onClick={handleInquiry}
-            ml={1}
-          >
-            Contact Gallery
-          </Button>
-        )}
+        {isCBNEnabled &&
+          !isInquireable &&
+          !is_in_auction &&
+          partner?.partnerType !== "Institution" && (
+            <Button
+              variant="secondaryBlack"
+              size="small"
+              onClick={handleInquiry}
+              ml={1}
+            >
+              Contact Gallery
+            </Button>
+          )}
 
         {inquiryComponent}
       </Flex>
@@ -112,6 +115,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
           name
           href
           cities
+          partnerType
         }
         sale {
           name

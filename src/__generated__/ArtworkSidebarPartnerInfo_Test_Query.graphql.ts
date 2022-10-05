@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65bbf2fbf6a34eb38ff1bd604aa4195a>>
+ * @generated SignedSource<<1c8899692053c3456ed8513162019062>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -154,6 +154,13 @@ return {
                 "name": "cities",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerType",
+                "storageKey": null
+              },
               (v3/*: any*/)
             ],
             "storageKey": null
@@ -179,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bb977c6761ae059ef4a42721894f7334",
+    "cacheID": "824c5d6d9d156898cb8e79f94148a84d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -208,6 +215,7 @@ return {
         "artwork.partner.href": (v6/*: any*/),
         "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.name": (v6/*: any*/),
+        "artwork.partner.partnerType": (v6/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
@@ -222,7 +230,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  is_in_auction: isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  is_in_auction: isInAuction\n  partner {\n    name\n    href\n    cities\n    partnerType\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

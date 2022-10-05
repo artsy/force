@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81a9ac3c715ae3fc9793892d3331dbb2>>
+ * @generated SignedSource<<d01322273217cd7b19321976e182341a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -154,6 +154,13 @@ return {
                 "name": "cities",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerType",
+                "storageKey": null
+              },
               (v3/*: any*/)
             ],
             "storageKey": null
@@ -179,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a17465fd310a76f34ed877f6ed1cab05",
+    "cacheID": "76e096af6347419d7a5399508ddc543f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -208,6 +215,7 @@ return {
         "artwork.partner.href": (v6/*: any*/),
         "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.name": (v6/*: any*/),
+        "artwork.partner.partnerType": (v6/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
@@ -222,7 +230,7 @@ return {
     },
     "name": "ArtworkSidebar2PartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebar2PartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebar2PartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebar2PartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebar2PartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2PartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    partnerType\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();
