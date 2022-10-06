@@ -7,10 +7,12 @@ import { InsightsCareerHighlightRail_me$data } from "__generated__/InsightsCaree
 
 interface InsightsCareerHighlightRailProps {
   me: InsightsCareerHighlightRail_me$data
+  showProgress?: boolean
 }
 
 const InsightsCareerHighlightRail: React.FC<InsightsCareerHighlightRailProps> = ({
   me,
+  showProgress = true,
 }) => {
   const { myCollectionInfo } = me
   if (!myCollectionInfo?.artistInsightsCount) {
@@ -26,7 +28,7 @@ const InsightsCareerHighlightRail: React.FC<InsightsCareerHighlightRailProps> = 
   }
 
   return (
-    <Shelf alignItems="flex-start" showProgress>
+    <Shelf alignItems="flex-start" showProgress={showProgress}>
       {[
         ...careerHighlights.map(({ kind, count }, i) => (
           <InsightsCareerHighlightCard key={i} count={count} kind={kind} />

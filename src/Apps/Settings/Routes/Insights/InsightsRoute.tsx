@@ -2,6 +2,7 @@ import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Media } from "Utils/Responsive"
 import { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
 import { InsightsHeader } from "./Components/InsightsHeader"
@@ -29,8 +30,20 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
             {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
-            {/* @ts-ignore RELAY_UPGRADE 13 */}
-            <InsightsCareerHighlightRailFragmentContainer me={me} />
+            <Media greaterThanOrEqual="sm">
+              <InsightsCareerHighlightRailFragmentContainer
+                // @ts-ignore RELAY_UPGRADE 13
+                me={me}
+                showProgress={true}
+              />
+            </Media>
+            <Media lessThan="sm">
+              <InsightsCareerHighlightRailFragmentContainer
+                //@ts-ignore RELAY_UPGRADE 13
+                me={me}
+                showProgress={false}
+              />
+            </Media>
 
             {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsAuctionResultsFragmentContainer me={me} />

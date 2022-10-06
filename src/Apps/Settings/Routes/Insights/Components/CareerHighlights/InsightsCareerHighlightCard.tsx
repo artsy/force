@@ -17,18 +17,18 @@ export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardPr
 
   return (
     <Flex
-      width={313}
-      height={178}
-      p={2}
+      width={[205, 313]}
+      height={[135, 178]}
+      p={[1, 2]}
       background="white"
       border="1px solid"
       borderColor="black10"
       flexDirection="column"
     >
-      <Flex justifyContent="flex-end" mb={1}>
+      <Flex justifyContent="flex-end" mb={[2, 1]}>
         <Flex
-          height={30}
-          width={30}
+          height={[26, 30]}
+          width={[26, 30]}
           alignItems="center"
           justifyContent="center"
           border="1px solid"
@@ -40,11 +40,11 @@ export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardPr
       </Flex>
 
       <Flex flexDirection="column">
-        <Text variant="xl" color="blue100" mb={1}>
+        <Text variant={["lg-display", "xl"]} color="blue100" mb={[0, 1]}>
           {count}
         </Text>
 
-        <Text variant="sm-display">{label}</Text>
+        <Text variant={["xs", "sm-display"]}>{label}</Text>
       </Flex>
     </Flex>
   )
