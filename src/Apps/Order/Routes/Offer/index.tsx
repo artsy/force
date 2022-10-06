@@ -247,13 +247,9 @@ export const OfferRoute: FC<OfferRouteProps> = ({
           {!isInquiryCheckout && showPriceOptions && (
             <>
               <Text variant="lg-display">Select an option</Text>
-
-              {priceNote}
-
               <Text variant="xs" mt={4} mb={1}>
                 Your offer
               </Text>
-
               <PriceOptionsFragmentContainer
                 artwork={artwork}
                 order={order}
