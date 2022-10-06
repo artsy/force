@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { EntityHeaderGeneFragmentContainer_Test_Query } from "__generated__/EntityHeaderGeneFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { EntityHeaderGeneFragmentContainer } from "../EntityHeaderGene"
+import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
 
 jest.unmock("react-relay")
 
@@ -18,7 +18,6 @@ describe("EntityHeaderGene", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderGeneFragmentContainer_Test_Query
   >({
-    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderGeneFragmentContainer,
     query: QUERY,
   })

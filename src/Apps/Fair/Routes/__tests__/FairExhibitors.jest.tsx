@@ -1,6 +1,6 @@
 import { FairExhibitors_Test_Query } from "__generated__/FairExhibitors_Test_Query.graphql"
 import { graphql } from "react-relay"
-import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
+import { FairExhibitorsFragmentContainer } from "Apps/Fair/Routes/FairExhibitors"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
 
@@ -22,7 +22,6 @@ jest.mock("System/Router/useRouter", () => ({
 
 describe("FairExhibitors", () => {
   const { renderWithRelay } = setupTestWrapperTL<FairExhibitors_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: FairExhibitorsFragmentContainer,
     query: graphql`
       query FairExhibitors_Test_Query($id: String!) @relay_test_operation {

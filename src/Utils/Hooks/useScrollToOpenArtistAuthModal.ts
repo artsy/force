@@ -2,10 +2,10 @@ import Cookies from "cookies-js"
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System"
-import { getENV } from "../getENV"
+import { getENV } from "Utils/getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
-import { extractNodes } from "../extractNodes"
-import { openAuthModal } from "../openAuthModal"
+import { extractNodes } from "Utils/extractNodes"
+import { openAuthModal } from "Utils/openAuthModal"
 import { mediator } from "Server/mediator"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -62,7 +62,6 @@ export const useScrollToOpenArtistAuthModal = () => {
         relayEnvironment,
         USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY,
         { id: id }
-        // @ts-expect-error RELAY_UPGRADE
       ).toPromise()
 
       const artist = response?.artist
@@ -73,7 +72,6 @@ export const useScrollToOpenArtistAuthModal = () => {
 
       if (!artwork) return
 
-      // @ts-expect-error RELAY_UPGRADE
       const image = artwork.image?.cropped?.src
 
       const handleScroll = () => {

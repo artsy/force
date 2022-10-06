@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SoldRecentlyOnArtsyFragmentContainer } from "../SoldRecentlyOnArtsy"
+import { SoldRecentlyOnArtsyFragmentContainer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 

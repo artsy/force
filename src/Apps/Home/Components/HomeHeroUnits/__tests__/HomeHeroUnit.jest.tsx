@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeHeroUnit_Test_Query } from "__generated__/HomeHeroUnit_Test_Query.graphql"
-import { HomeHeroUnitFragmentContainer } from "../HomeHeroUnit"
+import { HomeHeroUnitFragmentContainer } from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnit"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -14,7 +14,6 @@ const { getWrapper } = setupTestWrapper<HomeHeroUnit_Test_Query>({
   Component: props => {
     return (
       <HomeHeroUnitFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         heroUnit={props.homePage!.heroUnits?.[0]!}
         layout="a"
         index={0}

@@ -23,7 +23,8 @@ export const followArtistMutation: FollowArtistMutationProps = (
         resolve(res)
       },
       mutation: graphql`
-        mutation FollowArtistMutation($input: FollowArtistInput!) {
+        mutation FollowArtistMutation($input: FollowArtistInput!)
+          @raw_response_type {
           followArtist(input: $input) {
             artist {
               id

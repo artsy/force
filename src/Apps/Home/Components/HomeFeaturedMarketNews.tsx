@@ -106,7 +106,6 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               return (
                 <CellArticleFragmentContainer
                   key={article.internalID}
-                  // @ts-ignore RELAY UPGRADE 13
                   article={article}
                   mode="GRID"
                   mb={4}
@@ -245,7 +244,6 @@ export const HomeFeaturedMarketNewsQueryRenderer: React.FC = () => {
         if (props.articles) {
           return (
             <HomeFeaturedMarketNewsFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               articles={compact(props.articles)}
             />
           )

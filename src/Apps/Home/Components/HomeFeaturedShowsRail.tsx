@@ -57,7 +57,6 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
           return (
             <HomeFeaturedShowFragmentContainer
               key={show.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               show={show}
             />
           )
@@ -127,7 +126,6 @@ export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {
         if (props.orderedSet) {
           return (
             <HomeFeaturedShowsRailFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               orderedSet={props.orderedSet}
             />
           )

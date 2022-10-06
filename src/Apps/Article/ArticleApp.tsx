@@ -40,28 +40,25 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
 
   return (
     <ArticleAdProvider>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
+      
       <ArticleMetaTagsFragmentContainer article={article} />
 
       <Join separator={<Spacer mt={4} />}>
         {(() => {
           switch (article.layout) {
             case "SERIES":
-              // @ts-ignore RELAY UPGRADE 13
               return <ArticleSeriesFragmentContainer article={article} />
 
             case "VIDEO":
-              // @ts-ignore RELAY UPGRADE 13
               return <ArticleVideoFragmentContainer article={article} />
 
             case "NEWS":
-              // @ts-ignore RELAY UPGRADE 13
               return <ArticleBodyFragmentContainer article={article} />
 
             case "CLASSIC":
               return (
                 <>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
+                  
                   <ArticleBodyFragmentContainer article={article} />
 
                   <FullBleed>
@@ -78,9 +75,9 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "STANDARD":
               return (
                 <>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
+                  
                   <ArticleVisibilityMetadataFragmentContainer article={article}>
-                    {/* @ts-ignore RELAY UPGRADE 13 */}
+                    
                     <ArticleBodyFragmentContainer article={article} />
                   </ArticleVisibilityMetadataFragmentContainer>
 

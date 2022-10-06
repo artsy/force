@@ -55,7 +55,6 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
       }}
       getItems={() => {
         return artworks.map(artwork => (
-          // @ts-ignore RELAY UPGRADE 13
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={artwork.internalID}
@@ -90,7 +89,7 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
         artworksConnection(first: 12, geneIDs: "trove") {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href
@@ -124,7 +123,6 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <HomeTroveArtworksRailFragmentContainer viewer={props.viewer} />
       }}
     />

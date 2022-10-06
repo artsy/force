@@ -16,10 +16,8 @@ const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditProfileAboutYouFragmentContainer me={me} />
 
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditProfileArtistsYouCollectFragmentContainer me={me} />
         </Join>
       </Column>

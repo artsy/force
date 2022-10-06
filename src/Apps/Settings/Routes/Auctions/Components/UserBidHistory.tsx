@@ -24,7 +24,6 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({
         return (
           <React.Fragment key={i}>
             <SettingsAuctionsLotStandingFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               lotStanding={lotStanding}
             />
 

@@ -5,12 +5,12 @@ import {
   PartnerArtistDetailsListRenderer,
   PartnerArtistDetailsRenderer,
   PartnerArtistsFragmentContainer,
-} from "../../Components/PartnerArtists"
+} from "Apps/Partner/Components/PartnerArtists"
 import { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
-import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
+import { PARTNER_NAV_BAR_HEIGHT } from "Apps/Partner/Components/NavigationTabs"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
+import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { scrollIntoView } from "Utils/scrollHelpers"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
@@ -54,7 +54,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
             selector: "#jump--PartnerArtistDetails",
             offset: PARTNER_NAV_BAR_HEIGHT + desktop + 20,
           }}
-          // @ts-ignore RELAY UPGRADE 13
           partner={partner}
         />
       </Media>
@@ -64,7 +63,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
             selector: "#jump--PartnerArtistDetails",
             offset: PARTNER_NAV_BAR_HEIGHT + mobile + 20,
           }}
-          // @ts-ignore RELAY UPGRADE 13
           partner={partner}
         />
       </Media>

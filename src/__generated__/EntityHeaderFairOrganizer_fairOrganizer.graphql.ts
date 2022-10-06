@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bce0e320705434c769c16a3b9835480>>
+ * @generated SignedSource<<1e40eab3dfa838791a987d560ffb8a62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type EntityHeaderFairOrganizer_fairOrganizer$data = {
     } | null;
     readonly href: string | null;
     readonly initials: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+    readonly internalID: string;
   } | null;
   readonly slug: string;
   readonly " $fragmentType": "EntityHeaderFairOrganizer_fairOrganizer";
@@ -35,19 +35,21 @@ export type EntityHeaderFairOrganizer_fairOrganizer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "EntityHeaderFairOrganizer_fairOrganizer",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -88,11 +90,7 @@ const node: ReaderFragment = {
       "name": "profile",
       "plural": false,
       "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -161,7 +159,8 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "052b967b34d0875f92bf82944cfa0ee2";
+(node as any).hash = "1b091ee93b9da81ade80d2d368113bc3";
 
 export default node;

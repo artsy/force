@@ -23,13 +23,13 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
-import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "Apps/Order/Components/OfferSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { SystemContextProps, withSystemContext } from "System"
-import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
+import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
@@ -392,29 +392,24 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 </>
               )}
               {order.mode === "OFFER" && (
-                // @ts-ignore RELAY UPGRADE 13
                 <OfferSummaryItem order={order} onChange={onChangeOffer} />
               )}
               <ShippingSummaryItem
-                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangeShippingAddress}
               />
               <PaymentMethodSummaryItem
-                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangePayment}
                 title="Payment method"
               />
               <ShippingArtaSummaryItemFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 order={order}
                 onChange={onChangeShippingMethod}
                 title="Shipping"
               />
             </Flex>
             <Media greaterThan="xs">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
               <Spacer mb={4} />
               <SubmitButton />
@@ -426,7 +421,6 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}

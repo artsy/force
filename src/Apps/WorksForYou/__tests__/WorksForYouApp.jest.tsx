@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { WorksForYouAppFragmentContainer } from "../WorksForYouApp"
+import { WorksForYouAppFragmentContainer } from "Apps/WorksForYou/WorksForYouApp"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")

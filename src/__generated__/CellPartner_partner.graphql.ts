@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf2dc0b88b32fcbefb3947ae5c1cfcb6>>
+ * @generated SignedSource<<575d10b1103ae788b5d78d214154b1db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,6 @@ export type CellPartner_partner$data = {
         readonly srcSet: string;
       } | null;
     } | null;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
   } | null;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
@@ -161,11 +160,6 @@ return {
       "plural": false,
       "selections": [
         {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
-        },
-        {
           "alias": null,
           "args": null,
           "concreteType": "Image",
@@ -231,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "58bd0b98f38e647dd9bb2a1a74b181e5";
+(node as any).hash = "964a81aa9dfdd0182864e9b4d12d3308";
 
 export default node;

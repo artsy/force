@@ -6,8 +6,8 @@ import {
   PartnerHeaderFragmentContainer as PartnerHeader,
 } from "Apps/Partner/Components/PartnerHeader"
 import { RouterLink } from "System/Router/RouterLink"
-import { PartnerHeaderAddress } from "../PartnerHeader/PartnerHeaderAddress"
-import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "Components/FollowButton/FollowProfileButton"
+import { PartnerHeaderAddress } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderAddress"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 jest.unmock("react-relay")
 jest.mock("Components/RouteTabs")
@@ -54,7 +54,7 @@ describe("PartnerHeader", () => {
 
     expect(wrapper.find(HeaderImage).length).toEqual(1)
     expect(wrapper.find(HeaderImage).prop("src")).toEqual("/img.png")
-    expect(wrapper.find(FollowProfileButton).length).toEqual(1)
+    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(1)
     expect(text).toContain("White cube")
     expect(text).toContain("Jeddah")
   })
@@ -217,7 +217,7 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.find(FollowProfileButton).length).toEqual(0)
+    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(0)
   })
 
   it("doesn't display follow button if partner type is equal to Auction House", () => {
@@ -227,6 +227,6 @@ describe("PartnerHeader", () => {
       }),
     })
 
-    expect(wrapper.find(FollowProfileButton).length).toEqual(0)
+    expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(0)
   })
 })

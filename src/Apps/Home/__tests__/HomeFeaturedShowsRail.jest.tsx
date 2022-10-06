@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeFeaturedShowsRailFragmentContainer } from "../Components/HomeFeaturedShowsRail"
+import { HomeFeaturedShowsRailFragmentContainer } from "Apps/Home/Components/HomeFeaturedShowsRail"
 import { HomeFeaturedShowsRail_Test_Query } from "__generated__/HomeFeaturedShowsRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -8,7 +8,6 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeFeaturedShowsRail_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: HomeFeaturedShowsRailFragmentContainer,
   query: graphql`
     query HomeFeaturedShowsRail_Test_Query @relay_test_operation {

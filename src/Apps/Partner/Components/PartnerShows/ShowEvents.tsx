@@ -26,7 +26,6 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
           return (
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
               <CellShowFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
                 show={show}
                 mode="GRID"
                 displayKind

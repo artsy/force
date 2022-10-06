@@ -43,7 +43,6 @@ export const ChannelArticles: FC<ChannelArticlesProps> = ({
         {articles.map(article => {
           return (
             <Column key={article.internalID} span={4}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <CellArticleFragmentContainer article={article} mode="GRID" />
             </Column>
           )

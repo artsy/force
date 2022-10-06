@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistArticlesRouteFragmentContainer } from "../ArtistArticlesRoute"
+import { ArtistArticlesRouteFragmentContainer } from "Apps/Artist/Routes/Articles/ArtistArticlesRoute"
 import { ArtistArticlesRoute_Test_Query } from "__generated__/ArtistArticlesRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -13,7 +13,6 @@ jest.mock("Components/Pagination", () => ({
 
 describe("ArtistArticlesRoute", () => {
   const { getWrapper } = setupTestWrapper<ArtistArticlesRoute_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistArticlesRouteFragmentContainer,
     query: graphql`
       query ArtistArticlesRoute_Test_Query @relay_test_operation {

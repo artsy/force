@@ -80,7 +80,6 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
             return (
               <Column key={index} span={[12, 6, 4, 4]}>
                 <EntityHeaderArtistFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   artist={node}
                   onClick={() => {
                     trackEvent({
@@ -244,7 +243,6 @@ export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
           if (props.artwork) {
             return (
               <ArtworkRelatedArtistsPaginationContainer
-                // @ts-ignore RELAY UPGRADE 13
                 artwork={props.artwork}
               />
             )

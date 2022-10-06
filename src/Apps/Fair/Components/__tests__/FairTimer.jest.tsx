@@ -2,13 +2,12 @@ import { graphql } from "react-relay"
 import { DateTime } from "luxon"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairTimer_Test_Query } from "__generated__/FairTimer_Test_Query.graphql"
-import { FairTimerFragmentContainer } from "../FairOverview/FairTimer"
+import { FairTimerFragmentContainer } from "Apps/Fair/Components/FairOverview/FairTimer"
 
 jest.unmock("react-relay")
 
 describe("FairTimer", () => {
   const { getWrapper } = setupTestWrapper<FairTimer_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: FairTimerFragmentContainer,
     query: graphql`
       query FairTimer_Test_Query @relay_test_operation {

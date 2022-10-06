@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { EntityHeaderPartnerFragmentContainer_Test_Query } from "__generated__/EntityHeaderPartnerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaderPartner"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 
 jest.unmock("react-relay")
 
@@ -18,7 +18,6 @@ describe("EntityHeaderPartner", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderPartnerFragmentContainer_Test_Query
   >({
-    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderPartnerFragmentContainer,
     query: QUERY,
   })

@@ -78,7 +78,6 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
             {artworks.map(artwork => {
               return (
                 <Fragment key={artwork.internalID}>
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                   <Spacer mt={4} />
@@ -89,7 +88,6 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}
-            // @ts-ignore RELAY UPGRADE 13
             pageCursors={pageCursors}
             onClick={handleClick}
             onNext={handleNext}
@@ -192,7 +190,6 @@ export const SettingsSavesArtworksQueryRenderer = () => {
           return SETTINGS_SAVES_ARTWORKS_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesArtworksRefetchContainer me={props.me} />
       }}
     />

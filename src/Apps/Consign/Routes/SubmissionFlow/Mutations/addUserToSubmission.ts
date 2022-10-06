@@ -1,5 +1,5 @@
 import { addUserToSubmissionMutation } from "__generated__/addUserToSubmissionMutation.graphql"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 export const useAddUserToSubmission = () => {

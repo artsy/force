@@ -1,4 +1,4 @@
-import { FairOverviewFragmentContainer } from "../../Routes/FairOverview"
+import { FairOverviewFragmentContainer } from "Apps/Fair/Routes/FairOverview"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
@@ -14,7 +14,6 @@ jest.mock("Utils/Hooks/useScrollTo", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<FairOverview_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: FairOverviewFragmentContainer,
   query: graphql`
     query FairOverview_Test_Query @relay_test_operation {

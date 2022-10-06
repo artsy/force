@@ -50,7 +50,6 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
         {artworks.map(artwork => {
           return (
             <React.Fragment key={artwork.internalID}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <GridItem artwork={artwork} />
 
               <Spacer mt={4} />

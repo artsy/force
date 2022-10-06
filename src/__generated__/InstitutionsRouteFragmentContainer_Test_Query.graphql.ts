@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c616cb2b0dcab04f523cae344b1490ea>>
+ * @generated SignedSource<<9f59eb4b70c10e3d53427df1b4400595>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "href",
   "storageKey": null
 },
 v3 = {
@@ -50,22 +50,22 @@ v3 = {
   "name": "name",
   "storageKey": null
 },
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v5 = [
+v4 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
 v6 = [
-  (v2/*: any*/)
+  (v5/*: any*/)
 ],
 v7 = {
   "kind": "InlineFragment",
@@ -181,22 +181,6 @@ return {
                             "kind": "InlineFragment",
                             "selections": [
                               (v1/*: any*/),
-                              (v2/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "slug",
-                                "storageKey": null
-                              },
-                              (v3/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "isFollowed",
-                                "storageKey": null
-                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -210,7 +194,7 @@ return {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v1/*: any*/),
-                                      (v4/*: any*/),
+                                      (v2/*: any*/),
                                       (v3/*: any*/),
                                       {
                                         "alias": null,
@@ -220,7 +204,7 @@ return {
                                         "name": "featuredShow",
                                         "plural": false,
                                         "selections": [
-                                          (v4/*: any*/),
+                                          (v2/*: any*/),
                                           (v3/*: any*/),
                                           {
                                             "alias": null,
@@ -238,14 +222,14 @@ return {
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v5/*: any*/),
+                                            "args": (v4/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "startAt",
                                             "storageKey": "startAt(format:\"MMM D\")"
                                           },
                                           {
                                             "alias": null,
-                                            "args": (v5/*: any*/),
+                                            "args": (v4/*: any*/),
                                             "kind": "ScalarField",
                                             "name": "endAt",
                                             "storageKey": "endAt(format:\"MMM D\")"
@@ -272,7 +256,7 @@ return {
                                                 "name": "city",
                                                 "storageKey": null
                                               },
-                                              (v2/*: any*/)
+                                              (v5/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
@@ -327,7 +311,7 @@ return {
                                             ],
                                             "storageKey": null
                                           },
-                                          (v2/*: any*/)
+                                          (v5/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -344,7 +328,8 @@ return {
                                   }
                                 ],
                                 "storageKey": null
-                              }
+                              },
+                              (v5/*: any*/)
                             ],
                             "type": "Profile",
                             "abstractKey": null
@@ -365,7 +350,7 @@ return {
                 ],
                 "storageKey": "orderedItemsConnection(first:50)"
               },
-              (v2/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": "orderedSet(id:\"564e181a258faf3d5c000080\")"
           }
@@ -375,7 +360,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20306ce032da99c8690bbfe4d9b232bb",
+    "cacheID": "f687dfd20a1e0832cd814e19938884a4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -414,13 +399,6 @@ return {
         "viewer.orderedSet.orderedItemsConnection.edges.node.__typename": (v9/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.id": (v8/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.internalID": (v8/*: any*/),
-        "viewer.orderedSet.orderedItemsConnection.edges.node.isFollowed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "viewer.orderedSet.orderedItemsConnection.edges.node.name": (v10/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.owner": {
           "enumValues": null,
           "nullable": false,
@@ -473,13 +451,12 @@ return {
         "viewer.orderedSet.orderedItemsConnection.edges.node.owner.href": (v10/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.owner.id": (v8/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.owner.internalID": (v8/*: any*/),
-        "viewer.orderedSet.orderedItemsConnection.edges.node.owner.name": (v10/*: any*/),
-        "viewer.orderedSet.orderedItemsConnection.edges.node.slug": (v8/*: any*/)
+        "viewer.orderedSet.orderedItemsConnection.edges.node.owner.name": (v10/*: any*/)
       }
     },
     "name": "InstitutionsRouteFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query InstitutionsRouteFragmentContainer_Test_Query {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query InstitutionsRouteFragmentContainer_Test_Query {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

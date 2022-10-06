@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import Linkify from "react-linkify"
 import {
   Box,

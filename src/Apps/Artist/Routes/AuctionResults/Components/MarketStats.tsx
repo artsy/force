@@ -272,7 +272,6 @@ export const MarketStatsQueryRenderer: React.FC<{
 
         return (
           <MarketStatsFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             priceInsightsConnection={props.priceInsightsConnection!}
             onRendered={onRender}
           />

@@ -60,7 +60,6 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
           return (
             <CellShowFragmentContainer
               key={show.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               show={show}
               onClick={() => {
                 tracking.trackEvent({
@@ -152,7 +151,6 @@ export const ArtistCurrentShowsRailQueryRenderer: React.FC<{
           }
           if (props.artist) {
             return (
-              // @ts-ignore RELAY UPGRADE 13
               <ArtistCurrentShowsRailFragmentContainer artist={props.artist} />
             )
           }

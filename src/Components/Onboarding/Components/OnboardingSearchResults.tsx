@@ -5,12 +5,12 @@ import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/En
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingSearchResults_viewer$data } from "__generated__/OnboardingSearchResults_viewer.graphql"
 import { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { ContextModule } from "@artsy/cohesion"
-import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 
 interface OnboardingSearchResultsProps {
@@ -41,7 +41,6 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderArtistFragmentContainer
                 key={node.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 artist={node}
                 FollowButton={
                   <FollowArtistButtonQueryRenderer
@@ -49,7 +48,7 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
                     contextModule={ContextModule.onboardingFlow}
                     size="small"
                     onFollow={() => {
-                      dispatch({ type: "FOLLOW", payload: node.internalID! })
+                      dispatch({ type: "FOLLOW", payload: node.internalID })
                     }}
                   />
                 }
@@ -64,17 +63,14 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
             return (
               <EntityHeaderPartnerFragmentContainer
                 key={node.internalID}
-                // @ts-ignore RELAY UPGRADE 13
                 partner={partner}
                 FollowButton={
-                  <FollowProfileButtonFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
-                    profile={node}
+                  <FollowProfileButtonQueryRenderer
                     id={node.internalID}
                     contextModule={ContextModule.onboardingFlow}
                     size="small"
                     onFollow={() => {
-                      dispatch({ type: "FOLLOW", payload: node.internalID! })
+                      dispatch({ type: "FOLLOW", payload: node.internalID })
                     }}
                   />
                 }
@@ -111,7 +107,6 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
               }
               ... on Profile {
                 internalID
-                ...FollowProfileButton_profile
                 owner {
                   __typename
                   ... on Partner {
@@ -171,7 +166,6 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
         return (
           <OnboardingSearchResultsFragmentContainer
             term={term}
-            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
           />
         )

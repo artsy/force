@@ -3,7 +3,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
-import { NotificationItemFragmentContainer } from "../NotificationItem"
+import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 
 jest.unmock("react-relay")
 
@@ -12,7 +12,6 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationItem_test_Query>({
     const notification = props.notificationsConnection?.edges?.[0]?.node
 
     if (notification) {
-      // @ts-ignore RELAY UPGRADE 13
       return <NotificationItemFragmentContainer item={notification} />
     }
 

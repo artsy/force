@@ -15,7 +15,6 @@ export const ShowHours: React.FC<ShowHoursProps> = ({ show, ...rest }) => {
     return null
   }
 
-  // @ts-ignore RELAY UPGRADE 13
   return <ShowLocationHoursFragmentContainer location={location} {...rest} />
 }
 

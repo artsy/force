@@ -13,10 +13,8 @@ import { Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail"
-import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { RouterLink } from "System/Router/RouterLink"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { extractNodes } from "Utils/extractNodes"
 import { SoldRecentlyOnArtsyQuery } from "__generated__/SoldRecentlyOnArtsyQuery.graphql"
@@ -56,51 +54,46 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
       title="Sold Recently on Artsy"
       getItems={() => {
         return artworks.map(
-          ({ artwork, highEstimate, lowEstimate, priceRealized }, index) => {
+          ({ artwork, highEstimate, lowEstimate, priceRealized }, i) => {
+            if (!artwork) return <></>
+
             return (
-              <Fragment key={artwork!.internalID}>
-                <RouterLink
-                  to={artwork!.href}
+              <Fragment key={artwork.internalID}>
+                <ShelfArtworkFragmentContainer
+                  artwork={artwork}
+                  hideSaleInfo
+                  lazyLoad
+                  width={[325]}
                   data-testid="soldRecentlyItem"
-                  display="block"
-                  textDecoration="none"
-                  onClick={trackArtworkItemClick(artwork, index)}
+                  onClick={trackArtworkItemClick(artwork, i)}
+                  // FIXME:
+                  contextModule={ContextModule.artworkRecentlySoldGrid as any}
+                />
+
+                <Flex
+                  mt={4}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  color="black60"
                 >
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
-                  <ShelfArtworkFragmentContainer
-                    artwork={artwork!}
-                    key={artwork!.internalID}
-                    hideSaleInfo
-                    lazyLoad
-                    // @ts-ignore
-                    contextModule={ContextModule.artworkRecentlySoldGrid}
-                  />
+                  <Text variant="xs">Estimate</Text>
 
-                  <Flex
-                    mt={4}
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    color="black60"
-                  >
-                    <Text variant="xs">Estimate</Text>
+                  <Text variant="xs">
+                    {lowEstimate?.display}—{highEstimate?.display}
+                  </Text>
+                </Flex>
 
-                    <Text variant="xs">
-                      {lowEstimate?.display}—{highEstimate?.display}
-                    </Text>
-                  </Flex>
+                <Flex
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  color="blue100"
+                >
+                  <Text variant="xs">Sold for (incl. premium)</Text>
 
-                  <Flex
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    color="blue100"
-                  >
-                    <Text variant="xs">Sold for (incl. premium)</Text>
-
-                    <Text variant="xs">{priceRealized?.display}</Text>
-                  </Flex>
-                </RouterLink>
+                  <Text variant="xs">{priceRealized?.display}</Text>
+                </Flex>
               </Fragment>
             )
           }
@@ -118,7 +111,7 @@ export const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
         edges {
           node {
             artwork {
-              ...ShelfArtwork_artwork @arguments(width: 325)
+              ...ShelfArtwork_artwork
               slug
               href
               internalID
@@ -183,12 +176,9 @@ const PLACEHOLDER = (
 )
 
 export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
-
   return (
     <SystemQueryRenderer<SoldRecentlyOnArtsyQuery>
       lazyLoad
-      environment={relayEnvironment}
       query={graphql`
         query SoldRecentlyOnArtsyQuery {
           recentlySoldArtworks {
@@ -209,7 +199,6 @@ export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
 
         return (
           <SoldRecentlyOnArtsyFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             recentlySoldArtworks={props.recentlySoldArtworks}
           />
         )

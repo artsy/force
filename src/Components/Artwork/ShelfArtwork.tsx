@@ -1,30 +1,22 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { ShelfArtwork_artwork$data } from "__generated__/ShelfArtwork_artwork.graphql"
-import Metadata from "./Metadata"
+import Metadata, { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
-import styled from "styled-components"
-import { Image, Flex } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
-import { useHoverMetadata } from "./useHoverMetadata"
+import { Box, Image, SkeletonBox } from "@artsy/palette"
+import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
+import { resized } from "Utils/resized"
 
-/**
- * The max height for an image in the carousel
- */
-export const IMG_HEIGHT = {
-  mobile: 250,
-  desktop: 320,
-}
-
-interface ShelfArtworkProps {
+export interface ShelfArtworkProps
+  extends Omit<RouterLinkProps, "to" | "width"> {
   artwork: ShelfArtwork_artwork$data
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  showExtended?: boolean
   showMetadata?: boolean
   onClick?: () => void
+  width?: number[]
 }
 
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
@@ -33,116 +25,112 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   hideSaleInfo,
   lazyLoad,
   onClick,
-  showExtended,
   showMetadata = true,
+  width = [150, 175, 200],
+  ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
+  // Resize image to largest width expected
+  const image = artwork.image?.src
+    ? resized(artwork.image.src, { width: width[width.length - 1] })
+    : null
+
   return (
-    <div
-      data-test="artworkShelfArtwork"
-      data-testid="ShelfArtwork"
+    <RouterLink
+      to={artwork?.href}
+      onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      display="flex"
+      flexDirection="column"
+      justifyContent="flex-end"
+      textDecoration="none"
+      data-test="artworkShelfArtwork"
+      data-testid="ShelfArtwork"
+      aria-label={artwork.title ?? "Artwork"}
+      width={width}
+      {...rest}
     >
-      <RouterLink
-        to={artwork?.href}
-        display="block"
-        textDecoration="none"
-        onClick={onClick}
-      >
-        <ResponsiveContainer artwork={artwork}>
+      {image ? (
+        <Box
+          maxHeight={[250, 320]}
+          maxWidth="100%"
+          style={{
+            aspectRatio: `${artwork.image?.width ?? 1} / ${
+              artwork.image?.height ?? 1
+            }`,
+          }}
+          bg="black10"
+        >
           <Image
-            src={artwork.image?.resized?.src!}
-            srcSet={artwork.image?.resized?.srcSet}
-            width={artwork.image?.resized?.width}
-            maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
             lazyLoad={lazyLoad}
-            style={{ objectFit: "contain", display: "block" }}
+            style={{ objectFit: "contain" }}
+            alt=""
           />
-        </ResponsiveContainer>
-      </RouterLink>
+        </Box>
+      ) : (
+        <Box style={{ aspectRatio: "1 / 1" }} maxWidth="100%" bg="black10" />
+      )}
 
       {showMetadata && (
         <Metadata
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
-          extended={showExtended}
           hideSaleInfo={hideSaleInfo}
-          maxWidth={artwork.image?.resized?.width}
           isHovered={isHovered}
           contextModule={contextModule}
           showSaveButton
+          disableRouterLinking
+          maxWidth="100%"
         />
       )}
-    </div>
+    </RouterLink>
   )
 }
-
-const getHeight = (
-  artwork: ShelfArtwork_artwork$data,
-  size: keyof typeof IMG_HEIGHT
-) => {
-  return (artwork.image?.resized?.height ?? 0) > IMG_HEIGHT[size]
-    ? IMG_HEIGHT[size]
-    : artwork?.image?.resized?.height
-}
-
-const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork$data }> = ({
-  artwork,
-  children,
-}) => {
-  // FIXME: Replace with <picture> and specific sizes for different platforms
-  return (
-    <>
-      <Media at="xs">
-        <Container
-          width={artwork.image?.resized?.width}
-          height={getHeight(artwork, "mobile")}
-        >
-          {children}
-        </Container>
-      </Media>
-
-      <Media greaterThan="xs">
-        <Container
-          width={artwork.image?.resized?.width}
-          height={getHeight(artwork, "desktop")}
-        >
-          {children}
-        </Container>
-      </Media>
-    </>
-  )
-}
-
-const Container = styled(Flex)`
-  position: relative;
-`
 
 export const ShelfArtworkFragmentContainer = createFragmentContainer(
   ShelfArtwork,
   {
     artwork: graphql`
-      fragment ShelfArtwork_artwork on Artwork
-        @argumentDefinitions(width: { type: "Int", defaultValue: 200 }) {
-        image {
-          resized(width: $width) {
-            src
-            srcSet
-            width
-            height
-          }
-          aspectRatio
-          height
-        }
-        imageTitle
-        title
-        href
+      fragment ShelfArtwork_artwork on Artwork {
         ...Metadata_artwork
         ...SaveButton_artwork
-        ...Badge_artwork
+        title
+        href
+        image {
+          src: url(version: ["normalized", "larger", "large"])
+          width
+          height
+        }
       }
     `,
   }
 )
+
+interface ShelfArtworkPlaceholderProps {
+  // Used to cycle through a set of placeholder heights
+  index: number
+  width?: number[]
+}
+
+export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = ({
+  index,
+  width = [150, 175, 200],
+}) => {
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="flex-end"
+      width={width}
+    >
+      <SkeletonBox width="100W%" height={[200, 300, 250, 275][index % 4]} />
+
+      <MetadataPlaceholder />
+    </Box>
+  )
+}

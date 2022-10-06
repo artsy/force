@@ -32,7 +32,6 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
     <>
       {hasArtistSeriesArtworks && (
         <>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ArtistSeriesArtworkRail artwork={artwork} />
         </>
       )}
@@ -43,7 +42,6 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
         <>
           {artwork.seriesArtist && (
             <ArtistSeriesRail
-              // @ts-ignore RELAY UPGRADE 13
               artist={artwork.seriesArtist}
               title="Series by this artist"
               contextModule={ContextModule.moreSeriesByThisArtist}

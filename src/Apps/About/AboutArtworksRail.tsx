@@ -27,7 +27,6 @@ export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             key={artwork.internalID}
           />
@@ -45,7 +44,7 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
         artworksConnection(first: 50, geneIDs: "trending-this-week") {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href

@@ -4448,15 +4448,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-relay@*":
-  version "7.0.17"
-  resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.17.tgz#83f6b85c41b5fd3bb27d04d759fa4c0e4dd6a8d4"
-  integrity sha512-cJqOFIbp3M3/QkRpxlL4pwWRWB0lPGHevJFW8unuebkkITre8ptgknkGhAKe5IlA6ENTRJqVQXMuNdyLxl+0cQ==
-  dependencies:
-    "@types/react" "*"
-    "@types/relay-runtime" "*"
-
-"@types/react-relay@^14.1.2":
+"@types/react-relay@*", "@types/react-relay@^14.1.2":
   version "14.1.2"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-14.1.2.tgz#0fa08fc8a7e196a0acdc1186fd983cdf3c7d559c"
   integrity sha512-skFg+hBAi/two5qloHVF2GjX+wNK7mRwLev6YOl3Xo48YZhPt6akOYdpQHMioBx0WBDxXHByut9JpjAAH3HAHA==
@@ -4528,10 +4520,15 @@
   dependencies:
     graphql "^14.5.3"
 
-"@types/relay-runtime@*", "@types/relay-runtime@9.1.6":
-  version "9.1.6"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-9.1.6.tgz#5a9afc37552d7e5b7966779d33ab26dce7da6771"
-  integrity sha512-rdylQOGAoqjDjtzC2uKdjIqeDRcAvUsjONQB+FZld3cAP9qU4eEwTfMKJ7MdZSw2YbWRcTphczT4OpKKlLxY3Q==
+"@types/relay-runtime@*", "@types/relay-runtime@14.1.1":
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-14.1.1.tgz#32c961161fbdc3010f336535321c7f23676f4a45"
+  integrity sha512-LNse8cKDXGQ1XNOc5nxP0SkxXX11vSCkumpjWrAMqWu6fCDYa4QLb/83NLwb/cXmfAdsJrd1lhir5hzNtOxHdg==
+
+"@types/relay-runtime@14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-14.1.0.tgz#0be283418ca20bfe9ccaac7229284fbecfed00a5"
+  integrity sha512-BT0iqH6f5agLTKrBA2/VKOEgH0N92MKdkkMds06jVkac/rcFHqNSUh9WVFaDE6rSX3n5GvFIrYs8MmA8rsCXFw==
 
 "@types/relay-test-utils@^14.1.0":
   version "14.1.0"

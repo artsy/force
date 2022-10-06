@@ -39,7 +39,7 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
-  onSelect: ({ artistId: string }) => void
+  onSelect: ({ artistId }) => void
   required?: boolean
 }> = ({ onError, onSelect, required }) => {
   const [suggestions, setSuggestions] = useState<
@@ -209,8 +209,7 @@ const fetchSuggestions = async (
       }
     `,
     { searchQuery }
-    // @ts-expect-error RELAY_UPGRADE
   ).toPromise()
 
-  return response.searchConnection
+  return response?.searchConnection
 }

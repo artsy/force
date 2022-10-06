@@ -26,14 +26,11 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
           addition to your password to log in to your Artsy account.
         </Text>
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <AppSecondFactorRefetchContainer me={me} />
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SmsSecondFactorRefetchContainer me={me} />
 
         {me.hasSecondFactorEnabled && (
-          // @ts-ignore RELAY UPGRADE 13
           <SettingsEditSettingsTwoFactorBackupCodesFragmentContainer me={me} />
         )}
       </Join>

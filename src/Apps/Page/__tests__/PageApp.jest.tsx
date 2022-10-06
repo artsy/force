@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { PageApp_Test_Query } from "__generated__/PageApp_Test_Query.graphql"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { PageAppFragmentContainer } from "../PageApp"
+import { PageAppFragmentContainer } from "Apps/Page/PageApp"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
@@ -13,7 +13,6 @@ jest.mock("Components/MetaTags", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<PageApp_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: PageAppFragmentContainer,
   query: graphql`
     query PageApp_Test_Query @relay_test_operation {

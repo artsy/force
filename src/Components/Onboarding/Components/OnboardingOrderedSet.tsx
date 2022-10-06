@@ -6,12 +6,12 @@ import { OnboardingOrderedSetQuery } from "__generated__/OnboardingOrderedSetQue
 import { FC } from "react"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "Utils/extractNodes"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
-import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet$data
@@ -32,7 +32,6 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
               return (
                 <EntityHeaderArtistFragmentContainer
                   key={node.internalID}
-                  // @ts-ignore RELAY UPGRADE 13
                   artist={node}
                   displayLink={false}
                   FollowButton={
@@ -41,7 +40,7 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                       contextModule={ContextModule.onboardingFlow}
                       size="small"
                       onFollow={() => {
-                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                        dispatch({ type: "FOLLOW", payload: node.internalID })
                       }}
                     />
                   }
@@ -56,17 +55,14 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
               return (
                 <EntityHeaderPartnerFragmentContainer
                   key={node.internalID}
-                  // @ts-ignore RELAY UPGRADE 13
                   partner={partner}
                   FollowButton={
-                    <FollowProfileButtonFragmentContainer
+                    <FollowProfileButtonQueryRenderer
                       id={node.internalID}
                       contextModule={ContextModule.onboardingFlow}
-                      // @ts-ignore RELAY UPGRADE 13
-                      profile={node}
                       size="small"
                       onFollow={() => {
-                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                        dispatch({ type: "FOLLOW", payload: node.internalID })
                       }}
                     />
                   }
@@ -95,7 +91,6 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
               }
               ... on Profile {
                 internalID
-                ...FollowProfileButton_profile
                 owner {
                   __typename
                   ... on Partner {
@@ -152,7 +147,6 @@ export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRend
 
         if (!orderedSet) return null
 
-        // @ts-ignore RELAY UPGRADE 13
         return <OnboardingOrderedSetFragmentContainer orderedSet={orderedSet} />
       }}
     />

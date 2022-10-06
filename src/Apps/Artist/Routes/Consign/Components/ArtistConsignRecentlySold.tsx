@@ -34,9 +34,7 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
           <>
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
-              showExtended={false}
               contextModule={ContextModule.artistRecentlySold}
             />
 

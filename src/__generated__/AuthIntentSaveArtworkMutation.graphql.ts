@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5178646f2854caa1af5f99df34b2ece1>>
+ * @generated SignedSource<<ce6b33ac2cd8812f72c9514e58351f6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type AuthIntentSaveArtworkMutation$data = {
     } | null;
   } | null;
 };
+export type AuthIntentSaveArtworkMutation$rawResponse = {
+  readonly saveArtwork: {
+    readonly artwork: {
+      readonly id: string;
+      readonly isSaved: boolean | null;
+    } | null;
+  } | null;
+};
 export type AuthIntentSaveArtworkMutation = {
+  rawResponse: AuthIntentSaveArtworkMutation$rawResponse;
   response: AuthIntentSaveArtworkMutation$data;
   variables: AuthIntentSaveArtworkMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f0e4b1d5370a41280441f06178aa7aa";
+(node as any).hash = "e3264dca9c4b2227f5086e1978706c2c";
 
 export default node;

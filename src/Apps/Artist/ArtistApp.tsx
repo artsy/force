@@ -39,7 +39,6 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
     return (
       <>
         {!isEigen && (
-          // @ts-ignore RELAY UPGRADE 13
           <BackLinkFragmentContainer artist={artist} artworkId={artworkId} />
         )}
 
@@ -55,7 +54,6 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   // Default page
   return (
     <PageWrapper artist={artist}>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtistHeaderFragmentContainer artist={artist} />
 
       <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
@@ -103,7 +101,6 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
       }}
     >
       <Box mt={[2, 4]} {...rest}>
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistMetaFragmentContainer artist={artist} />
         {children}
       </Box>

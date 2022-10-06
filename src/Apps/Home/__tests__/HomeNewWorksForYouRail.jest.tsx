@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeNewWorksForYouRailFragmentContainer } from "../Components/HomeNewWorksForYouRail"
+import { HomeNewWorksForYouRailFragmentContainer } from "Apps/Home/Components/HomeNewWorksForYouRail"
 import { HomeNewWorksForYouRail_Test_Query } from "__generated__/HomeNewWorksForYouRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -11,7 +11,6 @@ const { getWrapper } = setupTestWrapper<HomeNewWorksForYouRail_Test_Query>({
   Component: props => {
     return (
       <HomeNewWorksForYouRailFragmentContainer
-        // @ts-ignore RELAY UPGRADE 13
         artworksForUser={props.artworksForUser!}
       />
     )

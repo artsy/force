@@ -3,7 +3,7 @@ import { Accept_order$data } from "__generated__/Accept_order.graphql"
 import { RouteConfig, Router } from "found"
 import { FC } from "react"
 import { Media } from "Utils/Responsive"
-import { counterofferFlowSteps } from "../../Components/OrderStepper"
+import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -17,9 +17,9 @@ import {
 import { CountdownTimer } from "Components/CountdownTimer"
 import { get } from "Utils/get"
 import createLogger from "Utils/logger"
-import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { AcceptRouteSetOrderPaymentMutation } from "__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
@@ -265,7 +265,6 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
         >
           <Media at="xs">
             <Flex flexDirection="column">
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />
@@ -304,13 +303,12 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
           <Flex flexDirection="column">
             <Media greaterThan="xs">
               {className => (
-                // @ts-ignore RELAY UPGRADE 13
                 <ArtworkSummaryItem className={className} order={order} />
               )}
             </Media>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <ShippingSummaryItem order={order} locked />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

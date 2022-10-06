@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
-import { ShowAppFragmentContainer } from "../ShowApp"
-import { ShowViewingRoom } from "../Components/ShowViewingRoom"
+import { ShowAppFragmentContainer } from "Apps/Show/ShowApp"
+import { ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowApp_Test_Query } from "__generated__/ShowApp_Test_Query.graphql"
 
@@ -29,7 +29,6 @@ jest.mock("System/Router/useRouter", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
-  // @ts-ignore RELAY UPGRADE 13
   Component: ShowAppFragmentContainer,
   query: graphql`
     query ShowApp_Test_Query @relay_test_operation {

@@ -68,7 +68,6 @@ const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({
                   display="flex"
                   alignItems="flex-end"
                 >
-                  {/* @ts-ignore RELAY UPGRADE 13 */}
                   <CellPartnerFragmentContainer partner={partner} mode="GRID" />
                 </Column>
               )
@@ -201,7 +200,6 @@ export const PartnersFilteredCellsQueryRenderer: FC<PartnersFilteredCellsQueryRe
         }
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <PartnersFilteredCellsPaginationContainer viewer={props.viewer} />
         )
       }}

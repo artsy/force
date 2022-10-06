@@ -1,5 +1,5 @@
 import { ArtistArtworkFilterTestQuery } from "__generated__/ArtistArtworkFilterTestQuery.graphql"
-import { ArtistArtworkFilterRefetchContainer } from "../ArtistArtworkFilter"
+import { ArtistArtworkFilterRefetchContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilter"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
@@ -36,7 +36,6 @@ const getWrapper = (props: Props = {}) => {
         return (
           <MockBoot context={context}>
             <ArtistArtworkFilterRefetchContainer
-              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist}
               aggregations={[]}
             />

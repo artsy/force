@@ -1,4 +1,4 @@
-import { ShowArtworksRefetchContainer } from "../Components/ShowArtworks"
+import { ShowArtworksRefetchContainer } from "Apps/Show/Components/ShowArtworks"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
@@ -35,7 +35,6 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
         counts={{
           followedArtists: 10,
         }}
-        // @ts-ignore RELAY UPGRADE 13
         show={show!}
       />
     </MockBoot>

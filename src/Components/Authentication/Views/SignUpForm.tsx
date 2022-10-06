@@ -14,9 +14,9 @@ import { recaptcha } from "Utils/recaptcha"
 import { data as sd } from "sharify" // eslint-disable-line no-restricted-imports
 import { SignUpForm_requestLocation$data } from "__generated__/SignUpForm_requestLocation.graphql"
 import { Banner, Box, Button, Input, Join, Spacer, Text } from "@artsy/palette"
-import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswordInput"
-import { AuthenticationCheckbox } from "../Components/AuthenticationCheckbox"
-import { AuthenticationFooter } from "../Components/AuthenticationFooter"
+import { AuthenticationPasswordInput } from "Components/Authentication/Components/AuthenticationPasswordInput"
+import { AuthenticationCheckbox } from "Components/Authentication/Components/AuthenticationCheckbox"
+import { AuthenticationFooter } from "Components/Authentication/Components/AuthenticationFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 const gdprCountries = [
@@ -326,7 +326,6 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
           return (
             <SignUpFormFragmentContainer
               {...passedProps}
-              // @ts-ignore RELAY UPGRADE 13
               requestLocation={props.requestLocation}
             />
           )

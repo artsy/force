@@ -1,13 +1,15 @@
 import * as React from "react"
-import { Box, Shelf } from "@artsy/palette"
-import { compact } from "lodash"
+import { Shelf } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
-import { PartnerArtistsCarouselItemFragmentContainer } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
+import { extractNodes } from "Utils/extractNodes"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { ContextModule } from "@artsy/cohesion"
 
 const PAGE_SIZE = 20
 
@@ -26,20 +28,23 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
     return null
   }
 
-  const { artistsConnection, slug } = partner
-  const artists = compact(artistsConnection.edges)
+  const artists = extractNodes(partner.artistsConnection)
 
   return (
     <Shelf alignItems="flex-start">
       {artists.map(artist => (
-        <Box maxWidth={320}>
-          <PartnerArtistsCarouselItemFragmentContainer
-            key={artist.node?.id}
-            // @ts-ignore RELAY UPGRADE 13
-            artist={artist!}
-            partnerArtistHref={`/partner/${slug}/artists/${artist.node?.slug}`}
-          />
-        </Box>
+        <CellArtistFragmentContainer
+          key={artist.internalID}
+          artist={artist}
+          to={`/partner/${partner.slug}/artists/${artist.slug}`}
+          FollowButton={
+            <FollowArtistButtonQueryRenderer
+              id={artist.internalID}
+              contextModule={ContextModule.recommendedArtistsRail}
+              size="small"
+            />
+          }
+        />
       ))}
     </Shelf>
   )
@@ -57,14 +62,11 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
           displayOnPartnerProfile: true
         ) {
           edges {
-            counts {
-              artworks
-            }
             node {
-              id
+              ...CellArtist_artist
+              internalID
               slug
             }
-            ...PartnerArtistsCarouselItem_artist
           }
         }
       }
@@ -97,7 +99,6 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         return (
           <PartnerArtistsCarouselFragmentContainer
             {...rest}
-            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

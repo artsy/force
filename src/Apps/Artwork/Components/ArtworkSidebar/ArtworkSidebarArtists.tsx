@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork$data } from "__generated__/ArtworkSidebarArtists_artwork.graphql"
-import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 
 export interface ArtistsProps {
@@ -11,7 +11,7 @@ export interface ArtistsProps {
 }
 
 export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
-  artwork: { artists, cultural_maker },
+  artwork: { artists, culturalMaker },
 }) => {
   if (!artists) return null
 
@@ -23,28 +23,21 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
         return (
           <EntityHeaderArtistFragmentContainer
             key={artist.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             artist={artist}
             FollowButton={
-              <FollowArtistButtonFragmentContainer
-                // @ts-ignore RELAY UPGRADE 13
-                artist={artist}
+              <FollowArtistButtonQueryRenderer
+                id={artist.internalID}
                 contextModule={ContextModule.artworkSidebar}
                 triggerSuggestions
                 size="small"
-              >
-                Follow
-              </FollowArtistButtonFragmentContainer>
+              />
             }
           />
         )
       })}
 
-      {artists.length === 0 && cultural_maker && (
-        <EntityHeader
-          name={cultural_maker}
-          initials={cultural_maker.charAt(0)}
-        />
+      {artists.length === 0 && culturalMaker && (
+        <EntityHeader name={culturalMaker} initials={culturalMaker.charAt(0)} />
       )}
     </Join>
   )
@@ -54,18 +47,13 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
   ArtworkSidebarArtists,
   {
     artwork: graphql`
-      fragment ArtworkSidebarArtists_artwork on Artwork
-        @argumentDefinitions(
-          showFollowSuggestions: { type: "Boolean", defaultValue: true }
-        ) {
-        cultural_maker: culturalMaker
+      fragment ArtworkSidebarArtists_artwork on Artwork {
+        culturalMaker
         artists {
           ...EntityHeaderArtist_artist
           internalID
           slug
           name
-          ...FollowArtistButton_artist
-            @arguments(showFollowSuggestions: $showFollowSuggestions)
         }
       }
     `,

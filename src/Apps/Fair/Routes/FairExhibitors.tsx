@@ -2,10 +2,10 @@ import React, { useEffect } from "react"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
-import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
-import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
+import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "Apps/Fair/Components/FairExhibitors"
+import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Router/useRouter"
-import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
+import { useExhibitorsTabOffset } from "Apps/Fair/Utils/useExhibitorsTabOffset"
 import { scrollIntoView } from "Utils/scrollHelpers"
 
 interface FairExhibitorsProps {
@@ -42,7 +42,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
             <Text variant="lg-display" my={4}>
               {letter}
             </Text>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <FairExhibitorsGroup
               exhibitorsGroup={exhibitorsGroup}
               fair={fair}

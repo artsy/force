@@ -174,7 +174,6 @@ export const UnreadMessagesToastQueryRenderer: React.FC<{
       render={renderWithLoadProgress<UnreadMessagesToastQuery$data>(
         ({ me }) => (
           <UnreadMessagesToastRefetchContainer
-            // @ts-ignore RELAY UPGRADE 13
             conversation={me?.conversation}
             {...rest}
           />

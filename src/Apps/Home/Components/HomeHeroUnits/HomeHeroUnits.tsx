@@ -43,7 +43,6 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
           <HomeHeroUnitFragmentContainer
             key={i}
             index={i}
-            // @ts-ignore RELAY UPGRADE 13
             heroUnit={heroUnit}
             layout={i % 2 === 0 ? "b" : "a"}
           />

@@ -28,15 +28,12 @@ export class ArtworkSidebarMetadata extends Component<
           </Text>
         )}
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarTitleInfoFragmentContainer artwork={artwork} />
 
         {(artwork.edition_sets?.length ?? 0) < 2 && (
-          // @ts-ignore RELAY UPGRADE 13
           <ArtworkSidebarSizeInfoFragmentContainer piece={artwork} />
         )}
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkSidebarClassificationFragmentContainer artwork={artwork} />
       </>
     )

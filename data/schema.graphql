@@ -7357,6 +7357,30 @@ type DeleteUserAddressPayload {
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
+type deleteUserAdminNoteFailure {
+  mutationError: GravityMutationError
+}
+
+input deleteUserAdminNoteMutationInput {
+  adminNoteId: String!
+  clientMutationId: String
+  id: String!
+}
+
+type deleteUserAdminNoteMutationPayload {
+  # On success: the admin note deleted.
+  adminNoteOrError: deleteUserAdminNoteResponseOrError
+  clientMutationId: String
+}
+
+union deleteUserAdminNoteResponseOrError =
+    deleteUserAdminNoteFailure
+  | deleteUserAdminNoteSuccess
+
+type deleteUserAdminNoteSuccess {
+  adminNote: UserAdminNotes
+}
+
 input DeleteUserIconInput {
   clientMutationId: String
 }
@@ -10933,6 +10957,11 @@ type Mutation {
   deleteMyUserProfileIcon(input: DeleteUserIconInput!): DeleteUserIconPayload
   deleteUserAddress(input: DeleteUserAddressInput!): DeleteUserAddressPayload
 
+  # delete an admin note for the user
+  deleteUserAdminNote(
+    input: deleteUserAdminNoteMutationInput!
+  ): deleteUserAdminNoteMutationPayload
+
   # Deletes a UserInterest on the logged in User's CollectorProfile.
   deleteUserInterest(
     input: DeleteUserInterestMutationInput!
@@ -11785,7 +11814,34 @@ type Partner implements Node {
   ): LocationConnection
   meta: PartnerMeta
   name: String
+  partnerArtistsSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
+  ): partnerArtistsSearchConnection
+  partnerArtworksSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
+  ): partnerArtworksSearchConnection
   partnerPageEligible: Boolean
+  partnerShowsSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
+  ): partnerShowsSearchConnection
   partnerType: String
   profile: Profile
   profileArtistsLayout: String
@@ -11977,6 +12033,26 @@ type PartnerArtistEdge {
   sortableID: String
 }
 
+# A connection to a list of items.
+type partnerArtistsSearchConnection {
+  # A list of edges.
+  edges: [partnerArtistsSearchEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type partnerArtistsSearchEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Artist
+}
+
 type PartnerArtworkGrid implements ArtworkContextGrid {
   artworksConnection(
     after: String
@@ -11987,6 +12063,26 @@ type PartnerArtworkGrid implements ArtworkContextGrid {
   ctaHref: String
   ctaTitle: String
   title: String
+}
+
+# A connection to a list of items.
+type partnerArtworksSearchConnection {
+  # A list of edges.
+  edges: [partnerArtworksSearchEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type partnerArtworksSearchEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Artwork
 }
 
 type PartnerCategory {
@@ -12200,6 +12296,26 @@ type PartnerShowDocumentEdge {
 enum PartnerShowPartnerType {
   GALLERY
   MUSEUM
+}
+
+# A connection to a list of items.
+type partnerShowsSearchConnection {
+  # A list of edges.
+  edges: [partnerShowsSearchEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type partnerShowsSearchEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Show
 }
 
 enum PartnersSortType {
@@ -13707,6 +13823,9 @@ type Query {
     first: Int
     ids: [String]
     last: Int
+
+    # If present, will search by term, cannot be combined with `ids`
+    term: String
   ): UserConnection
 
   # A Partner or Fair
@@ -17367,6 +17486,9 @@ type Viewer {
     first: Int
     ids: [String]
     last: Int
+
+    # If present, will search by term, cannot be combined with `ids`
+    term: String
   ): UserConnection
 
   # A Partner or Fair

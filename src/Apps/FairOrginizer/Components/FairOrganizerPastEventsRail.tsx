@@ -22,7 +22,6 @@ export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailPr
       title="Past Events"
       getItems={() => {
         return pastFairs.map(fair => {
-          // @ts-ignore RELAY UPGRADE 13
           return <FairOrganizerPastEventRailCell key={fair.id} fair={fair} />
         })
       }}

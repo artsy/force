@@ -2,14 +2,13 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MarketStats_Test_Query } from "__generated__/MarketStats_Test_Query.graphql"
-import { MarketStatsFragmentContainer } from "../Components/MarketStats"
+import { MarketStatsFragmentContainer } from "Apps/Artist/Routes/AuctionResults/Components/MarketStats"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 describe("MarketStats", () => {
   const { getWrapper } = setupTestWrapper<MarketStats_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: MarketStatsFragmentContainer,
     query: graphql`
       query MarketStats_Test_Query($artistInternalID: ID!)

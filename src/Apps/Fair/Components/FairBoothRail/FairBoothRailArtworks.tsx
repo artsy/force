@@ -12,11 +12,13 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Box, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { Shelf } from "@artsy/palette"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { IMG_HEIGHT } from "Components/Artwork/ShelfArtwork"
 
 export interface FairBoothRailArtworksProps {
   show: FairBoothRailArtworks_show$data
@@ -61,7 +63,6 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
           <ShelfArtworkFragmentContainer
             key={artwork.internalID}
             contextModule={ContextModule.fairRail}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             lazyLoad
             onClick={() =>
@@ -83,18 +84,7 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
 const PLACEHOLDER = (
   <Shelf>
     {[...new Array(10)].map((_, i) => {
-      return (
-        <Box key={i}>
-          <SkeletonBox
-            width={200}
-            height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
-            mb={1}
-          />
-          <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-          <SkeletonText>Artwork Title</SkeletonText>
-          <SkeletonText>Price</SkeletonText>
-        </Box>
-      )
+      return <ShelfArtworkPlaceholder key={i} index={i} />
     })}
   </Shelf>
 )
@@ -107,9 +97,9 @@ export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
         artworksConnection(first: 20) {
           edges {
             node {
+              ...ShelfArtwork_artwork
               internalID
               slug
-              ...ShelfArtwork_artwork @arguments(width: 200)
             }
           }
         }
@@ -149,7 +139,6 @@ export const FairBoothRailArtworksQueryRenderer: React.FC<{
           return (
             <FairBoothRailArtworksFragmentContainer
               {...rest}
-              // @ts-ignore RELAY UPGRADE 13
               show={props.show}
             />
           )

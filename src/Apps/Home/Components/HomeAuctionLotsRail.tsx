@@ -57,7 +57,6 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
         return artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               key={artwork.slug}
               contextModule={ContextModule.auctionLots}
@@ -118,7 +117,7 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              ...ShelfArtwork_artwork @arguments(width: 210)
+              ...ShelfArtwork_artwork
               internalID
               slug
               href
@@ -156,7 +155,6 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
-          // @ts-ignore RELAY UPGRADE 13
           return <HomeAuctionLotsRailFragmentContainer viewer={props.viewer} />
         }
 

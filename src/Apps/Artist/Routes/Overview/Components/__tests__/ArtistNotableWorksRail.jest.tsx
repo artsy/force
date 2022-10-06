@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistNotableWorksRailFragmentContainer } from "../ArtistNotableWorksRail"
+import { ArtistNotableWorksRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail"
 import { ArtistNotableWorksRail_Test_Query } from "__generated__/ArtistNotableWorksRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
@@ -9,7 +9,6 @@ jest.mock("react-tracking")
 
 describe("ArtistNotableWorksRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistNotableWorksRail_Test_Query>({
-    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistNotableWorksRailFragmentContainer,
     query: graphql`
       query ArtistNotableWorksRail_Test_Query @relay_test_operation {
@@ -46,13 +45,13 @@ describe("ArtistNotableWorksRail", () => {
       }),
     })
     expect(wrapper.text()).toContain("Notable Works")
-    expect(wrapper.find("RouterLink").length).toBe(4)
-    expect(wrapper.find("RouterLink").at(0).props().to).toContain(
+    expect(wrapper.find("RouterLink").length).toBe(3)
+    expect(wrapper.find("RouterLink").first().props().to).toContain(
       "/artist/artistSlug/works-for-sale"
     )
     expect(wrapper.text()).toContain("View All Works")
     expect(wrapper.find("Shelf").length).toBe(1)
-    expect(wrapper.find("Image").length).toBe(2)
+    expect(wrapper.find("Image").length).toBe(1)
     expect(wrapper.text()).toContain("title")
     expect(wrapper.text()).toContain("date")
   })
@@ -74,13 +73,13 @@ describe("ArtistNotableWorksRail", () => {
 
   it("tracks work click", () => {
     const wrapper = getWrapper()
-    wrapper.find("RouterLink").at(2).simulate("click")
+    wrapper.find("RouterLink").last().simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "clickedArtworkGroup",
         context_module: "topWorksRail",
-        destination_page_owner_id: "<Artwork-mock-id-3>",
-        destination_page_owner_slug: "<Artwork-mock-id-4>",
+        destination_page_owner_id: "<Artwork-mock-id-8>",
+        destination_page_owner_slug: "<Artwork-mock-id-9>",
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",

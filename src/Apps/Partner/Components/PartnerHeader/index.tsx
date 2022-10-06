@@ -1,33 +1,25 @@
 import * as React from "react"
 import styled from "styled-components"
-import {
-  Box,
-  Text,
-  Image,
-  color,
-  GridColumns,
-  Column,
-  Flex,
-} from "@artsy/palette"
+import { Box, Text, Image, GridColumns, Column, Flex } from "@artsy/palette"
 import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "Components/FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "System/Router/RouterLink"
 import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
+import { themeGet } from "@styled-system/theme-get"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner$data
 }
 
 export const HeaderImage = styled(Image)`
-  border: 1px solid ${color("black10")};
+  border: 1px solid ${themeGet("black10")};
   object-fit: contain;
 `
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const hasLocations = partner.locations?.totalCount > 0
+  const hasLocations = (partner.locations?.totalCount ?? 0) > 0
   // TODO: Remove after page migration.
   const partnerUrl = `/partner/${partner.slug}`
   const canFollow =
@@ -37,38 +29,30 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     <GridColumns id="jumpto--PartnerHeader" gridRowGap={2} py={[2, 4]}>
       <Column span={[12, 10]}>
         <Flex>
-          {partner.profile?.icon && (
+          {partner.profile?.icon?.resized && (
             <Flex mr={2}>
-              <RouterLink
-                to={partnerUrl}
-                style={{ display: "flex", textDecoration: "none" }}
-              >
+              <RouterLink to={partnerUrl} display="flex" textDecoration="none">
                 <HeaderImage
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   src={partner.profile.icon.resized.src}
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                   srcSet={partner.profile.icon.resized.srcSet}
-                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                  alt={partner.name}
+                  alt={partner.name ?? ""}
                   width={[60, 80]}
                   height={[60, 80]}
                 />
               </RouterLink>
             </Flex>
           )}
+
           <Box>
             <Text as="h1" variant="xl">
-              <RouterLink
-                style={{
-                  textDecoration: "none",
-                }}
-                to={partnerUrl}
-              >
+              <RouterLink textDecoration="none" to={partnerUrl}>
                 {partner.name}
               </RouterLink>
             </Text>
+
             {hasLocations && (
               <Text color="black60" variant="sm">
+                {/* FIXME: Should be a fragment container */}
                 {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
@@ -76,16 +60,16 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
           </Box>
         </Flex>
       </Column>
-      <Column span={[12, 2]}>
-        {canFollow && (
-          <FollowProfileButton
-            // @ts-ignore RELAY UPGRADE 13
-            profile={partner.profile}
+
+      {canFollow && (
+        <Column span={[12, 2]}>
+          <FollowProfileButtonQueryRenderer
+            id={partner.profile.internalID}
             contextModule={ContextModule.partnerHeader}
             width="100%"
           />
-        )}
-      </Column>
+        </Column>
+      )}
     </GridColumns>
   )
 }
@@ -99,13 +83,13 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         type
         slug
         profile {
+          internalID
           icon {
             resized(width: 80, height: 80, version: "square140") {
               src
               srcSet
             }
           }
-          ...FollowProfileButton_profile
         }
         locations: locationsConnection(first: 20) {
           totalCount

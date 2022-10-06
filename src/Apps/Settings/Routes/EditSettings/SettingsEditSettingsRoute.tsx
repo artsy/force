@@ -18,16 +18,12 @@ const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsInformationFragmentContainer me={me} />
 
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsPasswordFragmentContainer me={me} />
 
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
 
-          {/* @ts-ignore RELAY UPGRADE 13  */}
           <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
 
           <SettingsEditSettingsEmailPreferences />

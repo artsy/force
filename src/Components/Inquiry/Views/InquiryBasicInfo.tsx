@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useInquiryContext } from "../Hooks/useInquiryContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryBasicInfo_artwork$data } from "__generated__/InquiryBasicInfo_artwork.graphql"
 import { InquiryBasicInfo_me$data } from "__generated__/InquiryBasicInfo_me.graphql"
 import { InquiryBasicInfoQuery } from "__generated__/InquiryBasicInfoQuery.graphql"
@@ -22,8 +22,8 @@ import {
   Place,
 } from "Components/LocationAutocompleteInput"
 import { useState } from "react"
-import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
-import { logger } from "../util"
+import { useUpdateMyUserProfile } from "Components/Inquiry/Hooks/useUpdateMyUserProfile"
+import { logger } from "Components/Inquiry/util"
 import { compactObject } from "Utils/compactObject"
 import { useMode } from "Utils/Hooks/useMode"
 
@@ -229,7 +229,6 @@ export const InquiryBasicInfoQueryRenderer: React.FC = () => {
         }
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <InquiryBasicInfoFragmentContainer
             artwork={props.artwork}
             me={props.me}

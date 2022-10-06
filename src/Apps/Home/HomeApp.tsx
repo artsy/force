@@ -14,7 +14,7 @@ import { HomeCurrentFairsQueryRenderer } from "./Components/HomeCurrentFairs"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
-import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
+import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
 
 interface HomeAppProps {
@@ -34,7 +34,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer mt={[2, 0]} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       {homePage && <HomeHeroUnitsFragmentContainer homePage={homePage} />}
 
       <Spacer mt={[4, 6]} />
@@ -43,7 +42,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         {featuredEventsOrderedSet && (
           <>
             <HomeFeaturedEventsRailFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               orderedSet={featuredEventsOrderedSet}
             />
           </>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe1aef666fe47d96886243b33fc20526>>
+ * @generated SignedSource<<1fe74658dabd068ccc1bc7dae5d58043>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,17 @@ export type SaveArtworkMutation$data = {
     } | null;
   } | null;
 };
+export type SaveArtworkMutation$rawResponse = {
+  readonly saveArtwork: {
+    readonly artwork: {
+      readonly id: string;
+      readonly is_saved: boolean | null;
+      readonly slug: string;
+    } | null;
+  } | null;
+};
 export type SaveArtworkMutation = {
+  rawResponse: SaveArtworkMutation$rawResponse;
   response: SaveArtworkMutation$data;
   variables: SaveArtworkMutation$variables;
 };
@@ -118,6 +128,6 @@ return {
 };
 })();
 
-(node as any).hash = "0883343afdb4d2132f5b10a72c04d981";
+(node as any).hash = "baa8fea7bf140f998bd1d54038de283e";
 
 export default node;

@@ -122,7 +122,6 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        // @ts-ignore RELAY UPGRADE 13
         pageCursors={artist?.articlesConnection?.pageCursors!}
         onClick={loadAfter}
         onNext={loadNext}

@@ -16,7 +16,7 @@ export const UpdateConversation = (
     mutation: graphql`
       mutation UpdateConversationMutation(
         $input: UpdateConversationMutationInput!
-      ) {
+      ) @raw_response_type {
         updateConversation(input: $input) {
           conversation {
             id

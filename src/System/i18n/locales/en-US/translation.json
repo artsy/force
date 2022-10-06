@@ -78,10 +78,19 @@
       "sellWithArtsy": "Want to sell a work by this artist?",
       "sellWithArtsyLink": "Sell with Artsy",
       "conditionsOfSale": "By placing your bid you agree to Artsy's",
-      "conditionsOfSaleLink": "Conditions of Sale"
+      "conditionsOfSaleLink": "Conditions of Sale",
+      "auction": {
+        "biddingClosed": "Bidding closed",
+        "estimatedValue": "Estimated value: {{value}}"
+      },
+      "commercialButtons": {
+        "buyNow": "Purchase",
+        "makeOffer": "Make an Offer",
+        "contactGallery": "Contact Gallery"
+      }
     }
   },
-  "searchApp" : {
+  "searchApp": {
     "noResultsFound": "No results found.",
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",

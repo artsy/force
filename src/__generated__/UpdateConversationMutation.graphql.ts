@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f4aff04dd590a87f4719920dc8d61c6>>
+ * @generated SignedSource<<96055c823e8b4d5f55d20ab44c25af59>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type UpdateConversationMutation$data = {
     } | null;
   } | null;
 };
+export type UpdateConversationMutation$rawResponse = {
+  readonly updateConversation: {
+    readonly conversation: {
+      readonly id: string;
+      readonly unread: boolean | null;
+    } | null;
+  } | null;
+};
 export type UpdateConversationMutation = {
+  rawResponse: UpdateConversationMutation$rawResponse;
   response: UpdateConversationMutation$data;
   variables: UpdateConversationMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "21516c941f71a6bc582dd682e48f3a5c";
+(node as any).hash = "2ef3cf2aca9e71180564f3883d3a3ef9";
 
 export default node;

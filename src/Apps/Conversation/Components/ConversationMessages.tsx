@@ -1,11 +1,14 @@
 import { Fragment, useEffect, useState } from "react"
 import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { Spacer } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { sortBy } from "lodash"
 
-import { groupMessages, Message as MessageType } from "../Utils/groupMessages"
+import {
+  groupMessages,
+  Message as MessageType,
+} from "Apps/Conversation/Utils/groupMessages"
 import { TimeSince, fromToday } from "./TimeSince"
 import { MessageFragmentContainer as Message } from "./Message"
 import { NewMessageMarker } from "./NewMessageMarker"

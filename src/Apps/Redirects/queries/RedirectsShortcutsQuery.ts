@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 
 export const REDIRECTS_SHORTCUTS_QUERY = graphql`
   query RedirectsShortcutsQuery($id: ID!) {

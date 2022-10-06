@@ -144,7 +144,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           return (
             <SavedSearchAlertListItemFragmentContainer
               key={edge.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               item={edge}
               variant={variant}
               onEditAlertClick={setEditAlertEntity}

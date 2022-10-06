@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -48,7 +48,6 @@ export const EntityHeaderGene = () => {
 
               return (
                 <EntityHeaderGeneFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   gene={props.gene}
                   {...rest}
                 />

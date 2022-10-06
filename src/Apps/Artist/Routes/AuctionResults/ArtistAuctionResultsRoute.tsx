@@ -8,7 +8,6 @@ export interface AuctionResultsRouteProps {
 }
 
 export const ArtistAuctionResultsRoute: React.FC<AuctionResultsRouteProps> = props => {
-  // @ts-ignore RELAY UPGRADE 13
   return <ArtistAuctionResultsRefetchContainer artist={props.artist} />
 }
 

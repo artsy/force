@@ -42,9 +42,8 @@ export const useBidderPosition = () => {
       `,
       variables,
       {
-        force: true,
+        fetchPolicy: "network-only",
       }
-      // @ts-expect-error RELAY_UPGRADE
     ).toPromise()
   }
 

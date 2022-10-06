@@ -81,7 +81,6 @@ export const AuctionDetailsStartTimeQueryRenderer: FC<AuctionDetailsStartTimeQue
 
         return (
           <AuctionDetailsStartTimeFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             sale={props.sale}
             {...rest}
           />

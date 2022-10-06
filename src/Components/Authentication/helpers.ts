@@ -52,32 +52,29 @@ export const checkEmail = ({
       }
     }
   `
-  return (
-    fetchQuery<helpersEmailQuery>(relayEnvironment, query, {
-      email: values.email,
-    })
-      // @ts-expect-error RELAY_UPGRADE
-      .toPromise()
-      .then((data: any) => {
-        if (data.user && data.user.userAlreadyExists) {
-          if (shouldExist) {
-            return true
-          } else {
-            actions.setFieldError("email", "Email already exists.")
-            actions.setSubmitting(false)
-            return false
-          }
+  return fetchQuery<helpersEmailQuery>(relayEnvironment, query, {
+    email: values.email,
+  })
+    .toPromise()
+    .then((data: any) => {
+      if (data.user && data.user.userAlreadyExists) {
+        if (shouldExist) {
+          return true
         } else {
-          if (shouldExist) {
-            actions.setFieldError("email", "Email does not exist.")
-            actions.setSubmitting(false)
-            return false
-          } else {
-            return true
-          }
+          actions.setFieldError("email", "Email already exists.")
+          actions.setSubmitting(false)
+          return false
         }
-      })
-  )
+      } else {
+        if (shouldExist) {
+          actions.setFieldError("email", "Email does not exist.")
+          actions.setSubmitting(false)
+          return false
+        } else {
+          return true
+        }
+      }
+    })
 }
 
 export const isOtpError = (errorMessage: string): boolean => {

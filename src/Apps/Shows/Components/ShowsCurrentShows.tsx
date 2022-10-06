@@ -48,7 +48,6 @@ const ShowsCurrentShows: React.FC<ShowsCurrentShowsProps> = ({
           return (
             <ShowsCurrentShowFragmentContainer
               key={show.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               show={show}
             />
           )
@@ -150,7 +149,6 @@ export const ShowsCurrentShowsQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
-          // @ts-ignore RELAY UPGRADE 13
           return <ShowsCurrentShowsPaginationContainer viewer={props.viewer} />
         }
 

@@ -27,7 +27,7 @@ import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 import { ArticleHTML } from "./ArticleHTML"
-import { useArticleTracking } from "../useArticleTracking"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { useFullBleedHeaderHeight } from "Components/FullBleedHeader"
 
 interface ArticleVideoProps {
@@ -191,7 +191,6 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
               return (
                 <Column span={12} key={relatedArticle.internalID}>
                   <ArticleSeriesItemFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     article={relatedArticle}
                   />
                 </Column>
@@ -207,7 +206,6 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
             {article.seriesArticle?.sponsor && (
               <ArticleSponsorFragmentContainer
                 mt={4}
-                // @ts-ignore RELAY UPGRADE 13
                 sponsor={article.seriesArticle?.sponsor}
               />
             )}

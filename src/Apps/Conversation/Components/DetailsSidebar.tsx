@@ -158,7 +158,6 @@ export const DetailsSidebar: FC<DetailsProps> = ({
               </a>
               <Flex flexDirection="column" ml={1}>
                 {item.__typename === "Artwork" && (
-                  // @ts-ignore RELAY UPGRADE 13
                   <ArtworkDetails mt="-4px" artwork={item} />
                 )}
               </Flex>
@@ -174,13 +173,11 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             title={`Order No. ${activeOrder.code}`}
           />
           <ShippingSummaryItemFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             order={activeOrder}
             textColor="black60"
           />
           <PaymentMethodSummaryItemFragmentContainer
             title="Payment Method"
-            // @ts-ignore RELAY UPGRADE 13
             order={activeOrder}
             textColor="black60"
           />

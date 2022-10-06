@@ -1,7 +1,6 @@
 import Cookies from "cookies-js"
 import { mediator } from "Server/mediator"
 import { useEffect } from "react"
-import { Environment } from "react-relay"
 import { useSystemContext } from "System"
 import { triggerEvent } from "Utils/openAuthModal"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
@@ -9,6 +8,7 @@ import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { useConnectUserToSubmission } from "Apps/Consign/Hooks/useConnectUserToSubmission"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -41,7 +41,7 @@ const parse = (value: any): AfterAuthAction | null => {
 
 export const runAuthIntent = async (
   user: User,
-  relayEnvironment: Environment
+  relayEnvironment: RelayModernEnvironment
 ) => {
   if (!user) return
 
@@ -59,18 +59,14 @@ export const runAuthIntent = async (
         case "follow":
           switch (value.kind) {
             case "artist":
-              // @ts-ignore RELAY UPGRADE 13
               return followArtistMutation(relayEnvironment, value.objectId)
             case "gene":
-              // @ts-ignore RELAY UPGRADE 13
               return followGeneMutation(relayEnvironment, value.objectId)
             case "profile":
-              // @ts-ignore RELAY UPGRADE 13
               return followProfileMutation(relayEnvironment, value.objectId)
           }
           break
         case "save":
-          // @ts-ignore RELAY UPGRADE 13
           return saveArtworkMutation(relayEnvironment, value.objectId)
       }
     })()

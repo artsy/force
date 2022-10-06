@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionTimerFragmentContainer } from "Components/AuctionTimer"
 import { LotTimerFragmentContainer } from "./LotTimer"
-import { lotIsClosed } from "../../Utils/lotIsClosed"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtworkSidebarAuctionTimer_artwork$data } from "__generated__/ArtworkSidebarAuctionTimer_artwork.graphql"
 
 interface ArtworkSidebarAuctionTimerProps {
@@ -23,13 +23,13 @@ export const ArtworkSidebarAuctionTimer: React.FC<ArtworkSidebarAuctionTimerProp
         (sale?.cascadingEndTimeIntervalMinutes ? (
           <>
             <Spacer mt={2} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <LotTimerFragmentContainer saleArtwork={saleArtwork} />
           </>
         ) : (
           <>
             <Spacer mt={2} />
-            {/* @ts-ignore RELAY UPGRADE 13 */}
+
             <AuctionTimerFragmentContainer sale={sale} />
           </>
         ))}

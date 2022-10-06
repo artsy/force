@@ -43,7 +43,6 @@ const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
             <FollowArtistPopoverRowFragmentContainer
               key={artist.id}
               user={user}
-              // @ts-ignore RELAY UPGRADE 13
               artist={artist}
             />
           )
@@ -101,7 +100,6 @@ export const FollowArtistPopoverQueryRenderer = ({
         if (props?.artist) {
           return (
             <FollowArtistPopoverFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist}
               user={user}
             />

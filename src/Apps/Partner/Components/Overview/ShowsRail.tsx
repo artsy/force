@@ -39,7 +39,6 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         {shows.map(show => (
           <CellShowFragmentContainer
             key={show.internalID}
-            // @ts-ignore RELAY UPGRADE 13
             show={show}
             displayKind
             displayPartner={false}

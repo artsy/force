@@ -2,11 +2,11 @@ import { ActionType } from "@artsy/cohesion"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { SystemContextProvider } from "System"
-import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
-import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
-import { ContactInformationFragmentContainer } from "../ContactInformation"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/ContactInformation"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

@@ -4,7 +4,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderFair_fair$data } from "__generated__/EntityHeaderFair_fair.graphql"
-import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
+import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 
 export interface EntityHeaderFairProps extends BoxProps {
   fair: EntityHeaderFair_fair$data
@@ -57,14 +57,14 @@ const EntityHeaderFair: FC<EntityHeaderFairProps> = ({
         </Flex>
       </Flex>
 
-      {FollowButton || (
-        <FollowProfileButtonFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
-          profile={fair.profile!}
-          contextModule={ContextModule.fairsHeader}
-          size="small"
-        />
-      )}
+      {FollowButton ||
+        (fair.profile && (
+          <FollowProfileButtonQueryRenderer
+            id={fair.profile.internalID}
+            contextModule={ContextModule.fairsHeader}
+            size="small"
+          />
+        ))}
     </Flex>
   )
 }
@@ -86,7 +86,7 @@ export const EntityHeaderFairFragmentContainer = createFragmentContainer(
           }
         }
         profile {
-          ...FollowProfileButton_profile
+          internalID
           initials
         }
       }

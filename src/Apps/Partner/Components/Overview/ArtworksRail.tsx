@@ -43,7 +43,6 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
       <Shelf alignItems="flex-start">
         {artworks.map(artwork => {
           return (
-            // @ts-ignore RELAY UPGRADE 13
             <FillwidthItem
               // @ts-ignore TODO: Add relevant contextModule
               contextModule={null}
@@ -105,7 +104,6 @@ export const ArtworksRailRenderer: React.FC<
           return <ArtworksRailPlaceholder {...rest} count={15} />
 
         return (
-          // @ts-ignore RELAY UPGRADE 13
           <ArtworksRailFragmentContainer {...rest} partner={props.partner!} />
         )
       }}

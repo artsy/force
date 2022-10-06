@@ -14,7 +14,7 @@ import { Link } from "react-head"
 import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
@@ -89,9 +89,8 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               </Column>
 
               <Column start={avatar ? 3 : undefined} span={4}>
-                <FollowArtistButtonFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
-                  artist={artist}
+                <FollowArtistButtonQueryRenderer
+                  id={artist.internalID}
                   contextModule={ContextModule.artistHeader}
                   size="large"
                   width="100%"
@@ -117,7 +116,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
@@ -155,9 +153,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist {
-        ...FollowArtistButton_artist
         ...ArtistInsightPills_artist
-
         auctionResultsConnection(
           recordsTrusted: true
           first: 1

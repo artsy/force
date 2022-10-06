@@ -8,7 +8,7 @@ import { StoredImage } from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
-import { MagnifyImage } from "../MagnifyImage"
+import { MagnifyImage } from "Components/MagnifyImage"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
@@ -86,12 +86,10 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           />
         </LinkContainer>
 
-        {/* @ts-ignore RELAY UPGRADE 13 */}
         <Badge artwork={artwork} />
       </Box>
 
       <Metadata
-        // @ts-ignore RELAY UPGRADE 13
         artwork={artwork}
         isHovered={isHovered}
         contextModule={contextModule ?? ContextModule.artworkGrid}

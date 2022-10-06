@@ -26,17 +26,18 @@ import {
   settingOrderShipmentMissingCountryFailure,
   settingOrderShipmentMissingRegionFailure,
   settingOrderShipmentSuccess,
-} from "../__fixtures__/MutationResults"
-import { ShippingFragmentContainer } from "../Shipping"
+} from "Apps/Order/Routes/__fixtures__/MutationResults"
+import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
   saveAddressSuccess,
   updateAddressSuccess,
-} from "../__fixtures__/MutationResults/saveAddress"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import * as updateUserAddress from "../../Mutations/UpdateUserAddress"
+import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
+import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -678,6 +679,10 @@ describe("Shipping", () => {
           CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
           Me: () => emptyTestMe,
         })
+        const updateUserAddressSpy = jest.spyOn(
+          updateUserAddress,
+          "updateUserAddress"
+        )
         const page = new ShippingTestPage(wrapper)
 
         const address = {
@@ -722,7 +727,7 @@ describe("Shipping", () => {
 
         await page.clickSubmit()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(3)
         expect(mockCommitMutation).toHaveBeenNthCalledWith(
           3,
           expect.objectContaining({
@@ -734,19 +739,13 @@ describe("Shipping", () => {
             },
           })
         )
-        expect(mockCommitMutation).toHaveBeenNthCalledWith(
-          4,
-          expect.arrayContaining([
-            expect.anything(),
-            expect.objectContaining({
-              variables: {
-                input: {
-                  attributes: address,
-                  userAddressID: "address-id",
-                },
-              },
-            }),
-          ])
+        expect(updateUserAddressSpy).toHaveBeenCalledWith(
+          expect.anything(),
+          "address-id",
+          address,
+          expect.anything(),
+          expect.anything(),
+          expect.anything()
         )
       })
 
@@ -757,6 +756,10 @@ describe("Shipping", () => {
             relayProps[1].onCompleted(saveAddressSuccess)
           })
           .mockReturnValueOnce(selectShippingQuoteSuccess)
+        const deleteUserAddressSpy = jest.spyOn(
+          deleteUserAddress,
+          "deleteUserAddress"
+        )
 
         const wrapper = getWrapper({
           CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
@@ -810,7 +813,7 @@ describe("Shipping", () => {
 
         await page.clickSubmit()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(3)
         expect(mockCommitMutation).toHaveBeenNthCalledWith(
           3,
           expect.objectContaining({
@@ -822,18 +825,11 @@ describe("Shipping", () => {
             },
           })
         )
-        expect(mockCommitMutation).toHaveBeenNthCalledWith(
-          4,
-          expect.arrayContaining([
-            expect.anything(),
-            expect.objectContaining({
-              variables: {
-                input: {
-                  userAddressID: "address-id",
-                },
-              },
-            }),
-          ])
+        expect(deleteUserAddressSpy).toHaveBeenCalledWith(
+          expect.anything(),
+          "address-id",
+          expect.anything(),
+          expect.anything()
         )
       })
     })
@@ -1606,12 +1602,17 @@ describe("Shipping", () => {
 
     describe("editing address", () => {
       let page: ShippingTestPage
+      let updateUserAddressSpy: jest.SpyInstance
       beforeEach(() => {
         const wrapper = getWrapper({
           CommerceOrder: () => testOrder,
           Me: () => testMe,
         })
         page = new ShippingTestPage(wrapper) as any
+        updateUserAddressSpy = jest.spyOn(
+          updateUserAddress,
+          "updateUserAddress"
+        )
       })
 
       it("opens modal with correct title and action properties", async () => {
@@ -1651,6 +1652,7 @@ describe("Shipping", () => {
           ]
         `)
       })
+
       it("sends mutation with updated values when modal form is submitted", async () => {
         page
           .find(`[data-test="editAddressInShipping"]`)
@@ -1672,28 +1674,23 @@ describe("Shipping", () => {
         form.props().onSubmit()
 
         await page.update()
-        expect(mockCommitMutation).toHaveBeenCalledWith(
-          expect.arrayContaining([
-            expect.anything(),
-            expect.objectContaining({
-              variables: {
-                input: {
-                  attributes: {
-                    addressLine1: "Test input 'addressLine1'",
-                    addressLine2: "Test input 'addressLine2'",
-                    addressLine3: "",
-                    city: "Test input 'city'",
-                    country: "US",
-                    name: "Test input 'name'",
-                    phoneNumber: "555-555-5555",
-                    postalCode: "Test input 'postalCode'",
-                    region: "Test input 'region'",
-                  },
-                  userAddressID: "1",
-                },
-              },
-            }),
-          ])
+        expect(updateUserAddressSpy).toHaveBeenCalledWith(
+          expect.anything(),
+          "1",
+          {
+            addressLine1: "Test input 'addressLine1'",
+            addressLine2: "Test input 'addressLine2'",
+            addressLine3: "",
+            city: "Test input 'city'",
+            country: "US",
+            name: "Test input 'name'",
+            phoneNumber: "555-555-5555",
+            postalCode: "Test input 'postalCode'",
+            region: "Test input 'region'",
+          },
+          expect.anything(),
+          expect.anything(),
+          expect.anything()
         )
       })
     })

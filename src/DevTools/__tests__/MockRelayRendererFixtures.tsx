@@ -29,7 +29,6 @@ export const Artwork = createFragmentContainer(
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <img src={props.artwork.image.url} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (
         <ArtistQueryRenderer id={props.artwork.artist.slug} />

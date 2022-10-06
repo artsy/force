@@ -1,5 +1,5 @@
 import { AppRouteConfig } from "System/Router/Route"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
 const NewForYouApp = loadable(() => import("./NewForYouApp"), {

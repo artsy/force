@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0cf7ba3bb23f944d912d301f55c0326d>>
+ * @generated SignedSource<<83309a18563935a8a14419650a9ed745>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,9 +18,9 @@ export type PartnerArtistDetails_partnerArtist$data = {
   readonly node: {
     readonly formattedNationalityAndBirthday: string | null;
     readonly href: string | null;
+    readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
   readonly " $fragmentType": "PartnerArtistDetails_partnerArtist";
@@ -84,6 +84,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
         },
@@ -107,11 +114,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "formattedNationalityAndBirthday",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
         }
       ],
       "storageKey": null
@@ -121,6 +123,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f070ad2ab63ddc54cae550761f2cde60";
+(node as any).hash = "2f51b36b34ce99bdf0f438ac94c1e7bd";
 
 export default node;

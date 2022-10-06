@@ -90,7 +90,6 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
           <ArtworkSharePanelFragmentContainer
             width={300}
             pt={1}
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
           />
         }
@@ -154,7 +153,6 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   }
 
   const SaveButton = () => {
-    // @ts-ignore RELAY UPGRADE 13
     return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
   }
 
@@ -199,7 +197,6 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     <>
       {isViewInRoomVisible && (
         <ViewInRoomFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           onClose={hideViewInRoom}
         />

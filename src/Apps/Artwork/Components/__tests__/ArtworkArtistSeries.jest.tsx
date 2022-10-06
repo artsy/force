@@ -1,12 +1,33 @@
-import { MockBoot, renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
-import { ArtworkArtistSeries_Query$rawResponse } from "__generated__/ArtworkArtistSeries_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { ArtworkArtistSeriesFragmentContainer } from "../ArtworkArtistSeries"
+import { ArtworkArtistSeriesFragmentContainer } from "Apps/Artwork/Components/ArtworkArtistSeries"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+jest.mock(
+  "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail",
+  () => ({
+    ArtistSeriesArtworkRailFragmentContainer: () => (
+      <div>ArtistSeriesArtworkRail</div>
+    ),
+  })
+)
+jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
+  ArtistSeriesRailFragmentContainer: () => <div>ArtistSeriesRail</div>,
+}))
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtworkArtistSeriesFragmentContainer,
+  query: graphql`
+    query ArtworkArtistSeries_Query @relay_test_operation {
+      artwork(id: "example") {
+        ...ArtworkArtistSeries_artwork
+      }
+    }
+  `,
+})
 
 describe("ArtworkArtistSeries", () => {
   let trackEvent
@@ -19,80 +40,43 @@ describe("ArtworkArtistSeries", () => {
     })
   })
 
-  const getWrapper = async (
-    breakpoint: Breakpoint = "lg",
-    response: ArtworkArtistSeries_Query$rawResponse = ArtworkArtistSeriesFixture
-  ) => {
-    return renderRelayTree({
-      Component: ({ artwork }) => {
-        return (
-          <MockBoot breakpoint={breakpoint}>
-            <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
-          </MockBoot>
-        )
-      },
-      query: graphql`
-        query ArtworkArtistSeries_Query($slug: String!)
-          @raw_response_type
-          @relay_test_operation {
-          artwork(id: $slug) {
-            ...ArtworkArtistSeries_artwork
-          }
-        }
-      `,
-      variables: {
-        slug: "pumpkin",
-      },
-      mockData: response,
-    })
-  }
+  it("includes both rails when there is data", () => {
+    renderWithRelay()
 
-  it("includes both rails when there is data", async () => {
-    const wrapper = await getWrapper()
-    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
-    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(1)
+    expect(screen.getByText("ArtistSeriesArtworkRail")).toBeInTheDocument()
+    expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
   })
 
   it("includes just the series rail if there are no artworks", async () => {
-    const noArtworksData: ArtworkArtistSeries_Query$rawResponse = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artwork: {
-        ...ArtworkArtistSeriesFixture.artwork,
-        seriesForCounts: {
-          edges: [
-            {
-              node: {
-                artworksCount: 0,
-              },
-            },
-          ],
-        },
-      },
-    }
-    const wrapper = await getWrapper("xl", noArtworksData)
-    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
-    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+    renderWithRelay({
+      Artwork: () => ({
+        seriesForCounts: { edges: [{ node: { artworksCount: 0 } }] },
+      }),
+    })
+
+    expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
+    expect(
+      screen.queryByText("ArtistSeriesArtworkRail")
+    ).not.toBeInTheDocument()
   })
 
   it("includes just series if the artist has any", async () => {
-    const noSeriesData: ArtworkArtistSeries_Query$rawResponse = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artwork: {
-        ...ArtworkArtistSeriesFixture.artwork,
+    renderWithRelay({
+      Artwork: () => ({
         artistSeriesConnection: null,
         seriesForCounts: null,
-      },
-    }
-    const wrapper = await getWrapper("xl", noSeriesData)
-    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
-    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+      }),
+    })
+
+    expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
+    expect(
+      screen.queryByText("ArtistSeriesArtworkRail")
+    ).not.toBeInTheDocument()
   })
 
   it("is null if there is no series or artworks", async () => {
-    const noSeriesData: ArtworkArtistSeries_Query$rawResponse = {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artwork: {
-        ...ArtworkArtistSeriesFixture.artwork,
+    renderWithRelay({
+      Artwork: () => ({
         artistSeriesConnection: null,
         seriesForCounts: null,
         seriesArtist: {
@@ -101,134 +85,12 @@ describe("ArtworkArtistSeries", () => {
             edges: [],
           },
         },
-      },
-    }
-    const wrapper = await getWrapper("xl", noSeriesData)
-    expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
-    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+      }),
+    })
+
+    expect(screen.queryByText("ArtistSeriesRail")).not.toBeInTheDocument()
+    expect(
+      screen.queryByText("ArtistSeriesArtworkRail")
+    ).not.toBeInTheDocument()
   })
 })
-
-const ArtworkArtistSeriesFixture: ArtworkArtistSeries_Query$rawResponse = {
-  artwork: {
-    id: "relayrelay",
-    internalID: "abc124",
-    slug: "pumpkin",
-    seriesArtist: {
-      id: "series-artist-relay",
-      artistSeriesConnection: {
-        edges: [
-          {
-            node: {
-              internalID: "abc123445",
-              slug: "yayoi-kusama-pumpkins",
-              featured: true,
-              title: "Yayoi Kusama: Pumpkins",
-              artworksCountMessage: "12 available",
-              image: {
-                cropped: {
-                  src: "pumpkin.jpg",
-                  srcSet: "pumpkin.jpg",
-                  width: 100,
-                  height: 100,
-                },
-              },
-            },
-          },
-        ],
-      },
-    },
-    seriesForCounts: {
-      edges: [
-        {
-          node: {
-            artworksCount: 124,
-          },
-        },
-      ],
-    },
-    artistSeriesConnection: {
-      edges: [
-        {
-          node: {
-            internalID: "artwork1234",
-            slug: "yayoi-kusama-pumpkins",
-            filterArtworksConnection: {
-              id: "filter-artworks-relay-id",
-              edges: [
-                {
-                  node: {
-                    id: "ggg123",
-                    slug: "yayoi-kusama-pumpkin-2222222222222222",
-                    href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
-                    internalID: "zzz123",
-                    image: {
-                      resized: {
-                        src: "pumpkins.jpg",
-                        srcSet: "pumpkins.jpg",
-                        width: 100,
-                        height: 100,
-                      },
-                      aspectRatio: 1,
-                      height: 100,
-                    },
-                    imageTitle: "Pumpkin",
-                    title: "Pumpkin",
-                    date: "2020",
-                    sale_message: "Contact For Price",
-                    cultural_maker: null,
-                    artists: [
-                      {
-                        id: "artistabc123",
-                        href: "/artist/yayoi-kusama",
-                        name: "Yayoi Kusama",
-                      },
-                    ],
-                    collecting_institution: null,
-                    partner: {
-                      name: "Important Auction House",
-                      href: "/auction/important-auction-house",
-                      id: "ahabc123",
-                    },
-                    sale: {
-                      is_auction: true,
-                      is_closed: false,
-                      id: "saleabc123",
-                      is_preview: false,
-                      display_timely_at: "live in 3d",
-                      cascadingEndTimeIntervalMinutes: null,
-                      extendedBiddingIntervalMinutes: null,
-                      startAt: "2022-03-11T12:33:37.000Z",
-                      endAt: "2022-03-12T12:33:37.000Z",
-                    },
-                    sale_artwork: {
-                      lotID: "lot-id",
-                      lotLabel: "0",
-                      counts: {
-                        bidder_positions: 0,
-                      },
-                      highest_bid: {
-                        display: null,
-                      },
-                      opening_bid: {
-                        display: "USD $2222",
-                      },
-                      id: "idabc123",
-                      endAt: "2022-03-12T12:33:37.000Z",
-                      formattedEndDateTime: "Mar 12, 2022 • 12:33pm GMT",
-                      extendedBiddingEndAt: null,
-                    },
-                    is_saved: false,
-                    is_biddable: true,
-                    attributionClass: null,
-                    mediumType: null,
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-    },
-  },
-}

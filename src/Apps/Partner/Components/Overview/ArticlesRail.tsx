@@ -36,7 +36,6 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {
           return (
             <CellArticleFragmentContainer
               key={article.internalID}
-              // @ts-ignore RELAY UPGRADE 13
               article={article}
             />
           )

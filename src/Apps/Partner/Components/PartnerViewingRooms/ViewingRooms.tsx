@@ -20,7 +20,6 @@ const ViewingRooms: React.FC<ViewingRoomsProps> = ({ edges, eventTitle }) => {
           if (!viewingRoom) return
           return (
             <Column key={viewingRoom.internalID} span={[6, 6, 3, 3]}>
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ViewingRoomCardFragmentContainer viewingRoom={viewingRoom} />
             </Column>
           )

@@ -18,8 +18,8 @@ import { Router } from "found"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-import { offerFlowSteps } from "../../Components/OrderStepper"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { offerFlowSteps } from "Apps/Order/Components/OrderStepper"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
@@ -254,7 +254,6 @@ export const OfferRoute: FC<OfferRouteProps> = ({
                 Your Offer
               </Text>
 
-              {/* @ts-ignore RELAY UPGRADE 13 */}
               <PriceOptionsFragmentContainer
                 artwork={artwork}
                 order={order}
@@ -296,7 +295,6 @@ export const OfferRoute: FC<OfferRouteProps> = ({
       sidebar={
         <Flex flexDirection="column">
           <Flex flexDirection="column">
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtworkSummaryItem order={order} />
             <TransactionDetailsSummaryItem
               transactionStep="offer"

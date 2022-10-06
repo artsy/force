@@ -15,7 +15,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "System/Router/useRouter"
 import { Sticky, StickyProvider } from "Components/Sticky"
-import { AppContainer } from "../Components/AppContainer"
+import { AppContainer } from "Apps/Components/AppContainer"
 import { useTranslation } from "react-i18next"
 
 export interface SearchAppProps {
@@ -91,7 +91,6 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
                     <NavigationTabs
                       artworkCount={artworkCount}
                       term={term}
-                      // @ts-ignore RELAY UPGRADE 13
                       searchableConnection={searchConnection!}
                     />
                   </AppContainer>

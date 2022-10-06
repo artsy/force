@@ -92,7 +92,6 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
                   </ResponsiveBox>
                 )}
 
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ViewingRoomArtworkDetails artwork={artwork} />
               </Box>
             )

@@ -45,7 +45,6 @@ const HomeNewWorksForYouRail: React.FC<HomeNewWorksForYouRailProps> = ({
 
         return (
           <ShelfArtworkFragmentContainer
-            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             key={index}
             // TODO: Add home type to cohesion once we have tracking
@@ -100,7 +99,7 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
           node {
             internalID
             slug
-            ...ShelfArtwork_artwork @arguments(width: 210)
+            ...ShelfArtwork_artwork
           }
         }
       }
@@ -140,7 +139,6 @@ export const HomeNewWorksForYouRailQueryRenderer: React.FC = () => {
         if (props.artworksForUser) {
           return (
             <HomeNewWorksForYouRailFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artworksForUser={props.artworksForUser}
             />
           )

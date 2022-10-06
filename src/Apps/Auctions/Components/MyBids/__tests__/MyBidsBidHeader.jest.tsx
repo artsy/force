@@ -1,6 +1,6 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MyBidsBidHeaderFragmentContainer } from "../MyBidsBidHeader"
+import { MyBidsBidHeaderFragmentContainer } from "Apps/Auctions/Components/MyBids/MyBidsBidHeader"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.mock("react-tracking")

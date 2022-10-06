@@ -23,7 +23,6 @@ const ArticleSection: FC<ArticleSectionProps> = ({
     case "ArticleSectionText": {
       return (
         <ArticleSectionTextFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           section={section}
           isFirst={isFirst}
           isLast={isLast}
@@ -33,28 +32,23 @@ const ArticleSection: FC<ArticleSectionProps> = ({
 
     case "ArticleSectionImageCollection": {
       return (
-        // @ts-ignore RELAY UPGRADE 13
         <ArticleSectionImageCollectionFragmentContainer section={section} />
       )
     }
 
     case "ArticleSectionImageSet": {
-      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionImageSetFragmentContainer section={section} />
     }
 
     case "ArticleSectionVideo": {
-      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionVideoFragmentContainer section={section} />
     }
 
     case "ArticleSectionSocialEmbed": {
-      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionSocialEmbedFragmentContainer section={section} />
     }
 
     case "ArticleSectionEmbed": {
-      // @ts-ignore RELAY UPGRADE 13
       return <ArticleSectionEmbedFragmentContainer section={section} />
     }
 

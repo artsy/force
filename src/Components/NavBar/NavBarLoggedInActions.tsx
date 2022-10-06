@@ -9,7 +9,7 @@ import {
   Flex,
   SoloIcon,
 } from "@artsy/palette"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   NavBarLoggedInActionsQuery,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8264b7694a458ad2d36ed971d7a5385b>>
+ * @generated SignedSource<<8a15b9ee11bb954ecb1545314f4fd539>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,16 @@ export type FairOrganizerFollowMutation$data = {
     } | null;
   } | null;
 };
+export type FairOrganizerFollowMutation$rawResponse = {
+  readonly followProfile: {
+    readonly profile: {
+      readonly id: string;
+      readonly isFollowed: boolean | null;
+    } | null;
+  } | null;
+};
 export type FairOrganizerFollowMutation = {
+  rawResponse: FairOrganizerFollowMutation$rawResponse;
   response: FairOrganizerFollowMutation$data;
   variables: FairOrganizerFollowMutation$variables;
 };
@@ -110,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "6f04f6fd3ba8d792295309cbe0c6b812";
+(node as any).hash = "9d056b58780248b9e74b3dc8b7a7eace";
 
 export default node;

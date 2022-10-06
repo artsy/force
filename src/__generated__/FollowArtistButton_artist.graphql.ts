@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7fc64706da553da86c37bf2514d939a5>>
+ * @generated SignedSource<<3a423efb0764b61f4a5894049adc0a90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type FollowArtistButton_artist$data = {
   readonly isFollowed: boolean | null;
   readonly name: string | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopover_artist">;
   readonly " $fragmentType": "FollowArtistButton_artist";
 };
 export type FollowArtistButton_artist$key = {
@@ -28,29 +27,11 @@ export type FollowArtistButton_artist$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "showFollowSuggestions"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "FollowArtistButton_artist",
   "selections": [
-    {
-      "condition": "showFollowSuggestions",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowArtistPopover_artist"
-        }
-      ]
-    },
     {
       "alias": null,
       "args": null,
@@ -109,6 +90,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a7288a928f5654f43e9b7643dd70ea12";
+(node as any).hash = "c88c1bc198c4a5e092eb861fbb8b55eb";
 
 export default node;

@@ -49,7 +49,6 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
               return (
                 <CollectionsCategoryFragmentContainer
                   key={category.name + i}
-                  // @ts-ignore RELAY UPGRADE 13
                   category={category}
                 />
               )

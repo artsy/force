@@ -2,10 +2,10 @@ import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
+import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene$data } from "__generated__/GeneShow_gene.graphql"
-import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
-import { GeneMetaFragmentContainer } from "../Components/GeneMeta"
+import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
+import { GeneMetaFragmentContainer } from "Apps/Gene/Components/GeneMeta"
 import { extractNodes } from "Utils/extractNodes"
 
 interface GeneShowProps {
@@ -18,7 +18,6 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneMetaFragmentContainer gene={gene} />
 
       <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -27,8 +26,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
             {gene.displayName || gene.name}
           </Text>
 
-          {/* @ts-ignore RELAY UPGRADE 13 */}
-          <FollowGeneButtonFragmentContainer gene={gene} />
+          <FollowGeneButtonQueryRenderer id={gene.internalID} />
         </Column>
 
         <Column span={6}>
@@ -82,7 +80,6 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
       <Spacer mt={12} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <GeneArtworkFilterRefetchContainer gene={gene} />
     </>
   )
@@ -102,7 +99,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
           aggregations: $aggregations
           shouldFetchCounts: $shouldFetchCounts
         )
-      ...FollowGeneButton_gene
+      internalID
       name
       displayName
       formattedDescription: description(format: HTML)

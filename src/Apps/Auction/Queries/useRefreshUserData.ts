@@ -20,7 +20,6 @@ export const useRefreshUserData = () => {
         }
       `,
       {}
-      // @ts-expect-error RELAY_UPGRADE
     ).toPromise()
   }
 

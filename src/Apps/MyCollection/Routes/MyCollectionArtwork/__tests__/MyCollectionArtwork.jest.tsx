@@ -2,10 +2,10 @@ import { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
-import { MyCollectionArtworkFragmentContainer } from "../MyCollectionArtwork"
+import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
@@ -81,12 +81,14 @@ describe("MyCollectionArtwork", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversWithInsights)
 
+      // eslint-disable-next-line jest/valid-expect
       expect(screen.getByText("Artwork has been submitted for sale"))
     })
     it("P1 artist: renders correct component when artwork does not have submission id", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversWithoutInsights)
 
+      // eslint-disable-next-line jest/valid-expect
       expect(screen.getByText("Interested in Selling This Work?"))
     })
     it("not P1 artist: the section is not rendered", () => {

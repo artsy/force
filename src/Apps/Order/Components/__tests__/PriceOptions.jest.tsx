@@ -1,4 +1,4 @@
-import { PriceOptionsFragmentContainer } from "../PriceOptions"
+import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { fireEvent, screen, within } from "@testing-library/react"
@@ -20,7 +20,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => (
-    // @ts-ignore RELAY UPGRADE 13
     <PriceOptionsFragmentContainer
       artwork={props.artwork}
       order={props.order!}

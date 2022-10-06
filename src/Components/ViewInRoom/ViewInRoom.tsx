@@ -24,7 +24,6 @@ const ViewInRoom: React.FC<ViewInRoomProps> = ({ artwork, onClose }) => {
           return (
             <>
               <ViewInRoomRoom onMount={onMount}>
-                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ViewInRoomArtworkFragmentContainer artwork={artwork} />
 
                 <ViewInRoomScale />

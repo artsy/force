@@ -146,7 +146,6 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })}
         {searchConnection && (
           <Pagination
-            // @ts-ignore RELAY UPGRADE 13
             pageCursors={searchConnection.pageCursors}
             onClick={this.loadAfter}
             onNext={this.loadNext}

@@ -177,19 +177,15 @@ export const ArtworkApp: React.FC<Props> = props => {
       <UseRecordArtworkView />
 
       {artwork.sale && (
-        // @ts-ignore RELAY UPGRADE 13
         <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
       )}
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkMetaFragmentContainer artwork={artwork} />
 
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
       <GridColumns>
         <Column span={8}>
-          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           <Media greaterThanOrEqual="sm">
@@ -202,10 +198,8 @@ export const ArtworkApp: React.FC<Props> = props => {
 
         <Column span={4} pt={[0, 2]}>
           {isNewArtworkSidebarEnabled ? (
-            // @ts-ignore RELAY UPGRADE 13
-            <ArtworkSidebar2FragmentContainer artwork={artwork} />
+            <ArtworkSidebar2FragmentContainer artwork={artwork} me={me} />
           ) : (
-            // @ts-ignore RELAY UPGRADE 13
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
           )}
         </Column>
@@ -239,7 +233,6 @@ export const ArtworkApp: React.FC<Props> = props => {
       <RecentlyViewed />
 
       {shouldRenderSubmittedOrderModal && (
-        // @ts-ignore RELAY UPGRADE 13
         <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
       )}
     </>
@@ -336,6 +329,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+        ...ArtworkSidebar2_me
         ...SubmittedOrderModal_me
       }
     `,

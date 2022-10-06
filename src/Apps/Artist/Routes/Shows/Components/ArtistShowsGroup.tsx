@@ -97,7 +97,6 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        // @ts-ignore RELAY UPGRADE 13
         pageCursors={artist?.showsConnection?.pageCursors!}
         onClick={loadAfter}
         onNext={loadNext}

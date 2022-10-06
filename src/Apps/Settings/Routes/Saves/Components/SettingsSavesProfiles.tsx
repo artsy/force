@@ -69,7 +69,6 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
                         return (
                           <EntityHeaderPartnerFragmentContainer
                             key={internalID}
-                            // @ts-ignore RELAY UPGRADE 13
                             partner={profile.owner}
                           />
                         )
@@ -78,7 +77,6 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
                         return (
                           <EntityHeaderFairFragmentContainer
                             key={internalID}
-                            // @ts-ignore RELAY UPGRADE 13
                             fair={profile.owner}
                           />
                         )
@@ -87,7 +85,6 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
                         return (
                           <EntityHeaderFairOrganizerFragmentContainer
                             key={internalID}
-                            // @ts-ignore RELAY UPGRADE 13
                             fairOrganizer={profile.owner}
                           />
                         )
@@ -213,7 +210,6 @@ export const SettingsSavesProfilesQueryRenderer = () => {
           return SETTINGS_SAVES_PROFILES_PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRADE 13
         return <SettingsSavesProfilesPaginationContainer me={props.me} />
       }}
     />

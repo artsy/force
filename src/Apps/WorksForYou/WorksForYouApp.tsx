@@ -121,12 +121,10 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
             <Spacer my={4} />
 
             {viewerArtist && (
-              // @ts-ignore RELAY UPGRADE 13
               <WorksForYouArtistFeedPaginationContainer viewer={viewerArtist} />
             )}
 
             {viewerFeed && (
-              // @ts-ignore RELAY UPGRADE 13
               <WorksForYouFeedPaginationContainer viewer={viewerFeed} />
             )}
           </Column>

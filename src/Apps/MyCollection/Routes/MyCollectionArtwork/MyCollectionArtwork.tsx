@@ -28,6 +28,7 @@ import {
   MyCollectionArtworkSWASectionMobileLayout,
 } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkRequestPriceEstimateSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworRequestPriceEstimateSection"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -63,6 +64,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const isMyCollectionPhase5Enabled = useFeatureFlag(
     "my-collection-web-phase-5"
+  )
+
+  const isMyCollectionPhase6Enabled = useFeatureFlag(
+    "my-collection-web-phase-6-request-price-estimate"
   )
 
   const EditArtworkButton = () => (
@@ -106,7 +111,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   return (
     <>
-      {/* @ts-ignore RELAY UPGRADE 13 */}
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
       {showHowItWorksModal && (
@@ -123,47 +127,48 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       <GridColumns gridRowGap={[2, null]}>
         <Column span={8}>
-          {/* @ts-ignore RELAY_UPGRADE 13  */}
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
-            {/* @ts-ignore RELAY_UPGRADE 13  */}
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isMyCollectionPhase5Enabled && isP1Artist && (
               <Media greaterThanOrEqual="sm">
-                {!!submissionId ? (
-                  <>
-                    <Separator my={2} />
-                    <MyCollectionArtworkSWASectionSubmitted />
-                    <Separator my={2} />
-                  </>
-                ) : (
-                  <MyCollectionArtworkSWASectionDesktopLayout
-                    route={`/my-collection/submission/artwork-details/${id}`}
-                    learnMore={() => setShowHowItWorksModal(true)}
-                    slug={slug}
-                    artworkId={artwork.internalID}
-                  />
+                {isMyCollectionPhase6Enabled && (
+                  <MyCollectionArtworkRequestPriceEstimateSection />
                 )}
+
+                {isMyCollectionPhase5Enabled &&
+                  (!!submissionId ? (
+                    <>
+                      <Separator my={2} />
+                      <MyCollectionArtworkSWASectionSubmitted />
+                      <Separator my={2} />
+                    </>
+                  ) : (
+                    <MyCollectionArtworkSWASectionDesktopLayout
+                      route={`/my-collection/submission/artwork-details/${id}`}
+                      learnMore={() => setShowHowItWorksModal(true)}
+                      slug={slug}
+                      artworkId={artwork.internalID}
+                    />
+                  ))}
               </Media>
             )}
           </Media>
 
           <Media lessThan="sm">
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
-              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
             />
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
-                    // @ts-ignore RELAY UPGRADE 13
                     artwork={artwork}
                   />
-                  {!!isMyCollectionPhase5Enabled && isP1Artist && (
+                  {isMyCollectionPhase5Enabled && isP1Artist && (
                     <Media lessThan="sm">
                       {!!submissionId ? (
                         <MyCollectionArtworkSWASectionSubmitted />
@@ -182,7 +187,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Tab name="About">
                   <>
                     <MyCollectionArtworkSidebarFragmentContainer
-                      // @ts-ignore RELAY UPGRADE 13
                       artwork={artwork}
                     />
 
@@ -200,7 +204,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             ) : (
               <>
                 <MyCollectionArtworkSidebarFragmentContainer
-                  // @ts-ignore RELAY UPGRADE 13
                   artwork={artwork}
                 />
 
@@ -221,7 +224,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       <Media greaterThanOrEqual="sm">
         {hasInsights && (
           <>
-            {/* @ts-ignore RELAY UPGRADE 13 */}
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
             <Spacer m={[4, 6]} />

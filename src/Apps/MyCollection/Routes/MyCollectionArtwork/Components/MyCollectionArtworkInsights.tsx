@@ -1,6 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
+import { MyCollectionArtworkRequestPriceEstimateSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworRequestPriceEstimateSection"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
@@ -26,31 +28,34 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
     "my-collection-web-phase-4-auction-results"
   )
+  const enableMyCollectionPhase6RequestPreiceEstimate = useFeatureFlag(
+    "my-collection-web-phase-6-request-price-estimate"
+  )
 
   return (
     <Join separator={<Spacer mt={[4, 6]} />}>
       {!!enableMyCollectionPhase4DemandIndex && (
         <MyCollectionArtworkDemandIndexFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
-
+      <Media lessThan="sm">
+        {!!enableMyCollectionPhase6RequestPreiceEstimate && (
+          <MyCollectionArtworkRequestPriceEstimateSection />
+        )}
+      </Media>
       {!!enableMyCollectionPhase4ArtistMarket && (
         <MyCollectionArtworkArtistMarketFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           marketPriceInsights={artwork.marketPriceInsights!}
         />
       )}
 
       {!!enableMyCollectionPhase4Comparables && (
-        // @ts-ignore RELAY UPGRADE 13
         <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
       )}
 
       {!!enableMyCollectionPhase4AuctionResults && (
         <MyCollectionArtworkAuctionResultsFragmentContainer
-          // @ts-ignore RELAY UPGRADE 13
           artist={artwork?.artist!}
         />
       )}

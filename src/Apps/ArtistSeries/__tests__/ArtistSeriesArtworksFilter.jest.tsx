@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { ArtistSeriesArtworksFilterRefetchContainer } from "../Components/ArtistSeriesArtworksFilter"
+import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
 import { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -34,7 +34,6 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
           mediumAggregation,
           materialsTermsAggregation,
         ]}
-        // @ts-ignore RELAY UPGRADE 13
         artistSeries={artistSeries!}
       />
     </MockBoot>
