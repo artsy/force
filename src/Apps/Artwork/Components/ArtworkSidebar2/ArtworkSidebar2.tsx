@@ -102,6 +102,8 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
       {isInAuction ? (
         <>
+          <Separator />
+          <Spacer mt={2} />
           <ArtworkSidebar2EstimatedValueFragmentContainer artwork={artwork} />
           <Join separator={<Spacer mt={2} />}>
             {hasEnded ? (

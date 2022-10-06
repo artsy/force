@@ -1,14 +1,14 @@
-import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import {
   Box,
+  Clickable,
   Flex,
   LosingBidIcon,
   Separator,
+  Spacer,
   Text,
   WinningBidIcon,
 } from "@artsy/palette"
@@ -132,7 +132,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     <>
       {dialogComponent}
 
-      <Separator my={2} />
+      {isNewArtworkSidebarEnabled ? <Spacer mt={2} /> : <Separator my={2} />}
 
       <Flex width="100%" flexDirection="row" justifyContent="space-between">
         <Text variant="lg-display" pr={1}>
