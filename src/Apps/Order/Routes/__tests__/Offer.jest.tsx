@@ -7,13 +7,13 @@ import {
   UntouchedOfferOrderSingleEditionSet,
   UntouchedOfferOrderSingleEditionSetNoPrice,
   UntouchedOfferOrderPriceHidden,
-} from "../../../__tests__/Fixtures/Order"
+} from "Apps/__tests__/Fixtures/Order"
 import {
   initialOfferFailedAmountIsInvalid,
   initialOfferFailedCannotOffer,
   initialOfferSuccess,
-} from "../__fixtures__/MutationResults"
-import { OfferFragmentContainer } from "../Offer"
+} from "Apps/Order/Routes/__fixtures__/MutationResults"
+import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
@@ -112,8 +112,6 @@ describe("Offer InitialMutation", () => {
 
       expect(page.priceOptions).toHaveLength(1)
       expect(page.priceOptions.find("BorderedRadio")).toHaveLength(4)
-      const container = page.find("div#offer-page-left-column")
-      expect(container.text()).toContain("List price: US$16,000")
       expect(page.text()).toContain("All offers are binding")
     })
     it("has price options - single edition with price", () => {
@@ -184,16 +182,6 @@ describe("Offer InitialMutation", () => {
 
   describe("a non-usd currency", () => {
     const offer = { ...testOffer, ...UntouchedOfferOrderInPounds }
-
-    it("shows the list price just below the input", () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => offer,
-      })
-      let page = new OrderAppTestPage(wrapper)
-
-      const container = page.find("div#offer-page-left-column")
-      expect(container.text()).toContain("List price: £16,000")
-    })
 
     it("can receive input, which updates the transaction summary", async () => {
       let wrapper = getWrapper({
