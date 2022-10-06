@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0521b546f116daf77e6e723df1189376>>
+ * @generated SignedSource<<aa8f14b85781b8b547e4b3b4472dafa9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryFigure_figure$data = {
   readonly __typename: "ArticleImageSection";
+  readonly image: {
+    readonly height: number | null;
+    readonly url: string | null;
+    readonly width: number | null;
+  } | null;
+  readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
+} | {
+  readonly __typename: "ArticleUnpublishedArtwork";
   readonly image: {
     readonly height: number | null;
     readonly url: string | null;
@@ -106,6 +114,12 @@ return {
       "selections": (v0/*: any*/),
       "type": "ArticleImageSection",
       "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v0/*: any*/),
+      "type": "ArticleUnpublishedArtwork",
+      "abstractKey": null
     }
   ],
   "type": "ArticleSectionImageCollectionFigure",
@@ -113,6 +127,6 @@ return {
 };
 })();
 
-(node as any).hash = "be0d702024ad600e40a808c3e62f6d4e";
+(node as any).hash = "3e038525be1ac1edbe524df55537cd86";
 
 export default node;

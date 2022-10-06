@@ -53,7 +53,8 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
   const initialCursor = figures.findIndex(figure => {
     if (
       figure.__typename === "Artwork" ||
-      figure.__typename === "ArticleImageSection"
+      figure.__typename === "ArticleImageSection" ||
+      figure.__typename === "ArticleUnpublishedArtwork"
     ) {
       return figure.id === figureId
     }
@@ -177,6 +178,9 @@ export const ArticleZoomGalleryFragmentContainer = createFragmentContainer(
                 id
               }
               ... on ArticleImageSection {
+                id
+              }
+              ... on ArticleUnpublishedArtwork {
                 id
               }
             }
