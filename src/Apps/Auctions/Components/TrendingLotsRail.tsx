@@ -78,7 +78,7 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
               sale {
                 isClosed
               }
-              ...ShelfArtwork_artwork @arguments(width: 325)
+              ...ShelfArtwork_artwork
             }
           }
         }

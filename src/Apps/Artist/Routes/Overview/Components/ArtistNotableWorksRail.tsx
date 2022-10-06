@@ -66,7 +66,6 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
               artwork={node}
               contextModule={ContextModule.topWorksRail}
               key={index}
-              showExtended={false}
               showMetadata
               lazyLoad
               onClick={() => {
@@ -102,9 +101,9 @@ export const ArtistNotableWorksRailFragmentContainer = createFragmentContainer(
         filterArtworksConnection(sort: "-weighted_iconicity", first: 10) {
           edges {
             node {
+              ...ShelfArtwork_artwork
               internalID
               slug
-              ...ShelfArtwork_artwork @arguments(width: 200)
             }
           }
         }

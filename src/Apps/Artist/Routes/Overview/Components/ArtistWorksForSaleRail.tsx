@@ -61,7 +61,6 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
                 key={index}
-                showExtended={false}
                 showMetadata
                 lazyLoad
                 onClick={() => {
@@ -98,7 +97,7 @@ export const ArtistWorksForSaleRailFragmentContainer = createFragmentContainer(
             node {
               internalID
               slug
-              ...ShelfArtwork_artwork @arguments(width: 200)
+              ...ShelfArtwork_artwork
             }
           }
         }

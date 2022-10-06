@@ -99,7 +99,7 @@ export const HomeNewWorksForYouRailFragmentContainer = createFragmentContainer(
           node {
             internalID
             slug
-            ...ShelfArtwork_artwork @arguments(width: 210)
+            ...ShelfArtwork_artwork
           }
         }
       }

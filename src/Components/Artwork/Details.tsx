@@ -1,11 +1,19 @@
-import { Link, Text, LinkProps, Flex, Spacer, Box, Join } from "@artsy/palette"
+import {
+  Link,
+  Text,
+  LinkProps,
+  Flex,
+  Spacer,
+  Box,
+  Join,
+  SkeletonText,
+} from "@artsy/palette"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
-
 import { AuthContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
@@ -124,6 +132,8 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
   )
 }
 
+const NBSP = " "
+
 const SaleMessage: React.FC<DetailsProps> = ({
   artwork: { sale, sale_message, sale_artwork },
 }) => {
@@ -142,7 +152,8 @@ const SaleMessage: React.FC<DetailsProps> = ({
     return <>Price on request</>
   }
 
-  return <>{sale_message}</>
+  // NBSP is used to prevent un-aligned carousels
+  return <>{sale_message ?? NBSP}</>
 }
 
 const BidInfo: React.FC<DetailsProps> = ({
@@ -349,3 +360,28 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
     }
   `,
 })
+
+type DetailsPlaceholderProps = Pick<
+  DetailsProps,
+  "hidePartnerName" | "hideArtistName" | "hideSaleInfo"
+>
+
+export const DetailsPlaceholder: React.FC<DetailsPlaceholderProps> = ({
+  hideArtistName,
+  hidePartnerName,
+  hideSaleInfo,
+}) => {
+  return (
+    <>
+      {!hideArtistName && (
+        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+      )}
+
+      <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
+
+      {!hidePartnerName && <SkeletonText variant="xs">Partner</SkeletonText>}
+
+      {!hideSaleInfo && <SkeletonText variant="xs">Price</SkeletonText>}
+    </>
+  )
+}

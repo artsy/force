@@ -112,7 +112,6 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
       {showMetadata && (
         <Metadata
           artwork={artwork}
-          extended={showExtended}
           hidePartnerName={hidePartnerName}
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}

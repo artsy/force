@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ffdfe58f4eaf83f37d8f99b409a64cf>>
+ * @generated SignedSource<<20234083b2fbc291e7cf8fd01b93411e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,10 @@ export type ArtworkSidebar2_artwork$data = {
     readonly internalID: string;
   } | null> | null;
   readonly isAcquireable: boolean | null;
+  readonly isBiddable: boolean | null;
   readonly isInAuction: boolean | null;
   readonly isOfferable: boolean | null;
+  readonly isOfferableFromInquiry: boolean | null;
   readonly isSold: boolean | null;
   readonly sale: {
     readonly startAt: string | null;
@@ -25,10 +27,11 @@ export type ArtworkSidebar2_artwork$data = {
     readonly endAt: string | null;
     readonly extendedBiddingEndAt: string | null;
     readonly lotID: string | null;
+    readonly lotLabel: string | null;
   } | null;
   readonly saleMessage: string | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2CreateArtworkAlert_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2EditionSets_artwork" | "ArtworkSidebar2Links_artwork" | "ArtworkSidebar2PartnerInfo_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2AuctionTimer_artwork" | "ArtworkSidebar2BiddingClosedMessage_artwork" | "ArtworkSidebar2CommercialButtons_artwork" | "ArtworkSidebar2CreateArtworkAlert_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2EstimatedValue_artwork" | "ArtworkSidebar2Links_artwork" | "ArtworkSidebar2PartnerInfo_artwork" | "ArtworkSidebar2ShippingInformation_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork">;
   readonly " $fragmentType": "ArtworkSidebar2_artwork";
 };
 export type ArtworkSidebar2_artwork$key = {
@@ -85,6 +88,20 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isBiddable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferableFromInquiry",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar2ArtworkTitle_artwork"
@@ -102,7 +119,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebar2EditionSets_artwork"
+      "name": "ArtworkSidebar2CommercialButtons_artwork"
     },
     {
       "args": null,
@@ -123,6 +140,26 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar2Links_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2EstimatedValue_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2BiddingClosedMessage_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2AuctionTimer_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarAuctionInfoPolling_artwork"
     },
     {
       "alias": null,
@@ -155,6 +192,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "lotID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotLabel",
           "storageKey": null
         },
         {
@@ -197,6 +241,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c81aeeda5cbc57eaa9872cc69041f66c";
+(node as any).hash = "eb700f47c7479c9ba3c22dd6f60afc87";
 
 export default node;

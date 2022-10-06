@@ -20,8 +20,6 @@ const StyledArtistLink = styled(RouterLink)`
   }
 `
 
-// TODO: Tracking
-
 export const ArtworkSidebar2Artists: React.FC<ArtistsProps> = ({
   artwork: { artists, culturalMaker },
 }) => {

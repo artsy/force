@@ -198,7 +198,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
         <Column span={4} pt={[0, 2]}>
           {isNewArtworkSidebarEnabled ? (
-            <ArtworkSidebar2FragmentContainer artwork={artwork} />
+            <ArtworkSidebar2FragmentContainer artwork={artwork} me={me} />
           ) : (
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
           )}
@@ -329,6 +329,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
+        ...ArtworkSidebar2_me
         ...SubmittedOrderModal_me
       }
     `,
