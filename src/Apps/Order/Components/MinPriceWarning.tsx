@@ -1,4 +1,4 @@
-import { Message, Text } from "@artsy/palette"
+import { Message } from "@artsy/palette"
 import { useEffect } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
