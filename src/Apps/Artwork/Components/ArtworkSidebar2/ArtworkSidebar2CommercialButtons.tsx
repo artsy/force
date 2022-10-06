@@ -303,6 +303,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         <SaleMessage saleMessage={artwork.saleMessage} />
       ) : (
         <>
+          <Separator />
           <ArtworkSidebar2EditionSetFragmentContainer
             artwork={artwork}
             selectedEditionSet={selectedEditionSet as EditionSet}
