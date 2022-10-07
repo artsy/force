@@ -30,7 +30,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
     case "SUBMITTED":
       return isOfferFlow
         ? {
-            title: "Your offer has been submitted",
+            title: "Thank you, your offer has been submitted.",
             description: (
               <>
                 The seller will respond to your offer by {stateExpiresAt}. Keep
@@ -39,11 +39,11 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             ),
           }
         : {
-            title: "Your order has been submitted",
+            title: "Thank you, your order has been submitted",
             description: (
               <>
-                Thank you for your purchase. You will receive a confirmation
-                email by {stateExpiresAt}.{covidNote()}
+                You will receive a confirmation email by {stateExpiresAt}.
+                {covidNote()}
               </>
             ),
           }
