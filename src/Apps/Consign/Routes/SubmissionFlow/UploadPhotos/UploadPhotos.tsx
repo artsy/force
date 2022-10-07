@@ -12,7 +12,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   createFragmentContainer,
   Environment,
@@ -161,6 +161,16 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
+          useEffect(() => {
+            console.log({
+              photos: values.photos,
+            })
+            console.log(
+              "photos",
+              values.photos.map(p => p.removed)
+            )
+          }, [values.photos])
+
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
