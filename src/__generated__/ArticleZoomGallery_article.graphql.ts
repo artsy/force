@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d10bccda51b6c3bb4de63c171fd116f9>>
+ * @generated SignedSource<<dc56d4ed9abb11f0acd9599d60ec6346>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,7 +46,17 @@ var v0 = {
   "name": "__typename",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "ArticleZoomGalleryFigure_figure"
+},
+v2 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "ArticleZoomGalleryCaption_figure"
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -55,39 +65,17 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "concreteType": null,
-  "kind": "LinkedField",
-  "name": "figures",
-  "plural": true,
-  "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArticleZoomGalleryFigure_figure"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArticleZoomGalleryCaption_figure"
-    },
-    (v0/*: any*/),
-    {
-      "kind": "InlineFragment",
-      "selections": (v1/*: any*/),
-      "type": "Artwork",
-      "abstractKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": (v1/*: any*/),
-      "type": "ArticleImageSection",
-      "abstractKey": null
-    }
-  ],
-  "storageKey": null
+v4 = {
+  "kind": "InlineFragment",
+  "selections": (v3/*: any*/),
+  "type": "Artwork",
+  "abstractKey": null
+},
+v5 = {
+  "kind": "InlineFragment",
+  "selections": (v3/*: any*/),
+  "type": "ArticleImageSection",
+  "abstractKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -107,7 +95,28 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
-            (v2/*: any*/)
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "figures",
+              "plural": true,
+              "selections": [
+                (v1/*: any*/),
+                (v2/*: any*/),
+                (v0/*: any*/),
+                (v4/*: any*/),
+                (v5/*: any*/),
+                {
+                  "kind": "InlineFragment",
+                  "selections": (v3/*: any*/),
+                  "type": "ArticleUnpublishedArtwork",
+                  "abstractKey": null
+                }
+              ],
+              "storageKey": null
+            }
           ],
           "type": "ArticleSectionImageCollection",
           "abstractKey": null
@@ -122,7 +131,22 @@ return {
               "name": "title",
               "storageKey": null
             },
-            (v2/*: any*/)
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "figures",
+              "plural": true,
+              "selections": [
+                (v1/*: any*/),
+                (v2/*: any*/),
+                (v0/*: any*/),
+                (v4/*: any*/),
+                (v5/*: any*/)
+              ],
+              "storageKey": null
+            }
           ],
           "type": "ArticleSectionImageSet",
           "abstractKey": null
@@ -136,6 +160,6 @@ return {
 };
 })();
 
-(node as any).hash = "718ade481e06a3457816550a1f14c849";
+(node as any).hash = "10f3e86aee0c73695b2beac505b64ddb";
 
 export default node;

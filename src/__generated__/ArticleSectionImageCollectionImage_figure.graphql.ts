@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd3cfe99b2d392a9682e05577e196f39>>
+ * @generated SignedSource<<8683b202fcfb5e064a4629e447c868d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -93,6 +93,12 @@ return {
       "selections": (v0/*: any*/),
       "type": "Artwork",
       "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v0/*: any*/),
+      "type": "ArticleUnpublishedArtwork",
+      "abstractKey": null
     }
   ],
   "type": "ArticleSectionImageCollectionFigure",
@@ -100,6 +106,6 @@ return {
 };
 })();
 
-(node as any).hash = "ef16ef43b057a46f4cc81474730a3b79";
+(node as any).hash = "236232a2e8b3677ee5e6260ed908e106";
 
 export default node;
