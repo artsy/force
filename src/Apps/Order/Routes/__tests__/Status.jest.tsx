@@ -14,7 +14,7 @@ import { TransactionDetailsSummaryItem } from "Apps/Order/Components/Transaction
 import { expectOne } from "DevTools/RootTestPage"
 import { produce } from "immer"
 import { graphql } from "react-relay"
-import { StatusFragmentContainer } from "../Status"
+import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
@@ -77,7 +77,9 @@ describe("Status", () => {
         })
         const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your offer has been submitted")
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
         )
@@ -98,7 +100,9 @@ describe("Status", () => {
         })
         const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your offer has been submitted")
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
         )
@@ -373,7 +377,9 @@ describe("Status", () => {
         })
         const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order has been submitted")
+        expect(page.text()).toContain(
+          "Thank you, your order has been submitted"
+        )
         expect(page.text()).toContain(
           "You will receive a confirmation email by Jan 15"
         )

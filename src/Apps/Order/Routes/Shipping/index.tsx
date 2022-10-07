@@ -590,7 +590,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   onSelect={onSelectShippingOption}
                   defaultValue={shippingOption}
                 >
-                  <Text variant="sm-display" mb="1">
+                  <Text variant="lg-display" mb="1">
                     Delivery method
                   </Text>
                   <BorderedRadio value="SHIP" label="Shipping" />
@@ -616,7 +616,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               data-test="savedAddressesCollapse"
               open={!!showSavedAddresses}
             >
-              <Text variant="sm-display" mb="1">
+              <Text variant="lg-display" mb="1">
                 Delivery address
               </Text>
               {isArtsyShipping &&
@@ -687,7 +687,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
               }
             >
-              <Text variant="sm">Artsy Shipping options</Text>
+              <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
                 All options are eligible for Artsy’s Buyer Protection policy,
                 which protects against damage and loss.

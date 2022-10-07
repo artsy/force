@@ -38,7 +38,7 @@ describe("SubmittedOrderModal", () => {
     renderWithRelay(mockedResolver)
 
     const expected = {
-      title: "Your offer has been submitted",
+      title: "Thank you, your offer has been submitted",
       description:
         "The seller will respond to your offer by Feb 28. Keep in mind making an offer doesn’t guarantee you the work.",
       inboxText: "Negotiation with the gallery will continue in the Inbox.",

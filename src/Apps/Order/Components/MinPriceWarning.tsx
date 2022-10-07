@@ -1,4 +1,4 @@
-import { Message, Text } from "@artsy/palette"
+import { Message } from "@artsy/palette"
 import { useEffect } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -25,12 +25,10 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
 
   return (
     <Message variant="warning" mt={2}>
-      <Text>
-        {isPriceRange
-          ? "Offers lower than the displayed price range are often declined. "
-          : "Offers less than 20% off the list price are often declined. "}
-        We recommend increasing your offer to {minPrice}.
-      </Text>
+      {isPriceRange
+        ? "Offers lower than the displayed price range are often declined. "
+        : "Offers less than 20% off the list price are often declined. "}
+      We recommend increasing your offer to {minPrice}.
     </Message>
   )
 }

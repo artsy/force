@@ -23,20 +23,20 @@ export const ShippingAddress = ({
   textColor = "black100",
 }: ShippingAddressProps) => (
   <>
-    <Text color={textColor} variant={["xs", "sm"]}>
+    <Text color={textColor} variant="sm">
       {name}
     </Text>
-    <Text color={textColor} variant={["xs", "sm"]}>
+    <Text color={textColor} variant="sm">
       {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
     </Text>
-    <Text color={textColor} variant={["xs", "sm"]}>
+    <Text color={textColor} variant="sm">
       {city}, {region} {postalCode}
     </Text>
-    <Text color={textColor} variant={["xs", "sm"]}>
+    <Text color={textColor} variant="sm">
       {country && (COUNTRY_CODE_TO_COUNTRY_NAME[country] || country)}
     </Text>
     {phoneNumber && (
-      <Text color={textColor} variant={["xs", "sm"]}>
+      <Text color={textColor} variant="sm">
         {phoneNumber}
       </Text>
     )}
