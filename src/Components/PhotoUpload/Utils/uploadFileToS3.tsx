@@ -1,13 +1,20 @@
 import { AssetCredentials } from "../Mutations/getGeminiCredentialsForEnvironment"
 import { Photo } from "./fileUtils"
 
+const externalPhotoToFile = async (photo: Photo) => {
+  const response = await fetch(photo.externalUrl!)
+  const blob = await response.blob()
+
+  return new File([blob], photo.name)
+}
+
 export const uploadFileToS3 = (
   photo: Photo,
   acl: string,
   asset: AssetCredentials,
   updateProgress: (progress: number) => void
 ): Promise<string | undefined> =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     if (!asset) {
       reject(new Error("Empty credentials"))
       return
@@ -23,16 +30,20 @@ export const uploadFileToS3 = (
     const bucket = asset.policyDocument.conditions.bucket
     const uploadURL = `https://${bucket}.s3.amazonaws.com`
 
+    const isExternalPhoto = photo.externalUrl
+
+    const file = isExternalPhoto ? await externalPhotoToFile(photo) : photo.file
+
     const data = {
-      acl: acl,
-      "Content-Type": photo.file.type,
+      acl,
+      "Content-Type": photo.file.type || "image/jpg",
       key: geminiKey + "/${filename}", // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
       AWSAccessKeyId: asset.credentials,
       success_action_status:
         asset.policyDocument.conditions.successActionStatus,
       policy: asset.policyEncoded,
       signature: asset.signature,
-      file: photo.file,
+      file,
     }
 
     for (const key in data) {

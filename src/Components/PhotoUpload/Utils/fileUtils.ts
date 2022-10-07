@@ -30,6 +30,7 @@ export interface Photo {
   name: string
   size?: number
   url?: string
+  externalUrl?: string
   geminiToken?: string
   abortUploading?: () => void
   progress?: number
@@ -39,10 +40,15 @@ export interface Photo {
   errorMessage?: string
 }
 
-export function normalizePhoto(file: File, errorMessage?: string): Photo {
+export function normalizePhoto(
+  file: File,
+  errorMessage?: string,
+  externalUrl?: string
+): Photo {
   return {
     id: uuid(),
     assetId: undefined,
+    externalUrl,
     file,
     name: file.name,
     size: file.size,
