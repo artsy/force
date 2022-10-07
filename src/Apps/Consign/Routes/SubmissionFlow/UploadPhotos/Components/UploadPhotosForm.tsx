@@ -9,7 +9,7 @@ import {
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
 import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
 
@@ -74,7 +74,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     }
   }, [values.photos])
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[]) => {
     const photos = acceptedFiles.map(file => normalizePhoto(file))
 
     setErrors([])
@@ -82,7 +82,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
       ...values.photos.filter(p => !p.errorMessage),
       ...photos,
     ])
-  }, [])
+  }
 
   const onReject = (rejections: FileRejection[]) => {
     setErrors(rejections)
