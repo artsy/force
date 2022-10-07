@@ -15,6 +15,9 @@ interface InsightsRouteProps {
 
 const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+  const isCareerHighlightEnabled = useFeatureFlag(
+    "my-collection-web-phase-7-career-highlights"
+  )
 
   if (!me.myCollectionInfo?.artworksCount) {
     return <InsightsLandingPage />
@@ -22,25 +25,29 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
 
   return (
     <>
-      {isInsightsEnabled && (
+      {!!isInsightsEnabled && (
         <>
           <InsightsHeader />
 
           <Join separator={<Spacer my={[4, 6]} />}>
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
-            <Media greaterThanOrEqual="sm">
-              <InsightsCareerHighlightRailFragmentContainer
-                me={me}
-                showProgress={true}
-              />
-            </Media>
-            <Media lessThan="sm">
-              <InsightsCareerHighlightRailFragmentContainer
-                me={me}
-                showProgress={false}
-              />
-            </Media>
+            {!!isCareerHighlightEnabled && (
+              <>
+                <Media greaterThanOrEqual="sm">
+                  <InsightsCareerHighlightRailFragmentContainer
+                    me={me}
+                    showProgress={true}
+                  />
+                </Media>
+                <Media lessThan="sm">
+                  <InsightsCareerHighlightRailFragmentContainer
+                    me={me}
+                    showProgress={false}
+                  />
+                </Media>
+              </>
+            )}
 
             <InsightsAuctionResultsFragmentContainer me={me} />
           </Join>
