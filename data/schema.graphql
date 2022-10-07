@@ -1154,7 +1154,10 @@ type ArticleSectionImageCollection {
   layout: ArticleSectionImageCollectionLayout!
 }
 
-union ArticleSectionImageCollectionFigure = ArticleImageSection | Artwork
+union ArticleSectionImageCollectionFigure =
+    ArticleImageSection
+  | ArticleUnpublishedArtwork
+  | Artwork
 
 enum ArticleSectionImageCollectionLayout {
   COLUMN_WIDTH
@@ -1236,6 +1239,35 @@ type ArticleSponsor {
   partnerLogoLink: String
   pixelTrackingCode: String
   subTitle: String
+}
+
+type ArticleUnpublishedArtwork {
+  artist: ArticleUnpublishedArtworkArtist
+  artists: [ArticleUnpublishedArtworkArtist!]!
+  credit: String
+  date: String
+
+  # A globally unique ID.
+  id: ID!
+  image: Image
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  partner: ArticleUnpublishedArtworkPartner
+
+  # A slug ID.
+  slug: ID!
+  title: String
+}
+
+type ArticleUnpublishedArtworkArtist {
+  name: String
+  slug: String
+}
+
+type ArticleUnpublishedArtworkPartner {
+  name: String
+  slug: String
 }
 
 type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Searchable {
@@ -11670,6 +11702,15 @@ type Partner implements Node {
     representedBy: Boolean
     sort: ArtistSorts
   ): ArtistPartnerConnection
+  artistsSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
+  ): ArtistConnection
 
   # A connection of artworks from a Partner.
   artworksConnection(
@@ -11699,6 +11740,15 @@ type Partner implements Node {
     # properties on an artwork, when true or not present fetch artwork :short properties
     shallow: Boolean
     sort: ArtworkSorts
+  ): ArtworkConnection
+  artworksSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
   ): ArtworkConnection
   cached: Int
   categories: [PartnerCategory]
@@ -11814,34 +11864,7 @@ type Partner implements Node {
   ): LocationConnection
   meta: PartnerMeta
   name: String
-  partnerArtistsSearchConnection(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    page: Int = 1
-    query: String!
-    size: Int = 10
-  ): partnerArtistsSearchConnection
-  partnerArtworksSearchConnection(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    page: Int = 1
-    query: String!
-    size: Int = 10
-  ): partnerArtworksSearchConnection
   partnerPageEligible: Boolean
-  partnerShowsSearchConnection(
-    after: String
-    before: String
-    first: Int
-    last: Int
-    page: Int = 1
-    query: String!
-    size: Int = 10
-  ): partnerShowsSearchConnection
   partnerType: String
   profile: Profile
   profileArtistsLayout: String
@@ -11871,6 +11894,15 @@ type Partner implements Node {
 
     # Filter shows by chronological event status
     status: EventStatus
+  ): ShowConnection
+  showsSearchConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int = 1
+    query: String!
+    size: Int = 10
   ): ShowConnection
 
   # A slug ID.
@@ -12033,26 +12065,6 @@ type PartnerArtistEdge {
   sortableID: String
 }
 
-# A connection to a list of items.
-type partnerArtistsSearchConnection {
-  # A list of edges.
-  edges: [partnerArtistsSearchEdge]
-  pageCursors: PageCursors!
-
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-  totalCount: Int
-}
-
-# An edge in a connection.
-type partnerArtistsSearchEdge {
-  # A cursor for use in pagination
-  cursor: String!
-
-  # The item at the end of the edge
-  node: Artist
-}
-
 type PartnerArtworkGrid implements ArtworkContextGrid {
   artworksConnection(
     after: String
@@ -12063,26 +12075,6 @@ type PartnerArtworkGrid implements ArtworkContextGrid {
   ctaHref: String
   ctaTitle: String
   title: String
-}
-
-# A connection to a list of items.
-type partnerArtworksSearchConnection {
-  # A list of edges.
-  edges: [partnerArtworksSearchEdge]
-  pageCursors: PageCursors!
-
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-  totalCount: Int
-}
-
-# An edge in a connection.
-type partnerArtworksSearchEdge {
-  # A cursor for use in pagination
-  cursor: String!
-
-  # The item at the end of the edge
-  node: Artwork
 }
 
 type PartnerCategory {
@@ -12296,26 +12288,6 @@ type PartnerShowDocumentEdge {
 enum PartnerShowPartnerType {
   GALLERY
   MUSEUM
-}
-
-# A connection to a list of items.
-type partnerShowsSearchConnection {
-  # A list of edges.
-  edges: [partnerShowsSearchEdge]
-  pageCursors: PageCursors!
-
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-  totalCount: Int
-}
-
-# An edge in a connection.
-type partnerShowsSearchEdge {
-  # A cursor for use in pagination
-  cursor: String!
-
-  # The item at the end of the edge
-  node: Show
 }
 
 enum PartnersSortType {
