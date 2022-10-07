@@ -26,7 +26,6 @@ describe("ArtworkSidebar2Links", () => {
     ArtworkSidebar2Links_Test_Query
   >({
     Component: ({ artwork }) => (
-      // @ts-ignore RELAY_UPGRADE 13
       <ArtworkSidebar2LinksFragmentContainer artwork={artwork!} />
     ),
     query: graphql`

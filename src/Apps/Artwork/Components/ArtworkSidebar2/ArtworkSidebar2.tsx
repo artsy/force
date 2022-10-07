@@ -161,7 +161,6 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
       )}
       <Separator />
 
-      {/* @ts-ignore RELAY_UPGRADE 13  */}
       <ArtworkSidebar2LinksFragmentContainer artwork={artwork} />
     </Flex>
   )

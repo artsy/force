@@ -24,10 +24,8 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
         <>
           <InsightsHeader />
           <Join separator={<Spacer my={[4, 6]} />}>
-            {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
-            {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsAuctionResultsFragmentContainer me={me} />
           </Join>
         </>

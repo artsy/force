@@ -78,7 +78,6 @@ export const ArtistAutoComplete: React.FC<{
         if (suggestions?.edges?.length) {
           const options = extractNodes(suggestions)
           setSuggestions(
-            // RELAY_UPGRADE
             options.map((option: any) => ({
               text: option.displayLabel!,
               value: option.internalID!,

@@ -77,7 +77,6 @@ export const AboutArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        // @ts-ignore RELAY UPGRDE 13
         return <AboutArtworksRailFragmentContainer viewer={props.viewer} />
       }}
     />
