@@ -30,7 +30,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
     case "SUBMITTED":
       return isOfferFlow
         ? {
-            title: "Thank you, your offer has been submitted.",
+            title: "Thank you, your offer has been submitted",
             description: (
               <>
                 The seller will respond to your offer by {stateExpiresAt}. Keep
