@@ -1,6 +1,5 @@
-import { AddCircleIcon, Button, Flex, NoImageIcon } from "@artsy/palette"
+import { AddCircleIcon, Button, Flex } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkNoImageComponentProps {
   artworkID?: string
@@ -9,10 +8,6 @@ interface MyCollectionArtworkNoImageComponentProps {
 export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNoImageComponentProps> = ({
   artworkID,
 }) => {
-  const isMyCollectionPhase3Enabled = useFeatureFlag(
-    "my-collection-web-phase-3"
-  )
-
   return (
     <Flex
       position="absolute"
@@ -23,21 +18,17 @@ export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNo
       justifyContent="center"
       alignItems="center"
     >
-      {isMyCollectionPhase3Enabled ? (
-        <Button
-          data-testid="uploadPhotosButton"
-          // @ts-ignore
-          as={RouterLink}
-          to={`/my-collection/artworks/${artworkID}/edit?step=photos`}
-          variant="secondaryNeutral"
-          size="large"
-          Icon={AddCircleIcon}
-        >
-          Upload Photos
-        </Button>
-      ) : (
-        <NoImageIcon width="28px" height="28px" fill="black60" />
-      )}
+      <Button
+        data-testid="uploadPhotosButton"
+        // @ts-ignore
+        as={RouterLink}
+        to={`/my-collection/artworks/${artworkID}/edit?step=photos`}
+        variant="secondaryNeutral"
+        size="large"
+        Icon={AddCircleIcon}
+      >
+        Upload Photos
+      </Button>
     </Flex>
   )
 }

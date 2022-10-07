@@ -42,9 +42,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
-  const isMyCollectionPhase3Enabled = useFeatureFlag(
-    "my-collection-web-phase-3"
-  )
 
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
@@ -186,18 +183,16 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                           justifyContent="flex-end"
                           py={2}
                         >
-                          {!!isMyCollectionPhase3Enabled && (
-                            <Button
-                              // @ts-ignore
-                              as={RouterLink}
-                              size={["small", "large"]}
-                              variant="primaryBlack"
-                              to="/my-collection/artworks/new"
-                              onClick={() => trackAddCollectedArtwork()}
-                            >
-                              Upload Artwork
-                            </Button>
-                          )}
+                          <Button
+                            // @ts-ignore
+                            as={RouterLink}
+                            size={["small", "large"]}
+                            variant="primaryBlack"
+                            to="/my-collection/artworks/new"
+                            onClick={() => trackAddCollectedArtwork()}
+                          >
+                            Upload Artwork
+                          </Button>
                         </Flex>
                       </HorizontalPadding>
                     </AppContainer>
