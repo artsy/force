@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e74a217a32a5a7dd9e459be6583611b>>
+ * @generated SignedSource<<bd74cf6300f5c370e22d177256302ad1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,7 +74,16 @@ v5 = {
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v6 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -104,7 +113,7 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -206,6 +215,7 @@ v7 = {
                   "name": "height",
                   "value": 683
                 },
+                (v6/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -216,8 +226,8 @@ v7 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v6/*: any*/),
-              "storageKey": "cropped(height:683,width:910)"
+              "selections": (v7/*: any*/),
+              "storageKey": "cropped(height:683,version:[\"normalized\",\"larger\",\"large\"],width:910)"
             },
             {
               "alias": "small",
@@ -227,6 +237,7 @@ v7 = {
                   "name": "height",
                   "value": 450
                 },
+                (v6/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -237,8 +248,8 @@ v7 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v6/*: any*/),
-              "storageKey": "cropped(height:450,width:600)"
+              "selections": (v7/*: any*/),
+              "storageKey": "cropped(height:450,version:[\"normalized\",\"larger\",\"large\"],width:600)"
             }
           ],
           "storageKey": null
@@ -292,26 +303,26 @@ v7 = {
   ],
   "storageKey": null
 },
-v8 = [
-  (v7/*: any*/)
+v9 = [
+  (v8/*: any*/)
 ],
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v11 = [
-  (v9/*: any*/),
+v12 = [
   (v10/*: any*/),
+  (v11/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -320,85 +331,85 @@ v11 = [
     "storageKey": null
   }
 ],
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ShowConnection"
 },
-v13 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "ShowEdge"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Show"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v16 = {
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v17 = {
+v18 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v18 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v19 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v20 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v21 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Location"
+  "type": "ID"
 },
 v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "PartnerTypes"
+  "type": "Location"
 },
 v23 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PartnerTypes"
+},
+v24 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
-v24 = {
+v25 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "PageCursor"
 },
-v25 = {
+v26 = {
   "enumValues": null,
   "nullable": false,
   "plural": true,
@@ -525,7 +536,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v8/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": "showsConnection(first:18,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
           },
           {
@@ -588,7 +599,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v11/*: any*/),
+                    "selections": (v12/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -598,7 +609,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v12/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -608,7 +619,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v11/*: any*/),
+                    "selections": (v12/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -619,8 +630,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v9/*: any*/),
-                      (v10/*: any*/)
+                      (v10/*: any*/),
+                      (v11/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -634,7 +645,7 @@ return {
                 "name": "totalCount",
                 "storageKey": null
               },
-              (v7/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": "showsConnection(first:18,sort:\"END_AT_ASC\",status:\"RUNNING\")"
           },
@@ -652,7 +663,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v8/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"CLOSED\")"
           }
         ],
@@ -661,7 +672,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7299b8d84502c54644d4dc0a9e1f888c",
+    "cacheID": "0f245dd27477256418525f1f00d0f218",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -671,37 +682,37 @@ return {
           "plural": false,
           "type": "City"
         },
-        "city.currentShows": (v12/*: any*/),
-        "city.currentShows.edges": (v13/*: any*/),
-        "city.currentShows.edges.node": (v14/*: any*/),
-        "city.currentShows.edges.node.coverImage": (v15/*: any*/),
-        "city.currentShows.edges.node.coverImage.large": (v16/*: any*/),
-        "city.currentShows.edges.node.coverImage.large.height": (v17/*: any*/),
-        "city.currentShows.edges.node.coverImage.large.src": (v18/*: any*/),
-        "city.currentShows.edges.node.coverImage.large.srcSet": (v18/*: any*/),
-        "city.currentShows.edges.node.coverImage.large.width": (v17/*: any*/),
-        "city.currentShows.edges.node.coverImage.small": (v16/*: any*/),
-        "city.currentShows.edges.node.coverImage.small.height": (v17/*: any*/),
-        "city.currentShows.edges.node.coverImage.small.src": (v18/*: any*/),
-        "city.currentShows.edges.node.coverImage.small.srcSet": (v18/*: any*/),
-        "city.currentShows.edges.node.coverImage.small.width": (v17/*: any*/),
-        "city.currentShows.edges.node.coverImage.title": (v19/*: any*/),
-        "city.currentShows.edges.node.endAt": (v19/*: any*/),
-        "city.currentShows.edges.node.formattedEndAt": (v19/*: any*/),
-        "city.currentShows.edges.node.formattedStartAt": (v19/*: any*/),
-        "city.currentShows.edges.node.href": (v19/*: any*/),
-        "city.currentShows.edges.node.id": (v20/*: any*/),
-        "city.currentShows.edges.node.internalID": (v20/*: any*/),
-        "city.currentShows.edges.node.location": (v21/*: any*/),
-        "city.currentShows.edges.node.location.city": (v19/*: any*/),
-        "city.currentShows.edges.node.location.id": (v20/*: any*/),
-        "city.currentShows.edges.node.name": (v19/*: any*/),
-        "city.currentShows.edges.node.partner": (v22/*: any*/),
-        "city.currentShows.edges.node.partner.__isNode": (v18/*: any*/),
-        "city.currentShows.edges.node.partner.__typename": (v18/*: any*/),
-        "city.currentShows.edges.node.partner.id": (v20/*: any*/),
-        "city.currentShows.edges.node.partner.name": (v19/*: any*/),
-        "city.currentShows.edges.node.startAt": (v19/*: any*/),
+        "city.currentShows": (v13/*: any*/),
+        "city.currentShows.edges": (v14/*: any*/),
+        "city.currentShows.edges.node": (v15/*: any*/),
+        "city.currentShows.edges.node.coverImage": (v16/*: any*/),
+        "city.currentShows.edges.node.coverImage.large": (v17/*: any*/),
+        "city.currentShows.edges.node.coverImage.large.height": (v18/*: any*/),
+        "city.currentShows.edges.node.coverImage.large.src": (v19/*: any*/),
+        "city.currentShows.edges.node.coverImage.large.srcSet": (v19/*: any*/),
+        "city.currentShows.edges.node.coverImage.large.width": (v18/*: any*/),
+        "city.currentShows.edges.node.coverImage.small": (v17/*: any*/),
+        "city.currentShows.edges.node.coverImage.small.height": (v18/*: any*/),
+        "city.currentShows.edges.node.coverImage.small.src": (v19/*: any*/),
+        "city.currentShows.edges.node.coverImage.small.srcSet": (v19/*: any*/),
+        "city.currentShows.edges.node.coverImage.small.width": (v18/*: any*/),
+        "city.currentShows.edges.node.coverImage.title": (v20/*: any*/),
+        "city.currentShows.edges.node.endAt": (v20/*: any*/),
+        "city.currentShows.edges.node.formattedEndAt": (v20/*: any*/),
+        "city.currentShows.edges.node.formattedStartAt": (v20/*: any*/),
+        "city.currentShows.edges.node.href": (v20/*: any*/),
+        "city.currentShows.edges.node.id": (v21/*: any*/),
+        "city.currentShows.edges.node.internalID": (v21/*: any*/),
+        "city.currentShows.edges.node.location": (v22/*: any*/),
+        "city.currentShows.edges.node.location.city": (v20/*: any*/),
+        "city.currentShows.edges.node.location.id": (v21/*: any*/),
+        "city.currentShows.edges.node.name": (v20/*: any*/),
+        "city.currentShows.edges.node.partner": (v23/*: any*/),
+        "city.currentShows.edges.node.partner.__isNode": (v19/*: any*/),
+        "city.currentShows.edges.node.partner.__typename": (v19/*: any*/),
+        "city.currentShows.edges.node.partner.id": (v21/*: any*/),
+        "city.currentShows.edges.node.partner.name": (v20/*: any*/),
+        "city.currentShows.edges.node.startAt": (v20/*: any*/),
         "city.currentShows.pageCursors": {
           "enumValues": null,
           "nullable": false,
@@ -714,115 +725,115 @@ return {
           "plural": true,
           "type": "PageCursor"
         },
-        "city.currentShows.pageCursors.around.cursor": (v18/*: any*/),
-        "city.currentShows.pageCursors.around.isCurrent": (v23/*: any*/),
-        "city.currentShows.pageCursors.around.page": (v17/*: any*/),
-        "city.currentShows.pageCursors.first": (v24/*: any*/),
-        "city.currentShows.pageCursors.first.cursor": (v18/*: any*/),
-        "city.currentShows.pageCursors.first.isCurrent": (v23/*: any*/),
-        "city.currentShows.pageCursors.first.page": (v17/*: any*/),
-        "city.currentShows.pageCursors.last": (v24/*: any*/),
-        "city.currentShows.pageCursors.last.cursor": (v18/*: any*/),
-        "city.currentShows.pageCursors.last.isCurrent": (v23/*: any*/),
-        "city.currentShows.pageCursors.last.page": (v17/*: any*/),
-        "city.currentShows.pageCursors.previous": (v24/*: any*/),
-        "city.currentShows.pageCursors.previous.cursor": (v18/*: any*/),
-        "city.currentShows.pageCursors.previous.page": (v17/*: any*/),
+        "city.currentShows.pageCursors.around.cursor": (v19/*: any*/),
+        "city.currentShows.pageCursors.around.isCurrent": (v24/*: any*/),
+        "city.currentShows.pageCursors.around.page": (v18/*: any*/),
+        "city.currentShows.pageCursors.first": (v25/*: any*/),
+        "city.currentShows.pageCursors.first.cursor": (v19/*: any*/),
+        "city.currentShows.pageCursors.first.isCurrent": (v24/*: any*/),
+        "city.currentShows.pageCursors.first.page": (v18/*: any*/),
+        "city.currentShows.pageCursors.last": (v25/*: any*/),
+        "city.currentShows.pageCursors.last.cursor": (v19/*: any*/),
+        "city.currentShows.pageCursors.last.isCurrent": (v24/*: any*/),
+        "city.currentShows.pageCursors.last.page": (v18/*: any*/),
+        "city.currentShows.pageCursors.previous": (v25/*: any*/),
+        "city.currentShows.pageCursors.previous.cursor": (v19/*: any*/),
+        "city.currentShows.pageCursors.previous.page": (v18/*: any*/),
         "city.currentShows.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "city.currentShows.pageInfo.endCursor": (v19/*: any*/),
-        "city.currentShows.pageInfo.hasNextPage": (v23/*: any*/),
+        "city.currentShows.pageInfo.endCursor": (v20/*: any*/),
+        "city.currentShows.pageInfo.hasNextPage": (v24/*: any*/),
         "city.currentShows.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "city.name": (v18/*: any*/),
-        "city.pastShows": (v12/*: any*/),
-        "city.pastShows.edges": (v13/*: any*/),
-        "city.pastShows.edges.node": (v14/*: any*/),
-        "city.pastShows.edges.node.coverImage": (v15/*: any*/),
-        "city.pastShows.edges.node.coverImage.large": (v16/*: any*/),
-        "city.pastShows.edges.node.coverImage.large.height": (v17/*: any*/),
-        "city.pastShows.edges.node.coverImage.large.src": (v18/*: any*/),
-        "city.pastShows.edges.node.coverImage.large.srcSet": (v18/*: any*/),
-        "city.pastShows.edges.node.coverImage.large.width": (v17/*: any*/),
-        "city.pastShows.edges.node.coverImage.small": (v16/*: any*/),
-        "city.pastShows.edges.node.coverImage.small.height": (v17/*: any*/),
-        "city.pastShows.edges.node.coverImage.small.src": (v18/*: any*/),
-        "city.pastShows.edges.node.coverImage.small.srcSet": (v18/*: any*/),
-        "city.pastShows.edges.node.coverImage.small.width": (v17/*: any*/),
-        "city.pastShows.edges.node.coverImage.title": (v19/*: any*/),
-        "city.pastShows.edges.node.endAt": (v19/*: any*/),
-        "city.pastShows.edges.node.formattedEndAt": (v19/*: any*/),
-        "city.pastShows.edges.node.formattedStartAt": (v19/*: any*/),
-        "city.pastShows.edges.node.href": (v19/*: any*/),
-        "city.pastShows.edges.node.id": (v20/*: any*/),
-        "city.pastShows.edges.node.internalID": (v20/*: any*/),
-        "city.pastShows.edges.node.location": (v21/*: any*/),
-        "city.pastShows.edges.node.location.city": (v19/*: any*/),
-        "city.pastShows.edges.node.location.id": (v20/*: any*/),
-        "city.pastShows.edges.node.name": (v19/*: any*/),
-        "city.pastShows.edges.node.partner": (v22/*: any*/),
-        "city.pastShows.edges.node.partner.__isNode": (v18/*: any*/),
-        "city.pastShows.edges.node.partner.__typename": (v18/*: any*/),
-        "city.pastShows.edges.node.partner.id": (v20/*: any*/),
-        "city.pastShows.edges.node.partner.name": (v19/*: any*/),
-        "city.pastShows.edges.node.startAt": (v19/*: any*/),
-        "city.slug": (v18/*: any*/),
-        "city.upcomingShows": (v12/*: any*/),
-        "city.upcomingShows.edges": (v13/*: any*/),
-        "city.upcomingShows.edges.node": (v14/*: any*/),
-        "city.upcomingShows.edges.node.coverImage": (v15/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.large": (v16/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.large.height": (v17/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.large.src": (v18/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.large.srcSet": (v18/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.large.width": (v17/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.small": (v16/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.small.height": (v17/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.small.src": (v18/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.small.srcSet": (v18/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.small.width": (v17/*: any*/),
-        "city.upcomingShows.edges.node.coverImage.title": (v19/*: any*/),
-        "city.upcomingShows.edges.node.endAt": (v19/*: any*/),
-        "city.upcomingShows.edges.node.formattedEndAt": (v19/*: any*/),
-        "city.upcomingShows.edges.node.formattedStartAt": (v19/*: any*/),
-        "city.upcomingShows.edges.node.href": (v19/*: any*/),
-        "city.upcomingShows.edges.node.id": (v20/*: any*/),
-        "city.upcomingShows.edges.node.internalID": (v20/*: any*/),
-        "city.upcomingShows.edges.node.location": (v21/*: any*/),
-        "city.upcomingShows.edges.node.location.city": (v19/*: any*/),
-        "city.upcomingShows.edges.node.location.id": (v20/*: any*/),
-        "city.upcomingShows.edges.node.name": (v19/*: any*/),
-        "city.upcomingShows.edges.node.partner": (v22/*: any*/),
-        "city.upcomingShows.edges.node.partner.__isNode": (v18/*: any*/),
-        "city.upcomingShows.edges.node.partner.__typename": (v18/*: any*/),
-        "city.upcomingShows.edges.node.partner.id": (v20/*: any*/),
-        "city.upcomingShows.edges.node.partner.name": (v19/*: any*/),
-        "city.upcomingShows.edges.node.startAt": (v19/*: any*/),
+        "city.name": (v19/*: any*/),
+        "city.pastShows": (v13/*: any*/),
+        "city.pastShows.edges": (v14/*: any*/),
+        "city.pastShows.edges.node": (v15/*: any*/),
+        "city.pastShows.edges.node.coverImage": (v16/*: any*/),
+        "city.pastShows.edges.node.coverImage.large": (v17/*: any*/),
+        "city.pastShows.edges.node.coverImage.large.height": (v18/*: any*/),
+        "city.pastShows.edges.node.coverImage.large.src": (v19/*: any*/),
+        "city.pastShows.edges.node.coverImage.large.srcSet": (v19/*: any*/),
+        "city.pastShows.edges.node.coverImage.large.width": (v18/*: any*/),
+        "city.pastShows.edges.node.coverImage.small": (v17/*: any*/),
+        "city.pastShows.edges.node.coverImage.small.height": (v18/*: any*/),
+        "city.pastShows.edges.node.coverImage.small.src": (v19/*: any*/),
+        "city.pastShows.edges.node.coverImage.small.srcSet": (v19/*: any*/),
+        "city.pastShows.edges.node.coverImage.small.width": (v18/*: any*/),
+        "city.pastShows.edges.node.coverImage.title": (v20/*: any*/),
+        "city.pastShows.edges.node.endAt": (v20/*: any*/),
+        "city.pastShows.edges.node.formattedEndAt": (v20/*: any*/),
+        "city.pastShows.edges.node.formattedStartAt": (v20/*: any*/),
+        "city.pastShows.edges.node.href": (v20/*: any*/),
+        "city.pastShows.edges.node.id": (v21/*: any*/),
+        "city.pastShows.edges.node.internalID": (v21/*: any*/),
+        "city.pastShows.edges.node.location": (v22/*: any*/),
+        "city.pastShows.edges.node.location.city": (v20/*: any*/),
+        "city.pastShows.edges.node.location.id": (v21/*: any*/),
+        "city.pastShows.edges.node.name": (v20/*: any*/),
+        "city.pastShows.edges.node.partner": (v23/*: any*/),
+        "city.pastShows.edges.node.partner.__isNode": (v19/*: any*/),
+        "city.pastShows.edges.node.partner.__typename": (v19/*: any*/),
+        "city.pastShows.edges.node.partner.id": (v21/*: any*/),
+        "city.pastShows.edges.node.partner.name": (v20/*: any*/),
+        "city.pastShows.edges.node.startAt": (v20/*: any*/),
+        "city.slug": (v19/*: any*/),
+        "city.upcomingShows": (v13/*: any*/),
+        "city.upcomingShows.edges": (v14/*: any*/),
+        "city.upcomingShows.edges.node": (v15/*: any*/),
+        "city.upcomingShows.edges.node.coverImage": (v16/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.large": (v17/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.large.height": (v18/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.large.src": (v19/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.large.srcSet": (v19/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.large.width": (v18/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.small": (v17/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.small.height": (v18/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.small.src": (v19/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.small.srcSet": (v19/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.small.width": (v18/*: any*/),
+        "city.upcomingShows.edges.node.coverImage.title": (v20/*: any*/),
+        "city.upcomingShows.edges.node.endAt": (v20/*: any*/),
+        "city.upcomingShows.edges.node.formattedEndAt": (v20/*: any*/),
+        "city.upcomingShows.edges.node.formattedStartAt": (v20/*: any*/),
+        "city.upcomingShows.edges.node.href": (v20/*: any*/),
+        "city.upcomingShows.edges.node.id": (v21/*: any*/),
+        "city.upcomingShows.edges.node.internalID": (v21/*: any*/),
+        "city.upcomingShows.edges.node.location": (v22/*: any*/),
+        "city.upcomingShows.edges.node.location.city": (v20/*: any*/),
+        "city.upcomingShows.edges.node.location.id": (v21/*: any*/),
+        "city.upcomingShows.edges.node.name": (v20/*: any*/),
+        "city.upcomingShows.edges.node.partner": (v23/*: any*/),
+        "city.upcomingShows.edges.node.partner.__isNode": (v19/*: any*/),
+        "city.upcomingShows.edges.node.partner.__typename": (v19/*: any*/),
+        "city.upcomingShows.edges.node.partner.id": (v21/*: any*/),
+        "city.upcomingShows.edges.node.partner.name": (v20/*: any*/),
+        "city.upcomingShows.edges.node.startAt": (v20/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Viewer"
         },
-        "viewer.allCities": (v25/*: any*/),
-        "viewer.allCities.text": (v18/*: any*/),
-        "viewer.allCities.value": (v18/*: any*/),
-        "viewer.featuredCities": (v25/*: any*/),
-        "viewer.featuredCities.text": (v18/*: any*/),
-        "viewer.featuredCities.value": (v18/*: any*/)
+        "viewer.allCities": (v26/*: any*/),
+        "viewer.allCities.text": (v19/*: any*/),
+        "viewer.allCities.value": (v19/*: any*/),
+        "viewer.featuredCities": (v26/*: any*/),
+        "viewer.featuredCities.text": (v19/*: any*/),
+        "viewer.featuredCities.value": (v19/*: any*/)
       }
     },
     "name": "ShowsCity_Test_Query",
     "operationKind": "query",
-    "text": "query ShowsCity_Test_Query {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: \"example\") {\n    ...ShowsCity_city\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, sort: END_AT_ASC) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query ShowsCity_Test_Query {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: \"example\") {\n    ...ShowsCity_city\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, sort: END_AT_ASC) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();
