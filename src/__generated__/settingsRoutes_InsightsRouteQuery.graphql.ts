@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec3910bd71926647c827906fcac144db>>
+ * @generated SignedSource<<b48279d4577913ff5a0812c914b590b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -104,6 +104,52 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "artistsCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistInsightsCount",
+                "kind": "LinkedField",
+                "name": "artistInsightsCount",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": "BIENNIAL",
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "biennialCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": "COLLECTED",
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "collectedCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": "GROUP_SHOW",
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "groupShowCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": "SOLO_SHOW",
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "soloShowCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": "REVIEWED",
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "reviewedCount",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -366,12 +412,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60cff8fbc90a515d0cde926ef48213f1",
+    "cacheID": "f97b286c44a0f8e09b18fbb719b4d05f",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n  ...InsightsCareerHighlightRail_me\n}\n"
   }
 };
 })();
