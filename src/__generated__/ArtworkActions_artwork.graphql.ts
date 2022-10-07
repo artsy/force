@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c14041a4ded09b3a0942bb86e41f8600>>
+ * @generated SignedSource<<7e720631511750c7c47e95cce8f81eb4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,25 +15,11 @@ export type ArtworkActions_artwork$data = {
     readonly name: string | null;
   } | null> | null;
   readonly date: string | null;
-  readonly dimensions: {
-    readonly cm: string | null;
-  } | null;
   readonly downloadableImageUrl: string | null;
-  readonly image: {
-    readonly height: number | null;
-    readonly internalID: string | null;
-    readonly url: string | null;
-    readonly width: number | null;
-  } | null;
-  readonly is_downloadable: boolean | null;
-  readonly is_hangable: boolean | null;
-  readonly is_saved: boolean | null;
+  readonly isDownloadable: boolean | null;
+  readonly isHangable: boolean | null;
   readonly partner: {
     readonly slug: string;
-  } | null;
-  readonly sale: {
-    readonly is_auction: boolean | null;
-    readonly is_closed: boolean | null;
   } | null;
   readonly slug: string;
   readonly title: string | null;
@@ -99,70 +85,7 @@ return {
       "name": "date",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "dimensions",
-      "kind": "LinkedField",
-      "name": "dimensions",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cm",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "larger"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"larger\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -171,14 +94,14 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_downloadable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isDownloadable",
       "storageKey": null
     },
     {
-      "alias": "is_hangable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isHangable",
@@ -202,38 +125,6 @@ return {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Sale",
-      "kind": "LinkedField",
-      "name": "sale",
-      "plural": false,
-      "selections": [
-        {
-          "alias": "is_closed",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
-          "storageKey": null
-        },
-        {
-          "alias": "is_auction",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isAuction",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": "is_saved",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
-      "storageKey": null
     }
   ],
   "type": "Artwork",
@@ -241,6 +132,6 @@ return {
 };
 })();
 
-(node as any).hash = "26c251982bdcff889e2e3995c70cc533";
+(node as any).hash = "c35a57ac470ad70d3c5b56c5c787cd3c";
 
 export default node;

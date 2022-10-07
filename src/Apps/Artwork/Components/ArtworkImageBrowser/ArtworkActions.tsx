@@ -66,7 +66,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     isViewInRoomVisible,
   } = useViewInRoom()
 
-  const { is_downloadable, artists, title, date } = artwork
+  const { isDownloadable, artists, title, date } = artwork
 
   const ViewInRoomButton = () => {
     return (
@@ -164,7 +164,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     },
     {
       name: "viewInRoom",
-      condition: artwork.is_hangable,
+      condition: artwork.isHangable,
       Component: ViewInRoomButton,
     },
     {
@@ -174,7 +174,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     },
     {
       name: "download",
-      condition: !!is_downloadable || isTeam,
+      condition: !!isDownloadable || isTeam,
       Component: DownloadButton,
     },
     {
@@ -272,28 +272,14 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
           name
         }
         date
-        dimensions {
-          cm
-        }
         slug
-        image {
-          internalID
-          url(version: "larger")
-          height
-          width
-        }
         downloadableImageUrl
-        is_downloadable: isDownloadable
-        is_hangable: isHangable
+        isDownloadable
+        isHangable
         partner {
           slug
         }
         title
-        sale {
-          is_closed: isClosed
-          is_auction: isAuction
-        }
-        is_saved: isSaved
       }
     `,
   }

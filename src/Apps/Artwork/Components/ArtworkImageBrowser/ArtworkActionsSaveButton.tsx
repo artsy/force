@@ -14,18 +14,19 @@ import { UtilButton } from "./ArtworkActions"
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
 }
+
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
   const { handleSave } = useSaveArtwork({
-    isSaved: !!artwork.is_saved,
+    isSaved: !!artwork.isSaved,
     artwork,
     contextModule: ContextModule.artworkImage,
   })
 
   const isOpenSale = artwork.sale?.isAuction && !artwork.sale?.isClosed
 
-  const isSaved = !!artwork.is_saved
+  const isSaved = !!artwork.isSaved
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -67,7 +68,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           isAuction
           isClosed
         }
-        is_saved: isSaved
+        isSaved
       }
     `,
   }
