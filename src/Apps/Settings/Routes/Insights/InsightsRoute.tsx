@@ -27,25 +27,21 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
           <InsightsHeader />
 
           <Join separator={<Spacer my={[4, 6]} />}>
-            {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
             <Media greaterThanOrEqual="sm">
               <InsightsCareerHighlightRailFragmentContainer
-                // @ts-ignore RELAY_UPGRADE 13
                 me={me}
                 showProgress={true}
               />
             </Media>
             <Media lessThan="sm">
               <InsightsCareerHighlightRailFragmentContainer
-                //@ts-ignore RELAY_UPGRADE 13
                 me={me}
                 showProgress={false}
               />
             </Media>
 
-            {/* @ts-ignore RELAY_UPGRADE 13 */}
             <InsightsAuctionResultsFragmentContainer me={me} />
           </Join>
         </>
