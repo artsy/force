@@ -14,7 +14,7 @@ import {
 import { ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
-import { formatFileSize, Photo } from "../Utils/fileUtils"
+import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface PhotoThumbnailProps {
   photo: Photo
@@ -49,7 +49,7 @@ export const PhotoThumbnail: React.FC<
     if (photo.file) {
       const reader = new FileReader()
       try {
-        reader.readAsDataURL(photo.file)
+        reader.readAsDataURL(photo.file as File)
 
         reader.onloadend = () => {
           setPhotoSrc(reader.result as string)

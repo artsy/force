@@ -12,7 +12,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import {
   createFragmentContainer,
   Environment,
@@ -56,26 +56,10 @@ export const getUploadPhotosFormInitialValues = (
   submission?: UploadPhotos_submission$data | redirects_submission$data,
   myCollectionArtwork?: UploadPhotos_myCollectionArtwork$data
 ): UploadPhotosFormModel => {
-  let submissionPhotos: Photo[] = []
-  let artworkPhotos: any[] = []
+  let photos: Photo[] = []
 
-  // Only add photos from artwork if they haven't been added already
-  // if (myCollectionArtwork && !submission?.assets?.length) {
-  if (myCollectionArtwork) {
-    artworkPhotos =
-      myCollectionArtwork?.images?.map(image => ({
-        name: "Automatically added",
-        externalUrl: image?.url!,
-      })) || []
-
-    // Needs to be adjusted
-    artworkPhotos = artworkPhotos.map(file =>
-      normalizePhoto(file, undefined, file.externalUrl)
-    )
-  }
-
-  if (submission) {
-    submissionPhotos =
+  if (submission?.assets?.length) {
+    photos =
       submission?.assets
         ?.filter(asset => !!asset)
         .map(asset => ({
@@ -88,9 +72,18 @@ export const getUploadPhotosFormInitialValues = (
           removed: false,
           loading: false,
         })) || []
+  } else if (myCollectionArtwork) {
+    photos =
+      myCollectionArtwork?.images
+        ?.map(image => ({
+          name: "Automatically added",
+          externalUrl: image?.url!,
+          type: "image/jpg",
+        }))
+        ?.map(file => normalizePhoto(file, undefined, file.externalUrl)) || []
   }
 
-  return { photos: [...artworkPhotos, ...submissionPhotos] }
+  return { photos }
 }
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({
@@ -110,7 +103,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
     submission,
     myCollectionArtwork
   )
-  console.log("Upload Flow", { initialValue })
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
   const artworkId = myCollectionArtwork?.internalID
 
@@ -161,16 +153,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         initialErrors={initialErrors}
       >
         {({ values, setFieldValue, isValid, isSubmitting }) => {
-          useEffect(() => {
-            console.log({
-              photos: values.photos,
-            })
-            console.log(
-              "photos",
-              values.photos.map(p => p.removed)
-            )
-          }, [values.photos])
-
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()

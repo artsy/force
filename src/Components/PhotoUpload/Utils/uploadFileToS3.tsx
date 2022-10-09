@@ -1,4 +1,4 @@
-import { AssetCredentials } from "../Mutations/getGeminiCredentialsForEnvironment"
+import { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import { Photo } from "./fileUtils"
 
 const externalPhotoToFile = async (photo: Photo) => {
@@ -32,7 +32,14 @@ export const uploadFileToS3 = (
 
     const isExternalPhoto = photo.externalUrl
 
-    const file = isExternalPhoto ? await externalPhotoToFile(photo) : photo.file
+    let file
+
+    try {
+      file = isExternalPhoto ? await externalPhotoToFile(photo) : photo.file
+    } catch (error) {
+      reject(new Error("Initializing artwork photo failed."))
+      return
+    }
 
     const data = {
       acl,
