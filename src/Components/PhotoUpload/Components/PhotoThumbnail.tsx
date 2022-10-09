@@ -11,10 +11,10 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
+import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
-import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface PhotoThumbnailProps {
   photo: Photo
@@ -46,16 +46,15 @@ export const PhotoThumbnail: React.FC<
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
-    if (photo.file) {
+    if (photo.externalUrl) {
+      setPhotoSrc(photo.externalUrl)
+    } else if (photo.file) {
       const reader = new FileReader()
-      try {
-        reader.readAsDataURL(photo.file as File)
 
-        reader.onloadend = () => {
-          setPhotoSrc(reader.result as string)
-        }
-      } catch (e) {
-        setPhotoSrc(photo.externalUrl)
+      reader.readAsDataURL(photo.file as File)
+
+      reader.onloadend = () => {
+        setPhotoSrc(reader.result as string)
       }
     } else {
       setPhotoSrc(photo.url)
