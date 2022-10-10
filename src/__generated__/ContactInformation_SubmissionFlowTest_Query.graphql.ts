@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39c72c0aad7ea1806d94ecc2d45e4f83>>
+ * @generated SignedSource<<c4aa9980e53db644425734187862db1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -222,7 +222,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dc3d7214b8e39e5dee081569ad46db4a",
+    "cacheID": "c70130e48d361db25fe0d24185d524a1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -264,7 +264,7 @@ return {
     },
     "name": "ContactInformation_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(externalId: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
+    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(externalId: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
   }
 };
 })();

@@ -12,13 +12,13 @@ import createLogger from "Utils/logger"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ContactInformation_me$data } from "__generated__/ContactInformation_me.graphql"
 import { ContactInformation_submission$data } from "__generated__/ContactInformation_submission.graphql"
-import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,
   validate,
-} from "../Utils/validation"
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import {
-  ContactInformationForm,
+  ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
 
@@ -141,7 +141,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       >
         {({ isValid, isSubmitting }) => (
           <Form>
-            <ContactInformationForm my={6} me={me} />
+            <ContactInformationFormFragmentContainer my={6} me={me} />
 
             <Button
               data-testid="save-button"
@@ -179,6 +179,7 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
           national: display(format: NATIONAL)
           regionCode
         }
+        ...ContactInformationForm_me
       }
     `,
   }

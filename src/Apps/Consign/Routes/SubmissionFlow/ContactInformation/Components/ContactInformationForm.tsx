@@ -1,10 +1,10 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { ContactInformation_me$data } from "__generated__/ContactInformation_me.graphql"
-import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
+import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
+import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
-
 export interface ContactInformationFormModel {
   name: string
   email: string
@@ -12,7 +12,7 @@ export interface ContactInformationFormModel {
 }
 
 export interface ContactInformationFormProps extends BoxProps {
-  me: ContactInformation_me$data
+  me: ContactInformationForm_me$data
 }
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
@@ -84,3 +84,23 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     </Box>
   )
 }
+
+export const ContactInformationFormFragmentContainer = createFragmentContainer(
+  ContactInformationForm,
+  {
+    me: graphql`
+      fragment ContactInformationForm_me on Me {
+        internalID
+        name
+        email
+        phone
+        phoneNumber {
+          isValid
+          international: display(format: INTERNATIONAL)
+          national: display(format: NATIONAL)
+          regionCode
+        }
+      }
+    `,
+  }
+)
