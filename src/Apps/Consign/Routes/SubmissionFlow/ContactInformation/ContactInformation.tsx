@@ -1,6 +1,11 @@
 import { ActionType } from "@artsy/cohesion"
 import { Button, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+import {
+  contactInformationValidationSchema,
+  validate,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -12,11 +17,6 @@ import createLogger from "Utils/logger"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ContactInformation_me$data } from "__generated__/ContactInformation_me.graphql"
 import { ContactInformation_submission$data } from "__generated__/ContactInformation_submission.graphql"
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import {
-  contactInformationValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,

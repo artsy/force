@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   FullBleed,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -15,13 +16,16 @@ import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Form, Formik } from "formik"
+import { useRouter } from "found"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
-import { useRouter } from "System/Router/useRouter"
+import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 
 const getContactInformationFormInitialValues = (
@@ -38,34 +42,57 @@ const getContactInformationFormInitialValues = (
 })
 
 export interface PriceEstimateContactInformationProps {
+  artwork: PriceEstimateContactInformation_artwork$data
   me: PriceEstimateContactInformation_me$data
 }
 
 export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInformationProps> = ({
+  artwork,
   me,
 }) => {
+  const { router } = useRouter()
   const { trackEvent } = useTracking()
-  const { match } = useRouter()
+  const { submitMutation } = useRequestPriceEstimate()
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
     initialValue,
     contactInformationValidationSchema
   )
-  const artworkId = match.params.artworkID
 
   const handleSubmit = async ({
     name,
     email,
     phone,
   }: ContactInformationFormModel) => {
-    trackEvent({
-      action: ActionType.sentRequestPriceEstimate,
-      submission_id: artworkId,
-      user_id: me?.internalID,
-      user_email: me?.email,
-    })
+    try {
+      trackEvent({
+        action: ActionType.sentRequestPriceEstimate,
+        artwork_id: artwork.internalID,
+        artwork_slug: artwork.slug,
+        user_id: me?.internalID,
+        user_email: me?.email,
+      })
 
-    // TODO: Add mutation
+      await submitMutation({
+        variables: {
+          input: {
+            artworkId: artwork.internalID,
+            requesterEmail: email,
+            requesterName: name,
+            requesterPhoneNumber: phone.international,
+          },
+        },
+      })
+
+      router.push(`/my-collection/artwork/${artwork.internalID}`)
+    } catch (error) {
+      console.error(error)
+
+      setErrorMessage("Could not submit request.")
+    }
   }
 
   return (
@@ -85,7 +112,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
           py={2}
           mb={4}
           width="min-content"
-          to={`/my-collection/artwork/${artworkId}`}
+          to={`/my-collection/artwork/${artwork.internalID}`}
         >
           Back
         </BackLink>
@@ -108,7 +135,20 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         >
           {({ isValid, isSubmitting }) => (
             <Form>
-              <ContactInformationFormFragmentContainer my={6} me={me} />
+              <ContactInformationFormFragmentContainer me={me} />
+
+              {!!errorMessage && (
+                <Text
+                  data-testid="error-message"
+                  mt={4}
+                  color="red100"
+                  variant="sm"
+                >
+                  {errorMessage}
+                </Text>
+              )}
+
+              <Spacer my={6} />
 
               <Button
                 data-testid="submit-button"
@@ -143,6 +183,12 @@ export const PriceEstimateContactInformationFragmentContainer = createFragmentCo
           regionCode
         }
         ...ContactInformationForm_me
+      }
+    `,
+    artwork: graphql`
+      fragment PriceEstimateContactInformation_artwork on Artwork {
+        internalID
+        slug
       }
     `,
   }
