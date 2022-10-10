@@ -6,6 +6,7 @@ import {
 import {
   Button,
   Flex,
+  Join,
   Separator,
   Spacer,
   Text,
@@ -288,10 +289,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
     }
 
     return (
-      <>
-        <Spacer mt={2} />
-        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-      </>
+      <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
     )
   }
 
@@ -326,21 +324,20 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         </>
       )}
 
-      <Flex>
-        {artwork.isSold && renderCreateAlertButton()}
-        {artwork.isAcquireable && (
-          <Button
-            width="100%"
-            size="large"
-            loading={isCommitingCreateOrderMutation}
-            onClick={handleCreateOrder}
-          >
-            {t("artworkPage.sidebar.commercialButtons.buyNow")}
-          </Button>
-        )}
-        {artwork.isOfferable && (
-          <>
-            <Spacer ml={artwork.isAcquireable ? 1 : 0} />
+      <Flex flexDirection={["column", "column", "column", "column", "row"]}>
+        <Join separator={<Spacer ml={1} mt={1} />}>
+          {artwork.isSold && renderCreateAlertButton()}
+          {artwork.isAcquireable && (
+            <Button
+              width="100%"
+              size="large"
+              loading={isCommitingCreateOrderMutation}
+              onClick={handleCreateOrder}
+            >
+              {t("artworkPage.sidebar.commercialButtons.buyNow")}
+            </Button>
+          )}
+          {artwork.isOfferable && (
             <Button
               variant={
                 artwork.isAcquireable ? "secondaryBlack" : "primaryBlack"
@@ -352,11 +349,8 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
             >
               {t("artworkPage.sidebar.commercialButtons.makeOffer")}
             </Button>
-          </>
-        )}
-        {artwork.isInquireable && (
-          <>
-            <Spacer ml={isSecondaryContactGalleryButton ? 1 : 0} />
+          )}
+          {artwork.isInquireable && (
             <Button
               width="100%"
               size="large"
@@ -369,8 +363,8 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
             >
               {t("artworkPage.sidebar.commercialButtons.contactGallery")}
             </Button>
-          </>
-        )}
+          )}
+        </Join>
       </Flex>
 
       <Spacer mt={4} />
