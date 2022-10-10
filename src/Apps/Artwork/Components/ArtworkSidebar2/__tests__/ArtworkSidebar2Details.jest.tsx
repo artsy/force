@@ -130,4 +130,19 @@ describe("ArtworkSidebar2Details", () => {
       screen.queryByTestId("authenticity-certificate")
     ).not.toBeInTheDocument()
   })
+
+  it("doens't render size details if it is an edition set", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        isEdition: true,
+        dimensions: {
+          in: "10 × 10 in",
+          cm: "25.4 × 25.4 cm",
+        },
+      }),
+    })
+
+    expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+  })
 })
