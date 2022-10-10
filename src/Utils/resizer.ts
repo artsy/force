@@ -1,7 +1,7 @@
 import qs from "qs"
 import { getENV } from "./getENV"
 
-const GEMINI_CLOUDFRONT_URL =
+export const GEMINI_CLOUDFRONT_URL =
   getENV("GEMINI_CLOUDFRONT_URL") ?? "https://d7hftxdivxxvm.cloudfront.net"
 
 const warn = (message: string) => {
