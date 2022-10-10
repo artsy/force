@@ -54,7 +54,6 @@ export const ArtQuizResultsLoader = () => {
               <Box />
               <Spinner />
               <Box width="100%">
-               
                 <Text variant={["xl", "xxl"]}>Art Taste Quiz</Text>
 
                 <Spacer my={2} />

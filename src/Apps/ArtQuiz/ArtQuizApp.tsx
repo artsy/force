@@ -18,7 +18,7 @@ export const ArtQuizApp = () => {
       ) : (
         <ArtQuizWelcome onStartQuiz={handleStartQuiz} />
       )} */}
-      <ArtQuizResultsLoader/>
+      <ArtQuizResultsLoader />
     </ArtQuizContextProvider>
   )
 }

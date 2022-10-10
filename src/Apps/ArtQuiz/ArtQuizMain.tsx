@@ -142,6 +142,5 @@ export const ArtQuizMain: FC = () => {
         </GridFlex>
       </CSSGrid>
     </FullBleed>
-    
   )
 }
