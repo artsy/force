@@ -28,7 +28,6 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { openAuthModal } from "Utils/openAuthModal"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
-import { Media } from "Utils/Responsive"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -326,19 +325,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       )}
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
-        <Join
-          separator={
-            <>
-              <Media at="xl">
-                <Spacer ml={1} />
-              </Media>
-
-              <Media lessThan="xl">
-                <Spacer mt={1} />
-              </Media>
-            </>
-          }
-        >
+        <Join separator={<Spacer ml={1} mt={1} />}>
           {artwork.isSold && renderCreateAlertButton()}
           {artwork.isAcquireable && (
             <Button
