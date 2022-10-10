@@ -138,7 +138,7 @@ const trackPageLoadSpeed = () => {
         if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
           window.setTimeout(function () {
             let deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
-            reportLoadTimeToVolley(pageType, deviceType)
+            reportLoadTimeToVolley({ pageType, deviceType })
           }, 0)
         }
       })
