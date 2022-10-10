@@ -38,6 +38,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   render() {
     const { artwork } = this.props
     const imageURL = get(artwork, a => a.metaImage?.resized?.url)
+    const addNoIndex = artwork?.visibilityLevel == "UNLISTED"
 
     return (
       <>
@@ -68,6 +69,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         <SeoDataForArtwork artwork={artwork} />
 
         {this.renderImageMetaTags()}
+        {addNoIndex && <Meta name="robots" content="noindex, follow" />}
 
         <ArtworkZendeskFragmentContainer artwork={artwork} />
       </>
@@ -84,6 +86,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         ...ArtworkZendesk_artwork
         href
         isShareable
+        visibilityLevel
         metaImage: image {
           resized(
             width: 640
