@@ -4,31 +4,23 @@ import {
   Text,
   Spacer,
   ArtsyMarkBlackIcon,
-  ArtsyLogoIcon,
   FullBleed,
   Spinner,
 } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useState, useEffect } from "react"
-//import { FC } from "react"
-
-// declare variables for each statement (here? or inside?)
-// declare and set useState inside of component
-// useEffect with setTimeout function inside that sets state after a few seconds
-// empty dependency array
+import { useTranslation } from "react-i18next"
 
 export const ArtQuizResultsLoader = () => {
   const { desktop } = useNavBarHeight()
+  const { t } = useTranslation()
 
-  const calculatingResults = "Calculating Results..."
-  const resultsComplete = "Results Complete"
-
-  const [message, setMessage] = useState(calculatingResults)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
-      setMessage(resultsComplete)
+      setLoading(false)
     }, 3000)
   }, [])
 
@@ -45,24 +37,30 @@ export const ArtQuizResultsLoader = () => {
           leftProps={{ display: ["none", "block"] }}
           right={
             <Flex
+              width="100%"
               flexDirection="column"
               justifyContent="center"
-              alignContent="center"
+              alignItems="center"
               p={[2, 4]}
             >
               {/* Vertically centers next Box */}
-              <Box />
-              <Spinner />
-              <Box width="100%">
-                <Text variant={["xl", "xxl"]}>Art Taste Quiz</Text>
 
-                <Spacer my={2} />
+              {loading ? (
+                <Spinner position="inherit" display="flex" />
+              ) : (
+                <Flex height="6px" />
+              )}
+              <Spacer my={2} />
+              <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
 
-                <Text variant={["md", "lg-display"]}>
-                  {message}
-                  <Spacer my={4} />
-                </Text>
-              </Box>
+              <Spacer my={2} />
+
+              <Text variant={["sm", "md"]} color="black60">
+                {loading
+                  ? t("artQuizPage.loadingScreen.calculatingResults")
+                  : t("artQuizPage.loadingScreen.resultsComplete")}
+                <Spacer my={4} />
+              </Text>
             </Flex>
           }
         />
