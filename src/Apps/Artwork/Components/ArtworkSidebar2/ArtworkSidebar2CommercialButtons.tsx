@@ -6,6 +6,7 @@ import {
 import {
   Button,
   Flex,
+  Join,
   Separator,
   Spacer,
   Text,
@@ -27,6 +28,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { openAuthModal } from "Utils/openAuthModal"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
+import { Media } from "Utils/Responsive"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -288,10 +290,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
     }
 
     return (
-      <>
-        <Spacer mt={2} />
-        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-      </>
+      <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
     )
   }
 
@@ -326,21 +325,32 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         </>
       )}
 
-      <Flex>
-        {artwork.isSold && renderCreateAlertButton()}
-        {artwork.isAcquireable && (
-          <Button
-            width="100%"
-            size="large"
-            loading={isCommitingCreateOrderMutation}
-            onClick={handleCreateOrder}
-          >
-            {t("artworkPage.sidebar.commercialButtons.buyNow")}
-          </Button>
-        )}
-        {artwork.isOfferable && (
-          <>
-            <Spacer ml={artwork.isAcquireable ? 1 : 0} />
+      <Flex flexDirection={["column", "column", "column", "column", "row"]}>
+        <Join
+          separator={
+            <>
+              <Media at="xl">
+                <Spacer ml={1} />
+              </Media>
+
+              <Media lessThan="xl">
+                <Spacer mt={1} />
+              </Media>
+            </>
+          }
+        >
+          {artwork.isSold && renderCreateAlertButton()}
+          {artwork.isAcquireable && (
+            <Button
+              width="100%"
+              size="large"
+              loading={isCommitingCreateOrderMutation}
+              onClick={handleCreateOrder}
+            >
+              {t("artworkPage.sidebar.commercialButtons.buyNow")}
+            </Button>
+          )}
+          {artwork.isOfferable && (
             <Button
               variant={
                 artwork.isAcquireable ? "secondaryBlack" : "primaryBlack"
@@ -352,11 +362,8 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
             >
               {t("artworkPage.sidebar.commercialButtons.makeOffer")}
             </Button>
-          </>
-        )}
-        {artwork.isInquireable && (
-          <>
-            <Spacer ml={isSecondaryContactGalleryButton ? 1 : 0} />
+          )}
+          {artwork.isInquireable && (
             <Button
               width="100%"
               size="large"
@@ -369,8 +376,8 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
             >
               {t("artworkPage.sidebar.commercialButtons.contactGallery")}
             </Button>
-          </>
-        )}
+          )}
+        </Join>
       </Flex>
 
       <Spacer mt={4} />
