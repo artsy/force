@@ -1,9 +1,9 @@
 import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
-import { Timer } from "Components/Timer"
+import { RegistrationAuctionTimer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
 
 export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data
@@ -54,19 +54,9 @@ const computeBannerProps = (props: ArtworkTopContextBarProps) => {
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
         href: context.href,
-        rightContent: sale.registrationEndsAt ? (
-          <Flex display={["none", "flex"]} ml={1}>
-            <Text variant="xs" color="black60" mr={0.5}>
-              Registration for this auction ends:
-            </Text>
-            <Timer
-              endDate={sale.registrationEndsAt}
-              minWidth={110}
-              textAlign="center"
-              variant="xs"
-            />
-          </Flex>
-        ) : null,
+        rightContent: (
+          <RegistrationAuctionTimer endAt={sale.registrationEndsAt} />
+        ),
       }
     }
     case "Fair": {
