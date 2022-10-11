@@ -1,7 +1,7 @@
 import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Column, Flex, GridColumns } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
 import { Timer } from "Components/Timer"
 
@@ -16,7 +16,7 @@ export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props =
     return null
   }
 
-  const { image, meta, name, subHeadline, href } = bannerProps
+  const { image, meta, name, subHeadline, href, rightContent } = bannerProps
   const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
@@ -24,34 +24,12 @@ export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props =
       href={href}
       displayBackArrow={isShow}
       src={!isShow ? image : undefined}
-      flex={1}
+      rightContent={rightContent}
     >
-      <GridColumns alignItems="center">
-        <Column span={6}>
-          {[name, subHeadline].filter(Boolean).join(" - ")}　
-          <Box as="span" display="inline-block" color="black60">
-            {meta}
-          </Box>
-        </Column>
-
-        {props.artwork.sale?.registrationEndsAt && (
-          <Column span={6}>
-            <Flex
-              flexDirection="row"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <Box as="span" color="black60" mr={0.5}>
-                Registration for this auction ends:{" "}
-              </Box>
-              <Timer
-                endDate={props.artwork.sale.registrationEndsAt}
-                minWidth={125}
-              />
-            </Flex>
-          </Column>
-        )}
-      </GridColumns>
+      {[name, subHeadline].filter(Boolean).join(" - ")}　
+      <Box as="span" display="inline-block" color="black60">
+        {meta}
+      </Box>
     </TopContextBar>
   )
 }
@@ -76,6 +54,19 @@ const computeBannerProps = (props: ArtworkTopContextBarProps) => {
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
         href: context.href,
+        rightContent: sale.registrationEndsAt ? (
+          <Flex display={["none", "flex"]} ml={1}>
+            <Text variant="xs" color="black60" mr={0.5}>
+              Registration for this auction ends:
+            </Text>
+            <Timer
+              endDate={sale.registrationEndsAt}
+              minWidth={110}
+              textAlign="center"
+              variant="xs"
+            />
+          </Flex>
+        ) : null,
       }
     }
     case "Fair": {
