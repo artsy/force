@@ -123,10 +123,8 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         <Text mt={4} variant="lg-display">
           Let us know how to reach you
         </Text>
-        <Text mt={1} mb={6} variant="sm-display" color="black60">
-          We wil only use these details to contact you about this price
-          estimate.
-        </Text>
+
+        <Spacer my={6} />
 
         <Formik<ContactInformationFormModel>
           validateOnMount
@@ -141,6 +139,16 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
               <ContactInformationFormFragmentContainer me={me} />
 
               <Spacer my={6} />
+
+              <Text variant="xs" color="black60">
+                By continuing, you agree to{" "}
+                <RouterLink color="black60" to="/privacy" target="_blank">
+                  Artsy's Privacy Policy
+                </RouterLink>
+                .
+              </Text>
+
+              <Spacer my={2} />
 
               <Button
                 data-testid="submit-button"
