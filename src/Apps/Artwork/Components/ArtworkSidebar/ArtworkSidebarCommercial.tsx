@@ -91,7 +91,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderSaleMessage(saleMessage: string) {
     return (
       <Text variant="lg-display" data-test="SaleMessage">
-        {saleMessage === "Contact For Price" ? "Price on request" : saleMessage}
+        {saleMessage.toLowerCase() === "contact for price"
+          ? "Price on request"
+          : saleMessage}
       </Text>
     )
   }
