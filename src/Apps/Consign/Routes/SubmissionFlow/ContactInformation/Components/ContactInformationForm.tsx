@@ -1,9 +1,9 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
+import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
-import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
 export interface ContactInformationFormModel {
   name: string
@@ -53,7 +53,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       <Input
         maxLength={256}
         name="name"
-        title="name"
+        title="Name"
         placeholder="Your full name"
         value={values.name}
         onChange={handleChange}
@@ -63,7 +63,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         mt={4}
         maxLength={256}
         name="email"
-        title="email"
+        title="Email"
         placeholder="Your email address"
         value={values.email}
         onChange={handleChange}

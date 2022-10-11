@@ -6,6 +6,7 @@ import {
   FullBleed,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import {
@@ -20,11 +21,10 @@ import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Form, Formik } from "formik"
-import { useRouter } from "found"
-import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 
@@ -50,11 +50,10 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
   artwork,
   me,
 }) => {
+  const { sendToast } = useToasts()
   const { router } = useRouter()
   const { trackEvent } = useTracking()
   const { submitMutation } = useRequestPriceEstimate()
-
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
@@ -91,7 +90,13 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
     } catch (error) {
       console.error(error)
 
-      setErrorMessage("Could not submit request.")
+      sendToast({
+        variant: "error",
+        message: "An error occurred",
+        description: "Please contact sell@artsymail.com",
+      })
+
+      return
     }
   }
 
@@ -120,7 +125,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         <Text mt={4} variant="lg-display">
           Let us know how to reach you
         </Text>
-        <Text mt={1} variant="sm-display" color="black60">
+        <Text mt={1} mb={6} variant="sm-display" color="black60">
           We wil only use these details to contact you about this price
           estimate.
         </Text>
@@ -136,17 +141,6 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
           {({ isValid, isSubmitting }) => (
             <Form>
               <ContactInformationFormFragmentContainer me={me} />
-
-              {!!errorMessage && (
-                <Text
-                  data-testid="error-message"
-                  mt={4}
-                  color="red100"
-                  variant="sm"
-                >
-                  {errorMessage}
-                </Text>
-              )}
 
               <Spacer my={6} />
 
