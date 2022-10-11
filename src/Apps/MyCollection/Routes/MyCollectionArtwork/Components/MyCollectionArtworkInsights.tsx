@@ -1,5 +1,5 @@
 import { Join, Spacer } from "@artsy/palette"
-import { MyCollectionArtworkRequestPriceEstimateSection } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworRequestPriceEstimateSection"
+import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
@@ -41,7 +41,9 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
       )}
       <Media lessThan="sm">
         {!!enableMyCollectionPhase6RequestPreiceEstimate && (
-          <MyCollectionArtworkRequestPriceEstimateSection />
+          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+            artwork={artwork}
+          />
         )}
       </Media>
       {!!enableMyCollectionPhase4ArtistMarket && (
@@ -69,6 +71,7 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
     artwork: graphql`
       fragment MyCollectionArtworkInsights_artwork on Artwork {
         ...MyCollectionArtworkComparables_artwork
+        ...MyCollectionArtworkRequestPriceEstimateSection_artwork
         artist {
           ...MyCollectionArtworkAuctionResults_artist
         }

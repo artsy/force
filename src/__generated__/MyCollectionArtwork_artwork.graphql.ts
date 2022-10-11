@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16142ee2259ff69546bfd88108bf2eff>>
+ * @generated SignedSource<<508c53094dcfe0c635abf8049dcf1866>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type MyCollectionArtwork_artwork$data = {
   readonly internalID: string;
   readonly slug: string;
   readonly submissionId: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$key = {
@@ -88,6 +88,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
     },
     {
       "alias": "comparables",
@@ -172,6 +177,6 @@ return {
 };
 })();
 
-(node as any).hash = "a9c2824058171c07d83ec1a2656d14cf";
+(node as any).hash = "f1c251f9a74bede950e5ceab16f9b82f";
 
 export default node;
