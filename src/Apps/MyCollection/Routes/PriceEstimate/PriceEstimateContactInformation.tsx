@@ -95,8 +95,6 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         message: "An error occurred",
         description: "Please contact sell@artsymail.com",
       })
-
-      return
     }
   }
 
