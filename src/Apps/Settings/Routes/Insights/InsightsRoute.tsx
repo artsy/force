@@ -1,6 +1,6 @@
 import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
-import { InsightsMedianSalePrice } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
+import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
@@ -55,7 +55,9 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
               </>
             )}
 
-            {!!isMedianSalePriceEnabled && <InsightsMedianSalePrice />}
+            {!!isMedianSalePriceEnabled && (
+              <InsightsMedianSalePriceFragmentContainer me={me} />
+            )}
           </Join>
         </>
       )}
@@ -75,6 +77,7 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         }
         ...InsightsAuctionResults_me
         ...InsightsCareerHighlightRail_me
+        ...InsightsMedianSalePrice_me
       }
     `,
   }
