@@ -1,11 +1,11 @@
 import { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
+import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
-import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
@@ -33,6 +33,9 @@ describe("MyCollectionArtwork", () => {
       featureFlags: {
         "my-collection-web-phase-4-demand-index": { flagEnabled: true },
         "my-collection-web-phase-5": { flagEnabled: true },
+        "my-collection-web-phase-6-request-price-estimate": {
+          flagEnabled: true,
+        },
       },
     }))
   })
@@ -101,6 +104,35 @@ describe("MyCollectionArtwork", () => {
       expect(
         screen.queryByText("Interested in Selling This Work?")
       ).not.toBeInTheDocument()
+    })
+  })
+
+  describe("Request Price Estimate section", () => {
+    describe("with P1 artist", () => {
+      it("the section is rendered", () => {
+        const { renderWithRelay } = getWrapper("lg")
+        renderWithRelay(mockResolversWithInsights)
+
+        expect(
+          screen
+            .getAllByRole("link")
+            .find(c => c.textContent?.includes("Request a Price Estimate"))
+        ).toHaveAttribute(
+          "href",
+          `/my-collection/artwork/63035a6b41808b000c7e2933/request-for-price-estimate`
+        )
+      })
+    })
+
+    describe("with non P1 artist", () => {
+      it("the section is not rendered", () => {
+        const { renderWithRelay } = getWrapper("lg")
+        renderWithRelay(mockResolversNotP1)
+
+        expect(
+          screen.queryByText("Request a Price Estimate")
+        ).not.toBeInTheDocument()
+      })
     })
   })
 })

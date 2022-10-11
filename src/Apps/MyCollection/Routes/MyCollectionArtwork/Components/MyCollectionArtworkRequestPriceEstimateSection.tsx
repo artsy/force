@@ -15,6 +15,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
   const [isPriceEstimteRequested, setIsPriceEstimteRequested] = useState<
     boolean
   >(false)
+
   return (
     <>
       <Separator my={2} />
