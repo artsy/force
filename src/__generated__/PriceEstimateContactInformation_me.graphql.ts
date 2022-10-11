@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25a26056312cbb21726f110ecd6b4543>>
+ * @generated SignedSource<<4a1e38d529457e397830ebbc7b0a6a2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_me$data = {
+export type PriceEstimateContactInformation_me$data = {
   readonly email: string | null;
   readonly internalID: string;
   readonly name: string | null;
@@ -22,18 +22,18 @@ export type ContactInformation_me$data = {
     readonly regionCode: string | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ContactInformationForm_me">;
-  readonly " $fragmentType": "ContactInformation_me";
+  readonly " $fragmentType": "PriceEstimateContactInformation_me";
 };
-export type ContactInformation_me$key = {
-  readonly " $data"?: ContactInformation_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+export type PriceEstimateContactInformation_me$key = {
+  readonly " $data"?: PriceEstimateContactInformation_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PriceEstimateContactInformation_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ContactInformation_me",
+  "name": "PriceEstimateContactInformation_me",
   "selections": [
     {
       "alias": null,
@@ -124,6 +124,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7986b13515ba645c6a7cf3a39182705e";
+(node as any).hash = "90da4cd8958e595fe22b17c682793b16";
 
 export default node;

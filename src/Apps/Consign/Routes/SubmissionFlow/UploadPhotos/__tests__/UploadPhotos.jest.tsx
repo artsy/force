@@ -1,10 +1,9 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { UploadPhotosFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
 import { MBSize, uploadPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { fetchQuery } from "react-relay"
-import { graphql } from "react-relay"
+import { fetchQuery, graphql } from "react-relay"
 import { SystemContextProvider } from "System"
-import { UploadPhotosFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
 
 jest.unmock("react-relay")
 
@@ -76,6 +75,33 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
   variables: {
     externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
+  },
+})
+
+const { renderWithRelay: renderWithRelayMyCollection } = setupTestWrapperTL({
+  Component: props => {
+    return (
+      <SystemContextProvider>
+        <UploadPhotosFragmentContainer {...props} />
+      </SystemContextProvider>
+    )
+  },
+  query: graphql`
+    query UploadPhotos_SubmissionMyCollectionFlowTest_Query(
+      $externalId: ID
+      $artworkId: String!
+    ) @relay_test_operation {
+      submission(externalId: $externalId) {
+        ...UploadPhotos_submission
+      }
+      myCollectionArtwork: artwork(id: $artworkId) {
+        ...UploadPhotos_myCollectionArtwork
+      }
+    }
+  `,
+  variables: {
+    externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
+    artworkId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
   },
 })
 
@@ -214,6 +240,27 @@ describe("UploadPhotos", () => {
       expect(screen.queryByText("foo.png")).not.toBeInTheDocument()
       expect(mockRemoveAsset).toHaveBeenCalled()
     })
+  })
+
+  it("populates images from My Collection artwork", async () => {
+    const artwork = {
+      internalID: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
+      images: [
+        {
+          url: "an-url",
+        },
+        {
+          url: "another-url",
+        },
+      ],
+    }
+
+    renderWithRelayMyCollection({
+      ConsignmentSubmission: () => submission,
+      Artwork: () => artwork,
+    })
+
+    expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(2)
   })
 
   it("prepopulates images from server", async () => {

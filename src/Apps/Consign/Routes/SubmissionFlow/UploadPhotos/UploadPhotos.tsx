@@ -1,8 +1,16 @@
 import { Box, Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  useAddAssetToConsignmentSubmission,
+  useRemoveAssetFromConsignmentSubmission,
+} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import {
+  uploadPhotosValidationSchema,
+  validate,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
 import { useRef, useState } from "react"
 import {
@@ -16,22 +24,14 @@ import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
 import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
-import { UploadPhotos_submission$data } from "__generated__/UploadPhotos_submission.graphql"
 import { UploadPhotos_myCollectionArtwork$data } from "__generated__/UploadPhotos_myCollectionArtwork.graphql"
-import {
-  useAddAssetToConsignmentSubmission,
-  useRemoveAssetFromConsignmentSubmission,
-} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
-import {
-  uploadPhotosValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import { UploadPhotos_submission$data } from "__generated__/UploadPhotos_submission.graphql"
 import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -53,10 +53,13 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
 }
 
 export const getUploadPhotosFormInitialValues = (
-  submission?: UploadPhotos_submission$data | redirects_submission$data
+  submission?: UploadPhotos_submission$data | redirects_submission$data,
+  myCollectionArtwork?: UploadPhotos_myCollectionArtwork$data
 ): UploadPhotosFormModel => {
-  return {
-    photos:
+  let photos: Photo[] = []
+
+  if (submission?.assets?.length) {
+    photos =
       submission?.assets
         ?.filter(asset => !!asset)
         .map(asset => ({
@@ -68,8 +71,19 @@ export const getUploadPhotosFormInitialValues = (
           url: getPhotoUrlFromAsset(asset),
           removed: false,
           loading: false,
-        })) || [],
+        })) || []
+  } else if (myCollectionArtwork) {
+    photos =
+      myCollectionArtwork?.images
+        ?.map(image => ({
+          name: "Automatically added",
+          externalUrl: image?.url!,
+          type: "image/jpg",
+        }))
+        ?.map(file => normalizePhoto(file, undefined, file.externalUrl)) || []
   }
+
+  return { photos }
 }
 
 export const UploadPhotos: React.FC<UploadPhotosProps> = ({
@@ -85,7 +99,10 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   } = useRemoveAssetFromConsignmentSubmission()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
 
-  const initialValue = getUploadPhotosFormInitialValues(submission)
+  const initialValue = getUploadPhotosFormInitialValues(
+    submission,
+    myCollectionArtwork
+  )
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
   const artworkId = myCollectionArtwork?.internalID
 
@@ -314,6 +331,9 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
     myCollectionArtwork: graphql`
       fragment UploadPhotos_myCollectionArtwork on Artwork {
         internalID
+        images {
+          url(version: "large")
+        }
       }
     `,
   }

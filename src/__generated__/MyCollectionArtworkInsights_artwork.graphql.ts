@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44e5b3d5819860d941bd28fe7f2044a5>>
+ * @generated SignedSource<<b6327b1d81388c64d946041d7d8fb2c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };
 export type MyCollectionArtworkInsights_artwork$key = {
@@ -35,6 +35,11 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkComparables_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
     },
     {
       "alias": null,
@@ -78,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d2c1c99d0676209196c88f2cf47fe118";
+(node as any).hash = "b76e773bda7b98da07b3b6bad8ebf040";
 
 export default node;
