@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8590492df863f6032ea62d6733f4bee0>>
+ * @generated SignedSource<<16a5e9dd43e34ce8dc4caf762652534b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,7 @@ export type ArtworkTopContextBar_artwork$data = {
     readonly isAuction: boolean | null;
     readonly isBenefit: boolean | null;
     readonly isGalleryAuction: boolean | null;
+    readonly registrationEndsAt: string | null;
   } | null;
   readonly " $fragmentType": "ArtworkTopContextBar_artwork";
 };
@@ -124,6 +125,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "isGalleryAuction",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "registrationEndsAt",
           "storageKey": null
         },
         {
@@ -228,6 +236,6 @@ return {
 };
 })();
 
-(node as any).hash = "4d4d3a7f46336ef25e1b852a0ca5d892";
+(node as any).hash = "d1fa605552895f81ee64aa055d7b3ae6";
 
 export default node;

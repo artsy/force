@@ -1,8 +1,9 @@
 import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Column, GridColumns } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
+import { Timer } from "Components/Timer"
 
 export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data
@@ -23,14 +24,33 @@ export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props =
       href={href}
       displayBackArrow={isShow}
       src={!isShow ? image : undefined}
+      flex={1}
     >
-      <GridColumns>
-        <Column span={8}>
+      <GridColumns alignItems="center">
+        <Column span={6}>
           {[name, subHeadline].filter(Boolean).join(" - ")}　
           <Box as="span" display="inline-block" color="black60">
             {meta}
           </Box>
         </Column>
+
+        {props.artwork.sale?.registrationEndsAt && (
+          <Column span={6}>
+            <Flex
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Box as="span" color="black60" mr={0.5}>
+                Registration for this auction ends:{" "}
+              </Box>
+              <Timer
+                endDate={props.artwork.sale.registrationEndsAt}
+                minWidth={125}
+              />
+            </Flex>
+          </Column>
+        )}
       </GridColumns>
     </TopContextBar>
   )
@@ -101,6 +121,7 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
           isAuction
           isBenefit
           isGalleryAuction
+          registrationEndsAt
           coverImage {
             url
           }

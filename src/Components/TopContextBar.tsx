@@ -7,11 +7,12 @@ import {
   Separator,
   Text,
   Image,
+  TextProps,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 
-export interface TopContextBarProps {
+export interface TopContextBarProps extends TextProps {
   displayBackArrow?: boolean
   href?: string | null
   redirectTo?: string | undefined
@@ -27,6 +28,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
   redirectTo,
   src,
   onClick,
+  ...rest
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
 
@@ -74,7 +76,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
           </Box>
         )}
 
-        <Text variant="xs" lineHeight={1} lineClamp={2}>
+        <Text variant="xs" lineHeight={1} lineClamp={2} {...rest}>
           {children}
         </Text>
       </Flex>

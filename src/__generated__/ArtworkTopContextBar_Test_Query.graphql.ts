@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<454dfd3673c00e4ed3dc36a276635c80>>
+ * @generated SignedSource<<0219d3414950582a1bdeb0daa7b0c250>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -175,6 +175,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "registrationEndsAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Image",
                 "kind": "LinkedField",
                 "name": "coverImage",
@@ -285,7 +292,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ccdc315bcf2d084f1f74719f400c097b",
+    "cacheID": "10a97986d8c46b0127719981ce10d23a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -338,12 +345,13 @@ return {
         "artwork.sale.id": (v7/*: any*/),
         "artwork.sale.isAuction": (v9/*: any*/),
         "artwork.sale.isBenefit": (v9/*: any*/),
-        "artwork.sale.isGalleryAuction": (v9/*: any*/)
+        "artwork.sale.isGalleryAuction": (v9/*: any*/),
+        "artwork.sale.registrationEndsAt": (v6/*: any*/)
       }
     },
     "name": "ArtworkTopContextBar_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    registrationEndsAt\n    coverImage {\n      url\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
