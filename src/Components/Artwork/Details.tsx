@@ -12,6 +12,7 @@ import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useState } from "react"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -21,7 +22,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
-  showHighDemandIcon?: boolean
+  isMyCollectionArtwork?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
 }
@@ -186,12 +187,26 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
-  showHighDemandIcon = false,
+  isMyCollectionArtwork = false,
   showHoverDetails = true,
   showSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
+
+  const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
+  const isHighDemand =
+    Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
+
+  const showDemandIndexHints = useFeatureFlag(
+    "show-my-collection-demand-index-hints"
+  )
+
+  const showHighDemandIcon =
+    !!isP1Artist &&
+    isHighDemand &&
+    !!showDemandIndexHints &&
+    isMyCollectionArtwork
 
   return (
     <Box>
@@ -325,6 +340,14 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       date
       sale_message: saleMessage
       cultural_maker: culturalMaker
+      artist {
+        targetSupply {
+          isP1
+        }
+      }
+      marketPriceInsights {
+        demandRank
+      }
       artists(shallow: true) {
         id
         href

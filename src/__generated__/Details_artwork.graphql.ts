@@ -10,6 +10,14 @@ export type Details_artwork = {
     readonly date: string | null;
     readonly sale_message: string | null;
     readonly cultural_maker: string | null;
+    readonly artist: {
+        readonly targetSupply: {
+            readonly isP1: boolean | null;
+        } | null;
+    } | null;
+    readonly marketPriceInsights: {
+        readonly demandRank: number | null;
+    } | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
         readonly href: string | null;
@@ -126,6 +134,53 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "culturalMaker",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "demandRank",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -308,5 +363,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'be3d2becf54d0dfa23d893950bb22d7d';
+(node as any).hash = '958f68c7156c0bb40d30f343ffa6db34';
 export default node;

@@ -18,7 +18,6 @@ export interface MetadataProps
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
-  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
   isMyCollectionArtwork?: boolean
@@ -34,7 +33,6 @@ export const Metadata: React.FC<MetadataProps> = ({
   hideSaleInfo,
   isHovered,
   mt = 1,
-  showHighDemandIcon,
   showHoverDetails,
   showSaveButton,
   isMyCollectionArtwork = false,
@@ -55,7 +53,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
-        showHighDemandIcon={showHighDemandIcon}
+        isMyCollectionArtwork={isMyCollectionArtwork}
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
