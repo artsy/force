@@ -39,7 +39,6 @@ describe("Price Estimate Confirmation page", () => {
     expect(wrapper.find("RouterLink").at(2).text()).toContain(
       "Back to My Collection"
     )
-
     expect(wrapper.find("RouterLink").at(2).props().to).toContain(
       "/my-collection/artwork/some-id"
     )

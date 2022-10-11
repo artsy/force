@@ -38,10 +38,11 @@ const mockArtwork = {
 }
 
 const mockRouterPush = jest.fn()
+const mockRouterReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush },
+    router: { push: mockRouterPush, replace: mockRouterReplace },
   })),
 }))
 
@@ -253,8 +254,11 @@ it("submiting a valid form", async () => {
         },
       },
     })
-    expect(mockRouterPush).toHaveBeenCalledWith(
+    expect(mockRouterReplace).toHaveBeenCalledWith(
       `/my-collection/artwork/${mockArtwork.internalID}`
+    )
+    expect(mockRouterPush).toHaveBeenCalledWith(
+      `/my-collection/artwork/${mockArtwork.internalID}/price-estimate/confirmation`
     )
   })
 })
