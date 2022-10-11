@@ -58,6 +58,6 @@ export const PartnerArtistArtworkCarouselItemPlaceholder: React.FC = () => (
 
     <SkeletonText variant="sm">Partner name</SkeletonText>
 
-    <SkeletonText variant="sm">Contact For Price</SkeletonText>
+    <SkeletonText variant="sm">Contact for price</SkeletonText>
   </Box>
 )
