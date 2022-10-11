@@ -24,6 +24,16 @@ const MyCollectionArtworkFormFragmentContainer = loadable(
   }
 )
 
+const PriceEstimateConfirmation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/PriceEstimate/PriceEstimateConfirmation"
+    ),
+  {
+    resolveComponent: component => component.PriceEstimateConfirmation,
+  }
+)
+
 const MyCollectionArtworkForm = loadable(
   () =>
     import(
@@ -55,6 +65,15 @@ export const myCollectionRoutes: AppRouteConfig[] = [
     `,
     cacheConfig: {
       force: true,
+    },
+  },
+  {
+    path: "/my-collection/artwork/:artworkID/price-estimate/confirmation",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateConfirmation,
+    onClientSideRender: () => {
+      PriceEstimateConfirmation.preload()
     },
   },
   {
