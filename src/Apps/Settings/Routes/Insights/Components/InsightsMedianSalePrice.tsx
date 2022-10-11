@@ -24,12 +24,15 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
 
   return (
     <Box>
-      <Text variant="md">Median Auction Price in the Last 3 Years</Text>
+      <Text variant={["sm-display", "md"]}>
+        Median Auction Price in the Last 3 Years
+      </Text>
+
       {groupedMedianSalePrices.map(msps => {
         const [artistData] = msps
 
         return (
-          <Flex mt={2}>
+          <Flex mt={2} mb={[4, 0]} flexDirection={["column", "row"]}>
             <EntityHeaderArtistFragmentContainer
               flex={1}
               alignItems="flex-start"
@@ -42,11 +45,21 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
             <Flex flex={1} flexDirection="column">
               {msps.map(msp => {
                 return (
-                  <Flex minHeight={45} alignItems="center">
-                    <Text variant="sm" color="black60" minWidth={200} mr={2}>
+                  <Flex
+                    mt={[2, 0]}
+                    minHeight={[0, 45]}
+                    alignItems="center"
+                    justifyContent={["space-between", null]}
+                  >
+                    <Text
+                      variant={["xs", "sm"]}
+                      color="black60"
+                      minWidth={[0, 200]}
+                      mr={2}
+                    >
                       {msp.mediumType?.name}
                     </Text>
-                    <Text variant="sm" fontWeight="bold">
+                    <Text variant={["xs", "sm"]} fontWeight="bold">
                       {msp.marketPriceInsights?.medianSalePriceDisplayText}
                     </Text>
                   </Flex>
