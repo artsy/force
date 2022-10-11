@@ -59,7 +59,6 @@ export const ArtQuizResultsLoader = () => {
                 {loading
                   ? t("artQuizPage.loadingScreen.calculatingResults")
                   : t("artQuizPage.loadingScreen.resultsComplete")}
-                <Spacer my={4} />
               </Text>
             </Flex>
           }
