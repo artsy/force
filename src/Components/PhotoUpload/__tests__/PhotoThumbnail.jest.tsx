@@ -3,7 +3,7 @@ import { mount, ReactWrapper } from "enzyme"
 import {
   PhotoThumbnail,
   PhotoThumbnailProps,
-} from "../Components/PhotoThumbnail"
+} from "Components/PhotoUpload/Components/PhotoThumbnail"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {
@@ -83,27 +83,8 @@ describe("PhotoThumbnail", () => {
       wrapper = getWrapper(props)
     })
 
-    it("renders name", () => {
-      expect(wrapper.text()).toContain("foo.png")
-    })
-
-    it("renders size", () => {
-      expect(wrapper.text()).toContain("0.01 MB")
-    })
-
     it("doesn't render image", () => {
       expect(wrapper.find(Image)).toHaveLength(0)
-    })
-
-    it("renders delete button", () => {
-      const deletePhotoThumbnail = wrapper.find("RemoveButton")
-
-      expect(deletePhotoThumbnail).toHaveLength(1)
-
-      deletePhotoThumbnail.simulate("click")
-
-      expect(deleteFn).toHaveBeenCalled()
-      expect(deleteFn).toHaveBeenCalledWith(props.photo)
     })
 
     it("renders error message", () => {
