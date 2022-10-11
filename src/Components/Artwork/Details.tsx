@@ -11,6 +11,7 @@ import { NewSaveButtonFragmentContainer } from "./SaveButton"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useState } from "react"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -20,6 +21,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
 }
@@ -167,12 +169,24 @@ const BidInfo: React.FC<DetailsProps> = ({
   )
 }
 
+const HighDemandInfo = () => {
+  return (
+    <Flex flexDirection="row">
+      <HighDemandIcon />
+      <Text variant="sm-display" color="blue100" ml={0.5}>
+        High Demand
+      </Text>
+    </Flex>
+  )
+}
+
 export const Details: React.FC<DetailsProps> = ({
   contextModule,
   hideArtistName,
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
   ...rest
@@ -215,6 +229,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
+        {showHighDemandIcon && <HighDemandInfo />}
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />

@@ -40,6 +40,15 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const isTeam = userIsTeam(user)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
+  const isP1Artist = artwork.artist?.targetSupply?.isP1
+  const isHighDemand =
+    Number((artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
+
+  const showDemandIndexHints = true
+
+  const showHighDemandIcon =
+    isP1Artist && isHighDemand && showDemandIndexHints && isMyCollectionArtwork
+
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
   const height = Math.floor(width / aspectRatio)
@@ -130,6 +139,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         showHoverDetails={showHoverDetails}
         disableRouterLinking={disableRouterLinking}
         isMyCollectionArtwork={isMyCollectionArtwork}
+        showHighDemandIcon={!!showHighDemandIcon}
       />
     </div>
   )
@@ -217,6 +227,14 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           aspect_ratio: aspectRatio
         }
         artistNames
+        artist {
+          targetSupply {
+            isP1
+          }
+        }
+        marketPriceInsights {
+          demandRank
+        }
         href
         ...Metadata_artwork
         ...SaveButton_artwork

@@ -14,6 +14,14 @@ export type GridItem_artwork = {
         readonly aspect_ratio: number;
     } | null;
     readonly artistNames: string | null;
+    readonly artist: {
+        readonly targetSupply: {
+            readonly isP1: boolean | null;
+        } | null;
+    } | null;
+    readonly marketPriceInsights: {
+        readonly demandRank: number | null;
+    } | null;
     readonly href: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
     readonly " $refType": "GridItem_artwork";
@@ -101,6 +109,53 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "demandRank",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "href",
       "storageKey": null
@@ -124,5 +179,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'a93086728692841831fb5b17dd14dd06';
+(node as any).hash = '7473e985ed23e8d057bf5e865a867751';
 export default node;
