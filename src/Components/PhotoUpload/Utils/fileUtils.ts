@@ -2,9 +2,9 @@ import { ErrorCode, FileRejection } from "react-dropzone"
 import { Environment } from "relay-runtime"
 import createLogger from "Utils/logger"
 import uuid from "uuid"
-import { createGeminiAssetWithS3Credentials } from "../Mutations/createGeminiAssetWithS3Credentials"
-import { getConvectionGeminiKey } from "../Mutations/getConvectionGeminiKey"
-import { getGeminiCredentialsForEnvironment } from "../Mutations/getGeminiCredentialsForEnvironment"
+import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
+import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
+import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import { uploadFileToS3 } from "./uploadFileToS3"
 
 const logger = createLogger("PhotoUpload/fileUtils.ts")
@@ -26,10 +26,11 @@ export function formatFileSize(size?: number): string {
 export interface Photo {
   id: string
   assetId?: string
-  file?: File
+  file?: File | ExternalFile
   name: string
   size?: number
   url?: string
+  externalUrl?: string
   geminiToken?: string
   abortUploading?: () => void
   progress?: number
@@ -39,10 +40,22 @@ export interface Photo {
   errorMessage?: string
 }
 
-export function normalizePhoto(file: File, errorMessage?: string): Photo {
+interface ExternalFile {
+  name: string
+  externalUrl: string
+  size?: number
+  type?: string
+}
+
+export function normalizePhoto(
+  file: File | ExternalFile,
+  errorMessage?: string,
+  externalUrl?: string
+): Photo {
   return {
     id: uuid(),
     assetId: undefined,
+    externalUrl,
     file,
     name: file.name,
     size: file.size,

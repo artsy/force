@@ -65,7 +65,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
   useEffect(() => {
     const imagesToUpload = values.photos.filter(
-      c => !(c.geminiToken || c.url) && !c.loading
+      c => !(c.geminiToken || c.url) && !c.loading && !c.errorMessage
     )
 
     if (imagesToUpload.length) {

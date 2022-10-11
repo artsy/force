@@ -1,5 +1,13 @@
-import { AssetCredentials } from "../Mutations/getGeminiCredentialsForEnvironment"
+import { AssetCredentials } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
 import { Photo } from "./fileUtils"
+
+// Fetches the artwork image and returns a file that can then be used to upload the image to S3.
+const fetchExternalFile = async (photo: Photo) => {
+  const response = await fetch(photo.externalUrl!)
+  const blob = await response.blob()
+
+  return new File([blob], photo.name)
+}
 
 export const uploadFileToS3 = (
   photo: Photo,
@@ -7,7 +15,7 @@ export const uploadFileToS3 = (
   asset: AssetCredentials,
   updateProgress: (progress: number) => void
 ): Promise<string | undefined> =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     if (!asset) {
       reject(new Error("Empty credentials"))
       return
@@ -23,8 +31,19 @@ export const uploadFileToS3 = (
     const bucket = asset.policyDocument.conditions.bucket
     const uploadURL = `https://${bucket}.s3.amazonaws.com`
 
+    const isExternalPhoto = photo.externalUrl
+
+    let file
+
+    try {
+      file = isExternalPhoto ? await fetchExternalFile(photo) : photo.file
+    } catch (error) {
+      reject(new Error("Initializing artwork photo failed."))
+      return
+    }
+
     const data = {
-      acl: acl,
+      acl,
       "Content-Type": photo.file.type,
       key: geminiKey + "/${filename}", // NOTE: This form (which _looks_ like ES6 interpolation) is required by AWS
       AWSAccessKeyId: asset.credentials,
@@ -32,7 +51,7 @@ export const uploadFileToS3 = (
         asset.policyDocument.conditions.successActionStatus,
       policy: asset.policyEncoded,
       signature: asset.signature,
-      file: photo.file,
+      file,
     }
 
     for (const key in data) {
