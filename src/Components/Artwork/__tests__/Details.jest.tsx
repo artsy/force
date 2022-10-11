@@ -24,6 +24,7 @@ describe("Details", () => {
   const getWrapper = async (
     response: Details_Test_QueryRawResponse["artwork"],
     restProps?: {
+      isMyCollectionArtwork?: boolean
       hideSaleInfo: boolean
       hidePartnerName: boolean
       hideArtistName: boolean
@@ -377,6 +378,41 @@ describe("Details", () => {
     })
   })
 
+  describe("Show High Demand Icon", () => {
+    beforeEach(() => {
+      const mockFeatureFlags = {
+        featureFlags: {
+          "show-my-collection-demand-index-hints": {
+            flagEnabled: true,
+            variant: {
+              name: "enabled",
+              enabled: true,
+            },
+          },
+        },
+      }
+
+      mockUseSystemContext.mockImplementation(() => mockFeatureFlags)
+    })
+    it("renders icon for MyCollectionArtwork in high demand", async () => {
+      props = {
+        isMyCollectionArtwork: true,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+
+      expect(wrapper.html()).toContain("High Demand")
+    })
+
+    it("does not render high demand icon for non-MyCollectionArtwork", async () => {
+      props = {
+        isMyCollectionArtwork: false,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+
+      expect(wrapper.html()).not.toContain("High Demand")
+    })
+  })
+
   it("should display save artwork button by default when showSaveButton prop is passed", async () => {
     props = {
       showSaveButton: true,
@@ -483,6 +519,15 @@ describe("Details", () => {
 const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
+  artist: {
+    id: "artist-id",
+    targetSupply: {
+      isP1: true,
+    },
+  },
+  marketPriceInsights: {
+    demandRank: 0.9,
+  },
   artists: [
     {
       id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
