@@ -3,7 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
-import { RegistrationAuctionTimer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
+import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
 
 export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data
@@ -54,9 +54,7 @@ const computeBannerProps = (props: ArtworkTopContextBarProps) => {
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
         href: context.href,
-        rightContent: (
-          <RegistrationAuctionTimer endAt={sale.registrationEndsAt} />
-        ),
+        rightContent: <RegistrationAuctionTimerFragmentContainer sale={sale} />,
       }
     }
     case "Fair": {
@@ -102,10 +100,10 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
           isAuction
           isBenefit
           isGalleryAuction
-          registrationEndsAt
           coverImage {
             url
           }
+          ...RegistrationAuctionTimer_sale
         }
         context {
           __typename

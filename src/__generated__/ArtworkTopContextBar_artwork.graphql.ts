@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16a5e9dd43e34ce8dc4caf762652534b>>
+ * @generated SignedSource<<bde4b7c5b219d6b48084722e5040ace5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,7 +47,7 @@ export type ArtworkTopContextBar_artwork$data = {
     readonly isAuction: boolean | null;
     readonly isBenefit: boolean | null;
     readonly isGalleryAuction: boolean | null;
-    readonly registrationEndsAt: string | null;
+    readonly " $fragmentSpreads": FragmentRefs<"RegistrationAuctionTimer_sale">;
   } | null;
   readonly " $fragmentType": "ArtworkTopContextBar_artwork";
 };
@@ -130,19 +130,17 @@ return {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "registrationEndsAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "coverImage",
           "plural": false,
           "selections": (v1/*: any*/),
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "RegistrationAuctionTimer_sale"
         }
       ],
       "storageKey": null
@@ -236,6 +234,6 @@ return {
 };
 })();
 
-(node as any).hash = "d1fa605552895f81ee64aa055d7b3ae6";
+(node as any).hash = "b7a3b152d9e93a73ee7d0f513bf48c6f";
 
 export default node;

@@ -1,14 +1,16 @@
 import { Flex, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
+import { createFragmentContainer, graphql } from "react-relay"
+import { RegistrationAuctionTimer_sale$data } from "__generated__/RegistrationAuctionTimer_sale.graphql"
 
 interface RegistrationAuctionTimerProps {
-  endAt: string | null
+  sale: RegistrationAuctionTimer_sale$data
 }
 
-export const RegistrationAuctionTimer: React.FC<RegistrationAuctionTimerProps> = ({
-  endAt,
+const RegistrationAuctionTimer: React.FC<RegistrationAuctionTimerProps> = ({
+  sale,
 }) => {
-  if (!endAt) {
+  if (!sale.registrationEndsAt || sale.isRegistrationClosed) {
     return null
   }
 
@@ -17,7 +19,24 @@ export const RegistrationAuctionTimer: React.FC<RegistrationAuctionTimerProps> =
       <Text variant="xs" color="black60" mr={0.5}>
         Registration for this auction ends:
       </Text>
-      <Timer endDate={endAt} minWidth={110} textAlign="center" variant="xs" />
+      <Timer
+        endDate={sale.registrationEndsAt}
+        minWidth={110}
+        textAlign="center"
+        variant="xs"
+      />
     </Flex>
   )
 }
+
+export const RegistrationAuctionTimerFragmentContainer = createFragmentContainer(
+  RegistrationAuctionTimer,
+  {
+    sale: graphql`
+      fragment RegistrationAuctionTimer_sale on Sale {
+        registrationEndsAt
+        isRegistrationClosed
+      }
+    `,
+  }
+)

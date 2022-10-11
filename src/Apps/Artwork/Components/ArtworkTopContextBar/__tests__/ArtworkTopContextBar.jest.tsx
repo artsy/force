@@ -85,28 +85,84 @@ describe("ArtworkTopContextBar", () => {
       expect(html).not.toContain("partnerHref")
     })
 
-    it("renders the auction registration countdown", () => {
-      const registrationEndsAt = DateTime.local().plus({ hours: 1 }).toString()
-      const wrapper = getWrapper({
-        Artwork: () => ({
-          context: {
-            __typename: "Sale",
-            name: "saleName",
-            href: "saleHref",
-          },
-          sale: {
-            registrationEndsAt,
-          },
-        }),
-        Partner: () => ({
-          name: "partnerName",
-        }),
+    describe("the auction registration countdown", () => {
+      it("does not render by default", () => {
+        const wrapper = getWrapper({
+          Artwork: () => ({
+            context: {
+              __typename: "Sale",
+              name: "saleName",
+              href: "saleHref",
+            },
+            sale: {
+              registrationEndsAt: null,
+              isRegistrationClosed: false,
+            },
+          }),
+          Partner: () => ({
+            name: "partnerName",
+          }),
+        })
+
+        const text = wrapper.text()
+
+        expect(text).not.toContain("Registration for this auction ends:")
+        expect(wrapper.find("Timer").length).toBe(0)
       })
 
-      const text = wrapper.text()
+      it("does not render if registration is closed", () => {
+        const registrationEndsAt = DateTime.local()
+          .plus({ hours: 1 })
+          .toString()
+        const wrapper = getWrapper({
+          Artwork: () => ({
+            context: {
+              __typename: "Sale",
+              name: "saleName",
+              href: "saleHref",
+            },
+            sale: {
+              registrationEndsAt,
+              isRegistrationClosed: true,
+            },
+          }),
+          Partner: () => ({
+            name: "partnerName",
+          }),
+        })
 
-      expect(text).toContain("Registration for this auction ends:")
-      expect(wrapper.find("Timer").length).toBe(1)
+        const text = wrapper.text()
+
+        expect(text).not.toContain("Registration for this auction ends:")
+        expect(wrapper.find("Timer").length).toBe(0)
+      })
+
+      it("render when sale registration is not closed", () => {
+        const registrationEndsAt = DateTime.local()
+          .plus({ hours: 1 })
+          .toString()
+        const wrapper = getWrapper({
+          Artwork: () => ({
+            context: {
+              __typename: "Sale",
+              name: "saleName",
+              href: "saleHref",
+            },
+            sale: {
+              registrationEndsAt,
+              isRegistrationClosed: false,
+            },
+          }),
+          Partner: () => ({
+            name: "partnerName",
+          }),
+        })
+
+        const text = wrapper.text()
+
+        expect(text).toContain("Registration for this auction ends:")
+        expect(wrapper.find("Timer").length).toBe(1)
+      })
     })
   })
 
