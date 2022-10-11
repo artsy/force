@@ -119,7 +119,7 @@ describe("MyCollectionArtwork", () => {
             .find(c => c.textContent?.includes("Request a Price Estimate"))
         ).toHaveAttribute(
           "href",
-          `/my-collection/artwork/63035a6b41808b000c7e2933/request-for-price-estimate`
+          `/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
         )
       })
     })

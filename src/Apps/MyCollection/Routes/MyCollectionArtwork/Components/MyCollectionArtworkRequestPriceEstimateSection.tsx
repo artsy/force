@@ -36,7 +36,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
             specialist.
           </Text>
           <RouterLink
-            to={`/my-collection/artwork/${artwork.internalID}/request-for-price-estimate`}
+            to={`/my-collection/artwork/${artwork.internalID}/price-estimate`}
             textDecoration="none"
             display="block"
             onClick={() => setIsPriceEstimteRequested(true)}
