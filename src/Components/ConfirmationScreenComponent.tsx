@@ -4,9 +4,9 @@ import { RouterLink } from "System/Router/RouterLink"
 export const ConfirmationScreenComponent: React.FC<{
   title: string
   subtitle: string
-  buttonTitle: string
+  buttonText: string
   routerLink: string
-}> = ({ title, subtitle, buttonTitle, routerLink }) => {
+}> = ({ title, subtitle, buttonText, routerLink }) => {
   return (
     <>
       <Text variant="xl" mt={4}>
@@ -22,7 +22,7 @@ export const ConfirmationScreenComponent: React.FC<{
       >
         <RouterLink to={routerLink}>
           <Button width={["100%", "auto"]} size="large" variant="primaryBlack">
-            {buttonTitle}
+            {buttonText}
           </Button>
         </RouterLink>
       </Flex>

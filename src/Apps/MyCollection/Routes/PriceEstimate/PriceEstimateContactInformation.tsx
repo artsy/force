@@ -88,7 +88,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
 
       router.replace(`/my-collection/artwork/${artwork.internalID}`)
       router.push(
-        `/my-collection/artwork/${artwork.internalID}/price-estimate/confirmation`
+        `/my-collection/artwork/${artwork.internalID}/price-estimate/success`
       )
     } catch (error) {
       console.error(error)

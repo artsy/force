@@ -35,7 +35,7 @@ export const PriceEstimateConfirmation = () => {
           title="Price Estimate Request Sent"
           subtitle="An Artsy Specialist will evaluate your artwork and contact you with a
       free price estimate."
-          buttonTitle="Back to My Collection"
+          buttonText="Back to My Collection"
           routerLink={`/my-collection/artwork/${artworkId}`}
         />
       </AppContainer>
