@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
@@ -44,10 +45,15 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const isHighDemand =
     Number((artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const showDemandIndexHints = true
+  const showDemandIndexHints = useFeatureFlag(
+    "show-my-collection-demand-index-hints"
+  )
 
   const showHighDemandIcon =
-    isP1Artist && isHighDemand && showDemandIndexHints && isMyCollectionArtwork
+    !!isP1Artist &&
+    isHighDemand &&
+    !!showDemandIndexHints &&
+    isMyCollectionArtwork
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -139,7 +145,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         showHoverDetails={showHoverDetails}
         disableRouterLinking={disableRouterLinking}
         isMyCollectionArtwork={isMyCollectionArtwork}
-        showHighDemandIcon={!!showHighDemandIcon}
+        showHighDemandIcon={showHighDemandIcon}
       />
     </div>
   )
