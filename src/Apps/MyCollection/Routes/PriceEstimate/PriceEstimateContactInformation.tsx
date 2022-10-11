@@ -142,7 +142,12 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
 
               <Text variant="xs" color="black60">
                 By continuing, you agree to{" "}
-                <RouterLink color="black60" to="/privacy" target="_blank">
+                <RouterLink
+                  color="black60"
+                  to="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Artsy's Privacy Policy
                 </RouterLink>
                 .
