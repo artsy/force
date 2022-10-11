@@ -2,6 +2,7 @@ import { ArtworkTopContextBar_Test_Query } from "__generated__/ArtworkTopContext
 import { ArtworkTopContextBarFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { DateTime } from "luxon"
 
 jest.unmock("react-relay")
 
@@ -82,6 +83,30 @@ describe("ArtworkTopContextBar", () => {
 
       const html = wrapper.html()
       expect(html).not.toContain("partnerHref")
+    })
+
+    it("renders the auction registration countdown", () => {
+      const registrationEndsAt = DateTime.local().plus({ hours: 1 }).toString()
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Sale",
+            name: "saleName",
+            href: "saleHref",
+          },
+          sale: {
+            registrationEndsAt,
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
+
+      const text = wrapper.text()
+
+      expect(text).toContain("Registration for this auction ends:")
+      expect(wrapper.find("Timer").length).toBe(1)
     })
   })
 
