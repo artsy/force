@@ -1033,7 +1033,14 @@ return {
                     "name": "qualifiedForBidding",
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v12/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "qualifiedForBidding",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               },

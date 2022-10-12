@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38f28c176467eed7be56caa46509959c>>
+ * @generated SignedSource<<ad701d7b202b3b7e3c47a223ff7250d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,10 @@ export type ArtworkActionsSaveButton_artwork$data = {
     readonly isClosed: boolean | null;
     readonly isRegistrationClosed: boolean | null;
     readonly registrationEndsAt: string | null;
+    readonly registrationStatus: {
+      readonly qualifiedForBidding: boolean | null;
+    } | null;
+    readonly requireIdentityVerification: boolean | null;
   } | null;
   readonly slug: string;
   readonly title: string | null;
@@ -90,6 +94,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "requireIdentityVerification",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "isRegistrationClosed",
           "storageKey": null
         },
@@ -98,6 +109,24 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "registrationEndsAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Bidder",
+          "kind": "LinkedField",
+          "name": "registrationStatus",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "qualifiedForBidding",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -120,6 +149,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "088315f97e4bd8496a8507f95a3b0d39";
+(node as any).hash = "c8b982e5ad4c32a3c0ce381e62ed1c6c";
 
 export default node;
