@@ -113,9 +113,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     />
   )
 
-  const SaveButton = () => {
-    return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
-  }
+  const SaveButton = (
+    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+  )
 
   const actions = [
     {
