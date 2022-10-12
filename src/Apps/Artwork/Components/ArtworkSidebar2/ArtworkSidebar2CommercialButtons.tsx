@@ -39,7 +39,7 @@ const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
   }
 
   return (
-    <Text variant="lg-display" color="black100">
+    <Text variant="lg-display" color="black100" data-test="SaleMessage">
       {saleMessage}
     </Text>
   )
