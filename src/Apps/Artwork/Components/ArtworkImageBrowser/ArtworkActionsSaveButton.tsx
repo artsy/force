@@ -33,16 +33,13 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const {
     isAuction,
     isClosed,
-    registrationEndsAt,
+    isLiveOpen,
     isRegistrationClosed,
     registrationStatus,
-    requireIdentityVerification,
   } = artwork.sale ?? {}
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.is_saved
-  const qualifiedForBidding = registrationStatus?.qualifiedForBidding ?? false
-  const userHasPendingVerification =
-    requireIdentityVerification && me.pendingIdentityVerification?.internalID
+  const registrationAttempted = !!registrationStatus
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -70,8 +67,8 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
                   !isLoggedIn ||
                   isSaved ||
                   isRegistrationClosed ||
-                  qualifiedForBidding ||
-                  userHasPendingVerification
+                  registrationAttempted ||
+                  isLiveOpen
                 ) {
                   return
                 }
@@ -110,9 +107,9 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         sale {
           isAuction
           isClosed
+          isLiveOpen
           requireIdentityVerification
           isRegistrationClosed
-          registrationEndsAt
           registrationStatus {
             qualifiedForBidding
           }
