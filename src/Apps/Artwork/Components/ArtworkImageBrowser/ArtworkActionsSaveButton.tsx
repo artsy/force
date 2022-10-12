@@ -14,7 +14,6 @@ import { ArtworkActionsSaveButton_me$data } from "__generated__/ArtworkActionsSa
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System"
-import { DateTime, Duration } from "luxon"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -44,19 +43,6 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const qualifiedForBidding = registrationStatus?.qualifiedForBidding ?? false
   const userHasPendingVerification =
     requireIdentityVerification && me.pendingIdentityVerification?.internalID
-
-  const checkIsAuctionRegistrationEnded = () => {
-    if (!registrationEndsAt) {
-      return false
-    }
-
-    const endDate = DateTime.fromISO(registrationEndsAt)
-    const difference = endDate.diffNow().toString()
-    const timeBeforeEnd = Duration.fromISO(difference)
-    const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
-
-    return hasEnded
-  }
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -90,11 +76,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
                   return
                 }
 
-                // We check whether the registration was closed
-                // while the user was on the page
-                if (!checkIsAuctionRegistrationEnded()) {
-                  onVisible()
-                }
+                onVisible()
               }}
             />
           )
