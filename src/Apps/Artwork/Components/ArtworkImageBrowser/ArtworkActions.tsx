@@ -48,78 +48,70 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     isViewInRoomVisible,
   } = useViewInRoom()
 
-  const ViewInRoomButton = () => {
-    return (
-      <UtilButton
-        name="viewInRoom"
-        label="View in room"
-        onClick={() => {
-          selectDefaultSlide()
-          showViewInRoom()
-        }}
-      />
-    )
-  }
+  const ViewInRoomButton = (
+    <UtilButton
+      name="viewInRoom"
+      label="View in room"
+      onClick={() => {
+        selectDefaultSlide()
+        showViewInRoom()
+      }}
+    />
+  )
 
-  const ShareButton = () => {
-    return (
-      <Popover
-        placement="top"
-        title="Share"
-        popover={
-          <ArtworkSharePanelFragmentContainer
-            width={300}
-            pt={1}
-            artwork={artwork}
+  const ShareButton = (
+    <Popover
+      placement="top"
+      title="Share"
+      popover={
+        <ArtworkSharePanelFragmentContainer
+          width={300}
+          pt={1}
+          artwork={artwork}
+        />
+      }
+    >
+      {({ anchorRef, onVisible }) => {
+        return (
+          <UtilButton
+            ref={anchorRef}
+            name="share"
+            onClick={() => {
+              onVisible()
+              toggleSharePanel() // Tracking
+            }}
+            label="Share"
           />
-        }
-      >
-        {({ anchorRef, onVisible }) => {
-          return (
-            <UtilButton
-              ref={anchorRef}
-              name="share"
-              onClick={() => {
-                onVisible()
-                toggleSharePanel() // Tracking
-              }}
-              label="Share"
-            />
-          )
-        }}
-      </Popover>
-    )
-  }
+        )
+      }}
+    </Popover>
+  )
 
-  const DownloadButton = () => {
-    return <ArtworkDownloadButtonFragmentContainer artwork={artwork} />
-  }
+  const DownloadButton = (
+    <ArtworkDownloadButtonFragmentContainer artwork={artwork} />
+  )
 
-  const EditButton = () => {
-    return (
-      <UtilButton
-        name="edit"
-        href={`${getENV("CMS_URL")}/artworks/${
-          artwork.slug
-        }/edit?current_partner_id=${artwork.partner?.slug}`}
-        label="Edit"
-        Component={UtilButtonLink}
-      />
-    )
-  }
+  const EditButton = (
+    <UtilButton
+      name="edit"
+      href={`${getENV("CMS_URL")}/artworks/${
+        artwork.slug
+      }/edit?current_partner_id=${artwork.partner?.slug}`}
+      label="Edit"
+      Component={UtilButtonLink}
+    />
+  )
 
-  const GenomeButton = () => {
-    return (
-      <UtilButton
-        name="genome"
-        href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
-          artwork.slug
-        }`}
-        label="Genome"
-        Component={UtilButtonLink}
-      />
-    )
-  }
+  const GenomeButton = (
+    <UtilButton
+      name="genome"
+      href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
+        artwork.slug
+      }`}
+      label="Genome"
+      Component={UtilButtonLink}
+    />
+  )
 
   const SaveButton = () => {
     return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
@@ -129,32 +121,32 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     {
       name: "save",
       condition: true,
-      Component: SaveButton,
+      content: SaveButton,
     },
     {
       name: "viewInRoom",
       condition: artwork.is_hangable,
-      Component: ViewInRoomButton,
+      content: ViewInRoomButton,
     },
     {
       name: "share",
       condition: true,
-      Component: ShareButton,
+      content: ShareButton,
     },
     {
       name: "download",
       condition: !!artwork.is_downloadable || isTeam,
-      Component: DownloadButton,
+      content: DownloadButton,
     },
     {
       name: "edit",
       condition: isAdmin && !!artwork.partner,
-      Component: EditButton,
+      content: EditButton,
     },
     {
       name: "genome",
       condition: isAdmin,
-      Component: GenomeButton,
+      content: GenomeButton,
     },
   ]
 
@@ -178,7 +170,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
               {displayableActions.map(action => {
                 return (
                   <React.Fragment key={action.name}>
-                    <action.Component />
+                    {action.content}
                   </React.Fragment>
                 )
               })}
@@ -190,7 +182,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
               {initialActions.map(action => {
                 return (
                   <React.Fragment key={action.name}>
-                    <action.Component />
+                    {action.content}
                   </React.Fragment>
                 )
               })}
@@ -201,11 +193,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
                   popover={
                     <Box width={300}>
                       {moreActions.map(action => {
-                        return (
-                          <Flex key={action.name}>
-                            <action.Component />
-                          </Flex>
-                        )
+                        return <Flex key={action.name}>{action.content}</Flex>
                       })}
                     </Box>
                   }
