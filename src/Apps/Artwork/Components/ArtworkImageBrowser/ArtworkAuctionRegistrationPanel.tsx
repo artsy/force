@@ -11,17 +11,22 @@ interface ArtworkAuctionRegistrationPanelProps {
 const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelProps> = ({
   artwork,
 }) => {
+  const { registrationEndsAt } = artwork.sale ?? {}
+
   return (
     <Box width={410}>
       <Separator my={1} />
 
       <Flex alignItems="center" justifyContent="space-between">
-        <Box mr={1}>
-          <Text variant="xs" color="black60">
-            Registration for this auction ends:
-          </Text>
-          <Timer variant="xs" endDate={artwork.sale?.registrationEndsAt!} />
-        </Box>
+        {registrationEndsAt && (
+          <Box mr={1}>
+            <Text variant="xs" color="black60">
+              Registration for this auction ends:
+            </Text>
+            <Timer variant="xs" endDate={registrationEndsAt} />
+          </Box>
+        )}
+
         <Button
           // @ts-ignore
           as={RouterLink}

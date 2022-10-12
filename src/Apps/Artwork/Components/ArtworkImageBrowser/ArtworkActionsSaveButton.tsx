@@ -32,6 +32,19 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const isSaved = !!artwork.is_saved
   const { registrationEndsAt, isRegistrationClosed } = artwork.sale ?? {}
 
+  const checkIsAuctionRegistrationEnded = () => {
+    if (!registrationEndsAt) {
+      return false
+    }
+
+    const endDate = DateTime.fromISO(registrationEndsAt)
+    const difference = endDate.diffNow().toString()
+    const timeBeforeEnd = Duration.fromISO(difference)
+    const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
+
+    return hasEnded
+  }
+
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
     const FilledIcon = () => <BellFillIcon fill="blue100" />
@@ -54,23 +67,13 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
               onClick={() => {
                 handleSave()
 
-                if (
-                  !isLoggedIn ||
-                  !registrationEndsAt ||
-                  isSaved ||
-                  isRegistrationClosed
-                ) {
+                if (!isLoggedIn || isSaved || isRegistrationClosed) {
                   return
                 }
 
                 // We check whether the registration was closed
                 // while the user was on the page
-                const endDate = DateTime.fromISO(registrationEndsAt)
-                const difference = endDate.diffNow().toString()
-                const timeBeforeEnd = Duration.fromISO(difference)
-                const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
-
-                if (!hasEnded) {
+                if (!checkIsAuctionRegistrationEnded()) {
                   onVisible()
                 }
               }}
