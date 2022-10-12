@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f788637fe067e8ea13b4beb6240d5ac>>
+ * @generated SignedSource<<39a371207799c1861288fd892de76158>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ArtworkActionsSaveButton_artwork$data = {
   } | null;
   readonly slug: string;
   readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionRegistrationPanel_artwork">;
   readonly " $fragmentType": "ArtworkActionsSaveButton_artwork";
 };
 export type ArtworkActionsSaveButton_artwork$key = {
@@ -92,12 +93,17 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isSaved",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkAuctionRegistrationPanel_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "f9f932f8bf5211f17e9a67fe030f2e48";
+(node as any).hash = "18c1cc2b2781e8a5945995551deb1b26";
 
 export default node;

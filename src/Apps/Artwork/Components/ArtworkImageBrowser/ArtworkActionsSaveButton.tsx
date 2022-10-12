@@ -4,12 +4,14 @@ import {
   BellIcon,
   HeartFillIcon,
   HeartIcon,
+  Popover,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { UtilButton } from "./UtilButton"
+import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -32,12 +34,28 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     const FilledIcon = () => <BellFillIcon fill="blue100" />
 
     return (
-      <UtilButton
-        name="bell"
-        Icon={isSaved ? FilledIcon : BellIcon}
-        label="Watch lot"
-        onClick={handleSave}
-      />
+      <Popover
+        title="Title"
+        placement="top"
+        popover={
+          <ArtworkAuctionRegistrationPanelFragmentContainer artwork={artwork} />
+        }
+      >
+        {({ anchorRef, onVisible }) => {
+          return (
+            <UtilButton
+              ref={anchorRef}
+              name="bell"
+              Icon={isSaved ? FilledIcon : BellIcon}
+              label="Watch lot"
+              onClick={() => {
+                handleSave()
+                onVisible()
+              }}
+            />
+          )
+        }}
+      </Popover>
     )
   } else {
     const FilledIcon = () => <HeartFillIcon fill="blue100" />
@@ -68,6 +86,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           isClosed
         }
         is_saved: isSaved
+        ...ArtworkAuctionRegistrationPanel_artwork
       }
     `,
   }
