@@ -137,9 +137,9 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 
 const HighDemandInfo = () => {
   return (
-    <Flex flexDirection="row">
+    <Flex flexDirection="row" alignItems="center">
       <HighDemandIcon />
-      <Text variant="sm-display" color="blue100" ml={0.5}>
+      <Text variant="xs" color="blue100" ml={0.5}>
         High Demand
       </Text>
     </Flex>
