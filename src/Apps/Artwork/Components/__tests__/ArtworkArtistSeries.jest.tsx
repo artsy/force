@@ -162,6 +162,15 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                     slug: "yayoi-kusama-pumpkin-2222222222222222",
                     href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
                     internalID: "zzz123",
+                    artist: {
+                      id: "artist-id",
+                      targetSupply: {
+                        isP1: null,
+                      },
+                    },
+                    marketPriceInsights: {
+                      demandRank: null,
+                    },
                     image: {
                       resized: {
                         src: "pumpkins.jpg",
