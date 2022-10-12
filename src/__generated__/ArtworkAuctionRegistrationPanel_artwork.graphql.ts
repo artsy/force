@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4785cff90ca5dc2a4ac1c3470525f4b2>>
+ * @generated SignedSource<<85cfe4945d9cfc2e911617eea974154f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ArtworkAuctionRegistrationPanel_artwork$data = {
   readonly sale: {
     readonly isRegistrationClosed: boolean | null;
     readonly registrationEndsAt: string | null;
+    readonly slug: string;
   } | null;
   readonly " $fragmentType": "ArtworkAuctionRegistrationPanel_artwork";
 };
@@ -40,6 +41,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "registrationEndsAt",
           "storageKey": null
         },
@@ -58,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "be17eca6cd8987b627c99e5e0e09ab10";
+(node as any).hash = "2623e667bbf5314680f6d12b6b152301";
 
 export default node;

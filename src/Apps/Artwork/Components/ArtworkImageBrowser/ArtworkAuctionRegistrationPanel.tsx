@@ -2,6 +2,7 @@ import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ArtworkAuctionRegistrationPanelProps {
   artwork: ArtworkAuctionRegistrationPanel_artwork$data
@@ -21,7 +22,14 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
           </Text>
           <Timer variant="xs" endDate={artwork.sale?.registrationEndsAt!} />
         </Box>
-        <Button size="small">Register to Bid</Button>
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          to={`/auction-registration/${artwork.sale?.slug}`}
+          size="small"
+        >
+          Register to Bid
+        </Button>
       </Flex>
     </Box>
   )
@@ -33,6 +41,7 @@ export const ArtworkAuctionRegistrationPanelFragmentContainer = createFragmentCo
     artwork: graphql`
       fragment ArtworkAuctionRegistrationPanel_artwork on Artwork {
         sale {
+          slug
           registrationEndsAt
           isRegistrationClosed
         }
