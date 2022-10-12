@@ -2,7 +2,6 @@ import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwor
 import { useSystemContext } from "System"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -17,6 +16,7 @@ import {
 } from "Components/ViewInRoom/ViewInRoom"
 import { getENV } from "Utils/getENV"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
+import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
@@ -47,8 +47,6 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     hideViewInRoom,
     isViewInRoomVisible,
   } = useViewInRoom()
-
-  const { is_downloadable, artists, title, date } = artwork
 
   const ViewInRoomButton = () => {
     return (
@@ -94,18 +92,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   }
 
   const DownloadButton = () => {
-    const artistNames = (artists ?? []).map(artist => artist?.name).join(", ")
-    const filename = compact([artistNames, title, date]).join(", ").trim()
-
-    return (
-      <UtilButton
-        name="download"
-        href={artwork.downloadableImageUrl!}
-        label="Download"
-        download={filename}
-        Component={UtilButtonLink}
-      />
-    )
+    return <ArtworkDownloadButtonFragmentContainer artwork={artwork} />
   }
 
   const EditButton = () => {
@@ -156,7 +143,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     },
     {
       name: "download",
-      condition: !!is_downloadable || isTeam,
+      condition: !!artwork.is_downloadable || isTeam,
       Component: DownloadButton,
     },
     {
@@ -248,12 +235,9 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkActions_artwork on Artwork {
         ...ArtworkActionsSaveButton_artwork
+        ...ArtworkDownloadButton_artwork
         ...ArtworkSharePanel_artwork
         ...ViewInRoom_artwork
-        artists {
-          name
-        }
-        date
         dimensions {
           cm
         }
@@ -270,7 +254,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         partner {
           slug
         }
-        title
         sale {
           is_closed: isClosed
           is_auction: isAuction
