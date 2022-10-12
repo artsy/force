@@ -131,11 +131,6 @@ describe("Price Estimate Contact Information", () => {
       expect(
         screen.getByText("Let us know how to reach you")
       ).toBeInTheDocument()
-      expect(
-        screen.getByText(
-          "We wil only use these details to contact you about this price estimate."
-        )
-      ).toBeInTheDocument()
       expect(screen.getByText("Back")).toBeInTheDocument()
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
