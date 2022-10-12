@@ -19,6 +19,8 @@ import { NewSaveButtonFragmentContainer } from "./SaveButton"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useState } from "react"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -28,6 +30,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  isMyCollectionArtwork?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
 }
@@ -132,6 +135,17 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
   )
 }
 
+const HighDemandInfo = () => {
+  return (
+    <Flex flexDirection="row">
+      <HighDemandIcon />
+      <Text variant="sm-display" color="blue100" ml={0.5}>
+        High Demand
+      </Text>
+    </Flex>
+  )
+}
+
 const NBSP = " "
 
 const SaleMessage: React.FC<DetailsProps> = ({
@@ -184,11 +198,26 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  isMyCollectionArtwork = false,
   showHoverDetails = true,
   showSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
+
+  const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
+  const isHighDemand =
+    Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
+
+  const showDemandIndexHints = useFeatureFlag(
+    "show-my-collection-demand-index-hints"
+  )
+
+  const showHighDemandIcon =
+    !!isP1Artist &&
+    isHighDemand &&
+    !!showDemandIndexHints &&
+    isMyCollectionArtwork
 
   return (
     <Box>
@@ -226,6 +255,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
+        {showHighDemandIcon && <HighDemandInfo />}
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
@@ -321,6 +351,14 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       date
       sale_message: saleMessage
       cultural_maker: culturalMaker
+      artist {
+        targetSupply {
+          isP1
+        }
+      }
+      marketPriceInsights {
+        demandRank
+      }
       artists(shallow: true) {
         id
         href
