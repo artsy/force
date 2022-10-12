@@ -49,11 +49,7 @@ const AuctionAssociatedSale: React.FC<AuctionAssociatedSaleProps> = ({
           </Text>
 
           <Text variant="sm" color="black60">
-            {startCase(sale.associatedSale.displayTimelyAt!)
-              .replace("By", "by")
-              .replace(" In", " in")
-              .replace(" Am", "am")
-              .replace(" Pm", "pm")}
+            {sale.associatedSale.displayTimelyAt!}
           </Text>
         </RouterLink>
       </Column>
