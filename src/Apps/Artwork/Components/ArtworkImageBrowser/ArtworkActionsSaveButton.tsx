@@ -12,6 +12,8 @@ import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
+import { useSystemContext } from "System"
+import { DateTime, Duration } from "luxon"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -19,6 +21,7 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
+  const { isLoggedIn } = useSystemContext()
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.is_saved,
     artwork,
@@ -26,8 +29,8 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   })
 
   const isOpenSale = artwork.sale?.isAuction && !artwork.sale?.isClosed
-
   const isSaved = !!artwork.is_saved
+  const { registrationEndsAt, isRegistrationClosed } = artwork.sale ?? {}
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -50,7 +53,26 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
               label="Watch lot"
               onClick={() => {
                 handleSave()
-                onVisible()
+
+                if (
+                  !isLoggedIn ||
+                  !registrationEndsAt ||
+                  isSaved ||
+                  isRegistrationClosed
+                ) {
+                  return
+                }
+
+                // We check whether the registration was closed
+                // while the user was on the page
+                const endDate = DateTime.fromISO(registrationEndsAt)
+                const difference = endDate.diffNow().toString()
+                const timeBeforeEnd = Duration.fromISO(difference)
+                const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
+
+                if (!hasEnded) {
+                  onVisible()
+                }
               }}
             />
           )
@@ -84,6 +106,8 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         sale {
           isAuction
           isClosed
+          isRegistrationClosed
+          registrationEndsAt
         }
         is_saved: isSaved
         ...ArtworkAuctionRegistrationPanel_artwork
