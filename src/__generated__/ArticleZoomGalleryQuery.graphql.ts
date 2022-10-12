@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3c332e966648d0e9a7d548029e7796e>>
+ * @generated SignedSource<<f429900563876d243f4c56da71a3f696>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,20 +108,20 @@ v6 = {
   "name": "date",
   "storageKey": null
 },
-v7 = [
-  {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
+v8 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
 v9 = {
   "alias": null,
   "args": null,
@@ -147,7 +147,7 @@ v11 = [
 ],
 v12 = [
   (v9/*: any*/),
-  (v8/*: any*/)
+  (v7/*: any*/)
 ],
 v13 = {
   "kind": "InlineFragment",
@@ -172,13 +172,61 @@ v13 = {
     },
     {
       "alias": null,
-      "args": (v7/*: any*/),
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        (v7/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "demandRank",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": (v8/*: any*/),
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artists",
       "plural": true,
       "selections": [
-        (v8/*: any*/),
+        (v7/*: any*/),
         (v4/*: any*/),
         (v9/*: any*/)
       ],
@@ -193,7 +241,7 @@ v13 = {
     },
     {
       "alias": null,
-      "args": (v7/*: any*/),
+      "args": (v8/*: any*/),
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
@@ -201,7 +249,7 @@ v13 = {
       "selections": [
         (v9/*: any*/),
         (v4/*: any*/),
-        (v8/*: any*/)
+        (v7/*: any*/)
       ],
       "storageKey": "partner(shallow:true)"
     },
@@ -249,7 +297,7 @@ v13 = {
           "name": "isClosed",
           "storageKey": null
         },
-        (v8/*: any*/)
+        (v7/*: any*/)
       ],
       "storageKey": null
     },
@@ -328,11 +376,11 @@ v13 = {
           "selections": (v11/*: any*/),
           "storageKey": null
         },
-        (v8/*: any*/)
+        (v7/*: any*/)
       ],
       "storageKey": null
     },
-    (v8/*: any*/),
+    (v7/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -420,7 +468,7 @@ v17 = {
   "storageKey": null
 },
 v18 = [
-  (v8/*: any*/)
+  (v7/*: any*/)
 ],
 v19 = {
   "kind": "InlineFragment",
@@ -500,7 +548,7 @@ return {
                         "selections": [
                           (v3/*: any*/),
                           (v14/*: any*/),
-                          (v8/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "type": "ArticleImageSection",
                         "abstractKey": null
@@ -513,7 +561,7 @@ return {
                           (v6/*: any*/),
                           (v16/*: any*/),
                           (v17/*: any*/),
-                          (v8/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "type": "ArticleUnpublishedArtwork",
                         "abstractKey": null
@@ -591,19 +639,19 @@ return {
             ],
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1beed79b27d5f976d4b3595443d82423",
+    "cacheID": "9a7c689fcb43f8f766e73088f8283d56",
     "id": null,
     "metadata": {},
     "name": "ArticleZoomGalleryQuery",
     "operationKind": "query",
-    "text": "query ArticleZoomGalleryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleZoomGallery_article\n    id\n  }\n}\n\nfragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    ...Metadata_artwork\n    href\n  }\n  ... on ArticleImageSection {\n    caption\n  }\n  ... on ArticleUnpublishedArtwork {\n    title\n    date\n    artist {\n      name\n    }\n    partner {\n      name\n    }\n  }\n}\n\nfragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleImageSection {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleUnpublishedArtwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n}\n\nfragment ArticleZoomGallery_article on Article {\n  sections {\n    __typename\n    ... on ArticleSectionImageCollection {\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on ArticleUnpublishedArtwork {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n    ... on ArticleSectionImageSet {\n      title\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query ArticleZoomGalleryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleZoomGallery_article\n    id\n  }\n}\n\nfragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    ...Metadata_artwork\n    href\n  }\n  ... on ArticleImageSection {\n    caption\n  }\n  ... on ArticleUnpublishedArtwork {\n    title\n    date\n    artist {\n      name\n    }\n    partner {\n      name\n    }\n  }\n}\n\nfragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleImageSection {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleUnpublishedArtwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n}\n\nfragment ArticleZoomGallery_article on Article {\n  sections {\n    __typename\n    ... on ArticleSectionImageCollection {\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on ArticleUnpublishedArtwork {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n    ... on ArticleSectionImageSet {\n      title\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

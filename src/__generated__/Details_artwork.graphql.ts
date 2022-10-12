@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f9a1909c4c135824b8bfe42d529ff40>>
+ * @generated SignedSource<<b26ecad03a93f18ed609a96583735a76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork$data = {
+  readonly artist: {
+    readonly targetSupply: {
+      readonly isP1: boolean | null;
+    } | null;
+  } | null;
   readonly artists: ReadonlyArray<{
     readonly href: string | null;
     readonly id: string;
@@ -20,6 +25,9 @@ export type Details_artwork$data = {
   readonly cultural_maker: string | null;
   readonly date: string | null;
   readonly href: string | null;
+  readonly marketPriceInsights: {
+    readonly demandRank: number | null;
+  } | null;
   readonly partner: {
     readonly href: string | null;
     readonly name: string | null;
@@ -129,6 +137,53 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "culturalMaker",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "demandRank",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -312,6 +367,6 @@ return {
 };
 })();
 
-(node as any).hash = "be3d2becf54d0dfa23d893950bb22d7d";
+(node as any).hash = "958f68c7156c0bb40d30f343ffa6db34";
 
 export default node;

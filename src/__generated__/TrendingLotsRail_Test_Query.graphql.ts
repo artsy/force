@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cb8f5f2a0794af93bb60ff1ab1c0f63>>
+ * @generated SignedSource<<1e56035fc2b463af434e4b915e876739>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,19 +92,19 @@ v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 },
 v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -306,6 +306,54 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "culturalMaker",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Artist",
+                        "kind": "LinkedField",
+                        "name": "artist",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtistTargetSupply",
+                            "kind": "LinkedField",
+                            "name": "targetSupply",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isP1",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          (v0/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkPriceInsights",
+                        "kind": "LinkedField",
+                        "name": "marketPriceInsights",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "demandRank",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
                       },
                       {
@@ -519,7 +567,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee48a24e6a3ebbd99b40a01164b61f4a",
+    "cacheID": "76628362637303988b18221c27cad260",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -550,15 +598,29 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "viewer.trendingLotsConnection.edges.node.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "viewer.trendingLotsConnection.edges.node.artist.id": (v9/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artist.targetSupply": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistTargetSupply"
+        },
+        "viewer.trendingLotsConnection.edges.node.artist.targetSupply.isP1": (v10/*: any*/),
         "viewer.trendingLotsConnection.edges.node.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "viewer.trendingLotsConnection.edges.node.artists.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.href": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.artists.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.artists.name": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.artists.name": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.attributionClass": {
           "enumValues": null,
           "nullable": true,
@@ -566,11 +628,11 @@ return {
           "type": "AttributionClass"
         },
         "viewer.trendingLotsConnection.edges.node.attributionClass.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.attributionClass.name": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.collecting_institution": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.cultural_maker": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.date": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.attributionClass.name": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.collecting_institution": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.cultural_maker": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.date": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.href": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.id": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.image": {
           "enumValues": null,
@@ -578,11 +640,23 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "viewer.trendingLotsConnection.edges.node.image.height": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.src": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.width": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.height": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.src": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.width": (v12/*: any*/),
         "viewer.trendingLotsConnection.edges.node.internalID": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.is_saved": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.is_saved": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.marketPriceInsights": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkPriceInsights"
+        },
+        "viewer.trendingLotsConnection.edges.node.marketPriceInsights.demandRank": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        },
         "viewer.trendingLotsConnection.edges.node.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -596,30 +670,30 @@ return {
           "type": "Gene"
         },
         "viewer.trendingLotsConnection.edges.node.mediumType.filterGene.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.mediumType.filterGene.name": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.mediumType.filterGene.name": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "viewer.trendingLotsConnection.edges.node.partner.href": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.href": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.partner.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.partner.name": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.partner.name": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "viewer.trendingLotsConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.endAt": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.endAt": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v12/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.isClosed": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.is_closed": (v12/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.startAt": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.isClosed": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.is_closed": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.startAt": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -628,34 +702,34 @@ return {
         },
         "viewer.trendingLotsConnection.edges.node.sale_artwork.counts": (v7/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.counts.bidder_positions": (v8/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.endAt": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.extendedBiddingEndAt": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.formattedEndDateTime": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.endAt": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.extendedBiddingEndAt": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.formattedEndDateTime": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid.display": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.highest_bid.display": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.lotID": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.lotLabel": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.lotID": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.lotLabel": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid.display": (v10/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale_message": (v10/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_artwork.opening_bid.display": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale_message": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.slug": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.title": (v10/*: any*/)
+        "viewer.trendingLotsConnection.edges.node.title": (v11/*: any*/)
       }
     },
     "name": "TrendingLotsRail_Test_Query",
     "operationKind": "query",
-    "text": "query TrendingLotsRail_Test_Query {\n  viewer {\n    ...TrendingLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  title\n  href\n  image {\n    src: url(version: [\"normalized\", \"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        sale {\n          isClosed\n          id\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query TrendingLotsRail_Test_Query {\n  viewer {\n    ...TrendingLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  title\n  href\n  image {\n    src: url(version: [\"normalized\", \"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        sale {\n          isClosed\n          id\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

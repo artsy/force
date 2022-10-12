@@ -519,6 +519,15 @@ describe("Details", () => {
 const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
+  artist: {
+    id: "artist-id",
+    targetSupply: {
+      isP1: true,
+    },
+  },
+  marketPriceInsights: {
+    demandRank: 0.9,
+  },
   artists: [
     {
       id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
