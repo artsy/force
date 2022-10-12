@@ -10,18 +10,15 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
-import { ArtworkActionsSaveButton_me$data } from "__generated__/ArtworkActionsSaveButton_me.graphql"
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
-  me: ArtworkActionsSaveButton_me$data
 }
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
-  me,
 }) => {
   const { isLoggedIn } = useSystemContext()
   const { handleSave } = useSaveArtwork({
@@ -116,13 +113,6 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         }
         is_saved: isSaved
         ...ArtworkAuctionRegistrationPanel_artwork
-      }
-    `,
-    me: graphql`
-      fragment ArtworkActionsSaveButton_me on Me {
-        pendingIdentityVerification {
-          internalID
-        }
       }
     `,
   }

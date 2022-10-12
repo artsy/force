@@ -1,5 +1,4 @@
 import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
-import { ArtworkActions_me$data } from "__generated__/ArtworkActions_me.graphql"
 import { useSystemContext } from "System"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -21,13 +20,11 @@ import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
-  me: ArtworkActions_me$data
   selectDefaultSlide(): void
 }
 
 export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   artwork,
-  me,
   selectDefaultSlide,
 }) => {
   const { user } = useSystemContext()
@@ -117,7 +114,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   )
 
   const SaveButton = (
-    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} me={me} />
+    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
   )
 
   const actions = [
@@ -250,11 +247,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
           is_auction: isAuction
         }
         is_saved: isSaved
-      }
-    `,
-    me: graphql`
-      fragment ArtworkActions_me on Me {
-        ...ArtworkActionsSaveButton_me
       }
     `,
   }

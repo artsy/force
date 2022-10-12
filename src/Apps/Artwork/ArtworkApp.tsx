@@ -186,7 +186,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <GridColumns>
         <Column span={8}>
-          <ArtworkImageBrowserFragmentContainer artwork={artwork} me={me} />
+          <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           <Media greaterThanOrEqual="sm">
             <BelowTheFoldArtworkDetails
@@ -331,7 +331,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkSidebar_me
         ...ArtworkSidebar2_me
         ...SubmittedOrderModal_me
-        ...ArtworkImageBrowser_me
       }
     `,
   }

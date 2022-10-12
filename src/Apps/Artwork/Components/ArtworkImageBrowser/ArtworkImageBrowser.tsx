@@ -7,7 +7,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useCursor } from "use-cursor"
 import { Media } from "Utils/Responsive"
 import { ArtworkImageBrowser_artwork$data } from "__generated__/ArtworkImageBrowser_artwork.graphql"
-import { ArtworkImageBrowser_me$data } from "__generated__/ArtworkImageBrowser_me.graphql"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
@@ -16,13 +15,11 @@ const MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork$data
-  me: ArtworkImageBrowser_me$data
   isMyCollectionArtwork?: boolean
 }
 
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
-  me,
   isMyCollectionArtwork,
 }) => {
   const { figures } = artwork
@@ -85,7 +82,6 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 
           <ArtworkActions
             artwork={artwork}
-            me={me}
             selectDefaultSlide={handleSelectDefaultSlide}
           />
         </>
@@ -116,11 +112,6 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
             type: __typename
           }
         }
-      }
-    `,
-    me: graphql`
-      fragment ArtworkImageBrowser_me on Me {
-        ...ArtworkActions_me
       }
     `,
   }
