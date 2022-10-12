@@ -38,7 +38,7 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
               alignItems="flex-start"
               artist={artistData.artist!}
               displayLink={false}
-              // to hide the follow button
+              // added this to hide the follow button
               FollowButton={<></>}
             />
 
