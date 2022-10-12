@@ -179,7 +179,6 @@ const notification = {
   isUnread: false,
   notificationType: "ARTWORK_PUBLISHED",
   artworksConnection: {
-    totalCount: 4,
     edges: artworks,
   },
 }

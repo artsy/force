@@ -94,7 +94,6 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         isUnread
         notificationType
         artworksConnection(first: 4) {
-          totalCount
           edges {
             node {
               internalID
