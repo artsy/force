@@ -33,6 +33,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     isLiveOpen,
     isRegistrationClosed,
     registrationStatus,
+    liveStartAt,
   } = artwork.sale ?? {}
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.is_saved
@@ -62,10 +63,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
 
                 if (
                   !isLoggedIn ||
+                  !liveStartAt ||
                   isSaved ||
                   isRegistrationClosed ||
-                  registrationAttempted ||
-                  isLiveOpen
+                  isLiveOpen ||
+                  registrationAttempted
                 ) {
                   return
                 }
@@ -105,8 +107,9 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           isAuction
           isClosed
           isLiveOpen
-          requireIdentityVerification
           isRegistrationClosed
+          requireIdentityVerification
+          liveStartAt
           registrationStatus {
             qualifiedForBidding
           }
