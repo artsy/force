@@ -28,7 +28,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
             <Text variant="xs" color="black60">
               Registration for this auction ends:
             </Text>
-            <Timer variant="xs" endDate={registrationEndsAt} />
+            <Timer variant="xs" color="black100" endDate={registrationEndsAt} />
           </Box>
 
           <Spacer mt={1} ml={1} />
