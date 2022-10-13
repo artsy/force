@@ -24,7 +24,7 @@ describe("Details", () => {
   const getWrapper = async (
     response: Details_Test_Query$rawResponse["artwork"],
     restProps?: {
-      isMyCollectionArtwork?: boolean
+      showHighDemandIcon?: boolean
       hideSaleInfo: boolean
       hidePartnerName: boolean
       hideArtistName: boolean
@@ -396,7 +396,7 @@ describe("Details", () => {
     })
     it("renders icon for MyCollectionArtwork in high demand", async () => {
       props = {
-        isMyCollectionArtwork: true,
+        showHighDemandIcon: true,
       }
       const wrapper = await getWrapper(artworkInAuction, props)
 
@@ -405,7 +405,7 @@ describe("Details", () => {
 
     it("does not render high demand icon for non-MyCollectionArtwork", async () => {
       props = {
-        isMyCollectionArtwork: false,
+        showHighDemandIcon: false,
       }
       const wrapper = await getWrapper(artworkInAuction, props)
 

@@ -30,7 +30,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
-  isMyCollectionArtwork?: boolean
+  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
 }
@@ -198,7 +198,7 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
-  isMyCollectionArtwork = false,
+  showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
   ...rest
@@ -213,11 +213,8 @@ export const Details: React.FC<DetailsProps> = ({
     "show-my-collection-demand-index-hints"
   )
 
-  const showHighDemandIcon =
-    !!isP1Artist &&
-    isHighDemand &&
-    !!showDemandIndexHints &&
-    isMyCollectionArtwork
+  const showHighDemandInfo =
+    !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
 
   return (
     <Box>
@@ -255,7 +252,7 @@ export const Details: React.FC<DetailsProps> = ({
       </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
-        {showHighDemandIcon && <HighDemandInfo />}
+        {showHighDemandInfo && <HighDemandInfo />}
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && showHoverDetails && (
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
