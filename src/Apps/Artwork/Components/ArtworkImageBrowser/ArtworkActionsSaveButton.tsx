@@ -39,6 +39,13 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.is_saved
   const registrationAttempted = !!registrationStatus
+  const ignoreAuctionRegistrationPopover =
+    !isLoggedIn ||
+    !liveStartAt ||
+    isSaved ||
+    isRegistrationClosed ||
+    isLiveOpen ||
+    registrationAttempted
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -69,18 +76,9 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
               onClick={() => {
                 handleSave()
 
-                if (
-                  !isLoggedIn ||
-                  !liveStartAt ||
-                  isSaved ||
-                  isRegistrationClosed ||
-                  isLiveOpen ||
-                  registrationAttempted
-                ) {
-                  return
+                if (!ignoreAuctionRegistrationPopover) {
+                  onVisible()
                 }
-
-                onVisible()
               }}
             />
           )
