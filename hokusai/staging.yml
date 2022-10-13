@@ -99,6 +99,14 @@ spec:
                 values:
                 - foreground
                 - foreground-spot
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground-spot
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
