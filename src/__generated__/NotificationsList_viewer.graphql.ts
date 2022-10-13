@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33384683602355681f1db529cd816ae8>>
+ * @generated SignedSource<<5dbd6386ea7d88e282d64494d5536ad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,21 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationsList_viewer$data = {
   readonly notifications: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly artworksConnection: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly id: string;
+            } | null;
+          } | null> | null;
+        } | null;
         readonly internalID: string;
+        readonly notificationType: NotificationTypesEnum;
         readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
       } | null;
     } | null> | null;
@@ -91,6 +100,59 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "notificationType",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "first",
+                      "value": 4
+                    }
+                  ],
+                  "concreteType": "ArtworkConnection",
+                  "kind": "LinkedField",
+                  "name": "artworksConnection",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "ArtworkEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Artwork",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "id",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "artworksConnection(first:4)"
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "NotificationItem_item"
@@ -148,6 +210,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "24853e1171ff783f11859741da1be54e";
+(node as any).hash = "878c4dca42287a5c87e972a842456733";
 
 export default node;

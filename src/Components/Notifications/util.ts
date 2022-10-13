@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { extractNodes } from "Utils/extractNodes"
 
 export const getDateLabel = (timestamp: string) => {
   const date = DateTime.fromISO(timestamp)
@@ -23,4 +24,18 @@ const isToday = (date: DateTime) => {
 
 const daysAgo = (date: DateTime) => {
   return Math.floor(DateTime.now().diff(date, "days").days)
+}
+
+export const shouldDisplayNotification = notification => {
+  if (!isArtworksBasedNotification(notification)) {
+    return true
+  }
+
+  return extractNodes(notification.artworksConnection).length > 0
+}
+
+const isArtworksBasedNotification = notification => {
+  return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(
+    notification.notificationType
+  )
 }
