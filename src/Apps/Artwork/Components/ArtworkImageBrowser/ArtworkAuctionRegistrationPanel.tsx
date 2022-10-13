@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
+import { Box, Button, Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { Timer } from "Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionRegistrationPanel_artwork$data } from "__generated__/ArtworkAuctionRegistrationPanel_artwork.graphql"
@@ -12,30 +12,51 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
   artwork,
 }) => {
   const { registrationEndsAt } = artwork.sale ?? {}
+  const shouldDisplayTimer = !!registrationEndsAt
+  const href = `/auction-registration/${artwork.sale?.slug}`
 
-  return (
-    <Box width={410}>
-      <Separator my={1} />
-
-      <Flex alignItems="center" justifyContent="space-between">
-        {registrationEndsAt && (
-          <Box mr={1}>
+  if (shouldDisplayTimer) {
+    return (
+      <Box>
+        <Separator my={1} />
+        <Flex
+          flexDirection={["column", "row"]}
+          alignItems={["flex-start", "center"]}
+          justifyContent="space-between"
+        >
+          <Box>
             <Text variant="xs" color="black60">
               Registration for this auction ends:
             </Text>
             <Timer variant="xs" endDate={registrationEndsAt} />
           </Box>
-        )}
 
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          to={`/auction-registration/${artwork.sale?.slug}`}
-          size="small"
-        >
-          Register to Bid
-        </Button>
-      </Flex>
+          <Spacer mt={1} ml={1} />
+
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to={href}
+            size="small"
+          >
+            Register to Bid
+          </Button>
+        </Flex>
+      </Box>
+    )
+  }
+
+  return (
+    <Box>
+      <Spacer mt={1} />
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        to={href}
+        size="small"
+      >
+        Register to Bid
+      </Button>
     </Box>
   )
 }

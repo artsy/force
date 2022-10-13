@@ -5,6 +5,7 @@ import {
   HeartFillIcon,
   HeartIcon,
   Popover,
+  Text,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -45,11 +46,18 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
 
     return (
       <Popover
-        title="Title"
+        title={
+          <Text variant="sm-display">
+            Register ahead of time to bid in this auction and get notifications
+            for this lot.
+          </Text>
+        }
         placement="top"
         popover={
           <ArtworkAuctionRegistrationPanelFragmentContainer artwork={artwork} />
         }
+        maxWidth={[335, 410]}
+        width="100%"
       >
         {({ anchorRef, onVisible }) => {
           return (
