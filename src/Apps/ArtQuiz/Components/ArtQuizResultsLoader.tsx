@@ -12,6 +12,8 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
+export const waitTime = 2000
+
 export const ArtQuizResultsLoader = () => {
   const { desktop } = useNavBarHeight()
   const { t } = useTranslation()
@@ -21,8 +23,12 @@ export const ArtQuizResultsLoader = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
-    }, 2000)
+    }, waitTime)
   }, [])
+
+  const keypath = loading
+    ? "artQuizPage.loadingScreen.calculatingResults"
+    : "artQuizPage.loadingScreen.resultsComplete"
 
   return (
     <FullBleed height={`calc(100vh - ${desktop}px)`}>
@@ -56,9 +62,7 @@ export const ArtQuizResultsLoader = () => {
               <Spacer my={2} />
 
               <Text variant={["sm", "md"]} color="black60">
-                {loading
-                  ? t("artQuizPage.loadingScreen.calculatingResults")
-                  : t("artQuizPage.loadingScreen.resultsComplete")}
+                {t(keypath)}
               </Text>
             </Flex>
           }
