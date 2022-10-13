@@ -18,8 +18,9 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
     return null
   }
 
+  // Grouping median sale prices by artist id to array of arrays
   const groupedMedianSalePrices = Object.values(
-    groupBy(medianSalePrices, msp => msp?.artist?.internalID)
+    groupBy(medianSalePrices, medianSalePrice => medianSalePrice?.artist?.internalID)
   )
 
   return (
@@ -28,22 +29,22 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
         Median Auction Price in the Last 3 Years
       </Text>
 
-      {groupedMedianSalePrices.map(msps => {
-        const [artistData] = msps
+      {groupedMedianSalePrices.map(artistMedianSalePrices => {
+        const [firstElement] = artistMedianSalePrices
 
         return (
           <Flex mt={2} mb={[4, 0]} flexDirection={["column", "row"]}>
             <EntityHeaderArtistFragmentContainer
               flex={1}
               alignItems="flex-start"
-              artist={artistData.artist!}
+              artist={firstElement.artist!}
               displayLink={false}
               // added this to hide the follow button
               FollowButton={<></>}
             />
 
             <Flex flex={1} flexDirection="column">
-              {msps.map(msp => {
+              {artistMedianSalePrices.map(medianSalePrice => {
                 return (
                   <Flex
                     mt={[2, 0]}
@@ -57,10 +58,10 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
                       minWidth={[0, 200]}
                       mr={2}
                     >
-                      {msp.mediumType?.name}
+                      {medianSalePrice.mediumType?.name}
                     </Text>
                     <Text variant={["xs", "sm"]} fontWeight="bold">
-                      {msp.marketPriceInsights?.medianSalePriceDisplayText}
+                      {medianSalePrice.marketPriceInsights?.medianSalePriceDisplayText}
                     </Text>
                   </Flex>
                 )

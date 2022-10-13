@@ -1,6 +1,3 @@
-// test rending
-// test returning null
-
 import { screen } from "@testing-library/react"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
