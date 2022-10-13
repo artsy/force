@@ -12,6 +12,7 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
+import { useTranslation } from "react-i18next"
 
 interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
@@ -19,6 +20,7 @@ interface ArtQuizWelcomeProps {
 
 export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
   const { desktop } = useNavBarHeight()
+  const { t } = useTranslation()
 
   return (
     <FullBleed height={`calc(100vh - ${desktop}px)`}>
@@ -41,22 +43,21 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
               <Box />
               <Box width="100%">
                 <ArtsyLogoIcon mb={2} />
-                <Text variant={["xl", "xxl"]}>Art Taste Quiz</Text>
+                <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
 
                 <Spacer my={6} />
 
                 <Text variant={["md", "lg-display"]}>
-                  See more of what you love.
+                  {t("artQuizPage.welcomeScreen.subtitle1")}
                   <Spacer my={4} />
-                  Rate artworks to discover your taste profile and get
-                  recommendations tailored to you.
+                  {t("artQuizPage.welcomeScreen.subtitle2")}
                 </Text>
               </Box>
 
               <Spacer my={1} />
               <Box width="100%">
                 <Button width="100%" onClick={onStartQuiz}>
-                  Start the Quiz
+                  {t("artQuizPage.welcomeScreen.getStartedButton")}
                 </Button>
                 <Button
                   // @ts-ignore
@@ -66,7 +67,7 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
                   width="100%"
                   to="/"
                 >
-                  Skip
+                  {t("artQuizPage.welcomeScreen.skipButton")}
                 </Button>
               </Box>
             </Flex>
