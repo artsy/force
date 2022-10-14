@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react"
+import { FC } from "react"
 import {
   Box,
   Flex,
@@ -13,7 +13,10 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { CategoryRailQuery } from "__generated__/CategoryRailQuery.graphql"
 import { CategoryRail_category$data } from "__generated__/CategoryRail_category.graphql"
-import { ShelfArtworkFragmentContainer } from "./Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "./Artwork/ShelfArtwork"
 import { EntityHeaderGeneFragmentContainer } from "./EntityHeaders/EntityHeaderGene"
 
 interface CategoryRailProps {
@@ -62,23 +65,7 @@ export const CATEGORY_RAIL_PLACEHOLDER = (
 
     <Shelf>
       {[...new Array(10)].map((_, i) => {
-        return (
-          <Fragment key={i}>
-            <SkeletonBox
-              width={200}
-              height={[
-                [100, 150, 200, 250][i % 4],
-                [100, 320, 200, 250][i % 4],
-              ]}
-              mb={1}
-            />
-
-            <SkeletonText variant="sm-display">Category Name</SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner</SkeletonText>
-            <SkeletonText variant="xs">US$0,000</SkeletonText>
-          </Fragment>
-        )
+        return <ShelfArtworkPlaceholder key={i} index={i} />
       })}
     </Shelf>
   </Skeleton>
