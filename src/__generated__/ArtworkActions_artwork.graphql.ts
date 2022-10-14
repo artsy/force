@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c14041a4ded09b3a0942bb86e41f8600>>
+ * @generated SignedSource<<c2096eb852057ee3f17e5038200c9458>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActions_artwork$data = {
-  readonly artists: ReadonlyArray<{
-    readonly name: string | null;
-  } | null> | null;
-  readonly date: string | null;
   readonly dimensions: {
     readonly cm: string | null;
   } | null;
@@ -36,8 +32,7 @@ export type ArtworkActions_artwork$data = {
     readonly is_closed: boolean | null;
   } | null;
   readonly slug: string;
-  readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkDownloadButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
   readonly " $fragmentType": "ArtworkActions_artwork";
 };
 export type ArtworkActions_artwork$key = {
@@ -67,37 +62,17 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ArtworkDownloadButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSharePanel_artwork"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ViewInRoom_artwork"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artists",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "date",
-      "storageKey": null
     },
     {
       "alias": null,
@@ -199,13 +174,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Sale",
       "kind": "LinkedField",
       "name": "sale",
@@ -241,6 +209,6 @@ return {
 };
 })();
 
-(node as any).hash = "26c251982bdcff889e2e3995c70cc533";
+(node as any).hash = "95c1675945c23325ea0cbf31af70b93a";
 
 export default node;

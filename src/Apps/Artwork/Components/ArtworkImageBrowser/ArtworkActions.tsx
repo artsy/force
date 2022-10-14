@@ -2,39 +2,21 @@ import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwor
 import { useSystemContext } from "System"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
-import {
-  BellIcon,
-  Box,
-  Clickable,
-  DownloadIcon,
-  EditIcon,
-  Flex,
-  GenomeIcon,
-  HeartIcon,
-  Join,
-  Link,
-  MoreIcon,
-  OpenEyeIcon,
-  ShareIcon,
-  Spacer,
-  Text,
-  Popover,
-  TextProps,
-} from "@artsy/palette"
+import { Box, Flex, Join, Spacer, Popover } from "@artsy/palette"
 import { userIsAdmin, userIsTeam } from "Utils/user"
-import { themeGet } from "@styled-system/theme-get"
 import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
 import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
 } from "Components/ViewInRoom/ViewInRoom"
 import { getENV } from "Utils/getENV"
+import { UtilButton, UtilButtonLink } from "./UtilButton"
+import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
@@ -66,126 +48,105 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     isViewInRoomVisible,
   } = useViewInRoom()
 
-  const { is_downloadable, artists, title, date } = artwork
+  const ViewInRoomButton = (
+    <UtilButton
+      name="viewInRoom"
+      label="View in room"
+      onClick={() => {
+        selectDefaultSlide()
+        showViewInRoom()
+      }}
+    />
+  )
 
-  const ViewInRoomButton = () => {
-    return (
-      <UtilButton
-        name="viewInRoom"
-        label="View in room"
-        onClick={() => {
-          selectDefaultSlide()
-          showViewInRoom()
-        }}
-      />
-    )
-  }
-
-  const ShareButton = () => {
-    return (
-      <Popover
-        placement="top"
-        title="Share"
-        popover={
-          <ArtworkSharePanelFragmentContainer
-            width={300}
-            pt={1}
-            artwork={artwork}
+  const ShareButton = (
+    <Popover
+      placement="top"
+      title="Share"
+      popover={
+        <ArtworkSharePanelFragmentContainer
+          width={300}
+          pt={1}
+          artwork={artwork}
+        />
+      }
+    >
+      {({ anchorRef, onVisible }) => {
+        return (
+          <UtilButton
+            ref={anchorRef}
+            name="share"
+            onClick={() => {
+              onVisible()
+              toggleSharePanel() // Tracking
+            }}
+            label="Share"
           />
-        }
-      >
-        {({ anchorRef, onVisible }) => {
-          return (
-            <UtilButton
-              ref={anchorRef}
-              name="share"
-              onClick={() => {
-                onVisible()
-                toggleSharePanel() // Tracking
-              }}
-              label="Share"
-            />
-          )
-        }}
-      </Popover>
-    )
-  }
+        )
+      }}
+    </Popover>
+  )
 
-  const DownloadButton = () => {
-    const artistNames = (artists ?? []).map(artist => artist?.name).join(", ")
-    const filename = compact([artistNames, title, date]).join(", ").trim()
+  const DownloadButton = (
+    <ArtworkDownloadButtonFragmentContainer artwork={artwork} />
+  )
 
-    return (
-      <UtilButton
-        name="download"
-        href={artwork.downloadableImageUrl!}
-        label="Download"
-        download={filename}
-        Component={UtilButtonLink}
-      />
-    )
-  }
+  const EditButton = (
+    <UtilButton
+      name="edit"
+      href={`${getENV("CMS_URL")}/artworks/${
+        artwork.slug
+      }/edit?current_partner_id=${artwork.partner?.slug}`}
+      label="Edit"
+      Component={UtilButtonLink}
+    />
+  )
 
-  const EditButton = () => {
-    return (
-      <UtilButton
-        name="edit"
-        href={`${getENV("CMS_URL")}/artworks/${
-          artwork.slug
-        }/edit?current_partner_id=${artwork.partner?.slug}`}
-        label="Edit"
-        Component={UtilButtonLink}
-      />
-    )
-  }
+  const GenomeButton = (
+    <UtilButton
+      name="genome"
+      href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
+        artwork.slug
+      }`}
+      label="Genome"
+      Component={UtilButtonLink}
+    />
+  )
 
-  const GenomeButton = () => {
-    return (
-      <UtilButton
-        name="genome"
-        href={`${getENV("GENOME_URL")}/genome/artworks?artwork_ids=${
-          artwork.slug
-        }`}
-        label="Genome"
-        Component={UtilButtonLink}
-      />
-    )
-  }
-
-  const SaveButton = () => {
-    return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
-  }
+  const SaveButton = (
+    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+  )
 
   const actions = [
     {
       name: "save",
       condition: true,
-      Component: SaveButton,
+      content: SaveButton,
     },
     {
       name: "viewInRoom",
       condition: artwork.is_hangable,
-      Component: ViewInRoomButton,
+      content: ViewInRoomButton,
     },
     {
       name: "share",
       condition: true,
-      Component: ShareButton,
+      content: ShareButton,
     },
     {
       name: "download",
-      condition: !!is_downloadable || isTeam,
-      Component: DownloadButton,
+      condition: !!artwork.is_downloadable || isTeam,
+      content: DownloadButton,
     },
     {
       name: "edit",
       condition: isAdmin && !!artwork.partner,
-      Component: EditButton,
+      content: EditButton,
     },
     {
       name: "genome",
       condition: isAdmin,
-      Component: GenomeButton,
+      content: GenomeButton,
     },
   ]
 
@@ -209,7 +170,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
               {displayableActions.map(action => {
                 return (
                   <React.Fragment key={action.name}>
-                    <action.Component />
+                    {action.content}
                   </React.Fragment>
                 )
               })}
@@ -221,7 +182,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
               {initialActions.map(action => {
                 return (
                   <React.Fragment key={action.name}>
-                    <action.Component />
+                    {action.content}
                   </React.Fragment>
                 )
               })}
@@ -232,11 +193,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
                   popover={
                     <Box width={300}>
                       {moreActions.map(action => {
-                        return (
-                          <Flex key={action.name}>
-                            <action.Component />
-                          </Flex>
-                        )
+                        return <Flex key={action.name}>{action.content}</Flex>
                       })}
                     </Box>
                   }
@@ -266,12 +223,9 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkActions_artwork on Artwork {
         ...ArtworkActionsSaveButton_artwork
+        ...ArtworkDownloadButton_artwork
         ...ArtworkSharePanel_artwork
         ...ViewInRoom_artwork
-        artists {
-          name
-        }
-        date
         dimensions {
           cm
         }
@@ -288,7 +242,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         partner {
           slug
         }
-        title
         sale {
           is_closed: isClosed
           is_auction: isAuction
@@ -298,162 +251,6 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-interface UtilButtonProps {
-  name:
-    | "bell"
-    | "edit"
-    | "download"
-    | "genome"
-    | "heart"
-    | "more"
-    | "share"
-    | "viewInRoom"
-  href?: string
-  download?: string
-  selected?: boolean
-  label?: string
-  longestLabel?: string
-  Icon?: React.ReactNode
-  Component?: typeof UtilButtonButton | typeof UtilButtonLink
-  onClick?: () => void
-}
-
-type UtilButtonInnerTextProps = Pick<
-  UtilButtonProps,
-  "label" | "longestLabel"
-> &
-  TextProps
-
-export const UtilButton: React.ForwardRefExoticComponent<
-  UtilButtonProps & {
-    ref?: React.Ref<HTMLElement>
-  }
-> = React.forwardRef(
-  (
-    {
-      href,
-      label,
-      longestLabel,
-      name,
-      onClick,
-      Icon,
-      Component = UtilButtonButton,
-      download,
-      ...rest
-    },
-    forwardedRef
-  ) => {
-    const getIcon = () => {
-      switch (name) {
-        case "bell":
-          return BellIcon
-        case "download":
-          return DownloadIcon
-        case "edit":
-          return EditIcon
-        case "genome":
-          return GenomeIcon
-        case "heart":
-          return HeartIcon
-        case "more":
-          return MoreIcon
-        case "share":
-          return ShareIcon
-        case "viewInRoom":
-          return OpenEyeIcon
-      }
-    }
-
-    // If we're passing in an `Icon`, override
-    const ActionIcon = Icon ? Icon : getIcon()
-
-    return (
-      <Component
-        ref={forwardedRef as any}
-        p={1}
-        onClick={onClick}
-        {...(href ? { href, target: "_blank", download } : {})}
-      >
-        <Flex
-          alignItems="center"
-          justifyContent="center"
-          width={20}
-          height={20}
-          mr={0.5}
-        >
-          {/* TODO: Fix types */}
-          {/* @ts-ignore */}
-          <ActionIcon {...rest} fill="currentColor" />
-        </Flex>
-
-        <UtilButtonInnerText
-          label={label}
-          longestLabel={longestLabel}
-          variant="xs"
-          lineHeight={1}
-        />
-      </Component>
-    )
-  }
-)
-
-const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
-  label,
-  longestLabel,
-  ...rest
-}) => {
-  if (!label) {
-    return null
-  }
-
-  if (longestLabel) {
-    return (
-      <Box position="relative">
-        <VisibleText {...rest}>{label}</VisibleText>
-        <HiddenText aria-hidden="true" {...rest}>
-          {longestLabel}
-        </HiddenText>
-      </Box>
-    )
-  }
-
-  return <Text {...rest}>{label}</Text>
-}
-
-const VisibleText = styled(Text)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const HiddenText = styled(Text)`
-  opacity: 0;
-  pointer-events: none;
-`
-
-const utilButtonMixin = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${themeGet("colors.black100")};
-
-  &:hover,
-  &:hover ${VisibleText} {
-    color: ${themeGet("colors.blue100")};
-    text-decoration: underline;
-  }
-`
-
-const UtilButtonLink = styled(Link)`
-  ${utilButtonMixin}
-  text-decoration: none;
-`
-
-const UtilButtonButton = styled(Clickable)`
-  ${utilButtonMixin}
-`
 
 const Container = styled(Flex)`
   user-select: none;
