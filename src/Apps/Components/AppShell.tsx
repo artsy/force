@@ -20,6 +20,7 @@ import { Z } from "./constants"
 import { createGlobalStyle } from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
+import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -28,6 +29,8 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
+  useImagePerformanceObserver()
+
   const isMounted = useDidMount()
   const { onboardingComponent } = useOnboardingModal()
 
