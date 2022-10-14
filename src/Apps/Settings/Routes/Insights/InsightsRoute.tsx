@@ -1,5 +1,6 @@
 import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
+import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
@@ -17,6 +18,9 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
   const isCareerHighlightEnabled = useFeatureFlag(
     "my-collection-web-phase-7-career-highlights"
+  )
+  const isMedianSalePriceEnabled = useFeatureFlag(
+    "my-collection-web-phase-7-median-sale-price"
   )
 
   if (!me.myCollectionInfo?.artworksCount) {
@@ -46,10 +50,14 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
                     showProgress={false}
                   />
                 </Media>
+
+                <InsightsAuctionResultsFragmentContainer me={me} />
               </>
             )}
 
-            <InsightsAuctionResultsFragmentContainer me={me} />
+            {!!isMedianSalePriceEnabled && (
+              <InsightsMedianSalePriceFragmentContainer me={me} />
+            )}
           </Join>
         </>
       )}
@@ -69,6 +77,7 @@ export const InsightsRouteFragmentContainer = createFragmentContainer(
         }
         ...InsightsAuctionResults_me
         ...InsightsCareerHighlightRail_me
+        ...InsightsMedianSalePrice_me
       }
     `,
   }
