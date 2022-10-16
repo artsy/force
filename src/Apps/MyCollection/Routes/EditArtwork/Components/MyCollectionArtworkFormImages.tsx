@@ -28,6 +28,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
+  console.log({ values })
   const saveImagesToLocalStorage = async (artworkId: string) => {
     try {
       // Store the artwork's local images in local storage

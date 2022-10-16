@@ -96,6 +96,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       photo => photo.url || null
     )
 
+    console.log({ externalImageUrls })
+
     // Create or update artwork
 
     try {
