@@ -190,37 +190,10 @@ describe("Save and Continue button", () => {
 
     simulateTyping("name", "Banksy")
     simulateTyping("email", "banksy@test.test")
-    simulateTyping("phone", "+1 415-555-0132")
-
-    await waitFor(() => {
-      expect(getSubmitButton()).toBeEnabled()
-    })
-
-    simulateTyping("phone", "not a phone number")
+    simulateTyping("phone", "123")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeDisabled()
-    })
-  })
-
-  it("is enalbed without a phone number", async () => {
-    getWrapper().renderWithRelay({
-      Me: () => mockEmptyMe,
-      Artwork: () => mockArtwork,
-    })
-
-    simulateTyping("name", "Banksy")
-    simulateTyping("email", "banksy@test.test")
-    simulateTyping("phone", "+1 415-555-0132")
-
-    await waitFor(() => {
-      expect(getSubmitButton()).toBeEnabled()
-    })
-
-    simulateTyping("phone", "")
-
-    await waitFor(() => {
-      expect(getSubmitButton()).toBeEnabled()
     })
   })
 
