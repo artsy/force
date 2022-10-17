@@ -18,7 +18,7 @@ export interface ContactInformationFormProps extends BoxProps {
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   me,
-  optionalPhoneNumber,
+  optionalPhoneNumber = false,
   ...rest
 }) => {
   const {

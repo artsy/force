@@ -80,9 +80,11 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         <Text variant="xs" mb={0.5} mr={0.5}>
           Phone number
         </Text>
-        <Text variant="xs" color="black60">
-          (Optional)
-        </Text>
+        {!!optional && (
+          <Text variant="xs" color="black60">
+            (Optional)
+          </Text>
+        )}
       </Flex>
 
       <Flex>

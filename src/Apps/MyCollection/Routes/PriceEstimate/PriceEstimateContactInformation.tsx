@@ -139,7 +139,10 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         >
           {({ isValid, isSubmitting }) => (
             <Form>
-              <ContactInformationFormFragmentContainer me={me} />
+              <ContactInformationFormFragmentContainer
+                me={me}
+                optionalPhoneNumber
+              />
 
               <Spacer my={6} />
 
