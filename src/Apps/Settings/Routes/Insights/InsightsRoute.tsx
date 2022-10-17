@@ -23,6 +23,10 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
     "my-collection-web-phase-7-median-sale-price"
   )
 
+  if (!isInsightsEnabled) {
+    return null
+  }
+
   if (!me.myCollectionInfo?.artworksCount) {
     return <InsightsLandingPage />
   }
@@ -50,10 +54,10 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
                     showProgress={false}
                   />
                 </Media>
-
-                <InsightsAuctionResultsFragmentContainer me={me} />
               </>
             )}
+
+            <InsightsAuctionResultsFragmentContainer me={me} />
 
             {!!isMedianSalePriceEnabled && (
               <InsightsMedianSalePriceFragmentContainer me={me} />
