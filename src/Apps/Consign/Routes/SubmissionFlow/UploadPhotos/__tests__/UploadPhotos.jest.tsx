@@ -412,7 +412,7 @@ describe("UploadPhotos", () => {
       })
     })
 
-    fit("if uploading wrong file type with too big size", async () => {
+    it("if uploading wrong file type with too big size", async () => {
       renderWithRelay({
         ConsignmentSubmission: () => submission,
       })
