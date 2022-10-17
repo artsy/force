@@ -1,13 +1,6 @@
-import {
-  ResponsiveBox,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Skeleton, SkeletonText, Spacer, Sup, Text } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { FC, Fragment, useState } from "react"
@@ -147,30 +140,7 @@ const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
       Saved Artworks
     </SkeletonText>
 
-    <Masonry columnCount={[2, 3, 4]}>
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <div key={i}>
-            <ResponsiveBox
-              aspectWidth={[4, 3, 5, 6][i % 4]}
-              aspectHeight={[3, 4, 5][i % 3]}
-              maxWidth="100%"
-            >
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-
-            <SkeletonText variant="sm-display" mt={1}>
-              Artist Name
-            </SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner Name</SkeletonText>
-            <SkeletonText variant="xs">US$0,000</SkeletonText>
-
-            <Spacer mt={4} />
-          </div>
-        )
-      })}
-    </Masonry>
+    <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={10} />
   </Skeleton>
 )
 
