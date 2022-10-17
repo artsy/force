@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<592eee5d3ce5ba7843091e628ac25e12>>
+ * @generated SignedSource<<bcb259313c4387768f0fb917b8cee6f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -197,13 +197,6 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "totalCount",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "ArtworkEdge",
                         "kind": "LinkedField",
                         "name": "edges",
@@ -295,7 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fa535ac7881c171045fcce6622a0a693",
+    "cacheID": "e7ab529d8573736662b76b4bfd3d33e4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -352,12 +345,6 @@ return {
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v3/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v5/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.totalCount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
         "notificationsConnection.edges.node.createdAt": (v5/*: any*/),
         "notificationsConnection.edges.node.id": (v3/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
@@ -383,7 +370,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

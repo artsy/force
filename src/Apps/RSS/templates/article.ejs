@@ -46,7 +46,7 @@
                   <%= figure.partner.name %>
                 <% } %>
               </p>
-            <% } else { %>
+            <% } else if (figure.image) { %>
               <img
                 src="<%= figure.image.resized.src %>"
                 srcSet="<%= figure.image.resized.srcSet %>"

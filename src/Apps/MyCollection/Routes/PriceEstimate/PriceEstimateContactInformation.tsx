@@ -3,7 +3,6 @@ import {
   ArtsyLogoBlackIcon,
   Button,
   Flex,
-  FullBleed,
   Spacer,
   Text,
   useToasts,
@@ -13,10 +12,6 @@ import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/ContactInformationForm"
-import {
-  contactInformationValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
@@ -27,6 +22,10 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
+import {
+  contactInformationValidationSchema,
+  validate,
+} from "./Utils/validation"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
@@ -105,13 +104,11 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
     <>
       <MetaTags title="Request a Price Estimate | Artsy" />
 
-      <Flex my={4}>
+      <Flex mt={4}>
         <RouterLink to="/my-collection" display="block">
           <ArtsyLogoBlackIcon display="block" />
         </RouterLink>
       </Flex>
-
-      <FullBleed border="1px solid" borderColor="black10" />
 
       <AppContainer>
         <BackLink
@@ -126,10 +123,8 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         <Text mt={4} variant="lg-display">
           Let us know how to reach you
         </Text>
-        <Text mt={1} mb={6} variant="sm-display" color="black60">
-          We wil only use these details to contact you about this price
-          estimate.
-        </Text>
+
+        <Spacer my={6} />
 
         <Formik<ContactInformationFormModel>
           validateOnMount
@@ -141,9 +136,27 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         >
           {({ isValid, isSubmitting }) => (
             <Form>
-              <ContactInformationFormFragmentContainer me={me} />
+              <ContactInformationFormFragmentContainer
+                me={me}
+                optionalPhoneNumber
+              />
 
               <Spacer my={6} />
+
+              <Text variant="xs" color="black60">
+                By continuing, you agree to{" "}
+                <RouterLink
+                  color="black60"
+                  to="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Artsy's Privacy Policy
+                </RouterLink>
+                .
+              </Text>
+
+              <Spacer my={2} />
 
               <Button
                 data-testid="submit-button"

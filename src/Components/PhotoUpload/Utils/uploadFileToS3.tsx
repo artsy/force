@@ -38,7 +38,7 @@ export const uploadFileToS3 = (
     try {
       file = isExternalPhoto ? await fetchExternalFile(photo) : photo.file
     } catch (error) {
-      reject(new Error("Initializing artwork photo failed."))
+      reject(new Error("Artwork image could not be automatically added."))
       return
     }
 

@@ -148,7 +148,7 @@ const SaleMessage: React.FC<DetailsProps> = ({
     return <>{highestBid_display || openingBid_display || ""}</>
   }
 
-  if (sale_message === "Contact For Price") {
+  if (sale_message?.toLowerCase() === "contact for price") {
     return <>Price on request</>
   }
 

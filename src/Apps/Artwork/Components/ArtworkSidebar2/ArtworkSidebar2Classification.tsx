@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtworkSidebar2Classification_artwork$data } from "__generated__/ArtworkSidebar2Classification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { ArtworkSidebarClassificationsModalQueryRenderer } from "../ArtworkSidebarClassificationsModal"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 
 interface ArtworkSidebar2ClassificationProps {
@@ -28,11 +28,11 @@ const ArtworkSidebar2Classification: React.FC<ArtworkSidebar2ClassificationProps
 
   const closeModal = () => setIsModalOpen(false)
 
-  if (!artwork.attributionClass) {
+  if (!artwork.attributionClass?.shortArrayDescription?.length) {
     return null
   }
 
-  const { shortArrayDescription } = artwork.attributionClass
+  const shortArrayDescription = artwork.attributionClass?.shortArrayDescription
 
   return (
     <>

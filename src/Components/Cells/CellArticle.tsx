@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { CellArticle_article$data } from "__generated__/CellArticle_article.graphql"
 import {
   Box,
+  BoxProps,
   Image,
   ResponsiveBox,
   SkeletonBox,
@@ -99,15 +100,16 @@ export const CellArticleFragmentContainer = createFragmentContainer(
   }
 )
 
-type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode">
+type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode"> & BoxProps
 
 export const CellArticlePlaceholder: FC<CellArticlePlaceholderProps> = ({
   mode = "RAIL",
+  ...rest
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (
-    <Box width={width}>
+    <Box width={width} {...rest}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
         <SkeletonBox width="100%" height="100%" />
       </ResponsiveBox>

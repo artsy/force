@@ -21,6 +21,7 @@ import { ArtworkSidebar2EstimatedValueFragmentContainer } from "./ArtworkSidebar
 import { ArtworkSidebar2BiddingClosedMessageFragmentContainer } from "./ArtworkSidebar2BiddingClosedMessage"
 import { ArtworkSidebar2AuctionTimerFragmentContainer } from "./ArtworkSidebar2AuctionTimer"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
+import { ContextModule } from "@artsy/cohesion"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork$data
@@ -87,7 +88,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     isOfferableFromInquiry
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
       {lotLabel && (
         <Text variant="sm" color="black100" mb={0.5}>
           Lot {lotLabel}

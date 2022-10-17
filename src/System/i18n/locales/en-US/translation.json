@@ -103,11 +103,16 @@
     "markAllAsRead": "Mark all as read"
   },
   "artQuizPage": {
+    "title": "Art Taste Quiz",
     "welcomeScreen": {
-      "title": "Art Curator Quiz",
-      "subtitle": "See more of what you love. Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "subtitle1": "See more of what you love.",
+      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
       "getStartedButton": "Start the Quiz",
       "skipButton": "Skip"
+    },
+    "loadingScreen": {
+      "calculatingResults": "Calculating Results...",
+      "resultsComplete": "Results Complete"
     }
   }
 }

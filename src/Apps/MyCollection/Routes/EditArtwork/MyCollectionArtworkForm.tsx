@@ -28,7 +28,7 @@ import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
-import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
 import {
   MyCollectionArtworkFormImages,
@@ -95,6 +95,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     const externalImageUrls = values.newPhotos.flatMap(
       photo => photo.url || null
     )
+
+    console.log({ externalImageUrls })
 
     // Create or update artwork
 

@@ -89,22 +89,24 @@ export const PhotoThumbnail: React.FC<
 
   return (
     <>
-      <Flex
-        p={photo.errorMessage ? [15] : [15, 2]}
-        border="1px solid"
-        borderRadius={4}
-        borderColor={photo.errorMessage ? "red100" : "black15"}
-        {...rest}
-      >
-        <CSSGrid
-          gridTemplateColumns="minmax(50px, 75%) minmax(120px, 25%)"
-          gridGap={2}
-          width="100%"
+      {!photo.errorMessage && (
+        <Flex
+          p={photo.errorMessage ? [15] : [15, 2]}
+          border="1px solid"
+          borderRadius={4}
+          borderColor={photo.errorMessage ? "red100" : "black15"}
+          {...rest}
         >
-          {renderThumbnail(photoSrc)}
-        </CSSGrid>
-      </Flex>
-      {photo.errorMessage && (
+          <CSSGrid
+            gridTemplateColumns="minmax(50px, 75%) minmax(120px, 25%)"
+            gridGap={2}
+            width="100%"
+          >
+            {renderThumbnail(photoSrc)}
+          </CSSGrid>
+        </Flex>
+      )}
+      {!!photo.errorMessage && (
         <Text
           data-testid="photo-thumbnail-error"
           mt={[0.5, 2]}

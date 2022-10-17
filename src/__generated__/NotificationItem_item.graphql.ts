@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<deb44d6f363c4392d9b0c36ac3f8920f>>
+ * @generated SignedSource<<4e283abf747db086eeb229aef1e76842>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,6 @@ export type NotificationItem_item$data = {
         readonly title: string | null;
       } | null;
     } | null> | null;
-    readonly totalCount: number | null;
   } | null;
   readonly createdAt: string | null;
   readonly isUnread: boolean;
@@ -104,13 +103,6 @@ return {
       "name": "artworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -197,6 +189,6 @@ return {
 };
 })();
 
-(node as any).hash = "00ea44f628b676260e68860b4294e07a";
+(node as any).hash = "ecfa0b0d4f8520c26166fbe59835ae1f";
 
 export default node;

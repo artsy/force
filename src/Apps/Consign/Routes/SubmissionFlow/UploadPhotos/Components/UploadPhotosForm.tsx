@@ -52,7 +52,9 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
       photo.loading = false
 
       if (!geminiToken) {
-        photo.errorMessage = `Photo could not be added: ${photo.name}`
+        photo.errorMessage = photo.externalUrl
+          ? "Artwork image could not be automatically added. Please add a photo."
+          : `Photo could not be added: ${photo.name}`
         setFieldValue("photos", values.photos)
         return
       }

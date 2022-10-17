@@ -21,6 +21,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Keep file structure organized](#keep-file-structure-organized)
 - [Naming, imports and exports](#naming-imports-and-exports)
 - [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
+- [Avoid inner spacing margins](#avoid-inner-spacing-margins)
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
   - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
@@ -171,6 +172,67 @@ const Foo = ({ title }) => <Text variant="lg-display">{title}</Text>
 ```
 
 The reasoning -- and this should be some kind of "Programmers Law" -- is that code is always returned to, either in the form of additions or for debugging. With implicit returns one can't `console.log` intermediate variables or easily add debugger statements, and if one needed to expand the code with a hook or some other piece of functionality the implicit return would need to be unwound.
+
+### Avoid inner spacing margins
+
+Avoid:
+
+```tsx
+const App = () => {
+  return (
+    <>
+      <Hello />
+      <World />
+    </>
+  )
+}
+
+const Hello = () => {
+  return (
+    <>
+      <Box>Hello!</>
+      <Spacer my={2} />
+    </>
+  )
+}
+
+const World = () => <Box>World</Box>
+```
+
+Better:
+
+```tsx
+const App = () => {
+  return (
+    <>
+      <Hello />
+      <Spacer my={2} />
+      <World />
+    </>
+  )
+}
+
+const Hello = () => {
+  return (
+    <Box>Hello!</>
+  )
+}
+```
+
+Also OK:
+
+```tsx
+const App = () => {
+  return (
+    <>
+      <Hello my={2} />
+      <World />
+    </>
+  )
+}
+```
+
+The reasoning is components without inner margins are portable, and layouts should always be defined from the parent.
 
 ### Write unit tests for new components
 

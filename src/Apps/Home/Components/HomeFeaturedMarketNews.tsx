@@ -186,28 +186,34 @@ const PLACEHOLDER = (
   <Skeleton>
     <HomeFeaturedMarketNewsContainer>
       <GridColumns>
-        <Column span={6}>
+        <Column span={[12, 6]} mb={[4, 0]}>
           <Media greaterThan="xs">
-            <SkeletonBox bg="black30" width="670" height={720} mb={2} />
+            <ResponsiveBox aspectWidth={670} aspectHeight={720} maxWidth="100%">
+              <SkeletonBox width="100%" height="100%" />
+            </ResponsiveBox>
 
-            <SkeletonText variant="xs" my={1}>
+            <SkeletonText variant="xs" fontWeight="bold" mt={1}>
               Art Fairs
             </SkeletonText>
 
-            <SkeletonText variant="xl">
+            <SkeletonText variant="xl" mt={0.5}>
               Essential Tips for Collecting Work by Anni and Josef Albers
             </SkeletonText>
 
             <SkeletonText variant="lg-display" mt={1}>
               By Artsy Editorial
             </SkeletonText>
+
+            <SkeletonText variant="lg-display" mt={0.5}>
+              Jan 1, 2000
+            </SkeletonText>
           </Media>
         </Column>
 
         <Column span={[12, 6]}>
           <Masonry columnCount={2}>
-            {[...new Array(8)].map((_, i) => {
-              return <CellArticlePlaceholder key={i} />
+            {[...new Array(ARTICLE_COUNT)].map((_, i) => {
+              return <CellArticlePlaceholder key={i} mode="GRID" mb={4} />
             })}
           </Masonry>
         </Column>

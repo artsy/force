@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { NotificationsEmptyStateByType } from "../NotificationsEmptyStateByType"
+import { NotificationsEmptyStateByType } from "Components/Notifications/NotificationsEmptyStateByType"
 
 describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'All'", () => {
@@ -16,9 +16,9 @@ describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'Alerts'", () => {
     render(<NotificationsEmptyStateByType type="alerts" />)
 
-    const title = "You haven't created any Alerts yet."
+    const title = "Set alerts for artworks you're hunting for."
     const message =
-      "Filter for the artworks you love on an Artist Page and tap 'Create Alert' to be notified when new works are added to Artsy."
+      'Filter for the artworks you love on an artist page and tap "Create Alert". Get notifications here when there\'s a match.'
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(message)).toBeInTheDocument()
