@@ -8,8 +8,6 @@ export const ConfirmationScreenComponent: React.FC<{
   customSubtitle?: ReactElement
   buttonText?: string
   routerLink?: string
-  extraButtonText?: string
-  extraRouterLink?: string
 }> = ({ title, subtitle, customSubtitle, buttonText, routerLink }) => {
   return (
     <>
