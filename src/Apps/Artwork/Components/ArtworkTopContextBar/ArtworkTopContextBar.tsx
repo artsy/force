@@ -1,8 +1,9 @@
 import { ArtworkTopContextBar_artwork$data } from "__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Column, GridColumns } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { TopContextBar } from "Components/TopContextBar"
+import { RegistrationAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkTopContextBar/RegistrationAuctionTimer"
 
 export interface ArtworkTopContextBarProps {
   artwork: ArtworkTopContextBar_artwork$data
@@ -15,7 +16,7 @@ export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props =
     return null
   }
 
-  const { image, meta, name, subHeadline, href } = bannerProps
+  const { image, meta, name, subHeadline, href, rightContent } = bannerProps
   const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
@@ -23,15 +24,12 @@ export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props =
       href={href}
       displayBackArrow={isShow}
       src={!isShow ? image : undefined}
+      rightContent={rightContent}
     >
-      <GridColumns>
-        <Column span={8}>
-          {[name, subHeadline].filter(Boolean).join(" - ")}　
-          <Box as="span" display="inline-block" color="black60">
-            {meta}
-          </Box>
-        </Column>
-      </GridColumns>
+      {[name, subHeadline].filter(Boolean).join(" - ")}　
+      <Box as="span" display="inline-block" color="black60">
+        {meta}
+      </Box>
     </TopContextBar>
   )
 }
@@ -56,6 +54,7 @@ const computeBannerProps = (props: ArtworkTopContextBarProps) => {
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
         href: context.href,
+        rightContent: <RegistrationAuctionTimerFragmentContainer sale={sale} />,
       }
     }
     case "Fair": {
@@ -104,6 +103,7 @@ export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
           coverImage {
             url
           }
+          ...RegistrationAuctionTimer_sale
         }
         context {
           __typename
