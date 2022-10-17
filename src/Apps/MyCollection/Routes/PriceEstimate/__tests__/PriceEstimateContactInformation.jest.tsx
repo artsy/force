@@ -182,7 +182,7 @@ describe("Save and Continue button", () => {
     expect(getSubmitButton()).toBeEnabled()
   })
 
-  it("is disabled when number is removed by user", async () => {
+  it("is disabled when phone number is not valid", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockEmptyMe,
       Artwork: () => mockArtwork,
@@ -190,13 +190,7 @@ describe("Save and Continue button", () => {
 
     simulateTyping("name", "Banksy")
     simulateTyping("email", "banksy@test.test")
-    simulateTyping("phone", "+1 415-555-0132")
-
-    await waitFor(() => {
-      expect(getSubmitButton()).toBeEnabled()
-    })
-
-    simulateTyping("phone", "")
+    simulateTyping("phone", "123")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeDisabled()

@@ -1,15 +1,15 @@
-import { countries } from "Utils/countries"
 import {
   Box,
   BoxProps,
   Flex,
   Input,
-  Select,
   InputProps,
-  Text,
+  Select,
   SelectProps,
+  Text,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
+import { countries } from "Utils/countries"
 
 export interface PhoneNumber {
   isValid: boolean
@@ -21,6 +21,7 @@ export interface PhoneNumberInputProps extends BoxProps {
   phoneNumber: PhoneNumber
   onChange?: (regionCode: string, number?: string) => void
   inputProps?: Partial<InputProps>
+  optional?: boolean
   selectProps?: Partial<SelectProps>
   error?: string
 }
@@ -29,6 +30,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   phoneNumber: { isValid, national, regionCode },
   onChange,
   inputProps,
+  optional,
   selectProps,
   error,
   ...props
@@ -74,9 +76,12 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 
   return (
     <Flex flexDirection="column" {...props}>
-      <Flex justifyContent="space-between">
-        <Text variant="xs" mb={0.5}>
+      <Flex>
+        <Text variant="xs" mb={0.5} mr={0.5}>
           Phone number
+        </Text>
+        <Text variant="xs" color="black60">
+          (Optional)
         </Text>
       </Flex>
 

@@ -13,10 +13,6 @@ import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/ContactInformationForm"
-import {
-  contactInformationValidationSchema,
-  validate,
-} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { useRequestPriceEstimate } from "Apps/MyCollection/Routes/PriceEstimate/Mutations/useRequestPriceEstimate"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
@@ -27,6 +23,10 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
+import {
+  contactInformationValidationSchema,
+  validate,
+} from "./Utils/validation"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
