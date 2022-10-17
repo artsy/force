@@ -32,6 +32,8 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
     "my-collection-web-phase-6-request-price-estimate"
   )
 
+  const isP1Artist = artwork.artist?.targetSupply?.isP1
+
   return (
     <Join separator={<Spacer mt={[4, 6]} />}>
       {!!enableMyCollectionPhase4DemandIndex && (
@@ -40,7 +42,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         />
       )}
       <Media lessThan="sm">
-        {!!enableMyCollectionPhase6RequestPreiceEstimate && (
+        {!!enableMyCollectionPhase6RequestPreiceEstimate && !!isP1Artist && (
           <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
             artwork={artwork}
           />
@@ -74,6 +76,9 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
         artist {
           ...MyCollectionArtworkAuctionResults_artist
+          targetSupply {
+            isP1
+          }
         }
         marketPriceInsights {
           ...MyCollectionArtworkArtistMarket_marketPriceInsights

@@ -129,7 +129,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-            {isMyCollectionPhase5Enabled && isP1Artist && (
+            {isP1Artist && (
               <Media greaterThanOrEqual="sm">
                 {isMyCollectionPhase6Enabled && (
                   <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer

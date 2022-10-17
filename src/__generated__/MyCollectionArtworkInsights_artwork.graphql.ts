@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6327b1d81388c64d946041d7d8fb2c7>>
+ * @generated SignedSource<<6ce89aeeda993a0496a5ebe0723798fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkInsights_artwork$data = {
   readonly artist: {
+    readonly targetSupply: {
+      readonly isP1: boolean | null;
+    } | null;
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null;
   readonly marketPriceInsights: {
@@ -53,6 +56,24 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "MyCollectionArtworkAuctionResults_artist"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistTargetSupply",
+          "kind": "LinkedField",
+          "name": "targetSupply",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isP1",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -83,6 +104,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b76e773bda7b98da07b3b6bad8ebf040";
+(node as any).hash = "b992ca717607c977972d709f3632d9c3";
 
 export default node;
