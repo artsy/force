@@ -23,7 +23,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={0.5} mt={4} variant="sm-display">
         Interested in Selling This Work?
       </Text>
-      <Text mb={2} color="black60">
+      <Text mb={2} color="black60" variant="xs">
         Let our experts find the best sales option for you.
       </Text>
       <RouterLink noUnderline to={route} data-testid="submit-for-sale-link">
@@ -48,7 +48,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
         </Button>
       </RouterLink>
 
-      <Text color="black60">
+      <Text color="black60" variant="xs">
         Learn more about{" "}
         <Clickable
           onClick={() => {
@@ -87,7 +87,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
       <Text mb={0.5} variant="sm-display">
         Interested in Selling This Work?
       </Text>
-      <Text mb={2} color="black60">
+      <Text mb={2} color="black60" variant="xs">
         Let our experts find the best sales option for you.
       </Text>
       <RouterLink
@@ -115,7 +115,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
           Submit for Sale
         </Button>
       </RouterLink>
-      <Text mb={2} color="black60">
+      <Text mb={2} color="black60" variant="xs">
         Learn more about{" "}
         <Clickable
           onClick={() => {

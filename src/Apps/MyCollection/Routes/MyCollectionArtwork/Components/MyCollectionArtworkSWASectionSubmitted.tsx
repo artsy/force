@@ -7,14 +7,14 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
 
   return (
     <>
-      <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
+      <Flex alignItems="center" flexDirection={"row"} mb={1} mt={2}>
         <WinningBidIcon />
         <Text variant="sm" ml={0.5}>
           Artwork has been submitted for sale
         </Text>
       </Flex>
 
-      <Text mb={2} color="black60">
+      <Text mb={2} color="black60" variant="xs">
         Have a question? Visit our{" "}
         <RouterLink to={article} target="_blank" color="black100">
           help center
