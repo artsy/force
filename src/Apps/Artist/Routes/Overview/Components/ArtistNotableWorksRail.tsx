@@ -3,20 +3,17 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "System"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistNotableWorksRail_artist$data } from "__generated__/ArtistNotableWorksRail_artist.graphql"
 import { ArtistNotableWorksRailQuery } from "__generated__/ArtistNotableWorksRailQuery.graphql"
 import { scrollToTop } from "Apps/Artist/Routes/Overview/Utils/scrollToTop"
 import { Rail } from "Components/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-} from "@artsy/palette"
+import { Box, Skeleton } from "@artsy/palette"
 
 interface ArtistNotableWorksRailProps {
   artist: ArtistNotableWorksRail_artist$data
@@ -66,7 +63,6 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
               artwork={node}
               contextModule={ContextModule.topWorksRail}
               key={index}
-              showMetadata
               lazyLoad
               onClick={() => {
                 tracking.trackEvent(
@@ -119,16 +115,7 @@ const PLACEHOLDER = (
       viewAllLabel="View All Works"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={200} key={i}>
-              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <Spacer mt={1} />
-              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-              <SkeletonText variant="xs">Partner</SkeletonText>
-              <SkeletonText variant="xs">Price</SkeletonText>
-            </Box>
-          )
+          return <ShelfArtworkPlaceholder key={i} index={i} />
         })
       }}
     />

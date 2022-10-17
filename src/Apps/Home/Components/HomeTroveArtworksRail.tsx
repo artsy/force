@@ -4,15 +4,12 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-} from "@artsy/palette"
+import { Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -136,16 +133,7 @@ const PLACEHOLDER = (
       subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={200} key={i}>
-              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <Spacer mt={1} />
-              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-              <SkeletonText variant="xs">Partner</SkeletonText>
-              <SkeletonText variant="xs">Price</SkeletonText>
-            </Box>
-          )
+          return <ShelfArtworkPlaceholder key={i} index={i} />
         })
       }}
     />

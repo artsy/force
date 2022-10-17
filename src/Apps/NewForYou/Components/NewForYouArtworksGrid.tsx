@@ -13,7 +13,8 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
 }) => {
   return (
     <>
-      {viewer.artworksForUser?.totalCount! > 0 ? (
+      {viewer.artworksForUser &&
+      (viewer.artworksForUser.totalCount ?? 0) > 0 ? (
         <ArtworkGrid artworks={viewer.artworksForUser} />
       ) : (
         <Text variant="lg" mt={4} color="black60">

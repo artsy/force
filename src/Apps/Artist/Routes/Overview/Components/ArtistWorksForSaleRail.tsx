@@ -3,13 +3,16 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "System"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
 import { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { scrollToTop } from "Apps/Artist/Routes/Overview/Utils/scrollToTop"
 import { Rail } from "Components/Rail"
-import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
+import { Box, Skeleton } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface ArtistWorksForSaleRailProps {
@@ -61,7 +64,6 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
                 key={index}
-                showMetadata
                 lazyLoad
                 onClick={() => {
                   tracking.trackEvent(
@@ -115,13 +117,7 @@ const PLACEHOLDER = (
       viewAllLabel="View All Works"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <React.Fragment key={i}>
-              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <SkeletonText variant="lg-display">Some Artist</SkeletonText>
-              <SkeletonText variant="sm-display">Location</SkeletonText>
-            </React.Fragment>
-          )
+          return <ShelfArtworkPlaceholder key={i} index={i} />
         })
       }}
     />

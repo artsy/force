@@ -12,7 +12,6 @@ import createLogger from "Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
-import { Mediator } from "Server/mediator"
 import track from "react-tracking"
 
 const logger = createLogger("RelatedWorksArtworkGrid.tsx")
@@ -22,7 +21,6 @@ const MAX_TAB_ITEMS = 3
 interface RelatedWorksArtworkGridProps {
   relay: RelayRefetchProp
   artwork: RelatedWorksArtworkGrid_artwork$data
-  mediator?: Mediator
 }
 
 interface RelatedWorksArtworkGridState {
@@ -71,7 +69,6 @@ class RelatedWorksArtworkGrid extends Component<
   render() {
     const {
       artwork: { layers, layer },
-      mediator,
     } = this.props
 
     // The layer might have failed to fetch, so we use the `get` helper
@@ -110,13 +107,14 @@ class RelatedWorksArtworkGrid extends Component<
                   {this.state.isLoading ? (
                     <Spinner /> // Should be a placeholder
                   ) : (
-                    <ArtworkGrid
-                      contextModule={ContextModule.relatedWorksRail}
-                      artworks={artworksConnection}
-                      columnCount={[2, 3, 4, 4]}
-                      mediator={mediator}
-                      onBrickClick={this.trackBrickClick.bind(this)}
-                    />
+                    artworksConnection && (
+                      <ArtworkGrid
+                        contextModule={ContextModule.relatedWorksRail}
+                        artworks={artworksConnection}
+                        columnCount={[2, 3, 4, 4]}
+                        onBrickClick={this.trackBrickClick.bind(this)}
+                      />
+                    )
                   )}
                 </ArtworksContainer>
               </Tab>

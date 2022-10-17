@@ -12,9 +12,11 @@ const columnCount = style({
   cssProperty: "columnCount",
 })
 
-export const Masonry = styled(Box)<
-  { columnCount?: number[] | number } & GridColumnGapProps
->`
+export interface MasonryProps extends GridColumnGapProps {
+  columnCount?: number[] | number
+}
+
+export const Masonry = styled(Box)<MasonryProps>`
   ${compose(columnCount, gridColumnGap)};
 
   * {
