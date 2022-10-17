@@ -18,6 +18,7 @@ export interface ContactInformationFormProps extends BoxProps {
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   me,
+  optionalPhoneNumber,
   ...rest
 }) => {
   const {
@@ -74,7 +75,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       <PhoneNumberInput
         mt={4}
         phoneNumber={values.phone}
-        optional
+        optional={optionalPhoneNumber}
         onChange={handlePhoneNumberChange}
         inputProps={{
           maxLength: 256,
