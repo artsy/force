@@ -1,9 +1,9 @@
-import { MetaTags } from "Components/MetaTags"
-import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { ArtsyLogoBlackIcon, Flex, FullBleed } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { ArtsyLogoBlackIcon, Flex } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
 import { BackLink } from "Components/Links/BackLink"
+import { MetaTags } from "Components/MetaTags"
+import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 
 export const PriceEstimateConfirmation = () => {
@@ -13,18 +13,17 @@ export const PriceEstimateConfirmation = () => {
   return (
     <>
       <MetaTags title="Request a Price Estimate | Artsy" />
-      <Flex my={4}>
+
+      <Flex mt={4}>
         <RouterLink to="/my-collection" display="block">
           <ArtsyLogoBlackIcon display="block" />
         </RouterLink>
       </Flex>
 
-      <FullBleed border="1px solid" borderColor="black10" />
-
       <AppContainer>
         <BackLink
           py={2}
-          mb={4}
+          mb={6}
           width="min-content"
           to={`/my-collection/artwork/${artworkId}`}
         >

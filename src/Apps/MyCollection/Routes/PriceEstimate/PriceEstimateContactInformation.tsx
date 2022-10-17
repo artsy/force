@@ -3,7 +3,6 @@ import {
   ArtsyLogoBlackIcon,
   Button,
   Flex,
-  FullBleed,
   Spacer,
   Text,
   useToasts,
@@ -105,18 +104,16 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
     <>
       <MetaTags title="Request a Price Estimate | Artsy" />
 
-      <Flex my={4}>
+      <Flex mt={4}>
         <RouterLink to="/my-collection" display="block">
           <ArtsyLogoBlackIcon display="block" />
         </RouterLink>
       </Flex>
 
-      <FullBleed border="1px solid" borderColor="black10" />
-
       <AppContainer>
         <BackLink
           py={2}
-          mb={4}
+          mb={6}
           width="min-content"
           to={`/my-collection/artwork/${artwork.internalID}`}
         >
