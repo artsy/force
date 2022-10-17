@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
+import { Button, Flex, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { DownloadApp } from "./Components/DownloadApp"
 import { useSystemContext } from "System"
