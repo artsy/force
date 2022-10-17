@@ -1,5 +1,12 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Column, Flex, GridColumns } from "@artsy/palette"
+import {
+  Column,
+  Flex,
+  GridColumns,
+  ResponsiveBox,
+  SkeletonBox,
+  Spacer,
+} from "@artsy/palette"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEmpty, isEqual } from "lodash"
@@ -7,22 +14,22 @@ import memoizeOnce from "memoize-one"
 import { ReactNode } from "react"
 import * as React from "react"
 import ReactDOM from "react-dom"
-// @ts-ignore
-import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
 import GridItem from "Components/Artwork/GridItem"
 import { withArtworkGridContext } from "./ArtworkGridContext"
 import { extractNodes } from "Utils/extractNodes"
 import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
+import { Masonry, MasonryProps } from "Components/Masonry"
+import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type Artwork = ArtworkGrid_artworks$data["edges"][0]["node"]
 
 type SectionedArtworks = Array<Array<Artwork>>
 
-export interface ArtworkGridProps
-  extends React.HTMLProps<ArtworkGridContainer> {
+export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   artworks: ArtworkGrid_artworks$data
   contextModule?: AuthContextModule
   columnCount?: number | number[]
@@ -350,4 +357,50 @@ export function createSectionedArtworks(
   })
 
   return sectionedArtworks
+}
+
+const PLACEHOLDER_DIMENSIONS = [
+  [300, 400],
+  [300, 375],
+  [300, 200],
+  [300, 450],
+  [300, 300],
+  [300, 400],
+  [300, 380],
+  [300, 300],
+]
+
+interface ArtworkGridPlaceholderProps extends MasonryProps {
+  amount?: number
+}
+
+export const ArtworkGridPlaceholder: React.FC<ArtworkGridPlaceholderProps> = ({
+  amount = 8,
+  ...rest
+}) => {
+  return (
+    <Masonry {...rest}>
+      {[...new Array(amount)].map((_, i) => {
+        const [width, height] = PLACEHOLDER_DIMENSIONS[
+          i % PLACEHOLDER_DIMENSIONS.length
+        ]
+
+        return (
+          <div key={i}>
+            <ResponsiveBox
+              aspectWidth={width}
+              aspectHeight={height}
+              maxWidth="100%"
+            >
+              <SkeletonBox width="100%" height="100%" />
+            </ResponsiveBox>
+
+            <MetadataPlaceholder />
+
+            <Spacer mt={4} />
+          </div>
+        )
+      })}
+    </Masonry>
+  )
 }
