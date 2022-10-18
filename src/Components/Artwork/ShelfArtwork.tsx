@@ -36,6 +36,10 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     ? resized(artwork.image.src, { width: width[width.length - 1] })
     : null
 
+  const label =
+    (artwork.title ?? "Artwork") +
+    (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
+
   return (
     <RouterLink
       to={artwork?.href}
@@ -48,7 +52,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       textDecoration="none"
       data-test="artworkShelfArtwork"
       data-testid="ShelfArtwork"
-      aria-label={artwork.title ?? "Artwork"}
+      aria-label={label}
       width={width}
       {...rest}
     >
@@ -101,6 +105,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         ...SaveButton_artwork
         title
         href
+        artistNames
         image {
           src: url(version: ["normalized", "larger", "large"])
           width
