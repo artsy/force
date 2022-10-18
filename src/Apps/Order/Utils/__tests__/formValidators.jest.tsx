@@ -18,9 +18,6 @@ describe("formValidators/validatePostalCode", () => {
   it("returns no error when postal code is valid for CA", () => {
     expect(validatePostalCode("YY", "CA")).toBe("This field is required")
   })
-  it("returns no error when postal code is outside of US and CA", () => {
-    expect(validatePostalCode("ZZ", "UK")).toBe(null)
-  })
 })
 
 describe("formValidators/validatePresence", () => {

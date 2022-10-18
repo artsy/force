@@ -9,18 +9,10 @@ export const validatePresence = (value: string): string | null => {
 }
 
 export const validatePostalCode = (postalCode: string, countryCode: string) => {
-  let postalCodeRegex: RegExp
-
-  switch (countryCode) {
-    case "US":
-      postalCodeRegex = /^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/
-      break
-    case "CA":
-      postalCodeRegex = /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
-      break
-    default:
-      postalCodeRegex = /[^\n]+/
-  }
+  let postalCodeRegex: RegExp =
+    countryCode === "US"
+      ? /^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/
+      : /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
 
   return postalCodeRegex.test(postalCode) ? null : "This field is required"
 }
@@ -34,7 +26,7 @@ export const validateAddress = (address: Address) => {
     city: validatePresence(city),
     region: usOrCanada && validatePresence(region),
     country: validatePresence(country),
-    postalCode: validatePostalCode(postalCode, country),
+    postalCode: usOrCanada && validatePostalCode(postalCode, country),
   }
   const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
 
