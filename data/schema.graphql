@@ -2420,6 +2420,7 @@ union ArtworkMutationType =
 
 union ArtworkOrEditionSetType = Artwork | EditionSet
 
+# Insights may not be available for all Artwork Connections due to potential performance issues
 type ArtworkPriceInsights {
   annualLotsSold: Int
   annualValueSoldCents: FormattedNumber
