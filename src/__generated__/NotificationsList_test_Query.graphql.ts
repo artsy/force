@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca63203e7757f521a15a4150a01cfb84>>
+ * @generated SignedSource<<c6de3f8b13d65b76280af68b1eca4462>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,14 +40,14 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "title",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
@@ -58,17 +58,23 @@ v4 = {
 },
 v5 = {
   "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtworkConnection"
+},
+v6 = {
+  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -148,6 +154,53 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": "artworks",
+                        "args": null,
+                        "concreteType": "ArtworkConnection",
+                        "kind": "LinkedField",
+                        "name": "artworksConnection",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "totalCount",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "message",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "targetHref",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isUnread",
+                        "storageKey": null
+                      },
+                      {
                         "alias": null,
                         "args": [
                           {
@@ -177,9 +230,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
                                   (v1/*: any*/),
-                                  (v3/*: any*/),
+                                  (v2/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -226,7 +278,8 @@ return {
                                       }
                                     ],
                                     "storageKey": null
-                                  }
+                                  },
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -237,35 +290,6 @@ return {
                         "storageKey": "artworksConnection(first:4)"
                       },
                       (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "message",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "targetHref",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isUnread",
-                        "storageKey": null
-                      },
-                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -329,7 +353,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "06550027c89aa26f3d9e53184a560efd",
+    "cacheID": "f9c8f030b4eadbedbdf6a14f331320c0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -359,12 +383,14 @@ return {
           "type": "Notification"
         },
         "viewer.notifications.edges.node.__typename": (v4/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection": {
+        "viewer.notifications.edges.node.artworks": (v5/*: any*/),
+        "viewer.notifications.edges.node.artworks.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ArtworkConnection"
+          "type": "Int"
         },
+        "viewer.notifications.edges.node.artworksConnection": (v5/*: any*/),
         "viewer.notifications.edges.node.artworksConnection.edges": {
           "enumValues": null,
           "nullable": true,
@@ -377,7 +403,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "viewer.notifications.edges.node.artworksConnection.edges.node.id": (v5/*: any*/),
+        "viewer.notifications.edges.node.artworksConnection.edges.node.id": (v6/*: any*/),
         "viewer.notifications.edges.node.artworksConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -392,12 +418,12 @@ return {
         },
         "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb.src": (v4/*: any*/),
         "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.internalID": (v5/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.title": (v6/*: any*/),
-        "viewer.notifications.edges.node.createdAt": (v6/*: any*/),
-        "viewer.notifications.edges.node.id": (v5/*: any*/),
-        "viewer.notifications.edges.node.internalID": (v5/*: any*/),
-        "viewer.notifications.edges.node.isUnread": (v7/*: any*/),
+        "viewer.notifications.edges.node.artworksConnection.edges.node.internalID": (v6/*: any*/),
+        "viewer.notifications.edges.node.artworksConnection.edges.node.title": (v7/*: any*/),
+        "viewer.notifications.edges.node.createdAt": (v7/*: any*/),
+        "viewer.notifications.edges.node.id": (v6/*: any*/),
+        "viewer.notifications.edges.node.internalID": (v6/*: any*/),
+        "viewer.notifications.edges.node.isUnread": (v8/*: any*/),
         "viewer.notifications.edges.node.message": (v4/*: any*/),
         "viewer.notifications.edges.node.notificationType": {
           "enumValues": [
@@ -417,13 +443,13 @@ return {
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.notifications.pageInfo.endCursor": (v6/*: any*/),
-        "viewer.notifications.pageInfo.hasNextPage": (v7/*: any*/)
+        "viewer.notifications.pageInfo.endCursor": (v7/*: any*/),
+        "viewer.notifications.pageInfo.hasNextPage": (v8/*: any*/)
       }
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworksConnection(first: 4) {\n          edges {\n            node {\n              id\n            }\n          }\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

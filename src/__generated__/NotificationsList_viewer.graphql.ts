@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5dbd6386ea7d88e282d64494d5536ad8>>
+ * @generated SignedSource<<f7ea364ad3c2962947fd79c8b654a6b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,12 +15,8 @@ export type NotificationsList_viewer$data = {
   readonly notifications: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly artworksConnection: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly id: string;
-            } | null;
-          } | null> | null;
+        readonly artworks: {
+          readonly totalCount: number | null;
         } | null;
         readonly internalID: string;
         readonly notificationType: NotificationTypesEnum;
@@ -107,14 +103,8 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "first",
-                      "value": 4
-                    }
-                  ],
+                  "alias": "artworks",
+                  "args": null,
                   "concreteType": "ArtworkConnection",
                   "kind": "LinkedField",
                   "name": "artworksConnection",
@@ -123,34 +113,12 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "ArtworkEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "Artwork",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "id",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
+                      "kind": "ScalarField",
+                      "name": "totalCount",
                       "storageKey": null
                     }
                   ],
-                  "storageKey": "artworksConnection(first:4)"
+                  "storageKey": null
                 },
                 {
                   "args": null,
@@ -210,6 +178,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "878c4dca42287a5c87e972a842456733";
+(node as any).hash = "b1fc107a2fde16d8574ed621d4fe3abe";
 
 export default node;

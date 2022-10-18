@@ -137,12 +137,8 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
             node {
               internalID
               notificationType
-              artworksConnection(first: 4) {
-                edges {
-                  node {
-                    id
-                  }
-                }
+              artworks: artworksConnection {
+                totalCount
               }
               ...NotificationItem_item
             }

@@ -53,13 +53,13 @@ describe("shouldDisplayNotification", () => {
   it("returns true when notification is artworks based, but has artworks", () => {
     const result = shouldDisplayNotification({
       notificationType: "ARTWORK_ALERT",
-      artworksConnection: { edges: [{ node: { id: "artwork_id" } }] },
+      artworks: { totalCount: 1 },
     })
     expect(result).toEqual(true)
 
     const result2 = shouldDisplayNotification({
       notificationType: "ARTWORK_PUBLISHED",
-      artworksConnection: { edges: [{ node: { id: "artwork_id" } }] },
+      artworks: { totalCount: 1 },
     })
     expect(result2).toEqual(true)
   })
@@ -67,7 +67,7 @@ describe("shouldDisplayNotification", () => {
   it("returns false when notification is artworks based, and has no artworks", () => {
     const result = shouldDisplayNotification({
       notificationType: "ARTWORK_ALERT",
-      artworksConnection: [],
+      artworks: { totalCount: 0 },
     })
     expect(result).toEqual(false)
   })
