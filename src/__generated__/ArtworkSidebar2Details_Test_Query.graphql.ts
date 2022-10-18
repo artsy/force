@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3db8fe9dcdcbcf0c5bdda706f6b24f6f>>
+ * @generated SignedSource<<f3201718fdf67ae1ab8342122a75d8af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -162,6 +162,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "EditionSet",
+            "kind": "LinkedField",
+            "name": "editionSets",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
             "name": "attributionClass",
@@ -199,7 +218,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "195469c6c7c85b3716485776984d525e",
+    "cacheID": "c0086695bac654d4b1c0c0e5a1ba1cbd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -231,6 +250,14 @@ return {
         "artwork.dimensions.cm": (v3/*: any*/),
         "artwork.dimensions.in": (v3/*: any*/),
         "artwork.editionOf": (v3/*: any*/),
+        "artwork.editionSets": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "EditionSet"
+        },
+        "artwork.editionSets.id": (v2/*: any*/),
+        "artwork.editionSets.internalID": (v2/*: any*/),
         "artwork.framed": {
           "enumValues": null,
           "nullable": true,
@@ -247,7 +274,7 @@ return {
     },
     "name": "ArtworkSidebar2Details_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebar2Details_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2Details_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n"
+    "text": "query ArtworkSidebar2Details_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar2Details_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n\nfragment ArtworkSidebar2Classification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebar2Details_artwork on Artwork {\n  medium\n  dimensions {\n    in\n    cm\n  }\n  framed {\n    details\n  }\n  editionOf\n  isEdition\n  editionSets {\n    internalID\n    id\n  }\n  ...ArtworkSidebar2Classification_artwork\n  ...ArtworkSidebar2AuthenticityCertificate_artwork\n}\n"
   }
 };
 })();
