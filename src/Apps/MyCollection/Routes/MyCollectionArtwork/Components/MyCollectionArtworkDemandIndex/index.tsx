@@ -66,7 +66,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
 
       <Spacer m={2} />
 
-      <Text variant={["xl", "xxl"]} color={demandRankColor}>
+      <Text variant={"xl"} color={demandRankColor}>
         {adjustedDemandRank}
       </Text>
       <Flex flexDirection="row" alignItems="center">
@@ -76,7 +76,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
           </Flex>
         )}
 
-        <Text variant={["md", "lg"]} color={demandRankColor}>
+        <Text variant={"md"} color={demandRankColor}>
           {marketPriceInsights.demandRankDisplayText}
         </Text>
       </Flex>
