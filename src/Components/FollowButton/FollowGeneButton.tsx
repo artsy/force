@@ -84,6 +84,9 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     <FollowButton
       isFollowed={!!gene.isFollowed}
       handleFollow={handleClick}
+      aria-label={
+        gene.isFollowed ? `Unfollow ${gene.name}` : `Follow ${gene.name}`
+      }
       {...rest}
     />
   )

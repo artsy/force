@@ -139,6 +139,11 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
               handleClick(event)
               openSuggestions()
             }}
+            aria-label={
+              artist.isFollowed
+                ? `Unfollow ${artist.name}`
+                : `Follow ${artist.name}`
+            }
             {...rest}
           />
         )
