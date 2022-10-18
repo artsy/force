@@ -20,7 +20,7 @@ const ArtworkSidebar2ArtworkTitle: React.FC<ArtworkSidebar2ArtworkTitleProps> = 
   }
 
   return (
-    <Text color="black60" variant="lg-display">
+    <Text as="h1" color="black60" variant="lg-display">
       <i>{artwork.title?.trim()}</i>
       {getArtworkDate()}
     </Text>
