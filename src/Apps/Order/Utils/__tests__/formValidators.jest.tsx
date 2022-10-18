@@ -1,5 +1,27 @@
 import { Address } from "Components/AddressForm"
-import { validateAddress, validatePresence } from "../formValidators"
+import {
+  validateAddress,
+  validatePresence,
+  validatePostalCode,
+} from "Apps/Order/Utils/formValidators"
+
+describe("formValidators/validatePostalCode", () => {
+  it("returns error when postal code is invalid for US", () => {
+    expect(validatePostalCode("XX", "US")).toBe("This field is required")
+  })
+  it("returns no error when postal code is valid for US", () => {
+    expect(validatePostalCode("15601", "US")).toBe(null)
+  })
+  it("returns error when postal code is invalid for CA", () => {
+    expect(validatePostalCode("M3J3N3", "CA")).toBe(null)
+  })
+  it("returns no error when postal code is valid for CA", () => {
+    expect(validatePostalCode("YY", "CA")).toBe("This field is required")
+  })
+  it("returns no error when postal code is outside of US and CA", () => {
+    expect(validatePostalCode("ZZ", "UK")).toBe(null)
+  })
+})
 
 describe("formValidators/validatePresence", () => {
   it("returns error when field is null", () => {
@@ -165,20 +187,20 @@ describe("formValidators/validateAddress", () => {
   })
 
   describe("postalCode", () => {
-    it("returns no error for an undefined postalCode if it's not US/CA", () => {
+    it("returns no error for a postalCode outside of US and CA", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      address.postalCode = undefined
+      address.postalCode = "zz"
+      address.country = "DE"
 
       const result = validateAddress(address)
 
       expect(result.hasErrors).toEqual(false)
     })
 
-    it("returns an error for an undefined postalCode if it's US", () => {
+    it("returns an error for an invalid postalCode for US", () => {
       const address: Address = buildAddress()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      address.postalCode = undefined
+
+      address.postalCode = "xx"
       address.country = "US"
 
       const result = validateAddress(address)
@@ -187,7 +209,41 @@ describe("formValidators/validateAddress", () => {
       expect(result.errors.postalCode).toEqual("This field is required")
     })
 
-    it("returns an error for a whitespace postalCode if it's US", () => {
+    it("returns no error for a valid postalCode for US", () => {
+      const address: Address = buildAddress()
+
+      address.postalCode = "15601"
+      address.country = "US"
+
+      const result = validateAddress(address)
+
+      expect(result.hasErrors).toEqual(false)
+    })
+
+    it("returns an error for an invalid postalCode for Canada", () => {
+      const address: Address = buildAddress()
+
+      address.postalCode = "yy"
+      address.country = "CA"
+
+      const result = validateAddress(address)
+
+      expect(result.hasErrors).toEqual(true)
+      expect(result.errors.postalCode).toEqual("This field is required")
+    })
+
+    it("returns no error for a valid postalCode for Canada", () => {
+      const address: Address = buildAddress()
+
+      address.postalCode = "M3J3N3"
+      address.country = "CA"
+
+      const result = validateAddress(address)
+
+      expect(result.hasErrors).toEqual(false)
+    })
+
+    it("returns an error for a whitespace postalCode", () => {
       const address: Address = buildAddress()
       address.postalCode = "   \t"
       address.country = "US"
