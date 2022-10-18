@@ -35,9 +35,9 @@ export const MyCollectionArtworkArtistMarket = ({
   return (
     <>
       <Media greaterThanOrEqual="sm">
-        <Text variant="lg">Artist Market</Text>
+        <Text variant="md">Artist Market</Text>
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           Based on the last 36 months of auction sale data from top commercial
           auction houses.
         </Text>

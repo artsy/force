@@ -39,9 +39,11 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
   return (
     <>
       <Media greaterThanOrEqual="sm">
-        <Text variant="lg">Demand Index</Text>
+        <Text variant="md" mt={4}>
+          Demand Index
+        </Text>
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           {DemandIndexExplanation}
         </Text>
       </Media>
