@@ -4,7 +4,7 @@ export const geneToCollectionMap = {
   "street-art-now-1": "street-art-highlights",
   "artists-on-the-rise": "artists-on-the-rise",
   "contemporary-now": "contemporary-now",
-  "women-artists-now": "women-artists-now",
+  "women-artists-now": "women-artists-to-watch",
   trove: "trove-editors-picks",
   "our-top-auction-lots": "top-auction-lots",
   "iconic-prints": "iconic-prints",
