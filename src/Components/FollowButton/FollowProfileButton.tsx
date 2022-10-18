@@ -84,6 +84,11 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
     <FollowButton
       isFollowed={!!profile.isFollowed}
       handleFollow={handleClick}
+      aria-label={
+        profile.isFollowed
+          ? `Unfollow ${profile.name}`
+          : `Follow ${profile.name}`
+      }
       {...rest}
     />
   )
