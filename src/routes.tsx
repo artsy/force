@@ -51,6 +51,7 @@ import { pressRoutes } from "./Apps/Press/pressRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { myCollectionInsightsRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -86,6 +87,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: jobsRoutes },
     { routes: meetTheSpecialistsRoutes },
     { routes: myCollectionRoutes },
+    { routes: myCollectionInsightsRoutes },
     { routes: newForYouRoutes },
     { routes: notificationsRoutes },
     { routes: onboardingRoutes },
