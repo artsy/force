@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<193aaafb49619a5ab3fada1f2835b8fc>>
+ * @generated SignedSource<<5e299e3414559d762d3c8590a26a6c2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,20 +50,20 @@ v3 = {
   "name": "href",
   "storageKey": null
 },
-v4 = [
-  {
-    "kind": "Literal",
-    "name": "shallow",
-    "value": true
-  }
-],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
 v6 = {
   "alias": null,
   "args": null,
@@ -82,7 +82,7 @@ v7 = [
 ],
 v8 = [
   (v2/*: any*/),
-  (v5/*: any*/)
+  (v4/*: any*/)
 ],
 v9 = {
   "enumValues": null,
@@ -92,21 +92,21 @@ v9 = {
 },
 v10 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v11 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
 },
 v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "String"
 },
 v13 = {
   "enumValues": null,
@@ -316,13 +316,61 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v4/*: any*/),
+                        "args": null,
+                        "concreteType": "Artist",
+                        "kind": "LinkedField",
+                        "name": "artist",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtistTargetSupply",
+                            "kind": "LinkedField",
+                            "name": "targetSupply",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isP1",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkPriceInsights",
+                        "kind": "LinkedField",
+                        "name": "marketPriceInsights",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "demandRank",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": (v5/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
                         "selections": [
-                          (v5/*: any*/),
+                          (v4/*: any*/),
                           (v3/*: any*/),
                           (v2/*: any*/)
                         ],
@@ -337,7 +385,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v4/*: any*/),
+                        "args": (v5/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
@@ -345,7 +393,7 @@ return {
                         "selections": [
                           (v2/*: any*/),
                           (v3/*: any*/),
-                          (v5/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": "partner(shallow:true)"
                       },
@@ -393,7 +441,7 @@ return {
                             "name": "isClosed",
                             "storageKey": null
                           },
-                          (v5/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": "is_preview",
                             "args": null,
@@ -486,11 +534,11 @@ return {
                             "selections": (v7/*: any*/),
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -549,18 +597,18 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": "filterArtworksConnection(first:50,forSale:true,height:\"*-*\",inquireableOnly:true,marketable:true,offerable:true,page:1,priceRange:\"*-*\",sort:\"-decayed_merch\",width:\"*-*\")"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "gene(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "03d9885337f3fa7abc39a676ab37fd4f",
+    "cacheID": "678cdfb0b937e45d9f772ed5aa8f4d7c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -583,29 +631,43 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "gene.artworks.edges.node.artistNames": (v10/*: any*/),
+        "gene.artworks.edges.node.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "gene.artworks.edges.node.artist.id": (v10/*: any*/),
+        "gene.artworks.edges.node.artist.targetSupply": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistTargetSupply"
+        },
+        "gene.artworks.edges.node.artist.targetSupply.isP1": (v11/*: any*/),
+        "gene.artworks.edges.node.artistNames": (v12/*: any*/),
         "gene.artworks.edges.node.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "gene.artworks.edges.node.artists.href": (v10/*: any*/),
-        "gene.artworks.edges.node.artists.id": (v11/*: any*/),
-        "gene.artworks.edges.node.artists.name": (v10/*: any*/),
+        "gene.artworks.edges.node.artists.href": (v12/*: any*/),
+        "gene.artworks.edges.node.artists.id": (v10/*: any*/),
+        "gene.artworks.edges.node.artists.name": (v12/*: any*/),
         "gene.artworks.edges.node.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "gene.artworks.edges.node.attributionClass.id": (v11/*: any*/),
-        "gene.artworks.edges.node.attributionClass.name": (v10/*: any*/),
-        "gene.artworks.edges.node.collecting_institution": (v10/*: any*/),
-        "gene.artworks.edges.node.cultural_maker": (v10/*: any*/),
-        "gene.artworks.edges.node.date": (v10/*: any*/),
-        "gene.artworks.edges.node.href": (v10/*: any*/),
-        "gene.artworks.edges.node.id": (v11/*: any*/),
+        "gene.artworks.edges.node.attributionClass.id": (v10/*: any*/),
+        "gene.artworks.edges.node.attributionClass.name": (v12/*: any*/),
+        "gene.artworks.edges.node.collecting_institution": (v12/*: any*/),
+        "gene.artworks.edges.node.cultural_maker": (v12/*: any*/),
+        "gene.artworks.edges.node.date": (v12/*: any*/),
+        "gene.artworks.edges.node.href": (v12/*: any*/),
+        "gene.artworks.edges.node.id": (v10/*: any*/),
         "gene.artworks.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -618,12 +680,24 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "gene.artworks.edges.node.image.placeholder": (v10/*: any*/),
-        "gene.artworks.edges.node.image.url": (v10/*: any*/),
-        "gene.artworks.edges.node.image_title": (v10/*: any*/),
-        "gene.artworks.edges.node.internalID": (v11/*: any*/),
-        "gene.artworks.edges.node.is_biddable": (v12/*: any*/),
-        "gene.artworks.edges.node.is_saved": (v12/*: any*/),
+        "gene.artworks.edges.node.image.placeholder": (v12/*: any*/),
+        "gene.artworks.edges.node.image.url": (v12/*: any*/),
+        "gene.artworks.edges.node.image_title": (v12/*: any*/),
+        "gene.artworks.edges.node.internalID": (v10/*: any*/),
+        "gene.artworks.edges.node.is_biddable": (v11/*: any*/),
+        "gene.artworks.edges.node.is_saved": (v11/*: any*/),
+        "gene.artworks.edges.node.marketPriceInsights": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkPriceInsights"
+        },
+        "gene.artworks.edges.node.marketPriceInsights.demandRank": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Float"
+        },
         "gene.artworks.edges.node.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -631,17 +705,17 @@ return {
           "type": "ArtworkMedium"
         },
         "gene.artworks.edges.node.mediumType.filterGene": (v9/*: any*/),
-        "gene.artworks.edges.node.mediumType.filterGene.id": (v11/*: any*/),
-        "gene.artworks.edges.node.mediumType.filterGene.name": (v10/*: any*/),
+        "gene.artworks.edges.node.mediumType.filterGene.id": (v10/*: any*/),
+        "gene.artworks.edges.node.mediumType.filterGene.name": (v12/*: any*/),
         "gene.artworks.edges.node.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "gene.artworks.edges.node.partner.href": (v10/*: any*/),
-        "gene.artworks.edges.node.partner.id": (v11/*: any*/),
-        "gene.artworks.edges.node.partner.name": (v10/*: any*/),
+        "gene.artworks.edges.node.partner.href": (v12/*: any*/),
+        "gene.artworks.edges.node.partner.id": (v10/*: any*/),
+        "gene.artworks.edges.node.partner.name": (v12/*: any*/),
         "gene.artworks.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
@@ -649,14 +723,14 @@ return {
           "type": "Sale"
         },
         "gene.artworks.edges.node.sale.cascadingEndTimeIntervalMinutes": (v13/*: any*/),
-        "gene.artworks.edges.node.sale.display_timely_at": (v10/*: any*/),
-        "gene.artworks.edges.node.sale.endAt": (v10/*: any*/),
+        "gene.artworks.edges.node.sale.display_timely_at": (v12/*: any*/),
+        "gene.artworks.edges.node.sale.endAt": (v12/*: any*/),
         "gene.artworks.edges.node.sale.extendedBiddingIntervalMinutes": (v13/*: any*/),
-        "gene.artworks.edges.node.sale.id": (v11/*: any*/),
-        "gene.artworks.edges.node.sale.is_auction": (v12/*: any*/),
-        "gene.artworks.edges.node.sale.is_closed": (v12/*: any*/),
-        "gene.artworks.edges.node.sale.is_preview": (v12/*: any*/),
-        "gene.artworks.edges.node.sale.startAt": (v10/*: any*/),
+        "gene.artworks.edges.node.sale.id": (v10/*: any*/),
+        "gene.artworks.edges.node.sale.is_auction": (v11/*: any*/),
+        "gene.artworks.edges.node.sale.is_closed": (v11/*: any*/),
+        "gene.artworks.edges.node.sale.is_preview": (v11/*: any*/),
+        "gene.artworks.edges.node.sale.startAt": (v12/*: any*/),
         "gene.artworks.edges.node.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -675,38 +749,38 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
-        "gene.artworks.edges.node.sale_artwork.endAt": (v10/*: any*/),
-        "gene.artworks.edges.node.sale_artwork.extendedBiddingEndAt": (v10/*: any*/),
-        "gene.artworks.edges.node.sale_artwork.formattedEndDateTime": (v10/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.endAt": (v12/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.extendedBiddingEndAt": (v12/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.formattedEndDateTime": (v12/*: any*/),
         "gene.artworks.edges.node.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "gene.artworks.edges.node.sale_artwork.highest_bid.display": (v10/*: any*/),
-        "gene.artworks.edges.node.sale_artwork.id": (v11/*: any*/),
-        "gene.artworks.edges.node.sale_artwork.lotID": (v10/*: any*/),
-        "gene.artworks.edges.node.sale_artwork.lotLabel": (v10/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.highest_bid.display": (v12/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.id": (v10/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.lotID": (v12/*: any*/),
+        "gene.artworks.edges.node.sale_artwork.lotLabel": (v12/*: any*/),
         "gene.artworks.edges.node.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "gene.artworks.edges.node.sale_artwork.opening_bid.display": (v10/*: any*/),
-        "gene.artworks.edges.node.sale_message": (v10/*: any*/),
-        "gene.artworks.edges.node.slug": (v11/*: any*/),
-        "gene.artworks.edges.node.title": (v10/*: any*/),
-        "gene.artworks.id": (v11/*: any*/),
-        "gene.id": (v11/*: any*/),
-        "gene.internalID": (v11/*: any*/),
-        "gene.name": (v10/*: any*/)
+        "gene.artworks.edges.node.sale_artwork.opening_bid.display": (v12/*: any*/),
+        "gene.artworks.edges.node.sale_message": (v12/*: any*/),
+        "gene.artworks.edges.node.slug": (v10/*: any*/),
+        "gene.artworks.edges.node.title": (v12/*: any*/),
+        "gene.artworks.id": (v10/*: any*/),
+        "gene.id": (v10/*: any*/),
+        "gene.internalID": (v10/*: any*/),
+        "gene.name": (v12/*: any*/)
       }
     },
     "name": "OnboardingGene_Test_Query",
     "operationKind": "query",
-    "text": "query OnboardingGene_Test_Query {\n  gene(id: \"example\") {\n    ...OnboardingGene_gene\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment OnboardingGene_gene on Gene {\n  internalID\n  name\n  artworks: filterArtworksConnection(first: 50, page: 1, sort: \"-decayed_merch\", height: \"*-*\", width: \"*-*\", priceRange: \"*-*\", marketable: true, offerable: true, inquireableOnly: true, forSale: true) {\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query OnboardingGene_Test_Query {\n  gene(id: \"example\") {\n    ...OnboardingGene_gene\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment OnboardingGene_gene on Gene {\n  internalID\n  name\n  artworks: filterArtworksConnection(first: 50, page: 1, sort: \"-decayed_merch\", height: \"*-*\", width: \"*-*\", priceRange: \"*-*\", marketable: true, offerable: true, inquireableOnly: true, forSale: true) {\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

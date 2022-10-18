@@ -78,8 +78,8 @@ describe("ArtistNotableWorksRail", () => {
       expect.objectContaining({
         action: "clickedArtworkGroup",
         context_module: "topWorksRail",
-        destination_page_owner_id: "<Artwork-mock-id-8>",
-        destination_page_owner_slug: "<Artwork-mock-id-9>",
+        destination_page_owner_id: "<Artwork-mock-id-9>",
+        destination_page_owner_slug: "<Artwork-mock-id-10>",
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",

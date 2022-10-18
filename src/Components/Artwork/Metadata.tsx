@@ -54,6 +54,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
+        showHighDemandIcon={isMyCollectionArtwork}
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}

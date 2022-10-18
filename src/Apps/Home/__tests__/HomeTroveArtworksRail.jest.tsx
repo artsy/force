@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeTroveArtworksRailFragmentContainer } from "../Components/HomeTroveArtworksRail"
+import { HomeTroveArtworksRailFragmentContainer } from "Apps/Home/Components/HomeTroveArtworksRail"
 
 jest.unmock("react-relay")
 
@@ -67,8 +67,8 @@ describe("HomeTroveArtworksRail", () => {
         action: "clickedArtworkGroup",
         context_module: "troveArtworksRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: "<Artwork-mock-id-6>",
-        destination_page_owner_slug: "<Artwork-mock-id-7>",
+        destination_page_owner_id: "<Artwork-mock-id-7>",
+        destination_page_owner_slug: "<Artwork-mock-id-8>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
       })
