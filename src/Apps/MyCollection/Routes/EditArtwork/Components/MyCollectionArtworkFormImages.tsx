@@ -12,8 +12,8 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
 import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
-import { MyCollectionPhotoToPhoto } from "../Utils/artworkFormHelpers"
-import { ArtworkModel } from "../Utils/artworkModel"
+import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
+import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 
 export interface MyCollectionArtworkFormImagesProps {
   saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>

@@ -247,7 +247,7 @@ it("submiting a valid form", async () => {
       `/my-collection/artwork/${mockArtwork.internalID}`
     )
     expect(mockRouterPush).toHaveBeenCalledWith(
-      `/my-collection/artwork/${mockArtwork.internalID}/price-estimate/confirmation`
+      `/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
     )
   })
 })

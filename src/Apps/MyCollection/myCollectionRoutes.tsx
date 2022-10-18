@@ -95,7 +95,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/my-collection/artwork/:artworkID/price-estimate/confirmation",
+    path: "/my-collection/artwork/:artworkID/price-estimate/success",
     hideNav: true,
     hideFooter: true,
     getComponent: () => PriceEstimateConfirmation,

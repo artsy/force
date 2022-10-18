@@ -20,7 +20,10 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
 
   // Grouping median sale prices by artist id to array of arrays
   const groupedMedianSalePrices = Object.values(
-    groupBy(medianSalePrices, medianSalePrice => medianSalePrice?.artist?.internalID)
+    groupBy(
+      medianSalePrices,
+      medianSalePrice => medianSalePrice?.artist?.internalID
+    )
   )
 
   return (
@@ -61,7 +64,10 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
                       {medianSalePrice.mediumType?.name}
                     </Text>
                     <Text variant={["xs", "sm"]} fontWeight="bold">
-                      {medianSalePrice.marketPriceInsights?.medianSalePriceDisplayText}
+                      {
+                        medianSalePrice.marketPriceInsights
+                          ?.medianSalePriceDisplayText
+                      }
                     </Text>
                   </Flex>
                 )

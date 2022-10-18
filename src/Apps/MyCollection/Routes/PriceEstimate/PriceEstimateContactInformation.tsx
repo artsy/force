@@ -87,7 +87,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
 
       router.replace(`/my-collection/artwork/${artwork.internalID}`)
       router.push(
-        `/my-collection/artwork/${artwork.internalID}/price-estimate/confirmation`
+        `/my-collection/artwork/${artwork.internalID}/price-estimate/success`
       )
     } catch (error) {
       console.error(error)
@@ -113,7 +113,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
       <AppContainer>
         <BackLink
           py={2}
-          mb={6}
+          mb={4}
           width="min-content"
           to={`/my-collection/artwork/${artwork.internalID}`}
         >
