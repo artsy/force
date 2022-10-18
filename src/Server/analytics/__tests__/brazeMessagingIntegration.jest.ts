@@ -10,7 +10,7 @@ describe("isMatchingRoute", () => {
     "/artists",
     "/auctions",
     "/collect",
-    "/collection/trove",
+    "/collection/trove-editors-picks",
     "/fair/outside-tent-thingy",
     "/galleries",
     "/gene/works-on-paper",
