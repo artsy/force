@@ -31,7 +31,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
           <Text mb={0.5} variant="sm-display">
             Get a Free Price Estimate
           </Text>
-          <Text mb={2} color="black60">
+          <Text mb={2} color="black60" variant="xs">
             This artwork is eligible for a free evaluation from an Artsy
             specialist.
           </Text>
