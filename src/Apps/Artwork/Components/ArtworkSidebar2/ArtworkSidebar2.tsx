@@ -85,7 +85,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     !checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage) &&
     !isSold &&
     !isInAuction &&
-    isOfferableFromInquiry
+    (isOfferableFromInquiry || isOfferable)
 
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
