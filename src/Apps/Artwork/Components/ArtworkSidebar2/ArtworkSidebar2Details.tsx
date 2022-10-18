@@ -12,7 +12,7 @@ interface ArtworkSidebar2DetailsProps {
 const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
   artwork,
 }) => {
-  const { medium, dimensions, framed, editionOf, isEdition } = artwork
+  const { medium, dimensions, framed, editionOf, editionSets } = artwork
   const { t } = useTranslation()
 
   const dimensionsPresent = dimensions =>
@@ -29,7 +29,7 @@ const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
   return (
     <Box color="black60">
       <Text variant="sm-display">{medium}</Text>
-      {!!dimensionsPresent(dimensions) && !isEdition && (
+      {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
         <Text variant="sm-display">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
       )}
       {!!getFrameString(framed?.details) && (
@@ -67,6 +67,9 @@ export const ArtworkSidebar2DetailsFragmentContainer = createFragmentContainer(
         }
         editionOf
         isEdition
+        editionSets {
+          internalID
+        }
         ...ArtworkSidebar2Classification_artwork
         ...ArtworkSidebar2AuthenticityCertificate_artwork
       }
