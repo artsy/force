@@ -17,6 +17,7 @@ import { SystemContext } from "System"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
+import { shouldDisplayNotification } from "./util"
 
 interface NotificationsListQueryRendererProps {
   type: NotificationType
@@ -38,7 +39,9 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   const [currentPaginationType, setCurrentPaginationType] = useState(
     paginationType
   )
-  const nodes = extractNodes(viewer.notifications)
+  const nodes = extractNodes(viewer.notifications).filter(node =>
+    shouldDisplayNotification(node)
+  )
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -133,6 +136,10 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
           edges {
             node {
               internalID
+              notificationType
+              artworks: artworksConnection {
+                totalCount
+              }
               ...NotificationItem_item
             }
           }

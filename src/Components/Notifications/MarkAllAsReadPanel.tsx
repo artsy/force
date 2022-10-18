@@ -50,7 +50,9 @@ export const MarkAllAsReadPanel: React.FC<MarkAllAsReadPanelProps> = ({
       bg="white100"
     >
       <Text variant="xs" color={hasUnreadNotifications ? "brand" : "black60"}>
-        {t(`activityPanel.newNotifications`, { count: unreadCounts })}
+        {hasUnreadNotifications
+          ? t("activityPanel.newNotifications")
+          : t("activityPanel.noNewNotifications")}
       </Text>
       <Clickable onClick={markAllAsRead} disabled={!hasUnreadNotifications}>
         <Text variant="xs" color="black60">

@@ -97,9 +97,8 @@
     "resultsCount_other": "{{count}} results for"
   },
   "activityPanel": {
-    "newNotifications_zero": "No new notifications",
-    "newNotifications_one": "{{count}} new notification",
-    "newNotifications_other": "{{count}} new notifications",
+    "noNewNotifications": "No new notifications",
+    "newNotifications": "New notifications",
     "markAllAsRead": "Mark all as read"
   },
   "artQuizPage": {

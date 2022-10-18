@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { NotificationTypesEnum } from "__generated__/NotificationsList_viewer.graphql"
 
 export const getDateLabel = (timestamp: string) => {
   const date = DateTime.fromISO(timestamp)
@@ -23,4 +24,19 @@ const isToday = (date: DateTime) => {
 
 const daysAgo = (date: DateTime) => {
   return Math.floor(DateTime.now().diff(date, "days").days)
+}
+
+export const shouldDisplayNotification = notification => {
+  if (!isArtworksBasedNotification(notification.notificationType)) {
+    return true
+  }
+
+  const artworksCount = notification.artworks?.totalCount ?? 0
+  return artworksCount > 0
+}
+
+const isArtworksBasedNotification = (
+  notificationType: NotificationTypesEnum
+) => {
+  return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
 }
