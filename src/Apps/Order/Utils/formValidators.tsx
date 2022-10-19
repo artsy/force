@@ -14,7 +14,9 @@ export const validatePostalCode = (postalCode: string, countryCode: string) => {
       ? /^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/
       : /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
 
-  return postalCodeRegex.test(postalCode) ? null : "Postal code is invalid"
+  return postalCodeRegex.test(postalCode)
+    ? null
+    : "Please enter a valid zip/postal code for your region"
 }
 
 export const validateAddress = (address: Address) => {

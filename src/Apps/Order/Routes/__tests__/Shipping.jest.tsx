@@ -1456,8 +1456,14 @@ describe("Shipping", () => {
               .simulate("click")
             const inputs = page.find("AddressModal").find("input")
             inputs.forEach(input => {
-              // @ts-ignore
-              input.instance().value = `Test input '${input.props().name}'`
+              if (input.props().name === "postalCode") {
+                // @ts-ignore
+                input.instance().value = `15601`
+              } else {
+                // @ts-ignore
+                input.instance().value = `Test input '${input.props().name}'`
+              }
+
               input.simulate("change")
             })
             const countrySelect = page
@@ -1475,7 +1481,7 @@ describe("Shipping", () => {
               city: "Test input 'city'",
               country: "US",
               name: "Test input 'name'",
-              postalCode: "Test input 'postalCode'",
+              postalCode: "15601",
               region: "Test input 'region'",
             }
 
@@ -1557,8 +1563,13 @@ describe("Shipping", () => {
               .simulate("click")
             const inputs = page.find("AddressModal").find("input")
             inputs.forEach(input => {
-              // @ts-ignore
-              input.instance().value = `Test input '${input.props().name}'`
+              if (input.props().name === "postalCode") {
+                // @ts-ignore
+                input.instance().value = `15601`
+              } else {
+                // @ts-ignore
+                input.instance().value = `Test input '${input.props().name}'`
+              }
               input.simulate("change")
             })
             const countrySelect = page
@@ -1587,7 +1598,7 @@ describe("Shipping", () => {
                 country: "US",
                 name: "Test input 'name'",
                 phoneNumber: "555-555-5555",
-                postalCode: "Test input 'postalCode'",
+                postalCode: "15601",
                 region: "Test input 'region'",
               },
               expect.anything(),
@@ -1660,8 +1671,13 @@ describe("Shipping", () => {
           .simulate("click")
         const inputs = page.find("AddressModal").find("input")
         inputs.forEach(input => {
-          // @ts-ignore
-          input.instance().value = `Test input '${input.props().name}'`
+          if (input.props().name === "postalCode") {
+            // @ts-ignore
+            input.instance().value = `15601`
+          } else {
+            // @ts-ignore
+            input.instance().value = `Test input '${input.props().name}'`
+          }
           input.simulate("change")
         })
         const countrySelect = page.find("AddressModal").find("select").first()
@@ -1685,7 +1701,7 @@ describe("Shipping", () => {
             country: "US",
             name: "Test input 'name'",
             phoneNumber: "555-555-5555",
-            postalCode: "Test input 'postalCode'",
+            postalCode: "15601",
             region: "Test input 'region'",
           },
           expect.anything(),

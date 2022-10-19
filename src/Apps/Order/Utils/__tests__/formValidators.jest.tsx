@@ -7,7 +7,9 @@ import {
 
 describe("formValidators/validatePostalCode", () => {
   it("returns error when postal code is invalid for US", () => {
-    expect(validatePostalCode("XX", "US")).toBe("Postal code is invalid")
+    expect(validatePostalCode("XX", "US")).toBe(
+      "Please enter a valid zip/postal code for your region"
+    )
   })
   it("returns no error when postal code is valid for US", () => {
     expect(validatePostalCode("15601", "US")).toBe(null)
@@ -19,7 +21,9 @@ describe("formValidators/validatePostalCode", () => {
     expect(validatePostalCode("M3J3N3", "CA")).toBe(null)
   })
   it("returns error when postal code is invalid for CA", () => {
-    expect(validatePostalCode("YY", "CA")).toBe("Postal code is invalid")
+    expect(validatePostalCode("YY", "CA")).toBe(
+      "Please enter a valid zip/postal code for your region"
+    )
   })
 })
 
@@ -206,7 +210,9 @@ describe("formValidators/validateAddress", () => {
       const result = validateAddress(address)
 
       expect(result.hasErrors).toEqual(true)
-      expect(result.errors.postalCode).toEqual("Postal code is invalid")
+      expect(result.errors.postalCode).toEqual(
+        "Please enter a valid zip/postal code for your region"
+      )
     })
 
     it("returns no error for a valid postalCode for US", () => {
@@ -240,7 +246,9 @@ describe("formValidators/validateAddress", () => {
       const result = validateAddress(address)
 
       expect(result.hasErrors).toEqual(true)
-      expect(result.errors.postalCode).toEqual("Postal code is invalid")
+      expect(result.errors.postalCode).toEqual(
+        "Please enter a valid zip/postal code for your region"
+      )
     })
 
     it("returns no error for a valid postalCode for Canada", () => {
