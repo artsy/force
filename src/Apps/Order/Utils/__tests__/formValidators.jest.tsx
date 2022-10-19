@@ -12,10 +12,10 @@ describe("formValidators/validatePostalCode", () => {
   it("returns no error when postal code is valid for US", () => {
     expect(validatePostalCode("15601", "US")).toBe(null)
   })
-  it("returns error when postal code is invalid for CA", () => {
+  it("returns no error when postal code is valid for CA", () => {
     expect(validatePostalCode("M3J3N3", "CA")).toBe(null)
   })
-  it("returns no error when postal code is valid for CA", () => {
+  it("returns error when postal code is invalid for CA", () => {
     expect(validatePostalCode("YY", "CA")).toBe("This field is required")
   })
 })
@@ -210,6 +210,17 @@ describe("formValidators/validateAddress", () => {
       const address: Address = buildAddress()
 
       address.postalCode = "15601"
+      address.country = "US"
+
+      const result = validateAddress(address)
+
+      expect(result.hasErrors).toEqual(false)
+    })
+
+    it("returns no error for a valid 9-digit postalCode for US", () => {
+      const address: Address = buildAddress()
+
+      address.postalCode = "88310-7241"
       address.country = "US"
 
       const result = validateAddress(address)
