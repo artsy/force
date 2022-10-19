@@ -7,7 +7,7 @@ import {
 
 describe("formValidators/validatePostalCode", () => {
   it("returns error when postal code is invalid for US", () => {
-    expect(validatePostalCode("XX", "US")).toBe("This field is required")
+    expect(validatePostalCode("XX", "US")).toBe("Postal code is invalid")
   })
   it("returns no error when postal code is valid for US", () => {
     expect(validatePostalCode("15601", "US")).toBe(null)
@@ -19,7 +19,7 @@ describe("formValidators/validatePostalCode", () => {
     expect(validatePostalCode("M3J3N3", "CA")).toBe(null)
   })
   it("returns error when postal code is invalid for CA", () => {
-    expect(validatePostalCode("YY", "CA")).toBe("This field is required")
+    expect(validatePostalCode("YY", "CA")).toBe("Postal code is invalid")
   })
 })
 
@@ -206,7 +206,7 @@ describe("formValidators/validateAddress", () => {
       const result = validateAddress(address)
 
       expect(result.hasErrors).toEqual(true)
-      expect(result.errors.postalCode).toEqual("This field is required")
+      expect(result.errors.postalCode).toEqual("Postal code is invalid")
     })
 
     it("returns no error for a valid postalCode for US", () => {
@@ -240,7 +240,7 @@ describe("formValidators/validateAddress", () => {
       const result = validateAddress(address)
 
       expect(result.hasErrors).toEqual(true)
-      expect(result.errors.postalCode).toEqual("This field is required")
+      expect(result.errors.postalCode).toEqual("Postal code is invalid")
     })
 
     it("returns no error for a valid postalCode for Canada", () => {
