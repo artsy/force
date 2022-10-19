@@ -22,7 +22,7 @@ export const validateAddress = (address: Address) => {
   const usOrCanada = country === "US" || country === "CA"
 
   let postalCodeValidationResult: string | null = null
-  // check presence and check corretness if present
+  // check presence and check correctness if present
   if (usOrCanada) {
     postalCodeValidationResult = validatePresence(postalCode)
 

@@ -19,7 +19,7 @@ import { graphql } from "react-relay"
 import {
   CreditCardPicker,
   CreditCardPickerFragmentContainer,
-} from "../CreditCardPicker"
+} from "Apps/Order/Components/CreditCardPicker"
 import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "DevTools/mockStripe"
 import { MockBoot } from "DevTools"
@@ -276,13 +276,13 @@ describe("CreditCardPickerFragmentContainer", () => {
     await page.getCreditCardId()
 
     expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
-      name: "Artsy UK Ltd",
-      address_line1: "14 Gower's Walk",
-      address_line2: "Suite 2.5, The Loom",
-      address_city: "Whitechapel",
-      address_state: "London",
-      address_zip: "E1 8PY",
-      address_country: "UK",
+      name: "Erik David",
+      address_line1: "401 Broadway",
+      address_line2: "",
+      address_city: "New York",
+      address_state: "NY",
+      address_zip: "15601",
+      address_country: "US",
     })
   })
 
@@ -317,13 +317,13 @@ describe("CreditCardPickerFragmentContainer", () => {
     await page.getCreditCardId()
 
     expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
-      name: "Artsy UK Ltd",
-      address_line1: "14 Gower's Walk",
-      address_line2: "Suite 2.5, The Loom",
-      address_city: "Whitechapel",
-      address_state: "London",
-      address_zip: "E1 8PY",
-      address_country: "UK",
+      name: "Erik David",
+      address_line1: "401 Broadway",
+      address_line2: "",
+      address_city: "New York",
+      address_state: "NY",
+      address_zip: "15601",
+      address_country: "US",
     })
   })
 
