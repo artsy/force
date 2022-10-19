@@ -105,8 +105,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         <NavBarMobileMenuItemLink
           to="/notifications"
           onClick={() => {
-            console.log("[Debug] [Tracking] clickedNotificationsBell", user?.id)
-
             trackEvent({
               action: ActionType.clickedNotificationsBell,
               user_id: user?.id,

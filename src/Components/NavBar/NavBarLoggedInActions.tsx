@@ -65,12 +65,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
               anchorProps.onClick?.(event)
 
               if (!visible) {
-                console.log(
-                  "[Debug] [Tracking] clickedNotificationsBell",
-                  user?.id,
-                  visible
-                )
-
                 trackEvent({
                   action: ActionType.clickedNotificationsBell,
                   user_id: user?.id,

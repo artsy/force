@@ -34,14 +34,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
     <NotificationItemLink
       to={item.targetHref}
       onClick={() => {
-        console.log(
-          "[Debug] [Tracking] ClickedActivityPanelNotificationItem",
-          item.notificationType,
-          user?.id
-        )
         trackEvent({
           action: ActionType.clickedActivityPanelNotificationItem,
           user_id: user?.id,
+          notification_type: item.notificationType,
         })
       }}
     >
