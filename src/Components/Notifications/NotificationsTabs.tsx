@@ -16,6 +16,9 @@ import {
   MarkAllAsReadPanelProps,
   MARK_ALL_AS_READ_PANEL_HEIGHT,
 } from "./MarkAllAsReadPanel"
+import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useSystemContext } from "System"
 
 const TABS_CONTAINER_HEIGHT = 60
 const DROPDOWN_HEADER_HEIGHT =
@@ -33,9 +36,28 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   unreadCounts,
   children,
 }) => {
+  const { trackEvent } = useTracking()
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
     children,
   })
+  const { user } = useSystemContext()
+
+  const handleTabClick = (tab, index) => () => {
+    console.log(
+      "[Debug] [Tracking] [index]",
+      index,
+      " ClickedActivityPanelTab",
+      tab.child.props.name,
+      user?.id
+    )
+    trackEvent({
+      // action: ActionType.clickedActivityPanelTab,
+      action: ActionType.addToCalendar,
+      user_id: user?.id,
+    })
+
+    handleClick(index)
+  }
 
   const Tabs = (
     <InnerTabs ref={ref as any} borderBottomColor="transparent" width="100%">
@@ -45,8 +67,8 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
             key={i}
             ref={tab.ref as any}
             aria-selected={i === activeTabIndex}
-            onClick={handleClick(i)}
             flex={1}
+            onClick={handleTabClick(tab, i)}
           >
             <NotificationBaseTab active={i === activeTabIndex} variant="sm">
               <span>{tab.child.props.name}</span>

@@ -6,6 +6,9 @@ import { RouterLink } from "System/Router/RouterLink"
 import { getDateLabel } from "./util"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import { useSystemContext } from "System"
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
@@ -14,6 +17,8 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+  const { trackEvent } = useTracking()
+  const { user } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
 
   const getNotificationType = () => {
@@ -26,7 +31,21 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const notificationTypeLabel = getNotificationType()
 
   return (
-    <NotificationItemLink to={item.targetHref}>
+    <NotificationItemLink
+      to={item.targetHref}
+      onClick={() => {
+        console.log(
+          "[Debug] [Tracking] ClickedActivityPanelNotificationItem",
+          item.notificationType,
+          user?.id
+        )
+        trackEvent({
+          // action: ActionType.clickedActivityPanelTab,
+          action: ActionType.addToCalendar,
+          user_id: user?.id,
+        })
+      }}
+    >
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {notificationTypeLabel && (

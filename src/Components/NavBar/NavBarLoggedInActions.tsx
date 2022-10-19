@@ -24,11 +24,14 @@ import { Z } from "Apps/Components/constants"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
+  const { trackEvent } = useTracking()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
     notifications: me?.unreadNotificationsCount,
@@ -57,6 +60,19 @@ export const NavBarLoggedInActions: React.FC<Partial<
             ref={anchorRef as any}
             active={visible}
             {...anchorProps}
+            onClick={event => {
+              anchorProps.onClick?.(event)
+
+              console.log(
+                "[Debug] [Tracking] clickedNotificationBell",
+                me?.internalID
+              )
+              trackEvent({
+                // action: ActionType.clickedNotificationBell,
+                action: ActionType.addToCalendar,
+                user_id: me?.internalID,
+              })
+            }}
           >
             <BellIcon
               title="Notifications"
@@ -126,6 +142,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
       query={graphql`
         query NavBarLoggedInActionsQuery {
           me {
+            internalID
             unreadNotificationsCount
             unreadConversationCount
             followsAndSaves {
