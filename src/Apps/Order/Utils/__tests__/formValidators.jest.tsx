@@ -12,6 +12,9 @@ describe("formValidators/validatePostalCode", () => {
   it("returns no error when postal code is valid for US", () => {
     expect(validatePostalCode("15601", "US")).toBe(null)
   })
+  it("returns no error when a 9-digit postal code is valid for US", () => {
+    expect(validatePostalCode("88310-7241", "US")).toBe(null)
+  })
   it("returns no error when postal code is valid for CA", () => {
     expect(validatePostalCode("M3J3N3", "CA")).toBe(null)
   })
