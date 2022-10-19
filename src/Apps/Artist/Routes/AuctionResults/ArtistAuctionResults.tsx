@@ -1,4 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Title } from "react-head"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -47,7 +48,6 @@ import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { MetaTags } from "Components/MetaTags"
 import { extractNodes } from "Utils/extractNodes"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
@@ -214,7 +214,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   return (
     <>
-      <MetaTags title={titleString} />
+      <Title>{titleString}</Title>
 
       <Box id="scrollTo--marketSignalsTop" />
 
