@@ -14,6 +14,7 @@ import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActi
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System"
+import { useTranslation } from "react-i18next"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -21,6 +22,7 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
+  const { t } = useTranslation()
   const { isLoggedIn } = useSystemContext()
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.is_saved,
@@ -35,6 +37,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     isRegistrationClosed,
     registrationStatus,
     liveStartAt,
+    registrationEndsAt,
   } = artwork.sale ?? {}
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.is_saved
@@ -55,8 +58,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
       <Popover
         title={
           <Text variant="sm-display">
-            Register ahead of time to bid in this auction and get notifications
-            for this lot.
+            {t(
+              registrationEndsAt
+                ? `artworkPage.actions.save.registerToBidWithDeadline`
+                : `artworkPage.actions.save.registerToBidWithoutDeadline`
+            )}
           </Text>
         }
         placement="top"
@@ -116,6 +122,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           isRegistrationClosed
           requireIdentityVerification
           liveStartAt
+          registrationEndsAt
           registrationStatus {
             qualifiedForBidding
           }
