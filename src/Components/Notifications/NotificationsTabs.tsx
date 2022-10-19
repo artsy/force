@@ -42,7 +42,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   })
   const { user } = useSystemContext()
 
-  const handleTabClick = (tab, index) => () => {
+  const handleTabClick = (tab, index) => event => {
+    event.preventDefault()
+
     console.log(
       "[Debug] [Tracking] [index]",
       index,
@@ -51,11 +53,11 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
       user?.id
     )
     trackEvent({
-      // action: ActionType.clickedActivityPanelTab,
-      action: ActionType.addToCalendar,
+      action: ActionType.clickedActivityPanelTab,
       user_id: user?.id,
     })
 
+    console.log("[Debug] [Tracking] before handleClick", handleClick, index)
     handleClick(index)
   }
 
@@ -69,6 +71,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
             aria-selected={i === activeTabIndex}
             flex={1}
             onClick={handleTabClick(tab, i)}
+            // onClick={handleClick(i)}
           >
             <NotificationBaseTab active={i === activeTabIndex} variant="sm">
               <span>{tab.child.props.name}</span>

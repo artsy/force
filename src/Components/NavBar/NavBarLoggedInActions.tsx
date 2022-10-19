@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System"
+import { useSystemContext, SystemContext } from "System"
 import {
   BellIcon,
   Dropdown,
@@ -32,6 +32,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
+  const { user } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
     notifications: me?.unreadNotificationsCount,
@@ -63,15 +64,18 @@ export const NavBarLoggedInActions: React.FC<Partial<
             onClick={event => {
               anchorProps.onClick?.(event)
 
-              console.log(
-                "[Debug] [Tracking] clickedNotificationBell",
-                me?.internalID
-              )
-              trackEvent({
-                // action: ActionType.clickedNotificationBell,
-                action: ActionType.addToCalendar,
-                user_id: me?.internalID,
-              })
+              if (!visible) {
+                console.log(
+                  "[Debug] [Tracking] clickedNotificationsBell",
+                  user?.id,
+                  visible
+                )
+
+                trackEvent({
+                  action: ActionType.clickedNotificationsBell,
+                  user_id: user?.id,
+                })
+              }
             }}
           >
             <BellIcon
@@ -142,7 +146,6 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
       query={graphql`
         query NavBarLoggedInActionsQuery {
           me {
-            internalID
             unreadNotificationsCount
             unreadConversationCount
             followsAndSaves {

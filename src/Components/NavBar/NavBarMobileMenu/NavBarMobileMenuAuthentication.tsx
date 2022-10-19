@@ -18,6 +18,8 @@ import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me$data | null
@@ -26,9 +28,10 @@ interface NavBarMobileMenuLoggedInProps {
 export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> = ({
   me,
 }) => {
-  const { mediator } = useSystemContext()
+  const { user, mediator } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+  const { trackEvent } = useTracking()
 
   const {
     hasConversations,
@@ -99,7 +102,17 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
 
       {enableActivityPanel && (
-        <NavBarMobileMenuItemLink to="/notifications">
+        <NavBarMobileMenuItemLink
+          to="/notifications"
+          onClick={() => {
+            console.log("[Debug] [Tracking] clickedNotificationsBell", user?.id)
+
+            trackEvent({
+              action: ActionType.clickedNotificationsBell,
+              user_id: user?.id,
+            })
+          }}
+        >
           Activity
           {hasNotifications && <Indicator />}
         </NavBarMobileMenuItemLink>

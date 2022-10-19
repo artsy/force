@@ -40,8 +40,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
           user?.id
         )
         trackEvent({
-          // action: ActionType.clickedActivityPanelTab,
-          action: ActionType.addToCalendar,
+          action: ActionType.clickedActivityPanelNotificationItem,
           user_id: user?.id,
         })
       }}
