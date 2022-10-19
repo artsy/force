@@ -49,7 +49,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     isSold,
     isAcquireable,
     isInAuction,
-    isOfferableFromInquiry,
+    isEligibleForArtsyGuarantee,
     isOfferable,
     saleArtwork,
     sale,
@@ -82,10 +82,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
   const lotLabel = artwork.isBiddable ? artwork.saleArtwork?.lotLabel : null
 
   const shouldDisplayArtsyGuarantee =
-    !checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage) &&
-    !isSold &&
-    !isInAuction &&
-    (isOfferableFromInquiry || isOfferable)
+    isSold !== true && isEligibleForArtsyGuarantee
 
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
@@ -180,7 +177,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         isInAuction
         saleMessage
         isBiddable
-        isOfferableFromInquiry
+        isEligibleForArtsyGuarantee
         ...ArtworkSidebar2ArtworkTitle_artwork
         ...ArtworkSidebar2Artists_artwork
         ...ArtworkSidebar2Details_artwork

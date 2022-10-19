@@ -101,34 +101,37 @@ describe("ArtworkSidebar2Artists", () => {
   })
 
   describe("Artsy Guarantee section", () => {
-    it("should be hidden when artwork is in auction", () => {
+    it("should be displayed when not sold and eligible", () => {
       renderWithRelay({
         Artwork: () => ({
-          isInAuction: true,
+          isSold: false,
+          isEligibleForArtsyGuarantee: true,
         }),
       })
 
       expect(
         screen.queryByText("Be covered by the Artsy Guarantee")
-      ).not.toBeInTheDocument()
+      ).toBeInTheDocument()
     })
 
-    it("should be hidden when artwork is not incquireable", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isOfferableFromInquiry: false,
-        }),
-      })
-
-      expect(
-        screen.queryByText("Be covered by the Artsy Guarantee")
-      ).not.toBeInTheDocument()
-    })
-
-    it("should be hidden when artwork is sold", () => {
+    it("should not be displayed when sold", () => {
       renderWithRelay({
         Artwork: () => ({
           isSold: true,
+          isEligibleForArtsyGuarantee: true,
+        }),
+      })
+
+      expect(
+        screen.queryByText("Be covered by the Artsy Guarantee")
+      ).not.toBeInTheDocument()
+    })
+
+    it("should not be displayed when inelgible", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isEligibleForArtsyGuarantee: false,
         }),
       })
 
