@@ -88,6 +88,10 @@ describe("PhotoThumbnail", () => {
     })
   })
 
+  it("renders error message", () => {
+    expect(wrapper.text()).toContain("error")
+  })
+
   describe("loading state", () => {
     let props
 
