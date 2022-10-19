@@ -12,6 +12,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
+import { findLast } from "lodash"
 import { useRef, useState } from "react"
 import {
   createFragmentContainer,
@@ -254,6 +255,12 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
             refetchPhotos()
           }
 
+          const errorMessageForAutomaticallyUploadedPhotos = findLast(
+            values.photos,
+            photo => photo.errorMessage && photo.externalUrl
+            // @ts-ignore
+          )?.errorMessage
+
           return (
             <Form>
               <UploadPhotosForm
@@ -273,6 +280,16 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                     onDelete={handlePhotoDelete}
                   />
                 ))}
+                {!!errorMessageForAutomaticallyUploadedPhotos && (
+                  <Text
+                    data-testid="photo-thumbnail-error"
+                    mt={[0.5, 2]}
+                    variant="xs"
+                    color="red100"
+                  >
+                    {errorMessageForAutomaticallyUploadedPhotos}
+                  </Text>
+                )}
               </Box>
 
               <Button
