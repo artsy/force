@@ -112,8 +112,8 @@ const InsightColumn = ({ name, value }: { name: string; value: string }) => {
   return (
     <Column span={[6, 4, 2]}>
       <Flex flexDirection={"column"} justifyContent="flex-start">
-        <Text variant={["xs", "sm-display", "sm-display"]}>{name}</Text>
-        <Text variant={["lg", "xl", "xl"]}>{value}</Text>
+        <Text variant={["xs", "sm-display"]}>{name}</Text>
+        <Text variant={["lg", "xl"]}>{value}</Text>
       </Flex>
     </Column>
   )
