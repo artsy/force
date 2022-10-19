@@ -1,8 +1,12 @@
 import {
   ArrowLeftIcon,
+  Clickable,
   CloseIcon,
   CSSGrid,
+  Flex,
   FullBleed,
+  Image,
+  ResponsiveBox,
   Spinner,
   Text,
 } from "@artsy/palette"
@@ -11,13 +15,6 @@ import {
   ArtQuizDislikeButton,
   ArtQuizSaveButton,
 } from "Apps/ArtQuiz/Components/ArtQuizButtons"
-import {
-  GridClickable,
-  GridFlex,
-  GridImage,
-  GridResponsiveBox,
-  GridText,
-} from "Apps/ArtQuiz/Components/ArtQuizGridComponents"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FC, useEffect, useState } from "react"
 import { useWindowSize } from "Utils/Hooks/useWindowSize"
@@ -68,7 +65,7 @@ export const ArtQuizMain: FC = () => {
           ". image ."
           ". controls ."`,
         ]}
-        gridTemplateColumns={["1fr", "1fr 8fr 1fr"]}
+        gridTemplateColumns={["1fr", "2fr 8fr 2fr"]}
         gridTemplateRows={[
           `${MOBILE_ROW_HEIGHT}px 1fr ${MOBILE_ROW_HEIGHT}px`,
           `${DESKTOP_ROW_HEIGHT}px 1fr ${DESKTOP_ROW_HEIGHT}px`,
@@ -76,31 +73,31 @@ export const ArtQuizMain: FC = () => {
         height="100%"
         pb={6}
       >
-        <GridClickable
+        <Clickable
           alignSelf={"center"}
           gridArea={["header", "back"]}
           justifySelf={["flex-start", "flex-end"]}
           px={[2, 0]}
         >
           <ArrowLeftIcon />
-        </GridClickable>
-        <GridText
+        </Clickable>
+        <Text
           gridArea={["header", "progress"]}
           alignSelf="center"
           justifySelf="center"
         >
           {`${currentIndex + 1} / ${artworksTotalCount}`}
-        </GridText>
-        <GridClickable
+        </Text>
+        <Clickable
           gridArea={["header", "skip"]}
           alignSelf="center"
           justifySelf={["flex-end", "flex-start"]}
           px={[2, 0]}
         >
           <CloseIcon />
-        </GridClickable>
+        </Clickable>
 
-        <GridFlex gridArea="image" justifyContent="center" alignItems="center">
+        <Flex gridArea="image" justifyContent="center" alignItems="center">
           {/** The appearance/disappearance of this loader is startling and poor UX.
            * We should definitely work on smoothing this visual transition out as part of
            * the animation user story. */}
@@ -111,7 +108,7 @@ export const ArtQuizMain: FC = () => {
             </>
           )}
           {!!maxHeight && (
-            <GridResponsiveBox
+            <ResponsiveBox
               display="grid"
               gridArea="image"
               aspectWidth={aspectRatio}
@@ -119,18 +116,18 @@ export const ArtQuizMain: FC = () => {
               maxHeight={maxHeight}
               p={[0, 2]}
             >
-              <GridImage
+              <Image
                 alt={currentArtwork.title}
                 src={currentArtwork.image?.url}
                 preventRightClick={true}
                 height="100%"
                 width="100%"
               />
-            </GridResponsiveBox>
+            </ResponsiveBox>
           )}
-        </GridFlex>
+        </Flex>
 
-        <GridFlex
+        <Flex
           gridArea="controls"
           width="100%"
           height="100%"
@@ -139,7 +136,7 @@ export const ArtQuizMain: FC = () => {
         >
           <ArtQuizDislikeButton px={6} />
           <ArtQuizSaveButton slug={currentArtwork.slug} px={6} />
-        </GridFlex>
+        </Flex>
       </CSSGrid>
     </FullBleed>
   )
