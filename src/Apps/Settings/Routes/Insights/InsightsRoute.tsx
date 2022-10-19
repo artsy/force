@@ -34,7 +34,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
 
   return (
     <>
-      <MetaTags title="Insights | Artsy" pathname="/insights" />
+      <MetaTags title="My Collection Insights | Artsy" pathname="/insights" />
 
       {!!isInsightsEnabled && (
         <>
