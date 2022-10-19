@@ -35,9 +35,9 @@ export const MyCollectionArtworkArtistMarket = ({
   return (
     <>
       <Media greaterThanOrEqual="sm">
-        <Text variant="lg">Artist Market</Text>
+        <Text variant="md">Artist Market</Text>
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           Based on the last 36 months of auction sale data from top commercial
           auction houses.
         </Text>
@@ -112,8 +112,8 @@ const InsightColumn = ({ name, value }: { name: string; value: string }) => {
   return (
     <Column span={[6, 4, 2]}>
       <Flex flexDirection={"column"} justifyContent="flex-start">
-        <Text variant={["xs", "md", "md"]}>{name}</Text>
-        <Text variant={["lg", "xl", "xl"]}>{value}</Text>
+        <Text variant={["xs", "sm-display"]}>{name}</Text>
+        <Text variant={["lg", "xl"]}>{value}</Text>
       </Flex>
     </Column>
   )

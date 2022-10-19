@@ -313,7 +313,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                       photo => photo.loading
                                     ).length > 0
                                   }
-                                  disabled={!isValid}
+                                  disabled={!isValid || !dirty}
                                 >
                                   {isEditing
                                     ? "Save Changes"
@@ -387,7 +387,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                         values.newPhotos.filter(photo => photo.loading).length >
                           0
                       }
-                      disabled={!isValid}
+                      disabled={!isValid || !dirty}
                     >
                       {isEditing ? "Save Changes" : "Upload Artwork"}
                     </Button>
