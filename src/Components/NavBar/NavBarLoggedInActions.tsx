@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
-import { useSystemContext, SystemContext } from "System"
+import { SystemContext } from "System"
 import {
   BellIcon,
   Dropdown,
@@ -32,7 +32,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
     notifications: me?.unreadNotificationsCount,
@@ -67,7 +66,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
               if (!visible) {
                 trackEvent({
                   action: ActionType.clickedNotificationsBell,
-                  user_id: user?.id,
                 })
               }
             }}

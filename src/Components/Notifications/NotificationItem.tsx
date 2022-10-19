@@ -8,7 +8,6 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
@@ -18,7 +17,6 @@ const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
 
   const getNotificationType = () => {
@@ -36,7 +34,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
       onClick={() => {
         trackEvent({
           action: ActionType.clickedActivityPanelNotificationItem,
-          user_id: user?.id,
           notification_type: item.notificationType,
         })
       }}

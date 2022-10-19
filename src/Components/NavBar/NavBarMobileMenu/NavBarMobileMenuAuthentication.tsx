@@ -28,7 +28,7 @@ interface NavBarMobileMenuLoggedInProps {
 export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> = ({
   me,
 }) => {
-  const { user, mediator } = useSystemContext()
+  const { mediator } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
   const { trackEvent } = useTracking()
@@ -107,7 +107,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
           onClick={() => {
             trackEvent({
               action: ActionType.clickedNotificationsBell,
-              user_id: user?.id,
             })
           }}
         >

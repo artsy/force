@@ -18,7 +18,6 @@ import {
 } from "./MarkAllAsReadPanel"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
 
 const TABS_CONTAINER_HEIGHT = 60
 const DROPDOWN_HEADER_HEIGHT =
@@ -40,12 +39,10 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
     children,
   })
-  const { user } = useSystemContext()
 
   const sendAnalytics = tab => {
     trackEvent({
       action: ActionType.clickedActivityPanelTab,
-      user_id: user?.id,
       tab_name: tab.child.props.name,
     })
   }
