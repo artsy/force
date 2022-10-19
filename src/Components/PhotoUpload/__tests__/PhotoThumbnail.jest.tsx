@@ -1,9 +1,9 @@
 import { Image, ProgressBar } from "@artsy/palette"
-import { mount, ReactWrapper } from "enzyme"
 import {
   PhotoThumbnail,
   PhotoThumbnailProps,
 } from "Components/PhotoUpload/Components/PhotoThumbnail"
+import { mount, ReactWrapper } from "enzyme"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {
@@ -86,10 +86,10 @@ describe("PhotoThumbnail", () => {
     it("doesn't render image", () => {
       expect(wrapper.find(Image)).toHaveLength(0)
     })
+  })
 
-    it("renders error message", () => {
-      expect(wrapper.text()).toContain("error")
-    })
+  it("renders error message", () => {
+    expect(wrapper.text()).toContain("error")
   })
 
   describe("loading state", () => {
