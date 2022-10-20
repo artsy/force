@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bcb259313c4387768f0fb917b8cee6f9>>
+ * @generated SignedSource<<717678d4a7dabf2b4a6d653f281ba534>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,12 +56,6 @@ v3 = {
 v4 = {
   "enumValues": null,
   "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
   "plural": false,
   "type": "String"
 };
@@ -154,10 +148,16 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "format",
+                        "value": "RELATIVE"
+                      }
+                    ],
                     "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
+                    "name": "publishedAt",
+                    "storageKey": "publishedAt(format:\"RELATIVE\")"
                   },
                   {
                     "alias": null,
@@ -288,7 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e7ab529d8573736662b76b4bfd3d33e4",
+    "cacheID": "6ce2b155e5ad31fe483b6902a8d7ef0b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -344,8 +344,12 @@ return {
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v3/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v5/*: any*/),
-        "notificationsConnection.edges.node.createdAt": (v5/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.title": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
         "notificationsConnection.edges.node.id": (v3/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
           "enumValues": null,
@@ -364,13 +368,14 @@ return {
           "plural": false,
           "type": "NotificationTypesEnum"
         },
+        "notificationsConnection.edges.node.publishedAt": (v4/*: any*/),
         "notificationsConnection.edges.node.targetHref": (v4/*: any*/),
         "notificationsConnection.edges.node.title": (v4/*: any*/)
       }
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
