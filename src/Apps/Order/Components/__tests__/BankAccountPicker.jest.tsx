@@ -6,13 +6,13 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { expectOne, RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
-import { BankAccountPickerFragmentContainer } from "../BankAccountPicker"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "../../Mutations/useSetPayment"
-import { BankAccountSelection } from "../../Routes/Payment/index"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
+import { BankAccountSelection } from "Apps/Order/Routes/Payment/index"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
@@ -114,6 +114,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            onError={jest.fn()}
           />
         </MockBoot>
       ),
@@ -149,6 +150,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            onError={jest.fn()}
           />
         </MockBoot>
       ),

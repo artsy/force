@@ -1,4 +1,5 @@
 import { FC, useState } from "react"
+import { StripeError } from "@stripe/stripe-js"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -21,9 +22,10 @@ import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext
 
 interface Props {
   order: { mode: string | null; internalID: string }
+  onError: (error: Error | StripeError) => void
 }
 
-export const BankDebitForm: FC<Props> = ({ order }) => {
+export const BankDebitForm: FC<Props> = ({ order, onError }) => {
   const {
     selectedPaymentMethod,
     bankAccountHasInsufficientFunds,
@@ -85,6 +87,7 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
 
     if (error) {
       setIsSavingPayment(false)
+      onError(error)
       throw error
     }
   }

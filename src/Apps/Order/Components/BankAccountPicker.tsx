@@ -1,5 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { StripeError } from "@stripe/stripe-js"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
@@ -10,7 +11,7 @@ import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { useSetPayment } from "../Mutations/useSetPayment"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
@@ -22,6 +23,7 @@ interface BankAccountRecord {
 interface Props {
   order: BankAccountPicker_order$data
   me: BankAccountPicker_me$data
+  onError: (error: Error | StripeError) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -83,7 +85,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
       setSelectedBankAccountId(bankAccountSelection?.id!)
     } catch (error) {
-      console.error(error)
+      props.onError(error)
     } finally {
       setIsSavingPayment(false)
     }
@@ -137,7 +139,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
       <Collapse open={bankAccountSelection?.type === "new"}>
         {bankAccountSelection?.type === "new" && (
-          <BankDebitProvider order={order} />
+          <BankDebitProvider order={order} onError={props.onError} />
         )}
       </Collapse>
 
