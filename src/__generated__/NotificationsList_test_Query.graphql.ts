@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6de3f8b13d65b76280af68b1eca4462>>
+ * @generated SignedSource<<281f767014d919e571d9de15ba33f92f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -181,10 +181,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "RELATIVE"
+                          }
+                        ],
                         "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": null
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"RELATIVE\")"
                       },
                       {
                         "alias": null,
@@ -353,7 +359,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9c8f030b4eadbedbdf6a14f331320c0",
+    "cacheID": "ded6c0a851f800d8211900c9416ad138",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,7 +426,6 @@ return {
         "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
         "viewer.notifications.edges.node.artworksConnection.edges.node.internalID": (v6/*: any*/),
         "viewer.notifications.edges.node.artworksConnection.edges.node.title": (v7/*: any*/),
-        "viewer.notifications.edges.node.createdAt": (v7/*: any*/),
         "viewer.notifications.edges.node.id": (v6/*: any*/),
         "viewer.notifications.edges.node.internalID": (v6/*: any*/),
         "viewer.notifications.edges.node.isUnread": (v8/*: any*/),
@@ -435,6 +440,7 @@ return {
           "plural": false,
           "type": "NotificationTypesEnum"
         },
+        "viewer.notifications.edges.node.publishedAt": (v4/*: any*/),
         "viewer.notifications.edges.node.targetHref": (v4/*: any*/),
         "viewer.notifications.edges.node.title": (v4/*: any*/),
         "viewer.notifications.pageInfo": {
@@ -449,7 +455,7 @@ return {
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
