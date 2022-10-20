@@ -44,7 +44,10 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
           const [firstElement] = artistMedianSalePrices
 
           return (
-            <ArtistRowWrapper artistID={firstElement.artist?.internalID!}>
+            <ArtistRowWrapper
+              artistID={firstElement.artist?.internalID!}
+              medium={firstElement.mediumType?.name!}
+            >
               <Flex py={1} mb={[4, 0]} flexDirection={["column", "row"]}>
                 <EntityHeaderArtistFragmentContainer
                   flex={1}
@@ -94,7 +97,8 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
 const ArtistRowWrapper: React.FC<{
   artistID: string
   children: JSX.Element
-}> = ({ artistID, children }) => {
+  medium: string
+}> = ({ artistID, children, medium }) => {
   const { router } = useRouter()
 
   const enableMedianSalePriceGraphScreen = useFeatureFlag(
@@ -104,7 +108,9 @@ const ArtistRowWrapper: React.FC<{
     return (
       <ClickableArtistRow
         onClick={() =>
-          router.push(`/my-collection/median-sale-price-at-auction/${artistID}`)
+          router.push(
+            `/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`
+          )
         }
       >
         {children}

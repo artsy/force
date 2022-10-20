@@ -79,7 +79,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/my-collection/median-sale-price-at-auction/takashi-murakami-id"
+        "/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
   })
