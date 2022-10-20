@@ -28,14 +28,14 @@ const ArtworkSidebar2Details: React.FC<ArtworkSidebar2DetailsProps> = ({
 
   return (
     <Box color="black60">
-      <Text variant="sm-display">{medium}</Text>
+      <Text variant="sm">{medium}</Text>
       {!!dimensionsPresent(dimensions) && (editionSets?.length ?? 0) < 2 && (
-        <Text variant="sm-display">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
+        <Text variant="sm">{`${dimensions?.in} | ${dimensions?.cm}`}</Text>
       )}
       {!!getFrameString(framed?.details) && (
-        <Text variant="sm-display">{getFrameString(framed?.details)}</Text>
+        <Text variant="sm">{getFrameString(framed?.details)}</Text>
       )}
-      {!!editionOf && <Text variant="sm-display">{editionOf}</Text>}
+      {!!editionOf && <Text variant="sm">{editionOf}</Text>}
 
       <Spacer mt={1} />
 
