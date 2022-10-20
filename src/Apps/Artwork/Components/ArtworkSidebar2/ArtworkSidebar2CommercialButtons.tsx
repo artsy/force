@@ -91,7 +91,6 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
   }
 
   const handleCreateOrder = () => {
-    // console.log("I am here!")
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
       flow: DeprecatedSchema.Flow.BuyNow,
@@ -278,20 +277,10 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
   const shouldRenderButtons =
     artworkEcommerceAvailable || !!artwork.isInquireable
 
-  const createAlertAvailable =
+  const isCreateAlertAvailable =
     artwork.isSold && (artwork?.artists?.length ?? 0) > 0
   const isSecondaryContactGalleryButton =
-    artwork.isOfferable || createAlertAvailable
-
-  const renderCreateAlertButton = () => {
-    if (artwork.artists?.length === 0) {
-      return null
-    }
-
-    return (
-      <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-    )
-  }
+    artwork.isOfferable || isCreateAlertAvailable
 
   return (
     <>
@@ -300,7 +289,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
         <>
           <SaleMessage saleMessage={artwork.saleMessage} />
-          {createAlertAvailable && <Spacer mt={1} />}
+          {!!isCreateAlertAvailable && <Spacer mt={1} />}
         </>
       ) : (
         <>
@@ -321,15 +310,15 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         </>
       )}
 
-      {shouldRenderButtons && (
-        <>
-          <Spacer mt={2} />
-        </>
-      )}
+      {shouldRenderButtons && <Spacer mt={2} />}
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer ml={1} mt={1} />}>
-          {artwork.isSold && renderCreateAlertButton()}
+          {!!isCreateAlertAvailable && (
+            <ArtworkSidebarCreateAlertButtonFragmentContainer
+              artwork={artwork}
+            />
+          )}
           {artwork.isAcquireable && (
             <Button
               width="100%"
