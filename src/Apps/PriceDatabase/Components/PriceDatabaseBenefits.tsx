@@ -39,9 +39,9 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="Access the data you need to make the right decisions for your collection, whether you’re researching, buying, or selling."
         jsx={
           <SectionImage
-            src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
-            srcSet=""
-            alt=""
+            src="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fkehinde_wiley_portrait_of_nelly_moudime_ii.png&width=800"
+            srcSet="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fkehinde_wiley_portrait_of_nelly_moudime_ii.png&width=800 1x, https://d7hftxdivxxvm.cloudfront.net?height=1320&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fkehinde_wiley_portrait_of_nelly_moudime_ii.png&width=1600 2x"
+            alt="Kehinde Wiley, ‘Portrait of Nelly Moudime II’, 2020"
             artistName="Kehinde Wiley"
             artworkName="Portrait of Nelly Moudime II, 2020"
             artworkCopyright="Courtesy of Stephen Friedman Gallery."
@@ -57,9 +57,9 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="The Artsy Price Database is for every collector—with no search limits, no subscriptions, and no obligations. A more open art world starts here."
         jsx={
           <SectionImage
-            src="https://files.artsy.net/images/damien_hirst_kindness.png"
-            srcSet=""
-            alt=""
+            src="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fdamien_hirst_kindness.jpg&width=800"
+            srcSet="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fdamien_hirst_kindness.jpg&width=800 1x, https://d7hftxdivxxvm.cloudfront.net?height=1320&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fdamien_hirst_kindness.jpg&width=1600 2x"
+            alt="Damien Hirst, ‘Kindness’, 2011"
             artistName="Damien Hirst"
             artworkName="Kindness, 2011"
             artworkCopyright="© Damien Hirst and Science Ltd. All rights reserved/DACS, London/ARS, NY."
@@ -74,11 +74,11 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text={`Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
         jsx={
           <SectionImage
-            src="https://files.artsy.net/images/matthew_wong_morning.png"
-            srcSet=""
-            alt=""
+            src="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmatthew_wong_morning.jpg&width=800"
+            srcSet="https://d7hftxdivxxvm.cloudfront.net?height=660&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmatthew_wong_morning.jpg&width=800 1x, https://d7hftxdivxxvm.cloudfront.net?height=1320&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fmatthew_wong_morning.jpg&width=1600 2x"
+            alt="Matthew Wong, ‘Morning Landscape’, 2017"
             artistName="Matthew Wong"
-            artworkName="Morning Landscape ,2017"
+            artworkName="Morning Landscape, 2017"
             artworkCopyright="© Artist Rights Society (ARS), New York."
           />
         }
