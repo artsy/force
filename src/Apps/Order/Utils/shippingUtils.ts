@@ -6,7 +6,7 @@ import {
   UpdateUserAddressMutation$data,
   UserAddressAttributes,
 } from "__generated__/UpdateUserAddressMutation.graphql"
-import { NEW_ADDRESS } from "../Components/SavedAddresses"
+import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
@@ -134,6 +134,7 @@ export const convertShippingAddressToMutationInput = (
     {
       ...address,
       name: address?.name || "",
+      phone: address.phone.international || "",
     },
     ["isDefault", "internalID", "id", "__typename"]
   )

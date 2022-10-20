@@ -27,8 +27,13 @@ export const validateAddress = (address: Address) => {
   }
 }
 
-export const validatePhoneNumber = (phoneNumber: string) => {
-  const error = validatePresence(phoneNumber)
+export const validatePhoneNumber = (phoneNumber: {
+  international: string
+  isValid: boolean
+  originalNumber: string
+  national: string
+}) => {
+  const error = validatePresence(phoneNumber.originalNumber)
   const hasError = error !== null
 
   return {

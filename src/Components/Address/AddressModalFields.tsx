@@ -2,7 +2,11 @@ import * as React from "react"
 import { Box, Column, Flex, GridColumns, Input, Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { CountrySelect } from "../CountrySelect"
+import { CountrySelect } from "Components/CountrySelect"
+import { PhoneNumberInput } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/PhoneNumberInput"
+import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+import { useSystemContext } from "System"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export const AddressModalFields: React.FC = () => {
   const {
@@ -13,6 +17,27 @@ export const AddressModalFields: React.FC = () => {
     errors,
     setFieldValue,
   } = useFormikContext<SavedAddressType>()
+
+  const { relayEnvironment } = useSystemContext()
+
+  const handlePhoneNumberChange = async (region, number) => {
+    if (region && number && relayEnvironment) {
+      const phoneInformation = await getPhoneNumberInformation(
+        number,
+        relayEnvironment,
+        region
+      )
+      setFieldValue("phone", phoneInformation)
+      return
+    }
+
+    setFieldValue("phone", {
+      international: "",
+      isValid: false,
+      national: "",
+      originalNumber: "",
+    })
+  }
 
   return (
     <>
@@ -105,6 +130,37 @@ export const AddressModalFields: React.FC = () => {
           />
         </Column>
       </GridColumns>
+      <PhoneNumberInput
+        mt={4}
+        phoneNumber={values?.phoneNumber || ""}
+        onChange={handlePhoneNumberChange}
+        inputProps={{
+          maxLength: 256,
+          onBlur: handleBlur("phone"),
+          placeholder: "(000) 000 0000",
+        }}
+        error={touched.phoneNumber && (errors.phoneNumber as string)}
+      />
     </>
   )
 }
+
+export const AddressModalFieldsFragmentContainer = createFragmentContainer(
+  AddressModalFields,
+  {
+    me: graphql`
+      fragment AddressModalFields_me on Me {
+        internalID
+        name
+        email
+        phone
+        phoneNumber {
+          isValid
+          international: display(format: INTERNATIONAL)
+          national: display(format: NATIONAL)
+          regionCode
+        }
+      }
+    `,
+  }
+)

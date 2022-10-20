@@ -1,7 +1,7 @@
 import { Flex, Join, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
-import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
+import { TwoColumnSplit } from "Apps/Order/Components/TwoColumnLayout"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 
 export interface Address {
