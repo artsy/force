@@ -91,7 +91,6 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
   }
 
   const handleCreateOrder = () => {
-    // console.log("I am here!")
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
       flow: DeprecatedSchema.Flow.BuyNow,
