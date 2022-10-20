@@ -8,16 +8,38 @@ export const validatePresence = (value: string): string | null => {
   return null
 }
 
+export const validatePostalCode = (postalCode: string, countryCode: string) => {
+  let postalCodeRegex: RegExp =
+    countryCode === "US"
+      ? /^([0-9]{5})(?:[-\s]*([0-9]{4}))?$/
+      : /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
+
+  return postalCodeRegex.test(postalCode)
+    ? null
+    : "Please enter a valid zip/postal code for your region"
+}
+
 export const validateAddress = (address: Address) => {
   const { name, addressLine1, city, region, country, postalCode } = address
   const usOrCanada = country === "US" || country === "CA"
+
+  let postalCodeValidationResult: string | null = null
+  // check presence and check correctness if present
+  if (usOrCanada) {
+    postalCodeValidationResult = validatePresence(postalCode)
+
+    if (postalCodeValidationResult === null) {
+      postalCodeValidationResult = validatePostalCode(postalCode, country)
+    }
+  }
+
   const errors = {
     name: validatePresence(name),
     addressLine1: validatePresence(addressLine1),
     city: validatePresence(city),
     region: usOrCanada && validatePresence(region),
     country: validatePresence(country),
-    postalCode: usOrCanada && validatePresence(postalCode),
+    postalCode: postalCodeValidationResult,
   }
   const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
 

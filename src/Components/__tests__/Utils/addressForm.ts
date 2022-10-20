@@ -3,14 +3,14 @@ import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 
 export const validAddress: Address = {
-  name: "Artsy UK Ltd",
-  addressLine1: "14 Gower's Walk",
-  addressLine2: "Suite 2.5, The Loom",
-  city: "Whitechapel",
-  region: "London",
-  postalCode: "E1 8PY",
-  country: "UK",
-  phoneNumber: "8475937743",
+  name: "Erik David",
+  addressLine1: "401 Broadway",
+  addressLine2: "",
+  city: "New York",
+  region: "NY",
+  postalCode: "15601",
+  phoneNumber: "5555937743",
+  country: "US",
 }
 
 export const fillIn = (
