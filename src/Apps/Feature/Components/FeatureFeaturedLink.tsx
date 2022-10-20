@@ -5,7 +5,6 @@ import {
   FlexProps,
   Image,
   HTML,
-  HTMLProps,
   ResponsiveBox,
   Text,
   Spacer,
@@ -18,19 +17,6 @@ import { themeGet } from "@styled-system/theme-get"
 const Figure = styled(RouterLink)<RouterLinkProps>`
   &:hover + div {
     color: ${themeGet("colors.blue100")};
-  }
-`
-
-const FullHTML = styled(HTML)<HTMLProps>`
-  > blockquote {
-    font-size: ${themeGet("fontSizes.size10")};
-    font-family: ${themeGet("fonts.serif")};
-    letter-spacing: ${themeGet("letterSpacings.tight")};
-    line-height: ${themeGet("lineHeights.solid")};
-
-    @media (max-width: ${themeGet("breakpoints.xs")}) {
-      font-size: ${themeGet("fontSizes.size8")};
-    }
   }
 `
 
@@ -88,7 +74,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
         {description &&
           (size === "full" ? (
-            <FullHTML
+            <HTML
               variant="lg-display"
               html={description}
               mt={1}
