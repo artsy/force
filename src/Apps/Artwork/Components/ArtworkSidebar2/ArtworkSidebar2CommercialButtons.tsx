@@ -298,7 +298,10 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       {inquiryComponent}
 
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
-        <SaleMessage saleMessage={artwork.saleMessage} />
+        <>
+          <SaleMessage saleMessage={artwork.saleMessage} />
+          {createAlertAvailable && <Spacer mt={1} />}
+        </>
       ) : (
         <>
           <Separator />
