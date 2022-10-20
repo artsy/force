@@ -1,9 +1,14 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, Flex, Text, Clickable, Spacer, Join } from "@artsy/palette"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { groupBy } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { InsightsMedianSalePrice_me$data } from "__generated__/InsightsMedianSalePrice_me.graphql"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+import { Fragment } from "react"
+import { useRouter } from "System/Router/useRouter"
 
 interface InsightsMedianSalePriceProps {
   me: InsightsMedianSalePrice_me$data
@@ -32,52 +37,81 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
         Median Auction Price in the Last 3 Years
       </Text>
 
-      {groupedMedianSalePrices.map(artistMedianSalePrices => {
-        const [firstElement] = artistMedianSalePrices
+      <Spacer mb={1} />
 
-        return (
-          <Flex mt={2} mb={[4, 0]} flexDirection={["column", "row"]}>
-            <EntityHeaderArtistFragmentContainer
-              flex={1}
-              alignItems="flex-start"
-              artist={firstElement.artist!}
-              displayLink={false}
-              // added this to hide the follow button
-              FollowButton={<></>}
-            />
+      <Join separator={<Spacer mb={1} />}>
+        {groupedMedianSalePrices.map(artistMedianSalePrices => {
+          const [firstElement] = artistMedianSalePrices
 
-            <Flex flex={1} flexDirection="column">
-              {artistMedianSalePrices.map(medianSalePrice => {
-                return (
-                  <Flex
-                    mt={[2, 0]}
-                    minHeight={[0, 45]}
-                    alignItems="center"
-                    justifyContent={["space-between", null]}
-                  >
-                    <Text
-                      variant={["xs", "sm"]}
-                      color="black60"
-                      minWidth={[0, 200]}
-                      mr={2}
-                    >
-                      {medianSalePrice.mediumType?.name}
-                    </Text>
-                    <Text variant={["xs", "sm"]} fontWeight="bold">
-                      {
-                        medianSalePrice.marketPriceInsights
-                          ?.medianSalePriceDisplayText
-                      }
-                    </Text>
-                  </Flex>
-                )
-              })}
-            </Flex>
-          </Flex>
-        )
-      })}
+          return (
+            <ArtistRowWrapper artistID={firstElement.artist?.internalID!}>
+              <Flex py={1} mb={[4, 0]} flexDirection={["column", "row"]}>
+                <EntityHeaderArtistFragmentContainer
+                  flex={1}
+                  alignItems="flex-start"
+                  artist={firstElement.artist!}
+                  displayLink={false}
+                  // added this to hide the follow button
+                  FollowButton={<></>}
+                />
+
+                <Flex flex={1} flexDirection="column">
+                  {artistMedianSalePrices.map(medianSalePrice => {
+                    return (
+                      <Flex
+                        mt={[2, 0]}
+                        minHeight={[0, 45]}
+                        alignItems="center"
+                        justifyContent={["space-between", null]}
+                      >
+                        <Text
+                          variant={["xs", "sm"]}
+                          color="black60"
+                          minWidth={[0, 200]}
+                          mr={2}
+                        >
+                          {medianSalePrice.mediumType?.name}
+                        </Text>
+                        <Text variant={["xs", "sm"]} fontWeight="bold">
+                          {
+                            medianSalePrice.marketPriceInsights
+                              ?.medianSalePriceDisplayText
+                          }
+                        </Text>
+                      </Flex>
+                    )
+                  })}
+                </Flex>
+              </Flex>
+            </ArtistRowWrapper>
+          )
+        })}
+      </Join>
     </Box>
   )
+}
+
+const ArtistRowWrapper: React.FC<{
+  artistID: string
+  children: JSX.Element
+}> = ({ artistID, children }) => {
+  const { router } = useRouter()
+
+  const enableMedianSalePriceGraphScreen = useFeatureFlag(
+    "my-collection-web-phase-7-median-sale-price-graph"
+  )
+  if (enableMedianSalePriceGraphScreen) {
+    return (
+      <ClickableArtistRow
+        onClick={() =>
+          router.push(`/my-collection/median-sale-price-at-auction/${artistID}`)
+        }
+      >
+        {children}
+      </ClickableArtistRow>
+    )
+  }
+  return <Fragment>{children}</Fragment>
 }
 
 export const InsightsMedianSalePriceFragmentContainer = createFragmentContainer(
@@ -111,3 +145,10 @@ export const InsightsMedianSalePriceFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const ClickableArtistRow = styled(Clickable)`
+  &:hover {
+    background-color: ${themeGet("colors.black5")};
+  }
+  width: 100%;
+`

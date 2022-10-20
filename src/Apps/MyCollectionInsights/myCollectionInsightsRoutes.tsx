@@ -16,5 +16,7 @@ export const myCollectionInsightsRoutes: AppRouteConfig[] = [
   {
     path: "/my-collection/median-sale-price-at-auction/:artistID",
     getComponent: () => MyCollectionInsightsMedianSalePriceAtAuction,
+    // hideNav: true, // TODO: Hide/Unhide depending on the conversation with the #design team
+    // hideFooter: true, // TODO: Hide/Unhide depending on the conversation with the #design team
   },
 ]
