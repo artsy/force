@@ -7,11 +7,14 @@ export const ArtQuizResults: FC = () => {
 
   return (
     <Box>
-      <Text mt={6} variant="xl">
+      <Text mt={6} variant={["lg", "xl"]}>
         {t("artQuizPage.results.title")}
       </Text>
-      <Text color="black60">{t("artQuizPage.results.subtitle")}</Text>
-      <Spacer mt={2} />
+      <Spacer mt={1} />
+      <Text color="black60" variant={["sm", "md"]}>
+        {t("artQuizPage.results.subtitle")}
+      </Text>
+      <Spacer mt={4} />
       <Button variant="secondaryBlack">
         {t("artQuizPage.results.emailButton")}
       </Button>
