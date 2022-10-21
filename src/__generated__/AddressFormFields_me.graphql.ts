@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7af7e3c12805ae2a48335863a516aecc>>
+ * @generated SignedSource<<fee9ad1b17e0bf635729488213adf3af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AddressModalFields_me$data = {
+export type AddressFormFields_me$data = {
   readonly email: string | null;
   readonly internalID: string;
   readonly name: string | null;
@@ -21,18 +21,18 @@ export type AddressModalFields_me$data = {
     readonly national: string | null;
     readonly regionCode: string | null;
   } | null;
-  readonly " $fragmentType": "AddressModalFields_me";
+  readonly " $fragmentType": "AddressFormFields_me";
 };
-export type AddressModalFields_me$key = {
-  readonly " $data"?: AddressModalFields_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"AddressModalFields_me">;
+export type AddressFormFields_me$key = {
+  readonly " $data"?: AddressFormFields_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AddressFormFields_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AddressModalFields_me",
+  "name": "AddressFormFields_me",
   "selections": [
     {
       "alias": null,
@@ -118,6 +118,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1c276701f3edf45e8c12f21b976a21c5";
+(node as any).hash = "f97b63d4aefc25c277dce48f53c18701";
 
 export default node;

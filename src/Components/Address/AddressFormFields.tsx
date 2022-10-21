@@ -8,7 +8,7 @@ import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Ut
 import { useSystemContext } from "System"
 import { createFragmentContainer, graphql } from "react-relay"
 
-export const AddressModalFields: React.FC = () => {
+export const AddressFormFields: React.FC = () => {
   const {
     values,
     touched,
@@ -145,11 +145,11 @@ export const AddressModalFields: React.FC = () => {
   )
 }
 
-export const AddressModalFieldsFragmentContainer = createFragmentContainer(
-  AddressModalFields,
+export const AddressFormFieldsFragmentContainer = createFragmentContainer(
+  AddressFormFields,
   {
     me: graphql`
-      fragment AddressModalFields_me on Me {
+      fragment AddressFormFields_me on Me {
         internalID
         name
         email
