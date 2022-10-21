@@ -8,9 +8,10 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { useState } from "react"
-
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 interface ExpandableProps extends ClickableProps {
-  label?: string | JSX.Element
+  label: string
   expanded?: boolean
   children: React.ReactNode
 }
@@ -28,11 +29,19 @@ export const SidebarExpandable: React.FC<ExpandableProps> = ({
   onClick,
 }) => {
   const [expanded, setExpanded] = useState(defaultExpanded)
+  const { trackEvent } = useTracking()
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     setExpanded(prevExpanded => !prevExpanded)
+    trackEvent({
+      action: ActionType.toggledAccordion,
+      context_module: ContextModule.artworkSidebar,
+      context_owner_type: OwnerType.artwork,
+      subject: label,
+      expand: !expanded,
+    })
     onClick && onClick(event)
   }
 
