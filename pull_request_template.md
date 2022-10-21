@@ -5,7 +5,7 @@ The type of this PR is: **TYPE**
 <!-- If applicable, write the Jira ticket number in square brackets e.g. `[GRO-434]`
      The Jira integration will turn it into a clickable link for you. -->
 
-This PR solves [GRO-]
+This PR solves [PROJECT-XX]
 
 ### Description
 
