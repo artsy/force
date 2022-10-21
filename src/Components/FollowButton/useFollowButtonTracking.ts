@@ -1,7 +1,18 @@
 import {
   AuthContextModule,
   FollowedArgs,
+  FollowedArtist,
+  followedArtist,
+  FollowedGene,
+  followedGene,
+  FollowedPartner,
   followedPartner,
+  OwnerType,
+  UnfollowedArtist,
+  unfollowedArtist,
+  UnfollowedGene,
+  unfollowedGene,
+  UnfollowedPartner,
   unfollowedPartner,
 } from "@artsy/cohesion"
 import { useCallback } from "react"
@@ -9,12 +20,14 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System"
 
 interface UseFollowButtonTracking {
+  ownerType: OwnerType
   ownerId: string
   ownerSlug: string
   contextModule: AuthContextModule
 }
 
 export const useFollowButtonTracking = ({
+  ownerType,
   ownerId,
   ownerSlug,
   contextModule,
@@ -38,13 +51,35 @@ export const useFollowButtonTracking = ({
         contextOwnerType: contextPageOwnerType!,
       }
 
-      trackEvent(isFollowed ? unfollowedPartner(args) : followedPartner(args))
+      let followPayload: FollowedPartner | FollowedArtist | FollowedGene
+
+      let unfollowPayload: UnfollowedPartner | UnfollowedArtist | UnfollowedGene
+
+      switch (ownerType) {
+        case OwnerType.profile:
+          followPayload = followedPartner(args)
+          unfollowPayload = unfollowedPartner(args)
+          break
+        case OwnerType.artist:
+          followPayload = followedArtist(args)
+          unfollowPayload = unfollowedArtist(args)
+          break
+        case OwnerType.gene:
+          followPayload = followedGene(args)
+          unfollowPayload = unfollowedGene(args)
+          break
+        default:
+          throw new Error("Unrecognized owner type")
+      }
+
+      trackEvent(isFollowed ? unfollowPayload : followPayload)
     },
     [
       contextModule,
       contextPageOwnerId,
       contextPageOwnerSlug,
       contextPageOwnerType,
+      ownerType,
       ownerId,
       ownerSlug,
       trackEvent,
