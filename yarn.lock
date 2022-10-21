@@ -70,12 +70,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@24.0.1":
-  version "24.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-24.0.1.tgz#daf4cf4e87a7230b79e224409dcf9cd338fa85d0"
-  integrity sha512-yxn5vKYRS0SFjE/mAK4F95enEJJSUKCkfMBaVCJK53EboyfG4krneGO6j6G+M6wScKvcuEVh1YfyzUNbaM0e5Q==
+"@artsy/palette-charts@25.0.0":
+  version "25.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-25.0.0.tgz#57f80cd6b647a800a9f05e16b8ab953a0646748b"
+  integrity sha512-lQNuCPS2r8Nh/dgD7+tRSV5Ge+zp5Ch1jw9G+LDg/foM96nlrWOHSVpWjFTrFzBkf7qBWIlzqNRU9EIts1XqrQ==
   dependencies:
-    "@artsy/palette" "^25.0.1"
+    "@artsy/palette" "^26.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -87,10 +87,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
   integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@25.1.0":
-  version "25.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-25.1.0.tgz#ad5d7f9696579a232566967baf3d65117e2f7ba0"
-  integrity sha512-YQw+zolIIaFjFSZrWbZ3Ux66mfZoUqsGkvqYdVl2PIE5WO0w8KbCvPqn6Bbl8SsBLP1tCo/GsK0qvlDRa3IGeQ==
+"@artsy/palette@26.0.0", "@artsy/palette@^26.0.0":
+  version "26.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-26.0.0.tgz#a3a9de185ee85ec5027f73f534aee58b9bd39b7a"
+  integrity sha512-Dr5qjJqXbj2e7tGxSBCKOfwofZqQ1PafHzLpfPflbYVuELk3bt8tKDTNrSyiHPJ5osfz5HUShdPxZ4vHsPvvig==
   dependencies:
     "@artsy/palette-tokens" "^4.0.1"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -98,26 +98,8 @@
     lodash "^4.17.21"
     luxon "^1.15"
     proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "2.5.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^25.0.1":
-  version "25.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-25.0.1.tgz#5baa8864c0ae05f429c6e4f8bab653ae029a03a1"
-  integrity sha512-ZZzhVZ7KTztVdknZV4SjDQYanav7jDN/WVTH2YhojBJ7eZQ2ECpctIq6tikAr8sgdn2r3BfO44CQzLqu6OnwYg==
-  dependencies:
-    "@artsy/palette-tokens" "^4.0.1"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "2.5.0"
+    react-lazy-load-image-component "1.5.5"
+    react-remove-scroll "2.5.5"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
     use-cursor "^1.2.3"
@@ -17699,10 +17681,10 @@ react-is@16.8.3, react-is@^16.12.0, "react-is@^16.12.0 || ^17.0.0", react-is@^16
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
 
-react-lazy-load-image-component@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.0.tgz#48939f86cb262b93b345c6fa6322f75ede55160d"
-  integrity sha512-dAvuueTq0FNjswHEII8tcd0FRRHZgPoIdVhE1fcAfCdqY7LZ37IHd0xWb2c6rCl+dsSm9Z4AloEffM8JYPxTlA==
+react-lazy-load-image-component@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.5.tgz#ef6630a4cf5d604d36b0ca808dbe92eca8c81759"
+  integrity sha512-pPtq48tIhkLIZg6MAhB3VvVhntJLrc3MBun/lQkNmNtrRFXdjEc5aHlPT5EhpXPQR1nsNVwN91ne6Aagm3rtNQ==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
@@ -17788,22 +17770,22 @@ react-relay@13.1.1:
     nullthrows "^1.1.1"
     relay-runtime "13.1.1"
 
-react-remove-scroll-bar@^2.3.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.1.tgz#9f13b05b249eaa57c8d646c1ebb83006b3581f5f"
-  integrity sha512-IvGX3mJclEF7+hga8APZczve1UyGMkMG+tjS0o/U1iLgvZRpjFAQEUBJ4JETfvbNlfNnZnoDyWJCICkA15Mghg==
+react-remove-scroll-bar@^2.3.3:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.4.tgz#53e272d7a5cb8242990c7f144c44d8bd8ab5afd9"
+  integrity sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==
   dependencies:
-    react-style-singleton "^2.2.0"
+    react-style-singleton "^2.2.1"
     tslib "^2.0.0"
 
-react-remove-scroll@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.5.0.tgz#06602a8e863b4b773778114a5c7577ff40f802e5"
-  integrity sha512-uROvacoPUnY7U42vkCAYtyUJrvS0yE+TpayIaWtWL7RkZ25Y1nO1hlf+JRJ4X5rGFlJNtG+eJmUTdawgJaiqrg==
+react-remove-scroll@2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.5.5.tgz#1e31a1260df08887a8a0e46d09271b52b3a37e77"
+  integrity sha512-ImKhrzJJsyXJfBZ4bzu8Bwpka14c/fQt0k+cyFp/PBhTfyDnU5hjOtM4AG/0AMyy8oKzOTR0lDgJIM7pYXI0kw==
   dependencies:
-    react-remove-scroll-bar "^2.3.0"
-    react-style-singleton "^2.2.0"
-    tslib "^2.0.0"
+    react-remove-scroll-bar "^2.3.3"
+    react-style-singleton "^2.2.1"
+    tslib "^2.1.0"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
@@ -17841,10 +17823,10 @@ react-stickynode@^4.0.0:
     shallowequal "^1.0.0"
     subscribe-ui-event "^2.0.6"
 
-react-style-singleton@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.0.tgz#70f45f5fef97fdb9a52eed98d1839fa6b9032b22"
-  integrity sha512-nK7mN92DMYZEu3cQcAhfwE48NpzO5RpxjG4okbSqRRbfal9Pk+fG2RdQXTMp+f6all1hB9LIJSt+j7dCYrU11g==
+react-style-singleton@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"
+  integrity sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==
   dependencies:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
