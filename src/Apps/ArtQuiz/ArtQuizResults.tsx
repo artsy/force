@@ -16,7 +16,7 @@ export const ArtQuizResults: FC = () => {
         {t("artQuizPage.results.emailButton")}
       </Button>
       <Spacer mt={6} />
-      <Tabs justifyContent="fill">
+      <Tabs fill>
         <Tab name={t("artQuizPage.results.tabs.worksYouLiked")} />
         <Tab name={t("artQuizPage.results.tabs.recommendedCollections")} />
         <Tab name={t("artQuizPage.results.tabs.recommendedArtists")} />
