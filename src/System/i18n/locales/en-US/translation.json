@@ -108,22 +108,26 @@
     "markAllAsRead": "Mark all as read"
   },
   "artQuizPage": {
-    "title": "Art Taste Quiz",
-    "welcomeScreen": {
-      "subtitle1": "See more of what you love.",
-      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
-      "getStartedButton": "Start the Quiz",
-      "skipButton": "Skip"
+    "loadingScreen": {
+      "calculatingResults": "Calculating Results...",
+      "resultsComplete": "Results Complete"
     },
+    "title": "Art Taste Quiz",
     "results": {
       "emailButton": "Email My Results",
-      "title": "Taste Profile",
+      "title": "Explore Your Quiz Results",
       "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
       "tabs": {
         "worksYouLiked": "Works You Liked",
         "recommendedCollections": "Recommended Collections",
         "recommendedArtists": "Recommended Artists"
       }
+    },
+    "welcomeScreen": {
+      "subtitle1": "See more of what you love.",
+      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "getStartedButton": "Start the Quiz",
+      "skipButton": "Skip"
     }
   },
   "onboarding": {

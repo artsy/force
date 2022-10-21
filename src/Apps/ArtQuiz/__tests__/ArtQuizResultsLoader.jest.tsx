@@ -1,5 +1,6 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { render } from "DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 import {
   ArtQuizResultsLoader,
   waitTime,
@@ -7,9 +8,9 @@ import {
 import { act } from "react-dom/test-utils"
 
 describe("Art Quiz Results Loader", () => {
-  it("displays correct copy text when whatever", () => {
+  it("displays title text", () => {
     render(<ArtQuizResultsLoader />)
-    expect(screen.getByText("Art Taste Quiz")).toBeInTheDocument()
+    expect(screen.queryByText("Art Taste Quiz")).toBeInTheDocument()
   })
 
   it("displays 'Calculating Results...' while results are loading", () => {
