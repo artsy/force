@@ -88,6 +88,12 @@
         "makeOffer": "Make an Offer",
         "contactGallery": "Contact Gallery"
       }
+    },
+    "actions": {
+      "save": {
+        "registerToBidWithDeadline": "Register ahead of time to bid in this auction and get notifications for this lot.",
+        "registerToBidWithoutDeadline": "Register to bid in this auction and get notifications for this lot."
+      }
     }
   },
   "searchApp": {
