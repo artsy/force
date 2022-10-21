@@ -9,6 +9,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { ArtworkSidebar2PartnerInfo_artwork$data } from "__generated__/ArtworkSidebar2PartnerInfo_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ArtworkSidebar2PartnerInfoProps {
   artwork: ArtworkSidebar2PartnerInfo_artwork$data
@@ -21,6 +22,15 @@ interface PartnerNameProps {
 
 const PartnerContainer = styled(Box)`
   word-break: break-word;
+`
+
+const StyledPartnerLink = styled(RouterLink)`
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: ${themeGet("colors.black100")};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 const ArtworkSidebar2PartnerInfo: React.FC<ArtworkSidebar2PartnerInfoProps> = ({
@@ -88,7 +98,9 @@ const PartnerName: React.FC<PartnerNameProps> = ({ partner, sale }) => {
   if (sale) {
     return (
       <Text variant="sm-display">
-        <RouterLink to={sale.href ?? ""}>{sale.name}</RouterLink>
+        <StyledPartnerLink textDecoration="none" to={sale.href ?? ""}>
+          {sale.name}
+        </StyledPartnerLink>
       </Text>
     )
   }
@@ -99,7 +111,9 @@ const PartnerName: React.FC<PartnerNameProps> = ({ partner, sale }) => {
 
   return partner.href ? (
     <Text variant="sm-display">
-      <RouterLink to={partner.href}>{partner.name}</RouterLink>
+      <StyledPartnerLink textDecoration="none" to={partner.href}>
+        {partner.name}
+      </StyledPartnerLink>
     </Text>
   ) : (
     <Text variant="sm-display">{partner.name}</Text>
