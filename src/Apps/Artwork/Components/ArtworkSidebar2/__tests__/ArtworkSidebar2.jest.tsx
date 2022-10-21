@@ -1,9 +1,12 @@
+import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ArtworkSidebar2FragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2"
 
 jest.unmock("react-relay")
+
+jest.mock("react-tracking")
 
 const ARTWORKSIDEBAR2_TEST_QUERY = graphql`
   query ArtworkSidebar2_Test_Query @relay_test_operation {
@@ -19,6 +22,21 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebar2Artists", () => {
+  const trackEvent = jest.fn()
+  const mockTracking = useTracking as jest.Mock
+
+  beforeAll(() => {
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe("should display the create alert section", () => {
     it("renders the create alert section", () => {
       renderWithRelay()
@@ -138,6 +156,90 @@ describe("ArtworkSidebar2Artists", () => {
       expect(
         screen.queryByText("Be covered by the Artsy Guarantee")
       ).not.toBeInTheDocument()
+    })
+
+    it("should track click to expand/collapse the Artsy Guarantee section", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isEligibleForArtsyGuarantee: true,
+        }),
+      })
+
+      const button = screen.getByText("Be covered by the Artsy Guarantee")
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": true,
+            "subject": "Be covered by the Artsy Guarantee",
+          },
+        ]
+      `)
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": false,
+            "subject": "Be covered by the Artsy Guarantee",
+          },
+        ]
+      `)
+    })
+  })
+
+  describe("Shipping and Taxes section", () => {
+    it("should track click to expand/collapse the Shipping and Taxes section", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isAcquireable: true,
+        }),
+      })
+
+      const button = screen.getByText("Shipping and Taxes")
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": true,
+            "subject": "Shipping and Taxes",
+          },
+        ]
+      `)
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": false,
+            "subject": "Shipping and Taxes",
+          },
+        ]
+      `)
     })
   })
 })
