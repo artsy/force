@@ -1,8 +1,9 @@
-import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Clickable, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { MyCollectionInsightsMedianSalePriceAtAuction_artist$key } from "__generated__/MyCollectionInsightsMedianSalePriceAtAuction_artist.graphql"
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
+import { MyCollectionInsightsSelectArtistModal } from "./Components/MyCollectionInsightsSelectArtistModal"
 
 interface MyCollectionInsightsMedianSalePriceAtAuctionProps {
   artist: MyCollectionInsightsMedianSalePriceAtAuction_artist$key
@@ -12,6 +13,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollection
   artist,
 }) => {
   const artistData = useFragment(medianSalePriceAtAuctionFragment, artist)
+  const [showSelectArtistModal, setShowSelectArtistModal] = useState(false)
 
   return (
     <Box>
@@ -36,10 +38,23 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollection
 
         <Spacer ml={4} />
 
-        <Clickable color="black60" textDecoration="underline">
+        <Clickable
+          color="black60"
+          textDecoration="underline"
+          onClick={() => setShowSelectArtistModal(!showSelectArtistModal)}
+        >
           Change Artist
         </Clickable>
       </Flex>
+
+      {showSelectArtistModal && (
+        <ModalDialog
+          onClose={() => setShowSelectArtistModal(false)}
+          width={"100%"}
+        >
+          <MyCollectionInsightsSelectArtistModal />
+        </ModalDialog>
+      )}
     </Box>
   )
 }
