@@ -1,4 +1,5 @@
 import { Shelf } from "@artsy/palette"
+import { useCareerHighlightsStoriesModal } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Hooks/useCareerHighlightsStoriesModal"
 import { InsightsCareerHighlightCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightCard"
 import { InsightsCareerHighlightPromoCard } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightPromoCard"
 import { CareerHighlightKind } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
@@ -15,27 +16,41 @@ const InsightsCareerHighlightRail: React.FC<InsightsCareerHighlightRailProps> = 
   showProgress = true,
 }) => {
   const { myCollectionInfo } = me
-  if (!myCollectionInfo?.artistInsightsCount) {
-    return null
-  }
-
-  const careerHighlights = Object.entries(myCollectionInfo.artistInsightsCount)
+  const careerHighlights = Object.entries(
+    myCollectionInfo?.artistInsightsCount || {}
+  )
     .map(([kind, count]) => ({ kind: kind as CareerHighlightKind, count }))
     .filter(a => a.count > 0)
+
+  const {
+    careerHighlightsStoriesModalComponent,
+    showCareerHighlightsStoriesModal,
+  } = useCareerHighlightsStoriesModal({
+    careerHighlights: [...careerHighlights.map(ch => ch.kind), "PROMO"],
+  })
 
   if (careerHighlights.length === 0) {
     return null
   }
 
   return (
-    <Shelf alignItems="flex-start" showProgress={showProgress}>
-      {[
-        ...careerHighlights.map(({ kind, count }, i) => (
-          <InsightsCareerHighlightCard key={i} count={count} kind={kind} />
-        )),
-        <InsightsCareerHighlightPromoCard />,
-      ]}
-    </Shelf>
+    <>
+      <Shelf alignItems="flex-start" showProgress={showProgress}>
+        {[
+          ...careerHighlights.map(({ kind, count }, i) => (
+            <InsightsCareerHighlightCard
+              key={i}
+              count={count}
+              kind={kind}
+              onClick={showCareerHighlightsStoriesModal}
+            />
+          )),
+          <InsightsCareerHighlightPromoCard />,
+        ]}
+      </Shelf>
+
+      {careerHighlightsStoriesModalComponent}
+    </>
   )
 }
 
