@@ -133,7 +133,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isSavingPayment ||
     (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
 
-  // fired when an error is encountered during selecting bank account or setting payment
+  // fired when an error is encountered during selecting bank account, polling balance, or setting payment
   const handlePaymentError = (error: Error | StripeError) => {
     const errorContent = {
       ...error,

@@ -91,6 +91,8 @@ let mockBankAccountSelection: BankAccountSelection = {
   type: "new",
 }
 
+const mockOnError = jest.fn()
+
 describe("BankAccountFragmentContainer", () => {
   beforeAll(() => {
     ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
@@ -114,7 +116,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
-            onError={jest.fn()}
+            onError={mockOnError}
           />
         </MockBoot>
       ),
@@ -316,6 +318,46 @@ describe("BankAccountFragmentContainer", () => {
           },
         },
       })
+    })
+
+    it("calls payment route error logger when setPayment mutation fails", async () => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          setBalanceCheckComplete: jest.fn(),
+          setSelectedBankAccountId: jest.fn(),
+          setBankAccountSelection: jest.fn(),
+          setIsSavingPayment: jest.fn(),
+          bankAccountSelection: mockBankAccountSelection,
+        }
+      })
+
+      const submitMutationMock = jest.fn().mockResolvedValue({
+        commerceSetPayment: {
+          orderOrError: {
+            error: {
+              message: "a problem occured",
+            },
+          },
+        },
+      })
+      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+        submitMutation: submitMutationMock,
+      }))
+
+      const wrapper = getWrapper({
+        CommerceOrder: () => BuyOrderPickup,
+        Me: () => ({
+          bankAccounts: {
+            edges: [{ node: bankAccounts[0] }, { node: bankAccounts[1] }],
+          },
+        }),
+      })
+      const page = new BankAccountPickerTestPage(wrapper)
+      page.clickRadio(1)
+      page.submitButton.simulate("click")
+      page.update()
+      expect(mockOnError).toHaveBeenCalled()
     })
   })
 })
