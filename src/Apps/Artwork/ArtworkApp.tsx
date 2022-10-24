@@ -29,6 +29,7 @@ import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
@@ -75,6 +76,7 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 export const ArtworkApp: React.FC<Props> = props => {
   const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
+  const unlistedArtwork = artwork?.visibilityLevel == "UNLISTED"
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -178,6 +180,9 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       {artwork.sale && (
         <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
+      )}
+      {unlistedArtwork && artwork.partner && (
+        <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
       )}
 
       <ArtworkMetaFragmentContainer artwork={artwork} />
@@ -293,6 +298,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         is_acquireable: isAcquireable
         is_offerable: isOfferable
         availability
+        visibilityLevel
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
         listPrice {
@@ -302,6 +308,9 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
           ... on Money {
             display
           }
+        }
+        partner {
+          ...UnlistedArtworkBanner_partner
         }
         is_in_auction: isInAuction
         sale {
