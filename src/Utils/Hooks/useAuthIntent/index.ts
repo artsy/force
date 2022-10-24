@@ -67,6 +67,7 @@ export const runAuthIntent = async (
           }
           break
         case "save":
+          triggerEvent(mediator, "artwork:save", value)
           return saveArtworkMutation(relayEnvironment, value.objectId)
       }
     })()
