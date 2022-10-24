@@ -15,6 +15,7 @@ import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnbo
 import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
+import { useTranslation } from "react-i18next"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"
@@ -22,14 +23,10 @@ interface OnboardingFollowsProps {
 
 const CONFIGURATION = {
   artists: {
-    title: "Follow artists to see more of their work",
-    placeholder: "Search Artists",
     entities: "ARTIST",
     setId: "onboarding:suggested-artists",
   },
   galleries: {
-    title: "Follow galleries you love to see events and news",
-    placeholder: "Search Galleries",
     entities: "PROFILE",
     setId: "onboarding:suggested-galleries",
   },
@@ -44,9 +41,11 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
 
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
 
-  const { title, placeholder, entities, setId } = CONFIGURATION[kind]
+  const { entities, setId } = CONFIGURATION[kind]
 
   const tracking = useOnboardingTracking()
+
+  const { t } = useTranslation()
 
   return (
     <SplitLayout
@@ -63,18 +62,17 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
         <Flex flexDirection="column" minWidth={0}>
           <Box pt={4} px={4}>
             <Text ref={register(1)} variant="lg-display" mb={1}>
-              {title}
+              {t(`onboarding.follows.${kind}.title`)}
             </Text>
 
             <Text ref={register(2)} variant="sm-display" mb={2}>
-              You’ll see their latest works and get better recommendations (for
-              art you’ll love).
+              {t("onboarding.follows.description")}
             </Text>
 
             <Box ref={register(3)}>
               <LabeledInput
                 label={<MagnifyingGlassIcon />}
-                placeholder={placeholder}
+                placeholder={t(`onboarding.follows.${kind}.placeholder`)}
                 mb={4}
                 onChange={event => setQuery(event.currentTarget.value)}
                 data-testid="search-input"

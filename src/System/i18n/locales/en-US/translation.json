@@ -119,5 +119,18 @@
       "calculatingResults": "Calculating Results...",
       "resultsComplete": "Results Complete"
     }
+  },
+  "onboarding": {
+    "follows": {
+      "description": "You’ll see their latest works and get better recommendations (for art you’ll love).",
+      "artists": {
+        "title": "Follow artists to see more of their work",
+        "placeholder": "Search Artists"
+      },
+      "galleries": {
+        "title": "Follow galleries you love to see events and news",
+        "placeholder": "Search Galleries"
+      }
+    }
   }
 }
