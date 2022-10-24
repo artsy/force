@@ -1,4 +1,4 @@
-import { Box, Flex, Theme } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { NavBar } from "Components/NavBar"
@@ -86,30 +86,28 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Box>
       )}
 
-      <Theme theme="v3">
-        <AppToasts accomodateNav={showNav} />
+      <AppToasts accomodateNav={showNav} />
 
-        <Flex
-          as="main"
-          id="main"
-          // Occupies available vertical space
-          flex={1}
-        >
-          <AppContainer maxWidth={appContainerMaxWidth}>
-            <HorizontalPadding>{children}</HorizontalPadding>
+      <Flex
+        as="main"
+        id="main"
+        // Occupies available vertical space
+        flex={1}
+      >
+        <AppContainer maxWidth={appContainerMaxWidth}>
+          <HorizontalPadding>{children}</HorizontalPadding>
+        </AppContainer>
+      </Flex>
+
+      {showFooter && (
+        <Flex bg="white100" zIndex={Z.footer}>
+          <AppContainer>
+            <HorizontalPadding>
+              <Footer />
+            </HorizontalPadding>
           </AppContainer>
         </Flex>
-
-        {showFooter && (
-          <Flex bg="white100" zIndex={Z.footer}>
-            <AppContainer>
-              <HorizontalPadding>
-                <Footer />
-              </HorizontalPadding>
-            </AppContainer>
-          </Flex>
-        )}
-      </Theme>
+      )}
 
       {onboardingComponent}
 
