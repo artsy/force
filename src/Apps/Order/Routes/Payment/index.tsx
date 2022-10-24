@@ -1,7 +1,7 @@
 // libs
 import { createRef, FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { Stripe, StripeElements, StripeError } from "@stripe/stripe-js"
 import { Router } from "found"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
@@ -133,6 +133,19 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isSavingPayment ||
     (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
 
+  // fired when an error is encountered during selecting bank account, polling balance, or setting payment
+  const handlePaymentError = (error: Error | StripeError) => {
+    const errorContent = {
+      ...error,
+      orderId: props.order.internalID!,
+      selectedPaymentMethod,
+      bankAccountHasInsufficientFunds,
+      shouldLogErrorToSentry: true,
+    }
+
+    logger.error(errorContent)
+  }
+
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
@@ -226,7 +239,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       handlePaymentStepComplete()
     } catch (error) {
       setIsSavingPayment(false)
-      logger.error(error)
+      handlePaymentError(error)
       props.dialog.showErrorDialog()
     }
   }
@@ -250,8 +263,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
       handlePaymentStepComplete()
     } catch (error) {
+      handlePaymentError(error)
       setIsSavingPayment(false)
-      logger.error(error)
       props.dialog.showErrorDialog()
     }
   }
@@ -331,6 +344,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               onBalanceCheckComplete={handleBalanceCheckComplete}
               buyerTotalCents={order.buyerTotalCents!}
               orderCurrencyCode={order.currencyCode}
+              onError={handlePaymentError}
             />
           ) : (
             <>
@@ -347,6 +361,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
+                  onError={handlePaymentError}
                 />
               </Flex>
             </>

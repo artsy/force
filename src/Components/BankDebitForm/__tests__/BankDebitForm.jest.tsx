@@ -3,7 +3,7 @@ import { BuyOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
-import { BankDebitForm } from "../BankDebitForm"
+import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 // In our stripe PaymentElement mock
@@ -68,7 +68,7 @@ describe("BankDebitForm", () => {
     it("tracks a `complete` event from the onChange handler", () => {
       mockEvent = { complete: true, empty: true }
 
-      render(<BankDebitForm order={testOrder} />)
+      render(<BankDebitForm order={testOrder} onError={jest.fn()} />)
 
       expect(trackEvent).toHaveBeenCalledWith({
         flow: "BUY",
@@ -80,7 +80,9 @@ describe("BankDebitForm", () => {
     })
 
     it("renders correct not enough funds message", () => {
-      const screen = render(<BankDebitForm order={testOrder} />)
+      const screen = render(
+        <BankDebitForm order={testOrder} onError={jest.fn()} />
+      )
 
       expect(
         screen.queryByText("This bank account doesn’t have enough funds.")
@@ -102,7 +104,9 @@ describe("BankDebitForm", () => {
     })
 
     it("does not render a checkbox to save bank account", () => {
-      const screen = render(<BankDebitForm order={testOrder} />)
+      const screen = render(
+        <BankDebitForm order={testOrder} onError={jest.fn()} />
+      )
 
       expect(
         screen.queryByTestId("SaveBankAccountCheckbox")
