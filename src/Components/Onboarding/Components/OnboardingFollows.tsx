@@ -7,13 +7,13 @@ import {
   Flex,
 } from "@artsy/palette"
 import { FC, useState } from "react"
-import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrderedSet"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
+import { OnboardingOrderedSetQueryRenderer } from "Components/Onboarding/Components/OnboardingOrderedSet"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { OnboardingSearchResultsQueryRenderer } from "Components/Onboarding/Components/OnboardingSearchResults"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
 interface OnboardingFollowsProps {

@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react"
 import * as React from "react"
-import {
-  Button,
-  Flex,
-  themeProps,
-  Text,
-  Dropdown,
-  ThemeProviderV3,
-  Box,
-} from "@artsy/palette"
+import { Button, Flex, themeProps, Text, Dropdown, Box } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { NavBarSubMenu } from "./Menus"
@@ -138,7 +130,7 @@ export const NavBar: React.FC = track(
   }
 
   return (
-    <ThemeProviderV3>
+    <>
       <NavBarSkipLink />
 
       <Box
@@ -474,6 +466,6 @@ export const NavBar: React.FC = track(
           />
         </>
       )}
-    </ThemeProviderV3>
+    </>
   )
 })

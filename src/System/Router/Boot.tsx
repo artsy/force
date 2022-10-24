@@ -23,7 +23,7 @@ import {
   MediaContextProvider,
   ResponsiveProvider,
 } from "Utils/Responsive"
-import { AnalyticsContext } from "../Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ClientContext } from "System/Router/buildClientAppContext"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -71,7 +71,7 @@ export const Boot = track(undefined, {
   }
 
   return (
-    <Theme>
+    <Theme theme="v3">
       <GlobalStyles />
 
       <HeadProvider headTags={headTags}>
