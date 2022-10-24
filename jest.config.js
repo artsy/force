@@ -12,6 +12,7 @@ module.exports = {
   moduleNameMapper: {
     "^luxon$": "<rootDir>/node_modules/luxon",
     "^react$": "<rootDir>/node_modules/react",
+    "react-i18next": "<rootDir>/src/DevTools/mockReactI18n",
   },
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],

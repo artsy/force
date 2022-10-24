@@ -1,7 +1,6 @@
-import { render as rtlRender, RenderResult } from "@testing-library/react"
-import { mount as enzMount } from "enzyme"
+import { render, RenderResult } from "@testing-library/react"
+import { mount } from "enzyme"
 import * as React from "react"
-import { I18nextProvider } from "react-i18next"
 import { QueryRenderer } from "react-relay"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import {
@@ -10,15 +9,6 @@ import {
   MockEnvironment,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
-import i18n from "System/i18n/i18n"
-
-// overide mount to provide access to i18n inside the setupTestWrapper function
-const mount = children =>
-  enzMount(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
-
-// overide render to provide access to i18n inside the setupTestWrapperTL function
-export const render = children =>
-  rtlRender(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>

@@ -1,6 +1,5 @@
-import { screen } from "@testing-library/react"
-import { ArtworkSidebar2ArtsyGuarantee } from "../ArtworkSidebar2ArtsyGuarantee"
-import { render } from "DevTools/setupTestWrapper"
+import { render, screen } from "@testing-library/react"
+import { ArtworkSidebar2ArtsyGuarantee } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2ArtsyGuarantee"
 
 describe("ArtworkSidebar2ArtsyGuarantee", () => {
   it("renders the Artsy Guarantee section", async () => {
