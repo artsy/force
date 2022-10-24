@@ -50,7 +50,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollection
       {showSelectArtistModal && (
         <ModalDialog
           onClose={() => setShowSelectArtistModal(false)}
-          width={"100%"}
+          width={["100%", 800]}
         >
           <MyCollectionInsightsSelectArtistModal />
         </ModalDialog>
