@@ -9,14 +9,12 @@ import { act } from "react-dom/test-utils"
 describe("Art Quiz Results Loader", () => {
   it("displays correct copy text when whatever", () => {
     render(<ArtQuizResultsLoader />)
-    expect(screen.getByText("artQuizPage.title")).toBeInTheDocument()
+    expect(screen.getByText("Art Taste Quiz")).toBeInTheDocument()
   })
 
   it("displays 'Calculating Results...' while results are loading", () => {
     render(<ArtQuizResultsLoader />)
-    expect(
-      screen.getByText("artQuizPage.loadingScreen.calculatingResults")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Calculating Results...")).toBeInTheDocument()
   })
 
   it("displays 'Results Complete' after 2 seconds", () => {
@@ -25,9 +23,7 @@ describe("Art Quiz Results Loader", () => {
     act(() => {
       jest.advanceTimersByTime(waitTime)
     })
-    expect(
-      screen.getByText("artQuizPage.loadingScreen.resultsComplete")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Results Complete")).toBeInTheDocument()
     jest.runOnlyPendingTimers()
     jest.useRealTimers()
   })

@@ -1,6 +1,5 @@
-import { screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
-import { render } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System"
 import { Breakpoint } from "Utils/Responsive"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"

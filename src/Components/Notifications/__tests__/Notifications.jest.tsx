@@ -1,5 +1,4 @@
-import { screen } from "@testing-library/react"
-import { render } from "DevTools/setupTestWrapper"
+import { render, screen } from "@testing-library/react"
 import { Notifications } from "Components/Notifications/Notifications"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
