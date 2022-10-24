@@ -81,9 +81,6 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
 
   const lotLabel = artwork.isBiddable ? artwork.saleArtwork?.lotLabel : null
 
-  const shouldDisplayArtsyGuarantee =
-    isSold !== true && isEligibleForArtsyGuarantee
-
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
       {lotLabel && (
@@ -137,7 +134,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
 
-      {shouldDisplayArtsyGuarantee && (
+      {!!isEligibleForArtsyGuarantee && (
         <>
           <Separator />
           <SidebarExpandable

@@ -119,10 +119,9 @@ describe("ArtworkSidebar2Artists", () => {
   })
 
   describe("Artsy Guarantee section", () => {
-    it("should be displayed when not sold and eligible", () => {
+    it("should be displayed when eligible for artsy guarantee", () => {
       renderWithRelay({
         Artwork: () => ({
-          isSold: false,
           isEligibleForArtsyGuarantee: true,
         }),
       })
@@ -132,23 +131,9 @@ describe("ArtworkSidebar2Artists", () => {
       ).toBeInTheDocument()
     })
 
-    it("should not be displayed when sold", () => {
+    it("should not be displayed when ineligible for artsy guarantee", () => {
       renderWithRelay({
         Artwork: () => ({
-          isSold: true,
-          isEligibleForArtsyGuarantee: true,
-        }),
-      })
-
-      expect(
-        screen.queryByText("Be covered by the Artsy Guarantee")
-      ).not.toBeInTheDocument()
-    })
-
-    it("should not be displayed when inelgible", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          isSold: false,
           isEligibleForArtsyGuarantee: false,
         }),
       })
@@ -161,7 +146,6 @@ describe("ArtworkSidebar2Artists", () => {
     it("should track click to expand/collapse the Artsy Guarantee section", () => {
       renderWithRelay({
         Artwork: () => ({
-          isSold: false,
           isEligibleForArtsyGuarantee: true,
         }),
       })
