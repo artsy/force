@@ -62,11 +62,16 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
       right={
         <Flex flexDirection="column" minWidth={0}>
           <Box pt={4} px={4}>
-            <Text ref={register(1)} variant="lg-display" mb={2}>
+            <Text ref={register(1)} variant="lg-display" mb={1}>
               {title}
             </Text>
 
-            <Box ref={register(2)}>
+            <Text ref={register(2)} variant="sm-display" mb={2}>
+              You’ll see their latest works and get better recommendations (for
+              art you’ll love).
+            </Text>
+
+            <Box ref={register(3)}>
               <LabeledInput
                 label={<MagnifyingGlassIcon />}
                 placeholder={placeholder}
@@ -78,7 +83,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
           </Box>
 
           <Box
-            ref={register(3)}
+            ref={register(4)}
             px={4}
             flex={1}
             overflowY="auto"
