@@ -3,18 +3,17 @@ import { screen } from "@testing-library/react"
 import { render } from "DevTools/setupTestWrapper"
 
 describe("ArtQuizResults", () => {
-  it.each([
-    ["title", "Explore Your Quiz Results"],
-    [
-      "subtitle",
-      "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
-    ],
-    ["email button", "Email My Results"],
-    ["tab", "Works You Liked"],
-    ["tab", "Recommended Collections"],
-    ["tab", "Recommended Artists"],
-  ])("displays the expected %s text", (_key, text) => {
+  it("displays the expected text", () => {
     render(<ArtQuizResults />)
-    expect(screen.getByText(text)).toBeInTheDocument()
+    expect(screen.getByText("Explore Your Quiz Results")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home."
+      )
+    ).toBeInTheDocument()
+    expect(screen.getByText("Email My Results")).toBeInTheDocument()
+    expect(screen.getByText("Works You Liked")).toBeInTheDocument()
+    expect(screen.getByText("Recommended Collections")).toBeInTheDocument()
+    expect(screen.getByText("Recommended Artists")).toBeInTheDocument()
   })
 })
