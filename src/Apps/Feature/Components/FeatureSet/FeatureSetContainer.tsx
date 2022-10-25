@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, CSSGrid, Join, Spacer } from "@artsy/palette"
+import { CSSGrid, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "Components/Masonry"
 import { FeatureSetContainer_set$data } from "__generated__/FeatureSetContainer_set.graphql"
@@ -15,19 +15,13 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
   const count = set?.orderedItems?.edges?.length ?? 0
 
   if (set.layout === "FULL") {
-    return (
-      <Box mt={2} mb={6}>
-        <Join separator={<Spacer my={6} />}>{children}</Join>
-      </Box>
-    )
+    return <Join separator={<Spacer mt={4} />}>{children}</Join>
   }
 
   switch (set.itemType) {
-    case "FeaturedLink":
+    case "FeaturedLink": {
       return (
         <CSSGrid
-          mt={2}
-          mb={[6, 12]}
           gridTemplateColumns={[
             "repeat(1fr)",
             `repeat(${Math.min(count, 2)}, 1fr)`,
@@ -39,16 +33,15 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
           {children}
         </CSSGrid>
       )
+    }
 
-    case "Artwork":
+    case "Artwork": {
       return (
-        <Masonry
-          columnCount={[Math.min(count, 2), Math.min(count, 4)]}
-          gridColumnGap={20}
-        >
+        <Masonry columnCount={[Math.min(count, 2), Math.min(count, 4)]}>
           {children}
         </Masonry>
       )
+    }
 
     default:
       console.warn("Feature pages only support FeaturedLinks and Artworks")

@@ -1,14 +1,16 @@
-import { ComponentProps } from "react"
 import * as React from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink } from "Apps/Feature/Components/FeatureFeaturedLink"
+import {
+  FeaturedLinkSize,
+  FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink,
+} from "Apps/Feature/Components/FeatureFeaturedLink"
 import GridItem from "Components/Artwork/GridItem"
 import { FeatureSetItem_setItem$data } from "__generated__/FeatureSetItem_setItem.graphql"
 
 export interface FeatureSetItemProps {
   setItem: FeatureSetItem_setItem$data
-  size: ComponentProps<typeof FeatureFeaturedLink>["size"]
+  size: FeaturedLinkSize
 }
 
 export const FeatureSetItem: React.FC<FeatureSetItemProps> = ({
@@ -27,7 +29,7 @@ export const FeatureSetItem: React.FC<FeatureSetItemProps> = ({
 
     case "Artwork":
       return (
-        <Box key={setItem.id} pb={6} maxWidth={400} mx="auto">
+        <Box key={setItem.id} pb={6}>
           <GridItem artwork={setItem} />
         </Box>
       )

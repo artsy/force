@@ -1,5 +1,4 @@
 import * as React from "react"
-import styled from "styled-components"
 import {
   Box,
   BoxProps,
@@ -11,22 +10,10 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_feature.graphql"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-
-const Figure = styled(Box)`
-  overflow: hidden;
-
-  > picture {
-    width: 100%;
-    height: 100%;
-  }
-`
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader"
 
 export interface FeatureHeaderFullProps extends BoxProps {
   feature: FeatureHeaderFull_feature$data
@@ -36,28 +23,35 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
   feature: { name, subheadline, fullImage: image },
   ...rest
 }) => {
-  const { desktop, mobile } = useNavBarHeight()
-
+  const hasImage = !!image?.url
   return (
-    <FullBleed>
-      <Box {...rest}>
-        {image && (
-          <Figure
-            height={[`calc(95vh - ${mobile}px)`, `calc(95vh - ${desktop}px)`]}
-            bg="black10"
+    <Box {...rest}>
+      {hasImage ? (
+        <FullBleedHeader src={image.url}>
+          <FullBleedHeaderOverlay
+            alignItems="flex-start"
+            flexDirection="column"
+            color="white100"
+            p={4}
           >
-            <picture>
-              <source srcSet={image?.sm?.srcSet} media="(max-width: 400px)" />
-              <source srcSet={image?.md?.srcSet} media="(max-width: 1200px)" />
-              <source srcSet={image?.lg?.srcSet} media="(min-width: 1200px)" />
-              <Image src={image?.sm?.src} alt={name} loading="lazy" />
-            </picture>
-          </Figure>
-        )}
+            <Text as="h1" variant={["xl", "xxl"]}>
+              {name}
+            </Text>
 
-        <Box p={4}>
+            {subheadline && (
+              <Text
+                variant={["md", "lg-display"]}
+                color="rgba(255, 255, 255, 0.8)"
+              >
+                {subheadline}
+              </Text>
+            )}
+          </FullBleedHeaderOverlay>
+        </FullBleedHeader>
+      ) : (
+        <FullBleed px={4} pt={4}>
           <Join separator={<Spacer my={1} />}>
-            <Text variant="xxl" as="h1" textAlign="center">
+            <Text variant={["xl", "xxl"]} as="h1" textAlign="center">
               {name}
             </Text>
 
@@ -69,9 +63,9 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
               />
             )}
           </Join>
-        </Box>
-      </Box>
-    </FullBleed>
+        </FullBleed>
+      )}
+    </Box>
   )
 }
 
@@ -83,18 +77,7 @@ export const FeatureHeaderFullFragmentContainer = createFragmentContainer(
         name
         subheadline(format: HTML)
         fullImage: image {
-          sm: cropped(width: 800, height: 400, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
-          md: cropped(width: 1200, height: 600, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
-          lg: cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
+          url(version: ["main", "source", "wide"])
         }
       }
     `,
