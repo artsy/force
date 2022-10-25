@@ -1,13 +1,13 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "System/Router/Route"
 
-const ArtQuizApp = loadable(
-  () => import(/* webpackChunkName: "artQuizBundle" */ "./ArtQuizApp"),
+const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
+  resolveComponent: component => component.ArtQuizApp,
+})
 
-  {
-    resolveComponent: component => component.ArtQuizApp,
-  }
-)
+const ArtQuizResults = loadable(() => import("./ArtQuizResults"), {
+  resolveComponent: component => component.ArtQuizResults,
+})
 
 // TODO: Add query to check for quiz template
 export const artQuizRoutes: AppRouteConfig[] = [
@@ -20,9 +20,24 @@ export const artQuizRoutes: AppRouteConfig[] = [
         res.redirect("/")
       }
     },
-    getComponent: () => ArtQuizApp,
     onClientSideRender: () => {
       ArtQuizApp.preload()
+      ArtQuizResults.preload()
     },
+    children: [
+      {
+        path: "/",
+        getComponent: () => ArtQuizApp,
+      },
+      {
+        path: "results",
+        displayFullPage: true,
+        hideFooter: true,
+        getComponent: () => ArtQuizResults,
+        onClientSideRender: () => {
+          ArtQuizResults.preload()
+        },
+      },
+    ],
   },
 ]

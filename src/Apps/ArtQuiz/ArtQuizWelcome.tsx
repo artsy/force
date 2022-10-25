@@ -19,11 +19,13 @@ interface ArtQuizWelcomeProps {
 }
 
 export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
-  const { desktop } = useNavBarHeight()
+  const { desktop, mobile } = useNavBarHeight()
   const { t } = useTranslation()
 
   return (
-    <FullBleed height={`calc(100vh - ${desktop}px)`}>
+    <FullBleed
+      height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
+    >
       <Box height="100%" padding={0}>
         <SplitLayout
           hideLogo
@@ -34,28 +36,27 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
           }
           leftProps={{ display: ["none", "block"] }}
           right={
-            <Flex
-              flexDirection="column"
-              justifyContent="space-between"
-              p={[2, 4]}
-            >
-              {/* Vertically centers next Box */}
-              <Box />
-              <Box width="100%">
+            <Flex flexDirection="column" justifyContent="center" p={[2, 4]}>
+              <Box width="100%" my={6}>
                 <ArtsyLogoIcon mb={2} />
                 <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
 
                 <Spacer my={6} />
 
-                <Text variant={["md", "lg-display"]}>
+                <Text variant={["md", "lg"]}>
                   {t("artQuizPage.welcomeScreen.subtitle1")}
-                  <Spacer my={4} />
+                </Text>
+
+                <Spacer my={2} />
+
+                <Text variant={["md", "lg-display"]}>
                   {t("artQuizPage.welcomeScreen.subtitle2")}
                 </Text>
               </Box>
 
-              <Spacer my={1} />
-              <Box width="100%">
+              <Spacer my={6} />
+
+              <Box width="100%" my={6}>
                 <Button width="100%" onClick={onStartQuiz}>
                   {t("artQuizPage.welcomeScreen.getStartedButton")}
                 </Button>
