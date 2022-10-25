@@ -8,6 +8,15 @@ import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Ut
 import { useSystemContext } from "System"
 import { createFragmentContainer, graphql } from "react-relay"
 
+export type AddressType = Omit<SavedAddressType, "phoneNumber"> & {
+  phone: {
+    international: string
+    isValid: boolean
+    originalNumber: string
+    national: string
+  }
+}
+
 export const AddressFormFields: React.FC = () => {
   const {
     values,
@@ -16,7 +25,7 @@ export const AddressFormFields: React.FC = () => {
     handleChange,
     errors,
     setFieldValue,
-  } = useFormikContext<SavedAddressType>()
+  } = useFormikContext<AddressType>()
 
   const { relayEnvironment } = useSystemContext()
 
@@ -132,14 +141,14 @@ export const AddressFormFields: React.FC = () => {
       </GridColumns>
       <PhoneNumberInput
         mt={4}
-        phoneNumber={values?.phoneNumber || ""}
+        phoneNumber={values?.phone || ""}
         onChange={handlePhoneNumberChange}
         inputProps={{
           maxLength: 256,
           onBlur: handleBlur("phone"),
           placeholder: "(000) 000 0000",
         }}
-        error={touched.phoneNumber && (errors.phoneNumber as string)}
+        error={touched.phone && (errors.phone as string)}
       />
     </>
   )

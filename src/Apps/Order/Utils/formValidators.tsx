@@ -30,10 +30,10 @@ export const validateAddress = (address: Address) => {
 export const validatePhoneNumber = (phoneNumber: {
   international: string
   isValid: boolean
-  originalNumber: string
-  national: string
+  originalNumber?: string
+  national?: string
 }) => {
-  const error = validatePresence(phoneNumber.originalNumber)
+  const error = validatePresence(phoneNumber.international)
   const hasError = error !== null
 
   return {

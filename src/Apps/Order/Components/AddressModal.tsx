@@ -7,9 +7,13 @@ import { useSystemContext } from "System/SystemContext"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { AddressForm } from "Components/Address/AddressForm2"
+import { AddressType } from "Components/Address/AddressFormFields"
+
+export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
 export interface ModalDetails {
   addressModalTitle: string
+  addressModalAction: AddressModalAction
 }
 
 export interface Props {

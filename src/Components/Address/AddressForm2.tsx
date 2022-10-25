@@ -27,6 +27,8 @@ import { useSystemContext } from "System/SystemContext"
 import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefaultAddress"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
+import { AddressModalAction } from "Apps/Order/Components/AddressModal"
+import { AddressType } from "Components/Address/AddressFormFields"
 
 export interface ModalDetails {
   addressModalTitle: string
@@ -34,7 +36,6 @@ export interface ModalDetails {
 }
 
 export interface Props {
-  show: boolean
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (
@@ -55,8 +56,6 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 
 export const GENERIC_FAIL_MESSAGE =
   "Sorry there has been an issue saving your address. Please try again."
-
-export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
 export const AddressForm: React.FC<Props> = ({
   closeModal,
@@ -94,10 +93,7 @@ export const AddressForm: React.FC<Props> = ({
       validateOnMount
       initialValues={createMutation ? { country: "US" } : { ...address }}
       validate={validator}
-      onSubmit={(
-        values: SavedAddressType,
-        actions: FormikHelpers<SavedAddressType>
-      ) => {
+      onSubmit={(values: AddressType, actions: FormikHelpers<AddressType>) => {
         const handleError = message => {
           const userMessage: Record<string, string> | null =
             SERVER_ERROR_MAP[message]

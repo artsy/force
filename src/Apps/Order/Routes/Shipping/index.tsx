@@ -222,7 +222,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
         const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber(phoneNumber)
+        const { error, hasError } = validatePhoneNumber({
+          international: phoneNumber,
+          // TODO
+          isValid: true,
+        })
+
         if (hasErrors && hasError) {
           setAddressErrors(errors!)
           setAddressTouched(touchedAddress)
@@ -240,7 +245,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         }
       }
     } else {
-      const { error, hasError } = validatePhoneNumber(phoneNumber)
+      const { error, hasError } = validatePhoneNumber({
+        international: phoneNumber,
+        // TODO
+        isValid: true,
+      })
       if (hasError) {
         setPhoneNumberError(error!)
         setPhoneNumberTouched(true)
@@ -441,7 +450,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
-    const { error } = validatePhoneNumber(newPhoneNumber)
+    const { error } = validatePhoneNumber({
+      international: newPhoneNumber,
+      // TODO
+      isValid: true,
+    })
 
     setPhoneNumber(newPhoneNumber)
     setPhoneNumberError(error!)
