@@ -1,6 +1,5 @@
 import React from "react"
-import { render } from "DevTools/setupTestWrapper"
-import { screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import {
   ArtQuizResultsLoader,
   waitTime,

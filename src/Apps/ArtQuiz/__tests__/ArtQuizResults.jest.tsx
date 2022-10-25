@@ -1,6 +1,5 @@
 import { ArtQuizResults } from "Apps/ArtQuiz/ArtQuizResults"
-import { screen } from "@testing-library/react"
-import { render } from "DevTools/setupTestWrapper"
+import { render, screen } from "@testing-library/react"
 
 describe("ArtQuizResults", () => {
   it("displays the expected text", () => {
