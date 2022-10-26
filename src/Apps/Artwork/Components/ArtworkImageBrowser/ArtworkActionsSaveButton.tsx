@@ -6,6 +6,7 @@ import {
   HeartIcon,
   Popover as _Popover,
   Text,
+  THEME,
 } from "@artsy/palette"
 import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -74,6 +75,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
     const FilledIcon = () => <BellFillIcon fill="blue100" />
+    const mobileMaxWidth = `calc(100% - (${THEME.space[2]} * 2))`
 
     return (
       <Popover
@@ -92,7 +94,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
         popover={
           <ArtworkAuctionRegistrationPanelFragmentContainer artwork={artwork} />
         }
-        maxWidth={[335, 410]}
+        maxWidth={[mobileMaxWidth, 410]}
         width="100%"
         mx={2}
       >
