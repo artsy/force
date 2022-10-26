@@ -172,8 +172,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
       }
     } catch (error) {
-      logger.error(error)
-      props.dialog.showErrorDialog()
+      handleSubmitError(error)
     }
   }
 
@@ -232,7 +231,13 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     code: string
     data: string | null
   }) => {
-    logger.error(error)
+    logger.error({
+      ...error,
+      orderId: props.order.internalID!,
+      paymentMethod: props.order?.paymentMethod,
+      shouldLogErrorToSentry: true,
+    })
+
     switch (error.code) {
       case "missing_required_info": {
         props.dialog.showErrorDialog({
@@ -300,7 +305,6 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         break
       }
       default: {
-        logger.error(error)
         props.dialog.showErrorDialog()
         break
       }
@@ -344,6 +348,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     })
     props.router.push(`/orders/${props.order.internalID}/payment`)
   }
+
   const onChangeShippingAddress = () => {
     trackEvent({
       action: ActionType.clickedChangeShippingAddress,
@@ -452,6 +457,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment Review_order on CommerceOrder {
         internalID
+        paymentMethod
         mode
         code
         source
