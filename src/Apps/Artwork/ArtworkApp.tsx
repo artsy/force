@@ -76,7 +76,8 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 export const ArtworkApp: React.FC<Props> = props => {
   const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
-  const unlistedArtwork = artwork?.visibilityLevel == "UNLISTED"
+  const showUnlistedArtworkBanner =
+    artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -181,7 +182,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       {artwork.sale && (
         <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
       )}
-      {unlistedArtwork && artwork.partner && (
+      {showUnlistedArtworkBanner && (
         <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
       )}
 

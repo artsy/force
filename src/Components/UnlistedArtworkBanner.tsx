@@ -17,32 +17,18 @@ const UnlistedArtworkBanner: React.FC<UnlistedArtworkBannerProps> = ({
   return (
     <>
       <FullBleedBanner variant="brand">
-        {partner?.name ? (
-          <Text>
-            This is a{" "}
-            <Clickable
-              textDecoration="underline"
-              onClick={() => {
-                setOpen(true)
-              }}
-            >
-              private listing
-            </Clickable>{" "}
-            from {partner.name}.
-          </Text>
-        ) : (
-          <Text>
-            This is a{" "}
-            <Clickable
-              textDecoration="underline"
-              onClick={() => {
-                setOpen(true)
-              }}
-            >
-              private listing.
-            </Clickable>
-          </Text>
-        )}
+        <Text>
+          This is a{" "}
+          <Clickable
+            textDecoration="underline"
+            onClick={() => {
+              setOpen(true)
+            }}
+          >
+            private listing
+          </Clickable>{" "}
+          {partner?.name ? `from ${partner.name}.` : "."}
+        </Text>
       </FullBleedBanner>
       <UnlistedBannerModal show={open} onClose={() => setOpen(false)} />
     </>
