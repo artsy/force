@@ -37,7 +37,6 @@ import {
 } from "Apps/Order/Utils/formValidators"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
-  Address,
   AddressChangeHandler,
   AddressErrors,
   AddressForm,
@@ -85,6 +84,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
+import { Address } from "Components/Address/AddressForm2"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -114,7 +114,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
 
   const [address, setAddress] = useState<Address>(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     startingAddress(props.me, props.order)
   )
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
@@ -222,38 +221,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
         const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber({
-          international: phoneNumber,
-          // TODO
-          isValid: true,
-        })
 
-        if (hasErrors && hasError) {
+        if (hasErrors) {
           setAddressErrors(errors!)
           setAddressTouched(touchedAddress)
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
           return
         } else if (hasErrors) {
           setAddressErrors(errors!)
           setAddressTouched(touchedAddress)
           return
-        } else if (hasError) {
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
         }
-      }
-    } else {
-      const { error, hasError } = validatePhoneNumber({
-        international: phoneNumber,
-        // TODO
-        isValid: true,
-      })
-      if (hasError) {
-        setPhoneNumberError(error!)
-        setPhoneNumberTouched(true)
-        return
       }
     }
 
@@ -451,8 +428,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
     const { error } = validatePhoneNumber({
+      // TODO: figure out pickup phone number form
       international: newPhoneNumber,
-      // TODO
       isValid: true,
     })
 

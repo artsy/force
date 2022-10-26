@@ -17,7 +17,6 @@ import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
   validateAddress,
-  validatePhoneNumber,
 } from "Apps/Order/Utils/formValidators"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
@@ -34,6 +33,21 @@ export interface ModalDetails {
   addressModalTitle: string
   addressModalAction: AddressModalAction
 }
+export interface Address {
+  name: string
+  country: string
+  postalCode: string
+  addressLine1: string
+  addressLine2: string
+  city: string
+  region: string
+  phone: {
+    international: string
+    isValid: boolean
+    originalNumber: string
+    national: string
+  }
+}
 
 export interface Props {
   closeModal: () => void
@@ -45,6 +59,7 @@ export interface Props {
   onError: (message: string) => void
   modalDetails?: ModalDetails
   me: SavedAddresses_me$data
+  setShowDialog: (showDialog: boolean) => void
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -64,6 +79,7 @@ export const AddressForm: React.FC<Props> = ({
   onError,
   modalDetails,
   me,
+  setShowDialog,
 }) => {
   const createMutation =
     modalDetails?.addressModalAction === "createUserAddress"
@@ -71,10 +87,7 @@ export const AddressForm: React.FC<Props> = ({
   const validator = (values: any) => {
     console.log("values", values)
     const validationResult = validateAddress(values)
-    const phoneValidation = validatePhoneNumber(values.phone)
-    const errors = Object.assign({}, validationResult.errors, {
-      phone: phoneValidation.error,
-    })
+    const errors = Object.assign({}, validationResult.errors)
     const errorsTrimmed = removeEmptyKeys(errors)
     return errorsTrimmed
   }
@@ -84,7 +97,6 @@ export const AddressForm: React.FC<Props> = ({
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
     null
   )
-  const [showDialog, setShowDialog] = useState<boolean>(false)
 
   if (!relayEnvironment) return null
 

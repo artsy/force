@@ -4,17 +4,6 @@ import * as React from "react"
 import { TwoColumnSplit } from "Apps/Order/Components/TwoColumnLayout"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 
-export interface Address {
-  name: string
-  country: string
-  postalCode: string
-  addressLine1: string
-  addressLine2: string
-  city: string
-  region: string
-  phoneNumber?: string
-}
-
 export type AddressErrors = Partial<Address>
 export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
 export type AddressChangeHandler = (
@@ -30,7 +19,12 @@ export const emptyAddress: Address = {
   addressLine2: "",
   city: "",
   region: "",
-  phoneNumber: "",
+  phone: {
+    international: "",
+    isValid: false,
+    originalNumber: "",
+    national: "",
+  },
 }
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {

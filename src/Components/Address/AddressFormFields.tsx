@@ -27,6 +27,8 @@ export const AddressFormFields: React.FC = () => {
     setFieldValue,
   } = useFormikContext<AddressType>()
 
+  console.log("errors", errors)
+
   const { relayEnvironment } = useSystemContext()
 
   const handlePhoneNumberChange = async (region, number) => {
