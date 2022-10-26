@@ -1,25 +1,57 @@
-import { Text } from "@artsy/palette"
+import { CareerHighlightModalPromoStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Components/CareerHighlightModalPromoStep"
 import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Components/CareerHighlightModalStep"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Hooks/useCareerHighlightsStoriesContext"
+import { graphql, useLazyLoadQuery } from "react-relay"
+import { CareerHighlightsStepsQuery } from "__generated__/CareerHighlightsStepsQuery.graphql"
 
 export const CareerHighlightSteps = () => {
   const { current } = useCareerHighlightsStoriesContext()
+  const { me } = useLazyLoadQuery<CareerHighlightsStepsQuery>(
+    careerHighlightsStepsQuery,
+    {}
+  )
 
   switch (current) {
     case "BIENNIAL":
-      return <CareerHighlightModalStep />
     case "SOLO_SHOW":
-      return <Text>SOLO_SHOW</Text>
     case "GROUP_SHOW":
-      return <Text>GROUP_SHOW</Text>
     case "COLLECTED":
-      return <Text>COLLECTED</Text>
     case "REVIEWED":
-      return <Text>REVIEWED</Text>
+      return (
+        <CareerHighlightModalStep
+          kind={current}
+          careerHighlight={me?.myCollectionInfo?.[current]}
+        />
+      )
+
     case "PROMO":
-      return <Text>PROMO</Text>
+      return <CareerHighlightModalPromoStep />
 
     default:
       return null
   }
 }
+
+const careerHighlightsStepsQuery = graphql`
+  query CareerHighlightsStepsQuery {
+    me {
+      myCollectionInfo {
+        BIENNIAL: artistInsights(kind: BIENNIAL) {
+          ...CareerHighlightModalStep_careerHighlight
+        }
+        COLLECTED: artistInsights(kind: COLLECTED) {
+          ...CareerHighlightModalStep_careerHighlight
+        }
+        GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {
+          ...CareerHighlightModalStep_careerHighlight
+        }
+        REVIEWED: artistInsights(kind: REVIEWED) {
+          ...CareerHighlightModalStep_careerHighlight
+        }
+        SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {
+          ...CareerHighlightModalStep_careerHighlight
+        }
+      }
+    }
+  }
+`
