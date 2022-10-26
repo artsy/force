@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afb7d37cc40780bd94067d81c884597d>>
+ * @generated SignedSource<<279ee19b0dcaee0abd8624b293eace1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureHeaderDefault_feature$data = {
   readonly defaultImage: {
-    readonly lg: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
-    readonly md: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
-    readonly sm: {
+    readonly resized: {
       readonly src: string;
       readonly srcSet: string;
     } | null;
@@ -34,32 +26,7 @@ export type FeatureHeaderDefault_feature$key = {
   readonly " $fragmentSpreads": FragmentRefs<"FeatureHeaderDefault_feature">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "main",
-    "wide"
-  ]
-},
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -94,70 +61,44 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "sm",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 400
+              "name": "version",
+              "value": [
+                "main",
+                "source",
+                "wide"
+              ]
             },
-            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 400
+              "value": 900
             }
           ],
-          "concreteType": "CroppedImageUrl",
+          "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
-          "name": "cropped",
+          "name": "resized",
           "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:400,version:[\"main\",\"wide\"],width:400)"
-        },
-        {
-          "alias": "md",
-          "args": [
+          "selections": [
             {
-              "kind": "Literal",
-              "name": "height",
-              "value": 600
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
             },
-            (v0/*: any*/),
             {
-              "kind": "Literal",
-              "name": "width",
-              "value": 600
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
             }
           ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:600,version:[\"main\",\"wide\"],width:600)"
-        },
-        {
-          "alias": "lg",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 1000
-            },
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1000
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:1000)"
+          "storageKey": "resized(version:[\"main\",\"source\",\"wide\"],width:900)"
         }
       ],
       "storageKey": null
@@ -166,8 +107,7 @@ return {
   "type": "Feature",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "588199148f1e426283021a9e9f40a168";
+(node as any).hash = "abe5d39046032e80df6448aa870bf929";
 
 export default node;

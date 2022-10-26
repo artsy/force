@@ -1,10 +1,12 @@
 import * as React from "react"
-import { Box, BoxProps, Spacer } from "@artsy/palette"
+import { Box, BoxProps, Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
 import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
+import { extractNodes } from "Utils/extractNodes"
+import { useMemo } from "react"
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set$data
@@ -13,43 +15,46 @@ export interface FeatureSetProps extends Omit<BoxProps, "color"> {
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
 
 export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const count = set.orderedItems.edges.length
-  const size =
-    set.layout === "FULL"
-      ? "full"
-      : // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        ({ 1: "large", 2: "medium" }[set.orderedItems.edges.length] as
-          | "medium"
-          | "large"
-          | undefined) ?? "small"
+  const orderedItems = extractNodes(set.orderedItems)
+  const count = orderedItems.length
+  const size = useMemo(() => {
+    if (set.layout === "FULL") {
+      return "full"
+    }
+
+    if (orderedItems.length === 1) {
+      return "large"
+    }
+
+    if (orderedItems.length === 2) {
+      return "medium"
+    }
+
+    return "small"
+  }, [orderedItems.length, set.layout])
 
   if (
     // Nothing to render: it's possible to have a completely empty yet valid set
     (!set.name && !set.description && count === 0) ||
     // Or the set isn't a supported type (Sale, etc.)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    !SUPPORTED_ITEM_TYPES.includes(set.itemType)
+    !SUPPORTED_ITEM_TYPES.includes(set.itemType ?? "")
   ) {
     return null
   }
 
   return (
     <Box {...rest}>
-      {set.name || set.description ? (
-        <FeatureSetMeta set={set} mt={4} mb={2} />
-      ) : (
-        <Spacer my={4} />
-      )}
+      <Join separator={<Spacer mt={4} />}>
+        {(set.name || set.description) && <FeatureSetMeta set={set} />}
 
-      <FeatureSetContainer set={set}>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        {set.orderedItems.edges.map(({ node: setItem }) => {
-          return (
-            <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
-          )
-        })}
-      </FeatureSetContainer>
+        <FeatureSetContainer set={set}>
+          {orderedItems.map(setItem => {
+            return (
+              <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
+            )
+          })}
+        </FeatureSetContainer>
+      </Join>
     </Box>
   )
 }

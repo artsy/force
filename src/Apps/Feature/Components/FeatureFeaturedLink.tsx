@@ -14,14 +14,10 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink$data } from "__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
-const Figure = styled(RouterLink)<RouterLinkProps>`
-  &:hover + div {
-    color: ${themeGet("colors.blue100")};
-  }
-`
+export type FeaturedLinkSize = "small" | "medium" | "large" | "full"
 
 export interface FeatureFeaturedLinkProps extends FlexProps {
-  size: "small" | "medium" | "large" | "full"
+  size: FeaturedLinkSize
   featuredLink: FeatureFeaturedLink_featuredLink$data
 }
 
@@ -65,23 +61,25 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
         <Spacer mt={1} />
 
         {subtitle && (
-          <>
-            <Text variant="xs">{subtitle}</Text>
-          </>
+          <Text variant="xs" fontWeight="bold">
+            {subtitle}
+          </Text>
         )}
 
-        <Text variant="lg-display">{title}</Text>
+        <Text variant="lg-display" mt={0.5} lineClamp={3}>
+          {title}
+        </Text>
 
         {description &&
           (size === "full" ? (
             <HTML
               variant="lg-display"
-              html={description}
-              mt={1}
               color="black60"
+              mt={1}
+              html={description}
             />
           ) : (
-            <HTML variant="sm" html={description} mt={1} color="black60" />
+            <HTML variant="sm" color="black60" mt={0.5} html={description} />
           ))}
       </Flex>
     </Flex>
@@ -131,3 +129,9 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const Figure = styled(RouterLink)<RouterLinkProps>`
+  &:hover + div {
+    color: ${themeGet("colors.blue100")};
+  }
+`
