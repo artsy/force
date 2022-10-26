@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
-import { Dialog, ModalDialog } from "@artsy/palette"
+import { Button, Text, ModalDialog, Flex, Spacer } from "@artsy/palette"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import { useSystemContext } from "System/SystemContext"
@@ -76,28 +76,38 @@ export const AddressModal: React.FC<Props> = props => {
           />
         </ModalDialog>
       )}
-      <Dialog
-        title="Delete address?"
-        detail="This will remove this address from your saved addresses."
-        show={showDialog}
-        primaryCta={{
-          action: () => {
-            setShowDialog(false)
-            closeModal()
-            if (address?.internalID) {
-              onDeleteAddress(address.internalID)
-            }
-          },
-          text: "Delete",
-        }}
-        secondaryCta={{
-          action: () => {
-            setShowDialog(false)
-          },
-          text: "Cancel",
-        }}
-        onClose={() => setShowDialog(false)}
-      />
+      {showDialog && (
+        <ModalDialog
+          title="Delete address?"
+          onClose={() => setShowDialog(false)}
+          width="350px"
+        >
+          <Text>This will remove this address from your saved addressess.</Text>
+          <Spacer mb={2} />
+          <Flex justifyContent="flex-end">
+            <Button
+              variant="secondaryNeutral"
+              size="small"
+              onClick={() => setShowDialog(false)}
+            >
+              Cancel
+            </Button>
+            <Spacer mr={1} />
+            <Button
+              size="small"
+              onClick={() => {
+                setShowDialog(false)
+                closeModal()
+                if (address?.internalID) {
+                  onDeleteAddress(address.internalID)
+                }
+              }}
+            >
+              Detete
+            </Button>
+          </Flex>
+        </ModalDialog>
+      )}
     </>
   )
 }
