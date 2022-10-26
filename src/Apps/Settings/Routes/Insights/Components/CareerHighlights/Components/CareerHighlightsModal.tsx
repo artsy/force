@@ -45,14 +45,15 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
       <Flex
         flexDirection="column"
         width="100%"
-        height="100vh"
-        minHeight={["100vh", "100%"]}
+        height={["100vh", "90%"]}
+        minHeight={["100vh", "90%"]}
         overflowY="auto"
         position="relative"
         bg="white100"
         px={2}
         style={{
           boxShadow: DROP_SHADOW,
+          maxHeight: "90%",
           ...(isMounted
             ? {
                 opacity: 1,
@@ -76,7 +77,7 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
           </Clickable>
         </Flex>
 
-        <Flex flex={1} height="90%">
+        <Flex flex={1} overflowY="auto">
           <Clickable justifySelf="center" onClick={back} aria-label="Back">
             <ArrowLeftIcon fill="black100" display="block" />
           </Clickable>
