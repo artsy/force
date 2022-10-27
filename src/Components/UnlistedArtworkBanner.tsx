@@ -17,7 +17,7 @@ const UnlistedArtworkBanner: React.FC<UnlistedArtworkBannerProps> = ({
   return (
     <>
       <FullBleedBanner variant="brand">
-        <Text>
+        <Text data-testid="unlisted-text">
           This is a{" "}
           <Clickable
             textDecoration="underline"
