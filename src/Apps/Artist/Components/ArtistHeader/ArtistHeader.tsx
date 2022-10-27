@@ -100,7 +100,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               {!!artist.counts?.follows && (
                 <Column
                   span={6}
-                  display={["block", "none", "none", "flex"]}
+                  display={["block", "flex"]}
                   alignItems="center"
                 >
                   <Text
