@@ -662,7 +662,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 selected={saveAddress}
                 data-test="save-address-checkbox"
               >
-                Save shipping address for later useXXX
+                Save shipping address for later use
               </Checkbox>
               <Spacer mt={4} />
             </Collapse>
