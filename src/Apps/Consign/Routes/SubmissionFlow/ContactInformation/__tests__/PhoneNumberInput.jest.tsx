@@ -1,8 +1,8 @@
 import { mount, ReactWrapper } from "enzyme"
 import {
-  PhoneNumberInput,
   PhoneNumberInputProps,
-} from "../Components/PhoneNumberInput"
+  PhoneNumberInput,
+} from "Components/PhoneNumberInput/PhoneNumberInput"
 import { Input, Select } from "@artsy/palette"
 
 const handlePhoneNumberChange = jest.fn()
