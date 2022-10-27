@@ -1,4 +1,11 @@
-import { Flex, Skeleton, SkeletonBox, SkeletonText, Text } from "@artsy/palette"
+import {
+  Flex,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/config"
 import {
   CareerHighlightKind,
@@ -23,15 +30,15 @@ export const CareerHighlightModalStep: React.FC<CareerHighlightModalStepProps> =
   const { Icon, label } = getCareerHighlight(kind as CareerHighlightKind, count)
 
   return (
-    <Flex flex={1} flexDirection="column" mx={1}>
+    <Flex flex={1} flexDirection="column" mx={[0, 1]}>
       <Flex alignItems="center">
-        <Text flex={1} variant="xxl" color="blue100">
+        <Text flex={1} variant={["xl", "xxl"]} color="blue100">
           {count}
         </Text>
 
         <Flex
-          height={50}
-          width={50}
+          height={[40, 50]}
+          width={[40, 50]}
           alignItems="center"
           justifyContent="center"
           border="1px solid"
@@ -42,7 +49,9 @@ export const CareerHighlightModalStep: React.FC<CareerHighlightModalStepProps> =
         </Flex>
       </Flex>
 
-      <Text variant="lg">{label}</Text>
+      <Text variant={["lg-display", "lg"]}>{label}</Text>
+
+      <Spacer mb={4} />
 
       <Flex mt={2} flexDirection="column" overflowY="auto">
         {careerHighlights.map((careerHighlightArtist, index) => (
@@ -63,13 +72,13 @@ export const CareerHighlightModalStep: React.FC<CareerHighlightModalStepProps> =
 }
 
 export const STEPS_PLACEHOLDER = (
-  <Skeleton display="flex" flex={1} flexDirection="column" mx={1}>
+  <Skeleton display="flex" flex={1} flexDirection="column" mx={[0, 1]}>
     <Flex alignItems="center" justifyContent="space-between">
-      <SkeletonText variant="xxl">12</SkeletonText>
+      <SkeletonText variant={["xl", "xxl"]}>12</SkeletonText>
 
       <Flex
-        height={50}
-        width={50}
+        height={[40, 50]}
+        width={[40, 50]}
         justifySelf="flex-end"
         alignItems="center"
         justifyContent="center"
@@ -81,9 +90,11 @@ export const STEPS_PLACEHOLDER = (
       </Flex>
     </Flex>
 
-    <SkeletonText variant="lg">
+    <SkeletonText variant={["lg-display", "lg"]}>
       Artists were reviewed by major art publications.
     </SkeletonText>
+
+    <Spacer mb={4} />
 
     <Flex mt={2} flexDirection="column" overflowY="auto">
       {Array.from({ length: 4 }).map((_, i) => (

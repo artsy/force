@@ -19,8 +19,10 @@ const { src, srcSet } = cropped(
 
 export const CareerHighlightModalPromoStep = () => {
   return (
-    <Flex flex={1} flexDirection="column" mx={1}>
-      <Text variant="lg">Discover Career Highlights for Your Artists</Text>
+    <Flex flex={1} flexDirection="column" mx={[0, 1]}>
+      <Text variant={["lg-display", "lg"]}>
+        Discover Career Highlights for Your Artists
+      </Text>
 
       <Spacer mt={2} />
 
@@ -42,7 +44,7 @@ export const CareerHighlightModalPromoStep = () => {
         Upload Artwork
       </Button>
 
-      <Flex mt={2} overflowY="auto">
+      <Flex mt={4} overflowY="auto">
         <ResponsiveBox
           aspectWidth={750}
           aspectHeight={900}

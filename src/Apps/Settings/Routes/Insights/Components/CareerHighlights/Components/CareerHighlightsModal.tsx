@@ -67,12 +67,12 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
         <Flex py={2} alignItems="center">
           <ProgressDots
             flex={1}
-            px={4}
+            px={[0, 4]}
             amount={total}
             variant="dash"
             activeIndex={dotPosition}
           />
-          <Clickable onClick={onClose} aria-label="Close">
+          <Clickable ml={2} onClick={onClose} aria-label="Close">
             <CloseIcon fill="black100" display="block" />
           </Clickable>
         </Flex>
