@@ -6,7 +6,7 @@ import {
   UpdateUserAddressMutation$data,
   UserAddressAttributes,
 } from "__generated__/UpdateUserAddressMutation.graphql"
-import { NEW_ADDRESS } from "../Components/SavedAddresses"
+import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
@@ -19,6 +19,15 @@ export type SavedAddressType = NonNullable<
     >[number]
   >["node"]
 >
+
+export type FormikAddressType = SavedAddressType & {
+  phone: {
+    isValid: boolean
+    national?: string
+    international?: string
+    regionCode?: string
+  }
+}
 
 export type ShippingQuotesType = NonNullable<
   NonNullable<
@@ -128,14 +137,15 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  address: SavedAddressType
+  address: FormikAddressType
 ): UserAddressAttributes => {
   return omit(
     {
       ...address,
       name: address?.name || "",
+      phoneNumber: address?.phone?.international,
     },
-    ["isDefault", "internalID", "id", "__typename"]
+    ["isDefault", "internalID", "id", "__typename", "phone"]
   )
 }
 

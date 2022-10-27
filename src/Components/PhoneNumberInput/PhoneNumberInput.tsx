@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 import { countries } from "Utils/countries"
 
 export interface PhoneNumber {
-  isValid: boolean
+  isValid?: boolean
   national?: string
   regionCode?: string
 }

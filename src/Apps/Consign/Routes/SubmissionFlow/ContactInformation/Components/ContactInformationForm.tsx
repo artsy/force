@@ -4,7 +4,10 @@ import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
-import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
+import {
+  PhoneNumber,
+  PhoneNumberInput,
+} from "Components/PhoneNumberInput/PhoneNumberInput"
 export interface ContactInformationFormModel {
   name: string
   email: string
