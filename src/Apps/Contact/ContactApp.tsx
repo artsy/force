@@ -125,7 +125,7 @@ export const ContactApp: React.FC = () => {
 
         <Column span={2}>
           <Text as="h3" variant="xs">
-            Production Editor
+            Contemporary Art Editor
           </Text>
 
           <Text variant="sm">Harley Wong</Text>
@@ -141,10 +141,10 @@ export const ContactApp: React.FC = () => {
 
         <Column span={2}>
           <Text as="h3" variant="xs">
-            Art Market Editor
+            Production Editor
           </Text>
 
-          <Text variant="sm">Brian P. Kelly</Text>
+          <Text variant="sm">Olivia Horn</Text>
         </Column>
       </GridColumns>
 
