@@ -82,7 +82,9 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
             <ArrowLeftIcon fill="black100" display="block" />
           </Clickable>
 
-          {children}
+          <Flex flex={1} mt={4}>
+            {children}
+          </Flex>
 
           <Clickable alignSelf="center" onClick={next} aria-label="Next">
             <ArrowRightIcon fill="black100" display="block" />
