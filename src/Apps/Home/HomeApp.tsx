@@ -26,6 +26,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
+  const showHomeHeroUnits = !!homePage
+
   return (
     <>
       <HomeMeta />
@@ -34,7 +36,9 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer mt={[2, 0]} />
 
-      {homePage && <HomeHeroUnitsFragmentContainer homePage={homePage} />}
+      {showHomeHeroUnits && (
+        <HomeHeroUnitsFragmentContainer homePage={homePage} />
+      )}
 
       <Spacer mt={[4, 6]} />
 
