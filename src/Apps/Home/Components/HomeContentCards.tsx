@@ -4,30 +4,31 @@ import {
   HomeHeroUnit,
   StaticHeroUnit,
 } from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnit"
+import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 
 interface ContentCardProps {
-  card: any
-  index: any
+  card: BrazeContentCard
+  index: number
 }
 
 const ContentCard: React.FC<ContentCardProps> = ({ card, index }) => {
   const extras = card.extras || {}
 
-  const heroUnit = {
-    backgroundImageURL: card.imageUrl,
+  const heroUnit: StaticHeroUnit = {
+    backgroundImageURL: card.imageUrl!,
     creditLine: extras.credit,
     heading: extras.label,
-    href: card.url,
+    href: card.url!,
     linkText: card.linkText,
     subtitle: card.description,
     title: card.title,
-  } as StaticHeroUnit
+  }
 
   return <HomeHeroUnit heroUnit={heroUnit} index={index} layout="a" />
 }
 
 export const HomeContentCards: React.FC = () => {
-  const [cards, setCards] = useState([] as any)
+  const [cards, setCards] = useState<BrazeContentCard[]>([])
 
   useEffect(() => {
     window.analytics?.ready(() => {
