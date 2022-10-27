@@ -16,6 +16,9 @@ import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRa
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
+import { useRouter } from "System/Router/useRouter"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { HomeContentCards } from "./Components/HomeContentCards"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage$data | null
@@ -26,7 +29,12 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
-  const showHomeHeroUnits = !!homePage
+  const { match } = useRouter()
+  const { brazeContentCards } = paramsToCamelCase(match?.location.query) as {
+    brazeContentCards?: boolean
+  }
+  const showBrazeContentCards = !!brazeContentCards
+  const showHomeHeroUnits = !showBrazeContentCards && !!homePage
 
   return (
     <>
@@ -35,6 +43,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({
       <FlashBannerQueryRenderer />
 
       <Spacer mt={[2, 0]} />
+
+      {showBrazeContentCards && <HomeContentCards />}
 
       {showHomeHeroUnits && (
         <HomeHeroUnitsFragmentContainer homePage={homePage} />
