@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53666375fe2afeabad6c809fd9a3e23b>>
+ * @generated SignedSource<<a79023b01707b9686205bf61efc722c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type Visibility = "DRAFT" | "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {
   readonly artist: {
@@ -27,6 +28,9 @@ export type ArtworkApp_artwork$data = {
   readonly listPrice: {
     readonly display?: string | null;
   } | null;
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
+  } | null;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null;
     readonly internalID: string;
@@ -34,6 +38,7 @@ export type ArtworkApp_artwork$data = {
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
   } | null;
   readonly slug: string;
+  readonly visibilityLevel: Visibility | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar2_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
@@ -103,6 +108,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "visibilityLevel",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "listPrice",
@@ -119,6 +131,22 @@ return {
           "selections": (v2/*: any*/),
           "type": "Money",
           "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "UnlistedArtworkBanner_partner"
         }
       ],
       "storageKey": null
@@ -223,6 +251,6 @@ return {
 };
 })();
 
-(node as any).hash = "68b7c0e560c96851d12baa864bc0577a";
+(node as any).hash = "4e27ff757ff429d8d00a58e0772ef6f1";
 
 export default node;
