@@ -209,6 +209,7 @@
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
     "@babel/register": "7.13.8",
+    "@braze/web-sdk": "^4.3.0",
     "@graphql-inspector/core": "1.14.0",
     "@graphql-tools/jest-transform": "^1.2.0",
     "@loadable/babel-plugin": "5.13.2",
