@@ -200,7 +200,7 @@ jobs:
 
   upload-docs:
     docker:
-      - image: "cimg/python:3.10"
+      - image: "cimg/python:3.11"
     steps:
       - aws-s3/sync:
           arguments: --acl public-read
