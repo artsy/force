@@ -1,12 +1,27 @@
-import { Box, FullBleed, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Button, FullBleed, Separator, Spacer, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "../NavBar"
+import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar"
+import { useJump, Jump } from "Utils/Hooks/useJump"
 import { Sticky } from "./Sticky"
 import { StickyProvider } from "./StickyProvider"
 
 export default {
   title: "Components/Sticky",
+}
+
+const JumpButton = () => {
+  const { jumpTo } = useJump({ behavior: "smooth" })
+
+  return (
+    <Button
+      onClick={() => {
+        jumpTo("example")
+      }}
+    >
+      Scroll to jump example
+    </Button>
+  )
 }
 
 export const Example = () => {
@@ -20,6 +35,7 @@ export const Example = () => {
         height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]}
         p={1}
         bg="black5"
+        zIndex={1}
       >
         <Text variant="sm">Header placeholder</Text>
       </Box>
@@ -33,6 +49,8 @@ export const Example = () => {
           </Text>
         )
       })}
+
+      <JumpButton />
 
       <Sticky>
         <Box bg="black10" p={1}>
@@ -67,6 +85,10 @@ export const Example = () => {
           </Text>
         )
       })}
+
+      <Jump id="example">
+        <FullBleed bg="yellow">Jump to here</FullBleed>
+      </Jump>
 
       <Sticky>
         <Box bg="green10" p={1}>

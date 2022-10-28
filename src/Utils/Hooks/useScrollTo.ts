@@ -12,6 +12,7 @@ interface UseScrollTo {
 /**
  * Returns a `scrollTo` function that offsets based on the nav and the current
  * state of the sticky component.
+ * @deprecated: use `useJump/Jump` instead
  */
 export const useScrollTo = ({
   behavior,
@@ -46,6 +47,7 @@ export const useScrollTo = ({
  * Accepts a DOM selector string or a ref to an element, along with some options,
  * and returns a `scrollTo` function that offsets based on the nav and the current
  * state of the sticky component.
+ * @deprecated: use `useJump/Jump` instead
  */
 export const useScrollToElement = ({
   behavior,

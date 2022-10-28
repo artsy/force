@@ -1,7 +1,14 @@
 import { compound } from "@artsy/palette"
 import { uniqBy } from "lodash"
-import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
-import * as React from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
+import * as React from "react"
 
 type Sticky = {
   id: string
@@ -55,19 +62,20 @@ export const getOffsetTopForSticky = ({
   stickies: Sticky[]
 }) => {
   const index = stickies.findIndex(sticky => sticky.id === id)
+
   return compound([0, ...stickies.map(({ height }) => height).slice(0, -1)])[
     index
   ]
 }
 
-export const useSticky = () => {
+export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   const {
     stickies,
     registerSticky: __registerSticky__,
     deregisterSticky: __deregisterSticky__,
   } = useContext(StickyContext)
 
-  const id = useRef(generateId())
+  const id = useRef(_id ?? generateId())
 
   const registerSticky = useCallback(
     height => {
@@ -86,5 +94,11 @@ export const useSticky = () => {
     [stickies]
   )
 
-  return { offsetTop, registerSticky, deregisterSticky, id: id.current }
+  return {
+    id: id.current,
+    deregisterSticky,
+    offsetTop,
+    registerSticky,
+    stickies,
+  }
 }
