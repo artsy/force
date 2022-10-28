@@ -16,32 +16,38 @@ export const useImagePerformanceObserver = () => {
   useEffect(() => {
     if (typeof PerformanceObserver === "undefined") return
 
-    const performanceObserver = new PerformanceObserver(observedEntries => {
-      const entries = observedEntries.getEntries()
+    let performanceObserver: PerformanceObserver | null = null
 
-      entries.forEach((entry: PerformanceResourceTiming) => {
-        if (
-          // Only log images
-          entry.initiatorType !== "img" ||
-          // Ensure they are uncached
-          entry.transferSize === 0 ||
-          // Ensure they are Gemini images
-          !entry.name.includes(GEMINI_CLOUDFRONT_URL)
-        ) {
-          return
-        }
+    try {
+      performanceObserver = new PerformanceObserver(observedEntries => {
+        const entries = observedEntries.getEntries()
 
-        queue.current.push(entry)
+        entries.forEach((entry: PerformanceResourceTiming) => {
+          if (
+            // Only log images
+            entry.initiatorType !== "img" ||
+            // Ensure they are uncached
+            entry.transferSize === 0 ||
+            // Ensure they are Gemini images
+            !entry.name.includes(GEMINI_CLOUDFRONT_URL)
+          ) {
+            return
+          }
+
+          queue.current.push(entry)
+        })
       })
-    })
 
-    performanceObserver.observe({
-      type: "resource",
-      buffered: true,
-    })
+      performanceObserver.observe({
+        type: "resource",
+        buffered: true,
+      })
+    } catch (error) {
+      console.error(error)
+    }
 
     return () => {
-      performanceObserver.disconnect()
+      performanceObserver && performanceObserver.disconnect()
     }
   }, [])
 
