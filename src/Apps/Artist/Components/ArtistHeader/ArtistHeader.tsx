@@ -118,6 +118,8 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           <Column span={6}>
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
+            <Spacer mb={4} />
+
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
                 <Text variant="xs" mt={[2, 0]} mb={1}>

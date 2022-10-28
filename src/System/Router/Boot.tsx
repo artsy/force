@@ -29,6 +29,7 @@ import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
 import "System/i18n/i18n"
 import track from "react-tracking"
+import { StickyProvider } from "Components/Sticky"
 
 export interface BootProps {
   children: React.ReactNode
@@ -85,9 +86,11 @@ export const Boot = track(undefined, {
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
                     <ToastsProvider>
-                      <FocusVisible />
-                      <SiftContainer />
-                      {children}
+                      <StickyProvider>
+                        <FocusVisible />
+                        <SiftContainer />
+                        {children}
+                      </StickyProvider>
                     </ToastsProvider>
                   </ResponsiveProvider>
                 </MediaContextProvider>

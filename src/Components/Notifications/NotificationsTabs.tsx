@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar"
-import { Sticky, StickyProvider } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import styled from "styled-components"
 import {
   MarkAllAsReadPanel,
@@ -95,13 +95,15 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   }
 
   return (
-    <StickyProvider>
+    <>
       <Sticky>
         <HeaderContainer>{Tabs}</HeaderContainer>
+
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </Sticky>
+
       {activeTab.current.child}
-    </StickyProvider>
+    </>
   )
 }
 

@@ -28,6 +28,7 @@ import { useSticky } from "./StickyProvider"
  */
 export const Sticky: React.FC<
   Pick<ReactStickyProps, "bottomBoundary"> & {
+    // TODO: Remove this prop!
     withoutHeaderOffset?: boolean
   }
 > = ({ children, bottomBoundary, withoutHeaderOffset }) => {

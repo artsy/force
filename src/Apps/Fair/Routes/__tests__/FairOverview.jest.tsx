@@ -5,12 +5,13 @@ import { useRouter } from "System/Router/useRouter"
 import { FairOverview_Test_Query } from "__generated__/FairOverview_Test_Query.graphql"
 import { waitFor } from "@testing-library/react"
 
-const mockScrollTo = jest.fn()
+const mockJumpTo = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
-jest.mock("Utils/Hooks/useScrollTo", () => ({
-  useScrollToElement: () => ({ scrollTo: mockScrollTo }),
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+  Jump: () => null,
 }))
 
 const { getWrapper } = setupTestWrapper<FairOverview_Test_Query>({
@@ -28,7 +29,7 @@ describe("FairOverview", () => {
   const mockUseRouter = useRouter as jest.Mock
 
   beforeEach(() => {
-    mockScrollTo.mockClear()
+    mockJumpTo.mockClear()
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
@@ -144,6 +145,6 @@ describe("FairOverview", () => {
 
     getWrapper()
 
-    await waitFor(() => expect(mockScrollTo).toBeCalled())
+    await waitFor(() => expect(mockJumpTo).toBeCalled())
   })
 })

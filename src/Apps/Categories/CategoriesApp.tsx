@@ -6,55 +6,49 @@ import { GeneFamiliesFragmentContainer } from "./Components/GeneFamilies"
 import { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
-import { StickyProvider, Sticky } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { Media } from "Utils/Responsive"
 
 interface CategoriesAppProps {
   geneFamiliesConnection: CategoriesApp_geneFamiliesConnection$data
 }
 
-const CategoriesApp: React.FC<CategoriesAppProps> = props => {
-  const { geneFamiliesConnection } = props
-  const { mobile, desktop } = useNavBarHeight()
-
+const CategoriesApp: React.FC<CategoriesAppProps> = ({
+  geneFamiliesConnection,
+}) => {
   return (
     <>
       <MetaTags pathname="categories" />
+
       <Spacer mt={[2, 4]} />
+
       <CategoriesIntro />
+
       <Spacer mt={6} />
-      <StickyProvider>
-        <Sticky>
-          {({ stuck }) => {
-            return (
-              <FullBleed
-                backgroundColor="white100"
-                style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-              >
-                <AppContainer maxWidth="none">
-                  <Spacer pb={1} />
-                  <Media at="xs">
-                    <StickyNavFragmentContainer
-                      navBarHeight={mobile}
-                      geneFamiliesConnection={geneFamiliesConnection}
-                    />
-                  </Media>
-                  <Media greaterThan="xs">
-                    <StickyNavFragmentContainer
-                      navBarHeight={desktop}
-                      geneFamiliesConnection={geneFamiliesConnection}
-                    />
-                  </Media>
-                  <Spacer pb={1} />
-                </AppContainer>
-              </FullBleed>
-            )
-          }}
-        </Sticky>
-      </StickyProvider>
+
+      <Sticky>
+        {({ stuck }) => {
+          return (
+            <FullBleed
+              backgroundColor="white100"
+              style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+            >
+              <AppContainer maxWidth="none">
+                <Spacer mt={1} />
+
+                <StickyNavFragmentContainer
+                  geneFamiliesConnection={geneFamiliesConnection}
+                />
+
+                <Spacer mt={1} />
+              </AppContainer>
+            </FullBleed>
+          )
+        }}
+      </Sticky>
+
       <Spacer mt={6} />
+
       <GeneFamiliesFragmentContainer
         geneFamiliesConnection={geneFamiliesConnection}
       />

@@ -19,7 +19,7 @@ import {
   ChatIcon,
   MoneyBackIcon,
   PoweredByStripeIcon,
-} from "../Components/BuyerGuaranteeIcons"
+} from "Apps/BuyerGuarantee/Components/BuyerGuaranteeIcons"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { MetaTags } from "Components/MetaTags"
 import { cropped } from "Utils/resized"
@@ -28,15 +28,15 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import {
   BuyerGuaranteeTableDesktop,
   BuyerGuaranteeTableMobile,
-} from "../Components/BuyerGuaranteeTables"
+} from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
 import { Media } from "Utils/Responsive"
-import { useScrollTo } from "Utils/Hooks/useScrollTo"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 const SUPPORT_ARTICLE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973"
 
 export const BuyerGuaranteeIndex: FC = () => {
-  const { scrollTo } = useScrollTo({ behavior: "smooth", offset: 10 })
+  const { jumpTo } = useJump({ behavior: "smooth" })
 
   return (
     <>
@@ -122,7 +122,7 @@ export const BuyerGuaranteeIndex: FC = () => {
             mt={2}
             variant="tertiary"
             onClick={() => {
-              scrollTo("#jump--authenticityGuarantee")
+              jumpTo("authenticityGuarantee")
             }}
           >
             Learn More
@@ -146,7 +146,7 @@ export const BuyerGuaranteeIndex: FC = () => {
             mt={2}
             variant="tertiary"
             onClick={() => {
-              scrollTo("#jump--moneyBackGuarantee")
+              jumpTo("moneyBackGuarantee")
             }}
           >
             Learn More
@@ -170,7 +170,7 @@ export const BuyerGuaranteeIndex: FC = () => {
             mt={2}
             variant="tertiary"
             onClick={() => {
-              scrollTo("#jump--securePayment")
+              jumpTo("securePayment")
             }}
           >
             Learn More
@@ -183,6 +183,8 @@ export const BuyerGuaranteeIndex: FC = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={6} order={1}>
+          <Jump id="authenticityGuarantee" />
+
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
               {...cropped(
@@ -197,13 +199,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           </ResponsiveBox>
         </Column>
 
-        <Column
-          span={6}
-          pt={[0, 6]}
-          order={2}
-          // @ts-ignore
-          id="jump--authenticityGuarantee"
-        >
+        <Column span={6} pt={[0, 6]} order={2}>
           <Text variant="lg-display">Authenticity Guarantee</Text>
 
           <Text variant="sm" mt={2}>
@@ -227,13 +223,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           </Button>
         </Column>
 
-        <Column
-          span={6}
-          pt={[0, 6]}
-          order={[4, 3]}
-          // @ts-ignore
-          id="jump--moneyBackGuarantee"
-        >
+        <Column span={6} pt={[0, 6]} order={[4, 3]}>
           <Text variant="lg-display">Money-Back Guarantee</Text>
 
           <Text variant="sm" mt={2}>
@@ -257,6 +247,8 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
 
         <Column span={6} order={[3, 4]}>
+          <Jump id="moneyBackGuarantee" />
+
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
               {...cropped(
@@ -272,6 +264,8 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
 
         <Column span={6} order={5}>
+          <Jump id="securePayment" />
+
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
               {...cropped("https://files.artsy.net/securepaymentartwork.jpg", {
@@ -286,13 +280,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           </ResponsiveBox>
         </Column>
 
-        <Column
-          span={6}
-          pt={[0, 6]}
-          order={6}
-          // @ts-ignore
-          id="jump--securePayment"
-        >
+        <Column span={6} pt={[0, 6]} order={6}>
           <Text variant="lg-display">Secure Payment</Text>
 
           <Text variant="sm" mt={2}>

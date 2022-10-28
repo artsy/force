@@ -26,6 +26,10 @@ const StickyContext = createContext<{
   deregisterSticky: () => {},
 })
 
+/**
+ * Imported once in Boot.tsx.
+ * You do NOT need to import this to use a `Sticky` component.
+ */
 export const StickyProvider: React.FC = ({ children }) => {
   const [stickies, setStickies] = useState<Sticky[]>([])
 

@@ -16,7 +16,7 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
-import { Sticky, StickyProvider } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import { Form, Formik } from "formik"
 import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -70,6 +70,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     MyCollectionArtworkDetailsValidationSchema
   )
 
+  // TODO: Avoid using boolean state flags for UI modes
   const [
     showLeaveWithoutSavingModal,
     setShowLeaveWithoutSavingModal,
@@ -259,83 +260,79 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 <ArtsyLogoBlackIcon display="block" />
               </RouterLink>
 
-              <StickyProvider>
-                {showLeaveWithoutSavingModal && (
-                  <ConfirmationModalBack
-                    onClose={() => setShowLeaveWithoutSavingModal(false)}
-                    isEditing={isEditing}
-                    onLeave={() => leaveForm()}
-                  />
-                )}
-                {shouldShowDeletionModal && (
-                  <ConfirmationModalDelete
-                    onClose={() => setShouldShowDeletionModal(false)}
-                    handleDelete={handleDelete}
-                  />
-                )}
-                <Sticky withoutHeaderOffset>
-                  {({ stuck }) => {
-                    return (
-                      <FullBleed
-                        backgroundColor="white100"
-                        style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-                      >
-                        <AppContainer>
-                          <HorizontalPadding>
-                            <Flex
-                              flexDirection="row"
-                              justifyContent="space-between"
-                              py={2}
-                            >
-                              <BackLink
-                                // @ts-ignore
-                                as={RouterLink}
-                                onClick={() => {
-                                  dirty
-                                    ? setShowLeaveWithoutSavingModal(true)
-                                    : leaveForm()
-                                }}
-                                width="min-content"
-                              >
-                                Back
-                              </BackLink>
+              {showLeaveWithoutSavingModal && (
+                <ConfirmationModalBack
+                  onClose={() => setShowLeaveWithoutSavingModal(false)}
+                  isEditing={isEditing}
+                  onLeave={() => leaveForm()}
+                />
+              )}
 
-                              <Media greaterThan="xs">
-                                <Button
-                                  width={300}
-                                  data-testid="save-button"
-                                  type="submit"
-                                  size="large"
-                                  variant="primaryBlack"
-                                  loading={
-                                    isSubmitting ||
-                                    values.newPhotos.filter(
-                                      photo => photo.loading
-                                    ).length > 0
-                                  }
-                                  disabled={!isValid || !dirty}
-                                >
-                                  {isEditing
-                                    ? "Save Changes"
-                                    : "Upload Artwork"}
-                                </Button>
-                              </Media>
-                            </Flex>
-                          </HorizontalPadding>
-                        </AppContainer>
-                        <Separator />
-                      </FullBleed>
-                    )
-                  }}
-                </Sticky>
-              </StickyProvider>
+              {shouldShowDeletionModal && (
+                <ConfirmationModalDelete
+                  onClose={() => setShouldShowDeletionModal(false)}
+                  handleDelete={handleDelete}
+                />
+              )}
+
+              <Sticky withoutHeaderOffset>
+                {({ stuck }) => {
+                  return (
+                    <FullBleed
+                      backgroundColor="white100"
+                      style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                    >
+                      <AppContainer>
+                        <HorizontalPadding>
+                          <Flex
+                            flexDirection="row"
+                            justifyContent="space-between"
+                            py={2}
+                          >
+                            <BackLink
+                              // @ts-ignore
+                              as={RouterLink}
+                              onClick={() => {
+                                dirty
+                                  ? setShowLeaveWithoutSavingModal(true)
+                                  : leaveForm()
+                              }}
+                              width="min-content"
+                            >
+                              Back
+                            </BackLink>
+
+                            <Media greaterThan="xs">
+                              <Button
+                                width={300}
+                                data-testid="save-button"
+                                type="submit"
+                                size="large"
+                                variant="primaryBlack"
+                                loading={
+                                  isSubmitting ||
+                                  values.newPhotos.filter(
+                                    photo => photo.loading
+                                  ).length > 0
+                                }
+                                disabled={!isValid || !dirty}
+                              >
+                                {isEditing ? "Save Changes" : "Upload Artwork"}
+                              </Button>
+                            </Media>
+                          </Flex>
+                        </HorizontalPadding>
+                      </AppContainer>
+                      <Separator />
+                    </FullBleed>
+                  )
+                }}
+              </Sticky>
 
               {!onlyPhotos && (
-                <>
-                  <Text mb={1} mt={4} variant="lg-display">
-                    {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
-                  </Text>
-                </>
+                <Text mb={1} mt={4} variant="lg-display">
+                  {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
+                </Text>
               )}
 
               <Spacer mb={4} />
@@ -361,9 +358,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                       Delete Artwork
                     </Clickable>
                   </Flex>
+
                   <Spacer mt={6} />
                 </>
               )}
+
               <Media at="xs">
                 <Flex>
                   <Box

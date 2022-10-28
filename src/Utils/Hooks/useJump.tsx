@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC, useCallback, useEffect } from "react"
 import { themeProps } from "@artsy/palette-tokens"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { getOffsetTopForSticky, useSticky } from "Components/Sticky"
@@ -22,28 +22,31 @@ export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
 
   const { stickies } = useSticky()
 
-  const jumpTo = (
-    id: string,
-    options: { behavior?: ScrollBehavior; offset?: number } = {}
-  ) => {
-    const el = document.querySelector(`#${NAMESPACE}--${id}`)
+  const jumpTo = useCallback(
+    (
+      id: string,
+      options: { behavior?: ScrollBehavior; offset?: number } = {}
+    ) => {
+      const el = document.querySelector(`#${NAMESPACE}--${id}`)
 
-    if (!el) {
-      console.warn(`No element found for jumpTo: "${id}"`)
-      return null
-    }
+      if (!el) {
+        console.warn(`No element found for jumpTo: "${id}"`)
+        return null
+      }
 
-    const offsetTop = getOffsetTopForSticky({ id, stickies }) ?? 0
+      const offsetTop = getOffsetTopForSticky({ id, stickies }) ?? 0
 
-    const { top } = el.getBoundingClientRect()
+      const { top } = el.getBoundingClientRect()
 
-    const position =
-      top +
-      window.scrollY -
-      ((isMobile ? mobile : desktop) + offsetTop + (options.offset ?? offset))
+      const position =
+        top +
+        window.scrollY -
+        ((isMobile ? mobile : desktop) + offsetTop + (options.offset ?? offset))
 
-    window.scrollTo({ top: position, behavior: options.behavior ?? behavior })
-  }
+      window.scrollTo({ top: position, behavior: options.behavior ?? behavior })
+    },
+    [behavior, desktop, isMobile, mobile, offset, stickies]
+  )
 
   return { jumpTo }
 }

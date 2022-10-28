@@ -26,7 +26,7 @@ import { SavedSearchAlertHeader } from "./Components/SavedSearchAlertHeader"
 import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
 import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
-import { Sticky, StickyProvider } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 import { useTracking } from "react-tracking"
@@ -163,7 +163,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   )
 
   return (
-    <StickyProvider>
+    <>
       <MetaTags title="Your Alerts | Artsy" pathname="/settings/alerts" />
 
       <SavedSearchAlertHeader selected={sort} onSortSelect={handleSortSelect} />
@@ -226,7 +226,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           </>
         )}
       </Box>
-    </StickyProvider>
+    </>
   )
 }
 

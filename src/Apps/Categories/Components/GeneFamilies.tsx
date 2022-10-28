@@ -1,4 +1,4 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
 import { GeneFamilyFragmentContainer } from "./GeneFamily"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,21 +9,22 @@ interface GeneFamiliesProps {
   geneFamiliesConnection: GeneFamilies_geneFamiliesConnection$data
 }
 
-const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
-  const { geneFamiliesConnection } = props
+const GeneFamilies: React.FC<GeneFamiliesProps> = ({
+  geneFamiliesConnection,
+}) => {
   const geneFamilies = extractNodes(geneFamiliesConnection)
 
   return (
-    <Box>
+    <Join separator={<Spacer mt={6} />}>
       {geneFamilies.map(geneFamily => {
         return (
-          <Box key={geneFamily.internalID}>
-            <GeneFamilyFragmentContainer geneFamily={geneFamily} />
-            <Spacer mt={6} />
-          </Box>
+          <GeneFamilyFragmentContainer
+            key={geneFamily.internalID}
+            geneFamily={geneFamily}
+          />
         )
       })}
-    </Box>
+    </Join>
   )
 }
 

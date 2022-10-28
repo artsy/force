@@ -7,7 +7,7 @@ import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 import { SettingsSavesArtworksQuery } from "__generated__/SettingsSavesArtworksQuery.graphql"
 import { SettingsSavesArtworks_me$data } from "__generated__/SettingsSavesArtworks_me.graphql"
 
@@ -22,11 +22,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 }) => {
   const [loading, setLoading] = useState(false)
 
-  const { scrollTo } = useScrollToElement({
-    selectorOrRef: "#jump--SettingsSavedArtworks",
-    behavior: "smooth",
-    offset: 20,
-  })
+  const { jumpTo } = useJump({ offset: 20 })
 
   const connection = me.followsAndSaves?.artworksConnection
 
@@ -41,8 +37,9 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
   const pageCursors = connection.pageCursors!
 
   const handleClick = (cursor: string, page: number) => {
+    jumpTo("SettingsSavedArtworks")
+
     setLoading(true)
-    scrollTo()
 
     relay.refetch({ page }, null, error => {
       if (error) console.error(error)
@@ -62,9 +59,8 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
       </Text>
 
       {artworks.length > 0 ? (
-        <>
+        <Jump id="SettingsSavedArtworks">
           <Masonry
-            id="jump--SettingsSavedArtworks"
             columnCount={[2, 3, 4]}
             style={{ opacity: loading ? 0.5 : 1 }}
           >
@@ -85,7 +81,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
             onClick={handleClick}
             onNext={handleNext}
           />
-        </>
+        </Jump>
       ) : (
         <Text variant={["md", "lg"]} color="black60">
           Nothing yet.

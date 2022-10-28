@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SettingsSavesArtworksRefetchContainer } from "../SettingsSavesArtworks"
+import { SettingsSavesArtworksRefetchContainer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesArtworks"
 
 jest.unmock("react-relay")
 
@@ -9,8 +9,9 @@ jest.mock("Components/Pagination", () => ({
   PaginationFragmentContainer: () => "PaginationFragmentContainer",
 }))
 
-jest.mock("Utils/Hooks/useScrollTo", () => ({
-  useScrollToElement: () => ({ scrollTo: jest.fn() }),
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: jest.fn() }),
+  Jump: ({ children }) => children,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
