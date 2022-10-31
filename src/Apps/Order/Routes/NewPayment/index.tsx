@@ -67,12 +67,12 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
   const onContinue = async () => {
     try {
       setIsGettingCreditCardId(true)
-      const result = await CreditCardPicker?.current?.getCreditCardId()!
+      const result = await CreditCardPicker?.current?.getCreditCardId()
       setIsGettingCreditCardId(false)
 
-      if (result.type === "invalid_form") return
+      if (result?.type === "invalid_form") return
 
-      if (result.type === "error") {
+      if (result?.type === "error") {
         dialog.showErrorDialog({
           title: result.error,
           message:
@@ -81,7 +81,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
         return
       }
 
-      if (result.type === "internal_error") {
+      if (result?.type === "internal_error") {
         dialog.showErrorDialog({
           title: "An internal error occurred",
         })
@@ -92,23 +92,23 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
       const orderOrError = (
         await fixFailedPayment({
           input: {
-            creditCardId: result.creditCardId,
+            creditCardId: result?.creditCardId!,
             offerId: order.lastOffer?.internalID,
             orderId: order.internalID,
           },
         })
-      ).commerceFixFailedPayment?.orderOrError!
+      ).commerceFixFailedPayment?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         handleFixFailedPaymentError(orderOrError.error.code)
         return
       }
 
-      if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
+      if (orderOrError?.actionData && orderOrError?.actionData.clientSecret) {
         const scaResult = await stripe.handleCardAction(
           orderOrError.actionData.clientSecret
         )
-        if (scaResult.error) {
+        if (scaResult?.error) {
           dialog.showErrorDialog({
             title: "An error occurred",
             message: scaResult.error.message,
