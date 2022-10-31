@@ -39,13 +39,19 @@ const InsightsCareerHighlightRail: React.FC<InsightsCareerHighlightRailProps> = 
         {[
           ...careerHighlights.map(({ kind, count }, i) => (
             <InsightsCareerHighlightCard
-              key={i}
+              key={`CareerHighlightCard-${kind}`}
               count={count}
               kind={kind}
-              onClick={showCareerHighlightsStoriesModal}
+              onClick={() => showCareerHighlightsStoriesModal(i)}
             />
           )),
-          <InsightsCareerHighlightPromoCard />,
+          <InsightsCareerHighlightPromoCard
+            key="CareerHighlightCard-PROMO"
+            onClick={() =>
+              // sets the index to the last item in the array
+              showCareerHighlightsStoriesModal(careerHighlights.length)
+            }
+          />,
         ]}
       </Shelf>
 

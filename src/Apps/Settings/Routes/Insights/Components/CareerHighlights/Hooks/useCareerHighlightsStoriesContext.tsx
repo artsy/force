@@ -25,16 +25,19 @@ const CareerHighlightsStoriesContext = createContext<ContextType>({
 interface CareerHighlightsStoriesProviderProps {
   onClose(): void
   careerHighlights: CareerHighlightKindWithPromo[]
+  pageIndex?: number
 }
 
 export const CareerHighlightsStoriesProvider: React.FC<CareerHighlightsStoriesProviderProps> = ({
   children,
   onClose,
   careerHighlights,
+  pageIndex,
 }) => {
   const { back, current, index, next, total } = useCareerHighlightConfig({
     availableCareerHighlights: careerHighlights,
     onClose,
+    pageIndex,
   })
 
   return (

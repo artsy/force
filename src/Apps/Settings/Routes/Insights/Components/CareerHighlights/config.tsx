@@ -6,14 +6,16 @@ export type CareerHighlightKindWithPromo = CareerHighlightKind | "PROMO"
 interface Params {
   availableCareerHighlights: CareerHighlightKindWithPromo[]
   onClose(): void
+  pageIndex?: number
 }
 
 export const useCareerHighlightConfig = ({
   availableCareerHighlights,
   onClose,
+  pageIndex,
 }: Params) => {
   const flow = useRef(availableCareerHighlights)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(pageIndex ?? 0)
   const [current, setCurrent] = useState(flow.current[currentIndex])
 
   const atStart = () => {
