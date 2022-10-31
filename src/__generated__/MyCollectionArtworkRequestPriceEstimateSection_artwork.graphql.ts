@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f44935c575cd051b45580b5d784d4e0>>
+ * @generated SignedSource<<c1f0444793733026950d4529dfbb869d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkRequestPriceEstimateSection_artwork$data = {
+  readonly hasPriceEstimateRequest: boolean | null;
   readonly internalID: string;
   readonly " $fragmentType": "MyCollectionArtworkRequestPriceEstimateSection_artwork";
 };
@@ -31,12 +32,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasPriceEstimateRequest",
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "9ef4d69968e461eae380537be1f02b7b";
+(node as any).hash = "b182aff737e56e79c274c927795fc714";
 
 export default node;
