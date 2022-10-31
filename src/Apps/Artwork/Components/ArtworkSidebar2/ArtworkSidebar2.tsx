@@ -56,6 +56,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
   } = artwork
   const startAt = sale?.startAt
   const endAt = saleArtwork?.endAt
+  const lotLabel = saleArtwork?.lotLabel
   const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
   const biddingEndAt = extendedBiddingEndAt ?? endAt
 
@@ -79,11 +80,12 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
     isSold
 
-  const lotLabel = artwork.isBiddable ? artwork.saleArtwork?.lotLabel : null
+  const isNotClosedSale = sale && !sale.isClosed
+  const shoudlDisplayLotLabel = isInAuction && isNotClosedSale && lotLabel
 
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
-      {lotLabel && (
+      {shoudlDisplayLotLabel && (
         <Text variant="sm" color="black100" mb={0.5}>
           Lot {lotLabel}
         </Text>
@@ -189,6 +191,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         ...ArtworkSidebarAuctionInfoPolling_artwork
         sale {
           startAt
+          isClosed
         }
         saleArtwork {
           lotID
