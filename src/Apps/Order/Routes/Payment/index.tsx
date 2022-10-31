@@ -136,7 +136,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // fired when an error is encountered during selecting bank account, polling balance, or setting payment
   const handlePaymentError = (error: Error | StripeError) => {
     const errorContent = {
-      ...error,
+      ...error[0],
       orderId: props.order.internalID!,
       selectedPaymentMethod,
       bankAccountHasInsufficientFunds,
