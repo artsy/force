@@ -35,7 +35,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   } = partnerArtist
 
   return (
-    <GridColumns gridRowGap={[2, 4]} my={4}>
+    <GridColumns gridRowGap={[2, 4]}>
       <Column span={6}>
         <GridColumns gridRowGap={2}>
           <Column span={12}>
@@ -59,22 +59,27 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
       </Column>
 
       <Column span={6}>
-        <Join separator={<Spacer mt={2} />}>
-          {biographyBlurb?.text && (
-            <HTML variant="sm">
-              <ReadMore maxChars={320} content={biographyBlurb.text} />
-            </HTML>
-          )}
+        {biographyBlurb && (
+          <Join separator={<Spacer mt={2} />}>
+            {biographyBlurb.text && (
+              <HTML variant="sm">
+                <ReadMore maxChars={320} content={biographyBlurb.text} />
+              </HTML>
+            )}
 
-          {biographyBlurb?.credit && (
-            <HTML color="black60" variant="sm">
-              <ReadMore maxChars={320} content={`— ${biographyBlurb.credit}`} />
-            </HTML>
-          )}
-        </Join>
+            {biographyBlurb.credit && (
+              <HTML color="black60" variant="sm">
+                <ReadMore
+                  maxChars={320}
+                  content={`— ${biographyBlurb.credit}`}
+                />
+              </HTML>
+            )}
+          </Join>
+        )}
       </Column>
 
-      <Column span={12} maxWidth="100%">
+      <Column span={12}>
         <PartnerArtistArtworksRailPaginationContainer
           partnerId={partnerId}
           artistId={partnerArtist.node.slug}

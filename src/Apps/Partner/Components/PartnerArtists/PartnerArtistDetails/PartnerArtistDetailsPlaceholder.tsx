@@ -1,15 +1,15 @@
 import {
-  Box,
+  Button,
   Column,
   GridColumns,
-  SkeletonBox,
+  Shelf,
   SkeletonText,
 } from "@artsy/palette"
-import { Carousel } from "Components/Carousel"
+import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
 
 export const PartnerArtistDetailsPlaceholder: React.FC = () => {
   return (
-    <GridColumns gridRowGap={[2, 4]} my={4}>
+    <GridColumns gridRowGap={[2, 4]}>
       <Column span={6}>
         <GridColumns gridRowGap={2}>
           <Column span={12}>
@@ -19,13 +19,15 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
           </Column>
 
           <Column span={[12, 6]}>
-            <SkeletonBox width="100%" height={40} />
+            <Button variant="secondaryBlack" width="100%" disabled>
+              —
+            </Button>
           </Column>
         </GridColumns>
       </Column>
 
       <Column span={6}>
-        <SkeletonText>
+        <SkeletonText variant="sm">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
           lacinia varius neque ac rhoncus. Phasellus cursus finibus aliquam. Nam
           congue eget erat faucibus scelerisque. Nulla elementum aliquet
@@ -35,27 +37,13 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
         </SkeletonText>
       </Column>
 
-      <Column span={12} maxWidth="100%">
-        <Carousel arrowHeight={160}>
+      <Column span={12}>
+        <Shelf>
           {[...new Array(10)].map((_, i) => {
-            return <PartnerArtistArtworkCarouselItemPlaceholder key={i} />
+            return <ShelfArtworkPlaceholder key={i} index={i} />
           })}
-        </Carousel>
+        </Shelf>
       </Column>
     </GridColumns>
   )
 }
-
-export const PartnerArtistArtworkCarouselItemPlaceholder: React.FC = () => (
-  <Box>
-    <SkeletonBox width={220} height={160} mb={1} />
-
-    <SkeletonText variant="sm-display">Artist name</SkeletonText>
-
-    <SkeletonText variant="sm">Artwork name</SkeletonText>
-
-    <SkeletonText variant="sm">Partner name</SkeletonText>
-
-    <SkeletonText variant="sm">Contact for price</SkeletonText>
-  </Box>
-)
