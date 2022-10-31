@@ -1,5 +1,4 @@
 import { Button, Flex, Separator, Text, WinningBidIcon } from "@artsy/palette"
-import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
@@ -12,14 +11,10 @@ interface MyCollectionArtworkRequestPriceEstimateSectionProps {
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollectionArtworkRequestPriceEstimateSectionProps> = ({
   artwork,
 }) => {
-  const [isPriceEstimteRequested, setIsPriceEstimteRequested] = useState<
-    boolean
-  >(false)
-
   return (
     <>
       <Separator my={2} />
-      {isPriceEstimteRequested ? (
+      {artwork.hasPriceEstimateRequest ? (
         <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
           <WinningBidIcon />
           <Text variant="sm" ml={0.5}>
@@ -39,7 +34,6 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
             to={`/my-collection/artwork/${artwork.internalID}/price-estimate`}
             textDecoration="none"
             display="block"
-            onClick={() => setIsPriceEstimteRequested(true)}
           >
             <Button variant="primaryBlack" width="100%">
               Request a Price Estimate
@@ -60,6 +54,7 @@ export const MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer = c
     artwork: graphql`
       fragment MyCollectionArtworkRequestPriceEstimateSection_artwork on Artwork {
         internalID
+        hasPriceEstimateRequest
       }
     `,
   }
