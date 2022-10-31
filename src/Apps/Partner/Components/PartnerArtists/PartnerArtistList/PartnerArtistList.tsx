@@ -1,95 +1,150 @@
 import * as React from "react"
-import { PartnerArtistList_artists$data } from "__generated__/PartnerArtistList_artists.graphql"
+import { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Column, GridColumns, Text } from "@artsy/palette"
-import { groupArtists } from "Apps/Partner/Components/PartnerArtists/partnerArtistsUtils"
-import { ColumnSpan } from "@artsy/palette/dist/elements/GridColumns/calculateGridColumn"
-import { Media } from "Utils/Responsive"
-import { PartnerArtistItemFragmentContainer as PartnerArtistItem } from "./PartnerArtistItem"
-import { Carousel } from "Components/Carousel"
-import { ScrollIntoViewProps } from "Utils/scrollHelpers"
+import { Box, media, Text, THEME_V3 } from "@artsy/palette"
+import { compact } from "lodash"
+import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
+
+// Values here used to implement column headers in CSS
+const PADDING = 0.5
+const OFFSET =
+  parseInt(THEME_V3.textVariants.sm.lineHeight, 10) + PADDING * 10 * 2
 
 export interface PartnerArtistListProps {
-  artists: PartnerArtistList_artists$data
-  distinguishRepresentedArtists: boolean
-  partnerSlug: string
-  scrollTo: ScrollIntoViewProps
-  displayFullPartnerPage: boolean
-}
-
-export const PartnerArtistListContainer: React.FC = ({ children }) => {
-  return (
-    <>
-      <Media greaterThan="xs">{children}</Media>
-      <Media at="xs">
-        <Carousel>{children as JSX.Element}</Carousel>
-      </Media>
-    </>
-  )
+  partner: PartnerArtistList_partner$data
 }
 
 export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
-  artists,
-  distinguishRepresentedArtists,
-  partnerSlug,
-  scrollTo,
-  displayFullPartnerPage,
+  partner,
 }) => {
-  if (!artists) return null
+  if (
+    !partner.allArtistsConnection?.edges ||
+    (partner.allArtistsConnection.edges.length ?? 0) === 0
+  ) {
+    return null
+  }
 
-  const groups = groupArtists(
-    artists,
-    distinguishRepresentedArtists && displayFullPartnerPage
-  )
+  const edges = compact(partner.allArtistsConnection.edges)
+  const represented = edges.filter(edge => edge.representedBy)
+  const worksAvailableBy = edges.filter(edge => !edge.representedBy)
+
+  const groups: {
+    name: string | null
+    edges: typeof edges
+  }[] = partner.distinguishRepresentedArtists
+    ? [
+        ...(represented.length === 0
+          ? []
+          : [{ name: "Represented Artists", edges: represented }]),
+        ...(worksAvailableBy.length === 0
+          ? []
+          : [{ name: "Works Available by", edges: worksAvailableBy }]),
+      ].sort((a, b) => b.edges.length - a.edges.length)
+    : [{ name: null, edges }]
 
   return (
-    <PartnerArtistListContainer>
-      <GridColumns minWidth={["270vw", "auto"]} pr={[2, 0]} gridColumnGap={1}>
-        {groups.map((group, i) => {
-          return (
-            <Column key={i} span={[(group.columnSize * 2) as ColumnSpan]}>
-              {group.columnName && (
-                <Text variant="sm-display" mb={2}>
-                  {group.columnName}
-                </Text>
-              )}
-              <Box style={{ columnCount: group.columnSize }}>
-                {group.artists.map(({ node, counts }) => {
-                  return (
-                    <PartnerArtistItem
-                      scrollTo={scrollTo}
-                      key={node!.internalID}
-                      artist={node!}
-                      partnerSlug={partnerSlug}
-                      hasPublishedArtworks={counts?.artworks > 0}
-                      displayFullPartnerPage={displayFullPartnerPage}
-                    />
-                  )
-                })}
-              </Box>
-            </Column>
-          )
-        })}
-      </GridColumns>
-    </PartnerArtistListContainer>
+    <Columns
+      variant="sm"
+      pt={partner.distinguishRepresentedArtists ? OFFSET : 0}
+    >
+      {groups.map(({ name, edges }, i) => {
+        return (
+          <React.Fragment key={name ?? i}>
+            {name && (
+              <Text
+                variant="sm"
+                height={OFFSET}
+                overflow="visible"
+                style={{
+                  breakBefore: "column",
+                  whiteSpace: "nowrap",
+                  transform: `translateY(-${OFFSET}px)`,
+                }}
+              >
+                {name}
+              </Text>
+            )}
+
+            {edges.map((edge, i) => {
+              if (!edge.node) return null
+
+              const artist = edge.node
+              const mt = !!name && i === 0 ? -OFFSET : 0
+
+              // No partner artworks for this artist
+              if ((edge.counts?.artworks ?? 0) === 0) {
+                return (
+                  <Box
+                    key={artist.internalID}
+                    color="black60"
+                    py={PADDING}
+                    mt={mt}
+                  >
+                    {artist.name}
+                  </Box>
+                )
+              }
+
+              return (
+                <RouterLink
+                  key={artist.internalID}
+                  to={
+                    partner.displayFullPartnerPage
+                      ? `${partner.href}/artists/${artist.slug}`
+                      : `${artist.href}`
+                  }
+                  display="block"
+                  py={PADDING}
+                  mt={mt}
+                  textDecoration="none"
+                >
+                  {artist.name}
+                </RouterLink>
+              )
+            })}
+          </React.Fragment>
+        )
+      })}
+    </Columns>
   )
 }
 
 export const PartnerArtistListFragmentContainer = createFragmentContainer(
   PartnerArtistList,
   {
-    artists: graphql`
-      fragment PartnerArtistList_artists on ArtistPartnerEdge
-        @relay(plural: true) {
-        representedBy
-        counts {
-          artworks
-        }
-        node {
-          internalID
-          ...PartnerArtistItem_artist
+    partner: graphql`
+      fragment PartnerArtistList_partner on Partner {
+        href
+        distinguishRepresentedArtists
+        displayFullPartnerPage
+        allArtistsConnection(
+          displayOnPartnerProfile: true
+          hasNotRepresentedArtistWithPublishedArtworks: true
+        ) {
+          edges {
+            representedBy
+            counts {
+              artworks
+            }
+            node {
+              internalID
+              slug
+              name
+              href
+              counts {
+                artworks
+              }
+            }
+          }
         }
       }
     `,
   }
 )
+
+export const Columns = styled(Text)`
+  column-count: 6;
+  ${media.md`column-count: 4;`}
+  ${media.xs`column-count: 2;`}
+`

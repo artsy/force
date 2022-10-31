@@ -1,11 +1,11 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtistsRailFragmentContainer } from "../../Overview/ArtistsRail"
+import { ArtistsRailFragmentContainer } from "Apps/Partner/Components/Overview/ArtistsRail"
 import {
   PartnerArtistsCarouselRenderer,
-  PartnerArtistsRenderer,
-} from "../../PartnerArtists"
-import { ViewAllButton } from "../../Overview/ViewAllButton"
+  PartnerArtistsQueryRenderer,
+} from "Apps/Partner/Components/PartnerArtists"
+import { ViewAllButton } from "Apps/Partner/Components/Overview/ViewAllButton"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -44,7 +44,7 @@ describe("ArtistsRail", () => {
       }),
     })
 
-    expect(wrapper.find(PartnerArtistsRenderer)).toHaveLength(1)
+    expect(wrapper.find(PartnerArtistsQueryRenderer)).toHaveLength(1)
     expect(wrapper.find(ViewAllButton)).toHaveLength(0)
   })
 
@@ -102,7 +102,7 @@ describe("ArtistsRail", () => {
         }),
       })
 
-      expect(wrapper.find(PartnerArtistsRenderer)).toHaveLength(1)
+      expect(wrapper.find(PartnerArtistsQueryRenderer)).toHaveLength(1)
     })
 
     it("doesn't render if no artists", () => {

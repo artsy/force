@@ -1,5 +1,4 @@
 export * from "./PartnerArtistList"
-export * from "./partnerArtistsUtils"
 export * from "./PartnerArtistDetails"
 export * from "./PartnerArtistsCarousel"
 export * from "./PartnerArtistDetailsList"
