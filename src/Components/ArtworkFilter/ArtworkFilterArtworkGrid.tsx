@@ -87,7 +87,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           pageCursors={pageCursors}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}
-          scrollTo="#jump--artworkFilter"
+          scrollTo="#JUMP--artworkFilter"
           offset={offset}
         />
       </LoadingArea>

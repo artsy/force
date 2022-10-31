@@ -9,9 +9,9 @@ import { useAnalyticsContext } from "System/Analytics"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
-import { appendCurrencySymbol } from "../Utils/currencyUtils"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -115,10 +115,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
   const minPrice = priceOptions[2]?.value!
 
-  const { scrollTo } = useScrollToElement({
-    selectorOrRef: "#scrollTo--price-option-custom",
-    behavior: "smooth",
-  })
+  const { jumpTo } = useJump()
 
   return (
     <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
@@ -142,7 +139,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         ))
         .concat(
           <BorderedRadio
-            id="scrollTo--price-option-custom"
             value="price-option-custom"
             label="Different amount"
             error={showError}
@@ -150,28 +146,29 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
               customValue && onChange(customValue)
               !toggle && setToggle(true)
             }}
-            key="price-option-custom"
           >
             {toggle && (
-              <Flex flexDirection="column" mt={2}>
-                <OfferInput
-                  id="OfferForm_offerValue"
-                  showError={showError}
-                  onChange={setCustomValue}
-                  onFocus={() => {
-                    onFocus()
-                    scrollTo()
-                  }}
-                  noTitle
-                />
-                {(!customValue || customValue < minPrice) && (
-                  <MinPriceWarning
-                    isPriceRange={!!artwork?.isPriceRange}
-                    minPrice={asCurrency(minPrice) as string}
-                    orderID={order.internalID}
+              <Jump key="price-option-custom" id="price-option-custom">
+                <Flex flexDirection="column" mt={2}>
+                  <OfferInput
+                    id="OfferForm_offerValue"
+                    showError={showError}
+                    onChange={setCustomValue}
+                    onFocus={() => {
+                      onFocus()
+                      jumpTo("price-option-custom")
+                    }}
+                    noTitle
                   />
-                )}
-              </Flex>
+                  {(!customValue || customValue < minPrice) && (
+                    <MinPriceWarning
+                      isPriceRange={!!artwork?.isPriceRange}
+                      minPrice={asCurrency(minPrice) as string}
+                      orderID={order.internalID}
+                    />
+                  )}
+                </Flex>
+              </Jump>
             )}
           </BorderedRadio>
         )}

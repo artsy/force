@@ -44,7 +44,8 @@ import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -216,7 +217,7 @@ export const BaseArtworkFilter: React.FC<
 
   return (
     <Box {...rest}>
-      <Box id="jump--artworkFilter" />
+      <Jump id="artworkFilter" />
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">

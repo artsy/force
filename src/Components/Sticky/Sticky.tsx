@@ -2,7 +2,7 @@ import { Box, themeProps } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSticky } from "./StickyProvider"
 
 /**
@@ -28,35 +28,40 @@ import { useSticky } from "./StickyProvider"
  */
 export const Sticky: React.FC<
   Pick<ReactStickyProps, "bottomBoundary"> & {
+    // TODO: Remove this prop!
     withoutHeaderOffset?: boolean
   }
 > = ({ children, bottomBoundary, withoutHeaderOffset }) => {
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()
+
   const { desktop, mobile } = useNavBarHeight()
+
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+
   const [stuck, setStuck] = useState(false)
+
   const containerRef = useRef<HTMLDivElement | null>(null)
+
   const headerOffset = withoutHeaderOffset ? 0 : isMobile ? mobile : desktop
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
+
     return deregisterSticky
   }, [registerSticky, deregisterSticky])
 
   return (
-    <Box>
-      <ReactSticky
-        top={headerOffset + offsetTop}
-        bottomBoundary={bottomBoundary}
-        onStateChange={state => {
-          setStuck(state.status === ReactSticky.STATUS_FIXED)
-        }}
-        innerZ={1}
-      >
-        <Box ref={containerRef as any}>
-          {typeof children === "function" ? children({ stuck }) : children}
-        </Box>
-      </ReactSticky>
-    </Box>
+    <ReactSticky
+      top={headerOffset + offsetTop}
+      bottomBoundary={bottomBoundary}
+      onStateChange={state => {
+        setStuck(state.status === ReactSticky.STATUS_FIXED)
+      }}
+      innerZ={1}
+    >
+      <Box ref={containerRef as any}>
+        {typeof children === "function" ? children({ stuck }) : children}
+      </Box>
+    </ReactSticky>
   )
 }

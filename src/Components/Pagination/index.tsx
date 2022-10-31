@@ -17,6 +17,7 @@ export interface PaginationProps {
     | Pagination_pageCursors$data
     | CommercePagination_pageCursors$data
     | undefined
+  // FIXME: Replace with `useJump` implementation
   scrollTo?: string
   offset?: number
   getHref?: BasePaginationProps["getHref"]

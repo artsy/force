@@ -28,7 +28,6 @@ import {
   NavBarItemLink,
   NavBarItemUnfocusableAnchor,
 } from "./NavBarItem"
-import { scrollIntoView } from "Utils/scrollHelpers"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
@@ -38,19 +37,12 @@ import { Z } from "Apps/Components/constants"
 import { useTranslation } from "react-i18next"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
+import { useJump } from "Utils/Hooks/useJump"
 
 /**
- * Old Force pages have the navbar height hardcoded in several places. If
- * you're modifying the navbar you may need to update these files:
- *
- * src/desktop/apps/articles/stylesheets/articles.styl
- * src/desktop/components/stylus_lib/index.styl
- *
- * Additional context:
- * https://github.com/artsy/force/pull/6991
- *
  * NOTE: Fresnel doesn't work correctly here because this is included
  * on older CoffeeScript pages. Hence the `display={["none", "flex"]}` usage
+ * (FIXME: Can use Fresnel now)
  */
 
 export const NavBar: React.FC = track(
@@ -63,9 +55,13 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const { mediator, user, isEigen } = useSystemContext()
+
+  // FIXME: Doesn't follow rules of hooks
   if (isEigen) {
     return null
   }
+
+  const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
@@ -442,11 +438,7 @@ export const NavBar: React.FC = track(
                   px={0}
                   pl={1}
                   onClick={() => {
-                    scrollIntoView({
-                      selector: "#download-app-banner",
-                      behavior: "smooth",
-                      offset: 100,
-                    })
+                    jumpTo("download-app-banner")
                   }}
                 >
                   {t`navbar.downloadApp`}

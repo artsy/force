@@ -22,7 +22,7 @@ import { useRouter } from "System/Router/useRouter"
 import { userIsAdmin } from "Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
-import { Sticky, StickyProvider } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import styled from "styled-components"
@@ -67,7 +67,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   const artworkCount = fair.counts?.artworks ?? 0
 
   return (
-    <StickyProvider>
+    <>
       <FairMetaFragmentContainer fair={fair} />
 
       <FairHeaderImageFragmentContainer fair={fair} />
@@ -135,7 +135,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       </Sticky>
 
       {children}
-    </StickyProvider>
+    </>
   )
 }
 

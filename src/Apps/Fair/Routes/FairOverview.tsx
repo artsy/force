@@ -13,7 +13,7 @@ import { FairOverview_fair$data } from "__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "Apps/Fair/Components/FairOverview/FairAbout"
 import { FairBoothsQueryRenderer as FairBooths } from "Apps/Fair/Components/FairBooths"
 import { useRouter } from "System/Router/useRouter"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair$data
@@ -22,25 +22,21 @@ interface FairOverviewProps extends BoxProps {
 const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
-  const { focused_booths: focusedBooths } = match.location.query
-  const { scrollTo: scrollToBooths } = useScrollToElement({
-    behavior: "smooth",
-    selectorOrRef: "#jump--BoothsSection",
-    offset: 160, // Sticky top header
-  })
+  const { jumpTo } = useJump()
 
-  /**
-   * scrollTo without requestAnimationFrame doesn't scroll to container
-   * when it is used in useEffect hook
-   */
+  const { focused_booths: focusedBooths } = match.location.query
+
   useEffect(() => {
-    if (focusedBooths) {
-      requestAnimationFrame(() => {
-        scrollToBooths()
-      })
+    if (!focusedBooths) return
+
+    const timeout = setTimeout(() => {
+      jumpTo("BoothsSection")
+    }, 0)
+
+    return () => {
+      clearTimeout(timeout)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusedBooths])
+  }, [focusedBooths, jumpTo])
 
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
@@ -76,12 +72,13 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
 
-      <Box id="jump--BoothsSection">
+      <Jump id="BoothsSection">
         <Text variant="lg-display" mb={4}>
           Booths
         </Text>
+
         <FairBooths slug={fair.slug} />
-      </Box>
+      </Jump>
     </Box>
   )
 }

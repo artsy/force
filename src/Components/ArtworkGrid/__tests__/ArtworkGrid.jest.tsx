@@ -1,23 +1,24 @@
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { MockBoot } from "DevTools"
 import { graphql } from "react-relay"
-import GridItem, { ArtworkGridItem } from "../../Artwork/GridItem"
+import GridItem, { ArtworkGridItem } from "Components/Artwork/GridItem"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"
 import ArtworkGrid, {
   ArtworkGridContainer,
   ArtworkGridContainerState,
   createSectionedArtworks,
-} from "../ArtworkGrid"
+} from "Components/ArtworkGrid/ArtworkGrid"
 import {
   ArtworkGridEmptyState,
   ResetFilterLink,
-} from "../ArtworkGridEmptyState"
+} from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 global.clearInterval = jest.fn()
 jest.mock("Components/Sticky", () => ({
   Sticky: ({ children }) => children({ stuck: false }),
+  StickyProvider: ({ children }) => children,
 }))
 
 describe("ArtworkGrid", () => {

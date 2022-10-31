@@ -1,17 +1,18 @@
-import { Flex, Pill, Spacer } from "@artsy/palette"
+import { Flex, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistInsightPills_artist$data } from "__generated__/ArtistInsightPills_artist.graphql"
-import { useScrollTo } from "Utils/Hooks/useScrollTo"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface ArtistInsightPillsProps {
   artist: ArtistInsightPills_artist$data
 }
 
 export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
-  const { scrollTo } = useScrollTo({ behavior: "smooth" })
+  const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
+
   const handleClick = () => {
-    scrollTo("#jump--artistCareerHighlights")
+    jumpTo("ArtistCareerHighlights")
   }
 
   if (artist.insightPills.length === 0) {
@@ -19,24 +20,21 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   }
 
   return (
-    <>
-      <Flex flexDirection="row" flexWrap="wrap" mb={-1}>
-        {artist.insightPills.map(insight => {
-          return (
-            <Pill
-              variant="badge"
-              mr={1}
-              mb={1}
-              key={insight.kind!}
-              onClick={handleClick}
-            >
-              {insight.label}
-            </Pill>
-          )
-        })}
-      </Flex>
-      <Spacer mb={4} />
-    </>
+    <Flex flexDirection="row" flexWrap="wrap" mb={-1}>
+      {artist.insightPills.map(insight => {
+        return (
+          <Pill
+            variant="badge"
+            mr={1}
+            mb={1}
+            key={insight.kind!}
+            onClick={handleClick}
+          >
+            {insight.label}
+          </Pill>
+        )
+      })}
+    </Flex>
   )
 }
 

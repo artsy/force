@@ -12,6 +12,7 @@ import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistIns
 import { RouterLink } from "System/Router/RouterLink"
 import { getENV } from "Utils/getENV"
 import { useTranslation } from "react-i18next"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
@@ -54,19 +55,21 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
         </>
       )}
 
-      <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
-        {displayInsightAchievements && (
-          <Column span={6}>
-            <ArtistInsightAchievementsFragmentContainer artist={artist} />
-          </Column>
-        )}
+      <Jump id="ArtistCareerHighlights">
+        <GridColumns gridRowGap={4}>
+          {displayInsightAchievements && (
+            <Column span={6}>
+              <ArtistInsightAchievementsFragmentContainer artist={artist} />
+            </Column>
+          )}
 
-        {displayInsightBadges && (
-          <Column span={6}>
-            <ArtistInsightBadgesFragmentContainer artist={artist} />
-          </Column>
-        )}
-      </GridColumns>
+          {displayInsightBadges && (
+            <Column span={6}>
+              <ArtistInsightBadgesFragmentContainer artist={artist} />
+            </Column>
+          )}
+        </GridColumns>
+      </Jump>
     </>
   )
 }

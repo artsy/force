@@ -7,7 +7,7 @@ import {
   Sup,
   Message,
 } from "@artsy/palette"
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ShowsHeaderFragmentContainer } from "Apps/Shows/Components/ShowsHeader"
@@ -19,7 +19,7 @@ import { DateTime } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { FragmentRefs } from "relay-runtime"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 interface ShowsCityProps {
   viewer: ShowsCity_viewer$data
@@ -32,6 +32,8 @@ type Shows = {
   startAt: string | null
   " $fragmentRefs": FragmentRefs<"ShowsFeaturedShow_show">
 }[]
+
+const CURRENT_SHOWS_JUMP_ID = "CurrentShows"
 
 export const ShowsCity: React.FC<ShowsCityProps> = ({
   viewer,
@@ -60,14 +62,10 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
 
   const [loading, setLoading] = useState(false)
 
-  const currentShowsRef = useRef<HTMLDivElement | null>(null)
-  const { scrollTo } = useScrollToElement({
-    selectorOrRef: currentShowsRef,
-    offset: 20,
-  })
+  const { jumpTo } = useJump({ offset: 20 })
 
   const handleClick = (cursor: string, page: number) => {
-    scrollTo()
+    jumpTo(CURRENT_SHOWS_JUMP_ID)
 
     setLoading(true)
 
@@ -93,7 +91,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
 
     if (!(hasNextPage && endCursor)) return
 
-    scrollTo()
+    jumpTo(CURRENT_SHOWS_JUMP_ID)
 
     handleClick(endCursor, page)
   }
@@ -137,7 +135,9 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
           </>
         )}
 
-        <Text as="h2" variant="xl" ref={currentShowsRef as any}>
+        <Jump id={CURRENT_SHOWS_JUMP_ID} />
+
+        <Text as="h2" variant="xl">
           {city.slug === "online"
             ? "Current Shows"
             : `Current Shows in ${city.name}`}
