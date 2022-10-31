@@ -5,5 +5,3 @@ export default {
   fillwidthDimensions,
   Events,
 }
-
-export * from "./ScrollIntoView"

@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Box, Text, themeProps } from "@artsy/palette"
+import { Box, Join, Separator, Spacer, Text, themeProps } from "@artsy/palette"
 import { Match } from "found"
 import {
   PartnerArtistDetailsListRenderer,
@@ -7,13 +7,10 @@ import {
   PartnerArtistsFragmentContainer,
 } from "Apps/Partner/Components/PartnerArtists"
 import { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
-import { PARTNER_NAV_BAR_HEIGHT } from "Apps/Partner/Components/NavigationTabs"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "Utils/Responsive"
 import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
-import { scrollIntoView } from "Utils/scrollHelpers"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 export interface ArtistsRouteProps {
   partner: ArtistsRoute_partner$data
@@ -24,57 +21,40 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner,
   match,
 }) => {
-  const { mobile, desktop } = useNavBarHeight()
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+
   const { isLoaded } = usePartnerArtistsLoadingContext()
+
+  const { jumpTo } = useJump()
 
   useEffect(() => {
     if (match.params.artistId && isLoaded && isMobile !== null) {
-      scrollIntoArtistDetails()
+      jumpTo("PartnerArtistDetails")
     }
-  }, [isLoaded, isMobile])
-
-  const scrollIntoArtistDetails = () => {
-    const offset = PARTNER_NAV_BAR_HEIGHT + (isMobile ? mobile : desktop) + 20
-
-    scrollIntoView({
-      offset: offset,
-      selector: "#jump--PartnerArtistDetails",
-    })
-  }
+  }, [isLoaded, isMobile, jumpTo, match.params.artistId])
 
   return (
     <Box mt={4}>
-      <Text variant="lg-display" mb={6}>
-        Artists
-      </Text>
-      <Media greaterThan="xs">
-        <PartnerArtistsFragmentContainer
-          scrollTo={{
-            selector: "#jump--PartnerArtistDetails",
-            offset: PARTNER_NAV_BAR_HEIGHT + desktop + 20,
-          }}
-          partner={partner}
-        />
-      </Media>
-      <Media at="xs">
-        <PartnerArtistsFragmentContainer
-          scrollTo={{
-            selector: "#jump--PartnerArtistDetails",
-            offset: PARTNER_NAV_BAR_HEIGHT + mobile + 20,
-          }}
-          partner={partner}
-        />
-      </Media>
+      <Join separator={<Spacer mt={6} />}>
+        <Text variant="lg-display">Artists</Text>
 
-      {match.params.artistId ? (
-        <PartnerArtistDetailsRenderer
-          partnerId={match.params.partnerId}
-          artistId={match.params.artistId}
-        />
-      ) : (
-        <PartnerArtistDetailsListRenderer partnerId={match.params.partnerId} />
-      )}
+        <PartnerArtistsFragmentContainer partner={partner} />
+
+        <Jump id="PartnerArtistDetails">
+          <Separator />
+        </Jump>
+
+        {match.params.artistId ? (
+          <PartnerArtistDetailsRenderer
+            partnerId={match.params.partnerId}
+            artistId={match.params.artistId}
+          />
+        ) : (
+          <PartnerArtistDetailsListRenderer
+            partnerId={match.params.partnerId}
+          />
+        )}
+      </Join>
     </Box>
   )
 }
