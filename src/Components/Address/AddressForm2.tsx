@@ -12,6 +12,7 @@ import {
 import {
   SavedAddressType,
   convertShippingAddressToMutationInput,
+  FormikAddressType,
 } from "Apps/Order/Utils/shippingUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
@@ -27,7 +28,6 @@ import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefault
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { AddressModalAction } from "Apps/Order/Components/AddressModal"
-import { AddressType } from "Components/Address/AddressFormFields"
 
 export interface ModalDetails {
   addressModalTitle: string
@@ -41,15 +41,21 @@ export interface Address {
   addressLine2: string
   city: string
   region: string
-  phone: {
-    international: string
-    isValid: boolean
-    originalNumber: string
-    national: string
-  }
+  phoneNumber: string
 }
 
-export interface Props {
+export const emptyAddress: Address = {
+  name: "",
+  country: "",
+  postalCode: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  region: "",
+  phoneNumber: "",
+}
+
+export interface AddressFormProps {
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (
@@ -72,7 +78,7 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 export const GENERIC_FAIL_MESSAGE =
   "Sorry there has been an issue saving your address. Please try again."
 
-export const AddressForm: React.FC<Props> = ({
+export const AddressForm: React.FC<AddressFormProps> = ({
   closeModal,
   address,
   onSuccess,
@@ -85,7 +91,6 @@ export const AddressForm: React.FC<Props> = ({
     modalDetails?.addressModalAction === "createUserAddress"
 
   const validator = (values: any) => {
-    console.log("values", values)
     const validationResult = validateAddress(values)
     const errors = Object.assign({}, validationResult.errors)
     const errorsTrimmed = removeEmptyKeys(errors)
@@ -105,7 +110,10 @@ export const AddressForm: React.FC<Props> = ({
       validateOnMount
       initialValues={createMutation ? { country: "US" } : { ...address }}
       validate={validator}
-      onSubmit={(values: AddressType, actions: FormikHelpers<AddressType>) => {
+      onSubmit={(
+        values: FormikAddressType,
+        actions: FormikHelpers<FormikAddressType>
+      ) => {
         const handleError = message => {
           const userMessage: Record<string, string> | null =
             SERVER_ERROR_MAP[message]

@@ -60,6 +60,7 @@ import {
   getShippingQuotes,
   getShippingOption,
   ShippingQuotesType,
+  FormikAddressType,
 } from "Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
@@ -116,6 +117,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const [address, setAddress] = useState<Address>(
     startingAddress(props.me, props.order)
   )
+
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
     defaultShippingAddressIndex(props.me, props.order)
   )
@@ -220,7 +222,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (shippingOption === "SHIP") {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(address)
+        const { errors, hasErrors } = validateAddress(
+          address as FormikAddressType
+        )
 
         if (hasErrors) {
           setAddressErrors(errors!)

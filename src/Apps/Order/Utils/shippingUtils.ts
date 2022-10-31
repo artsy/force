@@ -1,4 +1,4 @@
-import { Address, emptyAddress } from "Components/AddressForm"
+import { Address, emptyAddress } from "Components/Address/AddressForm2"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { pick, omit, compact } from "lodash"
@@ -11,7 +11,15 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
-import { AddressType } from "Components/Address/AddressFormFields"
+
+export type FormikAddressType = SavedAddressType & {
+  phone: {
+    isValid: boolean
+    national?: string
+    international?: string
+    regionCode?: string
+  }
+}
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -119,7 +127,7 @@ type MutationAddressResponse = NonNullable<
 
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (
-  address: SavedAddressType | MutationAddressResponse
+  address: FormikAddressType | MutationAddressResponse
 ): Address => {
   return Object.assign(
     {},
@@ -129,7 +137,7 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  address: AddressType
+  address: FormikAddressType
 ): UserAddressAttributes => {
   return omit(
     {

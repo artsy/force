@@ -1,21 +1,12 @@
 import * as React from "react"
 import { Box, Column, Flex, GridColumns, Input, Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import { FormikAddressType } from "Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
 import { PhoneNumberInput } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/PhoneNumberInput"
 import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { useSystemContext } from "System"
 import { createFragmentContainer, graphql } from "react-relay"
-
-export type AddressType = Omit<SavedAddressType, "phoneNumber"> & {
-  phone: {
-    international: string
-    isValid: boolean
-    originalNumber: string
-    national: string
-  }
-}
 
 export const AddressFormFields: React.FC = () => {
   const {
@@ -25,9 +16,7 @@ export const AddressFormFields: React.FC = () => {
     handleChange,
     errors,
     setFieldValue,
-  } = useFormikContext<AddressType>()
-
-  console.log("errors", errors)
+  } = useFormikContext<FormikAddressType>()
 
   const { relayEnvironment } = useSystemContext()
 

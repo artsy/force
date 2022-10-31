@@ -1,7 +1,7 @@
-import { Address } from "Components/Address/AddressForm2"
+import { FormikAddressType } from "Apps/Order/Utils/shippingUtils"
 import { isEmpty } from "lodash"
 
-export const validatePresence = (value: string): string | null => {
+export const validatePresence = (value: string | null) => {
   if (value == undefined || isEmpty(value.trim())) {
     return "This field is required"
   }
@@ -15,7 +15,7 @@ const isValidPhoneNumber = phone => {
   return null
 }
 
-export const validateAddress = (address: Address) => {
+export const validateAddress = (address: FormikAddressType) => {
   const {
     name,
     addressLine1,
