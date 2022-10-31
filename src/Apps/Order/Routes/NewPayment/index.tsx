@@ -74,7 +74,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
 
       if (result?.type === "error") {
         dialog.showErrorDialog({
-          title: result.error,
+          title: result?.error,
           message:
             "Please enter another payment method or contact your bank for more information.",
         })
@@ -85,7 +85,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
         dialog.showErrorDialog({
           title: "An internal error occurred",
         })
-        logger.error(result.error)
+        logger.error(result?.error)
         return
       }
 
@@ -97,18 +97,18 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
             orderId: order.internalID,
           },
         })
-      ).commerceFixFailedPayment?.orderOrError
+      ).commerceFixFailedPayment?.orderOrError!
 
-      if (orderOrError?.error) {
+      if (orderOrError.error) {
         handleFixFailedPaymentError(orderOrError.error.code)
         return
       }
 
-      if (orderOrError?.actionData && orderOrError?.actionData.clientSecret) {
+      if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
         const scaResult = await stripe.handleCardAction(
           orderOrError.actionData.clientSecret
         )
-        if (scaResult?.error) {
+        if (scaResult.error) {
           dialog.showErrorDialog({
             title: "An error occurred",
             message: scaResult.error.message,
