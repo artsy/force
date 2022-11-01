@@ -2,19 +2,16 @@ import * as React from "react"
 import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRail_partner$data } from "__generated__/ArtworksRail_partner.graphql"
-import { useSystemContext } from "System"
 import { ArtworksRailRendererQuery } from "__generated__/ArtworksRailRendererQuery.graphql"
-import FillwidthItem from "Components/Artwork/FillwidthItem"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner$data
 }
-
-export const ARTWORK_CAROUSEL_ITEM_HEIGHT = 300
 
 const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
   if (
@@ -40,17 +37,12 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
         <ViewAllButton to={`/partner/${slug}/works`} />
       </Flex>
 
-      <Shelf alignItems="flex-start">
+      <Shelf>
         {artworks.map(artwork => {
           return (
-            <FillwidthItem
-              // @ts-ignore TODO: Add relevant contextModule
-              contextModule={null}
-              key={artwork.id}
+            <ShelfArtworkFragmentContainer
+              key={artwork.internalID}
               artwork={artwork}
-              imageHeight={ARTWORK_CAROUSEL_ITEM_HEIGHT}
-              hidePartnerName
-              lazyLoad
             />
           )
         })}
@@ -70,8 +62,8 @@ const ArtworksRailFragmentContainer = createFragmentContainer(ArtworksRail, {
       ) {
         edges {
           node {
-            id
-            ...FillwidthItem_artwork
+            ...ShelfArtwork_artwork
+            internalID
           }
         }
       }
@@ -84,12 +76,9 @@ export const ArtworksRailRenderer: React.FC<
     partnerId: string
   } & Omit<ArtworksRailProps, "partner">
 > = ({ partnerId, ...rest }) => {
-  const { relayEnvironment } = useSystemContext()
-
   return (
     <SystemQueryRenderer<ArtworksRailRendererQuery>
       lazyLoad
-      environment={relayEnvironment}
       query={graphql`
         query ArtworksRailRendererQuery($partnerId: String!) {
           partner(id: $partnerId) @principalField {
