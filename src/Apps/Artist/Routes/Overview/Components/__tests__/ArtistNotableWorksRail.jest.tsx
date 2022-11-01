@@ -6,6 +6,9 @@ import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: jest.fn() }),
+}))
 
 describe("ArtistNotableWorksRail", () => {
   const { getWrapper } = setupTestWrapper<ArtistNotableWorksRail_Test_Query>({

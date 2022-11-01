@@ -10,10 +10,10 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistNotableWorksRail_artist$data } from "__generated__/ArtistNotableWorksRail_artist.graphql"
 import { ArtistNotableWorksRailQuery } from "__generated__/ArtistNotableWorksRailQuery.graphql"
-import { scrollToTop } from "Apps/Artist/Routes/Overview/Utils/scrollToTop"
 import { Rail } from "Components/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Skeleton } from "@artsy/palette"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface ArtistNotableWorksRailProps {
   artist: ArtistNotableWorksRail_artist$data
@@ -29,6 +29,8 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
 
+  const { jumpTo } = useJump({ offset: 20 })
+
   const nodes = extractNodes(artist.filterArtworksConnection)
 
   if (nodes.length === 0) {
@@ -41,7 +43,7 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
       viewAllLabel="View All Works"
       viewAllHref={`/artist/${artist.slug}/works-for-sale`}
       viewAllOnClick={() => {
-        scrollToTop()
+        jumpTo("artistContentArea")
 
         tracking.trackEvent(
           clickedEntityGroup({
