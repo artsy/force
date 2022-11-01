@@ -1,6 +1,4 @@
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
   Clickable,
   CloseIcon,
   DROP_SHADOW,
@@ -8,6 +6,8 @@ import {
   ModalBase,
   ModalBaseProps,
   ProgressDots,
+  ShelfNext,
+  ShelfPrevious,
   splitBoxProps,
   useDidMount,
 } from "@artsy/palette"
@@ -78,17 +78,13 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
         </Flex>
 
         <Flex flex={1} overflowY="auto">
-          <Clickable justifySelf="center" onClick={back} aria-label="Back">
-            <ArrowLeftIcon fill="black100" display="block" />
-          </Clickable>
+          <ShelfPrevious display="flex" alignSelf="center" onClick={back} />
 
           <Flex flex={1} mt={4}>
             {children}
           </Flex>
 
-          <Clickable alignSelf="center" onClick={next} aria-label="Next">
-            <ArrowRightIcon fill="black100" display="block" />
-          </Clickable>
+          <ShelfNext display="flex" alignSelf="center" onClick={next} />
         </Flex>
       </Flex>
     </ModalBase>
