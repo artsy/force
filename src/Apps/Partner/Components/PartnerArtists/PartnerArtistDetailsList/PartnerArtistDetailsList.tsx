@@ -1,7 +1,6 @@
-import { Box, Join, Separator } from "@artsy/palette"
+import { Box, Join, Spacer } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import * as React from "react"
-import { useSystemContext } from "System"
 import {
   createPaginationContainer,
   graphql,
@@ -64,11 +63,9 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
   return (
     <Box ref={containerRef as any}>
-      <Join separator={<Separator />}>
+      <Join separator={<Spacer mt={4} />}>
         {partner.artists?.edges?.map(edge => {
-          if (!edge) {
-            return null
-          }
+          if (!edge) return null
 
           return (
             <PartnerArtistDetailsFragmentContainer
@@ -82,7 +79,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
       {isLoading && (
         <>
-          <Separator />
+          <Spacer mt={4} />
 
           <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
         </>
@@ -148,12 +145,10 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
 export const PartnerArtistDetailsListRenderer: React.FC<{
   partnerId: string
 }> = ({ partnerId, ...rest }) => {
-  const { relayEnvironment } = useSystemContext()
-
   return (
     <SystemQueryRenderer<PartnerArtistDetailsListQuery>
       lazyLoad
-      environment={relayEnvironment}
+      // debugPlaceholder
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
           partner(id: $partnerId) @principalField {
