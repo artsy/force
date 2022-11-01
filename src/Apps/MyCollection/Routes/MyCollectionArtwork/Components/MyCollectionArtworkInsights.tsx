@@ -42,11 +42,13 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         />
       )}
       <Media lessThan="sm">
-        {!!enableMyCollectionPhase6RequestPreiceEstimate && !!isP1Artist && (
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-          />
-        )}
+        {!!enableMyCollectionPhase6RequestPreiceEstimate &&
+          !!isP1Artist &&
+          !artwork.submissionId && (
+            <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+              artwork={artwork}
+            />
+          )}
       </Media>
       {!!enableMyCollectionPhase4ArtistMarket && (
         <MyCollectionArtworkArtistMarketFragmentContainer
@@ -74,6 +76,7 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
       fragment MyCollectionArtworkInsights_artwork on Artwork {
         ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkRequestPriceEstimateSection_artwork
+        submissionId
         artist {
           ...MyCollectionArtworkAuctionResults_artist
           targetSupply {

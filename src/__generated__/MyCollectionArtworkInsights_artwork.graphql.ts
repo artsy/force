@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ce89aeeda993a0496a5ebe0723798fe>>
+ * @generated SignedSource<<a1c1a6f64c824e20a90c50d57df68998>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type MyCollectionArtworkInsights_artwork$data = {
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
   } | null;
+  readonly submissionId: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };
@@ -43,6 +44,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkRequestPriceEstimateSection_artwork"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "submissionId",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -104,6 +112,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b992ca717607c977972d709f3632d9c3";
+(node as any).hash = "88f963583f5fbbff5f4d2bb2c9169ee2";
 
 export default node;

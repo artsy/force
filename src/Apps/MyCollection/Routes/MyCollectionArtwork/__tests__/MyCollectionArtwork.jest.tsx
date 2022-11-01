@@ -111,7 +111,7 @@ describe("MyCollectionArtwork", () => {
     describe("with P1 artist", () => {
       it("the section is rendered", () => {
         const { renderWithRelay } = getWrapper("lg")
-        renderWithRelay(mockResolversWithInsights)
+        renderWithRelay(mockResolversWithInsightsWithoutSubmission)
 
         expect(
           screen
@@ -121,6 +121,17 @@ describe("MyCollectionArtwork", () => {
           "href",
           `/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
         )
+      })
+
+      describe("when artist was already submitted", () => {
+        it("the section is not rendered", () => {
+          const { renderWithRelay } = getWrapper("lg")
+          renderWithRelay(mockResolversWithInsights)
+
+          expect(
+            screen.queryByText("Request a Price Estimate")
+          ).not.toBeInTheDocument()
+        })
       })
     })
 
@@ -143,8 +154,24 @@ const mockResolversWithInsights = {
     title: "Morons",
     date: "2007",
     artistNames: "Banksy",
-    hasMarketPriceInsights: true,
     submissionId: "submission-id",
+    hasMarketPriceInsights: true,
+    artist: {
+      targetSupply: {
+        isP1: true,
+      },
+    },
+  }),
+}
+
+const mockResolversWithInsightsWithoutSubmission = {
+  Artwork: () => ({
+    internalID: "63035a6b41808b000c7e2933",
+    title: "Morons",
+    date: "2007",
+    artistNames: "Banksy",
+    hasMarketPriceInsights: true,
+    submissionId: null,
     artist: {
       targetSupply: {
         isP1: true,
