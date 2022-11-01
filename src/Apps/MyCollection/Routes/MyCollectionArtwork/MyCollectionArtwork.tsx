@@ -129,31 +129,29 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <Column span={4}>
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-            {isP1Artist && (
-              <Media greaterThanOrEqual="sm">
-                {isMyCollectionPhase6Enabled && !submissionId && (
-                  <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-                    artwork={artwork}
-                  />
-                )}
 
-                {isMyCollectionPhase5Enabled &&
-                  (submissionId ? (
-                    <>
-                      <Separator my={2} />
-                      <MyCollectionArtworkSWASectionSubmitted />
-                      <Separator my={2} />
-                    </>
-                  ) : (
-                    <MyCollectionArtworkSWASectionDesktopLayout
-                      route={`/my-collection/submission/artwork-details/${id}`}
-                      learnMore={() => setShowHowItWorksModal(true)}
-                      slug={slug}
-                      artworkId={artwork.internalID}
-                    />
-                  ))}
-              </Media>
+            {isMyCollectionPhase6Enabled && (
+              <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+                artwork={artwork}
+              />
             )}
+
+            {isP1Artist &&
+              isMyCollectionPhase5Enabled &&
+              (submissionId ? (
+                <>
+                  <Separator my={2} />
+                  <MyCollectionArtworkSWASectionSubmitted />
+                  <Separator my={2} />
+                </>
+              ) : (
+                <MyCollectionArtworkSWASectionDesktopLayout
+                  route={`/my-collection/submission/artwork-details/${id}`}
+                  learnMore={() => setShowHowItWorksModal(true)}
+                  slug={slug}
+                  artworkId={artwork.internalID}
+                />
+              ))}
           </Media>
 
           <Media lessThan="sm">
