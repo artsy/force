@@ -31,6 +31,7 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
           <ShelfArtworkFragmentContainer
             key={artwork.internalID}
             artwork={artwork}
+            lazyLoad
           />
         )
       })}

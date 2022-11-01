@@ -1,20 +1,18 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairFollowedArtists_fair$data } from "__generated__/FairFollowedArtists_fair.graphql"
-import { Carousel } from "Components/Carousel"
-import FillwidthItem from "Components/Artwork/FillwidthItem"
 import {
   ActionType,
   ClickedArtworkGroup,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import { Box, BoxProps, Shelf, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-
-const IMAGE_HEIGHT = 160
+import { extractNodes } from "Utils/extractNodes"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 
 interface FairFollowedArtistsProps extends BoxProps {
   fair: FairFollowedArtists_fair$data
@@ -34,8 +32,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.worksByArtistsYouFollowRail,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_type: contextPageOwnerType!,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.fair,
@@ -52,8 +49,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.worksByArtistsYouFollowRail,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_type: contextPageOwnerType!,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
       destination_page_owner_type: OwnerType.artwork,
@@ -65,12 +61,14 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
     }
   }
 
-  if (!fair.followedArtistArtworks?.edges?.length) return null
+  const artworks = extractNodes(fair.followedArtistArtworks)
+
+  if (artworks.length === 0) return null
 
   return (
     <Box {...rest}>
       <Box display="flex" justifyContent="space-between">
-        <Text variant="lg-display" as="h3" mb={2}>
+        <Text variant="lg-display" as="h3">
           Works by artists you follow
         </Text>
 
@@ -86,16 +84,15 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
         </Text>
       </Box>
 
-      <Carousel arrowHeight={IMAGE_HEIGHT}>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        {fair.followedArtistArtworks.edges.map(({ artwork }, index) => {
+      <Spacer mt={4} />
+
+      <Shelf>
+        {artworks.map((artwork, index) => {
           return (
-            <FillwidthItem
+            <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               contextModule={ContextModule.fairRail}
               artwork={artwork}
-              imageHeight={IMAGE_HEIGHT}
-              hidePartnerName
               lazyLoad
               onClick={() =>
                 tracking.trackEvent(
@@ -109,7 +106,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
             />
           )
         })}
-      </Carousel>
+      </Shelf>
     </Box>
   )
 }
@@ -126,10 +123,10 @@ export const FairFollowedArtistsFragmentContainer = createFragmentContainer(
           first: 20
         ) {
           edges {
-            artwork: node {
+            node {
+              ...ShelfArtwork_artwork
               internalID
               slug
-              ...FillwidthItem_artwork
             }
           }
         }

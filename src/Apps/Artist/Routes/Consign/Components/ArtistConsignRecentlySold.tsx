@@ -61,7 +61,6 @@ export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContaine
             artworksConnection {
               edges {
                 node {
-                  ...FillwidthItem_artwork
                   ...ShelfArtwork_artwork
                   internalID
                   realizedPrice
