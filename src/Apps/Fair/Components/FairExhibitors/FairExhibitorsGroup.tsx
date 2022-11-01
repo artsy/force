@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitorsGroup_exhibitorsGroup$data } from "__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
 import { FairExhibitorsGroup_fair$data } from "__generated__/FairExhibitorsGroup_fair.graphql"
 import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairExhibitorCard"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface FairExhibitorsGroupProps {
   exhibitorsGroup: FairExhibitorsGroup_exhibitorsGroup$data
@@ -21,7 +22,9 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 
         return (
           <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
-            <FairExhibitorCard exhibitor={exhibitor} fair={fair} />
+            <Jump id={exhibitor.partner.internalID}>
+              <FairExhibitorCard exhibitor={exhibitor} fair={fair} />
+            </Jump>
           </Column>
         )
       })}

@@ -5,8 +5,7 @@ import { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.grap
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "Apps/Fair/Components/FairExhibitors"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Router/useRouter"
-import { useExhibitorsTabOffset } from "Apps/Fair/Utils/useExhibitorsTabOffset"
-import { scrollIntoView } from "Utils/scrollHelpers"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair$data
@@ -14,18 +13,22 @@ interface FairExhibitorsProps {
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
   const { match } = useRouter()
+
   const { focused_exhibitor: focusedExhibitorID } = match.location.query
-  const offset = useExhibitorsTabOffset()
+
+  const { jumpTo } = useJump()
 
   useEffect(() => {
-    if (focusedExhibitorID) {
-      scrollIntoView({
-        selector: `#jump--${focusedExhibitorID}`,
-        offset,
-        behavior: "smooth",
-      })
+    if (!focusedExhibitorID) return
+
+    const timeout = setTimeout(() => {
+      jumpTo(focusedExhibitorID)
+    }, 0)
+
+    return () => {
+      clearTimeout(timeout)
     }
-  }, [focusedExhibitorID, offset])
+  }, [focusedExhibitorID, jumpTo])
 
   return (
     <>
@@ -38,16 +41,18 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
         }
 
         return (
-          <Box key={letter} id={getExhibitorSectionId(letter)}>
-            <Text variant="lg-display" my={4}>
-              {letter}
-            </Text>
+          <Jump id={getExhibitorSectionId(letter)}>
+            <Box key={letter}>
+              <Text variant="lg-display" my={4}>
+                {letter}
+              </Text>
 
-            <FairExhibitorsGroup
-              exhibitorsGroup={exhibitorsGroup}
-              fair={fair}
-            />
-          </Box>
+              <FairExhibitorsGroup
+                exhibitorsGroup={exhibitorsGroup}
+                fair={fair}
+              />
+            </Box>
+          </Jump>
         )
       })}
     </>
