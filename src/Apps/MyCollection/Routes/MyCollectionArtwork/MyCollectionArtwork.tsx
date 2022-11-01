@@ -131,14 +131,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isP1Artist && (
               <Media greaterThanOrEqual="sm">
-                {isMyCollectionPhase6Enabled && (
+                {isMyCollectionPhase6Enabled && !submissionId && (
                   <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                     artwork={artwork}
                   />
                 )}
 
                 {isMyCollectionPhase5Enabled &&
-                  (!!submissionId ? (
+                  (submissionId ? (
                     <>
                       <Separator my={2} />
                       <MyCollectionArtworkSWASectionSubmitted />
