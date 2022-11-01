@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f90e4d08b7170a071b74a2d68e0dcf38>>
+ * @generated SignedSource<<5a144a93685ed0824c349dbe5c4b2fc8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type ArtworksRail_partner$data = {
   readonly filterArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly id: string;
-        readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;
   } | null;
@@ -81,16 +81,16 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShelfArtwork_artwork"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "FillwidthItem_artwork"
                 }
               ],
               "storageKey": null
@@ -106,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5efdca573596231f79106b38f3a770fa";
+(node as any).hash = "d1dcef257c4f281a89c578b7d535d64c";
 
 export default node;
