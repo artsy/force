@@ -43,6 +43,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               artwork={artwork}
+              lazyLoad
             />
           )
         })}

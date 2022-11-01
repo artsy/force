@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b24634be63cf09f3db3f3f8fda40a5f>>
+ * @generated SignedSource<<4236ed51d83fba1a9ba6cbee56b6c84a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtists_fair$data = {
   readonly followedArtistArtworks: {
     readonly edges: ReadonlyArray<{
-      readonly artwork: {
+      readonly node: {
         readonly internalID: string;
         readonly slug: string;
-        readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork">;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;
   } | null;
@@ -80,20 +80,20 @@ return {
           "plural": true,
           "selections": [
             {
-              "alias": "artwork",
+              "alias": null,
               "args": null,
               "concreteType": "Artwork",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
-                (v1/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FillwidthItem_artwork"
-                }
+                  "name": "ShelfArtwork_artwork"
+                },
+                (v0/*: any*/),
+                (v1/*: any*/)
               ],
               "storageKey": null
             }
@@ -109,6 +109,6 @@ return {
 };
 })();
 
-(node as any).hash = "7ae10ce6625902d40dcc690d39252781";
+(node as any).hash = "e6f2019d1199cc4b9c488adf91d25f8a";
 
 export default node;
