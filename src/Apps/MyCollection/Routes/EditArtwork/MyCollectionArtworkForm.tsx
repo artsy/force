@@ -222,13 +222,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
-  const leaveForm = () => {
-    router.replace({ pathname: "/settings/my-collection" })
-    router.push({
-      pathname: isEditing
-        ? `/my-collection/artwork/${artwork.internalID}`
-        : "/settings/my-collection",
-    })
+  const goBack = () => {
+    router.go(-1)
   }
 
   return (
@@ -262,7 +257,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                   <ConfirmationModalBack
                     onClose={() => setShowLeaveWithoutSavingModal(false)}
                     isEditing={isEditing}
-                    onLeave={() => leaveForm()}
+                    onLeave={goBack}
                   />
                 )}
                 {shouldShowDeletionModal && (
@@ -291,7 +286,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 onClick={() => {
                                   dirty
                                     ? setShowLeaveWithoutSavingModal(true)
-                                    : leaveForm()
+                                    : goBack()
                                 }}
                                 width="min-content"
                               >
