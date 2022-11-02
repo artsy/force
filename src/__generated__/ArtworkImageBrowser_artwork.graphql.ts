@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a766e5c1f2df0499409d1d644cc9fff2>>
+ * @generated SignedSource<<ce95ff7c096d04256e8e9c8505802d00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,19 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork$data = {
   readonly figures: ReadonlyArray<{
-    readonly internalID?: string | null;
-    readonly isDefault?: boolean | null;
-    readonly type: "Video";
-  }>;
-  readonly images: ReadonlyArray<{
+    readonly __typename: "Image";
     readonly height: number | null;
+    readonly isDefault: boolean | null;
     readonly width: number | null;
-  } | null> | null;
+  } | {
+    readonly __typename: "Video";
+    readonly videoHeight: number;
+    readonly videoWidth: number;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  }>;
   readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserLarge_artwork" | "ArtworkImageBrowserSmall_artwork">;
   readonly " $fragmentType": "ArtworkImageBrowser_artwork";
@@ -29,15 +34,7 @@ export type ArtworkImageBrowser_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -58,30 +55,11 @@ return {
       "kind": "FragmentSpread",
       "name": "ArtworkImageBrowserLarge_artwork"
     },
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "images",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -93,14 +71,34 @@ return {
       "plural": true,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
+        {
           "kind": "InlineFragment",
           "selections": [
-            (v0/*: any*/),
             {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
               "name": "isDefault",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
               "storageKey": null
             }
           ],
@@ -111,10 +109,17 @@ return {
           "kind": "InlineFragment",
           "selections": [
             {
-              "alias": "type",
+              "alias": "videoWidth",
               "args": null,
               "kind": "ScalarField",
-              "name": "__typename",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": "videoHeight",
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
               "storageKey": null
             }
           ],
@@ -128,8 +133,7 @@ return {
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "541f4cb1252318c53c846581e242af3b";
+(node as any).hash = "4e875a2951207bbb5d162ebe8a367427";
 
 export default node;

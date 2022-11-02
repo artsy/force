@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45230a1dccb53c79bfcd87720f7a9f28>>
+ * @generated SignedSource<<40e3585d7017ebf5d63877b3de7004ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkVideoPlayer_artwork$data = {
   readonly figures: ReadonlyArray<{
-    readonly height: number;
-    readonly type: "Video";
+    readonly __typename: "Video";
     readonly url: string;
-    readonly width: number;
+    readonly videoHeight: number;
+    readonly videoWidth: number;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
-    readonly type: "%other";
+    readonly __typename: "%other";
   }>;
   readonly " $fragmentType": "ArtworkVideoPlayer_artwork";
 };
@@ -46,7 +46,7 @@ const node: ReaderFragment = {
           "kind": "InlineFragment",
           "selections": [
             {
-              "alias": "type",
+              "alias": null,
               "args": null,
               "kind": "ScalarField",
               "name": "__typename",
@@ -60,17 +60,17 @@ const node: ReaderFragment = {
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
-            {
-              "alias": null,
+              "alias": "videoWidth",
               "args": null,
               "kind": "ScalarField",
               "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": "videoHeight",
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
               "storageKey": null
             }
           ],
@@ -85,6 +85,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "974a30d74f842d7276a8cb99153735a5";
+(node as any).hash = "269c2e841473f427dbad8334f35dd64a";
 
 export default node;

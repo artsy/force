@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ff8b4d4daeef6a64f72306f2889947c>>
+ * @generated SignedSource<<7347ea87bf783f993d2d4993c6edcd9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserLarge_artwork$data = {
   readonly figures: ReadonlyArray<{
+    readonly __typename: "Image";
     readonly internalID: string | null;
     readonly isZoomable: boolean | null;
-    readonly type: "Image";
     readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
   } | {
-    readonly type: "Video";
+    readonly __typename: "Video";
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
-    readonly type: "%other";
+    readonly __typename: "%other";
   }>;
   readonly isSetVideoAsCover: boolean | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
@@ -34,7 +34,7 @@ export type ArtworkImageBrowserLarge_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": "type",
+  "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
@@ -74,6 +74,11 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "DeepZoom_image"
+            },
             (v0/*: any*/),
             {
               "alias": null,
@@ -88,11 +93,6 @@ return {
               "kind": "ScalarField",
               "name": "isZoomable",
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "DeepZoom_image"
             }
           ],
           "type": "Image",
@@ -115,6 +115,6 @@ return {
 };
 })();
 
-(node as any).hash = "944454e1603b527be041c31ce582c3d8";
+(node as any).hash = "11cc8c62bd737569f6b8a2804f1b49af";
 
 export default node;

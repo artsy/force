@@ -1,8 +1,8 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { compact } from "lodash"
 import { scale } from "proportional-scale"
 import * as React from "react"
+import { useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCursor } from "use-cursor"
 import { Media } from "Utils/Responsive"
@@ -11,7 +11,8 @@ import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActi
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
 
-const MAX_DIMENSION = 800
+// Dimension used to scale both images and videos
+export const MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork$data
@@ -28,23 +29,51 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     max: figures.length,
   })
 
-  const images = compact(artwork.images)
-  const hasGeometry = !!images[0]?.width
-  const maxHeight = Math.max(
-    ...images.map(image => {
-      const scaled = scale({
-        width: image.width!,
-        height: image.height!,
-        maxWidth: MAX_DIMENSION,
-        maxHeight: MAX_DIMENSION,
-      })
+  // Here we pre-emptively scale the figures to figure out which is going
+  // to have the largest height. We use this to set a fixed height on the container
+  // so that the UI doesn't shift around.
+  const maxHeight = useMemo(() => {
+    return Math.max(
+      ...figures.map(figure => {
+        switch (figure.__typename) {
+          case "Image": {
+            if (!figure.width || !figure.height) return MAX_DIMENSION
 
-      return hasGeometry ? scaled.height : MAX_DIMENSION
-    })
-  )
+            return scale({
+              width: figure.width,
+              height: figure.height,
+              maxWidth: MAX_DIMENSION,
+              maxHeight: MAX_DIMENSION,
+            }).height
+          }
+
+          case "Video": {
+            return scale({
+              width: figure.videoWidth,
+              height: figure.videoHeight,
+              maxWidth: MAX_DIMENSION,
+              maxHeight: MAX_DIMENSION,
+            }).height
+          }
+
+          default: {
+            return MAX_DIMENSION
+          }
+        }
+      })
+    )
+  }, [figures])
+
+  const defaultIndex = useMemo(() => {
+    return (
+      figures.findIndex(figure => {
+        if (!("isDefault" in figure)) return false
+        return !!figure.isDefault
+      }) ?? 0
+    )
+  }, [figures])
 
   const handleSelectDefaultSlide = () => {
-    const defaultIndex = figures?.findIndex(image => !!image?.isDefault) ?? 0
     setCursor(defaultIndex)
   }
 
@@ -76,6 +105,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           maxHeight={maxHeight}
         />
       </Media>
+
       {!isMyCollectionArtwork && (
         <>
           <Spacer mt={2} />
@@ -99,18 +129,17 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
         ...ArtworkImageBrowserSmall_artwork
         ...ArtworkImageBrowserLarge_artwork
         internalID
-        images {
-          width
-          height
-        }
         figures {
+          __typename
           ... on Image {
-            internalID
             isDefault
+            width
+            height
           }
-          # FIXME: Figure out why this only works logged-in
           ... on Video {
-            type: __typename
+            # Fields need to be aliased to prevent conflicting types
+            videoWidth: width
+            videoHeight: height
           }
         }
       }
