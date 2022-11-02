@@ -427,6 +427,7 @@ export const NavBar: React.FC = track(
                   href="/collect?additional_gene_ids[0]=nft"
                   onClick={handleClick}
                   data-label="NFTs"
+                  display={["none", "none", "flex"]}
                 >
                   {t`navbar.nfts`}
                 </NavBarItemLink>
