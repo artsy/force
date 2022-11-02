@@ -6,7 +6,6 @@ import {
   ResponsiveBox,
   Image,
   ArtsyLogoBlackIcon,
-  Box,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
@@ -23,25 +22,22 @@ const { src: mSrc, srcSet: mSrcSet } = cropped(
 const { src: dSrc, srcSet: dSrcSet } = cropped(
   "https://files.artsy.net/images/CareerHighlightModalPromoImage.png",
   {
-    height: 1238,
-    width: 798,
+    height: 550,
+    width: 380,
   }
 )
 
 const CareerHighlightModalPromoStepDesktop = () => {
   return (
-    <Flex flex={1} flexDirection="column" flexGrow={1}>
-      <Box mb={2}>
-        <ArtsyLogoBlackIcon />
-      </Box>
+    <Flex flex={1} flexDirection="column">
+      <ArtsyLogoBlackIcon />
 
-      <Flex overflowY="auto">
+      <Flex mt={2}>
         <ResponsiveBox
-          aspectWidth={798}
-          aspectHeight={1238}
+          aspectWidth={380}
+          aspectHeight={550}
           maxWidth="100%"
           bg="black10"
-          mr={1}
         >
           <Image
             lazyLoad
@@ -53,8 +49,8 @@ const CareerHighlightModalPromoStepDesktop = () => {
 
         <Spacer mr={4} />
 
-        <Flex flexDirection="column">
-          <Text variant={"lg-display"}>
+        <Flex minWidth="45%" flexDirection="column">
+          <Text variant="lg-display">
             Discover Career Highlights for Your Artists
           </Text>
 
