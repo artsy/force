@@ -34,8 +34,8 @@ const ArticleSectionImageCollectionImage: FC<ArticleSectionImageCollectionImageP
       {articleZoomGalleryComponent}
 
       <ResponsiveBox
-        aspectWidth={figure.image.width ?? 1}
-        aspectHeight={figure.image.height ?? 1}
+        aspectWidth={figure.image.width || 1}
+        aspectHeight={figure.image.height || 1}
         maxWidth="100%"
         bg="black10"
         position="relative"

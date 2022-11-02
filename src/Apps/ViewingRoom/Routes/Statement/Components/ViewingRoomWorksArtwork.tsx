@@ -43,8 +43,8 @@ const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({
     >
       {image && (
         <ResponsiveBox
-          aspectWidth={image.width ?? 1}
-          aspectHeight={image.height ?? 1}
+          aspectWidth={image.width || 1}
+          aspectHeight={image.height || 1}
           maxWidth="100%"
         >
           <Image

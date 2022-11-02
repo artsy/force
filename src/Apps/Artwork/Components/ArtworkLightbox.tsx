@@ -66,9 +66,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           bg="black10"
           mx={[0, 2]}
           // @ts-ignore
-          maxWidth={image.width ?? "100%"}
-          aspectWidth={image.width ?? 1}
-          aspectHeight={image.height ?? 1}
+          maxWidth={image.width || "100%"}
+          aspectWidth={image.width || 1}
+          aspectHeight={image.height || 1}
         >
           <ArtworkLightboxPlaceholder
             key={placeholder!}
