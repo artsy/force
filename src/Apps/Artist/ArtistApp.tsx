@@ -10,6 +10,7 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
 import { hasOverviewContent } from "./Routes/Overview/Utils/hasOverviewContent"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
+import { Jump } from "Utils/Hooks/useJump"
 
 /**
  * For logged-out users, the sign-up modal is triggered via a global listener.
@@ -56,7 +57,9 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
     <PageWrapper artist={artist}>
       <ArtistHeaderFragmentContainer artist={artist} />
 
-      <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
+      <Spacer my={[4, 12]} />
+
+      <Jump id="artistContentArea" />
 
       <RouteTabs mb={2} fill data-test="navigationTabs">
         {showOverviewTab && (

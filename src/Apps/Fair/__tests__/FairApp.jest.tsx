@@ -1,13 +1,14 @@
 import { MockBoot } from "DevTools"
-import { FairAppFragmentContainer } from "../FairApp"
+import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
 import { graphql } from "react-relay"
 import { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
-import { scrollIntoView } from "Utils/scrollHelpers"
 import { fireEvent, screen } from "@testing-library/react"
+
+const mockJumpTo = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -18,8 +19,9 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
   useIsRouteActive: () => false,
 }))
-jest.mock("Utils/scrollHelpers", () => ({
-  scrollIntoView: jest.fn(),
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+  Jump: () => null,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
@@ -179,7 +181,7 @@ describe("FairApp", () => {
 
       fireEvent.click(screen.getByText("C"))
 
-      expect(scrollIntoView).toBeCalled()
+      expect(mockJumpTo).toBeCalled()
     })
   })
 })
