@@ -3,37 +3,32 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ExhibitorsLetterNavFragmentContainer } from "Apps/Fair/Components/ExhibitorsLetterNav"
 import { ExhibitorsLetterNav_Test_Query } from "__generated__/ExhibitorsLetterNav_Test_Query.graphql"
-import { Breakpoint } from "Utils/Responsive"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: jest.fn() }),
+  Jump: () => null,
+}))
 
-const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
-  setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
-    Component: ({ fair }) => (
-      <MockBoot breakpoint={breakpoint}>
-        <ExhibitorsLetterNavFragmentContainer fair={fair!} />
-      </MockBoot>
-    ),
-    query: graphql`
-      query ExhibitorsLetterNav_Test_Query @relay_test_operation {
-        fair(id: "one-x-artsy") {
-          ...ExhibitorsLetterNav_fair
-        }
+const { getWrapper } = setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
+  Component: ({ fair }) => (
+    <MockBoot breakpoint="lg">
+      <ExhibitorsLetterNavFragmentContainer fair={fair!} />
+    </MockBoot>
+  ),
+  query: graphql`
+    query ExhibitorsLetterNav_Test_Query @relay_test_operation {
+      fair(id: "one-x-artsy") {
+        ...ExhibitorsLetterNav_fair
       }
-    `,
-  }).getWrapper
+    }
+  `,
+})
 
 describe("ExhibitorsLetterNav", () => {
-  const getWrapper = getWrapperWithBreakpoint()
-
-  it("displays letters nav", () => {
-    const wrapper = getWrapper({})
-    expect(wrapper.find("Letters").length).toBe(1)
-  })
-
   it("displays 27 elements", () => {
     const wrapper = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
@@ -41,55 +36,50 @@ describe("ExhibitorsLetterNav", () => {
     expect(wrapper.find("Letter").length).toBe(27)
   })
 
-  it("displays letters with proper color", () => {
+  it("displays letters either enabled or disabled", () => {
     const wrapper = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
     })
-    const letter = wrapper.find("Letter")
+
+    const letters = wrapper.find("Letter")
+
     for (let i = 0; i < 10; i++) {
-      expect(letter.at(i).prop("color")).toEqual("black10")
+      expect(letters.at(i).prop("isEnabled")).toBe(false)
     }
+
     for (let i = 10; i < 13; i++) {
-      expect(letter.at(i).prop("color")).toEqual("black100")
+      expect(letters.at(i).prop("isEnabled")).toBe(true)
     }
+
     for (let i = 13; i < 26; i++) {
-      expect(letter.at(i).prop("color")).toEqual("black10")
+      expect(letters.at(i).prop("isEnabled")).toBe(false)
     }
-    expect(letter.at(26).prop("color")).toEqual("black100")
+
+    expect(letters.at(26).prop("isEnabled")).toBe(true)
   })
 
   it("displays letters with proper on-hover title", () => {
     const wrapper = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
     })
-    const letter = wrapper.find("Letter")
-    for (let i = 0; i < 10; i++) {
-      expect(letter.at(i).prop("title")).toEqual("")
-    }
-    expect(letter.at(10).prop("title")).toEqual(
+
+    const buttons = wrapper.find("button")
+
+    expect(buttons.at(0).prop("title")).toEqual(
       `View exhibitors starting with “K”`
     )
-    expect(letter.at(11).prop("title")).toEqual(
+
+    expect(buttons.at(1).prop("title")).toEqual(
       `View exhibitors starting with “L”`
     )
-    expect(letter.at(12).prop("title")).toEqual(
+
+    expect(buttons.at(2).prop("title")).toEqual(
       `View exhibitors starting with “M”`
     )
-    for (let i = 13; i < 26; i++) {
-      expect(letter.at(i).prop("title")).toEqual("")
-    }
-    expect(letter.at(26).prop("title")).toEqual(
+
+    expect(buttons.at(3).prop("title")).toEqual(
       `View exhibitors starting with special character or number`
     )
-  })
-
-  describe("mobile", () => {
-    const getWrapper = getWrapperWithBreakpoint("sm")
-
-    it("displays swiper", () => {
-      const wrapper = getWrapper({})
-      expect(wrapper.find("Swiper").length).toBe(1)
-    })
   })
 })
 

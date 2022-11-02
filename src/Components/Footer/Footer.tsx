@@ -19,9 +19,10 @@ import {
   TwitterIcon,
   WeChatIcon,
 } from "@artsy/palette"
-import { useCCPARequest } from "../CCPARequest"
+import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface FooterProps extends BoxProps {}
 
@@ -34,6 +35,8 @@ export const Footer: React.FC<FooterProps> = props => {
       borderColor="black10"
       {...props}
     >
+      <Jump id="download-app-banner" />
+
       <FooterDownloadAppBanner />
 
       <footer>

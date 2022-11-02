@@ -156,7 +156,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               router.replace({
                 ...newLocation,
                 state: {
-                  scrollTo: "#jump--artworkFilter"
+                  scrollTo: "#JUMP--artworkFilter"
                 },
               })
             *

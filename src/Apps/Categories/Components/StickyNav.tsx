@@ -3,45 +3,31 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { extractNodes } from "Utils/extractNodes"
-import { scrollIntoView } from "Utils/scrollHelpers"
 import { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
+import { useJump } from "Utils/Hooks/useJump"
+
 interface StickyNavProps {
   geneFamiliesConnection: StickyNav_geneFamiliesConnection$data
-  navBarHeight: number
 }
 
-const StickyNav: React.FC<StickyNavProps> = props => {
-  const { geneFamiliesConnection, navBarHeight } = props
-
+const StickyNav: React.FC<StickyNavProps> = ({ geneFamiliesConnection }) => {
+  const { jumpTo } = useJump({ offset: 10 })
   const geneFamilies = extractNodes(geneFamiliesConnection)
 
-  const stickyNavHeight = 50
-  const scrollOffset = navBarHeight + stickyNavHeight + 20
-
-  const handleClick = e => {
-    e.preventDefault()
-    const id = e.currentTarget.hash
-
-    scrollIntoView({ selector: id, offset: scrollOffset, behavior: "smooth" })
+  const handleClick = (slug: string) => () => {
+    jumpTo(slug)
   }
 
   return (
+    // TODO: Simplify layout
     <HorizontalOverflow my={-1} py={1}>
-      {/* This AppContainer looks weird considering we wrap StickyNav in an
-      AppConainer in the parent. It's necessary to get the rail to align with
-      the rest of the content on the page on first load, but then go all the
-      way to the edge of the screen as the user swipes/scrolls */}
       <AppContainer display="flex">
         <Spacer pr={[2, 4]} />
+
         {geneFamilies.map((geneFamily, i) => {
           return (
             <Flex key={geneFamily.slug} flexDirection="row">
-              <Pill
-                as="a"
-                onClick={handleClick}
-                // @ts-ignore
-                href={`#jump--${geneFamily.slug}`}
-              >
+              <Pill onClick={handleClick(geneFamily.slug)}>
                 {geneFamily.name}
               </Pill>
 
@@ -49,6 +35,7 @@ const StickyNav: React.FC<StickyNavProps> = props => {
             </Flex>
           )
         })}
+
         <Spacer pr={[2, 4]} />
       </AppContainer>
     </HorizontalOverflow>

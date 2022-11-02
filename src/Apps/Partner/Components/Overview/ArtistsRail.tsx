@@ -4,8 +4,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsRail_partner$data } from "__generated__/ArtistsRail_partner.graphql"
 import {
   PartnerArtistsCarouselRenderer,
-  PartnerArtistsRenderer,
-} from "../PartnerArtists"
+  PartnerArtistsQueryRenderer,
+} from "Apps/Partner/Components/PartnerArtists"
 import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtistsRailProps extends BoxProps {
@@ -62,7 +62,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
       {isCarouselRender ? (
         <PartnerArtistsCarouselRenderer partnerId={slug} />
       ) : (
-        <PartnerArtistsRenderer partnerId={slug} />
+        <PartnerArtistsQueryRenderer partnerId={slug} />
       )}
     </Box>
   )

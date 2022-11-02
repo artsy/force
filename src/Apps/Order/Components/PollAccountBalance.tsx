@@ -105,6 +105,7 @@ export const PollAccountBalanceRefetchContainer = createRefetchContainer(
 interface PollAccountBalanceQueryRendererProps {
   setupIntentId: string
   bankAccountId: string
+  onError: (error: Error) => void
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
     checkResult: BalanceCheckResult
@@ -116,6 +117,7 @@ interface PollAccountBalanceQueryRendererProps {
 export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRendererProps> = ({
   setupIntentId,
   bankAccountId,
+  onError,
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -129,9 +131,13 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
         bankAccountId ? { bankAccountId } : { setupIntentId, bankAccountId: "" }
       }
       query={BALANCE_QUERY}
-      render={({ props }) => {
+      render={({ props, error }) => {
         if (!props?.commerceBankAccountBalance) {
           return <SavingPaymentSpinner />
+        }
+
+        if (error) {
+          onError(error)
         }
 
         return (

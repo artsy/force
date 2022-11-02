@@ -1,21 +1,26 @@
-import { FairFollowedArtists } from "../FairOverview/FairFollowedArtists"
+import { FairFollowedArtists } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { mount } from "enzyme"
 import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("react-tracking")
-jest.mock("Components/Artwork/FillwidthItem", () => ({ onClick }) => (
-  <button onClick={onClick}>FillwidthItem</button>
-))
+jest.mock("Components/Artwork/ShelfArtwork", () => {
+  return {
+    ShelfArtworkFragmentContainer: ({ onClick }) => (
+      <button onClick={onClick}>ShelfArtwork</button>
+    ),
+  }
+})
 
+// TODO: Replace with `setupTestWrapper`
 const FAIR_FOLLOWED_ARTISTS_FIXTURE = {
   internalID: "example-fair-id",
   slug: "example-fair-slug",
   followedArtistArtworks: {
     edges: [
       {
-        artwork: {
+        node: {
           internalID: "example-artwork-internal-id",
           slug: "example-artwork-slug",
         },
@@ -80,7 +85,7 @@ describe("FairFollowedArtists", () => {
 
     const fillwidthItem = wrapper
       .find("button")
-      .findWhere(node => node.text() === "FillwidthItem")
+      .findWhere(node => node.text() === "ShelfArtwork")
       .first()
 
     expect(trackEvent).not.toBeCalled()

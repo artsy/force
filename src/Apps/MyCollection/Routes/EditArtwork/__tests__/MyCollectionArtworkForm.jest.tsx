@@ -95,7 +95,7 @@ describe("Edit artwork", () => {
       getWrapper().renderWithRelay({ Artwork: () => mockArtwork })
 
       expect(screen.getByText("Save Changes")).toBeInTheDocument()
-      expect(screen.getByTestId("save-button")).toBeEnabled()
+      expect(screen.getByTestId("save-button")).toBeDisabled()
 
       expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
@@ -187,10 +187,24 @@ describe("Edit artwork", () => {
   })
 
   describe("With valid values", () => {
-    it("enables save button", () => {
+    it("keeps save button disabled if form is not dirty", () => {
       getWrapper().renderWithRelay({
         Artwork: () => mockArtwork,
       })
+
+      expect(screen.getByTestId("save-button")).toBeDisabled()
+    })
+
+    it("enables save button if form is dirty", () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+      fireEvent.change(
+        screen.getByTestId("my-collection-artwork-details-title"),
+        {
+          target: { value: "Some new value" },
+        }
+      )
       expect(screen.getByTestId("save-button")).toBeEnabled()
     })
   })
@@ -208,10 +222,17 @@ describe("Edit artwork", () => {
   })
 
   describe("Form submit", () => {
-    it("saves the artwork and navigates to artwork detail page", async () => {
+    it("saves the artwork and navigates to artwork detail page if changes have been made", async () => {
       getWrapper().renderWithRelay({
         Artwork: () => mockArtwork,
       })
+
+      fireEvent.change(
+        screen.getByTestId("my-collection-artwork-details-title"),
+        {
+          target: { value: "Some new value" },
+        }
+      )
 
       fireEvent.click(screen.getByText("Save Changes"))
 
@@ -238,7 +259,7 @@ describe("Edit artwork", () => {
               pricePaidCents: 400000,
               pricePaidCurrency: "EUR",
               provenance: "Fooo",
-              title: "Untitled",
+              title: "Some new value",
               width: "11",
             },
           },

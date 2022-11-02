@@ -1,20 +1,13 @@
-import {
-  ResponsiveBox,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Skeleton, SkeletonText, Spacer, Sup, Text } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 import { SettingsSavesArtworksQuery } from "__generated__/SettingsSavesArtworksQuery.graphql"
 import { SettingsSavesArtworks_me$data } from "__generated__/SettingsSavesArtworks_me.graphql"
 
@@ -29,11 +22,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 }) => {
   const [loading, setLoading] = useState(false)
 
-  const { scrollTo } = useScrollToElement({
-    selectorOrRef: "#jump--SettingsSavedArtworks",
-    behavior: "smooth",
-    offset: 20,
-  })
+  const { jumpTo } = useJump({ offset: 20 })
 
   const connection = me.followsAndSaves?.artworksConnection
 
@@ -48,8 +37,9 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
   const pageCursors = connection.pageCursors!
 
   const handleClick = (cursor: string, page: number) => {
+    jumpTo("SettingsSavedArtworks")
+
     setLoading(true)
-    scrollTo()
 
     relay.refetch({ page }, null, error => {
       if (error) console.error(error)
@@ -69,9 +59,8 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
       </Text>
 
       {artworks.length > 0 ? (
-        <>
+        <Jump id="SettingsSavedArtworks">
           <Masonry
-            id="jump--SettingsSavedArtworks"
             columnCount={[2, 3, 4]}
             style={{ opacity: loading ? 0.5 : 1 }}
           >
@@ -92,7 +81,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
             onClick={handleClick}
             onNext={handleNext}
           />
-        </>
+        </Jump>
       ) : (
         <Text variant={["md", "lg"]} color="black60">
           Nothing yet.
@@ -147,30 +136,7 @@ const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
       Saved Artworks
     </SkeletonText>
 
-    <Masonry columnCount={[2, 3, 4]}>
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <div key={i}>
-            <ResponsiveBox
-              aspectWidth={[4, 3, 5, 6][i % 4]}
-              aspectHeight={[3, 4, 5][i % 3]}
-              maxWidth="100%"
-            >
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-
-            <SkeletonText variant="sm-display" mt={1}>
-              Artist Name
-            </SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner Name</SkeletonText>
-            <SkeletonText variant="xs">US$0,000</SkeletonText>
-
-            <Spacer mt={4} />
-          </div>
-        )
-      })}
-    </Masonry>
+    <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={10} />
   </Skeleton>
 )
 

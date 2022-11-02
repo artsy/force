@@ -11,10 +11,10 @@ import { resized } from "Utils/resized"
 export interface ShelfArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
   artwork: ShelfArtwork_artwork$data
+  children?: React.ReactNode
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  showMetadata?: boolean
   onClick?: () => void
   width?: number[]
 }
@@ -25,8 +25,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   hideSaleInfo,
   lazyLoad,
   onClick,
-  showMetadata = true,
   width = [150, 175, 200],
+  children,
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
@@ -35,6 +35,10 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const image = artwork.image?.src
     ? resized(artwork.image.src, { width: width[width.length - 1] })
     : null
+
+  const label =
+    (artwork.title ?? "Artwork") +
+    (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
 
   return (
     <RouterLink
@@ -48,7 +52,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       textDecoration="none"
       data-test="artworkShelfArtwork"
       data-testid="ShelfArtwork"
-      aria-label={artwork.title ?? "Artwork"}
+      aria-label={label}
       width={width}
       {...rest}
     >
@@ -77,17 +81,17 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Box style={{ aspectRatio: "1 / 1" }} maxWidth="100%" bg="black10" />
       )}
 
-      {showMetadata && (
-        <Metadata
-          artwork={artwork}
-          hideSaleInfo={hideSaleInfo}
-          isHovered={isHovered}
-          contextModule={contextModule}
-          showSaveButton
-          disableRouterLinking
-          maxWidth="100%"
-        />
-      )}
+      <Metadata
+        artwork={artwork}
+        hideSaleInfo={hideSaleInfo}
+        isHovered={isHovered}
+        contextModule={contextModule}
+        showSaveButton
+        disableRouterLinking
+        maxWidth="100%"
+      />
+
+      {children}
     </RouterLink>
   )
 }
@@ -101,6 +105,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         ...SaveButton_artwork
         title
         href
+        artistNames
         image {
           src: url(version: ["normalized", "larger", "large"])
           width
@@ -111,7 +116,8 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
   }
 )
 
-interface ShelfArtworkPlaceholderProps {
+interface ShelfArtworkPlaceholderProps
+  extends Pick<ShelfArtworkProps, "hideSaleInfo" | "children"> {
   // Used to cycle through a set of placeholder heights
   index: number
   width?: number[]
@@ -120,6 +126,7 @@ interface ShelfArtworkPlaceholderProps {
 export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = ({
   index,
   width = [150, 175, 200],
+  children,
 }) => {
   return (
     <Box
@@ -131,6 +138,8 @@ export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = (
       <SkeletonBox width="100W%" height={[200, 300, 250, 275][index % 4]} />
 
       <MetadataPlaceholder />
+
+      {children}
     </Box>
   )
 }

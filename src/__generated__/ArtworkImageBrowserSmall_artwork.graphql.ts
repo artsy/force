@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55756c39801640dc3271becbd23ce704>>
+ * @generated SignedSource<<b4d3a61f9207074b7eb26346e2405ddd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtworkImageBrowserSmall_artwork$data = {
     // value in case none of the concrete values match.
     readonly type: "%other";
   }>;
+  readonly isSetVideoAsCover: boolean | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
   readonly " $fragmentType": "ArtworkImageBrowserSmall_artwork";
 };
@@ -54,6 +55,13 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkVideoPlayer_artwork"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSetVideoAsCover",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -107,6 +115,6 @@ return {
 };
 })();
 
-(node as any).hash = "64fbb26e319b2397d63c4b301ab544bf";
+(node as any).hash = "48fc88192197f6a29ae440a7282aa2ee";
 
 export default node;

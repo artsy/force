@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react"
-import { ArtistInsightPillsFragmentContainer } from "../ArtistInsightPills"
+import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights/ArtistInsightPills"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
-jest.mock("Utils/Hooks/useScrollTo", () => ({
-  useScrollTo: () => ({ scrollTo: jest.fn() }),
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: jest.fn() }),
 }))
 jest.unmock("react-relay")
 

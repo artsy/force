@@ -1,5 +1,4 @@
 import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
-import { startCase } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuctionAssociatedSale_sale$data } from "__generated__/AuctionAssociatedSale_sale.graphql"
@@ -45,15 +44,10 @@ const AuctionAssociatedSale: React.FC<AuctionAssociatedSaleProps> = ({
           </ResponsiveBox>
 
           <Text variant="sm" mt={1}>
-            {sale.associatedSale.name}
+            {sale.associatedSale.name}{" "}
           </Text>
-
           <Text variant="sm" color="black60">
-            {startCase(sale.associatedSale.displayTimelyAt!)
-              .replace("By", "by")
-              .replace(" In", " in")
-              .replace(" Am", "am")
-              .replace(" Pm", "pm")}
+            {sale.associatedSale.displayTimelyAt!}
           </Text>
         </RouterLink>
       </Column>

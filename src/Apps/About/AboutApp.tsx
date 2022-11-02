@@ -15,8 +15,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 import { FullBleedHeader } from "Components/FullBleedHeader"
-import { scrollIntoView } from "Utils/scrollHelpers"
 import styled from "styled-components"
+import { useJump } from "Utils/Hooks/useJump"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -108,7 +108,6 @@ interface SectionProps {
   description: string
   caption: string
   href: string
-  onClick?: (event: React.MouseEvent) => void
 }
 
 const Section: React.FC<SectionProps & BoxProps> = ({
@@ -117,18 +116,28 @@ const Section: React.FC<SectionProps & BoxProps> = ({
   description,
   caption,
   href,
-  onClick,
   ...rest
 }) => {
-  const image = resized(imageUrl, {
-    width: 640,
-  })
+  const image = resized(imageUrl, { width: 640 })
+
+  const { jumpTo } = useJump()
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (title !== "Manage your collection") return
+
+    event.preventDefault()
+
+    jumpTo("download-app-banner")
+  }
+
   return (
     <RouterLink
       to={href}
       textDecoration="none"
       display="block"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <Box {...rest}>
         <ResponsiveBox
@@ -222,15 +231,6 @@ const SECTION_DATA: SectionProps[] = [
     caption: "John Baldessari, Marina Abramovic, 2018.",
     href: "#",
     imageUrl: "https://files.artsy.net/images/05_CVP_About_Manage.png",
-    onClick: event => {
-      event.preventDefault()
-
-      scrollIntoView({
-        selector: "#download-app-banner",
-        behavior: "smooth",
-        offset: 100,
-      })
-    },
   },
   {
     title: "Sell from your collection",

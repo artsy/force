@@ -2,7 +2,15 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist$data } from "__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "__generated__/PartnerArtistDetailsQuery.graphql"
-import { Column, GridColumns, ReadMore, Separator, Text } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  HTML,
+  Join,
+  ReadMore,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System"
@@ -27,55 +35,58 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   } = partnerArtist
 
   return (
-    <>
-      <Separator id="jump--PartnerArtistDetails" mt={4} />
+    <GridColumns gridRowGap={[2, 4]}>
+      <Column span={6}>
+        <GridColumns gridRowGap={2}>
+          <Column span={12}>
+            <RouterLink to={href} textDecoration="none">
+              <Text variant="xl">{name}</Text>
+            </RouterLink>
 
-      <GridColumns gridRowGap={[2, 4]} my={4}>
-        <Column span={6}>
-          <GridColumns gridRowGap={2}>
-            <Column span={12}>
-              <RouterLink to={href} textDecoration="none">
-                <Text variant="xl">{name}</Text>
-              </RouterLink>
-
-              <Text color="black60" variant="lg-display">
-                {formattedNationalityAndBirthday}
-              </Text>
-            </Column>
-
-            <Column span={[12, 6]}>
-              <FollowArtistButtonQueryRenderer
-                id={partnerArtist.node.internalID}
-                contextModule={ContextModule.artistHeader}
-                width="100%"
-              />
-            </Column>
-          </GridColumns>
-        </Column>
-
-        <Column span={6}>
-          {biographyBlurb?.text && (
-            <Text>
-              <ReadMore maxChars={320} content={biographyBlurb.text}></ReadMore>
+            <Text color="black60" variant="lg-display">
+              {formattedNationalityAndBirthday}
             </Text>
-          )}
+          </Column>
 
-          {biographyBlurb?.credit && (
-            <Text mt={1} color="black60">
-              <ReadMore maxChars={320} content={`— ${biographyBlurb.credit}`} />
-            </Text>
-          )}
-        </Column>
+          <Column span={[12, 6]}>
+            <FollowArtistButtonQueryRenderer
+              id={partnerArtist.node.internalID}
+              contextModule={ContextModule.artistHeader}
+              width="100%"
+            />
+          </Column>
+        </GridColumns>
+      </Column>
 
-        <Column span={12} maxWidth="100%">
-          <PartnerArtistArtworksRailPaginationContainer
-            partnerId={partnerId}
-            artistId={partnerArtist.node.slug}
-            partnerArtist={partnerArtist}
-          />
-        </Column>
-      </GridColumns>
-    </>
+      <Column span={6}>
+        {biographyBlurb && (
+          <Join separator={<Spacer mt={2} />}>
+            {biographyBlurb.text && (
+              <HTML variant="sm">
+                <ReadMore maxChars={320} content={biographyBlurb.text} />
+              </HTML>
+            )}
+
+            {biographyBlurb.credit && (
+              <HTML color="black60" variant="sm">
+                <ReadMore
+                  maxChars={320}
+                  content={`— ${biographyBlurb.credit}`}
+                />
+              </HTML>
+            )}
+          </Join>
+        )}
+      </Column>
+
+      <Column span={12}>
+        <PartnerArtistArtworksRailPaginationContainer
+          partnerId={partnerId}
+          artistId={partnerArtist.node.slug}
+          partnerArtist={partnerArtist}
+        />
+      </Column>
+    </GridColumns>
   )
 }
 

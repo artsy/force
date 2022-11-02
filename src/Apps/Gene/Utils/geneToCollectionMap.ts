@@ -1,0 +1,17 @@
+export const geneToCollectionMap = {
+  "trending-this-week": "trending-this-week",
+  "black-painters-on-our-radar": "black-painters-on-our-radar",
+  "street-art-now-1": "street-art-highlights",
+  "artists-on-the-rise": "artists-on-the-rise",
+  "contemporary-now": "contemporary-now",
+  "women-artists-now": "women-artists-to-watch",
+  trove: "trove-editors-picks",
+  "our-top-auction-lots": "top-auction-lots",
+  "iconic-prints": "iconic-prints",
+  "the-collectibles-shop": "the-collectibles-shop",
+  "finds-under-50000": "finds-under-50000-dollars",
+  "finds-under-10000": "finds-under-10000-dollars",
+  "finds-under-5000": "finds-under-5000-dollars",
+  "finds-under-2500": "finds-under-2500-dollars",
+  "finds-under-1000": "finds-under-1000-dollars",
+}

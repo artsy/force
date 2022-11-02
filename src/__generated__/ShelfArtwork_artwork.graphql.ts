@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e00bd8bc5b9f363e842334ac8af12fe>>
+ * @generated SignedSource<<da2fdbedc3cfaa80d906c84b515354e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShelfArtwork_artwork$data = {
+  readonly artistNames: string | null;
   readonly href: string | null;
   readonly image: {
     readonly height: number | null;
@@ -54,6 +55,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artistNames",
       "storageKey": null
     },
     {
@@ -103,6 +111,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b21e439bd4b7d6cb70e0113af36b5138";
+(node as any).hash = "b7aefa0e332daa959ac9f52c558be1bb";
 
 export default node;

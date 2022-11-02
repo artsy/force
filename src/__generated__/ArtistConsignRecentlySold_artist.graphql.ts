@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1945fae9feb934de3fb61a3dd3d6e14e>>
+ * @generated SignedSource<<4bf0847c858d1a191d3d88fae9c9facc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtistConsignRecentlySold_artist$data = {
           readonly node: {
             readonly internalID: string;
             readonly realizedPrice: string | null;
-            readonly " $fragmentSpreads": FragmentRefs<"FillwidthItem_artwork" | "ShelfArtwork_artwork">;
+            readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
           } | null;
         } | null> | null;
       } | null;
@@ -88,11 +88,6 @@ const node: ReaderFragment = {
                         {
                           "args": null,
                           "kind": "FragmentSpread",
-                          "name": "FillwidthItem_artwork"
-                        },
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
                           "name": "ShelfArtwork_artwork"
                         },
                         {
@@ -129,6 +124,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bd39241ec1b71ab357e0663a4fbbee3b";
+(node as any).hash = "617c2929cf3e8f1d1a9290f0c1884254";
 
 export default node;

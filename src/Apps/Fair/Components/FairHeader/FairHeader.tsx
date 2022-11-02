@@ -14,6 +14,9 @@ interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair$data
 }
 
+// FIXME:
+// - Fix initial layout shift
+// - Avoid animating height
 const FadingText = styled(Text)<{ show: boolean }>`
   transform-origin: 0 0;
   transform: ${p => `scale(${+p.show})`};

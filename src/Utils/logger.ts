@@ -1,7 +1,8 @@
 import { sendErrorToService } from "Utils/errors"
 
-export const shouldCaptureError = (environment: string = "development") =>
-  environment === "staging" || environment === "production"
+export const shouldCaptureError = (
+  environment: string = "development"
+): boolean => environment === "staging" || environment === "production"
 
 export default function createLogger(namespace = "") {
   const formattedNamespace = namespace ? `${namespace} |` : ""
@@ -15,7 +16,9 @@ export default function createLogger(namespace = "") {
       console.warn(formattedNamespace, ...warnings, "\n")
     },
     error: (...errors) => {
-      const error = errors.find(e => e instanceof Error)
+      const error = errors.find(
+        e => e instanceof Error || e?.shouldLogErrorToSentry
+      )
 
       if (error && shouldCaptureError(process.env.NODE_ENV)) {
         sendErrorToService(error)

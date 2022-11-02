@@ -27,7 +27,7 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
     <>
       <MetaTags title={titleString} />
 
-      <Text variant={["sm-display", "lg"]} textAlign="left">
+      <Text variant={["sm-display", "md"]} textAlign="left">
         Comparable Works
       </Text>
 

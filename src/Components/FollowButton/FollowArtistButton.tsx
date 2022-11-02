@@ -1,4 +1,9 @@
-import { AuthContextModule, Intent, ContextModule } from "@artsy/cohesion"
+import {
+  AuthContextModule,
+  Intent,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
 import { FollowArtistPopoverQueryRenderer } from "Components/FollowArtistPopover"
@@ -30,6 +35,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   const { isLoggedIn, mediator } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
+    ownerType: OwnerType.artist,
     ownerId: artist.internalID,
     ownerSlug: artist.slug,
     contextModule,
@@ -139,6 +145,11 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
               handleClick(event)
               openSuggestions()
             }}
+            aria-label={
+              artist.isFollowed
+                ? `Unfollow ${artist.name}`
+                : `Follow ${artist.name}`
+            }
             {...rest}
           />
         )

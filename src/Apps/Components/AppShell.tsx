@@ -1,4 +1,4 @@
-import { Box, Flex, Theme } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { NavBar } from "Components/NavBar"
@@ -20,6 +20,7 @@ import { Z } from "./constants"
 import { createGlobalStyle } from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
+import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -28,6 +29,8 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
+  useImagePerformanceObserver()
+
   const isMounted = useDidMount()
   const { onboardingComponent } = useOnboardingModal()
 
@@ -83,30 +86,28 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Box>
       )}
 
-      <Theme theme="v3">
-        <AppToasts accomodateNav={showNav} />
+      <AppToasts accomodateNav={showNav} />
 
-        <Flex
-          as="main"
-          id="main"
-          // Occupies available vertical space
-          flex={1}
-        >
-          <AppContainer maxWidth={appContainerMaxWidth}>
-            <HorizontalPadding>{children}</HorizontalPadding>
+      <Flex
+        as="main"
+        id="main"
+        // Occupies available vertical space
+        flex={1}
+      >
+        <AppContainer maxWidth={appContainerMaxWidth}>
+          <HorizontalPadding>{children}</HorizontalPadding>
+        </AppContainer>
+      </Flex>
+
+      {showFooter && (
+        <Flex bg="white100" zIndex={Z.footer}>
+          <AppContainer>
+            <HorizontalPadding>
+              <Footer />
+            </HorizontalPadding>
           </AppContainer>
         </Flex>
-
-        {showFooter && (
-          <Flex bg="white100" zIndex={Z.footer}>
-            <AppContainer>
-              <HorizontalPadding>
-                <Footer />
-              </HorizontalPadding>
-            </AppContainer>
-          </Flex>
-        )}
-      </Theme>
+      )}
 
       {onboardingComponent}
 

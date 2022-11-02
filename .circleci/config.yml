@@ -200,7 +200,7 @@ jobs:
 
   upload-docs:
     docker:
-      - image: "cimg/python:3.10"
+      - image: "cimg/python:3.11"
     steps:
       - aws-s3/sync:
           arguments: --acl public-read
@@ -218,7 +218,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/included:10.10.0
+      - image: cypress/included:10.11.0
         environment:
           TERM: xterm
     working_directory: ~/app

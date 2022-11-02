@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20234083b2fbc291e7cf8fd01b93411e>>
+ * @generated SignedSource<<5d6694bfb001f62b867102bafdde8e4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,12 @@ export type ArtworkSidebar2_artwork$data = {
   } | null> | null;
   readonly isAcquireable: boolean | null;
   readonly isBiddable: boolean | null;
+  readonly isEligibleForArtsyGuarantee: boolean;
   readonly isInAuction: boolean | null;
   readonly isOfferable: boolean | null;
-  readonly isOfferableFromInquiry: boolean | null;
   readonly isSold: boolean | null;
   readonly sale: {
+    readonly isClosed: boolean | null;
     readonly startAt: string | null;
   } | null;
   readonly saleArtwork: {
@@ -98,7 +99,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isOfferableFromInquiry",
+      "name": "isEligibleForArtsyGuarantee",
       "storageKey": null
     },
     {
@@ -175,6 +176,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "startAt",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -241,6 +249,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "eb700f47c7479c9ba3c22dd6f60afc87";
+(node as any).hash = "a897ed4da307d91b4eaea154eaea54ae";
 
 export default node;

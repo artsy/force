@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from "react"
-import { Appearance, loadStripe } from "@stripe/stripe-js"
+import { Appearance, loadStripe, StripeError } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
-import createLogger from "Utils/logger"
 import { Payment_order$data } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "Components/LoadingArea"
@@ -13,7 +12,6 @@ import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
-const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 const BankSetupErrorMessage = () => {
   return (
@@ -33,9 +31,10 @@ const BankSetupErrorMessage = () => {
 
 interface Props {
   order: BankAccountPicker_order$data | Payment_order$data
+  onError: (error: Error | StripeError) => void
 }
 
-export const BankDebitProvider: FC<Props> = ({ order }) => {
+export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
   const {
     selectedPaymentMethod,
     stripeClient,
@@ -72,7 +71,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
         }
       } catch (error) {
         setBankDebitSetupError(true)
-        logger.error(error)
+        onError(error)
       }
     }
 
@@ -149,7 +148,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
         <Spacer mt={2} />
         {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
-            <BankDebitForm order={order} />
+            <BankDebitForm order={order} onError={onError} />
           </Elements>
         )}
         {bankDebitSetupError && <BankSetupErrorMessage />}

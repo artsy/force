@@ -5,7 +5,12 @@ import { FollowButton } from "./Button"
 import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
 import { ButtonProps } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
-import { Intent, AuthContextModule, ContextModule } from "@artsy/cohesion"
+import {
+  Intent,
+  AuthContextModule,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -26,6 +31,7 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
   const { isLoggedIn, mediator } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
+    ownerType: OwnerType.profile,
     ownerId: profile.internalID,
     ownerSlug: profile.slug,
     contextModule,
@@ -84,6 +90,11 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
     <FollowButton
       isFollowed={!!profile.isFollowed}
       handleFollow={handleClick}
+      aria-label={
+        profile.isFollowed
+          ? `Unfollow ${profile.name}`
+          : `Follow ${profile.name}`
+      }
       {...rest}
     />
   )

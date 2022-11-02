@@ -7,8 +7,8 @@ import { ArtistSeriesRailFragmentContainer } from "Components/ArtistSeriesRail/A
 import { ContextModule } from "@artsy/cohesion"
 import { computeTitle } from "Apps/Artist/Utils/computeTitle"
 import { Title } from "react-head"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { useRouter } from "System/Router/useRouter"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
@@ -23,26 +23,20 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     true
   )
   const { match } = useRouter()
-  const { scrollTo, isReadyForUse } = useScrollToElement({
-    selectorOrRef: "#jump--artworkFilter",
-    behavior: "smooth",
-    offset: 10,
-  })
 
-  /**
-   * We should perform scroll only when isReadyForUse is true
-   * Otherwise the wrong offset will be used for mWeb
-   *
-   * scrollTo without requestAnimationFrame doesn't work in Safari
-   * when it is used in useEffect hook
-   */
+  const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
+
   useEffect(() => {
-    if (isReadyForUse && match?.location?.query?.search_criteria_id) {
-      requestAnimationFrame(() => {
-        scrollTo()
-      })
+    if (!match?.location?.query?.search_criteria_id) return
+
+    const timeout = setTimeout(() => {
+      jumpTo("artworkFilter")
+    }, 0)
+
+    return () => {
+      clearTimeout(timeout)
     }
-  }, [isReadyForUse])
+  }, [jumpTo, match.location.query.search_criteria_id])
 
   return (
     <>

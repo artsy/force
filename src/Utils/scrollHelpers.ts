@@ -13,7 +13,7 @@ export interface ScrollIntoViewProps {
 }
 
 /**
- * @deprecated Use the `useScrollTo` hook instead
+ * @deprecated Use the `useJump/Jump` instead
  */
 export const scrollIntoView = (props: ScrollIntoViewProps) => {
   const { selector, offset = 0, ...rest } = props

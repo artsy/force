@@ -38,6 +38,7 @@ export interface Props {
   me: Payment_me$data
   commitMutation: CommitMutation
   onSetPayment: () => void
+  onError: (error: Error) => void
   CreditCardPicker: RefObject<CreditCardPicker>
 }
 
@@ -132,7 +133,11 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
           // @ts-ignore RELAY_UPGRADE 13
-          <BankAccountPickerFragmentContainer me={me} order={order} />
+          <BankAccountPickerFragmentContainer
+            me={me}
+            order={order}
+            onError={props.onError}
+          />
         )}
       </Collapse>
 
@@ -142,7 +147,11 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
         {selectedPaymentMethod === "SEPA_DEBIT" && (
           // @ts-ignore RELAY_UPGRADE 13
-          <BankAccountPickerFragmentContainer me={me} order={order} />
+          <BankAccountPickerFragmentContainer
+            me={me}
+            order={order}
+            onError={props.onError}
+          />
         )}
       </Collapse>
 

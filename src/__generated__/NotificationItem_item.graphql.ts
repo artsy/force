@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e283abf747db086eeb229aef1e76842>>
+ * @generated SignedSource<<af1eb7fca15770071206af8cbb3a10cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,10 +26,10 @@ export type NotificationItem_item$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly createdAt: string | null;
   readonly isUnread: boolean;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
+  readonly publishedAt: string;
   readonly targetHref: string;
   readonly title: string;
   readonly " $fragmentType": "NotificationItem_item";
@@ -63,10 +63,16 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "RELATIVE"
+        }
+      ],
       "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
+      "name": "publishedAt",
+      "storageKey": "publishedAt(format:\"RELATIVE\")"
     },
     {
       "alias": null,
@@ -189,6 +195,6 @@ return {
 };
 })();
 
-(node as any).hash = "ecfa0b0d4f8520c26166fbe59835ae1f";
+(node as any).hash = "0c7fd1b2f003203f3cc4357db75fcccd";
 
 export default node;

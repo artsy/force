@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c0e4f61b03d15c69902ca1e4a37b467>>
+ * @generated SignedSource<<b897ede9b8f2c0eacea9ce934bc702bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -173,7 +173,62 @@ return {
                 "name": "isClosed",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isLiveOpen",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isRegistrationClosed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "requireIdentityVerification",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "liveStartAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "registrationEndsAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Bidder",
+                "kind": "LinkedField",
+                "name": "registrationStatus",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "qualifiedForBidding",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
               (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": "is_closed",
                 "args": null,
@@ -196,6 +251,39 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "isSaved",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "downloadableImageUrl",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artists",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -332,32 +420,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artists",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "date",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "dimensions",
             "kind": "LinkedField",
             "name": "dimensions",
@@ -371,13 +433,6 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "downloadableImageUrl",
             "storageKey": null
           },
           {
@@ -413,7 +468,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f2125650812c713d81ea5c2665ada4c2",
+    "cacheID": "dcc3378026bd5ca7df81473ed5fa2545",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -503,8 +558,22 @@ return {
         "artwork.sale.id": (v6/*: any*/),
         "artwork.sale.isAuction": (v11/*: any*/),
         "artwork.sale.isClosed": (v11/*: any*/),
+        "artwork.sale.isLiveOpen": (v11/*: any*/),
+        "artwork.sale.isRegistrationClosed": (v11/*: any*/),
         "artwork.sale.is_auction": (v11/*: any*/),
         "artwork.sale.is_closed": (v11/*: any*/),
+        "artwork.sale.liveStartAt": (v7/*: any*/),
+        "artwork.sale.registrationEndsAt": (v7/*: any*/),
+        "artwork.sale.registrationStatus": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Bidder"
+        },
+        "artwork.sale.registrationStatus.id": (v6/*: any*/),
+        "artwork.sale.registrationStatus.qualifiedForBidding": (v11/*: any*/),
+        "artwork.sale.requireIdentityVerification": (v11/*: any*/),
+        "artwork.sale.slug": (v6/*: any*/),
         "artwork.slug": (v6/*: any*/),
         "artwork.title": (v7/*: any*/),
         "artwork.widthCm": (v8/*: any*/)
@@ -512,7 +581,7 @@ return {
     },
     "name": "ArtworkActions_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  downloadableImageUrl\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    isLiveOpen\n    isRegistrationClosed\n    requireIdentityVerification\n    liveStartAt\n    registrationEndsAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  is_saved: isSaved\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  dimensions {\n    cm\n  }\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  downloadableImageUrl\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists {\n    name\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

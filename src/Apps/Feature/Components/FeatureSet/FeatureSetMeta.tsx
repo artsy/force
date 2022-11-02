@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Box, BoxProps, HTML, Text } from "@artsy/palette"
+import { Box, BoxProps, HTML, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSetMeta_set$data } from "__generated__/FeatureSetMeta_set.graphql"
 
@@ -13,15 +13,13 @@ export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
 }) => {
   return (
     <Box {...rest}>
-      {set.name && (
-        <Text variant={["lg-display", "xl"]} mb={4}>
-          {set.name}
-        </Text>
-      )}
+      <Join separator={<Spacer mt={4} />}>
+        {set.name && <Text variant={["lg-display", "xl"]}>{set.name}</Text>}
 
-      {set.description && (
-        <HTML variant="sm" color="black60" html={set.description} mt={1} />
-      )}
+        {set.description && (
+          <HTML variant="sm" color="black60" html={set.description} />
+        )}
+      </Join>
     </Box>
   )
 }

@@ -4,7 +4,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { useTracking } from "react-tracking"
 import { Button } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface ViewWorksButtonProps {
   artworksCount: number
@@ -15,11 +15,7 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
 }) => {
   const tracking = useTracking()
 
-  const { scrollTo } = useScrollToElement({
-    selectorOrRef: "#scrollTo--ViewingRoomTabBar",
-    offset: 20,
-    behavior: "smooth",
-  })
+  const { jumpTo } = useJump({ offset: 20 })
 
   const {
     match: {
@@ -41,7 +37,7 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
       to={to}
       data-test="viewingRoomWorksButton"
       onClick={() => {
-        scrollTo()
+        jumpTo("ViewingRoomTabBar")
 
         tracking.trackEvent({
           action_type: DeprecatedAnalyticsSchema.ActionType.ClickedArtworkGroup,

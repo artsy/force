@@ -38,10 +38,11 @@ const mockArtwork = {
 }
 
 const mockRouterPush = jest.fn()
+const mockRouterReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush },
+    router: { push: mockRouterPush, replace: mockRouterReplace },
   })),
 }))
 
@@ -181,7 +182,7 @@ describe("Save and Continue button", () => {
     expect(getSubmitButton()).toBeEnabled()
   })
 
-  it("is disabled when number is removed by user", async () => {
+  it("is disabled when phone number is not valid", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockEmptyMe,
       Artwork: () => mockArtwork,
@@ -189,13 +190,7 @@ describe("Save and Continue button", () => {
 
     simulateTyping("name", "Banksy")
     simulateTyping("email", "banksy@test.test")
-    simulateTyping("phone", "+1 415-555-0132")
-
-    await waitFor(() => {
-      expect(getSubmitButton()).toBeEnabled()
-    })
-
-    simulateTyping("phone", "")
+    simulateTyping("phone", "123")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeDisabled()
@@ -248,8 +243,11 @@ it("submiting a valid form", async () => {
         },
       },
     })
-    expect(mockRouterPush).toHaveBeenCalledWith(
+    expect(mockRouterReplace).toHaveBeenCalledWith(
       `/my-collection/artwork/${mockArtwork.internalID}`
+    )
+    expect(mockRouterPush).toHaveBeenCalledWith(
+      `/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
     )
   })
 })

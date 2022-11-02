@@ -131,18 +131,47 @@ describe("ArtworkSidebar2Details", () => {
     ).not.toBeInTheDocument()
   })
 
-  it("doens't render size details if it is an edition set", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        isEdition: true,
-        dimensions: {
-          in: "10 × 10 in",
-          cm: "25.4 × 25.4 cm",
-        },
-      }),
-    })
+  describe("with edition set size of 1", () => {
+    it("renders dimensions", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          editionSets: [
+            {
+              internalID: "1",
+            },
+          ],
+          dimensions: {
+            in: "10 × 10 in",
+            cm: "25.4 × 25.4 cm",
+          },
+        }),
+      })
 
-    expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
-    expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/cm/)).toBeInTheDocument()
+      expect(screen.queryByText(/in/)).toBeInTheDocument()
+    })
+  })
+  describe("with edition set size > 1", () => {
+    it("doesn't render dimensions", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          editionSets: [
+            {
+              internalID: "1",
+            },
+            {
+              internalID: "2",
+            },
+          ],
+          dimensions: {
+            in: "10 × 10 in",
+            cm: "25.4 × 25.4 cm",
+          },
+        }),
+      })
+
+      expect(screen.queryByText(/cm/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/in/)).not.toBeInTheDocument()
+    })
   })
 })

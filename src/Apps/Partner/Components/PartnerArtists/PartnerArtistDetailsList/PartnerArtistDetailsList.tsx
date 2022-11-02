@@ -1,7 +1,6 @@
-import { Box } from "@artsy/palette"
+import { Box, Join, Spacer } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
 import * as React from "react"
-import { useSystemContext } from "System"
 import {
   createPaginationContainer,
   graphql,
@@ -25,8 +24,32 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
   relay,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const containerRef = useRef<HTMLDivElement>()
+
+  const containerRef = useRef<HTMLDivElement | null>()
+
   useEffect(() => {
+    const loadMore = () => {
+      if (!relay.hasMore() || relay.isLoading()) return
+
+      setIsLoading(true)
+
+      relay.loadMore(PAGE_SIZE, error => {
+        if (error) console.error(error)
+
+        setIsLoading(false)
+      })
+    }
+
+    const maybeLoadMore = () => {
+      if (!containerRef.current) return
+
+      const el = containerRef.current.getBoundingClientRect()
+
+      if (window.innerHeight >= el.bottom && el.bottom > 0) {
+        loadMore()
+      }
+    }
+
     const interval = setInterval(() => {
       maybeLoadMore()
     }, 200)
@@ -36,45 +59,31 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
         clearInterval(interval)
       }
     }
-  }, [])
-
-  const maybeLoadMore = () => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const el = containerRef.current.getBoundingClientRect()
-
-    if (window.innerHeight >= el.bottom && el.bottom > 0) {
-      loadMore()
-    }
-  }
-
-  const loadMore = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
-
-    setIsLoading(true)
-    relay.loadMore(PAGE_SIZE, error => {
-      if (error) console.error(error)
-
-      setIsLoading(false)
-    })
-  }
+  }, [relay])
 
   return (
-    <Box ref={ref => ref && (containerRef.current = ref)} mt={4}>
-      {partner.artists?.edges?.map(edge => {
-        if (!edge) {
-          return null
-        }
+    <Box ref={containerRef as any}>
+      <Join separator={<Spacer mt={4} />}>
+        {partner.artists?.edges?.map(edge => {
+          if (!edge) return null
 
-        return (
-          <PartnerArtistDetailsFragmentContainer
-            key={edge.id}
-            partnerArtist={edge}
-            partnerId={partner.slug}
-          />
-        )
-      })}
+          return (
+            <PartnerArtistDetailsFragmentContainer
+              key={edge.id}
+              partnerArtist={edge}
+              partnerId={partner.slug}
+            />
+          )
+        })}
+      </Join>
 
-      {isLoading && <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />}
+      {isLoading && (
+        <>
+          <Spacer mt={4} />
+
+          <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
+        </>
+      )}
     </Box>
   )
 }
@@ -136,12 +145,10 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
 export const PartnerArtistDetailsListRenderer: React.FC<{
   partnerId: string
 }> = ({ partnerId, ...rest }) => {
-  const { relayEnvironment } = useSystemContext()
-
   return (
     <SystemQueryRenderer<PartnerArtistDetailsListQuery>
       lazyLoad
-      environment={relayEnvironment}
+      // debugPlaceholder
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
           partner(id: $partnerId) @principalField {

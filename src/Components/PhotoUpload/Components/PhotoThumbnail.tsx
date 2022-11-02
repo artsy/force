@@ -87,6 +87,9 @@ export const PhotoThumbnail: React.FC<
     }
   }
 
+  // Only show error messages for photos that have been uploaded by the user
+  const showErrorMessage = photo.errorMessage && !photo.externalUrl
+
   return (
     <>
       {!photo.errorMessage && (
@@ -106,7 +109,7 @@ export const PhotoThumbnail: React.FC<
           </CSSGrid>
         </Flex>
       )}
-      {!!photo.errorMessage && (
+      {!!showErrorMessage && (
         <Text
           data-testid="photo-thumbnail-error"
           mt={[0.5, 2]}

@@ -10,7 +10,6 @@ import {
 } from "react-relay"
 import { useState, Fragment, FC } from "react"
 import { useTranslation } from "react-i18next"
-import "System/i18n/i18n"
 
 const REFETCH_PAGE_SIZE = 10
 

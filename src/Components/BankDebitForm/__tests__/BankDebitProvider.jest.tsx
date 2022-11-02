@@ -33,6 +33,7 @@ describe("BankDebitProvider", () => {
           paymentMethodDetails: null,
           " $fragmentType": "BankAccountPicker_order",
         }}
+        onError={jest.fn()}
       />
     )
 

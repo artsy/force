@@ -23,7 +23,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
-import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { useJump, Jump } from "Utils/Hooks/useJump"
 import {
   cleanImagesLocalStore,
   getAllLocalImagesByArtwork,
@@ -43,16 +43,16 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
 
+  // TODO: Avoid using boolean state flags for UI modes
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
-
   const [localArtworksImages, setLocalArtworksImages] = useState<
     StoredArtworkWithImages[]
   >([])
 
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
 
-  const { scrollTo } = useScrollTo({ behavior: "smooth" })
+  const { jumpTo } = useJump()
 
   useEffect(() => {
     setHasDismissedMessage(
@@ -75,12 +75,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   useEffect(() => {
     cleanImagesLocalStore()
   }, [])
-
-  const { scrollTo: scrollToMyCollection } = useScrollToElement({
-    selectorOrRef: "#jump--MyCollectionArtworks",
-    behavior: "smooth",
-    offset: 20,
-  })
 
   const { myCollectionConnection } = me
 
@@ -109,7 +103,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   const handleClick = (_: string, page: number) => {
     setLoading(true)
-    scrollToMyCollection()
+    jumpTo("MyCollectionArtworks")
 
     relay.refetch({ page }, null, error => {
       if (error) console.error(error)
@@ -149,7 +143,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     Access all the My Collection features on the{" "}
                     <Clickable
                       onClick={() => {
-                        scrollTo("#download-app-banner")
+                        jumpTo("download-app-banner")
                       }}
                       color="blue100"
                       cursor="pointer"
@@ -202,31 +196,32 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </Sticky>
           </Box>
 
-          <Masonry
-            id="jump--MyCollectionArtworks"
-            columnCount={[2, 3, 4]}
-            style={{ opacity: loading ? 0.5 : 1 }}
-          >
-            {artworks.map(artwork => {
-              return (
-                <Fragment key={artwork.internalID}>
-                  <ArtworkGridItemFragmentContainer
-                    artwork={artwork}
-                    localHeroImage={getLocalImageSrcByArtworkID(
-                      artwork.internalID
-                    )}
-                    hideSaleInfo
-                    showSaveButton={false}
-                    showHoverDetails={false}
-                    disableRouterLinking={!enableMyCollectionPhase2}
-                    isMyCollectionArtwork
-                  />
+          <Jump id="MyCollectionArtworks">
+            <Masonry
+              columnCount={[2, 3, 4]}
+              style={{ opacity: loading ? 0.5 : 1 }}
+            >
+              {artworks.map(artwork => {
+                return (
+                  <Fragment key={artwork.internalID}>
+                    <ArtworkGridItemFragmentContainer
+                      artwork={artwork}
+                      localHeroImage={getLocalImageSrcByArtworkID(
+                        artwork.internalID
+                      )}
+                      hideSaleInfo
+                      showSaveButton={false}
+                      showHoverDetails={false}
+                      disableRouterLinking={!enableMyCollectionPhase2}
+                      isMyCollectionArtwork
+                    />
 
-                  <Spacer mt={4} />
-                </Fragment>
-              )
-            })}
-          </Masonry>
+                    <Spacer mt={4} />
+                  </Fragment>
+                )
+              })}
+            </Masonry>
+          </Jump>
 
           <PaginationFragmentContainer
             hasNextPage={hasNextPage}

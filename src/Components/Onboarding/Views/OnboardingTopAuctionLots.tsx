@@ -1,14 +1,14 @@
 import { FC } from "react"
-import { OnboardingGeneQueryRenderer } from "Components/Onboarding/Components/OnboardingGene"
+import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
 export const OnboardingTopAuctionLots: FC = () => {
   return (
-    <OnboardingGeneQueryRenderer
-      id="our-top-auction-lots"
+    <OnboardingMarketingCollectionQueryRenderer
+      slug="top-auction-lots"
       description={
         <>
-          Follow for works by emerging and established market stars—now open for
-          bidding. Click the heart to save artworks you love.
+          Works by emerging and established market stars—now open for bidding.
+          Click the heart to save artworks you love.
         </>
       }
     />

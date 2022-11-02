@@ -100,7 +100,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               {!!artist.counts?.follows && (
                 <Column
                   span={6}
-                  display={["block", "none", "none", "flex"]}
+                  display={["block", "flex"]}
                   alignItems="center"
                 >
                   <Text
@@ -117,6 +117,8 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
           <Column span={6}>
             <ArtistInsightPillsFragmentContainer artist={artist} />
+
+            <Spacer mb={4} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>

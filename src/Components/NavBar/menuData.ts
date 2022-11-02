@@ -33,15 +33,15 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     links: [
       {
         text: "Trending This Week",
-        href: "/gene/trending-this-week",
+        href: "/collection/trending-this-week",
       },
       {
         text: "Black Painters On Our Radar",
-        href: "/gene/black-painters-on-our-radar",
+        href: "/collection/black-painters-on-our-radar",
       },
       {
         text: "Street Art Highlights",
-        href: "/gene/street-art-now-1",
+        href: "/collection/street-art-highlights",
         dividerBelow: true,
       },
       {
@@ -51,7 +51,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Artists On The Rise",
-              href: "/gene/artists-on-the-rise",
+              href: "/collection/artists-on-the-rise",
             },
             {
               text: "Contemporary Now",
@@ -152,19 +152,19 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     links: [
       {
         text: "Trove: Editor's Picks",
-        href: "/gene/trove",
+        href: "/collection/trove-editors-picks",
       },
       {
         text: "Top Auction Lots",
-        href: "/gene/our-top-auction-lots",
+        href: "/collection/top-auction-lots",
       },
       {
         text: "Iconic Prints",
-        href: "/gene/iconic-prints",
+        href: "/collection/iconic-prints",
       },
       {
         text: "The Collectibles Shop",
-        href: "/gene/the-collectibles-shop",
+        href: "/collection/the-collectibles-shop",
       },
       {
         text: "Price",
@@ -185,11 +185,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Finds Under $2,500",
-              href: "/gene/finds-under-2500",
+              href: "/collection/finds-under-2500-dollars",
             },
             {
               text: "Finds Under $1,000",
-              href: "/gene/finds-under-1000",
+              href: "/collection/finds-under-1000-dollars",
             },
           ],
         },

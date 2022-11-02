@@ -4,15 +4,12 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import {
-  Box,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-} from "@artsy/palette"
+import { Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
@@ -40,15 +37,15 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
       title="Trove"
       subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       viewAllLabel="View All Works"
-      viewAllHref="/gene/trove"
+      viewAllHref="/collection/trove-editors-picks"
       viewAllOnClick={() => {
         const trackingEvent: ClickedArtworkGroup = {
           action: ActionType.clickedArtworkGroup,
           context_module: ContextModule.troveArtworksRail,
           context_page_owner_type: OwnerType.home,
-          destination_page_owner_type: OwnerType.gene,
-          destination_page_owner_id: "60a6b70fa7025f0012fdf5df",
-          destination_page_owner_slug: "trove",
+          destination_page_owner_type: OwnerType.collection,
+          destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
+          destination_page_owner_slug: "trove-editors-picks",
           type: "viewAll",
         }
         trackEvent(trackingEvent)
@@ -86,7 +83,10 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment HomeTroveArtworksRail_viewer on Viewer {
-        artworksConnection(first: 12, geneIDs: "trove") {
+        artworksConnection(
+          first: 12
+          marketingCollectionID: "trove-editors-picks"
+        ) {
           edges {
             node {
               ...ShelfArtwork_artwork
@@ -136,16 +136,7 @@ const PLACEHOLDER = (
       subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={200} key={i}>
-              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <Spacer mt={1} />
-              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-              <SkeletonText variant="xs">Partner</SkeletonText>
-              <SkeletonText variant="xs">Price</SkeletonText>
-            </Box>
-          )
+          return <ShelfArtworkPlaceholder key={i} index={i} />
         })
       }}
     />

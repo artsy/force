@@ -7,14 +7,15 @@ import {
   Flex,
 } from "@artsy/palette"
 import { FC, useState } from "react"
-import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrderedSet"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
+import { OnboardingOrderedSetQueryRenderer } from "Components/Onboarding/Components/OnboardingOrderedSet"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { OnboardingSearchResultsQueryRenderer } from "Components/Onboarding/Components/OnboardingSearchResults"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
+import { useTranslation } from "react-i18next"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"
@@ -22,14 +23,10 @@ interface OnboardingFollowsProps {
 
 const CONFIGURATION = {
   artists: {
-    title: "Follow artists to see more of their work",
-    placeholder: "Search Artists",
     entities: "ARTIST",
     setId: "onboarding:suggested-artists",
   },
   galleries: {
-    title: "Follow galleries you love to see events and news",
-    placeholder: "Search Galleries",
     entities: "PROFILE",
     setId: "onboarding:suggested-galleries",
   },
@@ -44,9 +41,11 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
 
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
 
-  const { title, placeholder, entities, setId } = CONFIGURATION[kind]
+  const { entities, setId } = CONFIGURATION[kind]
 
   const tracking = useOnboardingTracking()
+
+  const { t } = useTranslation()
 
   return (
     <SplitLayout
@@ -62,14 +61,18 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
       right={
         <Flex flexDirection="column" minWidth={0}>
           <Box pt={4} px={4}>
-            <Text ref={register(1)} variant="lg-display" mb={2}>
-              {title}
+            <Text ref={register(1)} variant="lg-display" mb={1}>
+              {t(`onboarding.follows.${kind}.title`)}
             </Text>
 
-            <Box ref={register(2)}>
+            <Text ref={register(2)} variant="sm-display" mb={2}>
+              {t("onboarding.follows.description")}
+            </Text>
+
+            <Box ref={register(3)}>
               <LabeledInput
                 label={<MagnifyingGlassIcon />}
-                placeholder={placeholder}
+                placeholder={t(`onboarding.follows.${kind}.placeholder`)}
                 mb={4}
                 onChange={event => setQuery(event.currentTarget.value)}
                 data-testid="search-input"
@@ -78,7 +81,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
           </Box>
 
           <Box
-            ref={register(3)}
+            ref={register(4)}
             px={4}
             flex={1}
             overflowY="auto"

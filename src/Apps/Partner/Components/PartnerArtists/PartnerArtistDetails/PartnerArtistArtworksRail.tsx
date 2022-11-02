@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
 import * as React from "react"
-import { Carousel } from "Components/Carousel"
 import {
   createPaginationContainer,
   graphql,
@@ -8,8 +6,8 @@ import {
 } from "react-relay"
 import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import FillwidthItem from "Components/Artwork/FillwidthItem"
-import { PartnerArtistArtworkCarouselItemPlaceholder } from "./PartnerArtistDetailsPlaceholder"
+import { Shelf } from "@artsy/palette"
+import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 
 export interface PartnerArtistArtworksRailProps {
   partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
@@ -18,63 +16,26 @@ export interface PartnerArtistArtworksRailProps {
   relay: RelayPaginationProp
 }
 
-const PAGE_SIZE = 12
-
 export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps> = ({
   partnerArtist,
   relay,
 }) => {
+  if (!partnerArtist.artworksConnection) return null
+
   const artworks = extractNodes(partnerArtist.artworksConnection)
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [page, setPage] = useState(0)
-  const [pageCount, setPageCount] = useState(0)
-
-  useEffect(() => {
-    // check that the current page is close to the end of the carousel
-    if (relay.hasMore() && pageCount > 0 && pageCount - (page + 1) <= 1) {
-      loadMore()
-    }
-  }, [page, pageCount])
-
-  const loadMore = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
-
-    setIsLoading(true)
-    relay.loadMore(PAGE_SIZE, error => {
-      if (error) console.error(error)
-
-      setIsLoading(false)
-    })
-  }
-
   return (
-    <Carousel
-      onChange={setPage}
-      onPageCountChange={setPageCount}
-      arrowHeight={160}
-    >
-      {artworks
-        .map(artwork => {
-          return (
-            <FillwidthItem
-              key={artwork.id}
-              artwork={artwork}
-              imageHeight={160}
-              lazyLoad
-              // @ts-ignore TODO: Add relevant contextModule
-              contextModule={null}
-            />
-          )
-        })
-        .concat(
-          isLoading
-            ? [
-                <PartnerArtistArtworkCarouselItemPlaceholder key="artwork-placeholder" />,
-              ]
-            : []
-        )}
-    </Carousel>
+    <Shelf>
+      {artworks.map(artwork => {
+        return (
+          <ShelfArtworkFragmentContainer
+            key={artwork.internalID}
+            artwork={artwork}
+            lazyLoad
+          />
+        )
+      })}
+    </Shelf>
   )
 }
 
@@ -107,10 +68,11 @@ export const PartnerArtistArtworksRailPaginationContainer = createPaginationCont
         ) {
         artworksConnection(first: $first, after: $after)
           @connection(key: "PartnerArtistArtworksRail_artworksConnection") {
+          totalCount
           edges {
             node {
-              id
-              ...FillwidthItem_artwork
+              ...ShelfArtwork_artwork
+              internalID
             }
           }
         }

@@ -56,6 +56,18 @@ describe("logger", () => {
           logger.error(err)
           expect(sendErrorToService).toHaveBeenCalledWith(err)
         })
+
+        it("sends extended error content to service", () => {
+          const err = new Error("msg")
+          const extendedErr = {
+            ...err,
+            customField: "customField",
+            shouldLogErrorToSentry: true,
+          }
+
+          logger.error(extendedErr)
+          expect(sendErrorToService).toHaveBeenCalledWith(extendedErr)
+        })
       })
 
       it("logs given errors with console.error", () => {

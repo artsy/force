@@ -76,7 +76,9 @@ const MetadataField = ({ label, value }) => {
       </Text>
 
       <Box display="flex" flex={1} flexDirection="column">
-        <WrappedText variant="sm">{value || emptyValue}</WrappedText>
+        <WrappedText variant="sm" color={value ? "black100" : "black60"}>
+          {value || emptyValue}
+        </WrappedText>
       </Box>
     </Box>
   )

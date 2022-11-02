@@ -26,10 +26,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.66.0":
-  version "4.66.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.66.0.tgz#254ae0201eb2fd50a4cbce3ee2e9252852905b3d"
-  integrity sha512-bxy8cObaPVcTurWE2fEEnZS7D3O2MA+81ZlKKbUqFK5OChHB1osaFsfOu1G8E8FSD7Lc6sAysytCUSp9tQ00dg==
+"@artsy/cohesion@4.70.0":
+  version "4.70.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.70.0.tgz#307d9d628be1ba8cbe28a42fe3ab272043a3caf5"
+  integrity sha512-8PvaA7SWvR7kYSSWuHCc+riXBRHLpQ5lQTFVjyGJafWpHJy8VWMMeeGPaiXqdZue/Iwx8pDnAo4fhnCh1e4mbw==
   dependencies:
     core-js "3"
 
@@ -70,36 +70,36 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@23.3.1":
-  version "23.3.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-23.3.1.tgz#3dff5d55c14eb5d06dd2e9fa4561089208c39a72"
-  integrity sha512-ur3mt3DoVZ+KtK8HQ6oGDlO1n5Q4C3AA0S72rgge2PvpccTAkN3i/rwe6io/YJl3e5cRKUneHTV/vXamInlurQ==
+"@artsy/palette-charts@25.0.1":
+  version "25.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-25.0.1.tgz#81f3c4abeb7a56fdaedf9f6bb65fcf9b7f27a7ac"
+  integrity sha512-UDs97WJQuVWJ7lRboP1qW/+u8pTFVlPRXihqR2VwRuOs1xiWpmteffbzRP0JLVjveeIzDFs11PRIrvUZoWc+Eg==
   dependencies:
-    "@artsy/palette" "^24.3.1"
+    "@artsy/palette" "^26.0.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
     styled-system "^5.1.5"
 
-"@artsy/palette-tokens@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.0.tgz#ee0d157ad73ca0e2e252f896a21fba798b20d4d9"
-  integrity sha512-Os2fimLkHgxWLZZ8xRPWm4t3mBTMMBsKO+Iqgn2d44VjhcN7w9XxAp8VK8sRSLJmcrajnTczZZtFy273lYeqaA==
+"@artsy/palette-tokens@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
+  integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@24.3.1", "@artsy/palette@^24.3.1":
-  version "24.3.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-24.3.1.tgz#ad458ad99a71f0f4dc92cd2e7f77973ec374dc6e"
-  integrity sha512-IbTOEp/ttGQ2YPf5NsRmEUAB+oj3o+jKFZbgfPZCtJq6nndG73qsI+N4n2UIKx1v0juuibC8YxS7j7oGO9CUhQ==
+"@artsy/palette@26.0.1", "@artsy/palette@^26.0.1":
+  version "26.0.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-26.0.1.tgz#0cfaaa0c4018de224f7866d3c26fc982371b2705"
+  integrity sha512-1WF8pvjtaVQVuyh4gH8sqGDc72C6EdQLndFcuuwFwvOjSqdcRBu+hlrj1pxgZn0CRG/0lJpGtpyijQQrZod6UA==
   dependencies:
-    "@artsy/palette-tokens" "^4.0.0"
+    "@artsy/palette-tokens" "^4.0.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     lodash "^4.17.21"
     luxon "^1.15"
     proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "2.5.0"
+    react-lazy-load-image-component "1.5.5"
+    react-remove-scroll "2.5.5"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
     use-cursor "^1.2.3"
@@ -1574,6 +1574,11 @@
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
+
+"@braze/web-sdk@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@braze/web-sdk/-/web-sdk-4.3.0.tgz#9d19b75e3cb8df05840cb3cbaf1c724b4ed5d7e9"
+  integrity sha512-yxlWCX8A/bSxNnT+GE77kzs/ctvogpmLMNbfiHwI2DCWXp2un9PDn21aWlbuhdCjl5A7WhZFV6F0CHAjpJkItw==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -17681,10 +17686,10 @@ react-is@16.8.3, react-is@^16.12.0, "react-is@^16.12.0 || ^17.0.0", react-is@^16
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
 
-react-lazy-load-image-component@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.0.tgz#48939f86cb262b93b345c6fa6322f75ede55160d"
-  integrity sha512-dAvuueTq0FNjswHEII8tcd0FRRHZgPoIdVhE1fcAfCdqY7LZ37IHd0xWb2c6rCl+dsSm9Z4AloEffM8JYPxTlA==
+react-lazy-load-image-component@1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.5.tgz#ef6630a4cf5d604d36b0ca808dbe92eca8c81759"
+  integrity sha512-pPtq48tIhkLIZg6MAhB3VvVhntJLrc3MBun/lQkNmNtrRFXdjEc5aHlPT5EhpXPQR1nsNVwN91ne6Aagm3rtNQ==
   dependencies:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
@@ -17770,22 +17775,22 @@ react-relay@13.1.1:
     nullthrows "^1.1.1"
     relay-runtime "13.1.1"
 
-react-remove-scroll-bar@^2.3.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.1.tgz#9f13b05b249eaa57c8d646c1ebb83006b3581f5f"
-  integrity sha512-IvGX3mJclEF7+hga8APZczve1UyGMkMG+tjS0o/U1iLgvZRpjFAQEUBJ4JETfvbNlfNnZnoDyWJCICkA15Mghg==
+react-remove-scroll-bar@^2.3.3:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.4.tgz#53e272d7a5cb8242990c7f144c44d8bd8ab5afd9"
+  integrity sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==
   dependencies:
-    react-style-singleton "^2.2.0"
+    react-style-singleton "^2.2.1"
     tslib "^2.0.0"
 
-react-remove-scroll@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.5.0.tgz#06602a8e863b4b773778114a5c7577ff40f802e5"
-  integrity sha512-uROvacoPUnY7U42vkCAYtyUJrvS0yE+TpayIaWtWL7RkZ25Y1nO1hlf+JRJ4X5rGFlJNtG+eJmUTdawgJaiqrg==
+react-remove-scroll@2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.5.5.tgz#1e31a1260df08887a8a0e46d09271b52b3a37e77"
+  integrity sha512-ImKhrzJJsyXJfBZ4bzu8Bwpka14c/fQt0k+cyFp/PBhTfyDnU5hjOtM4AG/0AMyy8oKzOTR0lDgJIM7pYXI0kw==
   dependencies:
-    react-remove-scroll-bar "^2.3.0"
-    react-style-singleton "^2.2.0"
-    tslib "^2.0.0"
+    react-remove-scroll-bar "^2.3.3"
+    react-style-singleton "^2.2.1"
+    tslib "^2.1.0"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
@@ -17823,10 +17828,10 @@ react-stickynode@^4.0.0:
     shallowequal "^1.0.0"
     subscribe-ui-event "^2.0.6"
 
-react-style-singleton@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.0.tgz#70f45f5fef97fdb9a52eed98d1839fa6b9032b22"
-  integrity sha512-nK7mN92DMYZEu3cQcAhfwE48NpzO5RpxjG4okbSqRRbfal9Pk+fG2RdQXTMp+f6all1hB9LIJSt+j7dCYrU11g==
+react-style-singleton@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"
+  integrity sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==
   dependencies:
     get-nonce "^1.0.0"
     invariant "^2.2.4"

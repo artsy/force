@@ -1,6 +1,5 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import { NotificationItem_test_Query } from "__generated__/NotificationItem_test_Query.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
@@ -47,23 +46,12 @@ describe("NotificationItem", () => {
     expect(screen.getByText("Notification Message")).toBeInTheDocument()
   })
 
-  it("should render 'x days ago' label", () => {
+  it("should render the formatted publication date", () => {
     renderWithRelay({
       Notification: () => notification,
     })
 
     expect(screen.getByText("2 days ago")).toBeInTheDocument()
-  })
-
-  it("should render 'Today' label", () => {
-    renderWithRelay({
-      Notification: () => ({
-        ...notification,
-        createdAt: DateTime.utc().minus({ hours: 1 }),
-      }),
-    })
-
-    expect(screen.getByText("Today")).toBeInTheDocument()
   })
 
   it("should render artwork images", () => {
@@ -175,7 +163,7 @@ const artworks = [
 const notification = {
   title: "Notification Title",
   message: "Notification Message",
-  createdAt: DateTime.utc().minus({ days: 2 }),
+  publishedAt: "2 days ago",
   isUnread: false,
   notificationType: "ARTWORK_PUBLISHED",
   artworksConnection: {

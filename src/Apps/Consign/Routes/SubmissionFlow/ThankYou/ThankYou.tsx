@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
+import { Button, Flex, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { DownloadApp } from "./Components/DownloadApp"
 import { useSystemContext } from "System"
@@ -8,8 +8,9 @@ import { useRouter } from "System/Router/useRouter"
 import {
   SoldRecentlyOnArtsyQueryRenderer,
   FAQ,
-} from "../../MarketingLanding/Components"
+} from "Apps/Consign/Routes/MarketingLanding/Components"
 import { useTracking } from "react-tracking"
+import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
@@ -29,44 +30,43 @@ export const ThankYou: React.FC = () => {
   return (
     <>
       {isLoggedIn ? (
-        <>
-          <Text variant="xxl" mt={4}>
-            Your artwork has been submitted
-          </Text>
-          <Box maxWidth="720px" mt={4}>
-            <Text variant="lg-display" color="black60">
-              We will email you within 1-3 days to confirm if your artwork has
-              been accepted or not. In the meantime your submission will appear
-              in the feature, My Collection, on the Artsy app.
-            </Text>
-            <Text variant="lg-display" mt={2} color="black60">
-              With low fees, informed pricing, and multiple sales options, why
-              not submit another piece with Artsy.
-            </Text>
-          </Box>
-        </>
+        <ConfirmationScreenComponent
+          title="Your artwork has been submitted"
+          customSubtitle={
+            <>
+              <Text>
+                We will email you within 1-3 days to confirm if your artwork has
+                been accepted or not. In the meantime your submission will
+                appear in the feature, My Collection, on the Artsy app.
+              </Text>
+              <Text mt={2}>
+                With low fees, informed pricing, and multiple sales options, why
+                not submit another piece with Artsy.
+              </Text>
+            </>
+          }
+        />
       ) : (
-        <>
-          <Text variant="xxl" mt={4}>
-            Thank you for submitting a work
-          </Text>
-          <Box maxWidth="720px" mt={4}>
-            <Text variant="lg-display">
-              We’ll email you within 1–3 business days to let you know the
-              status of your submission.
-            </Text>
-            <Text variant="lg-display" mt={2}>
-              In the meantime, feel free to submit another work—and benefit from
-              Artsy’s low fees, informed pricing, and multiple selling options.
-            </Text>
-          </Box>
-        </>
+        <ConfirmationScreenComponent
+          title="Thank you for submitting a work"
+          customSubtitle={
+            <>
+              <Text>
+                We’ll email you within 1–3 business days to let you know the
+                status of your submission.
+              </Text>
+              <Text mt={2}>
+                In the meantime, feel free to submit another work—and benefit
+                from Artsy’s low fees, informed pricing, and multiple selling
+                options.
+              </Text>
+            </>
+          }
+        />
       )}
 
       <Flex
-        py={2}
-        my={4}
-        mb={0}
+        pb={2}
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >

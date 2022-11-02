@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b856388cec79d79b5238ced62d151e3a>>
+ * @generated SignedSource<<a6a16e94e5a8b5c44f7d403a4a46e272>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -137,6 +137,31 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "notificationType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "artworks",
+                        "args": null,
+                        "concreteType": "ArtworkConnection",
+                        "kind": "LinkedField",
+                        "name": "artworksConnection",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "totalCount",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
                       (v3/*: any*/),
                       {
                         "alias": null,
@@ -147,10 +172,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "RELATIVE"
+                          }
+                        ],
                         "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": null
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"RELATIVE\")"
                       },
                       {
                         "alias": null,
@@ -164,13 +195,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "isUnread",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "notificationType",
                         "storageKey": null
                       },
                       {
@@ -326,12 +350,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f5eb5fe936e2e07254483530c676277f",
+    "cacheID": "41d9f90f809f5f7ee8f0cbe5f48fb861",
     "id": null,
     "metadata": {},
     "name": "NotificationsListQuery",
     "operationKind": "query",
-    "text": "query NotificationsListQuery(\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_1OKkmt\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_1OKkmt on Viewer {\n  notifications: notificationsConnection(first: 10, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListQuery(\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_1OKkmt\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_1OKkmt on Viewer {\n  notifications: notificationsConnection(first: 10, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

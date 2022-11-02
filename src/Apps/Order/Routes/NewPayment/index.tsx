@@ -47,10 +47,21 @@ export interface NewPaymentProps {
   isCommittingMutation: boolean
 }
 
+type CreditCardPickerResultType =
+  | { type: "error"; error: string | undefined }
+  | { type: "internal_error"; error: string | undefined }
+  | { type: "invalid_form" }
+  | { type: "success"; creditCardId: string }
+
 const logger = createLogger("Order/Routes/NewPayment/index.tsx")
 
 export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
+  const [
+    creditCardPickerResult,
+    setCreditCardPickerResult,
+  ] = useState<CreditCardPickerResultType | null>(null)
+
   const {
     order,
     me,
@@ -64,62 +75,80 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
   const isLoading = isCommittingMutation || isGettingCreditCardId
   const CreditCardPicker = createRef<CreditCardPicker>()
 
+  const getCreditCardId = async (): Promise<string | null> => {
+    setIsGettingCreditCardId(true)
+
+    const result = await CreditCardPicker?.current?.getCreditCardId()
+
+    setIsGettingCreditCardId(false)
+
+    if (result?.type === "invalid_form") return null
+
+    if (result?.type === "error") {
+      dialog.showErrorDialog({
+        title: result?.error,
+        message:
+          "Please enter another payment method or contact your bank for more information.",
+      })
+      return null
+    }
+
+    if (result?.type === "internal_error") {
+      dialog.showErrorDialog({
+        title: "An internal error occurred",
+      })
+      logger.error(result?.error)
+      return null
+    }
+
+    if (result?.type === "success" && result?.creditCardId) {
+      setCreditCardPickerResult(result)
+      return result.creditCardId
+    }
+
+    return null
+  }
+
   const onContinue = async () => {
     try {
-      setIsGettingCreditCardId(true)
-      const result = await CreditCardPicker?.current?.getCreditCardId()!
-      setIsGettingCreditCardId(false)
+      const creditCardId =
+        creditCardPickerResult?.type === "success"
+          ? creditCardPickerResult.creditCardId
+          : await getCreditCardId()
 
-      if (result.type === "invalid_form") return
-
-      if (result.type === "error") {
-        dialog.showErrorDialog({
-          title: result.error,
-          message:
-            "Please enter another payment method or contact your bank for more information.",
-        })
-        return
-      }
-
-      if (result.type === "internal_error") {
-        dialog.showErrorDialog({
-          title: "An internal error occurred",
-        })
-        logger.error(result.error)
-        return
-      }
-
-      const orderOrError = (
-        await fixFailedPayment({
-          input: {
-            creditCardId: result.creditCardId,
-            offerId: order.lastOffer?.internalID,
-            orderId: order.internalID,
-          },
-        })
-      ).commerceFixFailedPayment?.orderOrError!
-
-      if (orderOrError.error) {
-        handleFixFailedPaymentError(orderOrError.error.code)
-        return
-      }
-
-      if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
-        const scaResult = await stripe.handleCardAction(
-          orderOrError.actionData.clientSecret
-        )
-        if (scaResult.error) {
-          dialog.showErrorDialog({
-            title: "An error occurred",
-            message: scaResult.error.message,
+      if (creditCardId) {
+        const orderOrError = (
+          await fixFailedPayment({
+            input: {
+              creditCardId,
+              offerId: order.lastOffer?.internalID,
+              orderId: order.internalID,
+            },
           })
-          return
-        } else {
-          onContinue()
-        }
-      }
+        ).commerceFixFailedPayment?.orderOrError!
 
-      router.push(`/orders/${order.internalID}/status`)
+        if (orderOrError.error) {
+          handleFixFailedPaymentError(orderOrError.error.code)
+          return
+        }
+
+        if (orderOrError.actionData && orderOrError.actionData.clientSecret) {
+          const scaResult = await stripe.handleCardAction(
+            orderOrError.actionData.clientSecret
+          )
+          if (scaResult.error) {
+            dialog.showErrorDialog({
+              title: "An error occurred",
+              message: scaResult.error.message,
+            })
+            return
+          } else {
+            onContinue()
+          }
+        }
+
+        router.push(`/orders/${order.internalID}/status`)
+      }
     } catch (error) {
       logger.error(error)
       dialog.showErrorDialog()

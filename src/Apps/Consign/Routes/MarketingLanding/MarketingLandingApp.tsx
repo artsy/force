@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
-import { UtmParams } from "../SubmissionFlow/Utils/types"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
 import {
   SellMeta,
@@ -12,7 +12,6 @@ import {
   SoldRecentlyOnArtsyQueryRenderer,
   WhySellWithArtsy,
 } from "./Components"
-import { StickyProvider } from "Components/Sticky"
 
 export const MarketingLandingApp = () => {
   const {
@@ -37,7 +36,7 @@ export const MarketingLandingApp = () => {
   }, [])
 
   return (
-    <StickyProvider>
+    <>
       <SellMeta />
 
       <Header />
@@ -46,11 +45,15 @@ export const MarketingLandingApp = () => {
 
       <Join separator={<Spacer mt={[6, 12]} />}>
         <PromoSpace />
+
         <WhySellWithArtsy />
+
         <HowItWorks />
+
         <SoldRecentlyOnArtsyQueryRenderer />
+
         <FAQ />
       </Join>
-    </StickyProvider>
+    </>
   )
 }

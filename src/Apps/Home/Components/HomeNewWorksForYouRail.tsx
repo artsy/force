@@ -1,11 +1,4 @@
-import {
-  Box,
-  Shelf,
-  Skeleton,
-  SkeletonText,
-  SkeletonBox,
-  Spacer,
-} from "@artsy/palette"
+import { Shelf, Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
@@ -13,7 +6,10 @@ import { useTracking } from "react-tracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeNewWorksForYouRail_artworksForUser$data } from "__generated__/HomeNewWorksForYouRail_artworksForUser.graphql"
 import { HomeNewWorksForYouRailQuery } from "__generated__/HomeNewWorksForYouRailQuery.graphql"
-import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import {
+  ShelfArtworkFragmentContainer,
+  ShelfArtworkPlaceholder,
+} from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ActionType,
@@ -73,18 +69,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Shelf>
       {[...new Array(8)].map((_, i) => {
-        return (
-          <Box width={200} key={i}>
-            <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-
-            <Spacer mt={1} />
-
-            <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner</SkeletonText>
-            <SkeletonText variant="xs">Price</SkeletonText>
-          </Box>
-        )
+        return <ShelfArtworkPlaceholder key={i} index={i} />
       })}
     </Shelf>
   </Skeleton>

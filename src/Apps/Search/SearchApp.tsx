@@ -14,7 +14,7 @@ import { RecentlyViewed } from "Components/RecentlyViewed"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "System/Router/useRouter"
-import { Sticky, StickyProvider } from "Components/Sticky"
+import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useTranslation } from "react-i18next"
 
@@ -69,7 +69,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   const totalCount = countWithoutArtworks + artworkCount
 
   return (
-    <StickyProvider>
+    <>
       <SearchMeta term={term} />
 
       <Spacer mt={4} />
@@ -114,7 +114,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
       <Spacer mt={4} />
 
       <RecentlyViewed />
-    </StickyProvider>
+    </>
   )
 }
 

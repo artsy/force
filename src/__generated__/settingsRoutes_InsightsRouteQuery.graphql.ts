@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b48279d4577913ff5a0812c914b590b7>>
+ * @generated SignedSource<<9ee7cfda009f63e5026956901cbbd52b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,10 +26,45 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -77,13 +112,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -185,13 +214,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "title",
-                        "storageKey": null
-                      },
+                      (v1/*: any*/),
                       {
                         "alias": "dimension_text",
                         "args": null,
@@ -214,14 +237,8 @@ return {
                         "name": "artist",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          (v0/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -260,20 +277,8 @@ return {
                                 "name": "cropped",
                                 "plural": false,
                                 "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "src",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "srcSet",
-                                    "storageKey": null
-                                  },
+                                  (v4/*: any*/),
+                                  (v5/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -347,7 +352,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -391,11 +396,11 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v0/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -405,19 +410,205 @@ return {
             ],
             "storageKey": "myCollectionAuctionResults(first:6)"
           },
-          (v0/*: any*/)
+          {
+            "alias": "medianSalePrices",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 3
+              },
+              {
+                "kind": "Literal",
+                "name": "sortByLastAuctionResultDate",
+                "value": true
+              }
+            ],
+            "concreteType": "MyCollectionConnection",
+            "kind": "LinkedField",
+            "name": "myCollectionConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyCollectionEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artwork",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v0/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "medium",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkMedium",
+                        "kind": "LinkedField",
+                        "name": "mediumType",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Artist",
+                        "kind": "LinkedField",
+                        "name": "artist",
+                        "plural": false,
+                        "selections": [
+                          (v0/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "href",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "initials",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "formattedNationalityAndBirthday",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtistCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "artworks",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "forSaleArtworks",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": "avatar",
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "height",
+                                    "value": 45
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "width",
+                                    "value": 45
+                                  }
+                                ],
+                                "concreteType": "CroppedImageUrl",
+                                "kind": "LinkedField",
+                                "name": "cropped",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  (v5/*: any*/)
+                                ],
+                                "storageKey": "cropped(height:45,width:45)"
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkPriceInsights",
+                        "kind": "LinkedField",
+                        "name": "marketPriceInsights",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "medianSalePriceDisplayText",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "myCollectionConnection(first:3,sortByLastAuctionResultDate:true)"
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f97b286c44a0f8e09b18fbb719b4d05f",
+    "cacheID": "667e70920aebedcde8a8c892c870ab62",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n  ...InsightsCareerHighlightRail_me\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment InsightsAuctionResults_me on Me {\n  myCollectionAuctionResults(first: 6) {\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    artworksCount\n    ...InsightsOverview_info\n  }\n  ...InsightsAuctionResults_me\n  ...InsightsCareerHighlightRail_me\n  ...InsightsMedianSalePrice_me\n}\n"
   }
 };
 })();

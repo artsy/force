@@ -11,6 +11,7 @@ export const Timer: React.FC<
     labelWithTimeRemaining?: string
     labelWithoutTimeRemaining?: string
     label?: string
+    color?: string
   } & FlexProps &
     TextProps
 > = ({
@@ -20,6 +21,7 @@ export const Timer: React.FC<
   labelWithoutTimeRemaining,
   label = "",
   variant = "sm-display",
+  color = "blue100",
   ...rest
 }) => {
   const { hasEnded, time } = useTimer(endDate, startDate)
@@ -27,7 +29,7 @@ export const Timer: React.FC<
 
   return (
     <Flex flexDirection="column" {...rest}>
-      <Text variant={variant} color="blue100">
+      <Text variant={variant} color={color}>
         {label && (
           <Text variant={variant} color="black100">
             {label}

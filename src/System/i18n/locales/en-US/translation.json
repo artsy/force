@@ -88,6 +88,12 @@
         "makeOffer": "Make an Offer",
         "contactGallery": "Contact Gallery"
       }
+    },
+    "actions": {
+      "save": {
+        "registerToBidWithDeadline": "Register ahead of time to bid in this auction and get notifications for this lot.",
+        "registerToBidWithoutDeadline": "Register to bid in this auction and get notifications for this lot."
+      }
     }
   },
   "searchApp": {
@@ -97,17 +103,44 @@
     "resultsCount_other": "{{count}} results for"
   },
   "activityPanel": {
-    "newNotifications_zero": "No new notifications",
-    "newNotifications_one": "{{count}} new notification",
-    "newNotifications_other": "{{count}} new notifications",
+    "noNewNotifications": "No new notifications",
+    "newNotifications": "New notifications",
     "markAllAsRead": "Mark all as read"
   },
   "artQuizPage": {
+    "loadingScreen": {
+      "calculatingResults": "Calculating Results...",
+      "resultsComplete": "Results Complete"
+    },
+    "title": "Art Taste Quiz",
+    "results": {
+      "emailButton": "Email My Results",
+      "title": "Explore Your Quiz Results",
+      "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
+      "tabs": {
+        "worksYouLiked": "Works You Liked",
+        "recommendedCollections": "Recommended Collections",
+        "recommendedArtists": "Recommended Artists"
+      }
+    },
     "welcomeScreen": {
-      "title": "Art Curator Quiz",
-      "subtitle": "See more of what you love. Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "subtitle1": "See more of what you love.",
+      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
       "getStartedButton": "Start the Quiz",
       "skipButton": "Skip"
+    }
+  },
+  "onboarding": {
+    "follows": {
+      "description": "You’ll see their latest works and get better recommendations (for art you’ll love).",
+      "artists": {
+        "title": "Follow artists to see more of their work",
+        "placeholder": "Search Artists"
+      },
+      "galleries": {
+        "title": "Follow galleries you love to see events and news",
+        "placeholder": "Search Galleries"
+      }
     }
   }
 }

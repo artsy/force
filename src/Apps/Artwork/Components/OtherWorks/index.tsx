@@ -1,19 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  Box,
-  Join,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-} from "@artsy/palette"
+import { Box, Join, Skeleton, Spacer } from "@artsy/palette"
 import { OtherWorks_artwork$data } from "__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuctions"
-import { Header } from "Apps/Artwork/Components/OtherWorks/Header"
+import {
+  Header,
+  HeaderPlaceholder,
+} from "Apps/Artwork/Components/OtherWorks/Header"
 import { RelatedWorksArtworkGridRefetchContainer } from "Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
 import { SystemContextProps, withSystemContext } from "System"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import ArtworkGrid from "Components/ArtworkGrid"
+import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
@@ -21,8 +17,7 @@ import { Mediator } from "Server/mediator"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { useSystemContext } from "System"
-import { random } from "lodash"
-import { Rail } from "Components/Rail"
+import { compact } from "lodash"
 import track, { useTracking } from "react-tracking"
 
 export interface OtherWorksContextProps {
@@ -35,23 +30,6 @@ export interface OtherWorksContextProps {
  */
 export function hideGrid(artworksConnection): boolean {
   return Boolean(get(artworksConnection, p => !p?.edges.length))
-}
-
-const populatedGrids = (grids: OtherWorks_artwork$data["contextGrids"]) => {
-  if (grids && grids.length > 0) {
-    return grids.filter(grid => {
-      return (
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        grid.artworksConnection &&
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        grid.artworksConnection.edges &&
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        grid.artworksConnection.edges.length > 0 &&
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        grid.__typename !== "RelatedArtworkGrid"
-      )
-    })
-  }
 }
 
 const contextGridTypeToContextModule = contextGridType => {
@@ -71,7 +49,7 @@ const contextGridTypeToContextModule = contextGridType => {
   }
 }
 
-const contextGridTypeToV2ContextModule = contextGridType => {
+const contextGridTypeToV2ContextModule = (contextGridType: string) => {
   switch (contextGridType) {
     case "ArtistArtworkGrid": {
       return ContextModule.otherWorksByArtistRail
@@ -89,10 +67,20 @@ const contextGridTypeToV2ContextModule = contextGridType => {
 }
 
 export const OtherWorks = track()(
-  (props: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
-    const { context, contextGrids, sale } = props.artwork
-    const gridsToShow = populatedGrids(contextGrids)
+  ({ artwork }: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
+    const { context, contextGrids, sale } = artwork
+
     const tracking = useTracking()
+
+    const gridsToShow = compact(
+      (contextGrids ?? []).filter(grid => {
+        return (
+          !!grid &&
+          (grid.artworksConnection?.edges ?? []).length > 0 &&
+          grid.__typename !== "RelatedArtworkGrid"
+        )
+      })
+    )
 
     return (
       <>
@@ -100,34 +88,35 @@ export const OtherWorks = track()(
           <Join separator={<Spacer mt={6} />}>
             {gridsToShow.map((grid, index) => {
               const contextModule = contextGridTypeToV2ContextModule(
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 grid.__typename
               )
 
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
-                  {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                  <Header title={grid.title} buttonHref={grid.ctaHref} />
+                  {grid.title && (
+                    <Header title={grid.title} buttonHref={grid.ctaHref!} />
+                  )}
 
-                  <Spacer mt={4} />
+                  {grid.artworksConnection && (
+                    <>
+                      <Spacer mt={4} />
 
-                  <ArtworkGrid
-                    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                    artworks={grid.artworksConnection}
-                    columnCount={[2, 3, 4, 4]}
-                    mediator={props.mediator}
-                    contextModule={contextModule}
-                    onBrickClick={() =>
-                      tracking.trackEvent({
-                        type: DeprecatedSchema.Type.ArtworkBrick,
-                        action_type: DeprecatedSchema.ActionType.Click,
-                        context_module: contextGridTypeToContextModule(
-                          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                          grid.__typename
-                        ),
-                      })
-                    }
-                  />
+                      <ArtworkGrid
+                        artworks={grid.artworksConnection}
+                        columnCount={[2, 3, 4, 4]}
+                        contextModule={contextModule}
+                        onBrickClick={() =>
+                          tracking.trackEvent({
+                            type: DeprecatedSchema.Type.ArtworkBrick,
+                            action_type: DeprecatedSchema.ActionType.Click,
+                            context_module: contextGridTypeToContextModule(
+                              grid.__typename
+                            ),
+                          })
+                        }
+                      />
+                    </>
+                  )}
                 </Box>
               )
             })}
@@ -142,13 +131,14 @@ export const OtherWorks = track()(
           <>
             <Spacer mt={6} />
 
-            <RelatedWorksArtworkGridRefetchContainer artwork={props.artwork} />
+            <RelatedWorksArtworkGridRefetchContainer artwork={artwork} />
           </>
         )}
 
         {context && context.__typename === "ArtworkContextAuction" && (
           <>
             <Spacer mt={6} />
+
             <OtherAuctionsQueryRenderer />
           </>
         )}
@@ -196,28 +186,22 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Rail
-      title="Other works by Pablo Picasso"
-      viewAllLabel="View All"
-      showProgress={false}
-      getItems={() => {
-        return [...new Array(4)].map((_, i) => {
-          return (
-            <Box key={i} p={1}>
-              <SkeletonBox width={random(200, 400)} height={400} />
-              <Spacer mt={1} />
-              <SkeletonText variant="xs">Pablo Picasso</SkeletonText>
-              <SkeletonText variant="xs">
-                Paysage (Landscape), 1953
-              </SkeletonText>
-              <SkeletonText variant="xs">
-                Paysage (Landscape), 1953
-              </SkeletonText>
-            </Box>
-          )
-        })
-      }}
-    />
+    <Join separator={<Spacer mt={6} />}>
+      {[...new Array(2)].map((_, i) => {
+        return (
+          <Box key={i}>
+            <HeaderPlaceholder
+              title="Other works by Pablo Picasso"
+              buttonHref
+            />
+
+            <Spacer mt={4} />
+
+            <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
+          </Box>
+        )
+      })}
+    </Join>
   </Skeleton>
 )
 
@@ -245,9 +229,11 @@ export const OtherWorksQueryRenderer: React.FC<{
             console.error(error)
             return null
           }
+
           if (!props) {
             return PLACEHOLDER
           }
+
           if (props.artwork) {
             return <OtherWorksFragmentContainer artwork={props.artwork} />
           }

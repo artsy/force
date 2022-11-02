@@ -5,7 +5,12 @@ import { FollowButton } from "./Button"
 import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import { ButtonProps } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
-import { Intent, ContextModule, AuthContextModule } from "@artsy/cohesion"
+import {
+  Intent,
+  ContextModule,
+  AuthContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -26,6 +31,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
   const { isLoggedIn, mediator } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
+    ownerType: OwnerType.gene,
     ownerId: gene.internalID,
     ownerSlug: gene.slug,
     contextModule,
@@ -84,6 +90,9 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     <FollowButton
       isFollowed={!!gene.isFollowed}
       handleFollow={handleClick}
+      aria-label={
+        gene.isFollowed ? `Unfollow ${gene.name}` : `Follow ${gene.name}`
+      }
       {...rest}
     />
   )

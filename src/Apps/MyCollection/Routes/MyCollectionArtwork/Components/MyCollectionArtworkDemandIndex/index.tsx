@@ -39,9 +39,11 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
   return (
     <>
       <Media greaterThanOrEqual="sm">
-        <Text variant="lg">Demand Index</Text>
+        <Text variant="md" mt={4}>
+          Demand Index
+        </Text>
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           {DemandIndexExplanation}
         </Text>
       </Media>
@@ -64,7 +66,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
 
       <Spacer m={2} />
 
-      <Text variant={["xl", "xxl"]} color={demandRankColor}>
+      <Text variant={"xl"} color={demandRankColor}>
         {adjustedDemandRank}
       </Text>
       <Flex flexDirection="row" alignItems="center">
@@ -74,7 +76,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
           </Flex>
         )}
 
-        <Text variant={["md", "lg"]} color={demandRankColor}>
+        <Text variant={"md"} color={demandRankColor}>
           {marketPriceInsights.demandRankDisplayText}
         </Text>
       </Flex>

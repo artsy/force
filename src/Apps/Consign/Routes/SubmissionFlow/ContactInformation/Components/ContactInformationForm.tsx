@@ -13,10 +13,12 @@ export interface ContactInformationFormModel {
 
 export interface ContactInformationFormProps extends BoxProps {
   me: ContactInformationForm_me$data
+  optionalPhoneNumber?: boolean
 }
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   me,
+  optionalPhoneNumber = false,
   ...rest
 }) => {
   const {
@@ -73,6 +75,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       <PhoneNumberInput
         mt={4}
         phoneNumber={values.phone}
+        optional={optionalPhoneNumber}
         onChange={handlePhoneNumberChange}
         inputProps={{
           maxLength: 256,

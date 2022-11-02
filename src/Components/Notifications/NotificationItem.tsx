@@ -3,9 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
 import { RouterLink } from "System/Router/RouterLink"
-import { getDateLabel } from "./util"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
@@ -14,6 +15,7 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+  const { trackEvent } = useTracking()
   const artworks = extractNodes(item.artworksConnection)
 
   const getNotificationType = () => {
@@ -26,7 +28,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const notificationTypeLabel = getNotificationType()
 
   return (
-    <NotificationItemLink to={item.targetHref}>
+    <NotificationItemLink
+      to={item.targetHref}
+      onClick={() => {
+        trackEvent({
+          action: ActionType.clickedActivityPanelNotificationItem,
+          notification_type: item.notificationType,
+        })
+      }}
+    >
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {notificationTypeLabel && (
@@ -36,7 +46,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
               {notificationTypeLabel} •{" "}
             </NotificationTypeLabel>
           )}
-          {getDateLabel(item.createdAt!)}
+          {item.publishedAt}
         </Text>
 
         <Text variant="sm-display" fontWeight="bold">
@@ -89,7 +99,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
       fragment NotificationItem_item on Notification {
         title
         message
-        createdAt
+        publishedAt(format: "RELATIVE")
         targetHref
         isUnread
         notificationType

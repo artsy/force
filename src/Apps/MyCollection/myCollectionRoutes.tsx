@@ -35,6 +35,16 @@ const PriceEstimateContactInformation = loadable(
   }
 )
 
+const PriceEstimateConfirmation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/PriceEstimate/PriceEstimateConfirmation"
+    ),
+  {
+    resolveComponent: component => component.PriceEstimateConfirmation,
+  }
+)
+
 const MyCollectionArtworkForm = loadable(
   () =>
     import(
@@ -83,6 +93,15 @@ export const myCollectionRoutes: AppRouteConfig[] = [
         }
       }
     `,
+  },
+  {
+    path: "/my-collection/artwork/:artworkID/price-estimate/success",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateConfirmation,
+    onClientSideRender: () => {
+      PriceEstimateConfirmation.preload()
+    },
   },
   {
     path: "/my-collection",

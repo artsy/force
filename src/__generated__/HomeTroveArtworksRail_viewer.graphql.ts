@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e4525bb3d2d774427d94dbd7754e164>>
+ * @generated SignedSource<<4e3e2d4d1a9a56e146549187f9ac1fd8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,8 +44,8 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
-          "name": "geneIDs",
-          "value": "trove"
+          "name": "marketingCollectionID",
+          "value": "trove-editors-picks"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -102,13 +102,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:12,geneIDs:\"trove\")"
+      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"trove-editors-picks\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "aeb4755ff31a7f7acd1803d7daffc06a";
+(node as any).hash = "d3ba6a95604757356fd7f0426f0c17fb";
 
 export default node;

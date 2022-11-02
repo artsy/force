@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionAssociatedSaleFragmentContainer } from "../AuctionAssociatedSale"
+import { AuctionAssociatedSaleFragmentContainer } from "Apps/Auction/Components/AuctionAssociatedSale"
 import { AuctionAssociatedSaleTestQuery } from "__generated__/AuctionAssociatedSaleTestQuery.graphql"
 
 jest.unmock("react-relay")
@@ -29,6 +29,6 @@ describe("AuctionAssociatedSale", () => {
 
     expect(wrapper.find("Image")).toHaveLength(1)
     expect(wrapper.text()).toContain("Sale Name")
-    expect(wrapper.text()).toContain("Starts Tomorrow")
+    expect(wrapper.text()).toContain("Starts tomorrow")
   })
 })

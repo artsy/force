@@ -4,7 +4,7 @@ import { Flex, Spinner, Text } from "@artsy/palette"
 
 export const SavingPaymentSpinner: FC = () => {
   return (
-    <Flex flexDirection="column" alignItems="center">
+    <Flex flexDirection="column" alignItems="center" mb={6}>
       <SpinnerContainer>
         <Spinner size="large" color="blue100" />
       </SpinnerContainer>

@@ -1,5 +1,6 @@
-import * as React from "react";
-import { PartnerArtistDetailsPlaceholder } from "../PartnerArtistDetails"
+import * as React from "react"
+import { PartnerArtistDetailsPlaceholder } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails"
+import { Join, Skeleton, Spacer } from "@artsy/palette"
 
 export interface PartnerArtistDetailsListPlaceholderProps {
   count: number
@@ -9,10 +10,12 @@ export const PartnerArtistDetailsListPlaceholder: React.FC<PartnerArtistDetailsL
   count,
 }) => {
   return (
-    <>
-      {[...Array(count)].map((_, i) => (
-        <PartnerArtistDetailsPlaceholder key={i} />
-      ))}
-    </>
+    <Skeleton>
+      <Join separator={<Spacer mt={4} />}>
+        {[...Array(count)].map((_, i) => (
+          <PartnerArtistDetailsPlaceholder key={i} />
+        ))}
+      </Join>
+    </Skeleton>
   )
 }

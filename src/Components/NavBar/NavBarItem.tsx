@@ -5,7 +5,6 @@ import { RouterUnawareLink } from "System/Router/RouterLink"
 
 const navBarItemMixin = css<{ active?: boolean }>`
   position: relative;
-  display: flex;
   height: 100%;
   align-items: center;
   color: ${themeGet("colors.black100")};
@@ -28,6 +27,7 @@ export const NavBarItemLink = styled(RouterUnawareLink)`
 `
 
 NavBarItemLink.defaultProps = {
+  display: "flex",
   px: 1,
 }
 
@@ -36,6 +36,7 @@ export const NavBarItemButton = styled(Clickable)`
 `
 
 NavBarItemButton.defaultProps = {
+  display: "flex",
   px: 1,
 }
 

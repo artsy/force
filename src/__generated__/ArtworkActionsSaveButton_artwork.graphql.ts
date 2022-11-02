@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f788637fe067e8ea13b4beb6240d5ac>>
+ * @generated SignedSource<<d17b846875c9d1ada328644506abeb7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,18 @@ export type ArtworkActionsSaveButton_artwork$data = {
   readonly sale: {
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
+    readonly isLiveOpen: boolean | null;
+    readonly isRegistrationClosed: boolean | null;
+    readonly liveStartAt: string | null;
+    readonly registrationEndsAt: string | null;
+    readonly registrationStatus: {
+      readonly qualifiedForBidding: boolean | null;
+    } | null;
+    readonly requireIdentityVerification: boolean | null;
   } | null;
   readonly slug: string;
   readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionRegistrationPanel_artwork">;
   readonly " $fragmentType": "ArtworkActionsSaveButton_artwork";
 };
 export type ArtworkActionsSaveButton_artwork$key = {
@@ -82,6 +91,59 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "isClosed",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isLiveOpen",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isRegistrationClosed",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "requireIdentityVerification",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "liveStartAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "registrationEndsAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Bidder",
+          "kind": "LinkedField",
+          "name": "registrationStatus",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "qualifiedForBidding",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -92,12 +154,17 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isSaved",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkAuctionRegistrationPanel_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "f9f932f8bf5211f17e9a67fe030f2e48";
+(node as any).hash = "f267f1a91dc38412eeaf6a35c4495c3c";
 
 export default node;

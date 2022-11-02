@@ -34,8 +34,10 @@ export const useArtworkGridContext = () => {
   return artworkGridContext
 }
 
-export const withArtworkGridContext = Component => {
-  return props => {
+export const withArtworkGridContext = <T,>(
+  Component: React.ComponentType<T>
+) => {
+  return (props: T) => {
     return (
       <ArtworkGridContext.Consumer>
         {contextValues => {
