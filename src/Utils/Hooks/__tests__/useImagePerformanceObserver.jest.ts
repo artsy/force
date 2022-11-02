@@ -45,25 +45,34 @@ describe("useImagePerformanceObserver", () => {
 
     result.current.current = [
       {
-        initiatorType: "img",
-        transferSize: 10000,
-        name:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
-        duration: 100,
+        rootPath: "article",
+        entry: {
+          initiatorType: "img",
+          transferSize: 10000,
+          name:
+            "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
+          duration: 100,
+        },
       },
       {
-        initiatorType: "img",
-        transferSize: 3333333,
-        name:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
-        duration: 333,
+        rootPath: "article",
+        entry: {
+          initiatorType: "img",
+          transferSize: 3333333,
+          name:
+            "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
+          duration: 333,
+        },
       },
       {
-        initiatorType: "img",
-        transferSize: 100000,
-        name:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
-        duration: 150,
+        rootPath: "article",
+        entry: {
+          initiatorType: "img",
+          transferSize: 100000,
+          name:
+            "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&width=100&quality=80",
+          duration: 150,
+        },
       },
     ]
 
@@ -73,19 +82,34 @@ describe("useImagePerformanceObserver", () => {
     expect(spy).toBeCalledWith([
       {
         name: "image.load-time",
-        tags: ["transfer-size:sm", "device-type:desktop"],
+        tags: [
+          "transfer-size:0-100kb",
+          "device-type:desktop",
+          "pixel-ratio:1",
+          "root-path:article",
+        ],
         timing: 100,
         type: "timing",
       },
       {
         name: "image.load-time",
-        tags: ["transfer-size:xl", "device-type:desktop"],
+        tags: [
+          "transfer-size:3300-3400kb",
+          "device-type:desktop",
+          "pixel-ratio:1",
+          "root-path:article",
+        ],
         timing: 333,
         type: "timing",
       },
       {
         name: "image.load-time",
-        tags: ["transfer-size:md", "device-type:desktop"],
+        tags: [
+          "transfer-size:100-200kb",
+          "device-type:desktop",
+          "pixel-ratio:1",
+          "root-path:article",
+        ],
         timing: 150,
         type: "timing",
       },

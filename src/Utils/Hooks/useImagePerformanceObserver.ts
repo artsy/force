@@ -5,13 +5,13 @@ import { GEMINI_CLOUDFRONT_URL } from "Utils/resizer"
 
 const DEVICE_TYPE = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
+type Entry = Pick<
+  PerformanceResourceTiming,
+  "initiatorType" | "transferSize" | "name" | "duration"
+>
+
 export const useImagePerformanceObserver = () => {
-  const queue = useRef<
-    Pick<
-      PerformanceResourceTiming,
-      "initiatorType" | "transferSize" | "name" | "duration"
-    >[]
-  >([])
+  const queue = useRef<{ entry: Entry; rootPath: string }[]>([])
 
   useEffect(() => {
     if (typeof PerformanceObserver === "undefined") return
@@ -34,7 +34,9 @@ export const useImagePerformanceObserver = () => {
             return
           }
 
-          queue.current.push(entry)
+          const rootPath = window.location.pathname.split("/")[1]
+
+          queue.current.push({ entry, rootPath })
         })
       })
 
@@ -58,14 +60,16 @@ export const useImagePerformanceObserver = () => {
 
       if (entries.length === 0) return
 
-      const data = entries.map(entry => {
+      const data = entries.map(({ entry, rootPath }) => {
         const payload: VolleyMetric = {
           type: "timing",
           name: "image.load-time",
           timing: entry.duration,
           tags: [
-            `transfer-size:${bucket(entry.transferSize)}`,
+            `transfer-size:${transferSize(entry.transferSize)}`,
             `device-type:${DEVICE_TYPE}`,
+            `pixel-ratio:${window.devicePixelRatio}`,
+            `root-path:${rootPath}`,
           ],
         }
 
@@ -85,15 +89,8 @@ export const useImagePerformanceObserver = () => {
   return queue
 }
 
-type Bucket = "sm" | "md" | "lg" | "xl"
-
-const bucket = (size: number): Bucket => {
-  // 0 - 100kb
-  if (size < 100000) return "sm"
-  // 100kb - 200kb
-  if (size < 200000) return "md"
-  // 200kb - 300kb
-  if (size < 300000) return "lg"
-  // 300kb+
-  return "xl"
+const transferSize = (size: number) => {
+  const kb = size / 1000
+  const lowerBound = Math.floor(kb / 100) * 100
+  return `${lowerBound}-${lowerBound + 100}kb`
 }
