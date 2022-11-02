@@ -11,7 +11,7 @@ import {
   splitBoxProps,
   useDidMount,
 } from "@artsy/palette"
-import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Hooks/useCareerHighlightsStoriesContext"
+import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { omit } from "lodash"
 
 type CareerHighlightModalProps = ModalBaseProps

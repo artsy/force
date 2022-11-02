@@ -1,6 +1,6 @@
-import { CareerHighlightModalPromoStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Components/CareerHighlightModalPromoStep"
-import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Components/CareerHighlightModalStep"
-import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Hooks/useCareerHighlightsStoriesContext"
+import { CareerHighlightModalPromoStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalPromoStep"
+import { CareerHighlightModalStep } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Components/CareerHighlightModalStep"
+import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { CareerHighlightsStepsQuery } from "__generated__/CareerHighlightsStepsQuery.graphql"
 

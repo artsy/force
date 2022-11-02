@@ -6,7 +6,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/config"
+import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
 import {
   CareerHighlightKind,
   getCareerHighlight,

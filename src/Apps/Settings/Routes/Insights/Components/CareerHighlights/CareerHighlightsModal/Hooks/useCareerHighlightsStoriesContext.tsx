@@ -1,7 +1,7 @@
 import {
   CareerHighlightKindWithPromo,
   useCareerHighlightConfig,
-} from "Apps/Settings/Routes/Insights/Components/CareerHighlights/config"
+} from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
 import { createContext, useContext } from "react"
 
 interface ContextType {

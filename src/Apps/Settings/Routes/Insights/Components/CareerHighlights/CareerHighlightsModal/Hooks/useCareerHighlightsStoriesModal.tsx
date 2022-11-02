@@ -1,5 +1,5 @@
-import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/config"
-import { useCareerHighlightsStories } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/Hooks/useCareerHighlightsStories"
+import { CareerHighlightKindWithPromo } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/config"
+import { useCareerHighlightsStories } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStories"
 
 interface UseCareerHighlightsModalProps {
   careerHighlights: CareerHighlightKindWithPromo[]
