@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dfdeb2c3f10dc3732db6ef3cb6ff1ac>>
+ * @generated SignedSource<<27239cf8cc980f5c87260f6b7f6da8ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,14 +90,15 @@ v5 = {
   "storageKey": null
 },
 v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v7 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -105,15 +106,27 @@ v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v10 = {
+v11 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -248,7 +261,8 @@ return {
                     "storageKey": null
                   },
                   (v3/*: any*/),
-                  (v2/*: any*/)
+                  (v2/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "type": "Video",
                 "abstractKey": null
@@ -367,20 +381,14 @@ return {
             "name": "isSetVideoAsCover",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v6/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "3da190faefb0f1a5cc9b469ab0534dee",
+    "cacheID": "98fa8864261b2a02c31c986b70dee1de",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -396,7 +404,7 @@ return {
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v6/*: any*/),
+        "artwork.figures.__typename": (v7/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -409,37 +417,33 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.Overlap": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Overlap": (v9/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "DeepZoomImageSize"
         },
-        "artwork.figures.deepZoom.Image.Size.Height": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.Size.Width": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.TileSize": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v7/*: any*/),
-        "artwork.figures.height": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Height": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Width": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.TileSize": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v8/*: any*/),
+        "artwork.figures.height": (v10/*: any*/),
+        "artwork.figures.id": (v11/*: any*/),
         "artwork.figures.internalID": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ID"
         },
-        "artwork.figures.isZoomable": (v10/*: any*/),
-        "artwork.figures.type": (v6/*: any*/),
-        "artwork.figures.url": (v6/*: any*/),
-        "artwork.figures.width": (v9/*: any*/),
-        "artwork.formattedMetadata": (v7/*: any*/),
-        "artwork.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
+        "artwork.figures.isZoomable": (v12/*: any*/),
+        "artwork.figures.type": (v7/*: any*/),
+        "artwork.figures.url": (v7/*: any*/),
+        "artwork.figures.width": (v10/*: any*/),
+        "artwork.formattedMetadata": (v8/*: any*/),
+        "artwork.id": (v11/*: any*/),
         "artwork.images": {
           "enumValues": null,
           "nullable": true,
@@ -452,28 +456,28 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artwork.images.fallback.height": (v9/*: any*/),
-        "artwork.images.fallback.src": (v6/*: any*/),
-        "artwork.images.fallback.srcSet": (v6/*: any*/),
-        "artwork.images.fallback.width": (v9/*: any*/),
-        "artwork.images.isDefault": (v10/*: any*/),
-        "artwork.images.placeholder": (v7/*: any*/),
+        "artwork.images.fallback.height": (v10/*: any*/),
+        "artwork.images.fallback.src": (v7/*: any*/),
+        "artwork.images.fallback.srcSet": (v7/*: any*/),
+        "artwork.images.fallback.width": (v10/*: any*/),
+        "artwork.images.isDefault": (v12/*: any*/),
+        "artwork.images.placeholder": (v8/*: any*/),
         "artwork.images.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artwork.images.resized.height": (v8/*: any*/),
-        "artwork.images.resized.src": (v6/*: any*/),
-        "artwork.images.resized.srcSet": (v6/*: any*/),
-        "artwork.images.resized.width": (v8/*: any*/),
-        "artwork.isSetVideoAsCover": (v10/*: any*/)
+        "artwork.images.resized.height": (v9/*: any*/),
+        "artwork.images.resized.src": (v7/*: any*/),
+        "artwork.images.resized.srcSet": (v7/*: any*/),
+        "artwork.images.resized.width": (v9/*: any*/),
+        "artwork.isSetVideoAsCover": (v12/*: any*/)
       }
     },
     "name": "ArtworkImageBrowserLarge_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      type: __typename\n      internalID\n      isZoomable\n      ...DeepZoom_image\n    }\n    ... on Video {\n      type: __typename\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  figures {\n    __typename\n    ... on Video {\n      type: __typename\n      url\n      height\n      width\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      type: __typename\n      internalID\n      isZoomable\n      ...DeepZoom_image\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  figures {\n    __typename\n    ... on Video {\n      type: __typename\n      url\n      height\n      width\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
