@@ -25,7 +25,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 }) => {
   const { figures } = artwork
 
-  const { index, handleNext, handlePrev, setCursor } = useCursor({
+  const { index: activeIndex, handleNext, handlePrev, setCursor } = useCursor({
     max: figures.length,
   })
 
@@ -73,7 +73,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     )
   }, [figures])
 
-  const handleSelectDefaultSlide = () => {
+  const handleSelectRoomViewableFigure = () => {
     setCursor(defaultIndex)
   }
 
@@ -90,8 +90,8 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
       <Media at="xs">
         <ArtworkImageBrowserSmallFragmentContainer
           artwork={artwork}
-          index={index}
-          setIndex={setCursor}
+          activeIndex={activeIndex}
+          setActiveIndex={setCursor}
           maxHeight={maxHeight}
         />
       </Media>
@@ -99,7 +99,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
       <Media greaterThan="xs">
         <ArtworkImageBrowserLargeFragmentContainer
           artwork={artwork}
-          index={index}
+          activeIndex={activeIndex}
           onNext={handleNext}
           onPrev={handlePrev}
           maxHeight={maxHeight}
@@ -112,7 +112,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 
           <ArtworkActions
             artwork={artwork}
-            selectDefaultSlide={handleSelectDefaultSlide}
+            selectRoomViewableFigure={handleSelectRoomViewableFigure}
           />
         </>
       )}

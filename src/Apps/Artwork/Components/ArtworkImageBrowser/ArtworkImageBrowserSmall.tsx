@@ -16,20 +16,20 @@ import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/Art
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data
   /** Index of the currently active artwork */
-  index: number
+  activeIndex: number
   /** Update the currently active artwork (on swipe change) */
-  setIndex(index: number): void
+  setActiveIndex(index: number): void
   maxHeight: number
 }
 
 const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
   artwork,
-  index,
-  setIndex,
+  activeIndex,
+  setActiveIndex,
   maxHeight,
 }) => {
   const figures = artwork.figures
-  const activeFigure = figures[index]
+  const activeFigure = figures[activeIndex]
 
   const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
 
@@ -46,7 +46,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
         />
       )}
 
-      <Swiper snap="center" onChange={setIndex} Cell={Cell} Rail={Rail}>
+      <Swiper snap="center" onChange={setActiveIndex} Cell={Cell} Rail={Rail}>
         {figures.map((figure, i) => {
           switch (figure.type) {
             case "Image":
@@ -85,7 +85,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
         <ProgressDots
           variant="dash"
           amount={figures.length}
-          activeIndex={index}
+          activeIndex={activeIndex}
         />
       )}
     </>

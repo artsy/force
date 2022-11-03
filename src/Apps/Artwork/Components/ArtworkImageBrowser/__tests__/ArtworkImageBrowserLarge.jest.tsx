@@ -18,7 +18,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
         <ArtworkImageBrowserLargeFragmentContainer
           artwork={props.artwork}
           maxHeight={800}
-          index={0}
+          activeIndex={0}
           onNext={jest.fn()}
           onPrev={jest.fn()}
         />
