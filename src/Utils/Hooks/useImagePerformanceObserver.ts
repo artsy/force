@@ -68,7 +68,7 @@ export const useImagePerformanceObserver = () => {
           tags: [
             `transfer-size:${transferSize(entry.transferSize)}`,
             `device-type:${DEVICE_TYPE}`,
-            `pixel-ratio:${window.devicePixelRatio}`,
+            `pixel-ratio:${pixelRatio(window.devicePixelRatio)}`,
             `root-path:${rootPath}`,
           ],
         }
@@ -89,8 +89,14 @@ export const useImagePerformanceObserver = () => {
   return queue
 }
 
-const transferSize = (size: number) => {
+// Buckets into 100kb increments
+export const transferSize = (size: number) => {
   const kb = size / 1000
   const lowerBound = Math.floor(kb / 100) * 100
   return `${lowerBound}-${lowerBound + 100}kb`
+}
+
+// Round to either 1 or 2
+export const pixelRatio = (ratio: number) => {
+  return ratio >= 1.5 ? 2 : 1
 }

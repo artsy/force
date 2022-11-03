@@ -1,11 +1,43 @@
 import { renderHook } from "@testing-library/react-hooks"
-import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
+import {
+  pixelRatio,
+  transferSize,
+  useImagePerformanceObserver,
+} from "Utils/Hooks/useImagePerformanceObserver"
 import { sendToVolley } from "Server/volley"
 
 jest.mock("Server/volley", () => {
   return {
     sendToVolley: jest.fn(),
   }
+})
+
+const kb = (size: number) => size * 1000
+
+describe("transferSize", () => {
+  it("buckets into 100kb bands", () => {
+    expect(transferSize(kb(1))).toEqual("0-100kb")
+    expect(transferSize(kb(50))).toEqual("0-100kb")
+    expect(transferSize(kb(99.9))).toEqual("0-100kb")
+    expect(transferSize(kb(100))).toEqual("100-200kb")
+    expect(transferSize(kb(199.999))).toEqual("100-200kb")
+    expect(transferSize(kb(201))).toEqual("200-300kb")
+    expect(transferSize(kb(1000))).toEqual("1000-1100kb")
+  })
+})
+
+describe("pixelRatio", () => {
+  it("rounds to either 1x or 2x", () => {
+    expect(pixelRatio(0)).toEqual(1)
+    expect(pixelRatio(0.25)).toEqual(1)
+    expect(pixelRatio(1)).toEqual(1)
+    expect(pixelRatio(1.1)).toEqual(1)
+    expect(pixelRatio(1.5)).toEqual(2)
+    expect(pixelRatio(1.9)).toEqual(2)
+    expect(pixelRatio(2)).toEqual(2)
+    expect(pixelRatio(2.1)).toEqual(2)
+    expect(pixelRatio(3)).toEqual(2)
+  })
 })
 
 describe("useImagePerformanceObserver", () => {
