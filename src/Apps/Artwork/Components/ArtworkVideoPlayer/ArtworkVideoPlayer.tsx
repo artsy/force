@@ -2,6 +2,7 @@ import React, { FC } from "react"
 import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
+import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser"
 
 interface ArtworkVideoPlayerProps extends BoxProps {
   activeIndex: number
@@ -15,13 +16,9 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
   maxHeight,
   ...rest
 }) => {
-  if (!figures) {
-    return null
-  }
-
   const activeVideo = figures[activeIndex]
 
-  if (!activeVideo || activeVideo.type === "%other") {
+  if (!activeVideo || activeVideo.__typename === "%other") {
     return null
   }
 
@@ -32,13 +29,20 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
       justifyContent="center"
       height={[null, null, maxHeight]}
       width="100%"
+      px={[
+        0,
+        // FIXME: Pad to avoid overlapping with the next/prev buttons
+        // We can just show/hide the UI when hovering over the video instead
+        70,
+      ]}
       {...rest}
     >
       <ResponsiveBox
-        mx={[0, "70px"]}
-        maxWidth="100%"
-        aspectWidth={activeVideo.width}
-        aspectHeight={activeVideo.height}
+        maxWidth={MAX_DIMENSION}
+        maxHeight={MAX_DIMENSION}
+        aspectWidth={activeVideo.videoWidth}
+        aspectHeight={activeVideo.videoHeight}
+        bg="black10"
       >
         <iframe
           src={activeVideo.url}
@@ -61,10 +65,11 @@ const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
       fragment ArtworkVideoPlayer_artwork on Artwork {
         figures {
           ... on Video {
-            type: __typename
+            __typename
             url
-            height
-            width
+            # Fields need to be aliased to prevent conflicting types
+            videoWidth: width
+            videoHeight: height
           }
         }
       }

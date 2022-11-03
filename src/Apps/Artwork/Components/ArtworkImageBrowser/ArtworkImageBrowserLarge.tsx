@@ -3,6 +3,7 @@ import {
   ChevronIcon,
   Clickable,
   ProgressDots,
+  Spacer,
   VisuallyHidden,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -44,7 +45,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
   return (
     <>
-      {activeFigure.type === "Image" && isDeepZoomVisible && (
+      {activeFigure.__typename === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer
           image={activeFigure}
           onClose={hideDeepZoom}
@@ -88,9 +89,10 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           </nav>
         )}
 
-        {activeFigure.type === "Image" && (
+        <Spacer mt={2} />
+
+        {activeFigure.__typename === "Image" && (
           <ArtworkLightboxFragmentContainer
-            my={2}
             maxHeight={maxHeight}
             artwork={artwork}
             activeIndex={artwork.isSetVideoAsCover ? index - 1 : index}
@@ -98,14 +100,15 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           />
         )}
 
-        {activeFigure.type === "Video" && (
+        {activeFigure.__typename === "Video" && (
           <ArtworkVideoPlayerFragmentContainer
-            my={2}
             maxHeight={maxHeight}
             activeIndex={index}
             artwork={artwork}
           />
         )}
+
+        <Spacer mt={2} />
 
         {figures.length > 1 && (
           <>
@@ -135,13 +138,13 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         isSetVideoAsCover
         figures {
           ... on Image {
-            type: __typename
+            ...DeepZoom_image
+            __typename
             internalID
             isZoomable
-            ...DeepZoom_image
           }
           ... on Video {
-            type: __typename
+            __typename
           }
         }
       }
