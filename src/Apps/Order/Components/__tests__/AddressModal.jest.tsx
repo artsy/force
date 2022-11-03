@@ -10,8 +10,9 @@ import {
   updateAddressSuccess,
   updateAddressFailure,
 } from "Apps/Order/Routes/__fixtures__/MutationResults"
-import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import { FormikAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
+
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -22,14 +23,15 @@ jest.mock("Utils/user", () => ({
 
 const errorBoxQuery = "Banner[data-test='credit-card-error']"
 
-// needed for modal contentAnimation
-const tick = () => new Promise(resolve => setTimeout(resolve, 0))
-
 const commitMutation = _commitMutation as jest.Mock<any>
 
-const savedAddress: SavedAddressType = {
+const savedAddress: FormikAddressType = {
   ...validAddress,
   phoneNumber: "8475937743",
+  phone: {
+    isValid: true,
+    national: "8475937743",
+  },
   id: "id",
   internalID: "internal-id",
   addressLine3: null,
@@ -86,7 +88,7 @@ describe("AddressModal", () => {
 
     expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("select").length).toBe(2)
 
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(1)
@@ -115,7 +117,7 @@ describe("AddressModal", () => {
     })
     expect(wrapper.text()).toContain("Add address")
     expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("select").length).toBe(2)
 
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(0)
@@ -181,7 +183,13 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({
+        ...validAddress,
+        phone: {
+          isValid: true,
+          national: "5555937743",
+        },
+      } as FormikAddressType)
 
       await wrapper.update()
 
@@ -212,7 +220,13 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({
+        ...validAddress,
+        phone: {
+          isValid: true,
+          national: "5555937743",
+        },
+      } as FormikAddressType)
 
       await wrapper.update()
 
@@ -226,12 +240,11 @@ describe("AddressModal", () => {
         },
       })
 
-      await tick()
-
       expect(wrapper.find(AddressModal).props().onError).toHaveBeenCalled()
 
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
+
     it("shows generic error when mutation returns error", async () => {
       let wrapper = getWrapper(testAddressModalProps)
 
@@ -241,11 +254,15 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({
+        ...validAddress,
+        phone: {
+          isValid: true,
+          national: "5555937743",
+        },
+      } as FormikAddressType)
 
       await wrapper.update()
-
-      await tick()
 
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
@@ -273,68 +290,25 @@ describe("AddressModal", () => {
     const setFieldError = jest.fn()
 
     const onSubmit = formik.props().onSubmit as any
-    onSubmit(validAddress as any, {
-      setFieldError: setFieldError,
-      setSubmitting: jest.fn(),
-    })
+    onSubmit(
+      {
+        ...validAddress,
+        phone: {
+          isValid: false,
+          national: "",
+        },
+      } as FormikAddressType,
+      {
+        setFieldError: setFieldError,
+        setSubmitting: jest.fn(),
+      }
+    )
 
     await wrapper.update()
-
-    await tick()
 
     expect(setFieldError).toHaveBeenCalledWith(
       "phoneNumber",
       "Please enter a valid phone number"
     )
-  })
-})
-
-describe("AddressModal feature flag", () => {
-  beforeEach(() => {
-    testAddressModalProps = {
-      show: true,
-      address: savedAddress,
-      onSuccess: jest.fn(),
-      onError: jest.fn(),
-      onDeleteAddress: jest.fn(),
-      modalDetails: {
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
-      },
-      me: {
-        id: "1234",
-        addressConnection: {
-          totalCount: 0,
-          edges: [],
-        },
-
-        " $fragmentType": "SavedAddresses_me",
-      },
-      closeModal: jest.fn(),
-    }
-    commitMutation.mockReset()
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        user: { lab_features: ["Phone Number Validation"] },
-        isLoggedIn: true,
-        relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
-    })
-  })
-
-  // FIXME: Palette 18.16.1 breaks this spec somehow
-  // https://github.com/artsy/palette/pull/1111
-  // https://github.com/artsy/palette/pull/1112
-  it.skip("renders dropdown phone input field when feat flag present", () => {
-    const wrapper = getWrapper(testAddressModalProps)
-    expect(
-      wrapper.find("Input[data-test='phoneInputWithoutValidationFlag']").length
-    ).toBe(0)
   })
 })
