@@ -42,7 +42,8 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
         maxHeight={MAX_DIMENSION}
         aspectWidth={activeVideo.videoWidth}
         aspectHeight={activeVideo.videoHeight}
-        bg="black10"
+        // TODO: Uncomment this when dimensions issue is investigated a bit more
+        // bg="black10"
       >
         <iframe
           src={activeVideo.url}
