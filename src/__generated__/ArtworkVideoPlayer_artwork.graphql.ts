@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40e3585d7017ebf5d63877b3de7004ba>>
+ * @generated SignedSource<<a2ae95d063f5a4280370c220140f76c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,8 @@ export type ArtworkVideoPlayer_artwork$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   }>;
+  readonly internalID: string;
+  readonly slug: string;
   readonly " $fragmentType": "ArtworkVideoPlayer_artwork";
 };
 export type ArtworkVideoPlayer_artwork$key = {
@@ -34,6 +36,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkVideoPlayer_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -85,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "269c2e841473f427dbad8334f35dd64a";
+(node as any).hash = "e65f2b1505f1c488578df3bd61854029";
 
 export default node;

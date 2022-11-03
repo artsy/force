@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ff8a2f7faf30faeae04f671b9a1c8a1>>
+ * @generated SignedSource<<372aa7fe345a4bebc3750c2aadbde181>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,25 +84,26 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "alias": "type",
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v6 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -110,21 +111,27 @@ v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v10 = {
+v11 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -232,6 +239,14 @@ return {
             ],
             "storageKey": null
           },
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -271,8 +286,8 @@ return {
                     "name": "height",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
-                  (v4/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "type": "Video",
                 "abstractKey": null
@@ -362,13 +377,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "internalID",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -376,7 +385,7 @@ return {
                     "name": "isZoomable",
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "type": "Image",
                 "abstractKey": null
@@ -391,14 +400,14 @@ return {
             "name": "isSetVideoAsCover",
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "e50b77e0a272bc5b41471c5150723eb6",
+    "cacheID": "931619fdd0a0f97a6ef9424be5ec6f4f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -414,7 +423,7 @@ return {
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v5/*: any*/),
+        "artwork.figures.__typename": (v6/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -427,33 +436,33 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v6/*: any*/),
-        "artwork.figures.deepZoom.Image.Overlap": (v7/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v7/*: any*/),
+        "artwork.figures.deepZoom.Image.Overlap": (v8/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "DeepZoomImageSize"
         },
-        "artwork.figures.deepZoom.Image.Size.Height": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.Size.Width": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.TileSize": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v6/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v6/*: any*/),
-        "artwork.figures.id": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Height": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Width": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.TileSize": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v7/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v7/*: any*/),
+        "artwork.figures.id": (v9/*: any*/),
         "artwork.figures.internalID": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ID"
         },
-        "artwork.figures.isZoomable": (v9/*: any*/),
-        "artwork.figures.type": (v5/*: any*/),
-        "artwork.figures.url": (v5/*: any*/),
-        "artwork.figures.videoHeight": (v10/*: any*/),
-        "artwork.figures.videoWidth": (v10/*: any*/),
-        "artwork.formattedMetadata": (v6/*: any*/),
-        "artwork.id": (v8/*: any*/),
+        "artwork.figures.isZoomable": (v10/*: any*/),
+        "artwork.figures.type": (v6/*: any*/),
+        "artwork.figures.url": (v6/*: any*/),
+        "artwork.figures.videoHeight": (v11/*: any*/),
+        "artwork.figures.videoWidth": (v11/*: any*/),
+        "artwork.formattedMetadata": (v7/*: any*/),
+        "artwork.id": (v9/*: any*/),
         "artwork.images": {
           "enumValues": null,
           "nullable": true,
@@ -466,28 +475,30 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artwork.images.fallback.height": (v10/*: any*/),
-        "artwork.images.fallback.src": (v5/*: any*/),
-        "artwork.images.fallback.srcSet": (v5/*: any*/),
-        "artwork.images.fallback.width": (v10/*: any*/),
-        "artwork.images.isDefault": (v9/*: any*/),
-        "artwork.images.placeholder": (v6/*: any*/),
+        "artwork.images.fallback.height": (v11/*: any*/),
+        "artwork.images.fallback.src": (v6/*: any*/),
+        "artwork.images.fallback.srcSet": (v6/*: any*/),
+        "artwork.images.fallback.width": (v11/*: any*/),
+        "artwork.images.isDefault": (v10/*: any*/),
+        "artwork.images.placeholder": (v7/*: any*/),
         "artwork.images.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artwork.images.resized.height": (v7/*: any*/),
-        "artwork.images.resized.src": (v5/*: any*/),
-        "artwork.images.resized.srcSet": (v5/*: any*/),
-        "artwork.images.resized.width": (v7/*: any*/),
-        "artwork.isSetVideoAsCover": (v9/*: any*/)
+        "artwork.images.resized.height": (v8/*: any*/),
+        "artwork.images.resized.src": (v6/*: any*/),
+        "artwork.images.resized.srcSet": (v6/*: any*/),
+        "artwork.images.resized.width": (v8/*: any*/),
+        "artwork.internalID": (v9/*: any*/),
+        "artwork.isSetVideoAsCover": (v10/*: any*/),
+        "artwork.slug": (v9/*: any*/)
       }
     },
     "name": "ArtworkImageBrowserSmall_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      url\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      url\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
