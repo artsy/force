@@ -104,6 +104,9 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
     return `/search${formattedTab}?term=${encodedTerm}`
   }
 
+  // FIXME: Not rendering keys correctly.
+  // Move to it's own component & render normally.
+  // Avoid declaring "render functions" within other render bodies.
   const renderTab = (
     text: string,
     to: string,
