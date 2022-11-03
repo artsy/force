@@ -20,12 +20,12 @@ import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
-  selectDefaultSlide(): void
+  selectRoomViewableFigure(): void
 }
 
 export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   artwork,
-  selectDefaultSlide,
+  selectRoomViewableFigure,
 }) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
@@ -53,7 +53,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
       name="viewInRoom"
       label="View in room"
       onClick={() => {
-        selectDefaultSlide()
+        selectRoomViewableFigure()
         showViewInRoom()
       }}
     />

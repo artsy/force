@@ -18,7 +18,7 @@ import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/Art
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data
-  index: number
+  activeIndex: number
   onNext(): void
   onPrev(): void
   maxHeight: number
@@ -26,14 +26,14 @@ interface ArtworkImageBrowserLargeProps {
 
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   artwork,
-  index,
+  activeIndex,
   onNext,
   onPrev,
   maxHeight,
 }) => {
   const { figures } = artwork
 
-  const activeFigure = figures[index]
+  const activeFigure = figures[activeIndex]
 
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
@@ -95,7 +95,9 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           <ArtworkLightboxFragmentContainer
             maxHeight={maxHeight}
             artwork={artwork}
-            activeIndex={artwork.isSetVideoAsCover ? index - 1 : index}
+            activeIndex={
+              artwork.isSetVideoAsCover ? activeIndex - 1 : activeIndex
+            }
             onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
           />
         )}
@@ -103,7 +105,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         {activeFigure.__typename === "Video" && (
           <ArtworkVideoPlayerFragmentContainer
             maxHeight={maxHeight}
-            activeIndex={index}
+            activeIndex={activeIndex}
             artwork={artwork}
           />
         )}
@@ -113,11 +115,11 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         {figures.length > 1 && (
           <>
             <VisuallyHidden aria-live="polite" aria-atomic="true">
-              Page {index + 1} of {figures.length}
+              Page {activeIndex + 1} of {figures.length}
             </VisuallyHidden>
 
             <ProgressDots
-              activeIndex={index}
+              activeIndex={activeIndex}
               amount={figures.length}
               variant="dash"
             />
