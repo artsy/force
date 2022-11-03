@@ -258,7 +258,7 @@ export const countryCodes = {
   MZ: "258",
 }
 
-export const countries: CountryData[] = [
+export const countryList: CountryData[] = [
   {
     country: "United States",
     countryCode: "1",
@@ -1712,3 +1712,10 @@ export const countries: CountryData[] = [
     text: "🇿🇼 + 263",
   },
 ]
+
+export const countries: CountryData[] = countryList.sort(
+  (a, b) =>
+    Math.floor(Math.log10(Math.abs(Number(a.countryCode)))) -
+      Math.floor(Math.log10(Math.abs(Number(b.countryCode)))) ||
+    Number(a.countryCode) - Number(b.countryCode)
+)
