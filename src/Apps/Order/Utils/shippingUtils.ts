@@ -143,7 +143,7 @@ export const convertShippingAddressToMutationInput = (
     {
       ...address,
       name: address?.name || "",
-      phoneNumber: address?.phone?.international,
+      phoneNumber: address?.phone?.national,
     },
     ["isDefault", "internalID", "id", "__typename", "phone"]
   )

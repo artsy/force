@@ -106,13 +106,20 @@ export const AddressModal: React.FC<Props> = ({
   const getInitialFormikValues = () => {
     const initialPhoneValues = {
       isValid: false,
-      international: "",
       national: "",
+      regionCode: "",
     }
 
     return createMutation
       ? { country: "US", phone: initialPhoneValues }
-      : { ...address, phone: initialPhoneValues }
+      : {
+          ...address,
+          phone: {
+            isValid: address?.phoneNumber && address?.country,
+            national: address?.phoneNumber || "",
+            regionCode: address?.country.toLowerCase() || "",
+          },
+        }
   }
 
   return (
