@@ -15,7 +15,9 @@ import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/Art
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data
+  /** Index of the currently active artwork */
   index: number
+  /** Update the currently active artwork (on swipe change) */
   setIndex(index: number): void
   maxHeight: number
 }
@@ -54,7 +56,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
                   maxHeight={maxHeight}
                   my={2}
                   artwork={artwork}
-                  activeIndex={artwork.isSetVideoAsCover ? index - 1 : index}
+                  activeIndex={artwork.isSetVideoAsCover ? i - 1 : i}
                   lazyLoad={i !== 0}
                   onClick={
                     activeFigure.type === "Image" && activeFigure.isZoomable
