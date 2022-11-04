@@ -13,14 +13,14 @@ const emptyStateByType: Record<
   }
 > = {
   all: {
-    title: "You haven't followed any artists, galleries or fairs yet.",
+    title: "You haven’t followed any artists, galleries or fairs yet.",
     message:
       "Follow artists to keep track of their latest work and career highlights. Following artists helps Artsy to recommend works you might like.",
   },
   alerts: {
-    title: "Set alerts for artworks you're hunting for.",
+    title: "Set alerts for artworks you’re seeking.",
     message:
-      'Filter for the artworks you love on an artist page and tap "Create Alert". Get notifications here when there\'s a match.',
+      "Filter for the artworks you love on an artist page and select “Create Alert.” Get notifications here when there’s a match.",
   },
 }
 
