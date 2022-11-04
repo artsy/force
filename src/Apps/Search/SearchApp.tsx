@@ -17,6 +17,7 @@ import { useRouter } from "System/Router/useRouter"
 import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useTranslation } from "react-i18next"
+import { Jump } from "Utils/Hooks/useJump"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer$data
@@ -30,11 +31,13 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
 
   return (
     <>
-      <Text variant={["lg-display", "xl"]} display="inline">
+      <Text variant={["lg-display", "xl"]}>
         {t(`searchApp.resultsCount`, { count: count })}
-      </Text>
-      <Text variant={["lg-display", "xl"]} color="blue100" display="inline">
-        {` \u201C${term}\u201D`}
+
+        <Box as="span" color="blue100">
+          {" "}
+          “{term}”
+        </Box>
       </Text>
     </>
   )
@@ -100,6 +103,8 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
           </Sticky>
 
           <Spacer mt={4} />
+
+          <Jump id="searchResultTabs" />
 
           <Box minHeight="30vh">{children}</Box>
         </>

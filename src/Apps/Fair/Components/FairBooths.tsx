@@ -25,6 +25,7 @@ import { FairBoothSortFilter } from "./FairBoothSortFilter"
 import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
 import { defaultSort, isValidSort } from "Apps/Fair/Utils/IsValidSort"
 import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("FairBooths.tsx")
 
@@ -92,7 +93,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
 
   return (
     <>
-      <Box id="jump--BoothsFilter" />
+      <Jump id="BoothsFilter" />
 
       <Media at="xs">
         <Sticky>
@@ -148,7 +149,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={() => loadNext()}
-        scrollTo="#jump--BoothsFilter"
+        scrollTo="BoothsFilter"
       />
     </>
   )

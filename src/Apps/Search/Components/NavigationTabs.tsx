@@ -1,13 +1,5 @@
 import * as React from "react"
-import {
-  BoxProps,
-  Pill,
-  Swiper,
-  SwiperCell,
-  SwiperCellProps,
-  SwiperRail,
-  SwiperRailProps,
-} from "@artsy/palette"
+import { BoxProps, HorizontalOverflow, Pill } from "@artsy/palette"
 import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -21,7 +13,6 @@ import {
 } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useTracking } from "react-tracking"
 
 export interface NavigationTabsProps {
@@ -168,32 +159,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
     )
 
   return (
-    <Swiper Cell={Cell} Rail={Rail}>
-      {tabs}
-    </Swiper>
-  )
-}
-
-const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
-  (props, ref) => {
-    return (
-      <SwiperCell
-        {...props}
-        ref={ref as any}
-        display="inline-flex"
-        verticalAlign="top"
-        pr={0}
-      />
-    )
-  }
-)
-
-const Rail: React.FC<SwiperRailProps> = props => {
-  return (
     <AppContainer>
-      <HorizontalPadding>
-        <SwiperRail {...props} />
-      </HorizontalPadding>
+      <HorizontalOverflow pl={[2, 4]}>{tabs}</HorizontalOverflow>
     </AppContainer>
   )
 }

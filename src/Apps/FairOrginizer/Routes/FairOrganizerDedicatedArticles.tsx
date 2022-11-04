@@ -2,7 +2,7 @@ import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { PaginationFragmentContainer } from "Components/Pagination"
 import { extractNodes } from "Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 import { FairOrganizerDedicatedArticlesQuery } from "./FairOrganizerDedicatedArticlesQuery"
@@ -12,6 +12,7 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "Components/LoadingArea"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { MetaTags } from "Components/MetaTags"
+import { Jump } from "Utils/Hooks/useJump"
 
 const PAGE_SIZE = 16
 
@@ -76,12 +77,9 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
 
       <DedicatedArticlesBreadcrumbs fairOrganizer={fairOrganizer} />
 
-      <Text
-        as="h1"
-        variant="lg-display"
-        mt={6}
-        id="jump--FairOrganizerDedicatedArticles"
-      >
+      <Jump id="FairOrganizerDedicatedArticles" />
+
+      <Text as="h1" variant="lg-display" mt={6}>
         All Articles for {name} on Artsy
       </Text>
 
@@ -97,12 +95,12 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
         </GridColumns>
       </LoadingArea>
 
-      <Pagination
+      <PaginationFragmentContainer
         hasNextPage={hasNextPage}
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={loadNext}
-        scrollTo="#jump--FairOrganizerDedicatedArticles"
+        scrollTo="FairOrganizerDedicatedArticles"
       />
     </>
   )
