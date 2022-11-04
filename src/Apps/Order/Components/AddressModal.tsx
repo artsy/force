@@ -12,6 +12,7 @@ import {
   Banner,
   Select,
   Box,
+  ModalWidth,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -107,8 +108,8 @@ export const AddressModal: React.FC<Props> = ({
       {show && (
         <ModalDialog
           title={title}
-          onClose={() => handleModalClose()}
-          width="900px"
+          onClose={handleModalClose}
+          width={ModalWidth.Wide}
         >
           <Formik
             validateOnMount
