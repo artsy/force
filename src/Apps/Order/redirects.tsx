@@ -13,15 +13,11 @@ interface OrderQuery {
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
 
-console.log({ XXXX_redirects_16: "RENDERED" })
-
 const goToStatusIf = (
   pred: (order: redirects_order$data) => boolean,
   reason
 ): OrderPredicate => ({ order }) => {
   if (pred(order)) {
-    console.log({ XXXX_redirects_23: order })
-
     return {
       path: `/orders/${order.internalID}/status`,
       reason,

@@ -5,7 +5,7 @@ import { mount } from "enzyme"
 import { Resolver } from "found-relay"
 import { getFarceResult } from "found/server"
 import { HeadProvider, Meta } from "react-head"
-import { OrderAppFragmentContainer } from "../OrderApp"
+import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
 
 import { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import {
@@ -109,7 +109,7 @@ describe("OrderApp routing redirects", () => {
         state: "SUBMITTED",
       })
     )
-    // console.log(res.redirect)
+
     expect(res.redirect.url).toBe("/orders/2939023/status")
   })
 
@@ -369,6 +369,19 @@ describe("OrderApp routing redirects", () => {
       })
     )
     expect(redirect.url).toBe("/orders/2939023/status")
+  })
+
+  it("redirects to the new payment route if lastTransactionFailed failed on offer", async () => {
+    const res = await render(
+      "/orders/2939023/respond",
+      mockResolver({
+        ...UntouchedOfferOrder,
+        state: "SUBMITTED",
+        awaitingResponseFrom: "BUYER",
+        lastTransactionFailed: true,
+      })
+    )
+    expect(res.redirect.url).toBe("/orders/2939023/payment/new")
   })
 
   it("Stays on the respond page if all the appropriate conditions are met", async () => {
