@@ -214,6 +214,7 @@ export const OtherWorksQueryRenderer: React.FC<{
     <Box data-test="OtherWorksQueryRenderer">
       <SystemQueryRenderer<OtherWorksQuery>
         lazyLoad
+        lazyLoadThreshold={200}
         environment={relayEnvironment}
         variables={{ slug }}
         placeholder={PLACEHOLDER}
