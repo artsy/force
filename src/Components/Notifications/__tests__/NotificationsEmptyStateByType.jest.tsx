@@ -18,7 +18,7 @@ describe("NotificationsEmptyStateByType", () => {
 
     const title = "Set alerts for artworks you’re seeking."
     const message =
-      "Filter for the artworks you love on an artist page and tap “Create Alert.” Get notifications here when there’s a match."
+      "Filter for the artworks you love on an artist page and select “Create Alert.” Get notifications here when there’s a match."
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(message)).toBeInTheDocument()
