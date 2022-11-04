@@ -13,11 +13,15 @@ interface OrderQuery {
 
 type OrderPredicate = RedirectPredicate<OrderQuery>
 
+console.log({ XXXX_redirects_16: "RENDERED" })
+
 const goToStatusIf = (
   pred: (order: redirects_order$data) => boolean,
   reason
 ): OrderPredicate => ({ order }) => {
   if (pred(order)) {
+    console.log({ XXXX_redirects_23: order })
+
     return {
       path: `/orders/${order.internalID}/status`,
       reason,
@@ -111,6 +115,15 @@ const goToStatusIfNotLastTransactionFailed = goToStatusIf(
   "Order's lastTransactionFailed must be true"
 )
 
+const goToNewPaymentIfOfferLastTransactionFailed = ({ order }) => {
+  if (order.mode === "OFFER" && order.lastTransactionFailed) {
+    return {
+      path: `/orders/${order.internalID}/payment/new`,
+      reason: "No payment has been successfully made",
+    }
+  }
+}
+
 const goToReviewIfOrderIsPending: OrderPredicate = ({ order }) => {
   if (order.state === "PENDING") {
     return {
@@ -156,6 +169,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToStatusIfNotOfferOrder,
         goToStatusIfNotAwaitingBuyerResponse,
         goToStatusIfOrderIsNotSubmitted,
+        goToNewPaymentIfOfferLastTransactionFailed,
       ],
     },
     {
