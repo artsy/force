@@ -4,11 +4,9 @@ import {
   Button,
   Clickable,
   Checkbox,
-  Dialog,
   Flex,
   Input,
   ModalDialog,
-  ModalWidth,
   Spacer,
   Text,
   Banner,
@@ -290,11 +288,14 @@ export const AddressModal: React.FC<Props> = ({
       )}
       {showDialog && (
         <ModalDialog
+          data-test="deleteAddressDialog"
           title="Delete address?"
           onClose={() => setShowDialog(false)}
           width="350px"
         >
-          <Text>This will remove this address from your saved addressess.</Text>
+          <Text variant="xs">
+            This will remove this address from your saved addressess.
+          </Text>
           <Spacer mb={2} />
           <Flex justifyContent="flex-end">
             <Button
@@ -315,7 +316,7 @@ export const AddressModal: React.FC<Props> = ({
                 }
               }}
             >
-              Detete
+              Delete
             </Button>
           </Flex>
         </ModalDialog>
