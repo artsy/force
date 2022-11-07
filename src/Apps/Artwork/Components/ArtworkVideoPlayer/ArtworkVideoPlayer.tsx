@@ -96,7 +96,7 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
         // bg="black10"
       >
         <iframe
-          src={activeVideo.url}
+          src={activeVideo.playerUrl}
           frameBorder={0}
           allow="fullscreen; picture-in-picture"
           allowFullScreen
@@ -121,7 +121,7 @@ export const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
         figures {
           ... on Video {
             __typename
-            url
+            playerUrl
             # Fields need to be aliased to prevent conflicting types
             videoWidth: width
             videoHeight: height
