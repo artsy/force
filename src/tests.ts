@@ -13,7 +13,6 @@ track.mockImplementation(() => x => x as any)
 useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
-jest.mock("react-sizeme", () => jest.fn(() => d => d))
 jest.mock("Utils/logger")
 
 /**
