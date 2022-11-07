@@ -30,26 +30,34 @@ export function __internal__useMatchMedia(
   mediaQueryString: string,
   { initialMatches = null } = {}
 ) {
-  const [matches, setMatches] = useState(initialMatches)
+  const [matches, setMatches] = useState<boolean | null>(initialMatches)
 
   useEffect(() => {
-    const mediaQueryList = window.matchMedia(mediaQueryString)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    setMatches(mediaQueryList.matches)
-    const handleChange = event => setMatches(event.matches)
+    if (typeof window === "undefined" || typeof matchMedia === "undefined") {
+      return
+    }
 
-    mediaQueryList.addListener(handleChange)
+    const mediaQueryList = window.matchMedia(mediaQueryString)
+
+    setMatches(mediaQueryList.matches)
+
+    const handleChange = (event: MediaQueryListEvent) =>
+      setMatches(event.matches)
+
+    if (mediaQueryList.addEventListener) {
+      mediaQueryList.addEventListener("change", handleChange)
+    } else {
+      mediaQueryList.addListener(handleChange)
+    }
 
     return () => {
-      mediaQueryList.removeListener(handleChange)
+      if (mediaQueryList.removeEventListener) {
+        mediaQueryList.removeEventListener("change", handleChange)
+      } else {
+        mediaQueryList.removeListener(handleChange)
+      }
     }
   }, [mediaQueryString])
-
-  // Exit if we're in a server-like environment
-  const isServer = typeof window === "undefined"
-  if (isServer) {
-    return matches
-  }
 
   return matches
 }
