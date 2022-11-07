@@ -9,24 +9,20 @@ import {
   Clickable,
   Column,
   Dropdown,
+  FacebookIcon,
   Flex,
   GridColumns,
   Image,
-  Join,
+  InstagramIcon,
   Separator,
-  Spacer,
   Text,
+  TwitterIcon,
+  WeChatIcon,
 } from "@artsy/palette"
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { Jump } from "Utils/Hooks/useJump"
-import TwitterIcon from "@artsy/icons/TwitterIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import WeChatIcon from "@artsy/icons/WeChatIcon"
-import InstagramIcon from "@artsy/icons/InstagramIcon"
-import TikTokIcon from "@artsy/icons/TikTokIcon"
-import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 
 interface FooterProps extends BoxProps {}
 
@@ -184,7 +180,7 @@ export const Footer: React.FC<FooterProps> = props => {
         >
           <Media at="xs">
             <Flex flexShrink={0}>
-              <ArtsyMarkIcon title="Artsy" mr={2} />
+              <ArtsyMarkIcon title="Artsy" width={20} height={20} mr={2} />
             </Flex>
           </Media>
 
@@ -201,75 +197,41 @@ export const Footer: React.FC<FooterProps> = props => {
           </Media>
 
           <Flex alignItems="center">
-            <Join separator={<Spacer ml={2} />}>
-              <Dropdown
-                dropdown={
-                  <Image
-                    src="https://files.artsy.net/images/wechat_qr_logo.png"
-                    width={100}
-                    height={100}
-                    alt="Artsy WeChat QR code"
-                    style={{ display: "block" }}
-                    m={1}
-                  />
-                }
-                placement="top"
-              >
-                {({ anchorRef, anchorProps }) => {
-                  return (
-                    <Box ref={anchorRef as any} {...anchorProps}>
-                      <FooterLink
-                        to="http://weixin.qq.com/r/2CotNbbES_s0rfJW93-K"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <WeChatIcon />
-                      </FooterLink>
-                    </Box>
-                  )
-                }}
-              </Dropdown>
+            <Dropdown
+              dropdown={
+                <Image
+                  src="https://files.artsy.net/images/wechat_qr_logo.png"
+                  width={100}
+                  height={100}
+                  alt="Artsy WeChat QR code"
+                  style={{ display: "block" }}
+                  m={1}
+                />
+              }
+              placement="top"
+            >
+              {({ anchorRef, anchorProps }) => {
+                return (
+                  <Box ref={anchorRef as any} {...anchorProps} mr={2}>
+                    <FooterLink to="http://weixin.qq.com/r/2CotNbbES_s0rfJW93-K">
+                      <WeChatIcon width={20} height={20} />
+                    </FooterLink>
+                  </Box>
+                )
+              }}
+            </Dropdown>
 
-              <FooterLink
-                to="https://twitter.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <TwitterIcon />
-              </FooterLink>
+            <FooterLink to="https://twitter.com/artsy" mr={2}>
+              <TwitterIcon width={20} height={20} />
+            </FooterLink>
 
-              <FooterLink
-                to="https://www.facebook.com/artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FacebookIcon />
-              </FooterLink>
+            <FooterLink to="https://www.facebook.com/artsy" mr={2}>
+              <FacebookIcon width={20} height={20} />
+            </FooterLink>
 
-              <FooterLink
-                to="https://www.instagram.com/artsy/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <InstagramIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://www.tiktok.com/@artsy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <TikTokIcon />
-              </FooterLink>
-
-              <FooterLink
-                to="https://open.spotify.com/user/ic7ea71nb4o0dy7xpu958vx2q"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SpotifyIcon />
-              </FooterLink>
-            </Join>
+            <FooterLink to="https://www.instagram.com/artsy/">
+              <InstagramIcon width={20} height={20} />
+            </FooterLink>
           </Flex>
         </Flex>
       </footer>

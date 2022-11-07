@@ -1,10 +1,16 @@
-import { Box, BoxProps, Flex, Join, Spacer } from "@artsy/palette"
+import {
+  Box,
+  BoxProps,
+  EnvelopeIcon,
+  FacebookIcon,
+  Flex,
+  Join,
+  Spacer,
+  TwitterIcon,
+} from "@artsy/palette"
 import { FC } from "react"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { getENV } from "Utils/getENV"
-import TwitterIcon from "@artsy/icons/TwitterIcon"
-import FacebookIcon from "@artsy/icons/FacebookIcon"
-import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
 interface ArticleShareProps extends BoxProps {
   description: string | null
@@ -35,7 +41,7 @@ export const ArticleShare: FC<ArticleShareProps> = ({
           href={`mailto:?subject=${description}&body=Check out ${description} on Artsy: ${url}`}
           onClick={clickedArticleShare}
         >
-          <EnvelopeIcon />
+          <EnvelopeIcon title="" />
         </Box>
 
         <Box
@@ -46,7 +52,7 @@ export const ArticleShare: FC<ArticleShareProps> = ({
           href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
           onClick={clickedArticleShare}
         >
-          <FacebookIcon />
+          <FacebookIcon title="" />
         </Box>
 
         <Box
@@ -57,7 +63,7 @@ export const ArticleShare: FC<ArticleShareProps> = ({
           href={`https://twitter.com/intent/tweet?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
           onClick={clickedArticleShare}
         >
-          <TwitterIcon />
+          <TwitterIcon title="" />
         </Box>
       </Join>
     </Flex>
