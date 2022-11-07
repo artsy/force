@@ -2,7 +2,7 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { useTracking } from "react-tracking"
 import { ARTWORKS_SUBMENU_DATA } from "Components/NavBar/menuData"
 import { mount } from "enzyme"
-import { NavBarSubMenu } from "../Menus/NavBarSubMenu"
+import { NavBarSubMenu } from "Components/NavBar/Menus/NavBarSubMenu"
 
 jest.mock("react-tracking")
 

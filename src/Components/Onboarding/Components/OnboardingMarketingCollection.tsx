@@ -7,9 +7,9 @@ import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingThankYou } from "../Views/OnboardingThankYou"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingMarketingCollectionProps {
   marketingCollection: OnboardingMarketingCollection_marketingCollection$data

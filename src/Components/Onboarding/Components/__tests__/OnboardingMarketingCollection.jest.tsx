@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { OnboardingMarketingCollectionFragmentContainer } from "../OnboardingMarketingCollection"
+import { OnboardingMarketingCollectionFragmentContainer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
 jest.unmock("react-relay")
 

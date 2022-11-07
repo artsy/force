@@ -1,4 +1,4 @@
-import { isMatchingRoute } from "../brazeMessagingIntegration"
+import { isMatchingRoute } from "Server/analytics/brazeMessagingIntegration"
 
 describe("isMatchingRoute", () => {
   const validRoutes = [

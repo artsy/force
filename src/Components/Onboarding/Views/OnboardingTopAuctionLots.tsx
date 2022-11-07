@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { OnboardingMarketingCollectionQueryRenderer } from "../Components/OnboardingMarketingCollection"
+import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboarding/Components/OnboardingMarketingCollection"
 
 export const OnboardingTopAuctionLots: FC = () => {
   return (

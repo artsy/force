@@ -1,18 +1,19 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
-import { flushPromiseQueue, MockBoot } from "DevTools"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
-import { Breakpoint } from "Utils/Responsive"
-import { useTracking } from "react-tracking"
-import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import {
   MyCollectionArtworkForm,
   MyCollectionArtworkFormFragmentContainer,
 } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
+import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { flushPromiseQueue, MockBoot } from "DevTools"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { Breakpoint } from "Utils/Responsive"
+import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
+const mockRouterGo = jest.fn()
 const mockSubmitArtwork = jest.fn().mockResolvedValue({
   myCollectionUpdateArtwork: {
     artworkOrError: { artwork: { internalID: "internal-id" } },
@@ -26,7 +27,11 @@ const mockDeleteArtwork = jest.fn().mockResolvedValue({
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush, replace: mockRouterReplace },
+    router: {
+      push: mockRouterPush,
+      replace: mockRouterReplace,
+      go: mockRouterGo,
+    },
   })),
 }))
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -162,12 +167,7 @@ describe("Edit artwork", () => {
       fireEvent.click(screen.getByText("Back"))
       fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
-      })
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
+      expect(mockRouterGo).toHaveBeenCalledWith(-1)
     })
 
     it("navigates to the previous screen when the form has not been changed", async () => {
@@ -177,12 +177,7 @@ describe("Edit artwork", () => {
 
       fireEvent.click(screen.getByText("Back"))
 
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
-      })
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
+      expect(mockRouterGo).toHaveBeenCalledWith(-1)
     })
   })
 
@@ -267,7 +262,7 @@ describe("Edit artwork", () => {
       )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+        pathname: "/my-collection/artwork/internal-id",
       })
     })
   })
@@ -489,12 +484,7 @@ describe("Create artwork", () => {
       fireEvent.click(screen.getByText("Back"))
       fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
-      })
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
+      expect(mockRouterGo).toHaveBeenCalledWith(-1)
     })
 
     it("navigates to the previous screen when the form has not been changed", async () => {
@@ -503,7 +493,7 @@ describe("Create artwork", () => {
       fireEvent.click(screen.getByText("Back"))
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+        pathname: "/my-collection/artwork/internal-id",
       })
       expect(mockRouterReplace).toHaveBeenCalledWith({
         pathname: "/settings/my-collection",

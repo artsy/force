@@ -1,31 +1,39 @@
-import { Flex, Text } from "@artsy/palette"
+import {
+  Clickable,
+  ClickableProps,
+  Flex,
+  FlexProps,
+  Text,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import {
   CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
+import styled from "styled-components"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface InsightsCareerHighlightCardProps {
   kind: CareerHighlightKind
   count: number
+  onClick(): void
 }
 
 export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardProps> = ({
   count,
   kind,
+  onClick,
 }) => {
   const { label, Icon } = getCareerHighlight(kind, count)
 
   return (
-    <Flex
+    <CardWrapper
+      onClick={onClick}
       width={[205, 313]}
       height={[135, 178]}
       p={[1, 2]}
-      background="white"
-      border="1px solid"
-      borderColor="black10"
-      flexDirection="column"
     >
-      <Flex justifyContent="flex-end" mb={[2, 1]}>
+      <Flex alignSelf="flex-end" mb={[2, 1]}>
         <Flex
           height={[26, 30]}
           width={[26, 30]}
@@ -46,6 +54,47 @@ export const InsightsCareerHighlightCard: React.FC<InsightsCareerHighlightCardPr
 
         <Text variant={["xs", "sm-display"]}>{label}</Text>
       </Flex>
-    </Flex>
+    </CardWrapper>
   )
 }
+
+// extending ClickableProps since the type already has FlexProps (BoxProps)
+interface CardWrapperProps extends ClickableProps {
+  onClick?: () => void
+}
+
+const CardWrapper: React.FC<CardWrapperProps> = ({
+  onClick,
+  children,
+  ...rest
+}) => {
+  const isCareerHighlightModalEnabled = useFeatureFlag(
+    "my-collection-web-phase-7-career-highlights-modal"
+  )
+
+  if (isCareerHighlightModalEnabled) {
+    return (
+      <ClickableCard onClick={onClick} {...rest}>
+        {children}
+      </ClickableCard>
+    )
+  }
+  return <Card {...(rest as FlexProps)}>{children}</Card>
+}
+
+const Card = styled(Flex)`
+  background: white;
+  flex-direction: column;
+  border: 1px solid ${themeGet("colors.black10")};
+`
+
+const ClickableCard = styled(Clickable)`
+  background: white;
+  border: 1px solid ${themeGet("colors.black10")};
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    border-color: ${themeGet("colors.blue100")};
+  }
+`

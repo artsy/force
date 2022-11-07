@@ -1,4 +1,4 @@
-import { redirectGeneToCollection } from "../redirectGeneToCollection"
+import { redirectGeneToCollection } from "Apps/Gene/Server/redirectGeneToCollection"
 
 describe("redirectGeneToCollection", () => {
   it("does not redirect for a non-migrated gene", () => {

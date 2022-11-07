@@ -1,4 +1,4 @@
-import { geneToCollectionMap } from "../Utils/geneToCollectionMap"
+import { geneToCollectionMap } from "Apps/Gene/Utils/geneToCollectionMap"
 
 export function redirectGeneToCollection({ req, res }) {
   const geneSlug: string = req.params.slug

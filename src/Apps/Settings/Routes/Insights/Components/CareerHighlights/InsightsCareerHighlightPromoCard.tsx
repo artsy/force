@@ -1,5 +1,17 @@
-import { Button, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
+import {
+  Button,
+  Clickable,
+  ClickableProps,
+  Flex,
+  FlexProps,
+  Image,
+  ResponsiveBox,
+  Text,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
@@ -19,15 +31,11 @@ const { src: mSrc, srcSet: mSrcSet } = resized(
   }
 )
 
-export const InsightsCareerHighlightPromoCard: React.FC = () => {
+export const InsightsCareerHighlightPromoCard: React.FC<{
+  onClick?(): void
+}> = ({ onClick }) => {
   return (
-    <Flex
-      width={[205, 313]}
-      height={[135, 178]}
-      background="white"
-      border="1px solid"
-      borderColor="black10"
-    >
+    <CardWrapper onClick={onClick} width={[205, 313]} height={[135, 178]}>
       <Flex
         py={[1, 2]}
         pl={[0.5, 2]}
@@ -93,6 +101,46 @@ export const InsightsCareerHighlightPromoCard: React.FC = () => {
           />
         </ResponsiveBox>
       </Media>
-    </Flex>
+    </CardWrapper>
   )
 }
+
+// extending ClickableProps since the type already has FlexProps (BoxProps)
+interface CardWrapperProps extends ClickableProps {
+  onClick?: () => void
+}
+
+const CardWrapper: React.FC<CardWrapperProps> = ({
+  onClick,
+  children,
+  ...rest
+}) => {
+  const isCareerHighlightModalEnabled = useFeatureFlag(
+    "my-collection-web-phase-7-career-highlights-modal"
+  )
+
+  if (isCareerHighlightModalEnabled) {
+    return (
+      <ClickableCard onClick={onClick} {...rest}>
+        {children}
+      </ClickableCard>
+    )
+  }
+  return <Card {...(rest as FlexProps)}>{children}</Card>
+}
+
+const Card = styled(Flex)`
+  background: white;
+  border: 1px solid ${themeGet("colors.black10")};
+`
+
+const ClickableCard = styled(Clickable)`
+  background: white;
+  border: 1px solid ${themeGet("colors.black10")};
+  display: flex;
+  align-items: stretch;
+
+  &:hover {
+    border-color: ${themeGet("colors.blue100")};
+  }
+`
