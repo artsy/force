@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b45811cc5d13668e8fe4ea9bfe4bd2f>>
+ * @generated SignedSource<<8483e31a3380a9481c75242678ae73b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -113,7 +113,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "url",
+                    "name": "playerUrl",
                     "storageKey": null
                   },
                   {
@@ -145,12 +145,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "26880c01a50a0cc36e5da4f3c2070de7",
+    "cacheID": "d22aa2cb46f40eef1fefb9d8984e6aed",
     "id": null,
     "metadata": {},
     "name": "ArtworkVideoPlayer_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkVideoPlayer_Test_Query {\n  artwork(id: \"foo\") {\n    ...ArtworkVideoPlayer_artwork\n    id\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      url\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkVideoPlayer_Test_Query {\n  artwork(id: \"foo\") {\n    ...ArtworkVideoPlayer_artwork\n    id\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n"
   }
 };
 })();
