@@ -1,6 +1,14 @@
-export const HighDemandIcon = () => {
+interface HighDemandIconProps {
+  width?: number
+  height?: number
+}
+
+export const HighDemandIcon: React.FC<HighDemandIconProps> = ({
+  width = 22,
+  height = 22,
+}) => {
   return (
-    <svg width={22} height={22} viewBox="0 0 16 16" fill="none">
+    <svg width={width} height={height} viewBox="0 0 16 16" fill="none">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

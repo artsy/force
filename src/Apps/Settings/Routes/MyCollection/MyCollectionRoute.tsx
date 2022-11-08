@@ -1,14 +1,10 @@
 import {
   Box,
   Button,
-  Clickable,
-  CloseIcon,
   DROP_SHADOW,
   Flex,
   FullBleed,
-  Message,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -23,7 +19,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
-import { useJump, Jump } from "Utils/Hooks/useJump"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 import {
   cleanImagesLocalStore,
   getAllLocalImagesByArtwork,
@@ -45,7 +41,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   // TODO: Avoid using boolean state flags for UI modes
   const [loading, setLoading] = useState(false)
-  const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
   const [localArtworksImages, setLocalArtworksImages] = useState<
     StoredArtworkWithImages[]
   >([])
@@ -53,13 +48,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
 
   const { jumpTo } = useJump()
-
-  useEffect(() => {
-    setHasDismissedMessage(
-      window.localStorage.getItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER") ===
-        "true"
-    )
-  }, [])
 
   useEffect(() => {
     getAllLocalImagesByArtwork()
@@ -116,52 +104,12 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     handleClick(endCursor, page)
   }
 
-  const dismissMyCollectionMessage = () => {
-    window.localStorage.setItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER", "true")
-    setHasDismissedMessage(true)
-  }
-
   return (
     <>
       <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
 
       {total > 0 ? (
         <>
-          {!hasDismissedMessage && (
-            <FullBleed>
-              <Message variant="info" mt={[-2, -4]} mb={[2, 4]} py={1}>
-                <Flex
-                  flexDirection="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Text
-                    flex={1}
-                    textAlign={["left", "center"]}
-                    variant={["xs", "sm"]}
-                  >
-                    Access all the My Collection features on the{" "}
-                    <Clickable
-                      onClick={() => {
-                        jumpTo("download-app-banner")
-                      }}
-                      color="blue100"
-                      cursor="pointer"
-                      textDecoration="underline"
-                    >
-                      Artsy app
-                    </Clickable>
-                    . Coming soon also on web.
-                  </Text>
-
-                  <Clickable onClick={dismissMyCollectionMessage}>
-                    <CloseIcon />
-                  </Clickable>
-                </Flex>
-              </Message>
-            </FullBleed>
-          )}
-
           <Box mt={[-2, -4]}>
             <Sticky>
               {({ stuck }) => {

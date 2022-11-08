@@ -1,26 +1,26 @@
-import {
-  Link,
-  Text,
-  LinkProps,
-  Flex,
-  Spacer,
-  Box,
-  Join,
-  SkeletonText,
-} from "@artsy/palette"
-import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { AuthContextModule } from "@artsy/cohesion"
-import { NewSaveButtonFragmentContainer } from "./SaveButton"
-import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
-import { useState } from "react"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import {
+  Box,
+  Flex,
+  Join,
+  Link,
+  LinkProps,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import * as React from "react"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
+import { HoverDetailsFragmentContainer } from "./HoverDetails"
+import { NewSaveButtonFragmentContainer } from "./SaveButton"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -138,7 +138,7 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
 const HighDemandInfo = () => {
   return (
     <Flex flexDirection="row" alignItems="center">
-      <HighDemandIcon />
+      <HighDemandIcon width={16} height={16} />
       <Text variant="xs" color="blue100" ml={0.5}>
         High Demand
       </Text>
