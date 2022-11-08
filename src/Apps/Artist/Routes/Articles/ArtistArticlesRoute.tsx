@@ -1,13 +1,14 @@
-import { Join, Text, Image, Box, Flex, Spacer } from "@artsy/palette"
+import { Text, Spacer, Column, GridColumns, Message } from "@artsy/palette"
 import * as React from "react"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistArticlesRoute_artist$data } from "__generated__/ArtistArticlesRoute_artist.graphql"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Title } from "react-head"
-import { RouterLink } from "System/Router/RouterLink"
-
-const REFETCH_PAGE_SIZE = 10
+import { Jump } from "Utils/Hooks/useJump"
+import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { LoadingArea } from "Components/LoadingArea"
+import { useState } from "react"
 
 interface ArtistArticlesRouteProps {
   artist: ArtistArticlesRoute_artist$data
@@ -18,114 +19,60 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
   artist,
   relay,
 }) => {
-  const nodes = extractNodes(artist.articlesConnection)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // TODO: ZeroState
-  if (nodes.length === 0) {
-    return null
+  const articles = extractNodes(artist.articlesConnection)
+
+  if (articles.length === 0) {
+    return <Message>There aren’t any articles at this time.</Message>
   }
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
+  const handleNext = (page: number) => {
+    handleClick(null, page)
   }
 
-  const loadNext = () => {
-    const { hasNextPage, endCursor } = artist.articlesConnection?.pageInfo ?? {}
+  const handleClick = (_cursor: string | null, page: number) => {
+    setIsLoading(true)
 
-    if (hasNextPage && endCursor) {
-      scrollToTop()
-      loadAfter(endCursor)
-    }
-  }
-
-  const loadAfter = (cursor: string) => {
-    scrollToTop()
-    relay.refetch(
-      {
-        first: REFETCH_PAGE_SIZE,
-        after: cursor,
-        artistID: artist.slug,
-        before: null,
-        last: null,
-      },
-      null,
-      error => {
-        if (error) {
-          console.error(error)
-        }
+    relay.refetch({ artistID: artist.slug, page }, null, error => {
+      if (error) {
+        console.error(error)
       }
-    )
+
+      setIsLoading(false)
+    })
   }
 
   return (
     <>
       <Title>{`${artist.name} - Articles`}</Title>
 
+      <Jump id="top" />
+
       <Text variant="xl">{artist.name} Articles</Text>
 
       <Spacer mt={6} />
 
-      <Join separator={<Spacer mt={4} />}>
-        {nodes.map(article => {
-          return (
-            <RouterLink
-              key={article.internalID}
-              to={article.href ?? ""}
-              style={{ display: "block", textDecoration: "none" }}
-            >
-              <Flex justifyContent="space-between" width="100%">
-                <Flex width="100%" flexDirection={["column", "column", "row"]}>
-                  <Box width={["100%", "100%", "20%"]}>
-                    <Text variant="sm-display">{article.publishedAt}</Text>
-                  </Box>
-
-                  <Spacer mb={1} />
-
-                  <Box width={["100%", "100%", "60%"]} pr={2}>
-                    <Text variant={["sm-display", "lg-display", "lg-display"]}>
-                      {article.thumbnailTitle}
-                    </Text>
-
-                    <Spacer mb={1} />
-
-                    {article.author?.name && (
-                      <Text variant="sm-display" color="black60">
-                        {article.author.name}
-                      </Text>
-                    )}
-                  </Box>
-                </Flex>
-
-                {article.thumbnailImage?.cropped ? (
-                  <Box>
-                    <Image
-                      key={article.thumbnailImage.cropped.src}
-                      src={article.thumbnailImage.cropped.src}
-                      srcSet={article.thumbnailImage.cropped.srcSet}
-                      width={[105, 210]}
-                      height={[75, 150]}
-                      lazyLoad
-                      alt=""
-                    />
-                  </Box>
-                ) : (
-                  <Box width={210} height={150} bg="black10" />
-                )}
-              </Flex>
-            </RouterLink>
-          )
-        })}
-      </Join>
+      <LoadingArea isLoading={isLoading}>
+        <GridColumns gridRowGap={[2, 4]}>
+          {articles.map(article => {
+            return (
+              <Column key={article.internalID} span={[6, 4, 3]}>
+                <CellArticleFragmentContainer article={article} mode="GRID" />
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </LoadingArea>
 
       <PaginationFragmentContainer
         getHref={() => ""}
         pageCursors={artist?.articlesConnection?.pageCursors!}
-        onClick={loadAfter}
-        onNext={loadNext}
+        onClick={handleClick}
+        onNext={handleNext}
         hasNextPage={artist?.articlesConnection?.pageInfo.hasNextPage!}
+        scrollTo="top"
+        offset={40}
       />
     </>
   )
@@ -136,64 +83,35 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistArticlesRoute_artist on Artist
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-        ) {
+        @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
+        name
+        slug
         articlesConnection(
-          first: $first
-          after: $after
-          before: $before
-          last: $last
+          page: $page
+          size: 12
           sort: PUBLISHED_AT_DESC
           inEditorialFeed: true
         ) {
           pageInfo {
             hasNextPage
-            endCursor
           }
           pageCursors {
             ...Pagination_pageCursors
           }
           edges {
             node {
+              ...CellArticle_article
               internalID
-              href
-              thumbnailTitle
-              author {
-                name
-              }
-              publishedAt(format: "MMM Do, YYYY")
-              thumbnailImage {
-                cropped(width: 210, height: 150) {
-                  src
-                  srcSet
-                  width
-                  height
-                }
-              }
-              href
             }
           }
         }
-        name
-        slug
       }
     `,
   },
   graphql`
-    query ArtistArticlesRouteQuery(
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
-      $artistID: String!
-    ) {
+    query ArtistArticlesRouteQuery($page: Int, $artistID: String!) {
       artist(id: $artistID) {
-        ...ArtistArticlesRoute_artist
-          @arguments(first: $first, last: $last, after: $after, before: $before)
+        ...ArtistArticlesRoute_artist @arguments(page: $page)
       }
     }
   `

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42ac93fdc03a9d798f4af9565fa65236>>
+ * @generated SignedSource<<bcd34b9f33f45800182b353a0d975627>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,26 +14,14 @@ export type ArtistShowsGroup_artist$data = {
   readonly showsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly city: string | null;
-        readonly coverImage: {
-          readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-          } | null;
-        } | null;
-        readonly exhibitionPeriod: string | null;
-        readonly href: string | null;
-        readonly name: string | null;
-        readonly partner: {
-          readonly name?: string | null;
-        } | null;
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
       } | null;
     } | null> | null;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
       readonly hasNextPage: boolean;
     };
   } | null;
@@ -45,38 +33,12 @@ export type ArtistShowsGroup_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = [
-  (v0/*: any*/)
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
-      "defaultValue": 10,
-      "kind": "LocalArgument",
-      "name": "first"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "last"
+      "name": "page"
     },
     {
       "defaultValue": null,
@@ -104,24 +66,14 @@ return {
       "alias": null,
       "args": [
         {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "first",
-          "variableName": "first"
+          "value": 12
         },
         {
           "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
+          "name": "page",
+          "variableName": "page"
         },
         {
           "kind": "Variable",
@@ -152,13 +104,6 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
               "storageKey": null
             }
           ],
@@ -197,95 +142,15 @@ return {
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
                   "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "partner",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
-                      "type": "ExternalPartner",
-                      "abstractKey": null
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
-                      "type": "Partner",
-                      "abstractKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "CellShow_show"
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "exhibitionPeriod",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "coverImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 315
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 440
-                        }
-                      ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:315,width:440)"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
+                  "name": "internalID",
                   "storageKey": null
                 }
               ],
@@ -301,8 +166,7 @@ return {
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "3d1d8ee0545cad9313550d5b6031aa57";
+(node as any).hash = "5891977e375e2ceaa508551207c5fb71";
 
 export default node;
