@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps } from "@artsy/palette"
+import { Flex, Text, RadioProps, Clickable } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
@@ -68,7 +68,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           {phoneNumber}
         </Text>
       </Flex>
-      <EditButton
+      <Clickable
         position="absolute"
         top={2}
         right={2}
@@ -78,12 +78,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
 
           handleClickEdit(index)
         }}
-        textColor="blue100"
-        variant="sm"
         data-test="editAddressInShipping"
       >
-        Edit
-      </EditButton>
+        <EditButton textColor="blue100" variant="sm">
+          Edit
+        </EditButton>
+      </Clickable>
     </Flex>
   )
 }
