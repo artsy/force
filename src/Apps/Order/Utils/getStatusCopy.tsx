@@ -41,10 +41,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
         : {
             title: "Thank you, your order has been submitted",
             description: (
-              <>
-                You will receive a confirmation email by {stateExpiresAt}.
-                {covidNote()}
-              </>
+              <>You will receive a confirmation email by {stateExpiresAt}.</>
             ),
           }
     case "APPROVED":
@@ -54,13 +51,11 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           <>
             Thank you for your purchase. A specialist will contact you within 2
             business days to coordinate pickup.
-            {covidNote()}
           </>
         ) : (
           <>
             Thank you for your purchase. You will be notified when the work has
             shipped, typically within 5–7 business days.
-            {covidNote()}
           </>
         ),
       }
@@ -71,7 +66,6 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           <>
             Thank you for your purchase. {deliverText(order)}More delivery
             information will be available once your order ships.
-            {covidNote()}
           </>
         ),
       }
@@ -82,7 +76,6 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           <>
             Thank you for your purchase. {deliverText(order)}More delivery
             information will be available once your order ships.
-            {covidNote()}
           </>
         ),
       }
@@ -273,16 +266,6 @@ export const shipmentDescription = (
           {shipmentData.estimatedDelivery}
         </>
       )}
-    </>
-  )
-}
-
-export const covidNote = (): React.ReactNode => {
-  return (
-    <>
-      <Spacer mb={1} />
-      Disruptions caused by COVID-19 may cause delays — we appreciate your
-      understanding.
     </>
   )
 }
