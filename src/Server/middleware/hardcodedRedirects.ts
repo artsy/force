@@ -3,7 +3,7 @@ import url from "url"
 import express from "express"
 
 // Permanently (301) redirect a specific route or route pattern
-const REDIRECTS = {
+const PERMANENT_REDIRECTS = {
   "/partners": "/galleries",
   "/gallery": "/galleries",
   "/institution": "/institutions",
@@ -153,13 +153,28 @@ const REDIRECTS = {
 
 const router = express.Router()
 
-for (let from in REDIRECTS) {
-  const path = REDIRECTS[from]
+for (let from in PERMANENT_REDIRECTS) {
+  const path = PERMANENT_REDIRECTS[from]
 
   router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
     const queryString = url.parse(req.url).search || ""
 
     res.redirect(301, path + queryString)
+  })
+}
+
+// Temporarily (302) redirect a specific route or route pattern
+const TEMP_REDIRECTS = {
+  "/art-appraisals": "/sell",
+}
+
+for (let from in TEMP_REDIRECTS) {
+  const path = TEMP_REDIRECTS[from]
+
+  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
+    const queryString = url.parse(req.url).search || ""
+
+    res.redirect(302, path + queryString)
   })
 }
 
