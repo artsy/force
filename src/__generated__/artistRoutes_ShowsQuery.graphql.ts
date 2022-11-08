@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1e392db9ca41e53faf559b8790fc2b3>>
+ * @generated SignedSource<<8f93429d4e64339d8fad27c6b7522cf5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,31 +42,74 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "kind": "Literal",
   "name": "first",
-  "value": 10
+  "value": 1
 },
 v4 = {
+  "kind": "Literal",
+  "name": "status",
+  "value": "running"
+},
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+],
+v6 = {
+  "kind": "Literal",
+  "name": "status",
+  "value": "upcoming"
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v9 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 12
+},
+v10 = {
+  "kind": "Literal",
+  "name": "page",
+  "value": 1
+},
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v5 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v6 = [
-  (v4/*: any*/),
-  (v5/*: any*/),
+v13 = [
+  (v11/*: any*/),
+  (v12/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -75,21 +118,10 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v9 = [
+v14 = [
+  (v7/*: any*/)
+],
+v15 = [
   {
     "alias": null,
     "args": null,
@@ -103,13 +135,6 @@ v9 = [
         "args": null,
         "kind": "ScalarField",
         "name": "hasNextPage",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "endCursor",
         "storageKey": null
       }
     ],
@@ -130,7 +155,7 @@ v9 = [
         "kind": "LinkedField",
         "name": "around",
         "plural": true,
-        "selections": (v6/*: any*/),
+        "selections": (v13/*: any*/),
         "storageKey": null
       },
       {
@@ -140,7 +165,7 @@ v9 = [
         "kind": "LinkedField",
         "name": "first",
         "plural": false,
-        "selections": (v6/*: any*/),
+        "selections": (v13/*: any*/),
         "storageKey": null
       },
       {
@@ -150,7 +175,7 @@ v9 = [
         "kind": "LinkedField",
         "name": "last",
         "plural": false,
-        "selections": (v6/*: any*/),
+        "selections": (v13/*: any*/),
         "storageKey": null
       },
       {
@@ -161,8 +186,8 @@ v9 = [
         "name": "previous",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
-          (v5/*: any*/)
+          (v11/*: any*/),
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
@@ -188,6 +213,50 @@ v9 = [
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          (v8/*: any*/),
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "startAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "endAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isFairBooth",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "partner",
@@ -203,44 +272,24 @@ v9 = [
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v7/*: any*/),
-                  (v8/*: any*/)
-                ],
-                "type": "ExternalPartner",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v7/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "type": "Partner",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": [
-                  (v8/*: any*/)
-                ],
+                "selections": (v14/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v14/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
               }
             ],
-            "storageKey": null
-          },
-          (v7/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "exhibitionPeriod",
             "storageKey": null
           },
           {
@@ -257,12 +306,21 @@ v9 = [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 315
+                    "value": 334
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 440
+                    "value": 445
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
@@ -285,19 +343,12 @@ v9 = [
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:315,width:440)"
+                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "city",
-            "storageKey": null
-          },
-          (v8/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -347,7 +398,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "currentShows",
+            "alias": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -356,29 +407,65 @@ return {
             "selections": [
               (v2/*: any*/),
               {
-                "alias": null,
+                "alias": "currentShowsCount",
                 "args": [
                   (v3/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "sort",
-                    "value": "END_AT_ASC"
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "status",
-                    "value": "running"
-                  }
+                  (v4/*: any*/)
                 ],
                 "concreteType": "ShowConnection",
                 "kind": "LinkedField",
                 "name": "showsConnection",
                 "plural": false,
-                "selections": (v9/*: any*/),
-                "storageKey": "showsConnection(first:10,sort:\"END_AT_ASC\",status:\"running\")"
+                "selections": (v5/*: any*/),
+                "storageKey": "showsConnection(first:1,status:\"running\")"
               },
-              (v7/*: any*/),
-              (v8/*: any*/)
+              {
+                "alias": "upcomingShowsCount",
+                "args": [
+                  (v3/*: any*/),
+                  (v6/*: any*/)
+                ],
+                "concreteType": "ShowConnection",
+                "kind": "LinkedField",
+                "name": "showsConnection",
+                "plural": false,
+                "selections": (v5/*: any*/),
+                "storageKey": "showsConnection(first:1,status:\"upcoming\")"
+              },
+              (v7/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": "currentShows",
+            "args": (v1/*: any*/),
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": [
+                  (v9/*: any*/),
+                  (v10/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "sort",
+                    "value": "END_AT_ASC"
+                  },
+                  (v4/*: any*/)
+                ],
+                "concreteType": "ShowConnection",
+                "kind": "LinkedField",
+                "name": "showsConnection",
+                "plural": false,
+                "selections": (v15/*: any*/),
+                "storageKey": "showsConnection(first:12,page:1,sort:\"END_AT_ASC\",status:\"running\")"
+              },
+              (v2/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -390,30 +477,27 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v8/*: any*/),
               {
                 "alias": null,
                 "args": [
-                  (v3/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "sort",
                     "value": "START_AT_ASC"
                   },
-                  {
-                    "kind": "Literal",
-                    "name": "status",
-                    "value": "upcoming"
-                  }
+                  (v6/*: any*/)
                 ],
                 "concreteType": "ShowConnection",
                 "kind": "LinkedField",
                 "name": "showsConnection",
                 "plural": false,
-                "selections": (v9/*: any*/),
-                "storageKey": "showsConnection(first:10,sort:\"START_AT_ASC\",status:\"upcoming\")"
+                "selections": (v15/*: any*/),
+                "storageKey": "showsConnection(first:12,page:1,sort:\"START_AT_ASC\",status:\"upcoming\")"
               },
-              (v8/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -423,12 +507,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86c973ea1bdda0df330c907c04cd1699",
+    "cacheID": "05f21adc5f66d8d13dc61ed821cee854",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 10, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 12, page: 1, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  artist(id: $artistID) {\n    name\n    currentShowsCount: showsConnection(first: 1, status: \"running\") {\n      totalCount\n    }\n    upcomingShowsCount: showsConnection(first: 1, status: \"upcoming\") {\n      totalCount\n    }\n    id\n  }\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    name\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

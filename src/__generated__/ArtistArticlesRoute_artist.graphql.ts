@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5e41840fd6236d06237532a910eb7e1>>
+ * @generated SignedSource<<9f2c39944f7a7d571919f70272be5183>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,28 +14,14 @@ export type ArtistArticlesRoute_artist$data = {
   readonly articlesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly author: {
-          readonly name: string | null;
-        } | null;
-        readonly href: string | null;
         readonly internalID: string;
-        readonly publishedAt: string | null;
-        readonly thumbnailImage: {
-          readonly cropped: {
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-          } | null;
-        } | null;
-        readonly thumbnailTitle: string | null;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
       } | null;
     } | null> | null;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
       readonly hasNextPage: boolean;
     };
   } | null;
@@ -48,35 +34,12 @@ export type ArtistArticlesRoute_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistArticlesRoute_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
-      "defaultValue": 10,
-      "kind": "LocalArgument",
-      "name": "first"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "last"
+      "name": "page"
     }
   ],
   "kind": "Fragment",
@@ -85,22 +48,21 @@ return {
   "selections": [
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
         {
           "kind": "Literal",
           "name": "inEditorialFeed",
@@ -108,8 +70,13 @@ return {
         },
         {
           "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
+          "name": "page",
+          "variableName": "page"
+        },
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 12
         },
         {
           "kind": "Literal",
@@ -135,13 +102,6 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
               "storageKey": null
             }
           ],
@@ -180,110 +140,15 @@ return {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArticle_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "thumbnailTitle",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Author",
-                  "kind": "LinkedField",
-                  "name": "author",
-                  "plural": false,
-                  "selections": [
-                    (v0/*: any*/)
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "format",
-                      "value": "MMM Do, YYYY"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "publishedAt",
-                  "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "thumbnailImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 150
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 210
-                        }
-                      ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:150,width:210)"
-                    }
-                  ],
                   "storageKey": null
                 }
               ],
@@ -294,21 +159,12 @@ return {
         }
       ],
       "storageKey": null
-    },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "7605561e31fc8001b7412d5eebef9ff5";
+(node as any).hash = "30032b69fe2127dee1d1c91d9b310a4c";
 
 export default node;

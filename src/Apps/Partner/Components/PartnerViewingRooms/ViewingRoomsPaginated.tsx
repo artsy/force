@@ -2,18 +2,17 @@ import { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { Box } from "@artsy/palette"
 import { compact } from "lodash"
-
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { LoadingArea } from "Components/LoadingArea"
 import createLogger from "Utils/logger"
-
 import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
 import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
 import { ViewingRoomsPaginatedRendererQuery } from "__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
 import { ViewingRoomsPaginated_partner$data } from "__generated__/ViewingRoomsPaginated_partner.graphql"
+import { Jump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("ViewingRoomsPaginated.tsx")
 
@@ -59,8 +58,6 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
         statuses: ["closed"],
         after: cursor,
         partnerID: slug,
-        before: null,
-        last: null,
       },
       null,
       error => {
@@ -86,7 +83,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
   }
 
   return (
-    <Box id={scrollTo.substring(1)}>
+    <Jump id={scrollTo}>
       <LoadingArea isLoading={isLoading}>
         <ViewingRoomsFragmentContainer
           edges={compact(viewingRooms)}
@@ -106,7 +103,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
           />
         </Box>
       )}
-    </Box>
+    </Jump>
   )
 }
 

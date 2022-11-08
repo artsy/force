@@ -1,4 +1,3 @@
-import { Box, Spinner } from "@artsy/palette"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
@@ -9,7 +8,7 @@ import { PaginationFragmentContainer as Pagination } from "Components/Pagination
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Sticky } from "Components/Sticky"
+import { LoadingArea } from "Components/LoadingArea"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -56,7 +55,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
 
   return (
     <>
-      <LoadingArea isLoading={props.isLoading}>
+      <LoadingArea isLoading={!!props.isLoading}>
         <ArtworkGrid
           artworks={props.filtered_artworks}
           columnCount={columnCount}
@@ -87,7 +86,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           pageCursors={pageCursors}
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}
-          scrollTo="#JUMP--artworkFilter"
+          scrollTo="artworkFilter"
           offset={offset}
         />
       </LoadingArea>
@@ -118,22 +117,3 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
     `,
   }
 )
-
-const LoadingArea: React.FC<{ isLoading?: boolean }> = ({
-  isLoading,
-  children,
-}) => {
-  return (
-    <Box position="relative">
-      {isLoading && (
-        <Sticky>
-          <Box height={300} width="100%" position="absolute">
-            <Spinner />
-          </Box>
-        </Sticky>
-      )}
-
-      <Box opacity={isLoading ? 0.1 : 1}>{children}</Box>
-    </Box>
-  )
-}

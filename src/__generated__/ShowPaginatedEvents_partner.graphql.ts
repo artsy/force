@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7a2b77dac0d16f7bf5a8a2fda6ea86d>>
+ * @generated SignedSource<<e3d5d1b6661a51a4a2cd997269e7d378>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowPaginatedEvents_partner$data = {
-  readonly showsList: {
+  readonly showsConnection: {
     readonly edges: ReadonlyArray<{
-      readonly " $fragmentSpreads": FragmentRefs<"ShowEvents_edges">;
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
+      } | null;
     } | null> | null;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
@@ -81,7 +84,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "showsList",
+      "alias": null,
       "args": [
         {
           "kind": "Variable",
@@ -174,9 +177,27 @@ const node: ReaderFragment = {
           "plural": true,
           "selections": [
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "ShowEvents_edges"
+              "concreteType": "Show",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellShow_show"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -189,6 +210,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0af75016e048646a50556989af3d7c4e";
+(node as any).hash = "0a1bf8bd7ffdc937a5586d78cd6b7a1b";
 
 export default node;

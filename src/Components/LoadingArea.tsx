@@ -1,73 +1,45 @@
-import Spinner from "Components/Spinner"
-import { ReactNode, SFC } from "react"
-import styled from "styled-components"
+import { Box, BoxProps, Spinner } from "@artsy/palette"
+import { Sticky } from "Components/Sticky"
+import { ReactNode, FC } from "react"
 
-export interface LoadingAreaState {
+interface LoadingAreaProps extends BoxProps {
   isLoading: boolean
-}
-
-interface Props extends LoadingAreaState {
   children: ReactNode
-  isLoading: boolean
-  transitionTime?: string
 }
-
 /**
- * @deprecated Instead build a content-specific skeleton using Skeleton components from Palette
+ * Use this component when a content skeleton is inappropriate: for example,
+ * when paginating contents, a skeleton would likely cause the UI to shift
  */
-export const LoadingArea: SFC<Props> = props => {
-  const { transitionTime } = props
-  const loaderClass = props.isLoading ? "loading" : ""
-
+export const LoadingArea: FC<LoadingAreaProps> = ({
+  isLoading,
+  children,
+  ...rest
+}) => {
   return (
-    <OuterContainer>
-      <SpinnerContainer>
-        <SpinnerToggle
-          transitionTime={transitionTime}
-          className={loaderClass}
-        />
-      </SpinnerContainer>
+    <Box {...rest}>
+      {isLoading && (
+        <Sticky>
+          <Box
+            height={300}
+            position="absolute"
+            display="flex"
+            width="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Spinner />
+          </Box>
+        </Sticky>
+      )}
 
-      <Container transitionTime={transitionTime} className={loaderClass}>
-        {props.children}
-      </Container>
-    </OuterContainer>
+      <Box
+        style={{
+          opacity: isLoading ? 0.25 : 1,
+          transition: "opacity 250ms",
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   )
 }
-
-LoadingArea.defaultProps = {
-  transitionTime: "0.0s",
-}
-
-const OuterContainer = styled.div`
-  position: relative;
-`
-
-const SpinnerContainer = styled.div`
-  position: absolute;
-  top: 100px;
-  width: 100%;
-  z-index: 1;
-`
-
-const Container = styled.div`
-  opacity: 1;
-  position: relative;
-
-  transition: opacity ${(props: Partial<Props>) => props.transitionTime};
-
-  &.loading {
-    opacity: 0.1;
-  }
-`
-
-const SpinnerToggle = styled(Spinner)`
-  position: absolute;
-
-  opacity: 0;
-  transition: opacity ${(props: Partial<Props>) => props.transitionTime};
-
-  &.loading {
-    opacity: 1;
-  }
-`

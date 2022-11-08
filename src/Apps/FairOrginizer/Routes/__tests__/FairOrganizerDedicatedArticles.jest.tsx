@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { FairOrganizerDedicatedArticles_Test_Query } from "__generated__/FairOrganizerDedicatedArticles_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { FairOrganizerDedicatedArticlesFragmentContainer } from "../FairOrganizerDedicatedArticles"
+import { FairOrganizerDedicatedArticlesFragmentContainer } from "Apps/FairOrginizer/Routes/FairOrganizerDedicatedArticles"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({
@@ -15,6 +15,9 @@ jest.mock("System/Router/useRouter", () => ({
 }))
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => null,
+}))
+jest.mock("Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: jest.fn(),
 }))
 
 const { getWrapper } = setupTestWrapper<

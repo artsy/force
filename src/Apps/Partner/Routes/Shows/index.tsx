@@ -1,19 +1,18 @@
 import * as React from "react"
-import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner$data } from "__generated__/Shows_partner.graphql"
-import { ShowEventsFragmentContainer } from "Apps/Partner/Components/PartnerShows/ShowEvents"
 import { ShowPaginatedEventsRenderer } from "Apps/Partner/Components/PartnerShows/ShowPaginatedEvents"
 import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 import { useRouter } from "System/Router/useRouter"
+import { extractNodes } from "Utils/extractNodes"
+import { Text, Column, GridColumns, Join, Spacer } from "@artsy/palette"
+import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 
 interface PartnerShowsProps {
   partner: Shows_partner$data
 }
 
-export const Shows: React.FC<PartnerShowsProps> = ({
-  partner,
-}): JSX.Element => {
+export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
   const { currentEvents, upcomingEvents, featuredEvents } = partner
 
   const {
@@ -22,45 +21,75 @@ export const Shows: React.FC<PartnerShowsProps> = ({
     },
   } = useRouter()
 
-  const firstFeaturedEvent = compact(featuredEvents?.edges)[0]?.node
-  const isEventFeatured = firstFeaturedEvent && firstFeaturedEvent.isFeatured
-  const filteredUpcomingEvents = compact(upcomingEvents?.edges)?.filter(
-    ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
-  )
-  const filteredCurrentEvents = compact(currentEvents?.edges)?.filter(
-    ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
-  )
-  const isUpcomingEventsExist = !!filteredUpcomingEvents.length
-  const isCurrentEventsExist = !!filteredCurrentEvents.length
+  const [firstFeaturedEvent] = extractNodes(featuredEvents)
 
-  const page = +query.page || 1
+  const filteredUpcomingEvents = extractNodes(upcomingEvents).filter(
+    event => event?.internalID !== firstFeaturedEvent?.internalID
+  )
+
+  const filteredCurrentEvents = extractNodes(currentEvents).filter(
+    event => event?.internalID !== firstFeaturedEvent?.internalID
+  )
 
   return (
     <>
-      {isEventFeatured && (
-        <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
-      )}
-      {isCurrentEventsExist && (
-        <ShowEventsFragmentContainer
-          edges={filteredCurrentEvents}
-          eventTitle="Current Events"
+      <Join separator={<Spacer mt={6} />}>
+        {firstFeaturedEvent?.isFeatured && (
+          <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
+        )}
+
+        {filteredCurrentEvents.length > 0 && (
+          <>
+            <Text variant="lg-display">Current Events</Text>
+
+            <GridColumns gridRowGap={[2, 4]}>
+              {filteredCurrentEvents.map(show => {
+                return (
+                  <Column key={show.internalID} span={[6, 6, 3, 3]}>
+                    <CellShowFragmentContainer
+                      show={show}
+                      mode="GRID"
+                      displayKind
+                      displayPartner={false}
+                    />
+                  </Column>
+                )
+              })}
+            </GridColumns>
+          </>
+        )}
+
+        {filteredUpcomingEvents.length > 0 && (
+          <>
+            <Text variant="lg-display">Upcoming Events</Text>
+
+            <GridColumns gridRowGap={[2, 4]}>
+              {filteredUpcomingEvents.map(show => {
+                return (
+                  <Column key={show.internalID} span={[6, 6, 3, 3]}>
+                    <CellShowFragmentContainer
+                      show={show}
+                      mode="GRID"
+                      displayKind
+                      displayPartner={false}
+                    />
+                  </Column>
+                )
+              })}
+            </GridColumns>
+          </>
+        )}
+
+        <ShowPaginatedEventsRenderer
+          eventTitle="Past Events"
+          partnerId={partner.slug}
+          status="CLOSED"
+          first={40}
+          scrollTo="pastShowsGrid"
+          offset={20}
+          page={+query.page || 1}
         />
-      )}
-      {isUpcomingEventsExist && (
-        <ShowEventsFragmentContainer
-          edges={compact(upcomingEvents?.edges)}
-          eventTitle="Upcoming Events"
-        />
-      )}
-      <ShowPaginatedEventsRenderer
-        eventTitle="Past Events"
-        partnerId={partner.slug}
-        status="CLOSED"
-        first={40}
-        scrollTo="#jumpto--pastShowsGrid"
-        offset={200}
-        page={page}
-      />
+      </Join>
     </>
   )
 }
@@ -90,9 +119,9 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
       ) {
         edges {
           node {
+            ...CellShow_show
             internalID
           }
-          ...ShowEvents_edges
         }
       }
       upcomingEvents: showsConnection(
@@ -102,9 +131,9 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
       ) {
         edges {
           node {
+            ...CellShow_show
             internalID
           }
-          ...ShowEvents_edges
         }
       }
     }

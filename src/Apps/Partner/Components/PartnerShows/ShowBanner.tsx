@@ -16,7 +16,7 @@ import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { ShowBanner_show$data } from "__generated__/ShowBanner_show.graphql"
 
-const statusLabelsMap = {
+const STATUS_LABELS = {
   running: "current",
   upcoming: "upcoming",
   closed: "past",
@@ -48,10 +48,10 @@ interface ShowBannerProps extends BoxProps {
 
 const ShowBanner: React.FC<ShowBannerProps> = ({
   show,
-  selected,
+  selected = false,
   withAnimation,
   ...rest
-}): JSX.Element => {
+}) => {
   const {
     coverImage,
     name,
@@ -62,33 +62,34 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
     description,
     href,
   } = show
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const showType = `${statusLabelsMap[status]} ${
-    isFairBooth ? "fair booth" : "show"
-  }`
+
   const [active, setActive] = useState(!withAnimation)
 
   useEffect(() => {
     if (withAnimation && selected !== active) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setActive(selected)
     }
-  }, [withAnimation, selected])
+  }, [withAnimation, selected, active])
 
   return (
     <GridColumns width="100%" gridRowGap={[4, 2]} {...rest}>
       <Column span={6}>
         <FadeBox opacity={active ? 1 : 0}>
           <Text textTransform="capitalize" variant="sm-display" mb={1}>
-            {showType}
+            {[STATUS_LABELS[status ?? ""], isFairBooth ? "fair booth" : "show"]
+              .filter(Boolean)
+              .join(" ")}
           </Text>
+
           <RouterLink to={href} textDecoration="none">
             {name && <Text variant="xl">{name}</Text>}
+
             {exhibitionPeriod && (
               <Text color="black60" variant="lg-display">
                 {exhibitionPeriod}
               </Text>
             )}
+
             {location && location.city && (
               <Text
                 color="black60"
@@ -98,8 +99,9 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
                 {location.city}
               </Text>
             )}
+
             {description && (
-              <Text mt={1}>
+              <Text variant="sm" mt={1}>
                 <ReadMore maxChars={280} content={description} />
               </Text>
             )}
@@ -107,13 +109,19 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
 
           <GridColumns mt={[2, 4]}>
             <Column span={6}>
-              <RouterLink to={href}>
-                <Button width="100%">View More</Button>
-              </RouterLink>
+              <Button
+                width="100%"
+                // @ts-ignore
+                as={RouterLink}
+                to={href}
+              >
+                View More
+              </Button>
             </Column>
           </GridColumns>
         </FadeBox>
       </Column>
+
       {coverImage && coverImage.medium && (
         <Column height={[280, 480]} position="relative" span={6}>
           <SlideBox

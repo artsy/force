@@ -8,33 +8,31 @@ import {
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "System/Router/Utils/catchLinks"
-import { scrollIntoView } from "Utils/scrollHelpers"
+import { useJump } from "Utils/Hooks/useJump"
 
-export interface PaginationProps {
+export interface PaginationProps extends Pick<BasePaginationProps, "getHref"> {
   hasNextPage: boolean
   // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
-  pageCursors:
+  pageCursors?:
     | Pagination_pageCursors$data
     | CommercePagination_pageCursors$data
-    | undefined
-  // FIXME: Replace with `useJump` implementation
   scrollTo?: string
   offset?: number
-  getHref?: BasePaginationProps["getHref"]
   onClick?: (cursor: string, page: number) => void
   onNext?: (page: number) => void
 }
 
-export const Pagination: React.FC<PaginationProps> = props => {
-  const {
-    hasNextPage,
-    pageCursors,
-    scrollTo = null,
-    getHref: __getHref__,
-    onClick = _cursor => ({}),
-    onNext = () => ({}),
-    offset,
-  } = props
+export const Pagination: React.FC<PaginationProps> = ({
+  hasNextPage,
+  pageCursors,
+  scrollTo = null,
+  getHref: __getHref__,
+  onClick = _cursor => ({}),
+  onNext = () => ({}),
+  offset,
+}) => {
+  const { jumpTo } = useJump({ offset })
+
   const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors?.around.length === 1) {
@@ -47,18 +45,26 @@ export const Pagination: React.FC<PaginationProps> = props => {
     event: React.MouseEvent
   ) => {
     if (userIsForcingNavigation(event)) return
+
     event.preventDefault()
+
     onClick(cursor, page)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    scrollIntoView({ selector: scrollTo, offset })
+
+    if (!scrollTo) return
+
+    jumpTo(scrollTo, { offset })
   }
 
   const handleNext = (event: React.MouseEvent, page: number) => {
     if (userIsForcingNavigation(event)) return
+
     event.preventDefault()
+
     onNext(page)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    scrollIntoView({ selector: scrollTo, offset })
+
+    if (!scrollTo) return
+
+    jumpTo(scrollTo, { offset })
   }
 
   const paginationProps: BasePaginationProps = {
@@ -66,19 +72,14 @@ export const Pagination: React.FC<PaginationProps> = props => {
     hasNextPage,
     onClick: handleClick,
     onNext: handleNext,
+    // FIXME:
     pageCursors: pageCursors as any,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    scrollTo,
   }
 
   return (
-    // TODO: Should not have external margin
+    // FIXME: Should not have external margin
     <PaginationBase mt={6} {...paginationProps} />
   )
-}
-
-Pagination.defaultProps = {
-  offset: 40,
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {

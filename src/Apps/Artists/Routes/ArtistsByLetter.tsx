@@ -11,25 +11,19 @@ import {
 import { useState } from "react"
 import * as React from "react"
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { ArtistsByLetter_viewer$data } from "__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "Apps/Artists/Components/ArtistsByLetterMeta"
 import { ArtistsLetterNav } from "Apps/Artists/Components/ArtistsLetterNav"
+import { LoadingArea } from "Components/LoadingArea"
 
-const Columns = styled(Box)<{ isLoading: boolean }>`
+const Columns = styled(Box)`
   column-count: 4;
   ${media.md`column-count: 3;`}
   ${media.xs`column-count: 1;`}
-
-  ${({ isLoading }) =>
-    isLoading &&
-    css`
-      opacity: 0.25;
-      pointer-events: none;
-    `}
 `
 
 const Name = styled(RouterLink)`
@@ -113,21 +107,23 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
 
       <Spacer mt={6} />
 
-      <Columns isLoading={isLoading}>
-        {artists.map(singleArtist => {
-          if (!singleArtist) return
+      <LoadingArea isLoading={isLoading}>
+        <Columns>
+          {artists.map(singleArtist => {
+            if (!singleArtist) return
 
-          const { artist } = singleArtist
+            const { artist } = singleArtist
 
-          if (artist?.name && artist?.href) {
-            return (
-              <Text key={artist?.internalID}>
-                <Name to={artist?.href}>{artist.name}</Name>
-              </Text>
-            )
-          }
-        })}
-      </Columns>
+            if (artist?.name && artist?.href) {
+              return (
+                <Text key={artist?.internalID}>
+                  <Name to={artist?.href}>{artist.name}</Name>
+                </Text>
+              )
+            }
+          })}
+        </Columns>
+      </LoadingArea>
 
       <PaginationFragmentContainer
         hasNextPage={hasNextPage}
