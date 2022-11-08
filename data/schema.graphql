@@ -1290,6 +1290,8 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     # Get only articles with 'standard', 'feature', 'series' or 'video' layouts.
     inEditorialFeed: Boolean
     last: Int
+
+    # DEPRECATION REASON: Use `size` instead
     limit: Int
     page: Int
     size: Int
@@ -11818,6 +11820,19 @@ type Partner implements Node {
   displayFullPartnerPage: Boolean
   displayWorksSection: Boolean
   distinguishRepresentedArtists: Boolean
+
+  # Return partner documents if current user has CMS access.
+  documentsConnection(
+    after: String
+    artistID: String
+    before: String
+
+    # Filter documents by ID.
+    documentIDs: [String]
+    first: Int
+    last: Int
+    showID: String
+  ): PartnerDocumentConnection
   featuredShow: Show
 
   # Artworks Elastic Search results
@@ -12054,20 +12069,6 @@ type PartnerArtistCounts {
   ): FormattedNumber
 }
 
-type PartnerArtistDocument {
-  filename: String!
-
-  # A globally unique ID.
-  id: ID!
-
-  # A type-specific ID likely used as a database ID.
-  internalID: ID!
-  publicUrl: String!
-  size: Int!
-  title: String!
-  uri: String!
-}
-
 # A connection to a list of items.
 type PartnerArtistDocumentConnection {
   # A list of edges.
@@ -12085,7 +12086,7 @@ type PartnerArtistDocumentEdge {
   cursor: String!
 
   # The item at the end of the edge
-  node: PartnerArtistDocument
+  node: PartnerDocument
 }
 
 # An edge in a connection.
@@ -12264,6 +12265,40 @@ type PartnerCounts {
   ): FormattedNumber
 }
 
+type PartnerDocument {
+  filesize: Int!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific Gravity Mongo Document ID.
+  internalID: ID!
+  publicUrl: String! @deprecated(reason: "Prefer `publicURL`")
+  publicURL: String!
+  size: Int! @deprecated(reason: "Prefer `filesize`")
+  title: String!
+}
+
+# A connection to a list of items.
+type PartnerDocumentConnection {
+  # A list of edges.
+  edges: [PartnerDocumentEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type PartnerDocumentEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: PartnerDocument
+}
+
 # An edge in a connection.
 type PartnerEdge {
   # A cursor for use in pagination
@@ -12306,20 +12341,6 @@ type PartnersAggregationResults {
   slice: PartnersAggregation
 }
 
-type PartnerShowDocument {
-  filename: String!
-
-  # A globally unique ID.
-  id: ID!
-
-  # A type-specific ID likely used as a database ID.
-  internalID: ID!
-  publicUrl: String!
-  size: Int!
-  title: String!
-  uri: String!
-}
-
 # A connection to a list of items.
 type PartnerShowDocumentConnection {
   # A list of edges.
@@ -12337,7 +12358,7 @@ type PartnerShowDocumentEdge {
   cursor: String!
 
   # The item at the end of the edge
-  node: PartnerShowDocument
+  node: PartnerDocument
 }
 
 enum PartnerShowPartnerType {
@@ -13545,7 +13566,7 @@ type Query {
     id: String!
   ): Partner
 
-  # Retrieve all partner artist documents for a given partner and artist
+  # Retrieve all partner documents for a given partner
   partnerArtistDocumentsConnection(
     after: String
 
@@ -13560,6 +13581,7 @@ type Query {
     partnerID: String!
     size: Int
   ): PartnerArtistDocumentConnection
+    @deprecated(reason: "Prefer `partner.documentsConnection`")
 
   # A list of Artworks for a partner
   partnerArtworks(
@@ -13629,6 +13651,7 @@ type Query {
     showID: String!
     size: Int
   ): PartnerShowDocumentConnection
+    @deprecated(reason: "Prefer `partner.documentsConnection`")
 
   # Phone number information
   phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
@@ -17292,7 +17315,7 @@ type Viewer {
     id: String!
   ): Partner
 
-  # Retrieve all partner artist documents for a given partner and artist
+  # Retrieve all partner documents for a given partner
   partnerArtistDocumentsConnection(
     after: String
 
@@ -17307,6 +17330,7 @@ type Viewer {
     partnerID: String!
     size: Int
   ): PartnerArtistDocumentConnection
+    @deprecated(reason: "Prefer `partner.documentsConnection`")
 
   # A list of Artworks for a partner
   partnerArtworks(
@@ -17376,6 +17400,7 @@ type Viewer {
     showID: String!
     size: Int
   ): PartnerShowDocumentConnection
+    @deprecated(reason: "Prefer `partner.documentsConnection`")
 
   # Phone number information
   phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
