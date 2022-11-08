@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Modal, ModalWidth } from "@artsy/palette"
+import { ModalDialog, ModalWidth } from "@artsy/palette"
 import styled from "styled-components"
 
 export const StyledIframe = styled("iframe")`
@@ -21,12 +21,11 @@ export const OrderModal: React.FC<OrderModalProps> = ({
   title,
   path,
 }) => (
-  <Modal
-    modalWidth={ModalWidth.Wide}
-    show={show}
-    onClose={closeModal}
-    title={title}
-  >
-    <StyledIframe src={`${path}?isModal=true`}></StyledIframe>
-  </Modal>
+  <>
+    {show && (
+      <ModalDialog width={ModalWidth.Wide} onClose={closeModal} title={title}>
+        <StyledIframe src={`${path}?isModal=true`}></StyledIframe>
+      </ModalDialog>
+    )}
+  </>
 )
