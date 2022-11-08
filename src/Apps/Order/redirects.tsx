@@ -111,6 +111,15 @@ const goToStatusIfNotLastTransactionFailed = goToStatusIf(
   "Order's lastTransactionFailed must be true"
 )
 
+const goToNewPaymentIfOfferLastTransactionFailed = ({ order }) => {
+  if (order.mode === "OFFER" && order.lastTransactionFailed) {
+    return {
+      path: `/orders/${order.internalID}/payment/new`,
+      reason: "No payment has been successfully made",
+    }
+  }
+}
+
 const goToReviewIfOrderIsPending: OrderPredicate = ({ order }) => {
   if (order.state === "PENDING") {
     return {
@@ -156,6 +165,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
         goToStatusIfNotOfferOrder,
         goToStatusIfNotAwaitingBuyerResponse,
         goToStatusIfOrderIsNotSubmitted,
+        goToNewPaymentIfOfferLastTransactionFailed,
       ],
     },
     {

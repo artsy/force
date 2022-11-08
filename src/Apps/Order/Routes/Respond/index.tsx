@@ -348,6 +348,7 @@ export const RespondFragmentContainer = createFragmentContainer(
         itemsTotal(precision: 2)
         itemsTotalCents
         stateExpiresAt
+        lastTransactionFailed
         lineItems {
           edges {
             node {

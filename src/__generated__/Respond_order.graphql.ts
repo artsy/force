@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41da412101bfd424a25e3be86ebf656b>>
+ * @generated SignedSource<<e8593336dfad01ef40a85bde87951775>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type Respond_order$data = {
     readonly internalID: string;
     readonly note: string | null;
   } | null;
+  readonly lastTransactionFailed: boolean | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -115,6 +116,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "stateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastTransactionFailed",
       "storageKey": null
     },
     {
@@ -252,6 +260,6 @@ return {
 };
 })();
 
-(node as any).hash = "523fd9e13a22c46e90e9b2e8a75f93f4";
+(node as any).hash = "2eade9e7c194416e1bd4a36281ac7597";
 
 export default node;
