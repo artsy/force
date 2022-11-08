@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps, Clickable } from "@artsy/palette"
+import { Flex, Text, RadioProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
@@ -68,22 +68,29 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           {phoneNumber}
         </Text>
       </Flex>
-      <Clickable
+      <EditButton
+        textColor="blue100"
+        variant="sm"
         position="absolute"
         top={2}
         right={2}
+        tabIndex={0}
         onClick={event => {
           event.preventDefault()
           event.stopPropagation()
 
           handleClickEdit(index)
         }}
+        onKeyPress={event => {
+          event.preventDefault()
+          event.stopPropagation()
+
+          event.key === "Enter" && handleClickEdit(index)
+        }}
         data-test="editAddressInShipping"
       >
-        <EditButton textColor="blue100" variant="sm">
-          Edit
-        </EditButton>
-      </Clickable>
+        Edit
+      </EditButton>
     </Flex>
   )
 }
