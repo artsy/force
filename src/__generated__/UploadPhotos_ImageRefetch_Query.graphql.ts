@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79df193b9fbd6fb31577c729bdaefc68>>
+ * @generated SignedSource<<7775561abde35d27b0bef4f78597cc85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,8 @@ export type UploadPhotos_ImageRefetch_Query$data = {
       readonly size: string | null;
     } | null> | null;
     readonly externalId: string;
+    readonly userEmail: string | null;
+    readonly userId: string;
   } | null;
 };
 export type UploadPhotos_ImageRefetch_Query = {
@@ -66,10 +68,24 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userId",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userEmail",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -77,7 +93,7 @@ v4 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v3/*: any*/),
+    (v5/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -125,7 +141,9 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v4/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -148,20 +166,22 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           (v4/*: any*/),
-          (v3/*: any*/)
+          (v6/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f813b36dce7c3d23e2dca6faf1f7aacb",
+    "cacheID": "0818a08f95bb5e0cfdb2491b06b10213",
     "id": null,
     "metadata": {},
     "name": "UploadPhotos_ImageRefetch_Query",
     "operationKind": "query",
-    "text": "query UploadPhotos_ImageRefetch_Query(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(externalId: $id, sessionID: $sessionID) {\n    externalId\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n"
+    "text": "query UploadPhotos_ImageRefetch_Query(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(externalId: $id, sessionID: $sessionID) {\n    externalId\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n"
   }
 };
 })();

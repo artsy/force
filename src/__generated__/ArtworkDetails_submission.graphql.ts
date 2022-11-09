@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eac96e73b9ab5a462ee1bb1504ec716f>>
+ * @generated SignedSource<<309c21922be068c20a008597bb2dd66d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,8 @@ export type ArtworkDetails_submission$data = {
   readonly medium: string | null;
   readonly provenance: string | null;
   readonly title: string | null;
+  readonly userEmail: string | null;
+  readonly userId: string;
   readonly width: string | null;
   readonly year: string | null;
   readonly " $fragmentType": "ArtworkDetails_submission";
@@ -189,12 +191,26 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "provenance",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userEmail",
+      "storageKey": null
     }
   ],
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
 
-(node as any).hash = "b9518757b5006da2539920b75926ded6";
+(node as any).hash = "4b63226c9311e6c2b9a0c00ee41cbe7c";
 
 export default node;

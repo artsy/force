@@ -33,6 +33,8 @@ import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { LocationDescriptor } from "found"
+import { trackEvent } from "Server/analytics/helpers"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -149,6 +151,24 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         })
         return
       }
+
+      if (isLastStep) {
+        trackEvent({
+          action: ActionType.consignmentSubmitted,
+          submission_id: submissionId,
+          user_id: submission?.userId,
+          user_email: submission?.userEmail,
+        })
+      }
+
+      trackEvent({
+        action: ActionType.artworkDetailsCompleted,
+        context_owner_type: OwnerType.consignmentFlow,
+        context_module: ContextModule.artworkDetails,
+        submission_id: submissionId,
+        user_id: submission?.userId,
+        user_email: submission?.userEmail,
+      })
 
       router.replace(artworkId ? "/settings/my-collection" : "/sell")
 
@@ -295,6 +315,8 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         depth
         dimensionsMetric
         provenance
+        userId
+        userEmail
       }
     `,
     myCollectionArtwork: graphql`

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e8e11bb3e2617b361e08f422ea8935b>>
+ * @generated SignedSource<<612a02683dbb2faa8a2ba5846b3db9f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,6 +144,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "userId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userEmail",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ConsignmentSubmissionCategoryAsset",
             "kind": "LinkedField",
             "name": "assets",
@@ -231,7 +245,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ac7aaae8fd7970833dcfe7a1744bc99b",
+    "cacheID": "2a57f581ade2d3156c709e9df343a484",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -273,12 +287,19 @@ return {
         },
         "submission.assets.size": (v6/*: any*/),
         "submission.externalId": (v5/*: any*/),
-        "submission.id": (v5/*: any*/)
+        "submission.id": (v5/*: any*/),
+        "submission.userEmail": (v6/*: any*/),
+        "submission.userId": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "UploadPhotos_SubmissionMyCollectionFlowTest_Query",
     "operationKind": "query",
-    "text": "query UploadPhotos_SubmissionMyCollectionFlowTest_Query(\n  $externalId: ID\n  $artworkId: String!\n) {\n  submission(externalId: $externalId) {\n    ...UploadPhotos_submission\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query UploadPhotos_SubmissionMyCollectionFlowTest_Query(\n  $externalId: ID\n  $artworkId: String!\n) {\n  submission(externalId: $externalId) {\n    ...UploadPhotos_submission\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

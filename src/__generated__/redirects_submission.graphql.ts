@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83093cd6b3ea6395910a4303fbea3a99>>
+ * @generated SignedSource<<6849fc120fe7438dcdc6f739a219dd93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,8 @@ export type redirects_submission$data = {
   readonly medium: string | null;
   readonly provenance: string | null;
   readonly title: string | null;
+  readonly userEmail: string | null;
+  readonly userId: string;
   readonly width: string | null;
   readonly year: string | null;
   readonly " $fragmentType": "redirects_submission";
@@ -195,6 +197,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "provenance",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userEmail",
       "storageKey": null
     },
     {

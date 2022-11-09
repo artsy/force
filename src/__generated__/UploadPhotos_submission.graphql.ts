@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d580adb27d9efdf3f4ebbf03cbbb53f5>>
+ * @generated SignedSource<<b66534ad534095a89d79198dc6033524>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,8 @@ export type UploadPhotos_submission$data = {
     readonly size: string | null;
   } | null> | null;
   readonly externalId: string;
+  readonly userEmail: string | null;
+  readonly userId: string;
   readonly " $fragmentType": "UploadPhotos_submission";
 };
 export type UploadPhotos_submission$key = {
@@ -37,6 +39,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "externalId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "userEmail",
       "storageKey": null
     },
     {
@@ -90,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8c71b40126392ffdfdd810306a7f861d";
+(node as any).hash = "6cbff21ab8e0943f456bc0b251b4e505";
 
 export default node;

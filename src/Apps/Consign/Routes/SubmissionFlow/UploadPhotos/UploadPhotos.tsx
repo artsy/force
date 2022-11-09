@@ -1,3 +1,4 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Text } from "@artsy/palette"
 import {
   SubmissionStepper,
@@ -25,6 +26,7 @@ import {
   fetchQuery,
   graphql,
 } from "react-relay"
+import { trackEvent } from "Server/analytics/helpers"
 import { isServer } from "Server/isServer"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
@@ -122,13 +124,29 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   const handleSubmit = async () => {
     if (submission) {
       if (isLastStep && relayEnvironment) {
-        await createOrUpdateConsignSubmission(relayEnvironment, {
-          externalId: submission.externalId,
-          state: "SUBMITTED",
+        const submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          {
+            externalId: submission.externalId,
+            state: "SUBMITTED",
+          }
+        )
+        trackEvent({
+          action: ActionType.consignmentSubmitted,
+          submission_id: submissionId,
+          user_id: submission.userId,
+          user_email: submission.userEmail,
         })
       }
 
-      // Track last step
+      trackEvent({
+        action: ActionType.uploadPhotosCompleted,
+        context_owner_type: OwnerType.consignmentFlow,
+        context_module: ContextModule.uploadPhotos,
+        submission_id: submission.externalId,
+        user_id: submission.userId,
+        user_email: submission.userEmail,
+      })
 
       router.replace(artworkId ? "/settings/my-collection" : "/sell")
 
@@ -404,6 +422,8 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment UploadPhotos_submission on ConsignmentSubmission {
         externalId
+        userId
+        userEmail
         assets {
           id
           imageUrls

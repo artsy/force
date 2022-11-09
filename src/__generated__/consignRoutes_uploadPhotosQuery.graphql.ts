@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30a12ed647dcbeb7406a0d67f145ef2e>>
+ * @generated SignedSource<<486fe0f958c35ac617e728bfa3262a44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,8 @@ export type consignRoutes_uploadPhotosQuery$data = {
     readonly medium: string | null;
     readonly provenance: string | null;
     readonly title: string | null;
+    readonly userEmail: string | null;
+    readonly userId: string;
     readonly width: string | null;
     readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
@@ -224,10 +226,24 @@ v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userId",
   "storageKey": null
 },
 v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userEmail",
+  "storageKey": null
+},
+v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v26 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -235,7 +251,7 @@ v24 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v23/*: any*/),
+    (v25/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -321,7 +337,9 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
-          (v24/*: any*/)
+          (v23/*: any*/),
+          (v24/*: any*/),
+          (v26/*: any*/)
         ],
         "storageKey": null
       }
@@ -348,7 +366,9 @@ return {
         "plural": false,
         "selections": [
           (v4/*: any*/),
+          (v23/*: any*/),
           (v24/*: any*/),
+          (v26/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -359,7 +379,7 @@ return {
             "selections": [
               (v5/*: any*/),
               (v6/*: any*/),
-              (v23/*: any*/)
+              (v25/*: any*/)
             ],
             "storageKey": null
           },
@@ -379,19 +399,19 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
-          (v23/*: any*/)
+          (v25/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "b873d935f8d946f09f67aba39f435c78",
+    "cacheID": "b292e23cbe57821b80eb47f4fd3b3db6",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_uploadPhotosQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();
