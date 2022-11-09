@@ -350,8 +350,8 @@ export const processingApprovalTitle = (
   }
 
   return isOfferFlow
-    ? "Offer accepted. Payment processing"
-    : "Your order is confirmed. Payment processing"
+    ? "Offer accepted. Payment processing."
+    : "Your order is confirmed. Payment processing."
 }
 
 export const deliverText = (order): React.ReactNode => {
