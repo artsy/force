@@ -4,13 +4,13 @@ import { flushPromiseQueue } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtworkDetailsFragmentContainer } from "../ArtworkDetails"
+import { ArtworkDetailsFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
 } from "Apps/Consign/Components/SubmissionStepper"
-import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 
 const validForm = {
   externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
@@ -348,12 +348,10 @@ describe("ArtworkDetails", () => {
 
         await flushPromiseQueue()
 
-        expect(mockRouterReplace).toHaveBeenCalledWith({
-          pathname: "/sell/submission/1/artwork-details",
-        })
-        expect(mockRouterPush).toHaveBeenCalledWith({
-          pathname: "/sell/submission/1/upload-photos",
-        })
+        expect(mockRouterReplace).toHaveBeenCalledWith("/sell")
+        expect(mockRouterPush).toHaveBeenCalledWith(
+          "/sell/submission/1/upload-photos"
+        )
       })
 
       it("data with UTM params is saved in session storage and submition created", async () => {

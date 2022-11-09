@@ -203,7 +203,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         backTo = backTo + `/submission/${submission.externalId}`
       }
     }
-    backTo = backTo + `/${prevStep}`
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
     if (artworkId) {
       backTo = backTo + `/${artworkId}`
     }
@@ -384,7 +384,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
-                {isLastStep ? "Submit Artwork" : "Save & Continue"}
+                {isLastStep ? "Submit Artwork" : "Save and Continue"}
               </Button>
             </Form>
           )

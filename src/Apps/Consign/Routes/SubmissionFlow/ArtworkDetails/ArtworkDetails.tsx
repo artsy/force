@@ -225,7 +225,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         backTo = backTo + `/submission/${submission.externalId}`
       }
     }
-    backTo = backTo + `/${prevStep}`
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
     if (artworkId) {
       backTo = backTo + `/${artworkId}`
     }
@@ -280,7 +280,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
               loading={isSubmitting}
               disabled={!isValid}
             >
-              {isLastStep ? "Submit Artwork" : "Save & Continue"}
+              {isLastStep ? "Submit Artwork" : "Save and Continue"}
             </Button>
           </Form>
         )}

@@ -172,7 +172,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         backTo = backTo + `/submission/${submission.externalId}`
       }
     }
-    backTo = backTo + `/${prevStep}`
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
     if (artworkId) {
       backTo = backTo + `/${artworkId}`
     }
@@ -215,7 +215,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
               loading={isSubmitting}
               type="submit"
             >
-              {isLastStep ? "Submit Artwork" : "Save & Continue"}
+              {isLastStep ? "Submit Artwork" : "Save and Continue"}
             </Button>
           </Form>
         )}
