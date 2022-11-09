@@ -1,6 +1,9 @@
 import { ActionType } from "@artsy/cohesion"
 import { Button, Text, useToasts } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,
@@ -8,6 +11,7 @@ import {
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
+import { LocationDescriptor } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
@@ -57,6 +61,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   )
   const artworkId = match.params.artworkId
 
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Contact Information"),
+    [...steps].indexOf("Contact")
+  )
+  const isLastStep = stepIndex === steps.length - 1
+
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
 
@@ -67,31 +78,53 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   }: ContactInformationFormModel) => {
     if (!(await handleRecaptcha("submission_submit"))) return
 
-    if (relayEnvironment && submission) {
+    if (relayEnvironment) {
       try {
         const submissionEmail = email.trim()
 
-        await createOrUpdateConsignSubmission(relayEnvironment, {
-          externalId: submission.externalId,
-          userName: name.trim(),
-          userEmail: submissionEmail,
-          userPhone: phone.international,
-          state: "SUBMITTED",
-          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
-        })
+        const submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          {
+            externalId: submission?.externalId,
+            artistID: stepIndex === 0 ? "" : undefined,
+            userName: name.trim(),
+            userEmail: submissionEmail,
+            userPhone: phone.international,
+            state: isLastStep ? "SUBMITTED" : "DRAFT",
+            sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+          }
+        )
 
-        trackEvent({
-          action: ActionType.consignmentSubmitted,
-          submission_id: submission.externalId,
-          user_id: me?.internalID,
-          user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
-        })
+        if (isLastStep) {
+          trackEvent({
+            action: ActionType.consignmentSubmitted,
+            submission_id: submission?.externalId,
+            user_id: me?.internalID,
+            user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
+          })
+        }
+
+        // TODO:- Track ContactInformation step
 
         router.replace(artworkId ? "/settings/my-collection" : "/sell")
+
+        const nextStepIndex = isLastStep ? null : stepIndex + 1
+        let nextRoute: LocationDescriptor | null = null
+        if (nextStepIndex !== null) {
+          let nextStep = steps[nextStepIndex]
+          if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+            nextRoute = `/sell/submission/${submissionId}/artwork-details`
+          } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
+            nextRoute = `/sell/submission/${submissionId}/upload-photos`
+          }
+        }
+
         router.push(
           artworkId
-            ? `/my-collection/submission/${submission?.externalId}/thank-you/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/thank-you`
+            ? `/my-collection/submission/${submissionId}/thank-you/${artworkId}`
+            : nextRoute
+            ? nextRoute
+            : `/sell/submission/${submissionId}/thank-you`
         )
       } catch (error) {
         logger.error("Submission error", error)
@@ -150,7 +183,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
               loading={isSubmitting}
               type="submit"
             >
-              Submit Artwork
+              {isLastStep ? "Submit Artwork" : "Save & Continue"}
             </Button>
           </Form>
         )}

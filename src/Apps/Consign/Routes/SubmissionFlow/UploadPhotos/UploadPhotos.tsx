@@ -1,9 +1,13 @@
 import { Box, Button, Text } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   uploadPhotosValidationSchema,
   validate,
@@ -12,6 +16,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
+import { LocationDescriptor } from "found"
 import { findLast } from "lodash"
 import { useRef, useState } from "react"
 import {
@@ -100,6 +105,13 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   } = useRemoveAssetFromConsignmentSubmission()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
 
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Upload Photos"),
+    [...steps].indexOf("Photos")
+  )
+  const isLastStep = stepIndex === steps.length - 1
+
   const initialValue = getUploadPhotosFormInitialValues(
     submission,
     myCollectionArtwork
@@ -109,10 +121,36 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   const handleSubmit = async () => {
     if (submission) {
+      if (isLastStep && relayEnvironment) {
+        await createOrUpdateConsignSubmission(relayEnvironment, {
+          externalId: submission.externalId,
+          state: "SUBMITTED",
+        })
+      }
+      // Track last step
+      const nextStepIndex = isLastStep ? null : stepIndex + 1
+      let nextRoute: LocationDescriptor | null = null
+      if (nextStepIndex !== null) {
+        let nextStep = steps[nextStepIndex]
+        if (nextStep === "Contact" || nextStep === "Contact Information") {
+          nextRoute = `/sell/submission/${submission.externalId}/contact-information`
+        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `/sell/submission/${submission.externalId}/artwork-details`
+        }
+      }
+
+      // router.replace({
+      //   pathname: artworkId
+      //     ? `/my-collection/submission/${submission.externalId}/upload-photos/${artworkId}`
+      //     : `/sell/submission/${submission.externalId}/upload-photos`,
+      // })
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
       router.push({
         pathname: artworkId
           ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
-          : `/sell/submission/${submission.externalId}/contact-information`,
+          : nextRoute
+          ? nextRoute
+          : `/sell/submission/${submission.externalId}/thank-you`,
       })
     }
   }
@@ -298,7 +336,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
-                Save and Continue
+                {isLastStep ? "Submit Artwork" : "Save & Continue"}
               </Button>
             </Form>
           )

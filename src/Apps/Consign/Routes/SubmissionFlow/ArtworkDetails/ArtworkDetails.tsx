@@ -1,5 +1,8 @@
 import { Button, Text, useToasts } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
@@ -9,23 +12,27 @@ import {
   SubmissionType,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "System/Router/useRouter"
-import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
+import {
+  artworkDetailsValidationSchema,
+  validate,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,
-} from "../Utils/createOrUpdateConsignSubmission"
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import {
   ArtworkDetails_submission$data,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { UtmParams } from "../Utils/types"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { LocationDescriptor } from "found"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -41,6 +48,13 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
+
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Artwork Details"),
+    [...steps].indexOf("Artwork")
+  )
+  const isLastStep = stepIndex === steps.length - 1
 
   const data: getArtworkDetailsFormInitialValuesProps = submission
     ? { values: submission!, type: SubmissionType.submission }
@@ -104,7 +118,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         locationState: artworkDetailsForm.location.state?.trim(),
         locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
         locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
-        state: "DRAFT",
+        state: isLastStep ? "SUBMITTED" : "DRAFT",
         utmMedium: utmParams?.utmMedium,
         utmSource: utmParams?.utmSource,
         utmTerm: utmParams?.utmTerm,
@@ -133,15 +147,29 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         return
       }
 
-      router.replace({
-        pathname: artworkId
-          ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
-          : `/sell/submission/${submissionId}/artwork-details`,
-      })
+      const nextStepIndex = isLastStep ? null : stepIndex + 1
+      let nextRoute: LocationDescriptor | null = null
+      if (nextStepIndex !== null) {
+        let nextStep = steps[nextStepIndex]
+        if (nextStep === "Contact" || nextStep === "Contact Information") {
+          nextRoute = `/sell/submission/${submissionId}/contact-information`
+        } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
+          nextRoute = `/sell/submission/${submissionId}/upload-photos`
+        }
+      }
+
+      // router.replace({
+      //   pathname: artworkId
+      //     ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
+      //     : `/sell/submission/${submissionId}/artwork-details`,
+      // })
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
       router.push({
         pathname: artworkId
           ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
-          : `/sell/submission/${submissionId}/upload-photos`,
+          : nextRoute
+          ? nextRoute
+          : `/sell/submission/${submissionId}/thank-you`,
       })
     }
   }
@@ -197,7 +225,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
               loading={isSubmitting}
               disabled={!isValid}
             >
-              Save and Continue
+              {isLastStep ? "Submit Artwork" : "Save & Continue"}
             </Button>
           </Form>
         )}

@@ -1,9 +1,10 @@
-import { Media } from "Utils/Responsive"
-import { Box, Step, Stepper } from "@artsy/palette"
+import { Box, Step, Stepper, themeProps } from "@artsy/palette"
 import { FC } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface SubmissionStepperProps {
-  currentStep: "Artwork Details" | "Upload Photos" | "Contact Information"
+  currentStep: ReturnType<typeof useSubmissionFlowSteps>["0"]
 }
 
 function typedArray<T extends string>(...elems: T[]): T[] {
@@ -22,38 +23,58 @@ export const submissionFlowStepsMobile = typedArray(
   "Contact"
 )
 
+enum ALIAS {
+  "Artwork Details" = "Artwork",
+  Artwork = "Artwork Details",
+  "Contact Information" = "Contact",
+  Contact = "Contact Information",
+  "Upload Photos" = "Photos",
+  Photos = "Upload Photos",
+}
+
+export const useSubmissionFlowSteps = () => {
+  const enableFlowReorder = useFeatureFlag(
+    "reorder-swa-artwork-submission-flow"
+  )
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  if (enableFlowReorder && isMobile) {
+    return typedArray("Contact", "Artwork", "Photos")
+  } else if (enableFlowReorder) {
+    return typedArray("Contact Information", "Artwork Details", "Upload Photos")
+  }
+  if (isMobile) {
+    return submissionFlowStepsMobile
+  }
+  return submissionFlowSteps
+}
+
 export const SubmissionStepper: FC<SubmissionStepperProps> = ({
   currentStep,
 }) => {
-  const stepIndex = submissionFlowSteps.indexOf(currentStep)
+  const useSteps = useSubmissionFlowSteps()
+  const steps = [...useSteps]
+  let stepIndex = steps.indexOf(currentStep)
+  if (stepIndex === -1) {
+    stepIndex = steps.indexOf(ALIAS[currentStep])
+  }
+  if (stepIndex === -1) {
+    // this should never happen
+    return null
+  }
   return (
     <>
-      <Media at="xs">
-        <Box>
-          <Stepper
-            initialTabIndex={stepIndex}
-            currentStepIndex={stepIndex}
-            disableNavigation
-            autoScroll
-          >
-            {submissionFlowStepsMobile.map(step => (
-              <Step name={step} key={step} />
-            ))}
-          </Stepper>
-        </Box>
-      </Media>
-      <Media greaterThan="xs">
+      <Box>
         <Stepper
           initialTabIndex={stepIndex}
           currentStepIndex={stepIndex}
           disableNavigation
           autoScroll
         >
-          {submissionFlowSteps.map(step => (
+          {steps.map(step => (
             <Step name={step} key={step} />
           ))}
         </Stepper>
-      </Media>
+      </Box>
     </>
   )
 }

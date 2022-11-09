@@ -70,7 +70,7 @@ export const ThankYou: React.FC = () => {
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
-        <RouterLink to="/sell/submission/artwork-details">
+        <RouterLink to="/sell/submission">
           <Button
             mr={[0, 150]}
             width={["100%", "auto"]}
