@@ -181,14 +181,42 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     }
   }
 
+  const deriveBackLinkTo = () => {
+    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    let backTo = defaultBackLink
+    if (stepIndex === 0 && artworkId) {
+      return backTo + `/artwork/${artworkId}`
+    }
+    let prevStep = ""
+    if (stepIndex > 0) {
+      switch (steps[stepIndex - 1]) {
+        case "Contact":
+        case "Contact Information":
+          prevStep = "contact-information"
+          break
+        case "Upload Photos":
+        case "Photos":
+          prevStep = "upload-photos"
+          break
+        default:
+          break
+      }
+      if (submission) {
+        backTo = backTo + `/submission/${submission.externalId}`
+      }
+    }
+    backTo = backTo + `/${prevStep}`
+    if (artworkId) {
+      backTo = backTo + `/${artworkId}`
+    }
+    return backTo
+  }
+
+  const backTo = deriveBackLinkTo()
+
   return (
     <>
-      <BackLink
-        py={2}
-        mb={6}
-        to={artworkId ? `/my-collection/artwork/${artworkId}` : "/sell"}
-        width="min-content"
-      >
+      <BackLink py={2} mb={6} to={backTo} width="min-content">
         Back
       </BackLink>
 

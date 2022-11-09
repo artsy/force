@@ -148,18 +148,42 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     }
   }
 
+  const deriveBackLinkTo = () => {
+    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    let backTo = defaultBackLink
+    if (stepIndex === 0 && artworkId) {
+      return backTo + `/artwork/${artworkId}`
+    }
+    let prevStep = ""
+    if (stepIndex > 0) {
+      switch (steps[stepIndex - 1]) {
+        case "Artwork":
+        case "Artwork Details":
+          prevStep = "artwork-details"
+          break
+        case "Upload Photos":
+        case "Photos":
+          prevStep = "upload-photos"
+          break
+        default:
+          break
+      }
+      if (submission) {
+        backTo = backTo + `/submission/${submission.externalId}`
+      }
+    }
+    backTo = backTo + `/${prevStep}`
+    if (artworkId) {
+      backTo = backTo + `/${artworkId}`
+    }
+    return backTo
+  }
+
+  const backTo = deriveBackLinkTo()
+
   return (
     <>
-      <BackLink
-        py={2}
-        mb={6}
-        width="min-content"
-        to={
-          artworkId
-            ? `/my-collection/submission/${submission?.externalId}/upload-photos/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/upload-photos`
-        }
-      >
+      <BackLink py={2} mb={6} width="min-content" to={backTo}>
         Back
       </BackLink>
 
