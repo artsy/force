@@ -211,7 +211,7 @@ describe("Status", () => {
             "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
           )
           expect(page.text()).toContain(
-            "Find the order total and Artsy's banking details below."
+            "Find the order total and Artsy’s banking details below."
           )
           expect(page.text()).toContain(
             "Please inform your bank that you will be responsible for all wire transfer fees."
@@ -568,7 +568,7 @@ describe("Status", () => {
             "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
           )
           expect(page.text()).toContain(
-            "Find the order total and Artsy's banking details below."
+            "Find the order total and Artsy’s banking details below."
           )
           expect(page.text()).toContain(
             "Please inform your bank that you will be responsible for all wire transfer fees."

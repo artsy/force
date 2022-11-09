@@ -95,7 +95,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             </Text>
             <Spacer mt={2} />
             <Text>
-              1. &nbsp; Find the order total and Artsy's banking details below.
+              1. &nbsp; Find the order total and Artsy’s banking details below.
             </Text>
             <Text>
               2. &nbsp;Please inform your bank that you will be responsible for
@@ -231,7 +231,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
       return {
         title: "Offer expired",
         description: (
-          <>The seller’s offer expired because you didn't respond in time.</>
+          <>The seller’s offer expired because you didn’t respond in time.</>
         ),
         showTransactionSummary: false,
       }
