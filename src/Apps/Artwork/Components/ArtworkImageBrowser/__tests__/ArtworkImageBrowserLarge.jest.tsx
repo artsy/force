@@ -21,6 +21,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
           activeIndex={0}
           onNext={jest.fn()}
           onPrev={jest.fn()}
+          onChange={jest.fn()}
         />
       </MockBoot>
     )

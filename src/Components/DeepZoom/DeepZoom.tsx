@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, ModalBase } from "@artsy/palette"
-import { once, throttle } from "lodash"
+import { once } from "lodash"
 import * as React from "react"
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
 import { DeepZoomSlider } from "./DeepZoomSlider"
@@ -11,6 +11,7 @@ import { useRef } from "react"
 import { useEffect } from "react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useTracking } from "react-tracking"
+import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
 
 const ZOOM_PER_CLICK = 1.4
 
@@ -186,41 +187,6 @@ export const DeepZoomFragmentContainer = createFragmentContainer(DeepZoom, {
     }
   `,
 })
-
-const useDetectActivity = (
-  { waitTime }: { waitTime: number } = { waitTime: 2500 }
-) => {
-  const [isActive, setIsActive] = useState(true)
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const detectActivity = throttle(() => {
-    setIsActive(true)
-
-    timeoutRef.current && clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => setIsActive(false), waitTime)
-  }, 500)
-
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => setIsActive(false), waitTime)
-
-    return () => {
-      timeoutRef.current && clearTimeout(timeoutRef.current)
-    }
-  }, [waitTime])
-
-  return {
-    detectActivity,
-    isActive,
-    detectActivityProps: {
-      onMouseMove: detectActivity,
-      onWheel: detectActivity,
-      onTouchStart: detectActivity,
-      onTouchMove: detectActivity,
-      onClick: detectActivity,
-    },
-  }
-}
 
 export const useDeepZoom = () => {
   const [isDeepZoomVisible, setIsDeepZoomVisible] = useState(false)
