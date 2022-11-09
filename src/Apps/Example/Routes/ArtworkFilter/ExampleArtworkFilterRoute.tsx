@@ -30,9 +30,13 @@ const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
-      ZeroState={() => <Text variant="sm-display">No Results.</Text>}
+      ZeroState={CustomZeroState}
     />
   )
+}
+
+const CustomZeroState = () => {
+  return <Text variant="sm-display">No Results.</Text>
 }
 
 export const ExampleArtworkFilterFragmentContainer = createFragmentContainer(

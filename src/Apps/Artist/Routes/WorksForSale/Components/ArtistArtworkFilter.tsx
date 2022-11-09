@@ -76,7 +76,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
-      ZeroState={() => <ZeroState my={1} />}
+      ZeroState={ZeroState}
       userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
