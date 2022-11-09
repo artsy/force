@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86fb9b01af1f6abdf1d0aa555874992b>>
+ * @generated SignedSource<<fe54b9babd3dd4f4b0329be3890566a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,7 +84,16 @@ v9 = {
   "name": "id",
   "storageKey": null
 },
-v10 = [
+v10 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -114,7 +123,7 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -216,6 +225,7 @@ v11 = {
                   "name": "height",
                   "value": 683
                 },
+                (v10/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -226,8 +236,8 @@ v11 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v10/*: any*/),
-              "storageKey": "cropped(height:683,width:910)"
+              "selections": (v11/*: any*/),
+              "storageKey": "cropped(height:683,version:[\"normalized\",\"larger\",\"large\"],width:910)"
             },
             {
               "alias": "small",
@@ -237,6 +247,7 @@ v11 = {
                   "name": "height",
                   "value": 450
                 },
+                (v10/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -247,8 +258,8 @@ v11 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v10/*: any*/),
-              "storageKey": "cropped(height:450,width:600)"
+              "selections": (v11/*: any*/),
+              "storageKey": "cropped(height:450,version:[\"normalized\",\"larger\",\"large\"],width:600)"
             }
           ],
           "storageKey": null
@@ -302,26 +313,26 @@ v11 = {
   ],
   "storageKey": null
 },
-v12 = [
-  (v11/*: any*/)
+v13 = [
+  (v12/*: any*/)
 ],
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v15 = [
-  (v13/*: any*/),
+v16 = [
   (v14/*: any*/),
+  (v15/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -409,7 +420,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v12/*: any*/),
+            "selections": (v13/*: any*/),
             "storageKey": "showsConnection(first:18,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
           },
           {
@@ -474,7 +485,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -484,7 +495,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -494,7 +505,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -505,8 +516,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/),
-                      (v14/*: any*/)
+                      (v14/*: any*/),
+                      (v15/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -520,7 +531,7 @@ return {
                 "name": "totalCount",
                 "storageKey": null
               },
-              (v11/*: any*/)
+              (v12/*: any*/)
             ],
             "storageKey": null
           },
@@ -538,7 +549,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v12/*: any*/),
+            "selections": (v13/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"CLOSED\")"
           }
         ],
@@ -547,12 +558,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "558147f49fe985164879d94a928380d6",
+    "cacheID": "c927c905d82295d4a6720c727c4945c0",
     "id": null,
     "metadata": {},
     "name": "ShowsCityQuery",
     "operationKind": "query",
-    "text": "query ShowsCityQuery(\n  $slug: String!\n  $after: String\n  $page: Int\n) {\n  city(slug: $slug) {\n    ...ShowsCity_city_3Wi2mG\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city_3Wi2mG on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, after: $after, page: $page, sort: END_AT_ASC) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query ShowsCityQuery(\n  $slug: String!\n  $after: String\n  $page: Int\n) {\n  city(slug: $slug) {\n    ...ShowsCity_city_3Wi2mG\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city_3Wi2mG on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING, sort: START_AT_ASC) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: RUNNING, after: $after, page: $page, sort: END_AT_ASC) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

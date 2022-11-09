@@ -279,7 +279,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
           href
           internalID
           image {
-            aspect_ratio: aspectRatio
+            aspectRatio
           }
           ...GridItem_artwork
           ...FlatGridItem_artwork
@@ -348,7 +348,7 @@ export function createSectionedArtworks(
 
         // Keep track of total section aspect ratio
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const aspectRatio = artwork.image.aspect_ratio || 1 // Ensure we never divide by null/0
+        const aspectRatio = artwork.image.aspectRatio || 1 // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sectionRatioSums[sectionIndex] += 1 / aspectRatio

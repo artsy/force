@@ -110,7 +110,7 @@ const ArtworkGridItemImage: React.FC<Pick<
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
-  const aspectRatio = artwork.image?.aspect_ratio ?? 1
+  const aspectRatio = artwork.image?.aspectRatio ?? 1
   const width = 445
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
@@ -122,7 +122,7 @@ const ArtworkGridItemImage: React.FC<Pick<
   if (imageURL) {
     return (
       <MagnifyImage
-        alt={artwork.image_title ?? ""}
+        alt={artwork.imageTitle ?? ""}
         src={src}
         srcSet={srcSet}
         lazyLoad={lazyLoad}
@@ -240,11 +240,11 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
       fragment GridItem_artwork on Artwork {
         internalID
         title
-        image_title: imageTitle
+        imageTitle
         image {
           placeholder
-          url(version: "large")
-          aspect_ratio: aspectRatio
+          url(version: ["normalized", "larger", "large"])
+          aspectRatio
         }
         artistNames
         href

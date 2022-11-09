@@ -62,7 +62,11 @@ export const DefaultHeaderArtworkFragmentContainer = createFragmentContainer(
         href
         slug
         image {
-          resized(width: 300, height: 450) {
+          resized(
+            width: 300
+            height: 450
+            version: ["normalized", "larger", "large"]
+          ) {
             src
             srcSet
             width
