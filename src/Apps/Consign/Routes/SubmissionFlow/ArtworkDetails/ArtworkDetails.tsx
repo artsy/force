@@ -56,14 +56,17 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   )
   const isLastStep = stepIndex === steps.length - 1
 
-  const data: getArtworkDetailsFormInitialValuesProps = submission
-    ? { values: submission!, type: SubmissionType.submission }
-    : myCollectionArtwork
-    ? {
-        values: myCollectionArtwork!,
-        type: SubmissionType.myCollectionArtwork,
-      }
-    : { type: SubmissionType.default }
+  let data: getArtworkDetailsFormInitialValuesProps = {
+    type: SubmissionType.default,
+  }
+  if (myCollectionArtwork) {
+    data = {
+      values: myCollectionArtwork!,
+      type: SubmissionType.myCollectionArtwork,
+    }
+  } else if (submission) {
+    data = { values: submission!, type: SubmissionType.submission }
+  }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
@@ -147,30 +150,34 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         return
       }
 
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
+
+      const consignPath = artworkId
+        ? "/my-collection/submission"
+        : "/sell/submission"
+
       const nextStepIndex = isLastStep ? null : stepIndex + 1
-      let nextRoute: LocationDescriptor | null = null
+      let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
         if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `/sell/submission/${submissionId}/contact-information`
+          nextRoute = `${consignPath}/${submissionId}/contact-information`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
-          nextRoute = `/sell/submission/${submissionId}/upload-photos`
+          nextRoute = `${consignPath}/${submissionId}/upload-photos`
         }
       }
 
-      // router.replace({
-      //   pathname: artworkId
-      //     ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
-      //     : `/sell/submission/${submissionId}/artwork-details`,
-      // })
-      router.replace(artworkId ? "/settings/my-collection" : "/sell")
-      router.push({
-        pathname: artworkId
-          ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
-          : nextRoute
-          ? nextRoute
-          : `/sell/submission/${submissionId}/thank-you`,
-      })
+      if (nextRoute === consignPath) {
+        // there is no next step to go to. Prepare to go to thank you screen
+        nextRoute = `${nextRoute}/${submissionId}/thank-you`
+      }
+
+      if (artworkId) {
+        // artworkId should ever only be present for `/my-collection/submission` consign path
+        nextRoute = nextRoute + "/" + artworkId
+      }
+
+      router.push(nextRoute)
     }
   }
 

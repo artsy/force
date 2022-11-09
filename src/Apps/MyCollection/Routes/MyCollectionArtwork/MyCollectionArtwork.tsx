@@ -66,6 +66,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
+  const enableFlowReorder = useFeatureFlag(
+    "reorder-swa-artwork-submission-flow"
+  )
+
+  const firstSubmissionStep = enableFlowReorder
+    ? "contact-information"
+    : "artwork-details"
+
   const EditArtworkButton = () => (
     <Button
       // @ts-ignore
@@ -146,7 +154,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
-                  route={`/my-collection/submission/artwork-details/${id}`}
+                  route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
@@ -170,7 +178,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/my-collection/submission/artwork-details/${id}`}
+                          route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}

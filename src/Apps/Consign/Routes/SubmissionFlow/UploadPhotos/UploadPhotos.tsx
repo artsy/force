@@ -127,31 +127,37 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
           state: "SUBMITTED",
         })
       }
+
       // Track last step
+
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
+
+      const consignPath = artworkId
+        ? "/my-collection/submission"
+        : "/sell/submission"
+
       const nextStepIndex = isLastStep ? null : stepIndex + 1
-      let nextRoute: LocationDescriptor | null = null
+      let nextRoute: LocationDescriptor = consignPath
       if (nextStepIndex !== null) {
         let nextStep = steps[nextStepIndex]
         if (nextStep === "Contact" || nextStep === "Contact Information") {
-          nextRoute = `/sell/submission/${submission.externalId}/contact-information`
+          nextRoute = `${consignPath}/${submission.externalId}/contact-information`
         } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-          nextRoute = `/sell/submission/${submission.externalId}/artwork-details`
+          nextRoute = `${consignPath}/${submission.externalId}/artwork-details`
         }
       }
 
-      // router.replace({
-      //   pathname: artworkId
-      //     ? `/my-collection/submission/${submission.externalId}/upload-photos/${artworkId}`
-      //     : `/sell/submission/${submission.externalId}/upload-photos`,
-      // })
-      router.replace(artworkId ? "/settings/my-collection" : "/sell")
-      router.push({
-        pathname: artworkId
-          ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
-          : nextRoute
-          ? nextRoute
-          : `/sell/submission/${submission.externalId}/thank-you`,
-      })
+      if (nextRoute === consignPath) {
+        // there is no next step to go to. Prepare to go to thank you screen
+        nextRoute = `${nextRoute}/${submission.externalId}/thank-you`
+      }
+
+      if (artworkId) {
+        // artworkId should ever only be present for `/my-collection/submission` consign path
+        nextRoute = nextRoute + "/" + artworkId
+      }
+
+      router.push(nextRoute)
     }
   }
 

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { Redirect, RedirectException } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
@@ -81,8 +81,8 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
     return undefined
   }
 
+  const { submission } = props
   if (resolving) {
-    const { submission } = props as any
     const redirectTo = getRedirect(props.router, match, submission)
 
     if (redirectTo) {
@@ -90,7 +90,8 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
     }
   }
 
-  return <Component {...props} />
+  // submission can be null for the first step of submission
+  return <Component submission={submission ? submission : null} {...props} />
 }
 
 const prepareSubmissionFlowStepVariables = data => {
@@ -167,11 +168,17 @@ export const consignFromMyCollectionRoutes: AppRouteConfig[] = [
   {
     path: "/my-collection/submission",
     getComponent: () => SubmissionLayout,
+    onServerSideRender: ({ res }) => {
+      if (
+        res.locals.sd.FEATURE_FLAGS["reorder-swa-artwork-submission-flow"]
+          .flagEnabled
+      ) {
+        res.redirect("/my-collection/submission/contact-information")
+      } else {
+        res.redirect("/my-collection/submission/artwork-details")
+      }
+    },
     children: [
-      new Redirect({
-        from: "/",
-        to: "/my-collection/submission/artwork-details",
-      }) as any,
       {
         path: "artwork-details/:artworkId",
         hideNav: true,
@@ -275,6 +282,24 @@ export const consignFromMyCollectionRoutes: AppRouteConfig[] = [
               ...ContactInformation_submission
               ...redirects_submission @relay(mask: false)
             }
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
+        path: "/contact-information/:artworkId?",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: graphql`
+          query consignFromMyCollectionRoutes_contactInformationMeQuery {
             me {
               ...ContactInformation_me
             }

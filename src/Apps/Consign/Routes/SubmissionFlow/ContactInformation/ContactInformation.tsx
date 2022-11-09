@@ -43,7 +43,7 @@ const getContactInformationFormInitialValues = (
 
 export interface ContactInformationProps {
   me: ContactInformation_me$data
-  submission: ContactInformation_submission$data
+  submission: ContactInformation_submission$data | null
 }
 
 export const ContactInformation: React.FC<ContactInformationProps> = ({
@@ -108,24 +108,32 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
         router.replace(artworkId ? "/settings/my-collection" : "/sell")
 
+        const consignPath = artworkId
+          ? "/my-collection/submission"
+          : "/sell/submission"
+
         const nextStepIndex = isLastStep ? null : stepIndex + 1
-        let nextRoute: LocationDescriptor | null = null
+        let nextRoute: LocationDescriptor = consignPath
         if (nextStepIndex !== null) {
           let nextStep = steps[nextStepIndex]
           if (nextStep === "Artwork" || nextStep === "Artwork Details") {
-            nextRoute = `/sell/submission/${submissionId}/artwork-details`
+            nextRoute = `${consignPath}/${submissionId}/artwork-details`
           } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
-            nextRoute = `/sell/submission/${submissionId}/upload-photos`
+            nextRoute = `${consignPath}/${submissionId}/upload-photos`
           }
         }
 
-        router.push(
-          artworkId
-            ? `/my-collection/submission/${submissionId}/thank-you/${artworkId}`
-            : nextRoute
-            ? nextRoute
-            : `/sell/submission/${submissionId}/thank-you`
-        )
+        if (nextRoute === consignPath) {
+          // there is no next step to go to. Prepare to go to thank you screen
+          nextRoute = `${nextRoute}/${submissionId}/thank-you`
+        }
+
+        if (artworkId) {
+          // artworkId should ever only be present for `/my-collection/submission` consign path
+          nextRoute = nextRoute + "/" + artworkId
+        }
+
+        router.push(nextRoute)
       } catch (error) {
         logger.error("Submission error", error)
 
