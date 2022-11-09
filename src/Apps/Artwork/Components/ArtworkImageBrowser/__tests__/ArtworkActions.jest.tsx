@@ -1,4 +1,4 @@
-import { ArtworkActionsFragmentContainer } from "../ArtworkActions"
+import { ArtworkActionsFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActions"
 import {
   BellIcon,
   DownloadIcon,
@@ -79,7 +79,7 @@ describe("ArtworkActions", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
       const wrapper = getWrapper({
-        Artwork: () => ({ is_hangable: true, is_downloadable: true }),
+        Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
       expect(wrapper.find(HeartIcon).length).toBe(1)
@@ -100,7 +100,7 @@ describe("ArtworkActions", () => {
       })
 
       it("renders heart icon when sale is closed", () => {
-        const wrapper = getWrapper({ Sale: () => ({ is_closed: true }) })
+        const wrapper = getWrapper({ Sale: () => ({ isClosed: true }) })
 
         expect(wrapper.find(HeartIcon).length).toBe(1)
         expect(wrapper.find(BellIcon).length).toBe(0)
@@ -109,8 +109,8 @@ describe("ArtworkActions", () => {
       it("renders bell icon when sale is open", () => {
         const wrapper = getWrapper({
           Sale: () => ({
-            is_auction: true,
-            is_closed: false,
+            isAuction: true,
+            isClosed: false,
           }),
         })
 
@@ -121,13 +121,13 @@ describe("ArtworkActions", () => {
 
     describe("view in a room", () => {
       it("available for artworks that are hangable", () => {
-        const wrapper = getWrapper({ Artwork: () => ({ is_hangable: true }) })
+        const wrapper = getWrapper({ Artwork: () => ({ isHangable: true }) })
 
         expect(wrapper.find(OpenEyeIcon).length).toBe(1)
       })
 
       it("is not available for non hangable artworks", () => {
-        const wrapper = getWrapper({ Artwork: () => ({ is_hangable: false }) })
+        const wrapper = getWrapper({ Artwork: () => ({ isHangable: false }) })
 
         expect(wrapper.find(OpenEyeIcon).length).toBe(0)
       })
@@ -135,11 +135,11 @@ describe("ArtworkActions", () => {
 
     describe("concerning other utility actions", () => {
       describe("download link", () => {
-        it("renders link if is_downloadable", () => {
+        it("renders link if isDownloadable", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
           const wrapper = getWrapper({
-            Artwork: () => ({ is_downloadable: true }),
+            Artwork: () => ({ isDownloadable: true }),
           })
 
           expect(wrapper.find(DownloadIcon).length).toBe(1)
@@ -149,17 +149,17 @@ describe("ArtworkActions", () => {
           mockUserIsAdmin = true
           mockUserIsTeam = true
           const wrapper = getWrapper({
-            Artwork: () => ({ is_downloadable: false }),
+            Artwork: () => ({ isDownloadable: false }),
           })
 
           expect(wrapper.find(DownloadIcon).length).toBe(1)
         })
 
-        it("hides link if is_downloadable=false and the user is not an admin", () => {
+        it("hides link if isDownloadable=false and the user is not an admin", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
           const wrapper = getWrapper({
-            Artwork: () => ({ is_downloadable: false }),
+            Artwork: () => ({ isDownloadable: false }),
           })
 
           expect(wrapper.find(DownloadIcon).length).toBe(0)
@@ -173,7 +173,7 @@ describe("ArtworkActions", () => {
 
     it("shows the More icon", () => {
       const wrapper = getWrapper({
-        Artwork: () => ({ is_hangable: true, is_downloadable: true }),
+        Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
       expect(wrapper.find(HeartIcon).length).toBe(1)
@@ -189,7 +189,7 @@ describe("ArtworkActions", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
       const wrapper = getWrapper({
-        Artwork: () => ({ is_downloadable: false, is_hangable: true }),
+        Artwork: () => ({ isDownloadable: false, isHangable: true }),
       })
 
       expect(wrapper.find(HeartIcon).length).toBe(1)

@@ -28,7 +28,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const { t } = useTranslation()
   const { isLoggedIn } = useSystemContext()
   const { handleSave } = useSaveArtwork({
-    isSaved: !!artwork.is_saved,
+    isSaved: !!artwork.isSaved,
     artwork,
     contextModule: ContextModule.artworkImage,
   })
@@ -44,7 +44,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     registrationEndsAt,
   } = artwork.sale ?? {}
   const isOpenSale = isAuction && !isClosed
-  const isSaved = !!artwork.is_saved
+  const isSaved = !!artwork.isSaved
   const registrationAttempted = !!registrationStatus
   const ignoreAuctionRegistrationPopover =
     !isLoggedIn ||
@@ -153,7 +153,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
             qualifiedForBidding
           }
         }
-        is_saved: isSaved
+        isSaved
         ...ArtworkAuctionRegistrationPanel_artwork
       }
     `,

@@ -1,5 +1,5 @@
 import { MockBoot } from "DevTools"
-import { FairArtworksRefetchContainer } from "../FairArtworks"
+import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
 import { graphql } from "react-relay"
 import { FairArtworks_Query$rawResponse } from "__generated__/FairArtworks_Query.graphql"
 import { useTracking } from "react-tracking"
@@ -120,7 +120,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspect_ratio: 1.27,
+              aspectRatio: 1.27,
               placeholder: "78.76427829698858%",
               url: "https://test.artsy.net/image",
             },
@@ -198,7 +198,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspect_ratio: 1.43,
+              aspectRatio: 1.43,
               placeholder: "69.82024597918638%",
               url: "https://test.artsy.net/image2",
             },
