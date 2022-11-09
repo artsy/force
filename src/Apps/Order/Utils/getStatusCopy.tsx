@@ -39,7 +39,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             description: (
               <>
                 The seller will respond to your offer by {stateExpiresAt}. Keep
-                in mind making an offer doesn't guarantee you the work.
+                in mind making an offer doesn’t guarantee you the work.
               </>
             ),
           }
@@ -205,7 +205,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
             Thank you for your response. The seller will be informed of your
             decision to end the negotiation process.
             <Spacer mb={2} />
-            We'd love to get your feedback. Contact{" "}
+            We’d love to get your feedback. Contact{" "}
             <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
             comments you have.
           </>
@@ -231,7 +231,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
       return {
         title: "Offer expired",
         description: (
-          <>The seller's offer expired because you didn't respond in time.</>
+          <>The seller’s offer expired because you didn't respond in time.</>
         ),
         showTransactionSummary: false,
       }
@@ -240,7 +240,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
         title: "Offer expired",
         description: (
           <>
-            Your offer expired because the seller didn't respond to your offer
+            Your offer expired because the seller didn’t respond to your offer
             in time.
           </>
         ),
