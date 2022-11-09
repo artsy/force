@@ -13,9 +13,12 @@ import {
 import { Formik, Form } from "formik"
 import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
-import { useAddAddress } from "../useAddAddress"
-import { useEditAddress } from "../useEditAddress"
-import { useSetDefaultAddress } from "../useSetDefaultAddress"
+import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
+import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
+import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
+import { PhoneNumberInput } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/PhoneNumberInput"
+import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+import { useSystemContext } from "System"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -24,6 +27,7 @@ export const INITIAL_ADDRESS = {
   addressLine2: "",
   city: "",
   phoneNumber: "",
+  phoneNumberCountryCode: "",
   postalCode: "",
   region: "",
 }
@@ -44,6 +48,7 @@ const validationSchema = Yup.object().shape({
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
     phoneNumber: Yup.string().required("Phone Number is required"),
+    phoneNumberCountryCode: Yup.string().required("Phone Number is required"),
   }),
   isDefault: Yup.boolean().optional(),
 })
@@ -68,6 +73,8 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
+
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <Formik
@@ -134,10 +141,39 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         handleChange,
         handleBlur,
         setFieldValue,
+        setFieldError,
         isValid,
         isSubmitting,
         submitForm,
       }) => {
+        const handlePhoneNumberChange = async (region, number) => {
+          if (region && number && relayEnvironment) {
+            const phoneInformation = await getPhoneNumberInformation(
+              number,
+              relayEnvironment,
+              region
+            )
+
+            if (!phoneInformation?.isValid) {
+              setFieldError(
+                "attributes.phoneNumber",
+                "Phone Number is required"
+              )
+              setFieldError(
+                "attributes.phoneNumberCountryCode",
+                "Phone Number is required"
+              )
+              return
+            }
+
+            setFieldError("attributes.phoneNumber", "")
+            setFieldError("attributes.phoneNumberCountryCode", "")
+
+            setFieldValue("attributes.phoneNumber", phoneInformation?.national)
+            setFieldValue("attributes.phoneNumberCountryCode", region)
+          }
+        }
+
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
@@ -269,21 +305,24 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                 </Column>
 
                 <Column span={12}>
-                  <Input
-                    name="attributes.phoneNumber"
-                    title="Phone Number"
-                    type="tel"
-                    description="Required for shipping logistics"
-                    placeholder="Add phone number"
-                    autoComplete="tel"
-                    value={values.attributes.phoneNumber}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                  <PhoneNumberInput
+                    phoneNumber={{
+                      isValid: false,
+                      national: values.attributes.phoneNumber,
+                      regionCode: values.attributes.phoneNumberCountryCode,
+                    }}
+                    onChange={handlePhoneNumberChange}
+                    inputProps={{
+                      maxLength: 25,
+                      onBlur: handleBlur("attributes.phoneNumber"),
+                      placeholder: "(000) 000 0000",
+                    }}
                     error={
                       touched.attributes?.phoneNumber &&
                       errors.attributes?.phoneNumber
+                        ? errors.attributes?.phoneNumber
+                        : undefined
                     }
-                    required
                   />
                 </Column>
 
