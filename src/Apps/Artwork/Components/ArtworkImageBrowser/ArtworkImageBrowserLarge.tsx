@@ -1,6 +1,5 @@
 import {
   Box,
-  ChevronIcon,
   Clickable,
   ProgressDots,
   Spacer,
@@ -15,12 +14,17 @@ import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImag
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { isTouch } from "Utils/device"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data
   activeIndex: number
   onNext(): void
   onPrev(): void
+  onChange(index: number): void
   maxHeight: number
 }
 
@@ -29,6 +33,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   activeIndex,
   onNext,
   onPrev,
+  onChange,
   maxHeight,
 }) => {
   const { figures } = artwork
@@ -38,6 +43,10 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
   const { containerRef } = useNextPrevious({ onNext, onPrevious: onPrev })
+
+  const { detectActivityProps, isActive } = useDetectActivity()
+
+  const isNavVisible = isActive || isTouch
 
   if (figures.length === 0) {
     return null
@@ -52,7 +61,12 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         />
       )}
 
-      <Box ref={containerRef as any} position="relative">
+      <Box
+        ref={containerRef as any}
+        position="relative"
+        bg="white100"
+        {...detectActivityProps}
+      >
         {figures.length > 1 && (
           <nav>
             <NextPrevious
@@ -60,10 +74,9 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
               aria-label="Previous image"
               left={0}
               p={2}
+              style={{ opacity: isNavVisible ? 1 : 0 }}
             >
-              <ChevronIcon
-                direction="left"
-                // @ts-ignore
+              <ChevronLeftIcon
                 fill="currentColor"
                 width={30}
                 height={30}
@@ -76,10 +89,9 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
               aria-label="Next image"
               right={0}
               p={2}
+              style={{ opacity: isNavVisible ? 1 : 0 }}
             >
-              <ChevronIcon
-                direction="right"
-                // @ts-ignore
+              <ChevronRightIcon
                 fill="currentColor"
                 width={30}
                 height={30}
@@ -122,6 +134,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
               activeIndex={activeIndex}
               amount={figures.length}
               variant="dash"
+              onClick={onChange}
             />
           </>
         )}
@@ -156,16 +169,20 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
 
 const NextPrevious = styled(Clickable)`
   position: absolute;
-  top: 20%;
-  height: 60%;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${themeGet("colors.black30")};
-  transition: color 250ms;
+  color: ${themeGet("colors.black60")};
+  mix-blend-mode: difference;
+  transition: color 250ms, opacity 250ms;
   z-index: 1;
 
-  &:hover {
-    color: ${themeGet("colors.black100")};
+  &:hover,
+  &:focus,
+  &.focus-visible {
+    outline: none;
+    color: ${themeGet("colors.black10")};
   }
 `

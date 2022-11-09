@@ -46,7 +46,13 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
         />
       )}
 
-      <Swiper snap="center" onChange={setActiveIndex} Cell={Cell} Rail={Rail}>
+      <Swiper
+        snap="center"
+        onChange={setActiveIndex}
+        Cell={Cell}
+        Rail={Rail}
+        initialIndex={activeIndex}
+      >
         {figures.map((figure, i) => {
           switch (figure.type) {
             case "Image":
@@ -86,6 +92,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
           variant="dash"
           amount={figures.length}
           activeIndex={activeIndex}
+          onClick={setActiveIndex}
         />
       )}
     </>

@@ -102,6 +102,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           activeIndex={activeIndex}
           onNext={handleNext}
           onPrev={handlePrev}
+          onChange={setCursor}
           maxHeight={maxHeight}
         />
       </Media>

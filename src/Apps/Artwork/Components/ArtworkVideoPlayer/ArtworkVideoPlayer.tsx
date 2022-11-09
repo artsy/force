@@ -79,12 +79,6 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
       justifyContent="center"
       height={[null, null, maxHeight]}
       width="100%"
-      px={[
-        0,
-        // FIXME: Pad to avoid overlapping with the next/prev buttons
-        // We can just show/hide the UI when hovering over the video instead
-        70,
-      ]}
       {...rest}
     >
       <ResponsiveBox
