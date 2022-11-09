@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2a1d2298aae0cbaa4368651de789b03>>
+ * @generated SignedSource<<d9b1e066d1b89f08d429ae31198b0076>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Status_order$data = {
   readonly __typename: string;
@@ -53,6 +54,7 @@ export type Status_order$data = {
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
   } | null;
+  readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
   } | {
@@ -149,6 +151,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "stateReason",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentMethod",
       "storageKey": null
     },
     {
@@ -430,6 +439,6 @@ return {
 };
 })();
 
-(node as any).hash = "b9d9d73bb92eb7d6ab6ce8b34968dba1";
+(node as any).hash = "dcda7489f9ffdb48ee8da16de8b16d6b";
 
 export default node;

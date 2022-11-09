@@ -11,6 +11,7 @@ import {
   Text,
   Spacer,
   media,
+  Box,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
@@ -22,7 +23,10 @@ import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem }
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { useSystemContext } from "System/SystemContext"
 import { Status_order$data } from "__generated__/Status_order.graphql"
-import { getStatusCopy, continueToInboxText } from "Apps/Order/Utils/getStatusCopy"
+import {
+  getStatusCopy,
+  continueToInboxText,
+} from "Apps/Order/Utils/getStatusCopy"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -50,10 +54,14 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
   const shouldButtonDisplay = isEigen && !isModal && !isDeclined
   const shouldContinueToInbox =
     isEigen && isSubmittedOffer && order.source === "artwork_page"
-  const { title, description, showTransactionSummary = true } = getStatusCopy(
-    order,
-    logger
-  )
+  const {
+    title,
+    description,
+    alertMessageTitle,
+    alertMessage,
+    content,
+    showTransactionSummary = true,
+  } = getStatusCopy(order, logger)
 
   return (
     <>
@@ -70,6 +78,20 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
             <Title>{flowName} status | Artsy</Title>
             <Join separator={<Spacer mb={[2, 4]} />}>
               {description && <Message>{description}</Message>}
+              {alertMessage && (
+                <Message variant="alert" title={alertMessageTitle!}>
+                  {alertMessage}
+                </Message>
+              )}
+              {content && (
+                <Box
+                  border="1px solid #D8D8D8"
+                  flexDirection="column"
+                  padding={20}
+                >
+                  {content}
+                </Box>
+              )}
               {shouldContinueToInbox ? (
                 <>
                   <Spacer mb={2} />
@@ -152,6 +174,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       mode
       source
       stateReason
+      paymentMethod
       stateExpiresAt(format: "MMM D")
       requestedFulfillment {
         ... on CommerceShip {
