@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef8dcee13e82bb6233ba11ee52cb9ad1>>
+ * @generated SignedSource<<bbf018b5a865ab8893191e60261a2484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistShowsRoute_viewer$data = {
+  readonly artist: {
+    readonly currentShowsCount: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly name: string | null;
+    readonly upcomingShowsCount: {
+      readonly totalCount: number | null;
+    } | null;
+  } | null;
   readonly currentShows: {
     readonly name: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
@@ -31,6 +40,27 @@ var v0 = [
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
   }
 ];
 return {
@@ -65,6 +95,52 @@ return {
   "name": "ArtistShowsRoute_viewer",
   "selections": [
     {
+      "alias": null,
+      "args": (v0/*: any*/),
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        (v1/*: any*/),
+        {
+          "alias": "currentShowsCount",
+          "args": [
+            (v2/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "status",
+              "value": "running"
+            }
+          ],
+          "concreteType": "ShowConnection",
+          "kind": "LinkedField",
+          "name": "showsConnection",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": "showsConnection(first:1,status:\"running\")"
+        },
+        {
+          "alias": "upcomingShowsCount",
+          "args": [
+            (v2/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "status",
+              "value": "upcoming"
+            }
+          ],
+          "concreteType": "ShowConnection",
+          "kind": "LinkedField",
+          "name": "showsConnection",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": "showsConnection(first:1,status:\"upcoming\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "alias": "currentShows",
       "args": (v0/*: any*/),
       "concreteType": "Artist",
@@ -88,13 +164,7 @@ return {
           "kind": "FragmentSpread",
           "name": "ArtistShowsGroup_artist"
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -131,6 +201,6 @@ return {
 };
 })();
 
-(node as any).hash = "1e6a77e86f2c4e6e2bb445bd5cdb34fe";
+(node as any).hash = "61dfb612d3974e93bf9cfdb981d20c21";
 
 export default node;

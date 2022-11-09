@@ -1,12 +1,16 @@
 import { useState } from "react"
 import * as React from "react"
-import { Column, GridColumns, Box } from "@artsy/palette"
+import { Column, GridColumns, Spacer } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { Articles_partner$data } from "__generated__/Articles_partner.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { LoadingArea } from "Components/LoadingArea"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
+import { extractNodes } from "Utils/extractNodes"
+import { Jump } from "Utils/Hooks/useJump"
+import { LoadingArea } from "Components/LoadingArea"
+
+const PAGE_SIZE = 18
 
 interface ArticlesProps {
   partner: Articles_partner$data
@@ -26,58 +30,47 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   }
 
   const {
+    articlesConnection,
     articlesConnection: {
-      edges: articles,
       pageInfo: { hasNextPage, endCursor },
       pageCursors,
     },
     slug,
   } = partner
 
-  const handleClick = (cursor: string, page: number) => {
-    const paramsPage = +location.query.page || 1
-    const canRefetch = paramsPage !== page
+  const articles = extractNodes(articlesConnection)
 
-    canRefetch && setIsLoading(true)
-
-    canRefetch &&
-      relay.refetch(
-        {
-          first: 18,
-          after: cursor,
-          partnerID: slug,
-          before: null,
-          last: null,
-        },
-        null,
-        error => {
-          if (error) {
-            console.error(error)
-          }
-        }
-      )
-
+  const handleClick = (cursor: string | null, page: number) => {
     const query = page === 1 ? {} : { ...location.query, page }
 
-    router.push({
-      pathname: location.pathname,
-      query,
-    })
+    setIsLoading(true)
 
-    setIsLoading(false)
+    relay.refetch(
+      { first: PAGE_SIZE, after: cursor, partnerID: slug },
+      null,
+      error => {
+        if (error) {
+          console.error(error)
+        }
+
+        setIsLoading(false)
+
+        router.push({ pathname: location.pathname, query })
+      }
+    )
   }
 
   const handleNext = (page: number) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     handleClick(endCursor, page)
   }
 
   return (
-    <Box id="jumpto--articlesGrid">
+    <Jump id="articlesGrid">
+      <Spacer mt={6} />
+
       <LoadingArea isLoading={isLoading}>
-        <GridColumns mt={6} gridRowGap={[2, 4]}>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          {articles.map(({ node: article }) => {
+        <GridColumns gridRowGap={[2, 4]}>
+          {articles.map(article => {
             return (
               <Column key={article.internalID} span={4}>
                 <CellArticleFragmentContainer mode="GRID" article={article} />
@@ -87,17 +80,17 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         </GridColumns>
       </LoadingArea>
 
-      <Box mt={6}>
-        <PaginationFragmentContainer
-          hasNextPage={hasNextPage}
-          pageCursors={pageCursors}
-          onClick={handleClick}
-          onNext={handleNext}
-          scrollTo="#jumpto--articlesGrid"
-          offset={200}
-        />
-      </Box>
-    </Box>
+      <Spacer mt={6} />
+
+      <PaginationFragmentContainer
+        hasNextPage={hasNextPage}
+        pageCursors={pageCursors}
+        onClick={handleClick}
+        onNext={handleNext}
+        scrollTo="articlesGrid"
+        offset={20}
+      />
+    </Jump>
   )
 }
 

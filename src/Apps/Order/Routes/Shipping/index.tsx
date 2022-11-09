@@ -709,7 +709,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 variant="primaryBlack"
                 width="50%"
               >
-                Continue
+                Save and Continue
               </Button>
             </Media>
           </Flex>
@@ -735,7 +735,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 variant="primaryBlack"
                 width="100%"
               >
-                Continue
+                Save and Continue
               </Button>
             </Media>
           </Flex>

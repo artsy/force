@@ -16,7 +16,7 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 - **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
 - **Storybook:** [https://force-storybook.artsy.net](https://force-storybook.artsy.net)
 - **Hacks:** [View code hacks here](./HACKS.md)
-- **Point People:** [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
+- **Point People:** [@damassi](https://github.com/damassi), [@dzucconi](https://github.com/dzucconi), [@mzikherman](https://github.com/mzikherman)
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
 [![codecov](https://codecov.io/gh/artsy/force/branch/main/graph/badge.svg)](https://codecov.io/gh/artsy/force)

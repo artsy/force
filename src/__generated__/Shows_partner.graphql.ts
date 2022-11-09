@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a7957c4f447bf7a7208b1139d6a9eaf>>
+ * @generated SignedSource<<f9cee07a9797357a38ca32d9ee6a6601>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type Shows_partner$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
       } | null;
-      readonly " $fragmentSpreads": FragmentRefs<"ShowEvents_edges">;
     } | null> | null;
   } | null;
   readonly featuredEvents: {
@@ -33,8 +33,8 @@ export type Shows_partner$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
       } | null;
-      readonly " $fragmentSpreads": FragmentRefs<"ShowEvents_edges">;
     } | null> | null;
   } | null;
   readonly " $fragmentType": "Shows_partner";
@@ -79,14 +79,14 @@ v3 = [
         "name": "node",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CellShow_show"
+          },
           (v1/*: any*/)
         ],
         "storageKey": null
-      },
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "ShowEvents_edges"
       }
     ],
     "storageKey": null
@@ -210,6 +210,6 @@ return {
 };
 })();
 
-(node as any).hash = "0cd7aab15e111539c7884ec4b671d784";
+(node as any).hash = "a8a169083bf31768bbec1a51531ed995";
 
 export default node;

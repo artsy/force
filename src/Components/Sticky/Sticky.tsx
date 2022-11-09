@@ -1,5 +1,5 @@
 import { Box, themeProps } from "@artsy/palette"
-import { useEffect, useRef, useState } from "react"
+import { ReactNode, useEffect, useRef, useState } from "react"
 import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
@@ -30,6 +30,7 @@ export const Sticky: React.FC<
   Pick<ReactStickyProps, "bottomBoundary"> & {
     // TODO: Remove this prop!
     withoutHeaderOffset?: boolean
+    children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
   }
 > = ({ children, bottomBoundary, withoutHeaderOffset }) => {
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()

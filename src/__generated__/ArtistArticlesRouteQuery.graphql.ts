@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<925d8e94566b9cb1d3a16eb22834d526>>
+ * @generated SignedSource<<7996c8744bc480949eb4b1e4dc257bc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArticlesRouteQuery$variables = {
-  after?: string | null;
   artistID: string;
-  before?: string | null;
-  first?: number | null;
-  last?: number | null;
+  page?: number | null;
 };
 export type ArtistArticlesRouteQuery$data = {
   readonly artist: {
@@ -31,72 +28,42 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "after"
+  "name": "artistID"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "artistID"
+  "name": "page"
 },
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "before"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v4 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "last"
-},
-v5 = [
+v2 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistID"
   }
 ],
-v6 = {
+v3 = {
   "kind": "Variable",
-  "name": "after",
-  "variableName": "after"
+  "name": "page",
+  "variableName": "page"
 },
-v7 = {
-  "kind": "Variable",
-  "name": "before",
-  "variableName": "before"
-},
-v8 = {
-  "kind": "Variable",
-  "name": "first",
-  "variableName": "first"
-},
-v9 = {
-  "kind": "Variable",
-  "name": "last",
-  "variableName": "last"
-},
-v10 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v11 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v12 = [
-  (v10/*: any*/),
-  (v11/*: any*/),
+v6 = [
+  (v4/*: any*/),
+  (v5/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -105,14 +72,7 @@ v12 = [
     "storageKey": null
   }
 ],
-v13 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v14 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -123,10 +83,7 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/)
+      (v1/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -134,7 +91,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -142,10 +99,7 @@ return {
         "selections": [
           {
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/)
+              (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ArtistArticlesRoute_artist"
@@ -160,18 +114,15 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v3/*: any*/),
-      (v4/*: any*/),
-      (v0/*: any*/),
-      (v2/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v0/*: any*/)
     ],
     "kind": "Operation",
     "name": "ArtistArticlesRouteQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -179,16 +130,32 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/),
               {
                 "kind": "Literal",
                 "name": "inEditorialFeed",
                 "value": true
               },
-              (v9/*: any*/),
+              (v3/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 12
+              },
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -214,13 +181,6 @@ return {
                     "kind": "ScalarField",
                     "name": "hasNextPage",
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -240,7 +200,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v12/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -250,7 +210,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -260,7 +220,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -271,8 +231,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -299,14 +259,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "vertical",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
+                        "name": "title",
                         "storageKey": null
                       },
                       {
@@ -319,14 +279,15 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          (v13/*: any*/),
-                          (v14/*: any*/)
-                        ],
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
                         "storageKey": null
                       },
                       {
@@ -335,12 +296,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "format",
-                            "value": "MMM Do, YYYY"
+                            "value": "MMM D, YYYY"
                           }
                         ],
                         "kind": "ScalarField",
                         "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -356,12 +317,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 150
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 210
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -369,20 +330,6 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -396,14 +343,35 @@ return {
                                 "kind": "ScalarField",
                                 "name": "height",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:150,width:210)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -413,31 +381,23 @@ return {
             ],
             "storageKey": null
           },
-          (v13/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          (v14/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "37938bcf160ca32e0d9460813c1bf32b",
+    "cacheID": "47f2c47ca664bc0f70473f83ef59df08",
     "id": null,
     "metadata": {},
     "name": "ArtistArticlesRouteQuery",
     "operationKind": "query",
-    "text": "query ArtistArticlesRouteQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_pbnwq\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_pbnwq on Artist {\n  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistArticlesRouteQuery(\n  $page: Int\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_2Pg8Wv\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_2Pg8Wv on Artist {\n  name\n  slug\n  articlesConnection(page: $page, size: 12, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "eec4bd5713935eb05add0802879ad55b";
+(node as any).hash = "1de868883decc91688c55ed3ba2a50c1";
 
 export default node;

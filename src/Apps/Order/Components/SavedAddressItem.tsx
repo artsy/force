@@ -69,17 +69,24 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         </Text>
       </Flex>
       <EditButton
+        textColor="blue100"
+        variant="sm"
         position="absolute"
         top={2}
         right={2}
+        tabIndex={0}
         onClick={event => {
           event.preventDefault()
           event.stopPropagation()
 
           handleClickEdit(index)
         }}
-        textColor="blue100"
-        variant="sm"
+        onKeyPress={event => {
+          event.preventDefault()
+          event.stopPropagation()
+
+          event.key === "Enter" && handleClickEdit(index)
+        }}
         data-test="editAddressInShipping"
       >
         Edit

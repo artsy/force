@@ -35,7 +35,7 @@ export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
       <ViewingRoomsPaginatedRenderer
         eventTitle="Past Viewing Rooms"
         partnerId={slug}
-        scrollTo="#jumpto--pastShowsGrid"
+        scrollTo="pastShowsGrid"
         offset={200}
       />
     </>

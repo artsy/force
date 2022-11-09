@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2ae95d063f5a4280370c220140f76c4>>
+ * @generated SignedSource<<a1f51b84f07f7c7ab2057345a762118c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkVideoPlayer_artwork$data = {
   readonly figures: ReadonlyArray<{
     readonly __typename: "Video";
-    readonly url: string;
+    readonly playerUrl: string;
     readonly videoHeight: number;
     readonly videoWidth: number;
   } | {
@@ -72,7 +72,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "playerUrl",
               "storageKey": null
             },
             {
@@ -101,6 +101,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e65f2b1505f1c488578df3bd61854029";
+(node as any).hash = "8a5fdfc21456a80b8eab8068244edde0";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f27e27a7cfabf6206a2d883183de875>>
+ * @generated SignedSource<<06a71a7a5c3ae4a70ed85b2777af1d48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,15 +58,14 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
 v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 },
 v6 = {
   "enumValues": null,
@@ -76,29 +75,23 @@ v6 = {
 },
 v7 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Int"
 },
 v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
-},
-v10 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
   "type": "Boolean"
 },
-v11 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -147,16 +140,35 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              },
               {
                 "kind": "Literal",
                 "name": "inEditorialFeed",
                 "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "page",
+                "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 12
               },
               {
                 "kind": "Literal",
@@ -182,13 +194,6 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
                     "storageKey": null
                   }
                 ],
@@ -268,14 +273,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "vertical",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
+                        "name": "title",
                         "storageKey": null
                       },
                       {
@@ -288,14 +293,15 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          (v4/*: any*/),
-                          (v5/*: any*/)
-                        ],
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
                         "storageKey": null
                       },
                       {
@@ -304,12 +310,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "format",
-                            "value": "MMM Do, YYYY"
+                            "value": "MMM D, YYYY"
                           }
                         ],
                         "kind": "ScalarField",
                         "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -325,12 +331,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 150
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 210
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -338,20 +344,6 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -365,14 +357,35 @@ return {
                                 "kind": "ScalarField",
                                 "name": "height",
                                 "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:150,width:210)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -380,24 +393,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+            "storageKey": "articlesConnection(inEditorialFeed:true,page:1,size:12,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v4/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "e4354e1531d6e53eb51ebc2590dd922e",
+    "cacheID": "a4336c0399f460e96494caa9da0f7549",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -425,18 +430,11 @@ return {
           "plural": false,
           "type": "Article"
         },
-        "artist.articlesConnection.edges.node.author": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Author"
-        },
-        "artist.articlesConnection.edges.node.author.id": (v6/*: any*/),
-        "artist.articlesConnection.edges.node.author.name": (v7/*: any*/),
-        "artist.articlesConnection.edges.node.href": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.byline": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.href": (v5/*: any*/),
         "artist.articlesConnection.edges.node.id": (v6/*: any*/),
         "artist.articlesConnection.edges.node.internalID": (v6/*: any*/),
-        "artist.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.publishedAt": (v5/*: any*/),
         "artist.articlesConnection.edges.node.thumbnailImage": {
           "enumValues": null,
           "nullable": true,
@@ -449,11 +447,13 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v8/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v9/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v9/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v8/*: any*/),
-        "artist.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.height": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.src": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v8/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v7/*: any*/),
+        "artist.articlesConnection.edges.node.thumbnailTitle": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.title": (v5/*: any*/),
+        "artist.articlesConnection.edges.node.vertical": (v5/*: any*/),
         "artist.articlesConnection.pageCursors": {
           "enumValues": null,
           "nullable": false,
@@ -466,36 +466,35 @@ return {
           "plural": true,
           "type": "PageCursor"
         },
-        "artist.articlesConnection.pageCursors.around.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.around.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.around.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.first": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.first.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.first.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.first.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.last": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.last.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.last.isCurrent": (v10/*: any*/),
-        "artist.articlesConnection.pageCursors.last.page": (v8/*: any*/),
-        "artist.articlesConnection.pageCursors.previous": (v11/*: any*/),
-        "artist.articlesConnection.pageCursors.previous.cursor": (v9/*: any*/),
-        "artist.articlesConnection.pageCursors.previous.page": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.around.cursor": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.around.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.around.page": (v7/*: any*/),
+        "artist.articlesConnection.pageCursors.first": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.first.cursor": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.first.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.first.page": (v7/*: any*/),
+        "artist.articlesConnection.pageCursors.last": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.last.cursor": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.last.isCurrent": (v9/*: any*/),
+        "artist.articlesConnection.pageCursors.last.page": (v7/*: any*/),
+        "artist.articlesConnection.pageCursors.previous": (v10/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.cursor": (v8/*: any*/),
+        "artist.articlesConnection.pageCursors.previous.page": (v7/*: any*/),
         "artist.articlesConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "artist.articlesConnection.pageInfo.endCursor": (v7/*: any*/),
-        "artist.articlesConnection.pageInfo.hasNextPage": (v10/*: any*/),
+        "artist.articlesConnection.pageInfo.hasNextPage": (v9/*: any*/),
         "artist.id": (v6/*: any*/),
-        "artist.name": (v7/*: any*/),
+        "artist.name": (v5/*: any*/),
         "artist.slug": (v6/*: any*/)
       }
     },
     "name": "ArtistArticlesRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistArticlesRoute_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistArticlesRoute_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  name\n  slug\n  articlesConnection(page: 1, size: 12, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

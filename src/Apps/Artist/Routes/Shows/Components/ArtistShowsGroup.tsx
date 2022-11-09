@@ -1,11 +1,13 @@
-import { Text, Flex, Box, Image } from "@artsy/palette"
+import { Text, GridColumns, Column, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
-
-const REFETCH_PAGE_SIZE = 10
+import { CellShowFragmentContainer } from "Components/Cells/CellShow"
+import { useState } from "react"
+import { LoadingArea } from "Components/LoadingArea"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface ArtistShowsGroupProps {
   artist: ArtistShowsGroup_artist$data
@@ -21,86 +23,63 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
   sort,
   status,
 }) => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleNext = (page: number) => {
+    handleClick(null, page)
   }
 
-  const loadNext = () => {
-    const { hasNextPage, endCursor } = artist.showsConnection?.pageInfo!
+  const handleClick = (_cursor: string | null, page: number) => {
+    setIsLoading(true)
 
-    if (hasNextPage) {
-      scrollToTop()
-      loadAfter(endCursor)
-    }
-  }
-
-  const loadAfter = cursor => {
-    scrollToTop()
     relay.refetch(
-      {
-        first: REFETCH_PAGE_SIZE,
-        after: cursor,
-        artistID: artist.slug,
-        before: null,
-        last: null,
-        status,
-        sort,
-      },
+      { page, artistID: artist.slug, status, sort },
       null,
       error => {
         if (error) {
           console.error(error)
         }
+
+        setIsLoading(false)
       }
     )
   }
 
-  const nodes = extractNodes(artist.showsConnection)
+  const shows = extractNodes(artist.showsConnection)
+  const jump = `Shows--${status}`
 
-  if (nodes.length === 0) {
+  if (shows.length === 0) {
     return null
   }
 
   return (
     <>
-      <Text variant="xl" mb={6}>
-        Upcoming Shows
-      </Text>
+      <Text variant="xl">Upcoming Shows</Text>
 
-      <Flex flexWrap="wrap" justifyContent="space-between">
-        {nodes.map(show => {
-          return (
-            <Box width={["100%", "32%"]} mb={4}>
-              <Box>
-                <Image
-                  key={show.coverImage?.cropped?.src!}
-                  src={show.coverImage?.cropped?.src!}
-                  srcSet={show.coverImage?.cropped?.srcSet}
-                  width={"100%"}
-                  height={"auto"}
-                  style={{ objectFit: "cover" }}
-                  lazyLoad
-                />
-              </Box>
-              <Text variant="lg-display">{show.name}</Text>
-              {show?.partner?.name && (
-                <Text variant="sm">{show.partner.name}</Text>
-              )}
-              <Text variant="sm">{show.exhibitionPeriod}</Text>
-            </Box>
-          )
-        })}
-      </Flex>
+      <Spacer mt={6} />
+
+      <Jump id={jump} />
+
+      <LoadingArea isLoading={isLoading}>
+        <GridColumns gridRowGap={[2, 4]}>
+          {shows.map(show => {
+            return (
+              <Column key={show.internalID} span={[6, 4, 3]}>
+                <CellShowFragmentContainer show={show} mode="GRID" />
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </LoadingArea>
 
       <PaginationFragmentContainer
         getHref={() => ""}
-        pageCursors={artist?.showsConnection?.pageCursors!}
-        onClick={loadAfter}
-        onNext={loadNext}
-        hasNextPage={artist?.showsConnection?.pageInfo.hasNextPage!}
+        pageCursors={artist.showsConnection?.pageCursors!}
+        onClick={handleClick}
+        onNext={handleNext}
+        hasNextPage={!!artist.showsConnection?.pageInfo.hasNextPage}
+        scrollTo={jump}
+        offset={10}
       />
     </>
   )
@@ -112,49 +91,22 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
     artist: graphql`
       fragment ArtistShowsGroup_artist on Artist
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
+          page: { type: "Int", defaultValue: 1 }
           sort: { type: "ShowSorts" }
           status: { type: "String" }
         ) {
         slug
-        showsConnection(
-          first: $first
-          after: $after
-          before: $before
-          last: $last
-          sort: $sort
-          status: $status
-        ) {
+        showsConnection(first: 12, page: $page, sort: $sort, status: $status) {
           pageInfo {
             hasNextPage
-            endCursor
           }
           pageCursors {
             ...Pagination_pageCursors
           }
           edges {
             node {
-              partner {
-                ... on ExternalPartner {
-                  name
-                }
-                ... on Partner {
-                  name
-                }
-              }
-              name
-              href
-              exhibitionPeriod
-              coverImage {
-                cropped(width: 440, height: 315) {
-                  src
-                  srcSet
-                }
-              }
-              city
+              ...CellShow_show
+              internalID
             }
           }
         }
@@ -163,24 +115,14 @@ export const ArtistShowsGroupRefetchContainer = createRefetchContainer(
   },
   graphql`
     query ArtistShowsGroupQuery(
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
+      $page: Int
       $artistID: String!
       $sort: ShowSorts
       $status: String!
     ) {
       artist(id: $artistID) {
         ...ArtistShowsGroup_artist
-          @arguments(
-            sort: $sort
-            first: $first
-            last: $last
-            after: $after
-            before: $before
-            status: $status
-          )
+          @arguments(page: $page, sort: $sort, status: $status)
       }
     }
   `

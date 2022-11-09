@@ -3,7 +3,7 @@ import { Box, Separator } from "@artsy/palette"
 import { SearchResultsArtists_viewer$data } from "__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
-import { LoadingArea, LoadingAreaState } from "Components/LoadingArea"
+import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import { RouterState, withRouter } from "found"
 import qs from "qs"
@@ -14,8 +14,9 @@ export interface Props extends RouterState {
   relay: RelayRefetchProp
 }
 
-interface State extends LoadingAreaState {
+interface State {
   page: number
+  isLoading: boolean
 }
 
 const PAGE_SIZE = 10
@@ -33,13 +34,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
   }
 
-  toggleLoading = (isLoading): void => {
-    this.setState(
-      {
-        isLoading,
-      },
-      () => window.scrollTo(0, 0)
-    )
+  toggleLoading = (isLoading: boolean): void => {
+    this.setState({ isLoading })
   }
 
   loadNext = (): void => {
@@ -132,11 +128,12 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
             </Box>
           )
         })}
+
         <Pagination
           pageCursors={searchConnection!.pageCursors}
           onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}
-          scrollTo="#jumpto--searchResultTabs"
+          scrollTo="searchResultTabs"
           hasNextPage={searchConnection!.pageInfo.hasNextPage}
         />
       </>

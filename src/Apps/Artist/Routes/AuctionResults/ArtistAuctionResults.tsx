@@ -286,7 +286,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={(_cursor, page) => loadPage(_cursor, page)}
             onNext={() => loadNext()}
-            scrollTo="#jumpto-ArtistHeader"
           />
         </Column>
       </GridColumns>
