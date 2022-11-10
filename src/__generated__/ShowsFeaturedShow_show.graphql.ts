@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7740891ddd1a340047ca117110c40c0a>>
+ * @generated SignedSource<<2872dcccd1ca9f823ad6218c1fc54ca7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,16 +48,7 @@ var v0 = {
   "name": "name",
   "storageKey": null
 },
-v1 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -87,7 +78,7 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = [
+v2 = [
   (v0/*: any*/)
 ];
 return {
@@ -139,7 +130,6 @@ return {
               "name": "height",
               "value": 683
             },
-            (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -150,8 +140,8 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:683,version:[\"normalized\",\"larger\",\"large\"],width:910)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:683,width:910)"
         },
         {
           "alias": "small",
@@ -161,7 +151,6 @@ return {
               "name": "height",
               "value": 450
             },
-            (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -172,8 +161,8 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:450,version:[\"normalized\",\"larger\",\"large\"],width:600)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:450,width:600)"
         }
       ],
       "storageKey": null
@@ -188,13 +177,13 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "Partner",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "ExternalPartner",
           "abstractKey": null
         }
@@ -207,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "4bd9cd78adb854970d61abc9a9850747";
+(node as any).hash = "d1d89a35176a8f420cb68c7a2e5289c4";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbe392f36b0c2314ae785e60011183eb>>
+ * @generated SignedSource<<24468308dcc54d43fec6a77b5b1c830b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtworkGrid_artworks$data = {
       readonly href: string | null;
       readonly id: string;
       readonly image: {
-        readonly aspectRatio: number;
+        readonly aspect_ratio: number;
       } | null;
       readonly internalID: string;
       readonly slug: string;
@@ -89,7 +89,7 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
+                  "alias": "aspect_ratio",
                   "args": null,
                   "kind": "ScalarField",
                   "name": "aspectRatio",
@@ -119,6 +119,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "19b468e1292c87f591e4e48e3e351518";
+(node as any).hash = "8b933fbb60b8a2a04f5dea3d4dff8494";
 
 export default node;

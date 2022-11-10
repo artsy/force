@@ -86,21 +86,13 @@ export const ShowsFeaturedShowFragmentContainer = createFragmentContainer(
         href
         coverImage {
           title
-          large: cropped(
-            width: 910
-            height: 683
-            version: ["normalized", "larger", "large"]
-          ) {
+          large: cropped(width: 910, height: 683) {
             width
             height
             src
             srcSet
           }
-          small: cropped(
-            width: 600
-            height: 450
-            version: ["normalized", "larger", "large"]
-          ) {
+          small: cropped(width: 600, height: 450) {
             width
             height
             src

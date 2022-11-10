@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d47c195cc3ccc245e9772b67a54c7b7a>>
+ * @generated SignedSource<<6243d0b851190b0e285e05385d7b4bf8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,16 +76,7 @@ v5 = [
     "value": "MMM D"
   }
 ],
-v6 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -115,46 +106,46 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = [
+v7 = [
   (v4/*: any*/)
 ],
-v9 = {
+v8 = {
   "kind": "InlineFragment",
-  "selections": (v8/*: any*/),
+  "selections": (v7/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 },
-v10 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v11 = {
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v12 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v13 = {
+v12 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v14 = {
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v15 = {
+v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": true,
@@ -346,7 +337,6 @@ return {
                             "name": "height",
                             "value": 683
                           },
-                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -357,8 +347,8 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:683,version:[\"normalized\",\"larger\",\"large\"],width:910)"
+                        "selections": (v6/*: any*/),
+                        "storageKey": "cropped(height:683,width:910)"
                       },
                       {
                         "alias": "small",
@@ -368,7 +358,6 @@ return {
                             "name": "height",
                             "value": 450
                           },
-                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -379,8 +368,8 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:450,version:[\"normalized\",\"larger\",\"large\"],width:600)"
+                        "selections": (v6/*: any*/),
+                        "storageKey": "cropped(height:450,width:600)"
                       }
                     ],
                     "storageKey": null
@@ -411,7 +400,7 @@ return {
                         "type": "ExternalPartner",
                         "abstractKey": null
                       },
-                      (v9/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -419,16 +408,16 @@ return {
                 "type": "Show",
                 "abstractKey": null
               },
-              (v9/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": (v8/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v8/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
@@ -442,7 +431,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e7f530a5494fdb98244ea4f83f70385",
+    "cacheID": "527febc30254a1cd727e23aca50f4c18",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -452,75 +441,75 @@ return {
           "plural": false,
           "type": "OrderedSet"
         },
-        "featuredShows.id": (v10/*: any*/),
+        "featuredShows.id": (v9/*: any*/),
         "featuredShows.items": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "OrderedSetItem"
         },
-        "featuredShows.items.__isNode": (v11/*: any*/),
-        "featuredShows.items.__typename": (v11/*: any*/),
+        "featuredShows.items.__isNode": (v10/*: any*/),
+        "featuredShows.items.__typename": (v10/*: any*/),
         "featuredShows.items.coverImage": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "featuredShows.items.coverImage.large": (v12/*: any*/),
-        "featuredShows.items.coverImage.large.height": (v13/*: any*/),
-        "featuredShows.items.coverImage.large.src": (v11/*: any*/),
-        "featuredShows.items.coverImage.large.srcSet": (v11/*: any*/),
-        "featuredShows.items.coverImage.large.width": (v13/*: any*/),
-        "featuredShows.items.coverImage.small": (v12/*: any*/),
-        "featuredShows.items.coverImage.small.height": (v13/*: any*/),
-        "featuredShows.items.coverImage.small.src": (v11/*: any*/),
-        "featuredShows.items.coverImage.small.srcSet": (v11/*: any*/),
-        "featuredShows.items.coverImage.small.width": (v13/*: any*/),
-        "featuredShows.items.coverImage.title": (v14/*: any*/),
-        "featuredShows.items.endAt": (v14/*: any*/),
-        "featuredShows.items.formattedEndAt": (v14/*: any*/),
-        "featuredShows.items.formattedStartAt": (v14/*: any*/),
-        "featuredShows.items.href": (v14/*: any*/),
-        "featuredShows.items.id": (v10/*: any*/),
+        "featuredShows.items.coverImage.large": (v11/*: any*/),
+        "featuredShows.items.coverImage.large.height": (v12/*: any*/),
+        "featuredShows.items.coverImage.large.src": (v10/*: any*/),
+        "featuredShows.items.coverImage.large.srcSet": (v10/*: any*/),
+        "featuredShows.items.coverImage.large.width": (v12/*: any*/),
+        "featuredShows.items.coverImage.small": (v11/*: any*/),
+        "featuredShows.items.coverImage.small.height": (v12/*: any*/),
+        "featuredShows.items.coverImage.small.src": (v10/*: any*/),
+        "featuredShows.items.coverImage.small.srcSet": (v10/*: any*/),
+        "featuredShows.items.coverImage.small.width": (v12/*: any*/),
+        "featuredShows.items.coverImage.title": (v13/*: any*/),
+        "featuredShows.items.endAt": (v13/*: any*/),
+        "featuredShows.items.formattedEndAt": (v13/*: any*/),
+        "featuredShows.items.formattedStartAt": (v13/*: any*/),
+        "featuredShows.items.href": (v13/*: any*/),
+        "featuredShows.items.id": (v9/*: any*/),
         "featuredShows.items.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Location"
         },
-        "featuredShows.items.location.city": (v14/*: any*/),
-        "featuredShows.items.location.id": (v10/*: any*/),
-        "featuredShows.items.name": (v14/*: any*/),
+        "featuredShows.items.location.city": (v13/*: any*/),
+        "featuredShows.items.location.id": (v9/*: any*/),
+        "featuredShows.items.name": (v13/*: any*/),
         "featuredShows.items.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PartnerTypes"
         },
-        "featuredShows.items.partner.__isNode": (v11/*: any*/),
-        "featuredShows.items.partner.__typename": (v11/*: any*/),
-        "featuredShows.items.partner.id": (v10/*: any*/),
-        "featuredShows.items.partner.name": (v14/*: any*/),
-        "featuredShows.items.startAt": (v14/*: any*/),
-        "featuredShows.name": (v14/*: any*/),
+        "featuredShows.items.partner.__isNode": (v10/*: any*/),
+        "featuredShows.items.partner.__typename": (v10/*: any*/),
+        "featuredShows.items.partner.id": (v9/*: any*/),
+        "featuredShows.items.partner.name": (v13/*: any*/),
+        "featuredShows.items.startAt": (v13/*: any*/),
+        "featuredShows.name": (v13/*: any*/),
         "viewer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Viewer"
         },
-        "viewer.allCities": (v15/*: any*/),
-        "viewer.allCities.text": (v11/*: any*/),
-        "viewer.allCities.value": (v11/*: any*/),
-        "viewer.featuredCities": (v15/*: any*/),
-        "viewer.featuredCities.text": (v11/*: any*/),
-        "viewer.featuredCities.value": (v11/*: any*/)
+        "viewer.allCities": (v14/*: any*/),
+        "viewer.allCities.text": (v10/*: any*/),
+        "viewer.allCities.value": (v10/*: any*/),
+        "viewer.featuredCities": (v14/*: any*/),
+        "viewer.featuredCities.text": (v10/*: any*/),
+        "viewer.featuredCities.value": (v10/*: any*/)
       }
     },
     "name": "ShowsIndex_Test_Query",
     "operationKind": "query",
-    "text": "query ShowsIndex_Test_Query {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"example\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query ShowsIndex_Test_Query {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"example\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

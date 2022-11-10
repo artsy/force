@@ -39,7 +39,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.35,
+              aspect_ratio: 1.35,
               placeholder: "74.20097898070833%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/lTTEGbhqyyMC8IraJuGTtw/large.jpg",
@@ -83,7 +83,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.79,
+              aspect_ratio: 0.79,
               placeholder: "126.35956493921945%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/QNBY1kx6foZiKrB7msMWmw/large.jpg",
@@ -127,7 +127,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.33,
+              aspect_ratio: 1.33,
               placeholder: "75.44910179640718%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/RkBOuh6bjwu-pY9a3CzaHA/large.jpg",
@@ -174,7 +174,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.07,
+              aspect_ratio: 1.07,
               placeholder: "93.81044487427465%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/L8Vjqhum4XX6sqiEXUg3Fg/large.jpg",
@@ -219,7 +219,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.78,
+              aspect_ratio: 0.78,
               placeholder: "128.15296989422293%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/Lzonx30NloDXcs0FdKUjDw/large.jpg",
@@ -263,7 +263,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.82,
+              aspect_ratio: 0.82,
               placeholder: "121.67539267015708%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/NuQp4MqjsqRaiPpC9hu5BA/large.jpg",
@@ -307,7 +307,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.42,
+              aspect_ratio: 1.42,
               placeholder: "70.31349968010237%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/123zBWZmYy_OC9d9tV3ajQ/large.jpg",
@@ -351,7 +351,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "100%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/MySOcyJvvgWT6US5jFafRA/large.jpg",
@@ -395,7 +395,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "100.45558086560365%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/JfQvrm5cdR-D0O7hqqbEZg/large.jpg",
@@ -439,7 +439,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.21,
+              aspect_ratio: 1.21,
               placeholder: "82.84023668639054%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/TuMBh41hMifd0F7EaheI9w/large.jpg",
@@ -485,7 +485,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "99.71291866028709%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/6y_-lwRBHGbGgw6KmsdCmQ/large.jpg",
@@ -531,7 +531,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "100.2248201438849%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/nhUiLKacJVUqpMSXQ30nJA/large.jpg",
@@ -579,7 +579,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.58,
+              aspect_ratio: 0.58,
               placeholder: "172.1784776902887%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/EjLVZTsT0Ve41R6ProKQPQ/large.jpg",
@@ -627,7 +627,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.8,
+              aspect_ratio: 0.8,
               placeholder: "124.82435597189696%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/PWBFswpR5-Ai0lCrpRO5YA/large.jpg",
@@ -675,7 +675,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.76,
+              aspect_ratio: 0.76,
               placeholder: "131.11395646606914%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/_Gp2Tqu2040tCbVzm5ZSOg/large.jpg",
@@ -720,7 +720,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.75,
+              aspect_ratio: 0.75,
               placeholder: "133.57142857142856%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/mdtpEgwYjBZOLAnbV_wT3A/large.jpg",
@@ -764,7 +764,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.73,
+              aspect_ratio: 0.73,
               placeholder: "137.22126929674099%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/m08CoClNXzF2xnjrCxy5Kg/large.jpg",
@@ -808,7 +808,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "99.9002493765586%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/XzLLLPlzBCa4VLRv-x9Llw/large.jpg",
@@ -852,7 +852,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.78,
+              aspect_ratio: 0.78,
               placeholder: "128.2233936458185%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/1wd-zBc5RUMqVxXxWwvD2Q/large.jpg",
@@ -898,7 +898,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.79,
+              aspect_ratio: 0.79,
               placeholder: "125.92766557069046%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/kHTEwjm-QJPlM0woOxF3RQ/large.jpg",
@@ -944,7 +944,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.65,
+              aspect_ratio: 0.65,
               placeholder: "153.60983102918587%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/o_SwQjGrVcVDI3ZBFw_p1A/large.jpg",
@@ -988,7 +988,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.99,
+              aspect_ratio: 0.99,
               placeholder: "101.26150698943061%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/NQ-02-O7u2EcAK3VVVuBpg/large.jpg",
@@ -1034,7 +1034,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.69,
+              aspect_ratio: 0.69,
               placeholder: "145.1534339990258%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/fqXp8pPB9Gq_skirBR-Ttw/large.jpg",
@@ -1078,7 +1078,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1.24,
+              aspect_ratio: 1.24,
               placeholder: "80.53691275167785%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/-RLvowuSRvkjZP9aPrdXhg/large.jpg",
@@ -1122,7 +1122,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.87,
+              aspect_ratio: 0.87,
               placeholder: "115.29525653436592%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/bXDSjJjt3mNnTtUbmv3-GQ/large.jpg",
@@ -1168,7 +1168,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 1,
+              aspect_ratio: 1,
               placeholder: "99.70089730807578%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/YTOAMMo5veMFGqxWRfGGKw/large.jpg",
@@ -1212,7 +1212,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.88,
+              aspect_ratio: 0.88,
               placeholder: "113.60239162929746%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/LQ_-wbit7h14pg_rRZlUxg/large.jpg",
@@ -1256,7 +1256,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.69,
+              aspect_ratio: 0.69,
               placeholder: "144.65281297516472%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/sxPJfeQIEfyw4ZIPs3CUBA/large.jpg",
@@ -1300,7 +1300,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.74,
+              aspect_ratio: 0.74,
               placeholder: "134.3361674296926%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/riZWHaE2IEQhiNHwmFjiKw/large.jpg",
@@ -1346,7 +1346,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
                 width: 10,
                 height: 200,
               },
-              aspectRatio: 0.62,
+              aspect_ratio: 0.62,
               placeholder: "160.09673518742443%",
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/GIsZlmTq9UiTCEVIwx709g/large.jpg",

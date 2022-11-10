@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73d4e364e5a550e3236ed84ed49e2cab>>
+ * @generated SignedSource<<3312839eef86aa786a5e2e29d38b5cb1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ export type GridItem_artwork$data = {
   readonly artistNames: string | null;
   readonly href: string | null;
   readonly image: {
-    readonly aspectRatio: number;
+    readonly aspect_ratio: number;
     readonly placeholder: string | null;
     readonly url: string | null;
   } | null;
-  readonly imageTitle: string | null;
+  readonly image_title: string | null;
   readonly internalID: string;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork" | "SaveButton_artwork">;
@@ -50,7 +50,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "image_title",
       "args": null,
       "kind": "ScalarField",
       "name": "imageTitle",
@@ -77,19 +77,15 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": [
-                "normalized",
-                "larger",
-                "large"
-              ]
+              "value": "large"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
+          "storageKey": "url(version:\"large\")"
         },
         {
-          "alias": null,
+          "alias": "aspect_ratio",
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
@@ -132,6 +128,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2acbf9a1dbf5cdea2c9553b2ba71e9d8";
+(node as any).hash = "a93086728692841831fb5b17dd14dd06";
 
 export default node;

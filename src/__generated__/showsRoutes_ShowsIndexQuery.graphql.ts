@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<520d13aa414b53f3c1cdb420df0ab991>>
+ * @generated SignedSource<<eab74afeefa1bf1b3e3ae2e03b94dec6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,16 +76,7 @@ v5 = [
     "value": "MMM D"
   }
 ],
-v6 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -115,12 +106,12 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = [
+v7 = [
   (v4/*: any*/)
 ],
-v9 = {
+v8 = {
   "kind": "InlineFragment",
-  "selections": (v8/*: any*/),
+  "selections": (v7/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 };
@@ -310,7 +301,6 @@ return {
                             "name": "height",
                             "value": 683
                           },
-                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -321,8 +311,8 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:683,version:[\"normalized\",\"larger\",\"large\"],width:910)"
+                        "selections": (v6/*: any*/),
+                        "storageKey": "cropped(height:683,width:910)"
                       },
                       {
                         "alias": "small",
@@ -332,7 +322,6 @@ return {
                             "name": "height",
                             "value": 450
                           },
-                          (v6/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -343,8 +332,8 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:450,version:[\"normalized\",\"larger\",\"large\"],width:600)"
+                        "selections": (v6/*: any*/),
+                        "storageKey": "cropped(height:450,width:600)"
                       }
                     ],
                     "storageKey": null
@@ -375,7 +364,7 @@ return {
                         "type": "ExternalPartner",
                         "abstractKey": null
                       },
-                      (v9/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -383,16 +372,16 @@ return {
                 "type": "Show",
                 "abstractKey": null
               },
-              (v9/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": (v8/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v8/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
@@ -406,12 +395,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2a3d7958a33c663ff4aa49ac9b28068d",
+    "cacheID": "903e534aca0cc832d3a09236dbc038d8",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsIndexQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsIndexQuery {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsIndexQuery {\n  viewer {\n    ...ShowsIndex_viewer\n  }\n  featuredShows: orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...ShowsIndex_featuredShows\n    id\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsIndex_featuredShows on OrderedSet {\n  name\n  items {\n    __typename\n    ... on Show {\n      id\n      ...ShowsFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ShowsIndex_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

@@ -55,14 +55,17 @@ describe("ArtworkGrid", () => {
       const artworks = {
         " $refType": null,
         edges: aspectRatios.reduce(
-          (acc, aspectRatio) => [...acc, { node: { image: { aspectRatio } } }],
+          (acc, aspect_ratio) => [
+            ...acc,
+            { node: { image: { aspect_ratio } } },
+          ],
           []
         ),
       } as ArtworkGrid_artworks$data
 
       function expected(columnsRatios: number[][]) {
         return columnsRatios.map(columnRatios =>
-          columnRatios.map(aspectRatio => ({ image: { aspectRatio } }))
+          columnRatios.map(aspect_ratio => ({ image: { aspect_ratio } }))
         )
       }
 
