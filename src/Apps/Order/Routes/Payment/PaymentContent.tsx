@@ -15,9 +15,6 @@ import {
   Tooltip,
   Flex,
 } from "@artsy/palette"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-
 import { Payment_me$data } from "__generated__/Payment_me.graphql"
 import {
   Payment_order$data,
@@ -112,7 +109,6 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
-        {/* @ts-ignore RELAY_UPGRADE 13  */}
         <CreditCardPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -132,7 +128,6 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
-          // @ts-ignore RELAY_UPGRADE 13
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
@@ -146,7 +141,6 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "SEPA_DEBIT" && (
-          // @ts-ignore RELAY_UPGRADE 13
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
@@ -168,23 +162,6 @@ export const PaymentContent: FC<Props> = props => {
     </>
   )
 }
-
-const USBankOnlyLabel = styled(Text)`
-  background-color: ${themeGet("colors.orange10")};
-  color: ${themeGet("colors.orange150")};
-  padding: 1px 5px;
-  border-radius: 2px;
-  align-self: center;
-`
-
-const RadioWithLabel = styled(BorderedRadio)`
-  padding-right: 0px !important;
-  div {
-    flex-direction: row;
-    flex-grow: 0;
-    white-space: nowrap;
-  }
-`
 
 /*
  * returns all available payment methods in the form of BorderRadio
@@ -232,7 +209,7 @@ const getAvailablePaymentMethods = (
   // when available, unshift ACH since it's the first option we want to offer for US artworks
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
-      <RadioWithLabel
+      <BorderedRadio
         data-test-id="us-bank-account"
         key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
@@ -245,10 +222,10 @@ const getAvailablePaymentMethods = (
           </>
         }
       >
-        <USBankOnlyLabel ml={0.5} variant="xs">
+        <Text ml="24px" variant="xs" color="black60">
           US bank account only
-        </USBankOnlyLabel>
-      </RadioWithLabel>
+        </Text>
+      </BorderedRadio>
     )
   }
 

@@ -7,18 +7,18 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { AddressForm } from "Components/AddressForm"
 import { graphql } from "react-relay"
-import { settingOrderPaymentFailed } from "../__fixtures__/MutationResults"
-import { PaymentFragmentContainer } from "../Payment"
+import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults"
+import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
-import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
-import { useSetPayment } from "../../Mutations/useSetPayment"
+import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
+import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { useOrderPaymentContext } from "../Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -339,6 +339,10 @@ describe("Payment", () => {
     it("renders selection of payment methods", () => {
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
+    })
+
+    it("renders correct copy for ACH radio button description", () => {
+      expect(page.text()).toContain("US bank account only")
     })
 
     it("tracks the initially-selected payment method on load like any other selection", () => {
