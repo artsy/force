@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a5f86e7fd97058d7aebdd17223f0afa>>
+ * @generated SignedSource<<8168082c6b31c8d4578ba724f15c150f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -189,7 +189,6 @@ return {
                                 "kind": "Literal",
                                 "name": "version",
                                 "value": [
-                                  "normalized",
                                   "larger",
                                   "large"
                                 ]
@@ -220,7 +219,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                            "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                           }
                         ],
                         "storageKey": null
@@ -247,12 +246,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d935f9519d0e1ca700cf595bfecc71c1",
+    "cacheID": "efe8516506eab3356ca467e2a75b7faf",
     "id": null,
     "metadata": {},
     "name": "CellSaleStoryQuery",
     "operationKind": "query",
-    "text": "query CellSaleStoryQuery {\n  viewer {\n    salesConnection(first: 99, published: true, live: true, sort: LICENSED_TIMELY_AT_NAME_DESC) {\n      edges {\n        node {\n          ...CellSale_sale\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellSale_sale on Sale {\n  name\n  formattedStartDateTime\n  href\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellSaleStoryQuery {\n  viewer {\n    salesConnection(first: 99, published: true, live: true, sort: LICENSED_TIMELY_AT_NAME_DESC) {\n      edges {\n        node {\n          ...CellSale_sale\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellSale_sale on Sale {\n  name\n  formattedStartDateTime\n  href\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

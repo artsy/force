@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c720707a6cfdb5441b93c315cda1948>>
+ * @generated SignedSource<<94efdc9d17abfd26cecc66e31c0d24f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -382,7 +382,6 @@ return {
                                 "kind": "Literal",
                                 "name": "version",
                                 "value": [
-                                  "normalized",
                                   "larger",
                                   "large"
                                 ]
@@ -413,7 +412,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                            "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                           }
                         ],
                         "storageKey": null
@@ -435,12 +434,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d1e2f4e384422fde5caad8457681a1bb",
+    "cacheID": "055bb1a65f6365fadc27d32ec5bac832",
     "id": null,
     "metadata": {},
     "name": "ArtistShowsGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistShowsGroupQuery(\n  $page: Int\n  $artistID: String!\n  $sort: ShowSorts\n  $status: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_3ny9Yn\n    id\n  }\n}\n\nfragment ArtistShowsGroup_artist_3ny9Yn on Artist {\n  slug\n  showsConnection(first: 12, page: $page, sort: $sort, status: $status) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistShowsGroupQuery(\n  $page: Int\n  $artistID: String!\n  $sort: ShowSorts\n  $status: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_3ny9Yn\n    id\n  }\n}\n\nfragment ArtistShowsGroup_artist_3ny9Yn on Artist {\n  slug\n  showsConnection(first: 12, page: $page, sort: $sort, status: $status) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1cc575147cdbbc100a04e447af366f8>>
+ * @generated SignedSource<<ab1c08723bd02ccd2ca24d8a681d1696>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -213,7 +213,6 @@ return {
                     "kind": "Literal",
                     "name": "version",
                     "value": [
-                      "normalized",
                       "larger",
                       "large"
                     ]
@@ -244,7 +243,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
@@ -256,7 +255,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9c7e390474763b187a8a74972c36aff",
+    "cacheID": "850aeb6c32072038fc88972e61a271ef",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -308,7 +307,7 @@ return {
     },
     "name": "CellShowFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellShowFragmentContainer_Test_Query {\n  show(id: \"example\") {\n    ...CellShow_show\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellShowFragmentContainer_Test_Query {\n  show(id: \"example\") {\n    ...CellShow_show\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

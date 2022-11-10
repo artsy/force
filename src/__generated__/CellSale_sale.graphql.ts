@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b3631fe7e0d5d7a5531ae79f514b08b>>
+ * @generated SignedSource<<c0d6bda7d599986680a3d65eb3207a67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,7 +74,6 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "version",
               "value": [
-                "normalized",
                 "larger",
                 "large"
               ]
@@ -105,7 +104,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+          "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
         }
       ],
       "storageKey": null
@@ -115,6 +114,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6548a4992af1b2cbc5fdb190e87502b1";
+(node as any).hash = "978bf2d47ff557e5c4c1fa86d957a8f2";
 
 export default node;

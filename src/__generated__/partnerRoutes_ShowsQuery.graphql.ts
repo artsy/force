@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ca38df99a8c2a452a9fe335146995a3>>
+ * @generated SignedSource<<0929afde55792cd077c66630ec22e251>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -113,16 +113,7 @@ v10 = {
   "name": "id",
   "storageKey": null
 },
-v11 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "normalized",
-    "larger",
-    "large"
-  ]
-},
-v12 = [
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -138,15 +129,15 @@ v12 = [
     "storageKey": null
   }
 ],
-v13 = {
+v12 = {
   "kind": "Literal",
   "name": "first",
   "value": 12
 },
-v14 = [
+v13 = [
   (v10/*: any*/)
 ],
-v15 = [
+v14 = [
   {
     "alias": null,
     "args": null,
@@ -208,13 +199,13 @@ v15 = [
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v14/*: any*/),
+                "selections": (v13/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v14/*: any*/),
+                "selections": (v13/*: any*/),
                 "type": "ExternalPartner",
                 "abstractKey": null
               }
@@ -237,7 +228,14 @@ v15 = [
                     "name": "height",
                     "value": 334
                   },
-                  (v11/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "larger",
+                      "large"
+                    ]
+                  },
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -248,8 +246,8 @@ v15 = [
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v12/*: any*/),
-                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                "selections": (v11/*: any*/),
+                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
@@ -409,7 +407,15 @@ return {
                                 "name": "height",
                                 "value": 480
                               },
-                              (v11/*: any*/),
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
+                              },
                               {
                                 "kind": "Literal",
                                 "name": "width",
@@ -420,7 +426,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v12/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:480,version:[\"normalized\",\"larger\",\"large\"],width:600)"
                           }
                         ],
@@ -439,7 +445,7 @@ return {
           {
             "alias": "currentEvents",
             "args": [
-              (v13/*: any*/),
+              (v12/*: any*/),
               (v4/*: any*/),
               {
                 "kind": "Literal",
@@ -451,13 +457,13 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v15/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"RUNNING\")"
           },
           {
             "alias": "upcomingEvents",
             "args": [
-              (v13/*: any*/),
+              (v12/*: any*/),
               (v4/*: any*/),
               {
                 "kind": "Literal",
@@ -469,7 +475,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v15/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"UPCOMING\")"
           },
           (v10/*: any*/)
@@ -479,12 +485,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9be03c3114f4f3f5b6a57c05ebf5930d",
+    "cacheID": "e9cc03632688e3f1819ad40362dda792",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    counts {\n      displayableShows\n    }\n    ...Shows_partner\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    counts {\n      displayableShows\n    }\n    ...Shows_partner\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

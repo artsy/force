@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d68d0aeacc5b50a21763382b2d94103>>
+ * @generated SignedSource<<e29d85c9f49c6643f608c439b5158208>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -214,7 +214,6 @@ return {
                     "kind": "Literal",
                     "name": "version",
                     "value": [
-                      "normalized",
                       "larger",
                       "large"
                     ]
@@ -230,7 +229,7 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": (v2/*: any*/),
-                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
@@ -248,12 +247,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d6af2244d36418993abc9e781ab2c29b",
+    "cacheID": "e7f73965879f691d67676d8fb06cf0f0",
     "id": null,
     "metadata": {},
     "name": "CellArtistStoryQuery",
     "operationKind": "query",
-    "text": "query CellArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...CellArtist_artist\n    id\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...CellArtist_artist\n    id\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
