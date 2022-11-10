@@ -107,7 +107,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         href
         artistNames
         image {
-          src: url(version: ["normalized", "larger", "large"])
+          src: url(version: ["larger", "large"])
           width
           height
         }

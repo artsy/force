@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<051bb89eaf903bfd21efc465f3050e64>>
+ * @generated SignedSource<<ebad08e4e1e864d97b92d0065ab6d1d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -204,7 +204,6 @@ return {
                     "kind": "Literal",
                     "name": "version",
                     "value": [
-                      "normalized",
                       "larger",
                       "large"
                     ]
@@ -235,7 +234,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
@@ -247,12 +246,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8e3b006f74619cadda28a4dbe254ef62",
+    "cacheID": "dc7adbd6c0b45f95ade4437979bd79d3",
     "id": null,
     "metadata": {},
     "name": "CellShowStoryQuery",
     "operationKind": "query",
-    "text": "query CellShowStoryQuery(\n  $id: String!\n) {\n  show(id: $id) {\n    ...CellShow_show\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellShowStoryQuery(\n  $id: String!\n) {\n  show(id: $id) {\n    ...CellShow_show\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

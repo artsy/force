@@ -115,11 +115,7 @@ export const CellArtistFragmentContainer = createFragmentContainer(CellArtist, {
       href
       initials
       image {
-        cropped(
-          width: 445
-          height: 334
-          version: ["normalized", "larger", "large"]
-        ) {
+        cropped(width: 445, height: 334, version: ["larger", "large"]) {
           src
           srcSet
         }

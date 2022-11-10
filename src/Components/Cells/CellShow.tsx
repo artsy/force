@@ -149,11 +149,7 @@ export const CellShowFragmentContainer = createFragmentContainer(CellShow, {
         }
       }
       coverImage {
-        cropped(
-          width: 445
-          height: 334
-          version: ["normalized", "larger", "large"]
-        ) {
+        cropped(width: 445, height: 334, version: ["larger", "large"]) {
           src
           srcSet
         }

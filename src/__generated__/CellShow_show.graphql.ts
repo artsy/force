@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4774706ab2920015de5f28c24cda3fbf>>
+ * @generated SignedSource<<791011c304aa61beb3d86378bb9e7d35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -138,7 +138,6 @@ return {
               "kind": "Literal",
               "name": "version",
               "value": [
-                "normalized",
                 "larger",
                 "large"
               ]
@@ -169,7 +168,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+          "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
         }
       ],
       "storageKey": null
@@ -180,6 +179,6 @@ return {
 };
 })();
 
-(node as any).hash = "9baaf250a0d4304282eae2fc6f46c848";
+(node as any).hash = "8ef91d4835303d527e1ef98587a91733";
 
 export default node;
