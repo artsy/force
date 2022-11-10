@@ -1,9 +1,14 @@
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Text } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Mutations"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   uploadPhotosValidationSchema,
   validate,
@@ -12,6 +17,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
+import { LocationDescriptor } from "found"
 import { findLast } from "lodash"
 import { useRef, useState } from "react"
 import {
@@ -20,6 +26,7 @@ import {
   fetchQuery,
   graphql,
 } from "react-relay"
+import { trackEvent } from "Server/analytics/helpers"
 import { isServer } from "Server/isServer"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
@@ -100,6 +107,13 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   } = useRemoveAssetFromConsignmentSubmission()
   const { submitMutation: addAsset } = useAddAssetToConsignmentSubmission()
 
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Upload Photos"),
+    [...steps].indexOf("Photos")
+  )
+  const isLastStep = stepIndex === steps.length - 1
+
   const initialValue = getUploadPhotosFormInitialValues(
     submission,
     myCollectionArtwork
@@ -109,26 +123,98 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   const handleSubmit = async () => {
     if (submission) {
-      router.push({
-        pathname: artworkId
-          ? `/my-collection/submission/${submission.externalId}/contact-information/${artworkId}`
-          : `/sell/submission/${submission.externalId}/contact-information`,
+      if (isLastStep && relayEnvironment) {
+        const submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          {
+            externalId: submission.externalId,
+            state: "SUBMITTED",
+          }
+        )
+        trackEvent({
+          action: ActionType.consignmentSubmitted,
+          submission_id: submissionId,
+          user_id: submission.userId,
+          user_email: submission.userEmail,
+        })
+      }
+
+      trackEvent({
+        action: ActionType.uploadPhotosCompleted,
+        context_owner_type: OwnerType.consignmentFlow,
+        context_module: ContextModule.uploadPhotos,
+        submission_id: submission.externalId,
+        user_id: submission.userId,
+        user_email: submission.userEmail,
       })
+
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
+
+      const consignPath = artworkId
+        ? "/my-collection/submission"
+        : "/sell/submission"
+
+      const nextStepIndex = isLastStep ? null : stepIndex + 1
+      let nextRoute: LocationDescriptor = consignPath
+      if (nextStepIndex !== null) {
+        let nextStep = steps[nextStepIndex]
+        if (nextStep === "Contact" || nextStep === "Contact Information") {
+          nextRoute = `${consignPath}/${submission.externalId}/contact-information`
+        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `${consignPath}/${submission.externalId}/artwork-details`
+        }
+      }
+
+      if (nextRoute === consignPath) {
+        // there is no next step to go to. Prepare to go to thank you screen
+        nextRoute = `${nextRoute}/${submission.externalId}/thank-you`
+      }
+
+      if (artworkId) {
+        // artworkId should ever only be present for `/my-collection/submission` consign path
+        nextRoute = nextRoute + "/" + artworkId
+      }
+
+      router.push(nextRoute)
     }
   }
 
+  const deriveBackLinkTo = () => {
+    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    let backTo = defaultBackLink
+    if (stepIndex === 0 && artworkId) {
+      return backTo + `/artwork/${artworkId}`
+    }
+    let prevStep = ""
+    if (stepIndex > 0) {
+      switch (steps[stepIndex - 1]) {
+        case "Contact":
+        case "Contact Information":
+          prevStep = "contact-information"
+          break
+        case "Artwork":
+        case "Artwork Details":
+          prevStep = "artwork-details"
+          break
+        default:
+          break
+      }
+      if (submission) {
+        backTo = backTo + `/submission/${submission.externalId}`
+      }
+    }
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
+    if (artworkId) {
+      backTo = backTo + `/${artworkId}`
+    }
+    return backTo
+  }
+
+  const backTo = deriveBackLinkTo()
+
   return (
     <>
-      <BackLink
-        py={2}
-        mb={6}
-        width="min-content"
-        to={
-          artworkId
-            ? `/my-collection/submission/${submission?.externalId}/artwork-details/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/artwork-details`
-        }
-      >
+      <BackLink py={2} mb={6} width="min-content" to={backTo}>
         Back
       </BackLink>
 
@@ -298,7 +384,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
-                Save and Continue
+                {isLastStep ? "Submit Artwork" : "Save and Continue"}
               </Button>
             </Form>
           )
@@ -336,6 +422,8 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
     submission: graphql`
       fragment UploadPhotos_submission on ConsignmentSubmission {
         externalId
+        userId
+        userEmail
         assets {
           id
           imageUrls

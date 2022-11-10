@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f846f69a9d6cce3a70c44151a2daa0b8>>
+ * @generated SignedSource<<432e4d839bc5a4eb4478fc16869f7b9c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,8 @@ export type consignRoutes_artworkDetailsQuery$data = {
     readonly medium: string | null;
     readonly provenance: string | null;
     readonly title: string | null;
+    readonly userEmail: string | null;
+    readonly userId: string;
     readonly width: string | null;
     readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
@@ -224,10 +226,24 @@ v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userId",
   "storageKey": null
 },
 v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userEmail",
+  "storageKey": null
+},
+v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v26 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -235,7 +251,7 @@ v24 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v23/*: any*/),
+    (v25/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -321,7 +337,9 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
-          (v24/*: any*/)
+          (v23/*: any*/),
+          (v24/*: any*/),
+          (v26/*: any*/)
         ],
         "storageKey": null
       }
@@ -358,7 +376,7 @@ return {
             "selections": [
               (v5/*: any*/),
               (v6/*: any*/),
-              (v23/*: any*/)
+              (v25/*: any*/)
             ],
             "storageKey": null
           },
@@ -378,20 +396,22 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
+          (v23/*: any*/),
           (v24/*: any*/),
-          (v23/*: any*/)
+          (v26/*: any*/),
+          (v25/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "38b75e5b6ffc3dd70a8a0bc14fa8a5b4",
+    "cacheID": "9ff25c019fb200d85cd217c052b057ba",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_artworkDetailsQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query consignRoutes_artworkDetailsQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();

@@ -66,7 +66,7 @@ export const Header: React.FC = () => {
                     // @ts-ignore
                     as={RouterLink}
                     variant="primaryWhite"
-                    to="/sell/submission/artwork-details"
+                    to="/sell/submission"
                     onClick={trackSubmitClick}
                     mb={[2, 0]}
                     width={"100%"}

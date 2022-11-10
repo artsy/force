@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { Redirect, RedirectException } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
@@ -123,6 +123,22 @@ const prepareSubmissionFlowStepVariables = data => {
   }
 }
 
+const contactInformationQuery = graphql`
+  query consignRoutes_contactInformationQuery(
+    $id: ID
+    $externalId: ID
+    $sessionID: String
+  ) {
+    submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
+      ...ContactInformation_submission
+      ...redirects_submission @relay(mask: false)
+    }
+    me {
+      ...ContactInformation_me
+    }
+  }
+`
+
 export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell",
@@ -170,11 +186,17 @@ export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell/submission",
     getComponent: () => SubmissionLayout,
+    onServerSideRender: ({ res }) => {
+      if (
+        res.locals.sd.FEATURE_FLAGS["reorder-swa-artwork-submission-flow"]
+          .flagEnabled
+      ) {
+        res.redirect("/sell/submission/contact-information")
+      } else {
+        res.redirect("/sell/submission/artwork-details")
+      }
+    },
     children: [
-      new Redirect({
-        from: "/",
-        to: "/sell/submission/artwork-details",
-      }) as any,
       {
         path: "artwork-details",
         hideNav: true,
@@ -183,6 +205,18 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ArtworkDetails.preload()
         },
+      },
+      {
+        path: "contact-information",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: contactInformationQuery,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
         path: ":id/artwork-details",
@@ -246,25 +280,7 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ContactInformation.preload()
         },
-        query: graphql`
-          query consignRoutes_contactInformationQuery(
-            $id: ID
-            $externalId: ID
-            $sessionID: String
-          ) {
-            submission(
-              id: $id
-              externalId: $externalId
-              sessionID: $sessionID
-            ) {
-              ...ContactInformation_submission
-              ...redirects_submission @relay(mask: false)
-            }
-            me {
-              ...ContactInformation_me
-            }
-          }
-        `,
+        query: contactInformationQuery,
         render: renderSubmissionFlowStep,
         prepareVariables: prepareSubmissionFlowStepVariables,
       },

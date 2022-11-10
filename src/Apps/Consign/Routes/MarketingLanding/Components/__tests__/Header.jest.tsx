@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
-import { Header } from "../Header"
+import { Header } from "Apps/Consign/Routes/MarketingLanding/Components/Header"
 
 jest.mock("react-tracking")
 // TODO: Remove feature flag mock when feature flag is removed
@@ -42,7 +42,7 @@ describe("Header", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Submit an Artwork")
-      expect(link).toHaveAttribute("href", "/sell/submission/artwork-details")
+      expect(link).toHaveAttribute("href", "/sell/submission")
     })
 
     it("tracks click", () => {

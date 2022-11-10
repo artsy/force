@@ -1,5 +1,8 @@
 import { Button, Text, useToasts } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
@@ -9,23 +12,29 @@ import {
   SubmissionType,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "System/Router/useRouter"
-import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
+import {
+  artworkDetailsValidationSchema,
+  validate,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,
-} from "../Utils/createOrUpdateConsignSubmission"
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import {
   ArtworkDetails_submission$data,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { UtmParams } from "../Utils/types"
+import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { LocationDescriptor } from "found"
+import { trackEvent } from "Server/analytics/helpers"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -42,14 +51,24 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
 
-  const data: getArtworkDetailsFormInitialValuesProps = submission
-    ? { values: submission!, type: SubmissionType.submission }
-    : myCollectionArtwork
-    ? {
-        values: myCollectionArtwork!,
-        type: SubmissionType.myCollectionArtwork,
-      }
-    : { type: SubmissionType.default }
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Artwork Details"),
+    [...steps].indexOf("Artwork")
+  )
+  const isLastStep = stepIndex === steps.length - 1
+
+  let data: getArtworkDetailsFormInitialValuesProps = {
+    type: SubmissionType.default,
+  }
+  if (myCollectionArtwork) {
+    data = {
+      values: myCollectionArtwork!,
+      type: SubmissionType.myCollectionArtwork,
+    }
+  } else if (submission) {
+    data = { values: submission!, type: SubmissionType.submission }
+  }
 
   const initialValue = getArtworkDetailsFormInitialValues(data)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
@@ -104,7 +123,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         locationState: artworkDetailsForm.location.state?.trim(),
         locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
         locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
-        state: "DRAFT",
+        state: isLastStep ? "SUBMITTED" : "DRAFT",
         utmMedium: utmParams?.utmMedium,
         utmSource: utmParams?.utmSource,
         utmTerm: utmParams?.utmTerm,
@@ -133,27 +152,91 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         return
       }
 
-      router.replace({
-        pathname: artworkId
-          ? `/my-collection/submission/${submissionId}/artwork-details/${artworkId}`
-          : `/sell/submission/${submissionId}/artwork-details`,
+      if (isLastStep) {
+        trackEvent({
+          action: ActionType.consignmentSubmitted,
+          submission_id: submissionId,
+          user_id: submission?.userId,
+          user_email: submission?.userEmail,
+        })
+      }
+
+      trackEvent({
+        action: ActionType.artworkDetailsCompleted,
+        context_owner_type: OwnerType.consignmentFlow,
+        context_module: ContextModule.artworkDetails,
+        submission_id: submissionId,
+        user_id: submission?.userId,
+        user_email: submission?.userEmail,
       })
-      router.push({
-        pathname: artworkId
-          ? `/my-collection/submission/${submissionId}/upload-photos/${artworkId}`
-          : `/sell/submission/${submissionId}/upload-photos`,
-      })
+
+      router.replace(artworkId ? "/settings/my-collection" : "/sell")
+
+      const consignPath = artworkId
+        ? "/my-collection/submission"
+        : "/sell/submission"
+
+      const nextStepIndex = isLastStep ? null : stepIndex + 1
+      let nextRoute: LocationDescriptor = consignPath
+      if (nextStepIndex !== null) {
+        let nextStep = steps[nextStepIndex]
+        if (nextStep === "Contact" || nextStep === "Contact Information") {
+          nextRoute = `${consignPath}/${submissionId}/contact-information`
+        } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
+          nextRoute = `${consignPath}/${submissionId}/upload-photos`
+        }
+      }
+
+      if (nextRoute === consignPath) {
+        // there is no next step to go to. Prepare to go to thank you screen
+        nextRoute = `${nextRoute}/${submissionId}/thank-you`
+      }
+
+      if (artworkId) {
+        // artworkId should ever only be present for `/my-collection/submission` consign path
+        nextRoute = nextRoute + "/" + artworkId
+      }
+
+      router.push(nextRoute)
     }
   }
 
+  const deriveBackLinkTo = () => {
+    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    let backTo = defaultBackLink
+    if (stepIndex === 0 && artworkId) {
+      return backTo + `/artwork/${artworkId}`
+    }
+    let prevStep = ""
+    if (stepIndex > 0) {
+      switch (steps[stepIndex - 1]) {
+        case "Contact":
+        case "Contact Information":
+          prevStep = "contact-information"
+          break
+        case "Upload Photos":
+        case "Photos":
+          prevStep = "upload-photos"
+          break
+        default:
+          break
+      }
+      if (submission) {
+        backTo = backTo + `/submission/${submission.externalId}`
+      }
+    }
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
+    if (artworkId) {
+      backTo = backTo + `/${artworkId}`
+    }
+    return backTo
+  }
+
+  const backTo = deriveBackLinkTo()
+
   return (
     <>
-      <BackLink
-        py={2}
-        mb={6}
-        to={artworkId ? `/my-collection/artwork/${artworkId}` : "/sell"}
-        width="min-content"
-      >
+      <BackLink py={2} mb={6} to={backTo} width="min-content">
         Back
       </BackLink>
 
@@ -197,7 +280,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
               loading={isSubmitting}
               disabled={!isValid}
             >
-              Save and Continue
+              {isLastStep ? "Submit Artwork" : "Save and Continue"}
             </Button>
           </Form>
         )}
@@ -232,6 +315,8 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         depth
         dimensionsMetric
         provenance
+        userId
+        userEmail
       }
     `,
     myCollectionArtwork: graphql`

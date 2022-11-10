@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14b9138617aecf10e13fddef5b8423d6>>
+ * @generated SignedSource<<eb82bb06396088680b54624aa8bf4b0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,8 @@ export type consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery$da
     readonly medium: string | null;
     readonly provenance: string | null;
     readonly title: string | null;
+    readonly userEmail: string | null;
+    readonly userId: string;
     readonly width: string | null;
     readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
@@ -227,10 +229,24 @@ v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userId",
   "storageKey": null
 },
 v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userEmail",
+  "storageKey": null
+},
+v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v26 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -238,7 +254,7 @@ v24 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v23/*: any*/),
+    (v25/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -324,7 +340,9 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
-          (v24/*: any*/)
+          (v23/*: any*/),
+          (v24/*: any*/),
+          (v26/*: any*/)
         ],
         "storageKey": null
       },
@@ -377,7 +395,7 @@ return {
             "selections": [
               (v5/*: any*/),
               (v6/*: any*/),
-              (v23/*: any*/)
+              (v25/*: any*/)
             ],
             "storageKey": null
           },
@@ -397,8 +415,10 @@ return {
           (v20/*: any*/),
           (v21/*: any*/),
           (v22/*: any*/),
+          (v23/*: any*/),
           (v24/*: any*/),
-          (v23/*: any*/)
+          (v26/*: any*/),
+          (v25/*: any*/)
         ],
         "storageKey": null
       },
@@ -477,19 +497,19 @@ return {
             ],
             "storageKey": null
           },
-          (v23/*: any*/)
+          (v25/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "55b8b28ec3c95e7debee779369616f4a",
+    "cacheID": "55ae9b0164832b223bdce1908fb3a53e",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
+    "text": "query consignFromMyCollectionRoutes_contactInformationArtworkOwnerQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ContactInformation_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
   }
 };
 })();

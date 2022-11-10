@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fedf3dfffbdf968414044f84d468ad37>>
+ * @generated SignedSource<<5bc4cee8b5f30c995db84a55fad116e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,6 +48,8 @@ export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data 
     readonly medium: string | null;
     readonly provenance: string | null;
     readonly title: string | null;
+    readonly userEmail: string | null;
+    readonly userId: string;
     readonly width: string | null;
     readonly year: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
@@ -233,10 +235,24 @@ v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userId",
   "storageKey": null
 },
 v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userEmail",
+  "storageKey": null
+},
+v26 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v27 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -244,7 +260,7 @@ v25 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v24/*: any*/),
+    (v26/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -276,14 +292,14 @@ v25 = {
   ],
   "storageKey": null
 },
-v26 = [
+v28 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artworkId"
   }
 ],
-v27 = {
+v29 = {
   "alias": null,
   "args": null,
   "concreteType": "Artist",
@@ -293,7 +309,7 @@ v27 = {
   "selections": [
     (v6/*: any*/),
     (v7/*: any*/),
-    (v24/*: any*/)
+    (v26/*: any*/)
   ],
   "storageKey": null
 };
@@ -352,13 +368,15 @@ return {
           (v21/*: any*/),
           (v22/*: any*/),
           (v23/*: any*/),
-          (v25/*: any*/)
+          (v24/*: any*/),
+          (v25/*: any*/),
+          (v27/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": "myCollectionArtwork",
-        "args": (v26/*: any*/),
+        "args": (v28/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -396,7 +414,7 @@ return {
         "plural": false,
         "selections": [
           (v5/*: any*/),
-          (v27/*: any*/),
+          (v29/*: any*/),
           (v8/*: any*/),
           (v9/*: any*/),
           (v10/*: any*/),
@@ -413,21 +431,23 @@ return {
           (v21/*: any*/),
           (v22/*: any*/),
           (v23/*: any*/),
+          (v24/*: any*/),
           (v25/*: any*/),
-          (v24/*: any*/)
+          (v27/*: any*/),
+          (v26/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": "myCollectionArtwork",
-        "args": (v26/*: any*/),
+        "args": (v28/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
           (v6/*: any*/),
-          (v27/*: any*/),
+          (v29/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -464,7 +484,7 @@ return {
                 "name": "postalCode",
                 "storageKey": null
               },
-              (v24/*: any*/)
+              (v26/*: any*/)
             ],
             "storageKey": null
           },
@@ -486,7 +506,7 @@ return {
             "plural": false,
             "selections": [
               (v7/*: any*/),
-              (v24/*: any*/)
+              (v26/*: any*/)
             ],
             "storageKey": null
           },
@@ -503,19 +523,19 @@ return {
             "storageKey": null
           },
           (v23/*: any*/),
-          (v24/*: any*/)
+          (v26/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "678bdc679a01eb2d52848c851ef4c8be",
+    "cacheID": "9001f7a14790808de584aeb3da5b0714",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n  userId\n  userEmail\n}\n"
   }
 };
 })();

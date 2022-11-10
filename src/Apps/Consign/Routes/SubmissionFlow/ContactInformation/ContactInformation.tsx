@@ -1,6 +1,9 @@
 import { ActionType } from "@artsy/cohesion"
 import { Button, Text, useToasts } from "@artsy/palette"
-import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import {
+  SubmissionStepper,
+  useSubmissionFlowSteps,
+} from "Apps/Consign/Components/SubmissionStepper"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,
@@ -8,6 +11,7 @@ import {
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
+import { LocationDescriptor } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
@@ -39,7 +43,7 @@ const getContactInformationFormInitialValues = (
 
 export interface ContactInformationProps {
   me: ContactInformation_me$data
-  submission: ContactInformation_submission$data
+  submission: ContactInformation_submission$data | null
 }
 
 export const ContactInformation: React.FC<ContactInformationProps> = ({
@@ -57,6 +61,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   )
   const artworkId = match.params.artworkId
 
+  const steps = useSubmissionFlowSteps()
+  const stepIndex = Math.max(
+    [...steps].indexOf("Contact Information"),
+    [...steps].indexOf("Contact")
+  )
+  const isLastStep = stepIndex === steps.length - 1
+
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
 
@@ -67,32 +78,62 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   }: ContactInformationFormModel) => {
     if (!(await handleRecaptcha("submission_submit"))) return
 
-    if (relayEnvironment && submission) {
+    if (relayEnvironment) {
       try {
         const submissionEmail = email.trim()
 
-        await createOrUpdateConsignSubmission(relayEnvironment, {
-          externalId: submission.externalId,
-          userName: name.trim(),
-          userEmail: submissionEmail,
-          userPhone: phone.international,
-          state: "SUBMITTED",
-          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
-        })
+        const submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          {
+            externalId: submission?.externalId,
+            artistID: stepIndex === 0 ? "" : undefined,
+            userName: name.trim(),
+            userEmail: submissionEmail,
+            userPhone: phone.international,
+            state: isLastStep ? "SUBMITTED" : "DRAFT",
+            sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+          }
+        )
 
-        trackEvent({
-          action: ActionType.consignmentSubmitted,
-          submission_id: submission.externalId,
-          user_id: me?.internalID,
-          user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
-        })
+        if (isLastStep) {
+          trackEvent({
+            action: ActionType.consignmentSubmitted,
+            submission_id: submission?.externalId,
+            user_id: me?.internalID,
+            user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
+          })
+        }
+
+        // TODO:- Track ContactInformation step
 
         router.replace(artworkId ? "/settings/my-collection" : "/sell")
-        router.push(
-          artworkId
-            ? `/my-collection/submission/${submission?.externalId}/thank-you/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/thank-you`
-        )
+
+        const consignPath = artworkId
+          ? "/my-collection/submission"
+          : "/sell/submission"
+
+        const nextStepIndex = isLastStep ? null : stepIndex + 1
+        let nextRoute: LocationDescriptor = consignPath
+        if (nextStepIndex !== null) {
+          let nextStep = steps[nextStepIndex]
+          if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+            nextRoute = `${consignPath}/${submissionId}/artwork-details`
+          } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
+            nextRoute = `${consignPath}/${submissionId}/upload-photos`
+          }
+        }
+
+        if (nextRoute === consignPath) {
+          // there is no next step to go to. Prepare to go to thank you screen
+          nextRoute = `${nextRoute}/${submissionId}/thank-you`
+        }
+
+        if (artworkId) {
+          // artworkId should ever only be present for `/my-collection/submission` consign path
+          nextRoute = nextRoute + "/" + artworkId
+        }
+
+        router.push(nextRoute)
       } catch (error) {
         logger.error("Submission error", error)
 
@@ -107,18 +148,42 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     }
   }
 
+  const deriveBackLinkTo = () => {
+    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    let backTo = defaultBackLink
+    if (stepIndex === 0 && artworkId) {
+      return backTo + `/artwork/${artworkId}`
+    }
+    let prevStep = ""
+    if (stepIndex > 0) {
+      switch (steps[stepIndex - 1]) {
+        case "Artwork":
+        case "Artwork Details":
+          prevStep = "artwork-details"
+          break
+        case "Upload Photos":
+        case "Photos":
+          prevStep = "upload-photos"
+          break
+        default:
+          break
+      }
+      if (submission) {
+        backTo = backTo + `/submission/${submission.externalId}`
+      }
+    }
+    backTo = prevStep ? backTo + `/${prevStep}` : backTo
+    if (artworkId) {
+      backTo = backTo + `/${artworkId}`
+    }
+    return backTo
+  }
+
+  const backTo = deriveBackLinkTo()
+
   return (
     <>
-      <BackLink
-        py={2}
-        mb={6}
-        width="min-content"
-        to={
-          artworkId
-            ? `/my-collection/submission/${submission?.externalId}/upload-photos/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/upload-photos`
-        }
-      >
+      <BackLink py={2} mb={6} width="min-content" to={backTo}>
         Back
       </BackLink>
 
@@ -150,7 +215,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
               loading={isSubmitting}
               type="submit"
             >
-              Submit Artwork
+              {isLastStep ? "Submit Artwork" : "Save and Continue"}
             </Button>
           </Form>
         )}

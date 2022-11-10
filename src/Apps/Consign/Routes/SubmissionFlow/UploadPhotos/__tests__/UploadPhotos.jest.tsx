@@ -8,11 +8,12 @@ import { SystemContextProvider } from "System"
 jest.unmock("react-relay")
 
 const mockRouterPush = jest.fn()
+const mockRouterReplace = jest.fn()
 jest.mock("System/Router/useRouter", () => {
   return {
     useRouter: jest.fn(() => {
       return {
-        router: { push: mockRouterPush },
+        router: { push: mockRouterPush, replace: mockRouterReplace },
       }
     }),
   }
@@ -309,9 +310,9 @@ describe("UploadPhotos", () => {
     await waitFor(() => {
       expect(mockAddAsset).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: `/sell/submission/${submission.externalId}/contact-information`,
-      })
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        `/sell/submission/${submission.externalId}/contact-information`
+      )
     })
   })
 

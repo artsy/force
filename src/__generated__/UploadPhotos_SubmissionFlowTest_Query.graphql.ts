@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac4b5eb31e41b7184b24384778b08ee8>>
+ * @generated SignedSource<<cbe17241bf0372a5af9b95e4e3976ab5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,6 +108,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "userId",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "userEmail",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ConsignmentSubmissionCategoryAsset",
             "kind": "LinkedField",
             "name": "assets",
@@ -152,7 +166,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dd111c8ae0d473c5b423d2c879701d33",
+    "cacheID": "5d57347006b99f4dbc8623996a4905c3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -179,12 +193,19 @@ return {
         },
         "submission.assets.size": (v3/*: any*/),
         "submission.externalId": (v4/*: any*/),
-        "submission.id": (v4/*: any*/)
+        "submission.id": (v4/*: any*/),
+        "submission.userEmail": (v3/*: any*/),
+        "submission.userId": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "UploadPhotos_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query UploadPhotos_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(externalId: $externalId) {\n    ...UploadPhotos_submission\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query UploadPhotos_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(externalId: $externalId) {\n    ...UploadPhotos_submission\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

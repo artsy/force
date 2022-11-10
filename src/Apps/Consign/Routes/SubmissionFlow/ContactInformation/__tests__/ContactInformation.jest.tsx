@@ -242,6 +242,10 @@ describe("Contact Information step", () => {
       simulateTyping("email", "banksy@test.test")
       simulateTyping("phone", "333")
 
+      mockCreateOrUpdateConsignSubmission.mockResolvedValueOnce(
+        mockSubmission.externalId
+      )
+
       fireEvent.click(getSubmitButton())
 
       await waitFor(() => {
@@ -282,6 +286,10 @@ describe("Contact Information step", () => {
         Me: () => mockMe,
         ConsignmentSubmission: () => mockSubmission,
       })
+
+      mockCreateOrUpdateConsignSubmission.mockResolvedValueOnce(
+        mockSubmission.externalId
+      )
 
       fireEvent.click(getSubmitButton())
 
