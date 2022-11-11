@@ -35,8 +35,8 @@ export const artQuizRoutes: AppRouteConfig[] = [
             viewer {
               quizConnection {
                 completedAt
-                ...ArtQuizApp_quiz
               }
+              ...ArtQuizApp_viewer
             }
           }
         `,

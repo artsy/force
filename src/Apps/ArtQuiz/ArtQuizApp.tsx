@@ -2,14 +2,13 @@ import { ArtQuizWelcome } from "Apps/ArtQuiz/ArtQuizWelcome"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtQuizMainFragmentContainer } from "./ArtQuizMain"
-import { ArtQuizApp_quiz$data } from "__generated__/ArtQuizApp_quiz.graphql"
+import { ArtQuizApp_viewer$data } from "__generated__/ArtQuizApp_viewer.graphql"
 
 interface ArtQuizAppProps {
-  quiz: ArtQuizApp_quiz$data
+  viewer: ArtQuizApp_viewer$data
 }
 
-export const ArtQuizApp: FC<ArtQuizAppProps> = props => {
-  console.log("**************ARTQUIZAPP", props)
+export const ArtQuizApp: FC<ArtQuizAppProps> = ({ viewer }) => {
   const [startQuiz, setStartQuiz] = useState(false)
 
   const handleStartQuiz = () => {
@@ -19,7 +18,7 @@ export const ArtQuizApp: FC<ArtQuizAppProps> = props => {
   return (
     <>
       {startQuiz ? (
-        <ArtQuizMainFragmentContainer quiz={props.quiz} />
+        <ArtQuizMainFragmentContainer quiz={viewer.quizConnection} />
       ) : (
         <ArtQuizWelcome onStartQuiz={handleStartQuiz} />
       )}
@@ -28,9 +27,12 @@ export const ArtQuizApp: FC<ArtQuizAppProps> = props => {
 }
 
 export const ArtQuizAppFragmentContainer = createFragmentContainer(ArtQuizApp, {
-  quiz: graphql`
-    fragment ArtQuizApp_quiz on Quiz {
-      ...ArtQuizMain_quiz
+  viewer: graphql`
+    fragment ArtQuizApp_viewer on Viewer {
+      quizConnection {
+        completedAt
+        ...ArtQuizMain_quiz
+      }
     }
   `,
 })
