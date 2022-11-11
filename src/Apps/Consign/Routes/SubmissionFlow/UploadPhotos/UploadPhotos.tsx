@@ -129,6 +129,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
           {
             externalId: submission.externalId,
             state: "SUBMITTED",
+            sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
           }
         )
         trackEvent({
