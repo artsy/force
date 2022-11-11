@@ -4,13 +4,10 @@ import {
   Flex,
   GridColumns,
   HTML,
-  Image,
   ReadMore,
-  ResponsiveBox,
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Link } from "react-head"
 import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -19,6 +16,7 @@ import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.grap
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
+import { HeaderIcon } from "Components/HeaderIcon"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -31,19 +29,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
     artist.biographyBlurb!.credit
   )
 
-  const avatar = artist.image?.cropped
+  const avatar = artist.image?.url
 
   return (
     <>
-      {avatar && (
-        <Link
-          rel="preload"
-          as="image"
-          href={avatar.src}
-          imagesrcset={avatar.srcSet}
-        />
-      )}
-
       <Box data-test="artistHeader">
         <GridColumns gridRowGap={2}>
           <Column span={6}>
@@ -51,22 +40,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               {avatar && (
                 <Column span={2}>
                   <Flex justifyContent={["center", "left"]}>
-                    <ResponsiveBox
-                      aspectWidth={1}
-                      aspectHeight={1}
-                      maxWidth={100}
-                      borderRadius="50%"
-                      overflow="hidden"
-                      bg="black10"
-                    >
-                      <Image
-                        src={avatar.src}
-                        srcSet={avatar.srcSet}
-                        alt=""
-                        width="100%"
-                        height="100%"
-                      />
-                    </ResponsiveBox>
+                    <HeaderIcon src={avatar} />
                   </Flex>
                 </Column>
               )}
@@ -172,10 +146,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           }
         }
         image {
-          cropped(width: 100, height: 100) {
-            src
-            srcSet
-          }
+          url(version: ["large", "tall", "square"])
         }
         internalID
         slug
@@ -185,9 +156,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           follows
           forSaleArtworks
         }
-        biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
+        biographyBlurb(format: HTML, partnerBio: false) {
           credit
-          partnerID
           text
         }
       }

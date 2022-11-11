@@ -1,60 +1,31 @@
-import { MockBoot, renderRelayTree } from "DevTools"
-import { FairSubAppFragmentContainer } from "../FairSubApp"
+import { FairSubAppFragmentContainer } from "Apps/Fair/FairSubApp"
 import { graphql } from "react-relay"
-import { Title } from "react-head"
-import { FairSubApp_Query$rawResponse } from "__generated__/FairSubApp_Query.graphql"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
-const FAIR_APP_FIXTURE: FairSubApp_Query$rawResponse = {
-  fair: {
-    id: "fair12345",
-    metaDescription: null,
-    metaImage: null,
-    name: "Miart 2020",
-    profile: {
-      __typename: "Profile",
-      id: "profile",
-    },
-    slug: "miart-2020",
-  },
-}
+jest.mock("Apps/Fair/Components/FairMeta", () => ({
+  FairMetaFragmentContainer: () => null,
+}))
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: FairSubAppFragmentContainer,
+  query: graphql`
+    query FairSubApp_Query @relay_test_operation {
+      fair(id: "example") {
+        ...FairSubApp_fair
+      }
+    }
+  `,
+})
 
 describe("FairSubApp", () => {
-  const getWrapper = async (
-    response: FairSubApp_Query$rawResponse = FAIR_APP_FIXTURE
-  ) => {
-    return renderRelayTree({
-      Component: ({ fair }) => {
-        return (
-          <MockBoot>
-            <FairSubAppFragmentContainer fair={fair} />
-          </MockBoot>
-        )
-      },
-      mockData: response,
-      query: graphql`
-        query FairSubApp_Query($slug: String!)
-          @raw_response_type
-          @relay_test_operation {
-          fair(id: $slug) {
-            ...FairSubApp_fair
-          }
-        }
-      `,
-      variables: {
-        slug: "miart-2020",
-      },
+  it("displays a back button", () => {
+    renderWithRelay({
+      Fair: () => ({ name: "Example Fair" }),
     })
-  }
 
-  it("displays a back button", async () => {
-    const wrapper = await getWrapper()
-    expect(wrapper.html()).toContain("Back to Miart 2020")
-  })
-
-  it("sets a title tag", async () => {
-    const wrapper = await getWrapper()
-    expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
+    expect(screen.getByText("Back to Example Fair")).toBeInTheDocument()
   })
 })

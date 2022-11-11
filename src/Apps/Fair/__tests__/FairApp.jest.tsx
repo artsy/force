@@ -26,6 +26,8 @@ jest.mock("Utils/Hooks/useJump", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
   Component: props => {
+    if (!props.fair) return null
+
     return (
       <MockBoot
         context={{
@@ -36,8 +38,7 @@ const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
           },
         }}
       >
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <FairAppFragmentContainer {...props} />
+        <FairAppFragmentContainer fair={props.fair} />
       </MockBoot>
     )
   },
@@ -103,7 +104,7 @@ describe("FairApp", () => {
 
   it("renders the artworks tab with a count and appropriate href", () => {
     renderWithRelay({
-      Fair: () => ({ href: "/fair/miart-2020" }),
+      Fair: () => ({ href: "/fair/miart-2020", counts: { artworks: 2 } }),
     })
 
     expect(screen.getByText("Artworks")).toBeInTheDocument()

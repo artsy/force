@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48c60eaa84e0517041764e0ae0c9704a>>
+ * @generated SignedSource<<34c0cb603efcd4b14b2dae25d2e70c10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,13 @@ export type FairOverview_fair$data = {
     readonly edges: ReadonlyArray<{
       readonly __typename: "ArticleEdge";
     } | null> | null;
-    readonly totalCount: number | null;
   } | null;
   readonly href: string | null;
   readonly marketingCollections: ReadonlyArray<{
     readonly id: string;
   } | null>;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorial_fair" | "FairFollowedArtists_fair">;
+  readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorialRailArticles_fair" | "FairFollowedArtists_fair">;
   readonly " $fragmentType": "FairOverview_fair";
 };
 export type FairOverview_fair$key = {
@@ -39,7 +38,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FairEditorial_fair"
+      "name": "FairEditorialRailArticles_fair"
     },
     {
       "args": null,
@@ -92,13 +91,6 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "ArticleEdge",
           "kind": "LinkedField",
           "name": "edges",
@@ -146,6 +138,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "112a3a3be891f13c1d83a1c981c9aece";
+(node as any).hash = "1fda5e6f80a86ce85f7c32c2ce9dbbaf";
 
 export default node;

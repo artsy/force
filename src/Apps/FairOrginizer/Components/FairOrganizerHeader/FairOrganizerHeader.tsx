@@ -2,7 +2,6 @@ import * as React from "react"
 import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
-import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
 import { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
@@ -10,6 +9,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { Timer } from "Components/Timer"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { RouterLink } from "System/Router/RouterLink"
+import { HeaderIcon } from "Components/HeaderIcon"
 
 interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer$data
@@ -18,70 +18,77 @@ interface FairOrganizerHeaderProps {
 export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   fairOrganizer,
 }) => {
-  const { fairsConnection, name } = fairOrganizer
-  const fair = extractNodes(fairsConnection)[0]
+  const { fairsConnection, name, profile } = fairOrganizer
+  const [fair] = extractNodes(fairsConnection)
   const { startAt, exhibitionPeriod, href } = fair
 
   const currentTime = useCurrentTime({ syncWithServer: true })
   const fairHasNotStarted =
     DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
 
-  return (
-    <Box>
-      <Flex>
-        <RouterLink to={href} noUnderline>
-          <Flex>
-            <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
-            <Spacer mr={2} />
-            <Box>
-              <Text as="h1" variant="xl">
-                Explore {name} on Artsy
-              </Text>
-              <Text variant="xl" color="black60" mb={1}>
-                {exhibitionPeriod}
-              </Text>
-            </Box>
-          </Flex>
-        </RouterLink>
-      </Flex>
+  const avatar = profile?.icon?.url
 
-      <Spacer mt={75} />
+  return (
+    <>
+      <RouterLink to={href} noUnderline display="block">
+        <GridColumns>
+          {avatar && (
+            <Column span={[12, 12, 1]}>
+              <Flex justifyContent={["center", "center", "left"]}>
+                <HeaderIcon src={avatar} />
+              </Flex>
+            </Column>
+          )}
+
+          <Column
+            span={avatar ? [12, 12, 10] : 12}
+            textAlign={avatar ? ["center", "center", "left"] : "left"}
+          >
+            <Text as="h1" variant={["lg-display", "xl"]}>
+              Explore {name} on Artsy
+            </Text>
+
+            <Text variant={["lg-display", "xl"]} color="black60">
+              {exhibitionPeriod}
+            </Text>
+          </Column>
+        </GridColumns>
+      </RouterLink>
+
+      <Spacer mt={6} />
 
       <GridColumns>
         <Column span={6}>
-          <Flex flexDirection="column">
-            <Box>
-              {/* endAt is not passed to the Timer because this timer will only be shown
+          <Box>
+            {/* endAt is not passed to the Timer because this timer will only be shown
               before the fair starts. Therefore the timer only needs to know the length
               of time before the fair begins. The fair's end time is irrelevant. */}
-              {fairHasNotStarted && (
-                <>
-                  <Timer
-                    variant={["lg-display", "xl"]}
-                    label="Opens in:"
-                    startDate={startAt!}
-                    endDate=""
-                  />
-                  <Spacer mt={4} />
-                </>
-              )}
-            </Box>
+            {fairHasNotStarted && (
+              <>
+                <Timer
+                  variant={["lg-display", "xl"]}
+                  label="Opens in:"
+                  startDate={startAt!}
+                  endDate=""
+                />
 
-            <GridColumns>
-              <Column span={[12, 8, 6]}>
-                <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
-              </Column>
-            </GridColumns>
+                <Spacer mt={4} />
+              </>
+            )}
+          </Box>
 
-            <Spacer mt={4} />
-          </Flex>
+          <GridColumns>
+            <Column span={[12, 8, 6]}>
+              <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
+            </Column>
+          </GridColumns>
         </Column>
 
         <Column span={6}>
           <FairOrganizerInfo fairOrganizer={fairOrganizer} />
         </Column>
       </GridColumns>
-    </Box>
+    </>
   )
 }
 
@@ -100,7 +107,11 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...FairOrganizerHeaderIcon_fairOrganizer
+        profile {
+          icon {
+            url(version: ["large", "square", "square140"])
+          }
+        }
         ...FairOrganizerFollowButton_fairOrganizer
         ...FairOrganizerInfo_fairOrganizer
       }

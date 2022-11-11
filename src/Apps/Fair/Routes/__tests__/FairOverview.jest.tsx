@@ -87,9 +87,9 @@ describe("FairOverview", () => {
     const wrapper = getWrapper({
       Fair: () => ({
         href: "/fair/example",
-      }),
-      ArticleConnection: () => ({
-        totalCount: 0,
+        articlesConnection: {
+          edges: [],
+        },
       }),
     })
 

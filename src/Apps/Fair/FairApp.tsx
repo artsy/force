@@ -1,22 +1,13 @@
-import { useRef } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
-import { DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
-import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System"
-import { useTracking } from "react-tracking"
 import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "System/Analytics/AnalyticsContext"
-import {
-  ActionType,
-  ClickedNavigationTab,
-  ContextModule,
-  PageOwnerType,
-} from "@artsy/cohesion"
 import { HttpError } from "found"
 import { useRouter } from "System/Router/useRouter"
 import { userIsAdmin } from "Utils/user"
@@ -25,46 +16,17 @@ import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import styled from "styled-components"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "./Components/ExhibitorsLetterNav"
+import { FairTabsFragmentContainer } from "Apps/Fair/Components/FairTabs"
+import { Media } from "Utils/Responsive"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface FairAppProps {
   fair: FairApp_fair$data
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
-  const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-  const lastClickedTab = useRef(ContextModule.fairInfo)
   const { match } = useRouter()
-
-  const fairHref = fair.href ?? ""
-
-  const trackTabData = (
-    destinationPath: string,
-    subject: string,
-    contextModule: ContextModule
-  ) => () => {
-    const trackingData: ClickedNavigationTab = {
-      action: ActionType.clickedNavigationTab,
-      context_module: lastClickedTab.current,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: contextPageOwnerType as PageOwnerType,
-      destination_path: destinationPath,
-      subject,
-    }
-
-    lastClickedTab.current = contextModule
-
-    tracking.trackEvent(trackingData)
-  }
-
-  const artworkCount = fair.counts?.artworks ?? 0
 
   return (
     <>
@@ -72,79 +34,50 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <FairHeaderImageFragmentContainer fair={fair} />
 
-      <Spacer mt={[1, 30]} />
+      <Spacer mt={[2, 4]} />
 
-      <Sticky>
-        {({ stuck }) => {
-          return (
-            <FullBleed
-              mb={stuck ? 1 : 0}
-              backgroundColor="white100"
-              style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-            >
-              <AppContainer>
-                <HorizontalPadding>
-                  <FairHeaderFragmentContainer fair={fair} stuck={stuck} />
+      <FairHeaderFragmentContainer fair={fair} />
 
-                  <RouteTabs textAlign="center" flexGrow={1} fill>
-                    <FairRouteTab
-                      to={fairHref}
-                      exact
-                      onClick={trackTabData(
-                        fairHref,
-                        "Overview",
-                        ContextModule.fairInfo
-                      )}
-                    >
-                      Overview
-                    </FairRouteTab>
+      <Spacer mt={2} />
 
-                    <FairRouteTab
-                      to={`${fairHref}/artworks`}
-                      exact
-                      onClick={trackTabData(
-                        `${fairHref}/artworks`,
-                        "Artworks",
-                        ContextModule.artworksTab
-                      )}
-                    >
-                      Artworks
-                      <Text display="inline">&nbsp;({artworkCount})</Text>
-                    </FairRouteTab>
+      <Jump id="FairTabs" />
 
-                    <FairRouteTab
-                      to={`${fairHref}/exhibitors`}
-                      exact
-                      onClick={trackTabData(
-                        `${fairHref}/exhibitors`,
-                        "Exhibitors",
-                        ContextModule.exhibitorsTab
-                      )}
-                    >
-                      Exhibitors A-Z
-                    </FairRouteTab>
-                  </RouteTabs>
-                  {match.location.pathname.includes("/exhibitors") && (
-                    <ExhibitorsLetterNav fair={fair} />
-                  )}
-                </HorizontalPadding>
-              </AppContainer>
-            </FullBleed>
-          )
-        }}
-      </Sticky>
+      <Media greaterThan="xs">
+        <Sticky>
+          {({ stuck }) => {
+            return (
+              <Stuck stuck={stuck}>
+                <FairTabsFragmentContainer fair={fair} />
+
+                {match.location.pathname.includes("/exhibitors") && (
+                  <ExhibitorsLetterNav fair={fair} />
+                )}
+              </Stuck>
+            )
+          }}
+        </Sticky>
+      </Media>
+
+      <Media at="xs">
+        <FairTabsFragmentContainer fair={fair} />
+
+        <Sticky>
+          {({ stuck }) => {
+            return (
+              <Stuck stuck={stuck}>
+                {match.location.pathname.includes("/exhibitors") && (
+                  <ExhibitorsLetterNav fair={fair} />
+                )}
+              </Stuck>
+            )
+          }}
+        </Sticky>
+      </Media>
 
       {children}
     </>
   )
 }
-
-const FairRouteTab = styled(RouteTab).attrs({
-  variant: "sm-display",
-  alignItems: "center",
-  py: 2,
-  height: "auto",
-})``
 
 const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   const {
@@ -153,9 +86,10 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
 
   const { contextPageOwnerType } = useAnalyticsContext()
 
+  const { user } = useSystemContext()
+
   // If a fair's profile is inaccessible, that means it's private, which in turn means
   // the fair is only visible to admins.
-  const { user } = useSystemContext()
   if (!profile && !userIsAdmin(user)) {
     throw new HttpError(404)
   }
@@ -179,16 +113,13 @@ export const FairAppFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairApp_fair on Fair {
-        internalID
-        href
-        slug
+        ...FairTabs_fair
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
         ...ExhibitorsLetterNav_fair
-        counts {
-          artworks
-        }
+        internalID
+        slug
         profile {
           id
         }
@@ -196,3 +127,17 @@ export const FairAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const Stuck: React.FC<{ stuck: boolean }> = ({ stuck, children }) => {
+  return (
+    <FullBleed
+      mb={stuck ? 1 : 0}
+      backgroundColor="white100"
+      style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+    >
+      <AppContainer>
+        <HorizontalPadding>{children}</HorizontalPadding>
+      </AppContainer>
+    </FullBleed>
+  )
+}

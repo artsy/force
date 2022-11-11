@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d3d0e4053127797ee59ad294412ba93>>
+ * @generated SignedSource<<511acc11388d9919add821da6c7a70b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,12 @@ export type FairOrganizerHeader_fairOrganizer$data = {
     } | null> | null;
   } | null;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
+  readonly profile: {
+    readonly icon: {
+      readonly url: string | null;
+    } | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
   readonly " $fragmentType": "FairOrganizerHeader_fairOrganizer";
 };
 export type FairOrganizerHeader_fairOrganizer$key = {
@@ -108,9 +113,43 @@ const node: ReaderFragment = {
       "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerHeaderIcon_fairOrganizer"
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "icon",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "large",
+                    "square",
+                    "square140"
+                  ]
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:[\"large\",\"square\",\"square140\"])"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "args": null,
@@ -127,6 +166,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "75d33688c6accfce21edc2a10fc1f6ec";
+(node as any).hash = "b4e2b73a4213d8ea4b87718e8cbba060";
 
 export default node;

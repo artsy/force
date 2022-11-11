@@ -1,4 +1,4 @@
-import { FairArticlesPaginationContainer } from "../FairArticles"
+import { FairArticlesPaginationContainer } from "Apps/Fair/Routes/FairArticles"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
@@ -7,29 +7,26 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper({
   Component: FairArticlesPaginationContainer,
   query: graphql`
-    query FairArticles_test_Query($id: String!, $first: Int!, $after: String)
+    query FairArticles_test_Query($id: String!, $page: Int!)
       @relay_test_operation {
       fair(id: $id) {
-        ...FairArticles_fair @arguments(first: $first, after: $after)
+        ...FairArticles_fair @arguments(page: $page)
       }
     }
   `,
-  variables: {
-    id: "example",
-    first: 10,
-  },
 })
 
 describe("FairArticles", () => {
   it("renders the articles", () => {
     const wrapper = getWrapper({
-      Article: () => ({ title: "Example Article" }),
-      Author: () => ({ name: "Example Author" }),
+      Article: () => ({
+        thumbnailTitle: "Example Article",
+        byline: "Example Author",
+      }),
     })
 
     const html = wrapper.html()
 
-    expect(wrapper.find("h1")).toHaveLength(1)
     expect(html).toContain("Example Article")
     expect(html).toContain("Example Author")
   })

@@ -1,83 +1,41 @@
 import * as React from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import { BoxProps, Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair$data } from "__generated__/FairHeader_fair.graphql"
-import { ProfileIcon } from "Components/ProfileIcon"
-import styled from "styled-components"
-import { growAndFadeIn, shrinkAndFadeOut } from "Utils/animations"
-import { Media } from "Utils/Responsive"
-
-const SUBTITLE_HEIGHT = "38px"
+import { HeaderIcon } from "Components/HeaderIcon"
 
 interface FairHeaderProps extends BoxProps {
-  stuck?: boolean
   fair: FairHeader_fair$data
 }
 
-// FIXME:
-// - Fix initial layout shift
-// - Avoid animating height
-const FadingText = styled(Text)<{ show: boolean }>`
-  transform-origin: 0 0;
-  transform: ${p => `scale(${+p.show})`};
-  transition: transform 0.2s;
-  opacity: ${p => +p.show};
-  height: ${p => (p.show ? SUBTITLE_HEIGHT : 0)};
-  animation: ${p =>
-      p.show
-        ? growAndFadeIn(SUBTITLE_HEIGHT)
-        : shrinkAndFadeOut(SUBTITLE_HEIGHT)}
-    0.1s linear;
-`
-
-const ScalingText = styled(Text)<{ stuck: boolean }>`
-  transform-origin: 0 0;
-  transform: ${p => `scale(${p.stuck ? 0.7 : 1})`};
-  transition: transform 0.2s;
-`
-
-const Title: React.FC<{ title: string | null; stuck: boolean }> = ({
-  title,
-  stuck,
-}) => {
-  return (
-    <>
-      <Media greaterThanOrEqual="md">
-        <ScalingText as="h1" variant="xl" stuck={stuck}>
-          {title}
-        </ScalingText>
-      </Media>
-
-      <Media lessThan="md">
-        <Text as="h1" variant="lg-display">
-          {title}
-        </Text>
-      </Media>
-    </>
-  )
-}
-
-const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
+const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   const { name, exhibitionPeriod, profile } = fair
 
+  const avatar = profile?.icon?.url
+
   return (
-    <Box p={0} py={1} display="flex" flexDirection="row">
-      <ProfileIcon
-        profile={{ icon: profile?.icon, name: name! }}
-        stuck={stuck}
-        mr={2}
-      />
-      <Box display="flex" flexDirection="column" justifyContent="flex-start">
-        <Title title={name} stuck={stuck} />
-        <FadingText
-          show={!stuck}
-          variant={["lg-display", "xl"]}
-          color="black60"
-        >
+    <GridColumns>
+      {avatar && (
+        <Column span={[12, 12, 1]}>
+          <Flex justifyContent={["center", "center", "left"]}>
+            <HeaderIcon src={avatar} />
+          </Flex>
+        </Column>
+      )}
+
+      <Column
+        span={avatar ? [12, 12, 10] : 12}
+        textAlign={avatar ? ["center", "center", "left"] : "left"}
+      >
+        <Text as="h1" variant={["lg-display", "xl"]}>
+          {name}
+        </Text>
+
+        <Text variant={["lg-display", "xl"]} color="black60">
           {exhibitionPeriod}
-        </FadingText>
-      </Box>
-    </Box>
+        </Text>
+      </Column>
+    </GridColumns>
   )
 }
 
@@ -88,23 +46,7 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
       exhibitionPeriod
       profile {
         icon {
-          desktop: cropped(width: 80, height: 80, version: "square140") {
-            src
-            srcSet
-            size: width
-          }
-
-          mobile: cropped(width: 60, height: 60, version: "square140") {
-            src
-            srcSet
-            size: width
-          }
-
-          sticky: cropped(width: 50, height: 50, version: "square140") {
-            src
-            srcSet
-            size: width
-          }
+          url(version: ["large", "square", "square140"])
         }
       }
     }

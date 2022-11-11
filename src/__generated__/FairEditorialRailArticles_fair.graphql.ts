@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e0479d5d71ac5f4d38e456b1bd48791>>
+ * @generated SignedSource<<734bc8e1132b64beec5c61812c77805b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,9 @@ export type FairEditorialRailArticles_fair$data = {
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
+  readonly href: string | null;
   readonly " $fragmentType": "FairEditorialRailArticles_fair";
 };
 export type FairEditorialRailArticles_fair$key = {
@@ -33,6 +35,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FairEditorialRailArticles_fair",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -52,6 +61,13 @@ const node: ReaderFragment = {
       "name": "articlesConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -101,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "30676188c1197d7f9f369fc18a86211c";
+(node as any).hash = "ca0f9aea8f020b7021a699f1f2f122e0";
 
 export default node;

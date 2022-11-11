@@ -85,6 +85,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
       to={`/collection/${collection.slug}`}
       noUnderline
       onClick={() => tracking.trackEvent(collectionTrackingData)}
+      display="block"
     >
       <TriptychCard
         width={CARD_WIDTH}

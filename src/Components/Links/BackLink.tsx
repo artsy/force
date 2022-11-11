@@ -19,6 +19,9 @@ const Container = styled(StyledLink)`
   ${boxMixin}
 `
 
+/**
+ * @deprecated Use `TopContextBar` instead
+ */
 export const BackLink: React.FC<BackLinkProps> = ({
   children,
   to,

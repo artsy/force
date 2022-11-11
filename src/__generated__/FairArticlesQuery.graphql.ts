@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c3e84b37ed58f4fe3b01c5aee21a404>>
+ * @generated SignedSource<<a6ca718e3016e372bb3250ebc152d6f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairArticlesQuery$variables = {
-  after?: string | null;
-  first: number;
   id: string;
+  page?: number | null;
 };
 export type FairArticlesQuery$data = {
   readonly fair: {
@@ -26,98 +25,81 @@ export type FairArticlesQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v4 = [
+v2 = {
+  "kind": "Variable",
+  "name": "page",
+  "variableName": "page"
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+},
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/),
   {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
+    "storageKey": null
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v6 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
+};
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
           {
-            "args": (v4/*: any*/),
+            "args": [
+              (v2/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "FairArticles_fair"
           }
@@ -130,17 +112,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -155,7 +133,14 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": [
+              (v2/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 12
+              }
+            ],
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -164,8 +149,73 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageCursors",
+                "kind": "LinkedField",
+                "name": "pageCursors",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "around",
+                    "plural": true,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "first",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "last",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "previous",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               },
               {
@@ -188,7 +238,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "vertical",
                         "storageKey": null
                       },
                       {
@@ -202,26 +252,21 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
+                        "name": "thumbnailTitle",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          (v5/*: any*/)
-                        ],
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
                         "storageKey": null
                       },
                       {
@@ -230,19 +275,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "format",
-                            "value": "MMM Do, YYYY"
+                            "value": "MMM D, YYYY"
                           }
                         ],
                         "kind": "ScalarField",
                         "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "thumbnailTitle",
-                        "storageKey": null
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -253,91 +291,67 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "large",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 550
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 733
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v6/*: any*/),
-                            "storageKey": "cropped(height:550,width:733)"
-                          },
-                          {
-                            "alias": "medium",
-                            "args": [
+                            "selections": [
                               {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 150
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
                               },
                               {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 267
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
                               }
                             ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v6/*: any*/),
-                            "storageKey": "cropped(height:150,width:267)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "__typename",
+                        "name": "internalID",
                         "storageKey": null
-                      }
+                      },
+                      (v6/*: any*/)
                     ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
                     "storageKey": null
                   }
                 ],
@@ -346,32 +360,23 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": (v4/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "FairArticlesQuery_articlesConnection",
-            "kind": "LinkedHandle",
-            "name": "articlesConnection"
-          },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "877fd2a14419ca816da7e668177b8678",
+    "cacheID": "e0f06f0e271453f3ee958dc77090d09a",
     "id": null,
     "metadata": {},
     "name": "FairArticlesQuery",
     "operationKind": "query",
-    "text": "query FairArticlesQuery(\n  $id: String!\n  $first: Int!\n  $after: String\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2HEEH6\n    id\n  }\n}\n\nfragment FairArticles_fair_2HEEH6 on Fair {\n  slug\n  articlesConnection(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 733, height: 550) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 267, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairArticlesQuery(\n  $id: String!\n  $page: Int\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairArticles_fair_2Pg8Wv on Fair {\n  slug\n  articlesConnection(page: $page, size: 12) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5a9982ee74c4d5ce1c506901a7d83f3c";
+(node as any).hash = "3e26a081d8d5bef60c64073293111056";
 
 export default node;

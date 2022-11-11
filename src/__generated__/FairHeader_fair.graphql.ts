@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f8e98049a537846b0d2dbc3d49902e7>>
+ * @generated SignedSource<<210ee4592e3bd6f31efcc9aa83b2e0d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,21 +15,7 @@ export type FairHeader_fair$data = {
   readonly name: string | null;
   readonly profile: {
     readonly icon: {
-      readonly desktop: {
-        readonly size: number;
-        readonly src: string;
-        readonly srcSet: string;
-      } | null;
-      readonly mobile: {
-        readonly size: number;
-        readonly src: string;
-        readonly srcSet: string;
-      } | null;
-      readonly sticky: {
-        readonly size: number;
-        readonly src: string;
-        readonly srcSet: string;
-      } | null;
+      readonly url: string | null;
     } | null;
   } | null;
   readonly " $fragmentType": "FairHeader_fair";
@@ -39,36 +25,7 @@ export type FairHeader_fair$key = {
   readonly " $fragmentSpreads": FragmentRefs<"FairHeader_fair">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  },
-  {
-    "alias": "size",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -105,70 +62,21 @@ return {
           "plural": false,
           "selections": [
             {
-              "alias": "desktop",
+              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
-                  "name": "height",
-                  "value": 80
-                },
-                (v0/*: any*/),
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 80
+                  "name": "version",
+                  "value": [
+                    "large",
+                    "square",
+                    "square140"
+                  ]
                 }
               ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": "cropped(height:80,version:\"square140\",width:80)"
-            },
-            {
-              "alias": "mobile",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 60
-                },
-                (v0/*: any*/),
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 60
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-            },
-            {
-              "alias": "sticky",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 50
-                },
-                (v0/*: any*/),
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 50
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": "cropped(height:50,version:\"square140\",width:50)"
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": "url(version:[\"large\",\"square\",\"square140\"])"
             }
           ],
           "storageKey": null
@@ -180,8 +88,7 @@ return {
   "type": "Fair",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "099d89164e6ab5f5948b117e20784616";
+(node as any).hash = "f406737327f57215c5b236b25647ec44";
 
 export default node;
