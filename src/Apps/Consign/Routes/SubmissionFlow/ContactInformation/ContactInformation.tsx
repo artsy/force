@@ -1,4 +1,4 @@
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Button, Text, useToasts } from "@artsy/palette"
 import {
   SubmissionStepper,
@@ -104,7 +104,14 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           })
         }
 
-        // TODO:- Track ContactInformation step
+        trackEvent({
+          action: ActionType.contactInformationCompleted,
+          context_owner_type: OwnerType.consignmentFlow,
+          context_module: ContextModule.contactInformation,
+          submission_id: submissionId,
+          user_id: me?.internalID,
+          user_email: submissionEmail ?? me?.email,
+        })
 
         router.replace(artworkId ? "/settings/my-collection" : "/sell")
 
