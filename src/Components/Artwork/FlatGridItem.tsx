@@ -136,7 +136,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         title
         image_title: imageTitle
         image {
-          resized(width: 445, version: ["normalized", "larger", "large"]) {
+          resized(width: 445, version: ["larger", "large"]) {
             src
             srcSet
             width

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dfb9e76e957a5f5c1b5e22556435bad>>
+ * @generated SignedSource<<41a8a68ded5e944476bb6693709016b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -209,7 +209,6 @@ return {
                             "kind": "Literal",
                             "name": "version",
                             "value": [
-                              "normalized",
                               "larger",
                               "large"
                             ]
@@ -240,7 +239,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
+                        "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                       }
                     ],
                     "storageKey": null
@@ -272,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1491bbd64b0b288ba50a1da1e64bf892",
+    "cacheID": "e72caa7af7d6de95ece6249a273e52cd",
     "id": null,
     "metadata": {},
     "name": "InstitutionPartnershipsShowsQuery",
     "operationKind": "query",
-    "text": "query InstitutionPartnershipsShowsQuery {\n  orderedSet(id: \"62acd180259556000cd9991f\") {\n    ...InstitutionPartnershipsShows_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment InstitutionPartnershipsShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...CellShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query InstitutionPartnershipsShowsQuery {\n  orderedSet(id: \"62acd180259556000cd9991f\") {\n    ...InstitutionPartnershipsShows_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment InstitutionPartnershipsShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...CellShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

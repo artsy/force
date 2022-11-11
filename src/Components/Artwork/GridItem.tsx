@@ -243,7 +243,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         imageTitle
         image {
           placeholder
-          url(version: ["normalized", "larger", "large"])
+          url(version: ["larger", "large"])
           aspectRatio
         }
         artistNames
