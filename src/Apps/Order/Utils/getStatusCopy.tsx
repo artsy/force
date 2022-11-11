@@ -1,9 +1,12 @@
-import { Spacer } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
 interface StatusPageConfig {
   title?: React.ReactNode
   description?: React.ReactNode
+  alertMessageTitle?: string | null
+  alertMessage?: React.ReactNode
+  content?: React.ReactNode
   // default showTransactionSummary is true
   showTransactionSummary?: boolean
 }
@@ -14,6 +17,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
   }
 
   const {
+    paymentMethod,
     displayState,
     state,
     requestedFulfillment,
@@ -25,6 +29,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
   const isPickup = requestedFulfillment?.__typename === "CommercePickup"
   const isArtaShipped: boolean =
     requestedFulfillment?.__typename === "CommerceShipArta"
+  const isWireTransfer = paymentMethod === "WIRE_TRANSFER"
 
   switch (displayState) {
     case "SUBMITTED":
@@ -71,13 +76,70 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
       }
     case "PROCESSING_APPROVAL":
       return {
-        title: `${approvedTitle(isOfferFlow)}. Payment processing.`,
-        description: (
+        title: `${processingApprovalTitle(isOfferFlow, isWireTransfer)}`,
+        description: isWireTransfer ? null : (
           <>
             Thank you for your purchase. {deliverText(order)}More delivery
             information will be available once your order ships.
           </>
         ),
+        alertMessageTitle: isWireTransfer
+          ? "Please proceed with the wire transfer to complete your purchase"
+          : null,
+        alertMessage: isWireTransfer ? (
+          <>
+            <Text>
+              Please provide your proof of payment within 7 days. After this
+              period, your order will be eligible for cancellation by the
+              gallery.
+            </Text>
+            <Spacer mt={2} />
+            <Text>
+              1. &nbsp; Find the order total and Artsy’s banking details below.
+            </Text>
+            <Text>
+              2. &nbsp;Please inform your bank that you will be responsible for
+              all wire transfer fees.
+            </Text>
+            <Text>
+              3. &nbsp;Once you have made the transfer, please email
+              orders@artsy.net with your proof of payment.
+            </Text>
+          </>
+        ) : null,
+        content: isWireTransfer ? (
+          <>
+            <Text
+              variant={["xs", "sm-display"]}
+              fontWeight="bold"
+              color="black100"
+            >
+              Send wire transfer to
+            </Text>
+            <Spacer mt={1} />
+            <Text>Account name: Art.sy Inc.</Text>
+            <Text>Account number: 4243851425</Text>
+            <Text>Routing number: 121000248</Text>
+            <Text>International SWIFT: WFBIUS6S</Text>
+            <Spacer mt={2} />
+            <Text
+              variant={["xs", "sm-display"]}
+              fontWeight="bold"
+              color="black100"
+            >
+              Bank address
+            </Text>
+            <Spacer mt={1} />
+            <Text>Wells Fargo Bank, N.A.</Text>
+            <Text>420 Montgomery Street</Text>
+            <Text>San Francisco, CA 9410</Text>
+            <Spacer mt={2} />
+            <Text fontStyle="italic">
+              Add order number #{order.code} to the notes section in your wire
+              transfer.
+            </Text>
+          </>
+        ) : null,
       }
     case "IN_TRANSIT":
       return {
@@ -275,6 +337,21 @@ export const continueToInboxText =
 
 export const approvedTitle = (isOfferFlow): string => {
   return isOfferFlow ? "Offer accepted" : "Your order is confirmed"
+}
+
+export const processingApprovalTitle = (
+  isOfferFlow,
+  isWireTransfer
+): string => {
+  if (isWireTransfer) {
+    return isOfferFlow
+      ? "Thank you, your offer has been accepted"
+      : "Thank you, your order has been accepted"
+  }
+
+  return isOfferFlow
+    ? "Offer accepted. Payment processing."
+    : "Your order is confirmed. Payment processing."
 }
 
 export const deliverText = (order): React.ReactNode => {
