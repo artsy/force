@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d7394fe059492a5a89ab616e5590f21>>
+ * @generated SignedSource<<83230ac7f0738a5d21b56ddf0a812344>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,69 +30,23 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  },
-  {
-    "alias": "size",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  }
-],
-v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CroppedImageUrl"
-},
-v7 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -166,86 +120,37 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "desktop",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
-                        "name": "height",
-                        "value": 80
-                      },
-                      (v1/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 80
+                        "name": "version",
+                        "value": [
+                          "large",
+                          "square",
+                          "square140"
+                        ]
                       }
                     ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:80,version:\"square140\",width:80)"
-                  },
-                  {
-                    "alias": "mobile",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 60
-                      },
-                      (v1/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 60
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-                  },
-                  {
-                    "alias": "sticky",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 50
-                      },
-                      (v1/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 50
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:50,version:\"square140\",width:50)"
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:[\"large\",\"square\",\"square140\"])"
                   }
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "fair(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "8349d265a9eecfe9bbfe968af32acedc",
+    "cacheID": "8a444827b4f6c1e46a3a254e7fba0735",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -255,9 +160,9 @@ return {
           "plural": false,
           "type": "Fair"
         },
-        "fair.exhibitionPeriod": (v4/*: any*/),
-        "fair.id": (v5/*: any*/),
-        "fair.name": (v4/*: any*/),
+        "fair.exhibitionPeriod": (v2/*: any*/),
+        "fair.id": (v3/*: any*/),
+        "fair.name": (v2/*: any*/),
         "fair.profile": {
           "enumValues": null,
           "nullable": true,
@@ -270,24 +175,13 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "fair.profile.icon.desktop": (v6/*: any*/),
-        "fair.profile.icon.desktop.size": (v7/*: any*/),
-        "fair.profile.icon.desktop.src": (v8/*: any*/),
-        "fair.profile.icon.desktop.srcSet": (v8/*: any*/),
-        "fair.profile.icon.mobile": (v6/*: any*/),
-        "fair.profile.icon.mobile.size": (v7/*: any*/),
-        "fair.profile.icon.mobile.src": (v8/*: any*/),
-        "fair.profile.icon.mobile.srcSet": (v8/*: any*/),
-        "fair.profile.icon.sticky": (v6/*: any*/),
-        "fair.profile.icon.sticky.size": (v7/*: any*/),
-        "fair.profile.icon.sticky.src": (v8/*: any*/),
-        "fair.profile.icon.sticky.srcSet": (v8/*: any*/),
-        "fair.profile.id": (v5/*: any*/)
+        "fair.profile.icon.url": (v2/*: any*/),
+        "fair.profile.id": (v3/*: any*/)
       }
     },
     "name": "FairHeader_Test_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      sticky: cropped(width: 50, height: 50, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n"
   }
 };
 })();

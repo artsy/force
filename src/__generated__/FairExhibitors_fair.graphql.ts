@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40ec1b22e0e06e7069072b6ffcf0e026>>
+ * @generated SignedSource<<40d47abfe861e5186daa445e7f3e0cbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,11 @@ const node: ReaderFragment = {
       "plural": true,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FairExhibitorsGroup_exhibitorsGroup"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
@@ -69,11 +74,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FairExhibitorsGroup_exhibitorsGroup"
         }
       ],
       "storageKey": null
@@ -83,6 +83,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "00d47bea3a122986accc34e930ea2698";
+(node as any).hash = "235c1381aa13a8c7187aae90fca97fbe";
 
 export default node;

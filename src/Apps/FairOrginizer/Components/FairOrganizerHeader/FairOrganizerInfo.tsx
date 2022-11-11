@@ -1,6 +1,5 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Join, Spacer } from "@artsy/palette"
 import { InfoSection } from "Components/InfoSection"
 import { FairOrganizerInfo_fairOrganizer$data } from "__generated__/FairOrganizerInfo_fairOrganizer.graphql"
 import styled from "styled-components"
@@ -14,14 +13,13 @@ export const FairOrganizerInfo: React.FC<FairOrganizerInfoProps> = ({
   fairOrganizer,
 }) => {
   const { about } = fairOrganizer
+
+  if (!about) return null
+
   return (
-    <Join separator={<Spacer mt={2} />}>
-      {about && (
-        <InfoSectionContainer>
-          <InfoSection type="html" label="About" info={about} />
-        </InfoSectionContainer>
-      )}
-    </Join>
+    <InfoSectionContainer>
+      <InfoSection type="html" label="About" info={about} />
+    </InfoSectionContainer>
   )
 }
 

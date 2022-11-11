@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0715ea0471ebc31c07fffc163be661ef>>
+ * @generated SignedSource<<8eb30f15a10f30a92a72a4f905c8eea4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -135,6 +135,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -157,12 +164,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0242be2ecc4b45387e73bb12f0850028",
+    "cacheID": "c457febfab1d8f097ec58370683ef5b6",
     "id": null,
     "metadata": {},
     "name": "fairRoutes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  slug\n  profile {\n    __typename\n    id\n  }\n}\n"
+    "text": "query fairRoutes_FairSubAppQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  href\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();

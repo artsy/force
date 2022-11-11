@@ -1,8 +1,12 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { FairHeaderFragmentContainer } from "../FairHeader"
+import { FairHeaderFragmentContainer } from "Apps/Fair/Components/FairHeader"
 
 jest.unmock("react-relay")
+
+jest.mock("Components/HeaderIcon", () => ({
+  HeaderIcon: () => null,
+}))
 
 const { getWrapper } = setupTestWrapper({
   Component: FairHeaderFragmentContainer,

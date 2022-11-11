@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4ddb1cb3b77a1339a174dd583067b15>>
+ * @generated SignedSource<<5260507723c5ddb1d49a25093d13630e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,12 +53,6 @@ v4 = {
   "nullable": true,
   "plural": false,
   "type": "FormattedNumber"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -244,36 +238,17 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
-                    "name": "height",
-                    "value": 100
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 100
+                    "name": "version",
+                    "value": [
+                      "large",
+                      "tall",
+                      "square"
+                    ]
                   }
                 ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "cropped(height:100,width:100)"
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:[\"large\",\"tall\",\"square\"])"
               }
             ],
             "storageKey": null
@@ -361,13 +336,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "partnerID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "text",
                 "storageKey": null
               }
@@ -381,7 +349,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2fdcafd1902db2c721323ca68aa7f825",
+    "cacheID": "6212194dd0253208aabdeb488df71816",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -426,7 +394,6 @@ return {
           "type": "ArtistBlurb"
         },
         "artist.biographyBlurb.credit": (v3/*: any*/),
-        "artist.biographyBlurb.partnerID": (v3/*: any*/),
         "artist.biographyBlurb.text": (v3/*: any*/),
         "artist.counts": {
           "enumValues": null,
@@ -444,14 +411,7 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "artist.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "artist.image.cropped.src": (v5/*: any*/),
-        "artist.image.cropped.srcSet": (v5/*: any*/),
+        "artist.image.url": (v3/*: any*/),
         "artist.insightPills": {
           "enumValues": null,
           "nullable": false,
@@ -474,7 +434,12 @@ return {
           "plural": false,
           "type": "ArtistInsightKind"
         },
-        "artist.insightPills.label": (v5/*: any*/),
+        "artist.insightPills.label": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
         "artist.internalID": (v2/*: any*/),
         "artist.name": (v3/*: any*/),
         "artist.slug": (v2/*: any*/)
@@ -482,7 +447,7 @@ return {
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  ...ArtistInsightPills_artist\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightPills: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  ...ArtistInsightPills_artist\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    url(version: [\"large\", \"tall\", \"square\"])\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    text\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightPills: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n  }\n}\n"
   }
 };
 })();

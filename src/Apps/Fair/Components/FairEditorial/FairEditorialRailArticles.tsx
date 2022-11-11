@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorialRailArticles_fair.graphql"
-import { Shelf } from "@artsy/palette"
+import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
 import { useAnalyticsContext } from "System"
@@ -12,6 +12,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { RouterLink } from "System/Router/RouterLink"
 
 export interface FairBoothRailArtworksProps {
   fair: FairEditorialRailArticles_fair$data
@@ -31,32 +32,46 @@ const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
   const articles = extractNodes(fair.articlesConnection)
 
   return (
-    <Shelf alignItems="flex-start">
-      {articles.map(article => {
-        const clickedArticleTrackingData: ClickedArticleGroup = {
-          context_module: ContextModule.relatedArticles,
-          context_page_owner_type: contextPageOwnerType!,
-          context_page_owner_id: contextPageOwnerId,
-          context_page_owner_slug: contextPageOwnerSlug,
-          destination_page_owner_type: OwnerType.article,
-          destination_page_owner_id: article.internalID,
-          destination_page_owner_slug: article.slug!,
-          type: "thumbnail",
-          action: ActionType.clickedArticleGroup,
-        }
+    <>
+      <Flex justifyContent="space-between" alignItems="center">
+        <Text variant="lg-display" as="h3">
+          Explore Further
+        </Text>
 
-        return (
-          <CellArticleFragmentContainer
-            key={article.internalID}
-            article={article}
-            displayByline={false}
-            onClick={() => {
-              tracking.trackEvent(clickedArticleTrackingData)
-            }}
-          />
-        )
-      })}
-    </Shelf>
+        <Text variant="sm">
+          <RouterLink to={`${fair.href}/articles`}>View all</RouterLink>
+        </Text>
+      </Flex>
+
+      <Spacer mt={4} />
+
+      <Shelf alignItems="flex-start">
+        {articles.map(article => {
+          const clickedArticleTrackingData: ClickedArticleGroup = {
+            context_module: ContextModule.relatedArticles,
+            context_page_owner_type: contextPageOwnerType!,
+            context_page_owner_id: contextPageOwnerId,
+            context_page_owner_slug: contextPageOwnerSlug,
+            destination_page_owner_type: OwnerType.article,
+            destination_page_owner_id: article.internalID,
+            destination_page_owner_slug: article.slug!,
+            type: "thumbnail",
+            action: ActionType.clickedArticleGroup,
+          }
+
+          return (
+            <CellArticleFragmentContainer
+              key={article.internalID}
+              article={article}
+              displayByline={false}
+              onClick={() => {
+                tracking.trackEvent(clickedArticleTrackingData)
+              }}
+            />
+          )
+        })}
+      </Shelf>
+    </>
   )
 }
 
@@ -65,7 +80,9 @@ export const FairEditorialRailArticlesFragmentContainer = createFragmentContaine
   {
     fair: graphql`
       fragment FairEditorialRailArticles_fair on Fair {
+        href
         articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
+          totalCount
           edges {
             node {
               ...CellArticle_article

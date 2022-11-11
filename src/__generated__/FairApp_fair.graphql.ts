@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a20f7d275332962f52b5a4eca05dca0>>
+ * @generated SignedSource<<69356b771541fff73f0478875a32e083>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairApp_fair$data = {
-  readonly counts: {
-    readonly artworks: any | null;
-  } | null;
-  readonly href: string | null;
   readonly internalID: string;
   readonly profile: {
     readonly id: string;
   } | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairMeta_fair">;
+  readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairMeta_fair" | "FairTabs_fair">;
   readonly " $fragmentType": "FairApp_fair";
 };
 export type FairApp_fair$key = {
@@ -35,25 +31,9 @@ const node: ReaderFragment = {
   "name": "FairApp_fair",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "FairTabs_fair"
     },
     {
       "args": null,
@@ -78,19 +58,15 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "FairCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworks",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -116,6 +92,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2228432f7f50a07519a6d0bd2144be63";
+(node as any).hash = "80f839ebe021f81e3d289987060a9f2b";
 
 export default node;

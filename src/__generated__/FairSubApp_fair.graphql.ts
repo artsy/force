@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<046edc9fab39bb914eb89561d4f68266>>
+ * @generated SignedSource<<3a33733c994168a075393ef01afc2385>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairSubApp_fair$data = {
+  readonly href: string | null;
   readonly id: string;
   readonly name: string | null;
   readonly profile: {
     readonly __typename: "Profile";
   } | null;
-  readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FairMeta_fair">;
   readonly " $fragmentType": "FairSubApp_fair";
 };
@@ -54,7 +54,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -80,6 +80,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6e764f17377d6510ad976161b446cef9";
+(node as any).hash = "8800fcf01337098f990219c0fee9f38e";
 
 export default node;

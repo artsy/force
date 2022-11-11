@@ -77,7 +77,7 @@ interface LetterProps extends BoxProps {
 }
 
 const Letter: React.FC<LetterProps> = ({ letter, isEnabled, ...rest }) => {
-  const { jumpTo } = useJump()
+  const { jumpTo } = useJump({ offset: 10 })
 
   const sectionLabel =
     letter === "#" ? "special character or number" : `“${letter}”`

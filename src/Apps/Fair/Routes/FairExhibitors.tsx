@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, Join, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair$data } from "__generated__/FairExhibitors_fair.graphql"
-import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "Apps/Fair/Components/FairExhibitors"
+import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors"
 import { getExhibitorSectionId } from "Apps/Fair/Utils/getExhibitorSectionId"
 import { useRouter } from "System/Router/useRouter"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -30,31 +30,36 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
     }
   }, [focusedExhibitorID, jumpTo])
 
+  if (!fair.exhibitorsGroupedByName?.length) return null
+
   return (
     <>
       <Spacer mt={4} />
 
-      {fair.exhibitorsGroupedByName?.map(exhibitorsGroup => {
-        const { letter } = exhibitorsGroup!
-        if (!exhibitorsGroup?.exhibitors?.length || !letter) {
-          return null
-        }
+      <Join separator={<Spacer mt={4} />}>
+        {fair.exhibitorsGroupedByName.map(exhibitorsGroup => {
+          if (!exhibitorsGroup?.exhibitors?.length || !exhibitorsGroup.letter) {
+            return null
+          }
 
-        return (
-          <Jump id={getExhibitorSectionId(letter)}>
-            <Box key={letter}>
-              <Text variant="lg-display" my={4}>
-                {letter}
-              </Text>
+          const letter = exhibitorsGroup.letter
 
-              <FairExhibitorsGroup
-                exhibitorsGroup={exhibitorsGroup}
-                fair={fair}
-              />
-            </Box>
-          </Jump>
-        )
-      })}
+          return (
+            <Jump id={getExhibitorSectionId(letter)}>
+              <Box key={letter}>
+                <Text variant="lg-display">{letter}</Text>
+
+                <Spacer mt={4} />
+
+                <FairExhibitorsGroupFragmentContainer
+                  exhibitorsGroup={exhibitorsGroup}
+                  fair={fair}
+                />
+              </Box>
+            </Jump>
+          )
+        })}
+      </Join>
     </>
   )
 }
@@ -66,11 +71,11 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
       fragment FairExhibitors_fair on Fair {
         ...FairExhibitorsGroup_fair
         exhibitorsGroupedByName {
+          ...FairExhibitorsGroup_exhibitorsGroup
           letter
           exhibitors {
             partnerID
           }
-          ...FairExhibitorsGroup_exhibitorsGroup
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<450884686bb80a0dcb8fa1c9e264e80d>>
+ * @generated SignedSource<<9ab0e25734c24b6f6446da79c6bde08c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,6 @@ export type ArtistHeader_artist$data = {
   } | null;
   readonly biographyBlurb: {
     readonly credit: string | null;
-    readonly partnerID: string | null;
     readonly text: string | null;
   } | null;
   readonly counts: {
@@ -33,10 +32,7 @@ export type ArtistHeader_artist$data = {
   } | null;
   readonly formattedNationalityAndBirthday: string | null;
   readonly image: {
-    readonly cropped: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
+    readonly url: string | null;
   } | null;
   readonly internalID: string;
   readonly name: string | null;
@@ -166,36 +162,17 @@ const node: ReaderFragment = {
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 100
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 100
+              "name": "version",
+              "value": [
+                "large",
+                "tall",
+                "square"
+              ]
             }
           ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:100,width:100)"
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"large\",\"tall\",\"square\"])"
         }
       ],
       "storageKey": null
@@ -283,13 +260,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "partnerID",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "text",
           "storageKey": null
         }
@@ -301,6 +271,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "d9833c585f9a1ef55d8441d9a27ef44d";
+(node as any).hash = "a21727e985c7ec956a2828d1ef5abe1d";
 
 export default node;

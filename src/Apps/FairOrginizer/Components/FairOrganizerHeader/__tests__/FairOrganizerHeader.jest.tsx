@@ -1,9 +1,13 @@
 import { graphql } from "react-relay"
 import { DateTime } from "luxon"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { FairOrganizerHeaderFragmentContainer } from "../FairOrganizerHeader"
+import { FairOrganizerHeaderFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerHeader/FairOrganizerHeader"
 
 jest.unmock("react-relay")
+
+jest.mock("Components/HeaderIcon", () => ({
+  HeaderIcon: () => "HeaderIcon",
+}))
 
 const { getWrapper } = setupTestWrapper({
   Component: FairOrganizerHeaderFragmentContainer,
@@ -23,6 +27,7 @@ describe("FairOrganizerHeader", () => {
         href: "fair/art-paris-2020",
       }),
     })
+
     expect(wrapper.find("RouterLink").length).toBe(1)
     expect(wrapper.find("RouterLink").prop("to")).toEqual("fair/art-paris-2020")
   })
@@ -38,7 +43,7 @@ describe("FairOrganizerHeader", () => {
 
   it("displays icon, follow button, and info", () => {
     const wrapper = getWrapper({})
-    expect(wrapper.find("FairOrganizerHeaderIcon").length).toBe(1)
+    expect(wrapper.html()).toContain("HeaderIcon")
     expect(wrapper.find("FairOrganizerFollowButton").length).toBe(1)
     expect(wrapper.find("FairOrganizerInfo").length).toBe(1)
   })
