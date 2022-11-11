@@ -87,7 +87,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
                 <Box
                   border="1px solid #D8D8D8"
                   flexDirection="column"
-                  padding={20}
+                  padding={2}
                 >
                   {content}
                 </Box>
