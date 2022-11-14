@@ -3,17 +3,34 @@ import {
   PhoneNumberInput,
   PhoneNumberInputProps,
 } from "Components/PhoneNumberInput/PhoneNumberInput"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
 import { Input, Select } from "@artsy/palette"
 
-const handlePhoneNumberChange = jest.fn()
+jest.mock("react-relay")
+
+jest.mock("System/useSystemContext", () => ({
+  useSystemContext: jest.fn().mockReturnValue({ relayEnvironment: {} }),
+}))
+
+jest.mock("../getPhoneNumberInformation", () => ({
+  ...jest.requireActual("../getPhoneNumberInformation"),
+  getPhoneNumberInformation: jest.fn(),
+}))
+
+const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
+
+const mockOnPhoneNumberValidation = jest.fn()
+
+const mockUsPhoneNumber = {
+  isValid: true,
+  international: "+1 415-555-0133",
+  national: "(415) 555-0133",
+  originalNumber: "(415) 555-0133",
+}
 
 const phoneNumberProps: PhoneNumberInputProps = {
-  phoneNumber: {
-    isValid: true,
-    national: "(415) 555-0132",
-    regionCode: "us",
-  },
-  onPhoneNumberValidation: handlePhoneNumberChange,
+  phoneNumber: mockUsPhoneNumber,
+  onPhoneNumberValidation: mockOnPhoneNumberValidation,
 }
 
 const renderPhoneNumberInput = (props?: Partial<PhoneNumberInputProps>) => {
@@ -27,11 +44,11 @@ describe("PhoneNumberInput", () => {
   it("renders correctly", () => {
     wrapper = renderPhoneNumberInput()
 
-    expect(wrapper.find(Input).prop("value")).toBe("(415) 555-0132")
+    expect(wrapper.find(Input).prop("value")).toBe("(415) 555-0133")
     expect(wrapper.find(Select).prop("selected")).toBe("us")
   })
 
-  it("renders correctly with Franch number", () => {
+  it("renders correctly with French number", () => {
     wrapper = renderPhoneNumberInput({
       phoneNumber: {
         isValid: true,
@@ -55,24 +72,28 @@ describe("PhoneNumberInput", () => {
     expect(wrapper.find(Select).prop("selected")).toBe("us")
   })
 
-  describe("runs on change if", () => {
+  describe("fires the passed onPhoneNumberValidation with correct params", () => {
     beforeEach(() => {
       wrapper = renderPhoneNumberInput()
     })
 
-    it("input change", () => {
-      wrapper
-        .find("input[name='phone']")
-        .simulate("change", { target: { value: "(415) 555-1111" } })
-
-      expect(handlePhoneNumberChange).toHaveBeenCalled()
-      expect(handlePhoneNumberChange).toHaveBeenCalledWith(
-        "us",
-        "(415) 555-1111"
-      )
+    beforeAll(() => {
+      mockGetPhoneNumberInformation.mockResolvedValue(mockUsPhoneNumber)
     })
 
-    it("select change", () => {
+    it("when input change", () => {
+      wrapper
+        .find("input[name='phone']")
+        .simulate("change", { target: { value: "(415) 555-0133" } })
+
+      expect(mockOnPhoneNumberValidation).toHaveBeenCalled()
+      expect(mockOnPhoneNumberValidation).toHaveBeenLastCalledWith({
+        ...mockUsPhoneNumber,
+        region: "us",
+      })
+    })
+
+    it("when select change", () => {
       wrapper.find("select[name='countryCode']").simulate("change", {
         target: {
           value: "fr",
@@ -80,12 +101,7 @@ describe("PhoneNumberInput", () => {
       })
 
       wrapper.update()
-
-      expect(handlePhoneNumberChange).toHaveBeenCalled()
-      expect(handlePhoneNumberChange).toHaveBeenCalledWith(
-        "fr",
-        "(415) 555-0132"
-      )
+      expect(mockOnPhoneNumberValidation).toHaveBeenCalled()
     })
   })
 })
