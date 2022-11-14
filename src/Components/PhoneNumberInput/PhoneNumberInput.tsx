@@ -9,6 +9,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
+import { useSystemContext } from "System"
+import { getPhoneNumberInformation } from "./getPhoneNumberInformation"
 import { countries } from "Utils/countries"
 
 export interface PhoneNumber {
@@ -17,9 +19,17 @@ export interface PhoneNumber {
   regionCode?: string
 }
 
+export interface PhoneNumberValidationResult {
+  international: string
+  isValid: boolean
+  national: string
+  originalNumber: string
+  region: string
+}
+
 export interface PhoneNumberInputProps extends BoxProps {
   phoneNumber: PhoneNumber
-  onChange?: (regionCode: string, number?: string) => void
+  onPhoneNumberValidation: (arg: PhoneNumberValidationResult) => void
   inputProps?: Partial<InputProps>
   optional?: boolean
   selectProps?: Partial<SelectProps>
@@ -28,13 +38,15 @@ export interface PhoneNumberInputProps extends BoxProps {
 
 export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   phoneNumber: { isValid, national, regionCode },
-  onChange,
+  onPhoneNumberValidation,
   inputProps,
   optional,
   selectProps,
   error,
   ...props
 }) => {
+  const { relayEnvironment } = useSystemContext()
+
   const [number, setNumber] = useState(isValid && national ? national : "")
   const [focus, setFocus] = useState(false)
   const [hover, setHover] = useState(false)
@@ -43,7 +55,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   )
 
   useEffect(() => {
-    onChange?.(region, number?.trim())
+    validatePhoneNumber(number?.trim())
   }, [number, region])
 
   useEffect(() => {
@@ -70,8 +82,22 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   }
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    inputProps?.onChange?.(e)
     setNumber(e.target.value)
+    validatePhoneNumber(e.target.value)
+  }
+
+  const validatePhoneNumber = async (number: string) => {
+    if (relayEnvironment) {
+      const phoneInformation = await getPhoneNumberInformation(
+        number,
+        relayEnvironment,
+        region
+      )
+      onPhoneNumberValidation({
+        ...phoneInformation,
+        region,
+      } as PhoneNumberValidationResult)
+    }
   }
 
   return (

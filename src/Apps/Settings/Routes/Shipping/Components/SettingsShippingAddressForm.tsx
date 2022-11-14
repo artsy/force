@@ -16,9 +16,10 @@ import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import { PhoneNumberInput } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/Components/PhoneNumberInput"
-import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
-import { useSystemContext } from "System"
+import {
+  PhoneNumberInput,
+  PhoneNumberValidationResult,
+} from "Components/PhoneNumberInput/PhoneNumberInput"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -73,8 +74,6 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
-
-  const { relayEnvironment } = useSystemContext()
 
   return (
     <Formik
@@ -146,32 +145,26 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         isSubmitting,
         submitForm,
       }) => {
-        const handlePhoneNumberChange = async (region, number) => {
-          if (region && number && relayEnvironment) {
-            const phoneInformation = await getPhoneNumberInformation(
-              number,
-              relayEnvironment,
-              region
+        const handlePhoneNumberValidation = (
+          validationResult: PhoneNumberValidationResult
+        ) => {
+          if (!validationResult?.isValid) {
+            setFieldError("attributes.phoneNumber", "Phone Number is required")
+            setFieldError(
+              "attributes.phoneNumberCountryCode",
+              "Phone Number is required"
             )
-
-            if (!phoneInformation?.isValid) {
-              setFieldError(
-                "attributes.phoneNumber",
-                "Phone Number is required"
-              )
-              setFieldError(
-                "attributes.phoneNumberCountryCode",
-                "Phone Number is required"
-              )
-              return
-            }
-
-            setFieldError("attributes.phoneNumber", "")
-            setFieldError("attributes.phoneNumberCountryCode", "")
-
-            setFieldValue("attributes.phoneNumber", phoneInformation?.national)
-            setFieldValue("attributes.phoneNumberCountryCode", region)
+            return
           }
+
+          setFieldError("attributes.phoneNumber", "")
+          setFieldError("attributes.phoneNumberCountryCode", "")
+
+          setFieldValue("attributes.phoneNumber", validationResult?.national)
+          setFieldValue(
+            "attributes.phoneNumberCountryCode",
+            validationResult?.region
+          )
         }
 
         return (
@@ -311,7 +304,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                       national: values.attributes.phoneNumber,
                       regionCode: values.attributes.phoneNumberCountryCode,
                     }}
-                    onChange={handlePhoneNumberChange}
+                    onPhoneNumberValidation={handlePhoneNumberValidation}
                     inputProps={{
                       maxLength: 25,
                       onBlur: handleBlur("attributes.phoneNumber"),
