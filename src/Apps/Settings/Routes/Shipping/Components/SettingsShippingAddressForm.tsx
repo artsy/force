@@ -49,7 +49,7 @@ const validationSchema = Yup.object().shape({
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
     phoneNumber: Yup.string().required("Phone Number is required"),
-    phoneNumberCountryCode: Yup.string().required("Phone Number is required"),
+    // phoneNumberCountryCode: Yup.string(),
   }),
   isDefault: Yup.boolean().optional(),
 })
@@ -145,26 +145,27 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         isSubmitting,
         submitForm,
       }) => {
-        const handlePhoneNumberValidation = (
-          validationResult: PhoneNumberValidationResult
-        ) => {
-          if (!validationResult?.isValid) {
+        const handlePhoneNumberValidation = ({
+          isValid,
+          national,
+          region,
+        }: PhoneNumberValidationResult) => {
+          if (!isValid) {
+            setFieldValue("attributes.phoneNumber", "")
+            setFieldValue("attributes.phoneNumberCountryCode", "")
             setFieldError("attributes.phoneNumber", "Phone Number is required")
             setFieldError(
               "attributes.phoneNumberCountryCode",
               "Phone Number is required"
             )
+
             return
           }
 
+          setFieldValue("attributes.phoneNumber", national)
+          setFieldValue("attributes.phoneNumberCountryCode", region)
           setFieldError("attributes.phoneNumber", "")
           setFieldError("attributes.phoneNumberCountryCode", "")
-
-          setFieldValue("attributes.phoneNumber", validationResult?.national)
-          setFieldValue(
-            "attributes.phoneNumberCountryCode",
-            validationResult?.region
-          )
         }
 
         return (
