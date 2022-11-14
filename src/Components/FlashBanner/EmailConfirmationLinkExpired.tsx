@@ -55,7 +55,7 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
       <>
         Link expired.
         <Button
-          variant="primaryWhite"
+          variant="secondaryWhite"
           size="small"
           ml={1}
           onClick={handleSubmit}

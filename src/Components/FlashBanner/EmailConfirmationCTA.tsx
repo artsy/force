@@ -53,7 +53,7 @@ export const EmailConfirmationCTA: React.FC = () => {
       <>
         Please verify your email address
         <Button
-          variant="primaryWhite"
+          variant="secondaryWhite"
           onClick={handleSubmit}
           size="small"
           ml={1}
