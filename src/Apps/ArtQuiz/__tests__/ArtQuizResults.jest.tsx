@@ -1,4 +1,4 @@
-import { ArtQuizResults } from "Apps/ArtQuiz/ArtQuizResults"
+import { ArtQuizResults } from "Apps/ArtQuiz/Routes/ArtQuizResults"
 import { render, screen } from "@testing-library/react"
 
 describe("ArtQuizResults", () => {

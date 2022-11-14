@@ -7,15 +7,15 @@ import { AppRouteConfig } from "System/Router/Route"
 //   resolveComponent: component => component.ArtQuizAppFragmentContainer,
 // })
 
-const ArtQuizWelcome = loadable(() => import("./ArtQuizWelcome"), {
+const ArtQuizWelcome = loadable(() => import("./Routes/ArtQuizWelcome"), {
   resolveComponent: component => component.ArtQuizWelcome,
 })
 
-const ArtQuizMain = loadable(() => import("./ArtQuizMain"), {
+const ArtQuizMain = loadable(() => import("./Routes/ArtQuizMain"), {
   resolveComponent: component => component.ArtQuizMainFragmentContainer,
 })
 
-const ArtQuizResults = loadable(() => import("./ArtQuizResults"), {
+const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
   resolveComponent: component => component.ArtQuizResults,
 })
 
