@@ -1,4 +1,9 @@
 {
+  "activityPanel": {
+    "noNewNotifications": "No new notifications",
+    "newNotifications": "New notifications",
+    "markAllAsRead": "Mark all as read"
+  },
   "artistPage": {
     "cv": {
       "emptyState": "This artist has no {{groupName}} yet.",
@@ -10,33 +15,28 @@
       "cvLink": "See all past shows and fair booths"
     }
   },
-  "navbar": {
-    "show": "Show",
-    "shows": "Shows",
-    "buy": "Buy",
-    "artists": "Artists",
-    "artworks": "Artworks",
-    "galleries": "Galleries",
-    "auctions": "Auctions",
-    "fairs": "Fairs",
-    "museums": "Museums",
-    "viewingRooms": "Viewing Rooms",
-    "nfts": "NFTs",
-    "signup": "Sign Up",
-    "login": "Log In",
-    "sell": "Sell",
-    "priceDatabase": "Price Database",
-    "editorial": "Editorial",
-    "downloadApp": "Download App",
-    "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
-    "searchArtsy": "Search Artsy"
-  },
-  "specialists": {
-    "auctions": "Auctions",
-    "collectorServices": "Collector Services",
-    "meetTheSpecialists": "Meet the Specialists",
-    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
-    "privateSales": "Private Sales & Advisory"
+  "artQuizPage": {
+    "loadingScreen": {
+      "calculatingResults": "Calculating Results...",
+      "resultsComplete": "Results Complete"
+    },
+    "title": "Art Taste Quiz",
+    "results": {
+      "emailButton": "Email My Results",
+      "title": "Explore Your Quiz Results",
+      "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
+      "tabs": {
+        "worksYouLiked": "Works You Liked",
+        "recommendedCollections": "Recommended Collections",
+        "recommendedArtists": "Recommended Artists"
+      }
+    },
+    "welcomeScreen": {
+      "subtitle1": "See more of what you love.",
+      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "getStartedButton": "Start the Quiz",
+      "skipButton": "Skip"
+    }
   },
   "artworkPage": {
     "sidebar": {
@@ -96,39 +96,26 @@
       }
     }
   },
-  "searchApp": {
-    "noResultsFound": "No results found.",
-    "resultsCount_zero": "No results found for",
-    "resultsCount_one": "1 result for",
-    "resultsCount_other": "{{count}} results for"
-  },
-  "activityPanel": {
-    "noNewNotifications": "No new notifications",
-    "newNotifications": "New notifications",
-    "markAllAsRead": "Mark all as read"
-  },
-  "artQuizPage": {
-    "loadingScreen": {
-      "calculatingResults": "Calculating Results...",
-      "resultsComplete": "Results Complete"
-    },
-    "title": "Art Taste Quiz",
-    "results": {
-      "emailButton": "Email My Results",
-      "title": "Explore Your Quiz Results",
-      "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
-      "tabs": {
-        "worksYouLiked": "Works You Liked",
-        "recommendedCollections": "Recommended Collections",
-        "recommendedArtists": "Recommended Artists"
-      }
-    },
-    "welcomeScreen": {
-      "subtitle1": "See more of what you love.",
-      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
-      "getStartedButton": "Start the Quiz",
-      "skipButton": "Skip"
-    }
+  "navbar": {
+    "show": "Show",
+    "shows": "Shows",
+    "buy": "Buy",
+    "artists": "Artists",
+    "artworks": "Artworks",
+    "galleries": "Galleries",
+    "auctions": "Auctions",
+    "fairs": "Fairs",
+    "museums": "Museums",
+    "viewingRooms": "Viewing Rooms",
+    "nfts": "NFTs",
+    "signup": "Sign Up",
+    "login": "Log In",
+    "sell": "Sell",
+    "priceDatabase": "Price Database",
+    "editorial": "Editorial",
+    "downloadApp": "Download App",
+    "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
+    "searchArtsy": "Search Artsy"
   },
   "onboarding": {
     "follows": {
@@ -142,5 +129,24 @@
         "placeholder": "Search Galleries"
       }
     }
+  },
+  "rails": {
+    "artistFeaturedWorks": {
+      "title": "Featured Works",
+      "viewAllWorks": "View All Works"
+    }
+  },
+  "specialists": {
+    "auctions": "Auctions",
+    "collectorServices": "Collector Services",
+    "meetTheSpecialists": "Meet the Specialists",
+    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
+    "privateSales": "Private Sales & Advisory"
+  }, 
+  "searchApp": {
+    "noResultsFound": "No results found.",
+    "resultsCount_zero": "No results found for",
+    "resultsCount_one": "1 result for",
+    "resultsCount_other": "{{count}} results for"
   }
 }
