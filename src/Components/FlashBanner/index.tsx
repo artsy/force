@@ -6,11 +6,17 @@ import { graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { isServer } from "Server/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 import { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
-import { FullBleedBanner } from "../FullBleedBanner"
+import { FullBleedBanner } from "Components/FullBleedBanner"
 import track from "react-tracking"
+
+const FLASH_MESSAGES = {
+  confirmed: "Your email has been confirmed.",
+  already_confirmed: "You have already confirmed your email.",
+  invalid_token: "An error has occurred. Please contact support@artsy.net.",
+  blank_token: "An error has occurred. Please contact support@artsy.net.",
+}
 
 interface FlashBannerProps {
   contentCode?: string
@@ -51,12 +57,6 @@ export const FlashBanner: React.FC<FlashBannerProps> = ({
      * A map indexing keys (which may come from a contentCode prop, query string or
      * logic internal to the component + its props) to banner content.
      */
-    const contentMap: Record<string, string> = {
-      confirmed: "Your email has been confirmed.",
-      already_confirmed: "You have already confirmed your email.",
-      invalid_token: "An error has occurred. Please contact support@artsy.net.",
-      blank_token: "An error has occurred. Please contact support@artsy.net.",
-    }
 
     switch (contentCode) {
       case "email_confirmation_cta":
@@ -64,7 +64,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = ({
       case "expired_token":
         return <EmailConfirmationLinkExpired />
       default:
-        return contentMap[contentCode]
+        return FLASH_MESSAGES[contentCode]
     }
   }, [_contentCode, canRequestEmailConfirmation])
 
@@ -85,8 +85,6 @@ const TrackedFlashBanner = track({
 
 export const FlashBannerQueryRenderer: React.FC = () => {
   const { relayEnvironment, user } = useSystemContext()
-
-  if (isServer) return null
 
   return user ? (
     <SystemQueryRenderer<FlashBannerQuery>
