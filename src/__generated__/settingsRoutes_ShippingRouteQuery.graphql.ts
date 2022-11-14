@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5de6f5bd8f59a1265d6183aec1c2899a>>
+ * @generated SignedSource<<814b4f35a1ac762f825b3edc112426ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -154,6 +154,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "phoneNumberCountryCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
                       },
@@ -181,12 +188,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e0841261953e6ed7b48526f70dbebb28",
+    "cacheID": "13ccce52168ae01cd11e504221862395",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_ShippingRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...SettingsShippingAddresses_me\n}\n"
+    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...SettingsShippingAddresses_me\n}\n"
   }
 };
 })();

@@ -12,7 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { compactObject } from "Utils/compactObject"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
-import { useDeleteAddress } from "../useDeleteAddress"
+import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
 import {
   INITIAL_ADDRESS,
   SettingsShippingAddressForm,
@@ -152,6 +152,7 @@ export const SettingsShippingAddressFragmentContainer = createFragmentContainer(
         isDefault
         name
         phoneNumber
+        phoneNumberCountryCode
         postalCode
         region
       }
