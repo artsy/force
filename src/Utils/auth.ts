@@ -2,8 +2,8 @@
 // - Wraps auth related functions in consistent Promise interface
 // - Automatically handles CSRF token, session ID, ReCaptcha token
 
-import { data as sd } from "sharify"
 import Cookies from "cookies-js"
+import { getENV } from "Utils/getENV"
 import { recaptcha as _recaptcha } from "Utils/recaptcha"
 
 const headers = {
@@ -17,7 +17,7 @@ export const login = async (args: {
   password: string
   authenticationCode: string
 }) => {
-  const loginUrl = `${sd.APP_URL}${sd.AP.loginPagePath}`
+  const loginUrl = `${getENV("APP_URL")}${getENV("AP").loginPagePath}`
 
   const response = await fetch(loginUrl, {
     headers,
@@ -28,7 +28,7 @@ export const login = async (args: {
       password: args.password,
       otp_attempt: args.authenticationCode.replace(/ /g, ""),
       otpRequired: !!args.authenticationCode,
-      session_id: sd.SESSION_ID,
+      session_id: getENV("SESSION_ID"),
       _csrf: Cookies.get("CSRF_TOKEN"),
     }),
   })
@@ -51,13 +51,18 @@ export const login = async (args: {
  * Triggers a password reset (sends an email with password reset instructions)
  */
 export const forgotPassword = async (args: { email: string }) => {
-  const forgotPasswordUrl = `${sd.API_URL}/api/v1/users/send_reset_password_instructions`
+  const forgotPasswordUrl = `${getENV(
+    "API_URL"
+  )}/api/v1/users/send_reset_password_instructions`
 
   const response = await fetch(forgotPasswordUrl, {
-    headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
+    headers: { ...headers, "X-XAPP-TOKEN": getENV("ARTSY_XAPP_TOKEN") },
     method: "POST",
     credentials: "same-origin",
-    body: JSON.stringify({ email: args.email, session_id: sd.SESSION_ID }),
+    body: JSON.stringify({
+      email: args.email,
+      session_id: getENV("SESSION_ID"),
+    }),
   })
 
   if (response.ok) {
@@ -76,10 +81,10 @@ export const resetPassword = async (args: {
   password: string
   passwordConfirmation: string
 }) => {
-  const resetPasswordUrl = `${sd.API_URL}/api/v1/users/reset_password`
+  const resetPasswordUrl = `${getENV("API_URL")}/api/v1/users/reset_password`
 
   const response = await fetch(resetPasswordUrl, {
-    headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
+    headers: { ...headers, "X-XAPP-TOKEN": getENV("ARTSY_XAPP_TOKEN") },
     method: "PUT",
     credentials: "same-origin",
     body: JSON.stringify({
@@ -119,7 +124,7 @@ export const signUp = async (args: {
   email: string
   password: string
 }) => {
-  const signUpUrl = `${sd.APP_URL}${sd.AP.signupPagePath}`
+  const signUpUrl = `${getENV("APP_URL")}${getENV("AP").signupPagePath}`
 
   const recaptchaToken = await recaptcha()
 
@@ -135,7 +140,7 @@ export const signUp = async (args: {
       name: args.name,
       email: args.email,
       password: args.password,
-      session_id: sd.SESSION_ID,
+      session_id: getENV("SESSION_ID"),
       _csrf: Cookies.get("CSRF_TOKEN"),
       accepted_terms_of_service: true,
       recaptcha_token: recaptchaToken,
@@ -151,7 +156,7 @@ export const signUp = async (args: {
 }
 
 export const logout = async () => {
-  const logoutUrl = `${sd.APP_URL}${sd.AP.logoutPath}`
+  const logoutUrl = `${getENV("APP_URL")}${getENV("AP").logoutPath}`
 
   const response = await fetch(logoutUrl, {
     headers: {
