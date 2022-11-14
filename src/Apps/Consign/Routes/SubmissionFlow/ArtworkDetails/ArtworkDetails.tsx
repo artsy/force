@@ -129,6 +129,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         utmSource: utmParams?.utmSource,
         utmTerm: utmParams?.utmTerm,
         sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+        // myCollectionArtworkID is necessary in order to prevent duplication or mycollection artwork
         myCollectionArtworkID: artworkId && isFirstStep ? artworkId : undefined,
       }
       if (artworkId && !match?.params?.id) {

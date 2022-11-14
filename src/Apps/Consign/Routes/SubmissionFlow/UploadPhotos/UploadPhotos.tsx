@@ -131,8 +131,10 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
             externalId: submission.externalId,
             state: isLastStep ? "SUBMITTED" : "DRAFT",
             sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+            // myCollectionArtworkID is necessary in order to prevent duplication or mycollection artwork
             myCollectionArtworkID:
               artworkId && isFirstStep ? artworkId : undefined,
+            // Source is necessary in order to link this to a mycollection artwork
             source: isFirstStep && artworkId ? "MY_COLLECTION" : undefined,
           }
         )
