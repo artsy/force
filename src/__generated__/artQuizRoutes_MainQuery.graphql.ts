@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7df72163977488c0ed31888832a92e1>>
+ * @generated SignedSource<<ebf81d4776a1cf9a1041e70f3dd397db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,34 +10,25 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artQuizRoutes_TopLevelQuery$variables = {};
-export type artQuizRoutes_TopLevelQuery$data = {
+export type artQuizRoutes_MainQuery$variables = {};
+export type artQuizRoutes_MainQuery$data = {
   readonly viewer: {
     readonly quizConnection: {
-      readonly completedAt: string | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtQuizMain_quiz">;
     };
-    readonly " $fragmentSpreads": FragmentRefs<"ArtQuizApp_viewer">;
   } | null;
 };
-export type artQuizRoutes_TopLevelQuery = {
-  response: artQuizRoutes_TopLevelQuery$data;
-  variables: artQuizRoutes_TopLevelQuery$variables;
+export type artQuizRoutes_MainQuery = {
+  response: artQuizRoutes_MainQuery$data;
+  variables: artQuizRoutes_MainQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "completedAt",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "artQuizRoutes_TopLevelQuery",
+    "name": "artQuizRoutes_MainQuery",
     "selections": [
       {
         "alias": null,
@@ -55,14 +46,13 @@ return {
             "name": "quizConnection",
             "plural": false,
             "selections": [
-              (v0/*: any*/)
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ArtQuizMain_quiz"
+              }
             ],
             "storageKey": null
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtQuizApp_viewer"
           }
         ],
         "storageKey": null
@@ -75,7 +65,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "artQuizRoutes_TopLevelQuery",
+    "name": "artQuizRoutes_MainQuery",
     "selections": [
       {
         "alias": null,
@@ -93,7 +83,6 @@ return {
             "name": "quizConnection",
             "plural": false,
             "selections": [
-              (v0/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -226,16 +215,15 @@ return {
     ]
   },
   "params": {
-    "cacheID": "83654e17a7ccc0f4a91ca90eb55d50ff",
+    "cacheID": "852432dacce6a9eafe3d6e77f686dff3",
     "id": null,
     "metadata": {},
-    "name": "artQuizRoutes_TopLevelQuery",
+    "name": "artQuizRoutes_MainQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_TopLevelQuery {\n  viewer {\n    quizConnection {\n      completedAt\n    }\n    ...ArtQuizApp_viewer\n  }\n}\n\nfragment ArtQuizApp_viewer on Viewer {\n  quizConnection {\n    completedAt\n    ...ArtQuizMain_quiz\n  }\n}\n\nfragment ArtQuizMain_quiz on Quiz {\n  quizArtworks(first: 16) {\n    totalCount\n    edges {\n      node {\n        interactedAt\n        position\n        artwork {\n          slug\n          title\n          image {\n            url(version: \"large\")\n            aspectRatio\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query artQuizRoutes_MainQuery {\n  viewer {\n    quizConnection {\n      ...ArtQuizMain_quiz\n    }\n  }\n}\n\nfragment ArtQuizMain_quiz on Quiz {\n  quizArtworks(first: 16) {\n    totalCount\n    edges {\n      node {\n        interactedAt\n        position\n        artwork {\n          slug\n          title\n          image {\n            url(version: \"large\")\n            aspectRatio\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
-})();
 
-(node as any).hash = "d432948f8f6712115cf89d0a7c3f49e2";
+(node as any).hash = "8062cf02beacf33fcc4e8eaa5a55c54d";
 
 export default node;

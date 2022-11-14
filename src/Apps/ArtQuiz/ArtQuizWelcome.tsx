@@ -57,7 +57,13 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
               <Spacer y={6} />
 
               <Box width="100%" my={6}>
-                <Button width="100%" onClick={onStartQuiz}>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  width="100%"
+                  onClick={onStartQuiz}
+                  to="/art-quiz/artworks"
+                >
                   {t("artQuizPage.welcomeScreen.getStartedButton")}
                 </Button>
                 <Button

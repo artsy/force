@@ -29,14 +29,12 @@ interface ArtQuizMainProps {
   quiz: ArtQuizMain_quiz$data
 }
 
-export const ArtQuizMain: FC<ArtQuizMainProps> = props => {
+export const ArtQuizMain: FC<ArtQuizMainProps> = ({ quiz }) => {
   const { desktop, mobile } = useNavBarHeight()
   const { height, width } = useWindowSize()
 
-  console.log("**************", props)
-
-  const totalCount = props.quiz.quizArtworks?.totalCount
-  const currentQuizArtwork = props.quiz!.quizArtworks!.edges!.find(edge => {
+  const totalCount = quiz.quizArtworks?.totalCount
+  const currentQuizArtwork = quiz!.quizArtworks!.edges!.find(edge => {
     const quizArtwork = edge!.node!
     return !quizArtwork.interactedAt
   })!.node!
@@ -60,8 +58,6 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = props => {
   }, [height, width])
 
   return (
-    // Should we lift this FullBleed up into the ArtQuizApp?
-    // Maybe not relevant to the results page
     <FullBleed
       height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
       justifyContent="center"
