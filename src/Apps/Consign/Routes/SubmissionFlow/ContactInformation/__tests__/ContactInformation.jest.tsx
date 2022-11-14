@@ -5,7 +5,7 @@ import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
 import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/ContactInformation"
 
 jest.unmock("react-relay")

@@ -1,6 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
 import { PriceEstimateContactInformationFragmentContainer } from "Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"

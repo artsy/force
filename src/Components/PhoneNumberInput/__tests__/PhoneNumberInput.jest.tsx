@@ -13,7 +13,7 @@ const phoneNumberProps: PhoneNumberInputProps = {
     national: "(415) 555-0132",
     regionCode: "us",
   },
-  onChange: handlePhoneNumberChange,
+  onPhoneNumberValidation: handlePhoneNumberChange,
 }
 
 const renderPhoneNumberInput = (props?: Partial<PhoneNumberInputProps>) => {
