@@ -57,6 +57,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     [...steps].indexOf("Artwork")
   )
   const isLastStep = stepIndex === steps.length - 1
+  const isFirstStep = stepIndex === 0
 
   let data: getArtworkDetailsFormInitialValuesProps = {
     type: SubmissionType.default,
@@ -128,11 +129,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         utmSource: utmParams?.utmSource,
         utmTerm: utmParams?.utmTerm,
         sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+        myCollectionArtworkID: artworkId && isFirstStep ? artworkId : undefined,
       }
       if (artworkId && !match?.params?.id) {
         ;(submissionData as CreateSubmissionMutationInput).source =
           "MY_COLLECTION"
-        ;(submissionData as CreateSubmissionMutationInput).myCollectionArtworkID = artworkId
       }
       try {
         submissionId = await createOrUpdateConsignSubmission(

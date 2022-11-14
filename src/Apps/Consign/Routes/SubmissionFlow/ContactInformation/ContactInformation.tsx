@@ -67,6 +67,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     [...steps].indexOf("Contact")
   )
   const isLastStep = stepIndex === steps.length - 1
+  const isFirstStep = stepIndex === 0
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
@@ -92,6 +93,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
             userPhone: phone.international,
             state: isLastStep ? "SUBMITTED" : "DRAFT",
             sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+            myCollectionArtworkID:
+              artworkId && isFirstStep ? artworkId : undefined,
+            source: isFirstStep && artworkId ? "MY_COLLECTION" : undefined,
           }
         )
 

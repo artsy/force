@@ -113,6 +113,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
     [...steps].indexOf("Photos")
   )
   const isLastStep = stepIndex === steps.length - 1
+  const isFirstStep = stepIndex === 0
 
   const initialValue = getUploadPhotosFormInitialValues(
     submission,
@@ -128,8 +129,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
           relayEnvironment,
           {
             externalId: submission.externalId,
-            state: "SUBMITTED",
+            state: isLastStep ? "SUBMITTED" : "DRAFT",
             sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+            myCollectionArtworkID:
+              artworkId && isFirstStep ? artworkId : undefined,
+            source: isFirstStep && artworkId ? "MY_COLLECTION" : undefined,
           }
         )
         trackEvent({
