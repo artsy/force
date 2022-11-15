@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8d5e1eb3a08c4e0fecb6ffc3cf23bbf>>
+ * @generated SignedSource<<951aaa841ad1aadd6c9ca32f8dc35329>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,38 +9,24 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type FlashBannerTestQuery$variables = {};
-export type FlashBannerTestQuery$data = {
+import { FragmentRefs } from "relay-runtime";
+export type FlashBanner_Test_Query$variables = {};
+export type FlashBanner_Test_Query$data = {
   readonly me: {
-    readonly canRequestEmailConfirmation: boolean;
+    readonly " $fragmentSpreads": FragmentRefs<"FlashBanner_me">;
   } | null;
 };
-export type FlashBannerTestQuery$rawResponse = {
-  readonly me: {
-    readonly canRequestEmailConfirmation: boolean;
-    readonly id: string;
-  } | null;
-};
-export type FlashBannerTestQuery = {
-  rawResponse: FlashBannerTestQuery$rawResponse;
-  response: FlashBannerTestQuery$data;
-  variables: FlashBannerTestQuery$variables;
+export type FlashBanner_Test_Query = {
+  response: FlashBanner_Test_Query$data;
+  variables: FlashBanner_Test_Query$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "canRequestEmailConfirmation",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "FlashBannerTestQuery",
+    "name": "FlashBanner_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -50,7 +36,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FlashBanner_me"
+          }
         ],
         "storageKey": null
       }
@@ -62,7 +52,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "FlashBannerTestQuery",
+    "name": "FlashBanner_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -72,7 +62,13 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "canRequestEmailConfirmation",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -86,7 +82,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3100e134abd39082018558b8616c21bd",
+    "cacheID": "fd71c996171594405049406011bd0adc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -110,13 +106,12 @@ return {
         }
       }
     },
-    "name": "FlashBannerTestQuery",
+    "name": "FlashBanner_Test_Query",
     "operationKind": "query",
-    "text": "query FlashBannerTestQuery {\n  me {\n    canRequestEmailConfirmation\n    id\n  }\n}\n"
+    "text": "query FlashBanner_Test_Query {\n  me {\n    ...FlashBanner_me\n    id\n  }\n}\n\nfragment FlashBanner_me on Me {\n  canRequestEmailConfirmation\n}\n"
   }
 };
-})();
 
-(node as any).hash = "f3601d608439e328bcfce96e31a134c0";
+(node as any).hash = "f95a8001e9ae9786494d2b3996791315";
 
 export default node;
