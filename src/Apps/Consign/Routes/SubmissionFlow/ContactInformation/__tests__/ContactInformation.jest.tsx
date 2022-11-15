@@ -64,8 +64,10 @@ jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
   createOrUpdateConsignSubmission: jest.fn(),
 }))
 
-jest.mock("../../Utils/phoneNumberUtils", () => ({
-  ...jest.requireActual("../../Utils/phoneNumberUtils"),
+jest.mock("Components/PhoneNumberInput/getPhoneNumberInformation", () => ({
+  ...jest.requireActual(
+    "Components/PhoneNumberInput/getPhoneNumberInformation"
+  ),
   getPhoneNumberInformation: jest.fn(),
 }))
 
