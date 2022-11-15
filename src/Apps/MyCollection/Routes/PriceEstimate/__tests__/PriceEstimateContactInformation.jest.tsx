@@ -46,9 +46,9 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-jest.mock("Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils", () => ({
+jest.mock("Components/PhoneNumberInput/getPhoneNumberInformation", () => ({
   ...jest.requireActual(
-    "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
+    "Components/PhoneNumberInput/getPhoneNumberInformation"
   ),
   getPhoneNumberInformation: jest.fn(),
 }))
