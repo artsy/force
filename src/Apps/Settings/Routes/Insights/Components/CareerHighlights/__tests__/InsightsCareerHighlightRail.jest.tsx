@@ -44,7 +44,7 @@ describe("InsightsCareerHighlightRail", () => {
 
       // promo card
       expect(
-        screen.getByText("Discover career highlights for your artists.")
+        screen.getByText("Discover career highlights for artists you collect.")
       ).toBeInTheDocument()
 
       expect(
@@ -62,7 +62,9 @@ describe("InsightsCareerHighlightRail", () => {
       ).not.toBeInTheDocument()
 
       expect(
-        screen.queryByText("Discover career highlights for your artists.")
+        screen.queryByText(
+          "Discover career highlights for artists you collect."
+        )
       ).not.toBeInTheDocument()
     })
   })

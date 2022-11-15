@@ -3,9 +3,9 @@ import {
   Clickable,
   ClickableProps,
   Flex,
-  FlexProps,
   Image,
   ResponsiveBox,
+  splitBoxProps,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -45,7 +45,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<{
         flexDirection="column"
       >
         <Text variant={["xs", "sm-display"]} mb={[1, 2]}>
-          Discover career highlights for your artists.
+          Discover career highlights for artists you collect.
         </Text>
 
         <Button
@@ -105,7 +105,6 @@ export const InsightsCareerHighlightPromoCard: React.FC<{
   )
 }
 
-// extending ClickableProps since the type already has FlexProps (BoxProps)
 interface CardWrapperProps extends ClickableProps {
   onClick?: () => void
 }
@@ -115,6 +114,7 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
   children,
   ...rest
 }) => {
+  const [boxProps] = splitBoxProps(rest)
   const isCareerHighlightModalEnabled = useFeatureFlag(
     "my-collection-web-phase-7-career-highlights-modal"
   )
@@ -126,7 +126,8 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
       </ClickableCard>
     )
   }
-  return <Card {...(rest as FlexProps)}>{children}</Card>
+
+  return <Card {...boxProps}>{children}</Card>
 }
 
 const Card = styled(Flex)`
