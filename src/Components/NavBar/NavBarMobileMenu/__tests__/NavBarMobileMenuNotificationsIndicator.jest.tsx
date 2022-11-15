@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicatorFragmentContainer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
@@ -30,7 +30,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
     expect(indicator).not.toBeInTheDocument()
   })
 
-  it("should render indicator when there are unread conversations", () => {
+  it("should render indicator when there are unread conversations", async () => {
     renderWithRelay({
       Me: () => ({
         unreadConversationCount: 5,
@@ -38,11 +38,13 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       }),
     })
 
-    const indicator = screen.getByLabelText("Unread notifications indicator")
-    expect(indicator).toBeInTheDocument()
+    await waitFor(() => {
+      const indicator = screen.getByLabelText("Unread notifications indicator")
+      return expect(indicator).toBeInTheDocument()
+    })
   })
 
-  it("should render indicator when there are unread notifications", () => {
+  it("should render indicator when there are unread notifications", async () => {
     renderWithRelay({
       Me: () => ({
         unreadConversationCount: 0,
@@ -50,7 +52,9 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       }),
     })
 
-    const indicator = screen.getByLabelText("Unread notifications indicator")
-    expect(indicator).toBeInTheDocument()
+    await waitFor(() => {
+      const indicator = screen.getByLabelText("Unread notifications indicator")
+      return expect(indicator).toBeInTheDocument()
+    })
   })
 })
