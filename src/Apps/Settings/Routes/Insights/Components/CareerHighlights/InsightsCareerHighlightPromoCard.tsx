@@ -45,7 +45,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<{
         flexDirection="column"
       >
         <Text variant={["xs", "sm-display"]} mb={[1, 2]}>
-          Discover career highlights for your artists.
+          Discover career highlights for artists you collect.
         </Text>
 
         <Button
