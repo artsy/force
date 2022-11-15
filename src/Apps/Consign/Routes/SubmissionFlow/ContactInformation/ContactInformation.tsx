@@ -1,9 +1,7 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Button, Text, useToasts } from "@artsy/palette"
-import {
-  SubmissionStepper,
-  useSubmissionFlowSteps,
-} from "Apps/Consign/Components/SubmissionStepper"
+import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,

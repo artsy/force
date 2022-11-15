@@ -1,8 +1,5 @@
 import { Button, Text, useToasts } from "@artsy/palette"
-import {
-  SubmissionStepper,
-  useSubmissionFlowSteps,
-} from "Apps/Consign/Components/SubmissionStepper"
+import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
@@ -35,6 +32,7 @@ import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDe
 import { LocationDescriptor } from "found"
 import { trackEvent } from "Server/analytics/helpers"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -75,6 +73,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const artworkId = myCollectionArtwork?.internalID
+  console.log("artworkId", artworkId, "isFirstStep", isFirstStep)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"

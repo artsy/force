@@ -1,9 +1,7 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Text } from "@artsy/palette"
-import {
-  SubmissionStepper,
-  useSubmissionFlowSteps,
-} from "Apps/Consign/Components/SubmissionStepper"
+import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,

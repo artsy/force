@@ -7,6 +7,9 @@ import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/ContactInformation"
+import { flushPromiseQueue } from "DevTools"
+import { useRouter } from "System/Router/useRouter"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -44,6 +47,14 @@ jest.mock("System/Router/useRouter", () => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
     match: { params: { artworkId: undefined } },
   })),
+}))
+
+jest.mock("Apps/Consign/Hooks/useSubmissionFlowSteps", () => ({
+  useSubmissionFlowSteps: jest.fn(() => [
+    "Artwork Details",
+    "Upload Photos",
+    "Contact Information",
+  ]),
 }))
 
 const mockSendToast = jest.fn()
@@ -311,6 +322,47 @@ describe("Contact Information step", () => {
           `/sell/submission/${mockSubmission.externalId}/thank-you`
         )
       })
+    })
+  })
+
+  describe("When ContactInformation is the first step in MyCollection Submission", () => {
+    const mockUseRouter = useRouter as jest.Mock
+    const mockUseSubmissionFlowSteps = useSubmissionFlowSteps as jest.Mock
+    beforeEach(() => {
+      mockUseSubmissionFlowSteps.mockImplementationOnce(() => [
+        "Contact Information",
+        "Artwork Details",
+        "Upload Photos",
+      ])
+    })
+
+    it("includes myCollectionArtworkID and source in params", async () => {
+      mockUseRouter.mockImplementationOnce(() => ({
+        match: {
+          params: {
+            artworkId: "artwork-id-1234",
+          },
+        },
+        router: { push: mockRouterPush, replace: mockRouterReplace },
+      }))
+
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => null,
+      })
+
+      await flushPromiseQueue()
+
+      fireEvent.click(getSubmitButton())
+
+      await flushPromiseQueue()
+
+      expect(mockCreateOrUpdateConsignSubmission.mock.calls[0][1]).toEqual(
+        expect.objectContaining({
+          myCollectionArtworkID: "artwork-id-1234",
+          source: "MY_COLLECTION",
+        })
+      )
     })
   })
 
