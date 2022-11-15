@@ -16,7 +16,7 @@ import {
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
-import { checkAndSyncIndicatorsCount } from "./helpers"
+import { checkAndSyncIndicatorsCount, IndicatorsCountState } from "./helpers"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
@@ -33,10 +33,19 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
-  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
-    notifications: me?.unreadNotificationsCount,
-    conversations: me?.unreadConversationCount,
-  })
+  const [
+    indicatorCounts,
+    setIndicatorCounts,
+  ] = React.useState<IndicatorsCountState | null>(null)
+
+  React.useEffect(() => {
+    const result = checkAndSyncIndicatorsCount({
+      notifications: me?.unreadNotificationsCount,
+      conversations: me?.unreadConversationCount,
+    })
+
+    setIndicatorCounts(result)
+  }, [me])
 
   return (
     <>
@@ -76,7 +85,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               fill="currentColor"
             />
 
-            {hasNotifications &&
+            {indicatorCounts?.hasNotifications &&
               (enableActivityPanel ? (
                 <NavBarNotificationIndicator
                   position="absolute"
@@ -97,7 +106,9 @@ export const NavBarLoggedInActions: React.FC<Partial<
           fill="currentColor"
         />
 
-        {hasConversations && <NavBarLoggedInActionsNotificationIndicator />}
+        {indicatorCounts?.hasConversations && (
+          <NavBarLoggedInActionsNotificationIndicator />
+        )}
       </NavBarItemLink>
 
       <Dropdown

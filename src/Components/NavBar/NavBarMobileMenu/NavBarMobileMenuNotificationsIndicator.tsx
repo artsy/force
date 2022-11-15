@@ -1,11 +1,13 @@
-import { useContext } from "react"
-import * as React from "react"
+import { useContext, useEffect } from "react"
+import { useState } from "react"
 import { graphql } from "react-relay"
-import { isServer } from "Server/isServer"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
+import {
+  checkAndSyncIndicatorsCount,
+  IndicatorsCountState,
+} from "Components/NavBar/helpers"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
@@ -17,11 +19,21 @@ interface NavBarMobileMenuNotificationsIndicatorProps {
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
 }) => {
-  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
-    notifications: me?.unreadNotificationsCount,
-    conversations: me?.unreadConversationCount,
-  })
-  const shouldDisplayIndicator = hasConversations || hasNotifications
+  const [
+    indicatorCounts,
+    setIndicatorCounts,
+  ] = useState<IndicatorsCountState | null>(null)
+  const shouldDisplayIndicator =
+    indicatorCounts?.hasConversations || indicatorCounts?.hasNotifications
+
+  useEffect(() => {
+    const result = checkAndSyncIndicatorsCount({
+      notifications: me?.unreadNotificationsCount,
+      conversations: me?.unreadConversationCount,
+    })
+
+    setIndicatorCounts(result)
+  }, [me])
 
   if (!shouldDisplayIndicator) {
     return null
@@ -46,10 +58,6 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
 
 export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> = () => {
   const { relayEnvironment } = useContext(SystemContext)
-
-  if (isServer) {
-    return <NavBarMobileMenuNotificationsIndicator />
-  }
 
   return (
     <SystemQueryRenderer<NavBarMobileMenuNotificationsIndicatorQuery>
