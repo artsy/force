@@ -12,30 +12,22 @@ import {
 import { getClientParam } from "Utils/getClientParam"
 import { buildClientApp } from "System/Router/buildClientApp"
 import { loadSegment } from "Server/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
+import { initAuthModalContainer } from "Utils/initAuthModalContainer"
 
 async function setupClient() {
-  Promise.all([
-    import(
-      /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
-      "Utils/initAuthModalContainer"
-    ),
-  ]).then(clientImports => {
-    const [{ initAuthModalContainer }] = clientImports
+  // Attach analytics
+  if (getClientParam("disableAnalytics") !== "true") {
+    beforeAnalyticsReady()
+    window.analytics?.ready(() => {
+      onAnalyticsReady()
+    })
+  }
 
-    // Attach analytics
-    if (getClientParam("disableAnalytics") !== "true") {
-      beforeAnalyticsReady()
-      window.analytics?.ready(() => {
-        onAnalyticsReady()
-      })
-    }
+  loadSegment()
+  initAuthModalContainer()
 
-    loadSegment()
-    initAuthModalContainer()
-
-    // Logout handler
-    mediator.on("auth:logout", logoutEventHandler)
-  })
+  // Logout handler
+  mediator.on("auth:logout", logoutEventHandler)
 
   const { ClientApp } = await buildClientApp({
     routes: getAppRoutes(),
