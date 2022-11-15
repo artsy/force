@@ -48,7 +48,7 @@ const validationSchema = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    phoneNumber: Yup.string().required("Phone Number is required"),
+    phoneNumber: Yup.string().required("Please enter a valid phone number"),
     phoneNumberCountryCode: Yup.string(),
   }),
   isDefault: Yup.boolean().optional(),
@@ -170,7 +170,10 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         }: PhoneNumberValidationResult) => {
           if (!isValid) {
             setFieldValue("attributes.phoneNumber", "")
-            setFieldError("attributes.phoneNumber", "Phone Number is required")
+            setFieldError(
+              "attributes.phoneNumber",
+              "Please enter a valid phone number"
+            )
             return
           }
 
