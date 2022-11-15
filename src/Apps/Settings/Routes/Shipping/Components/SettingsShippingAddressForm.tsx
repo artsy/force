@@ -75,11 +75,28 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
 
+  const getInitialValues = () => {
+    if (!address) {
+      return INITIAL_VALUES
+    }
+
+    // in case address has no phone code, use country as phone code
+    return {
+      ...address,
+      attributes: {
+        ...address.attributes,
+        phoneNumberCountryCode: address.attributes?.phoneNumberCountryCode
+          ? address.attributes.phoneNumberCountryCode
+          : address?.attributes.country.toLowerCase(),
+      },
+    }
+  }
+
   return (
     <Formik
       validateOnMount
       validationSchema={validationSchema}
-      initialValues={address ?? INITIAL_VALUES}
+      initialValues={getInitialValues()}
       onSubmit={async ({ isDefault, attributes }, { setStatus, resetForm }) => {
         try {
           if (isEditing) {
@@ -145,6 +162,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         isSubmitting,
         submitForm,
       }) => {
+        // incorporate phone validation result into Formik values & errors
         const handlePhoneNumberValidation = ({
           isValid,
           national,
