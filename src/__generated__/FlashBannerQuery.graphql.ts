@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<378353976f511043f6c78c8d00e04787>>
+ * @generated SignedSource<<e7cf8e9c423b7f51297a0b46b9a6751b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type FlashBannerQuery$variables = {};
 export type FlashBannerQuery$data = {
   readonly me: {
-    readonly canRequestEmailConfirmation: boolean;
+    readonly " $fragmentSpreads": FragmentRefs<"FlashBanner_me">;
   } | null;
 };
 export type FlashBannerQuery = {
@@ -20,15 +21,7 @@ export type FlashBannerQuery = {
   variables: FlashBannerQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "canRequestEmailConfirmation",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -43,7 +36,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FlashBanner_me"
+          }
         ],
         "storageKey": null
       }
@@ -65,7 +62,13 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "canRequestEmailConfirmation",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -79,16 +82,15 @@ return {
     ]
   },
   "params": {
-    "cacheID": "75a1e79c5334c35035b0a59046243a97",
+    "cacheID": "b5fe0374f99d3248a4f2ce3468c2ce71",
     "id": null,
     "metadata": {},
     "name": "FlashBannerQuery",
     "operationKind": "query",
-    "text": "query FlashBannerQuery {\n  me {\n    canRequestEmailConfirmation\n    id\n  }\n}\n"
+    "text": "query FlashBannerQuery {\n  me {\n    ...FlashBanner_me\n    id\n  }\n}\n\nfragment FlashBanner_me on Me {\n  canRequestEmailConfirmation\n}\n"
   }
 };
-})();
 
-(node as any).hash = "1fbac78823b002fb61f95cef929ff464";
+(node as any).hash = "80d5e50618c947db10b2ada290fdf74b";
 
 export default node;

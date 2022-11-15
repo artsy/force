@@ -10,6 +10,7 @@ const logger = createLogger(
   "Components/FlashBanner/EmailConfirmationLinkExpired"
 )
 
+// TODO: Rewrite
 export const EmailConfirmationLinkExpired: React.FC = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<
     string | null
@@ -18,7 +19,7 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
   const { trackEvent } = useTracking()
 
-  const handleSubmit = () => {
+  const handleClick = () => {
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       subject: DeprecatedAnalyticsSchema.Subject.EmailConfirmationLinkExpired,
@@ -58,7 +59,7 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
           variant="secondaryWhite"
           size="small"
           ml={1}
-          onClick={handleSubmit}
+          onClick={handleClick}
         >
           Resend verification email
         </Button>
