@@ -110,6 +110,102 @@ const getSubmitButton = () => screen.getByTestId("save-button")
 const getInput = name =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
+describe("Save and Continue button", () => {
+  describe("with valid phone number", () => {
+    beforeAll(() => {
+      mockGetPhoneNumberInformation.mockResolvedValue({
+        isValid: true,
+      })
+      mockTracking.mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    it("is enabled if all fields are received valid", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      expect(getSubmitButton()).toBeEnabled()
+    })
+
+    it("is enabled if all fields are typed valid", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockEmptyMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      expect(getSubmitButton()).toBeDisabled()
+
+      simulateTyping("name", "Banksy")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
+
+      simulateTyping("email", "banksy@test.test")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
+
+      simulateTyping("phone", "(415) 555-0132")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeEnabled()
+      })
+    })
+  })
+
+  describe("with an invalid phone number", () => {
+    beforeAll(() => {
+      mockGetPhoneNumberInformation.mockResolvedValue({
+        isValid: false,
+      })
+      mockTracking.mockImplementation(() => ({
+        trackEvent: mockTrackEvent,
+      }))
+    })
+
+    it("is disabled when number is not valid", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      simulateTyping("name", "Banksy")
+      simulateTyping("email", "banksy@test.test")
+      simulateTyping("phone", "+1 123")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
+    })
+
+    it("is disabled when a valid number is removed by user", async () => {
+      getWrapper().renderWithRelay({
+        Me: () => mockMe,
+        ConsignmentSubmission: () => mockSubmission,
+      })
+
+      simulateTyping("name", "Banksy")
+      simulateTyping("email", "banksy@test.test")
+      simulateTyping("phone", "+1 415-555-0132")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeEnabled()
+      })
+
+      simulateTyping("phone", "")
+
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
+    })
+  })
+})
+
 describe("Contact Information step", () => {
   beforeAll(() => {
     mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
@@ -146,79 +242,6 @@ describe("Contact Information step", () => {
       )
 
       expect(getSubmitButton()).toBeInTheDocument()
-    })
-  })
-
-  describe("Save and Continue button", () => {
-    it("is disabled if at least one field is not valid", async () => {
-      getWrapper().renderWithRelay({
-        Me: () => mockEmptyMe,
-        ConsignmentSubmission: () => mockSubmission,
-      })
-
-      expect(getSubmitButton()).toBeDisabled()
-
-      simulateTyping("name", "Banksy")
-
-      await waitFor(() => {
-        expect(getSubmitButton()).toBeDisabled()
-      })
-
-      simulateTyping("email", "banksy@test.test")
-
-      await waitFor(() => {
-        expect(getSubmitButton()).toBeDisabled()
-      })
-
-      simulateTyping("phone", "(415) 555-0132")
-
-      await waitFor(() => {
-        expect(getSubmitButton()).toBeEnabled()
-      })
-    })
-
-    it("is enabled if  all fields is valid", async () => {
-      getWrapper().renderWithRelay({
-        Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
-      })
-
-      expect(getSubmitButton()).toBeEnabled()
-    })
-
-    // it("is disabled when number is removed by user", async () => {
-    //   getWrapper().renderWithRelay({
-    //     Me: () => mockEmptyMe,
-    //     ConsignmentSubmission: () => mockSubmission,
-    //   })
-
-    //   simulateTyping("name", "Banksy")
-    //   simulateTyping("email", "banksy@test.test")
-    //   simulateTyping("phone", "+1 415-555-0132")
-
-    //   await waitFor(() => {
-    //     expect(getSubmitButton()).toBeEnabled()
-    //   })
-
-    //   simulateTyping("phone", "")
-
-    //   await waitFor(() => {
-    //     expect(getSubmitButton()).toBeDisabled()
-    //   })
-    // })
-
-    it("show error modal if consingment submission fails", async () => {
-      mockCreateOrUpdateConsignSubmission.mockRejectedValueOnce("rejected")
-      getWrapper().renderWithRelay({
-        Me: () => mockMe,
-        ConsignmentSubmission: () => mockSubmission,
-      })
-
-      fireEvent.click(getSubmitButton())
-
-      await waitFor(() => {
-        expect(mockSendToast).toBeCalled()
-      })
     })
   })
 
@@ -334,6 +357,20 @@ describe("Contact Information step", () => {
         state: "SUBMITTED",
         sessionID: "SessionID",
       })
+    })
+  })
+
+  it("show error modal if consingment submission fails", async () => {
+    mockCreateOrUpdateConsignSubmission.mockRejectedValueOnce("rejected")
+    getWrapper().renderWithRelay({
+      Me: () => mockMe,
+      ConsignmentSubmission: () => mockSubmission,
+    })
+
+    fireEvent.click(getSubmitButton())
+
+    await waitFor(() => {
+      expect(mockSendToast).toBeCalled()
     })
   })
 
