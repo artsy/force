@@ -16,7 +16,6 @@ import {
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
-import { checkAndSyncIndicatorsCount, IndicatorsCountState } from "./helpers"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
@@ -26,6 +25,7 @@ import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
+import { useIndicators } from "Components/NavBar/useIndicators"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -33,19 +33,10 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
-  const [
-    indicatorCounts,
-    setIndicatorCounts,
-  ] = React.useState<IndicatorsCountState | null>(null)
-
-  React.useEffect(() => {
-    const result = checkAndSyncIndicatorsCount({
-      notifications: me?.unreadNotificationsCount,
-      conversations: me?.unreadConversationCount,
-    })
-
-    setIndicatorCounts(result)
-  }, [me])
+  const indicators = useIndicators({
+    notifications: me?.unreadNotificationsCount,
+    conversations: me?.unreadConversationCount,
+  })
 
   return (
     <>
@@ -85,7 +76,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               fill="currentColor"
             />
 
-            {indicatorCounts?.hasNotifications &&
+            {indicators?.hasNotifications &&
               (enableActivityPanel ? (
                 <NavBarNotificationIndicator
                   position="absolute"
@@ -106,7 +97,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
           fill="currentColor"
         />
 
-        {indicatorCounts?.hasConversations && (
+        {indicators?.hasConversations && (
           <NavBarLoggedInActionsNotificationIndicator />
         )}
       </NavBarItemLink>

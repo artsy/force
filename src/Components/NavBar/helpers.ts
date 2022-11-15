@@ -1,6 +1,6 @@
 import cookie from "cookies-js"
 
-interface Counts {
+export interface Counts {
   conversations?: number
   notifications?: number
 }

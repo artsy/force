@@ -1,16 +1,12 @@
-import { useContext, useEffect } from "react"
-import { useState } from "react"
+import { useContext } from "react"
 import { graphql } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  checkAndSyncIndicatorsCount,
-  IndicatorsCountState,
-} from "Components/NavBar/helpers"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
+import { useIndicators } from "Components/NavBar/useIndicators"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null
@@ -19,21 +15,12 @@ interface NavBarMobileMenuNotificationsIndicatorProps {
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
 }) => {
-  const [
-    indicatorCounts,
-    setIndicatorCounts,
-  ] = useState<IndicatorsCountState | null>(null)
+  const indicators = useIndicators({
+    notifications: me?.unreadNotificationsCount,
+    conversations: me?.unreadConversationCount,
+  })
   const shouldDisplayIndicator =
-    indicatorCounts?.hasConversations || indicatorCounts?.hasNotifications
-
-  useEffect(() => {
-    const result = checkAndSyncIndicatorsCount({
-      notifications: me?.unreadNotificationsCount,
-      conversations: me?.unreadConversationCount,
-    })
-
-    setIndicatorCounts(result)
-  }, [me])
+    indicators?.hasConversations || indicators?.hasNotifications
 
   if (!shouldDisplayIndicator) {
     return null
