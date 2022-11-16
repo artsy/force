@@ -37,15 +37,14 @@ export interface StaticHeroUnit {
 
 export interface HomeHeroUnitProps {
   heroUnit: HomeHeroUnit_heroUnit$data | StaticHeroUnit
-  layout: "a" | "b"
   index: number
 }
 
 export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   heroUnit,
-  layout = "a",
   index,
 }) => {
+  const layout = "a"
   const { trackEvent } = useTracking()
 
   const handleTrackEvent = useCallback(() => {
@@ -299,5 +298,5 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     title: card.title,
   }
 
-  return <HomeHeroUnit heroUnit={heroUnit} index={index} layout="a" />
+  return <HomeHeroUnit heroUnit={heroUnit} index={index} />
 }
