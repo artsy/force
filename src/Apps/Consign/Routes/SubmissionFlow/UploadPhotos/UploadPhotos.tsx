@@ -1,9 +1,7 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Text } from "@artsy/palette"
-import {
-  SubmissionStepper,
-  useSubmissionFlowSteps,
-} from "Apps/Consign/Components/SubmissionStepper"
+import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
@@ -113,6 +111,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
     [...steps].indexOf("Photos")
   )
   const isLastStep = stepIndex === steps.length - 1
+  const isFirstStep = stepIndex === 0
 
   const initialValue = getUploadPhotosFormInitialValues(
     submission,
@@ -128,8 +127,13 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
           relayEnvironment,
           {
             externalId: submission.externalId,
-            state: "SUBMITTED",
+            state: isLastStep ? "SUBMITTED" : "DRAFT",
             sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+            // myCollectionArtworkID is necessary in order to prevent duplication or mycollection artwork
+            myCollectionArtworkID:
+              artworkId && isFirstStep ? artworkId : undefined,
+            // Source is necessary in order to link this to a mycollection artwork
+            source: isFirstStep && artworkId ? "MY_COLLECTION" : undefined,
           }
         )
         trackEvent({
