@@ -2,31 +2,32 @@ import { themeProps } from "@artsy/palette"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
-function typedArray<T extends string>(...elems: T[]): T[] {
-  return elems
-}
+type MobileSteps = "Artwork" | "Photos" | "Contact"
 
-export const submissionFlowSteps = typedArray(
+type DesktopSteps = "Artwork Details" | "Upload Photos" | "Contact Information"
+
+export const submissionFlowSteps: DesktopSteps[] = [
   "Artwork Details",
   "Upload Photos",
-  "Contact Information"
-)
+  "Contact Information",
+]
 
-export const submissionFlowStepsMobile = typedArray(
+export const submissionFlowStepsMobile: MobileSteps[] = [
   "Artwork",
   "Photos",
-  "Contact"
-)
+  "Contact",
+]
 
-export const useSubmissionFlowSteps = () => {
+export const useSubmissionFlowSteps = (): DesktopSteps[] | MobileSteps[] => {
   const enableFlowReorder = useFeatureFlag(
     "reorder-swa-artwork-submission-flow"
   )
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   if (enableFlowReorder && isMobile) {
-    return typedArray("Contact", "Artwork", "Photos")
-  } else if (enableFlowReorder) {
-    return typedArray("Contact Information", "Artwork Details", "Upload Photos")
+    return ["Contact", "Artwork", "Photos"]
+  }
+  if (enableFlowReorder) {
+    return ["Contact Information", "Artwork Details", "Upload Photos"]
   }
   if (isMobile) {
     return submissionFlowStepsMobile

@@ -73,7 +73,6 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
   const artworkId = myCollectionArtwork?.internalID
-  console.log("artworkId", artworkId, "isFirstStep", isFirstStep)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
