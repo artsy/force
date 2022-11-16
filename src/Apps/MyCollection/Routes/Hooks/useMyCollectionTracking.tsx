@@ -13,11 +13,15 @@ export const useMyCollectionTracking = () => {
   const { trackEvent } = useTracking()
 
   return {
-    addCollectedArtwork: () => {
+    addCollectedArtwork: (
+      context_owner_type:
+        | OwnerType.myCollection
+        | OwnerType.myCollectionInsights = OwnerType.myCollection
+    ) => {
       const payload: AddCollectedArtwork = {
         action: ActionType.addCollectedArtwork,
         context_module: ContextModule.myCollectionHome,
-        context_owner_type: OwnerType.myCollection,
+        context_owner_type,
         platform: "web",
       }
 
