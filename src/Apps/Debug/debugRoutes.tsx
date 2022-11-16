@@ -1,5 +1,6 @@
 import { Text } from "@artsy/palette"
 import loadable from "@loadable/component"
+import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { HttpError } from "found"
 import { AppRouteConfig } from "System/Router/Route"
 import { RouterLink } from "System/Router/RouterLink"
@@ -7,6 +8,11 @@ import { RouterLink } from "System/Router/RouterLink"
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
   { resolveComponent: component => component.DebugApp }
+)
+
+const DebugAuth = loadable(
+  () => import(/* webpackChunkName: "debugBundle" */ "./DebugAuth"),
+  { resolveComponent: component => component.DebugAuth }
 )
 
 /**
@@ -17,11 +23,19 @@ const DebugApp = loadable(
 export const debugRoutes: AppRouteConfig[] = [
   {
     path: "/debug",
-    Component: ({ children }) => children,
+    Component: ({ children }) => (
+      // TODO: Move AuthDialogProvider to Boot
+      <AuthDialogProvider>{children}</AuthDialogProvider>
+    ),
     children: [
       {
         path: "baseline",
         Component: DebugApp,
+      },
+      // TODO: Remove this route once new AuthDialog is deployed
+      {
+        path: "auth",
+        Component: DebugAuth,
       },
       {
         path: "error-404",
