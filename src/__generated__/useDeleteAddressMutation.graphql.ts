@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fa0ccf31b7a3023c034551dc8d0304e>>
+ * @generated SignedSource<<7ad6567256ccacb8d71cadbed4a60835>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -137,6 +137,13 @@ v4 = [
     "args": null,
     "kind": "ScalarField",
     "name": "phoneNumber",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "phoneNumberCountryCode",
     "storageKey": null
   },
   {
@@ -306,12 +313,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad2a73c3171eda7f4983bb8db99ceca9",
+    "cacheID": "11501358d443cae5078e9a503e6210c3",
     "id": null,
     "metadata": {},
     "name": "useDeleteAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteAddressMutation(\n  $input: DeleteUserAddressInput!\n) {\n  deleteUserAddress(input: $input) {\n    me {\n      ...SettingsShippingAddresses_me\n      id\n    }\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        ...SettingsShippingAddress_address\n        id\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsShippingAddress_address on UserAddress {\n  internalID\n  addressLine1\n  addressLine2\n  city\n  country\n  isDefault\n  name\n  phoneNumber\n  phoneNumberCountryCode\n  postalCode\n  region\n}\n\nfragment SettingsShippingAddresses_me on Me {\n  addresses: addressConnection {\n    edges {\n      node {\n        internalID\n        ...SettingsShippingAddress_address\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

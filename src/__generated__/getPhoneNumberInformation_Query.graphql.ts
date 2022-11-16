@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41ebb0cc95be1cc542a7699f1b6709f0>>
+ * @generated SignedSource<<c1d4abae0219a9a49c647e4d5e35b8d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type phoneNumberUtils_PhoneNumber_Query$variables = {
+export type getPhoneNumberInformation_Query$variables = {
   phoneNumber: string;
   regionCode?: string | null;
 };
-export type phoneNumberUtils_PhoneNumber_Query$data = {
+export type getPhoneNumberInformation_Query$data = {
   readonly phoneNumber: {
     readonly international: string | null;
     readonly isValid: boolean | null;
@@ -21,9 +21,9 @@ export type phoneNumberUtils_PhoneNumber_Query$data = {
     readonly originalNumber: string | null;
   } | null;
 };
-export type phoneNumberUtils_PhoneNumber_Query = {
-  response: phoneNumberUtils_PhoneNumber_Query$data;
-  variables: phoneNumberUtils_PhoneNumber_Query$variables;
+export type getPhoneNumberInformation_Query = {
+  response: getPhoneNumberInformation_Query$data;
+  variables: getPhoneNumberInformation_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -108,7 +108,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "phoneNumberUtils_PhoneNumber_Query",
+    "name": "getPhoneNumberInformation_Query",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -117,20 +117,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "phoneNumberUtils_PhoneNumber_Query",
+    "name": "getPhoneNumberInformation_Query",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "3566501f29a8e61b8d48ac454ee06f5f",
+    "cacheID": "eb84a8489a586959bbffd5a20bb88f88",
     "id": null,
     "metadata": {},
-    "name": "phoneNumberUtils_PhoneNumber_Query",
+    "name": "getPhoneNumberInformation_Query",
     "operationKind": "query",
-    "text": "query phoneNumberUtils_PhoneNumber_Query(\n  $phoneNumber: String!\n  $regionCode: String\n) {\n  phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    originalNumber\n  }\n}\n"
+    "text": "query getPhoneNumberInformation_Query(\n  $phoneNumber: String!\n  $regionCode: String\n) {\n  phoneNumber(phoneNumber: $phoneNumber, regionCode: $regionCode) {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    originalNumber\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d2b6e5100128043441b2d7a0b6090607";
+(node as any).hash = "22c4487822c24ae4f4acecf7a1a84a23";
 
 export default node;
