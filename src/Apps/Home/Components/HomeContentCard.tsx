@@ -23,23 +23,23 @@ import {
 } from "@artsy/cohesion"
 import { useCallback, useMemo } from "react"
 
-export interface StaticHeroUnit {
+export interface ContentCard {
   backgroundImageURL: string
-  href: string
-  heading?: string | JSX.Element
-  title: string
-  subtitle: string
-  linkText?: string
   creditLine?: string
+  heading?: string | JSX.Element
+  href: string
+  linkText?: string
+  subtitle: string
+  title: string
 }
 
 export interface HomeHeroUnitProps {
-  heroUnit: StaticHeroUnit
+  contentCard: ContentCard
   index: number
 }
 
 export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
-  heroUnit,
+  contentCard,
   index,
 }) => {
   const { trackEvent } = useTracking()
@@ -49,14 +49,14 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       action: ActionType.clickedPromoSpace,
       context_module: ContextModule.banner,
       context_screen_owner_type: OwnerType.home,
-      destination_path: heroUnit.href ?? "",
+      destination_path: contentCard.href ?? "",
       subject: "clicking on the promo banner",
     }
     trackEvent(event)
-  }, [heroUnit.href, trackEvent])
+  }, [contentCard.href, trackEvent])
 
-  const image = heroUnit.backgroundImageURL
-    ? cropped(heroUnit.backgroundImageURL, {
+  const image = contentCard.backgroundImageURL
+    ? cropped(contentCard.backgroundImageURL, {
         // 3:2
         width: 910,
         height: 607,
@@ -68,7 +68,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
     () => (
       <Column span={6} bg="white100">
         <RouterLink
-          to={heroUnit.href ?? ""}
+          to={contentCard.href ?? ""}
           style={{
             display: "block",
             width: "100%",
@@ -112,7 +112,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                       lazyLoad={index > 0}
                     />
 
-                    {heroUnit.creditLine && (
+                    {contentCard.creditLine && (
                       <Box
                         position="absolute"
                         px={2}
@@ -124,7 +124,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                         left={0}
                       >
                         <HomeHeroUnitCredit>
-                          {heroUnit.creditLine}
+                          {contentCard.creditLine}
                         </HomeHeroUnitCredit>
                       </Box>
                     )}
@@ -136,7 +136,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
         </RouterLink>
       </Column>
     ),
-    [handleTrackEvent, heroUnit.creditLine, heroUnit.href, image, index]
+    [handleTrackEvent, contentCard.creditLine, contentCard.href, image, index]
   )
 
   const description = useMemo(
@@ -152,16 +152,16 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             py={4}
           >
             <RouterLink
-              to={heroUnit.href ?? ""}
+              to={contentCard.href ?? ""}
               tabIndex={-1}
               style={{ display: "block", textDecoration: "none" }}
               onClick={handleTrackEvent}
             >
               <Media greaterThan="xs">
-                {heroUnit.heading && (
+                {contentCard.heading && (
                   <>
                     <Text variant="xs" color="black100">
-                      {heroUnit.heading}
+                      {contentCard.heading}
                     </Text>
 
                     <Spacer mt={2} />
@@ -175,10 +175,10 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 color="black100"
                 lineClamp={3}
               >
-                {heroUnit.title}
+                {contentCard.title}
               </Text>
 
-              {heroUnit.subtitle && (
+              {contentCard.subtitle && (
                 <>
                   <Spacer mt={[1, 2]} />
 
@@ -187,13 +187,13 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                     color="black60"
                     lineClamp={4}
                   >
-                    {heroUnit.subtitle}
+                    {contentCard.subtitle}
                   </Text>
                 </>
               )}
             </RouterLink>
 
-            {heroUnit.linkText && heroUnit.href && (
+            {contentCard.linkText && contentCard.href && (
               <>
                 <Media greaterThan="xs">
                   <Spacer
@@ -207,10 +207,10 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                         variant="secondaryBlack"
                         // @ts-ignore
                         as={RouterLink}
-                        to={heroUnit.href}
+                        to={contentCard.href}
                         width="100%"
                       >
-                        {heroUnit.linkText}
+                        {contentCard.linkText}
                       </Button>
                     </Column>
                   </GridColumns>
@@ -220,12 +220,12 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                   <Spacer mt={1} />
 
                   <RouterLink
-                    to={heroUnit.href}
+                    to={contentCard.href}
                     noUnderline
                     onClick={handleTrackEvent}
                   >
                     <Text variant="xs" color="black100">
-                      {heroUnit.linkText}
+                      {contentCard.linkText}
                     </Text>
                   </RouterLink>
                 </Media>
@@ -237,11 +237,11 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
     ),
     [
       handleTrackEvent,
-      heroUnit.heading,
-      heroUnit.href,
-      heroUnit.linkText,
-      heroUnit.subtitle,
-      heroUnit.title,
+      contentCard.heading,
+      contentCard.href,
+      contentCard.linkText,
+      contentCard.subtitle,
+      contentCard.title,
       index,
     ]
   )
@@ -269,7 +269,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
 }) => {
   const extras = card.extras || {}
 
-  const heroUnit: StaticHeroUnit = {
+  const contentCard: ContentCard = {
     backgroundImageURL: card.imageUrl!,
     creditLine: extras.credit,
     heading: extras.label,
@@ -279,5 +279,5 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     title: card.title,
   }
 
-  return <HomeHeroUnit heroUnit={heroUnit} index={index} />
+  return <HomeHeroUnit contentCard={contentCard} index={index} />
 }
