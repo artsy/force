@@ -10,7 +10,6 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
@@ -35,7 +34,7 @@ export interface StaticHeroUnit {
 }
 
 export interface HomeHeroUnitProps {
-  heroUnit: HomeHeroUnit_heroUnit$data | StaticHeroUnit
+  heroUnit: StaticHeroUnit
   index: number
 }
 
