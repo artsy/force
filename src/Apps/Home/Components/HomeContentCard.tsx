@@ -18,8 +18,6 @@ import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 interface ContentCard {
   creditLine?: string
   heading?: string | JSX.Element
-  subtitle: string
-  title: string
 }
 
 interface HomeContentCardProps {
@@ -36,8 +34,6 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   const contentCard: ContentCard = {
     creditLine: extras.credit,
     heading: extras.label,
-    subtitle: card.description,
-    title: card.title,
   }
 
   const image = cropped(card.imageUrl!, {
@@ -150,10 +146,10 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                 color="black100"
                 lineClamp={3}
               >
-                {contentCard.title}
+                {card.title}
               </Text>
 
-              {contentCard.subtitle && (
+              {card.description && (
                 <>
                   <Spacer mt={[1, 2]} />
 
@@ -162,7 +158,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                     color="black60"
                     lineClamp={4}
                   >
-                    {contentCard.subtitle}
+                    {card.description}
                   </Text>
                 </>
               )}
