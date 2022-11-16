@@ -44,7 +44,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   heroUnit,
   index,
 }) => {
-  const layout = "a"
   const { trackEvent } = useTracking()
 
   const handleTrackEvent = useCallback(() => {
@@ -124,7 +123,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                         width="100%"
                         bottom={0}
                         background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
-                        {...(layout === "a" ? { left: 0 } : { right: 0 })}
+                        left={0}
                       >
                         <HomeHeroUnitCredit>
                           {heroUnit.creditLine}
@@ -139,7 +138,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
         </RouterLink>
       </Column>
     ),
-    [handleTrackEvent, heroUnit.creditLine, heroUnit.href, image, index, layout]
+    [handleTrackEvent, heroUnit.creditLine, heroUnit.href, image, index]
   )
 
   const description = useMemo(
@@ -261,17 +260,10 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       )}
 
       <GridColumns bg="black5" width="100%">
-        {layout === "a" ? (
-          <>
-            {figure}
-            {description}
-          </>
-        ) : (
-          <>
-            {description}
-            {figure}
-          </>
-        )}
+        <>
+          {figure}
+          {description}
+        </>
       </GridColumns>
     </>
   )
