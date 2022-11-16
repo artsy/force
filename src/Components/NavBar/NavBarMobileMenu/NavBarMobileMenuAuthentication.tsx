@@ -14,12 +14,12 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me$data } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
-import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import { useIndicators } from "Components/NavBar/useIndicators"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me$data | null
@@ -32,12 +32,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
   const { trackEvent } = useTracking()
-
-  const {
-    hasConversations,
-    hasNotifications,
-    counts,
-  } = checkAndSyncIndicatorsCount({
+  const indicators = useIndicators({
     notifications: me?.unreadNotificationsCount,
     conversations: me?.unreadConversationCount,
   })
@@ -111,7 +106,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
           }}
         >
           Activity
-          {hasNotifications && <Indicator />}
+          {indicators?.hasNotifications && <Indicator />}
         </NavBarMobileMenuItemLink>
       )}
 
@@ -120,8 +115,8 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         justifyContent="space-between"
       >
         Inbox
-        {hasConversations && (
-          <Box color="brand">{counts.conversations} new</Box>
+        {indicators?.hasConversations && (
+          <Box color="brand">{indicators.counts.conversations} new</Box>
         )}
       </NavBarMobileMenuItemLink>
 

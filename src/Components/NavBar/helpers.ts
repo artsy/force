@@ -1,13 +1,11 @@
 import cookie from "cookies-js"
-import { isServer } from "Server/isServer"
 
-interface Counts {
+export interface Counts {
   conversations?: number
   notifications?: number
 }
 
-export const getNotificationCount = () =>
-  (!isServer && cookie.get("notification-count")) || 0
+export const getNotificationCount = () => cookie.get("notification-count") || 0
 
 export const updateNotificationCache = (notificationCount?: number) => {
   if (typeof notificationCount === "number") {
@@ -17,8 +15,7 @@ export const updateNotificationCache = (notificationCount?: number) => {
   }
 }
 
-export const getConversationCount = () =>
-  (!isServer && cookie.get("conversation-count")) || 0
+export const getConversationCount = () => cookie.get("conversation-count") || 0
 
 export const updateConversationCache = (conversationCount?: number) => {
   if (typeof conversationCount === "number") {
@@ -47,3 +44,7 @@ export const checkAndSyncIndicatorsCount = (counts: Counts) => {
     },
   }
 }
+
+export type IndicatorsCountState = ReturnType<
+  typeof checkAndSyncIndicatorsCount
+>
