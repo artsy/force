@@ -220,14 +220,10 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   )
 
   return (
-    <>
-      <GridColumns bg="black5" width="100%">
-        <>
-          {figure}
-          {description}
-        </>
-      </GridColumns>
-    </>
+    <GridColumns bg="black5" width="100%">
+      {figure}
+      {description}
+    </GridColumns>
   )
 }
 
