@@ -14,14 +14,7 @@ import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
-import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  ClickedPromoSpace,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 
 export interface ContentCard {
   backgroundImageURL: string
@@ -42,19 +35,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   contentCard,
   index,
 }) => {
-  const { trackEvent } = useTracking()
-
-  const handleTrackEvent = useCallback(() => {
-    const event: ClickedPromoSpace = {
-      action: ActionType.clickedPromoSpace,
-      context_module: ContextModule.banner,
-      context_screen_owner_type: OwnerType.home,
-      destination_path: contentCard.href ?? "",
-      subject: "clicking on the promo banner",
-    }
-    trackEvent(event)
-  }, [contentCard.href, trackEvent])
-
   const image = contentCard.backgroundImageURL
     ? cropped(contentCard.backgroundImageURL, {
         // 3:2
@@ -75,7 +55,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             height: "100%",
           }}
           tabIndex={-1}
-          onClick={handleTrackEvent}
         >
           {image && (
             <>
@@ -136,7 +115,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
         </RouterLink>
       </Column>
     ),
-    [handleTrackEvent, contentCard.creditLine, contentCard.href, image, index]
+    [contentCard.creditLine, contentCard.href, image, index]
   )
 
   const description = useMemo(
@@ -155,7 +134,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
               to={contentCard.href ?? ""}
               tabIndex={-1}
               style={{ display: "block", textDecoration: "none" }}
-              onClick={handleTrackEvent}
             >
               <Media greaterThan="xs">
                 {contentCard.heading && (
@@ -219,11 +197,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 <Media at="xs">
                   <Spacer mt={1} />
 
-                  <RouterLink
-                    to={contentCard.href}
-                    noUnderline
-                    onClick={handleTrackEvent}
-                  >
+                  <RouterLink to={contentCard.href} noUnderline>
                     <Text variant="xs" color="black100">
                       {contentCard.linkText}
                     </Text>
@@ -236,7 +210,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       </Column>
     ),
     [
-      handleTrackEvent,
       contentCard.heading,
       contentCard.href,
       contentCard.linkText,
