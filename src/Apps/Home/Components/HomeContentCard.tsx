@@ -46,14 +46,12 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     title: card.title,
   }
 
-  const image = contentCard.backgroundImageURL
-    ? cropped(contentCard.backgroundImageURL, {
-        // 3:2
-        width: 910,
-        height: 607,
-        quality: 75,
-      })
-    : null
+  const image = cropped(contentCard.backgroundImageURL, {
+    // 3:2
+    width: 910,
+    height: 607,
+    quality: 75,
+  })
 
   return (
     <GridColumns bg="black5" width="100%">
