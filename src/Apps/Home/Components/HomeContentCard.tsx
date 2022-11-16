@@ -16,7 +16,6 @@ import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 
 interface ContentCard {
-  backgroundImageURL: string
   creditLine?: string
   heading?: string | JSX.Element
   href: string
@@ -37,7 +36,6 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   const extras = card.extras || {}
 
   const contentCard: ContentCard = {
-    backgroundImageURL: card.imageUrl!,
     creditLine: extras.credit,
     heading: extras.label,
     href: card.url!,
@@ -46,7 +44,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     title: card.title,
   }
 
-  const image = cropped(contentCard.backgroundImageURL, {
+  const image = cropped(card.imageUrl!, {
     // 3:2
     width: 910,
     height: 607,
