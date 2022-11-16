@@ -10,7 +10,6 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import { Link } from "react-head"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
@@ -250,15 +249,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 
   return (
     <>
-      {image && index === 0 && (
-        <Link
-          rel="preload"
-          as="image"
-          href={image.src}
-          imagesrcset={image.srcSet}
-        />
-      )}
-
       <GridColumns bg="black5" width="100%">
         <>
           {figure}
