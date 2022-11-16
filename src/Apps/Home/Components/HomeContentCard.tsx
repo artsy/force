@@ -18,7 +18,6 @@ import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 interface ContentCard {
   creditLine?: string
   heading?: string | JSX.Element
-  linkText?: string
   subtitle: string
   title: string
 }
@@ -37,7 +36,6 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   const contentCard: ContentCard = {
     creditLine: extras.credit,
     heading: extras.label,
-    linkText: card.linkText,
     subtitle: card.description,
     title: card.title,
   }
@@ -170,7 +168,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
               )}
             </RouterLink>
 
-            {contentCard.linkText && card.url && (
+            {card.linkText && card.url && (
               <>
                 <Media greaterThan="xs">
                   <Spacer
@@ -187,7 +185,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                         to={card.url}
                         width="100%"
                       >
-                        {contentCard.linkText}
+                        {card.linkText}
                       </Button>
                     </Column>
                   </GridColumns>
@@ -198,7 +196,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
 
                   <RouterLink to={card.url} noUnderline>
                     <Text variant="xs" color="black100">
-                      {contentCard.linkText}
+                      {card.linkText}
                     </Text>
                   </RouterLink>
                 </Media>
