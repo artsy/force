@@ -15,10 +15,6 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 
-interface ContentCard {
-  creditLine?: string
-}
-
 interface HomeContentCardProps {
   card: BrazeContentCard
   index: number
@@ -29,10 +25,6 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   index,
 }) => {
   const extras = card.extras || {}
-
-  const contentCard: ContentCard = {
-    creditLine: extras.credit,
-  }
 
   const image = cropped(card.imageUrl!, {
     // 3:2
@@ -88,7 +80,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                       lazyLoad={index > 0}
                     />
 
-                    {contentCard.creditLine && (
+                    {extras.credit && (
                       <Box
                         position="absolute"
                         px={2}
@@ -99,9 +91,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                         background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
                         left={0}
                       >
-                        <HomeHeroUnitCredit>
-                          {contentCard.creditLine}
-                        </HomeHeroUnitCredit>
+                        <HomeHeroUnitCredit>{extras.credit}</HomeHeroUnitCredit>
                       </Box>
                     )}
                   </Box>
