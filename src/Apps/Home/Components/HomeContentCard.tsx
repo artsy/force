@@ -33,11 +33,13 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     quality: 75,
   })
 
+  const cardLink = card.url ?? ""
+
   return (
     <GridColumns bg="black5" width="100%">
       <Column span={6} bg="white100">
         <RouterLink
-          to={card.url ?? ""}
+          to={cardLink}
           style={{
             display: "block",
             width: "100%",
@@ -108,7 +110,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             py={4}
           >
             <RouterLink
-              to={card.url ?? ""}
+              to={cardLink}
               tabIndex={-1}
               style={{ display: "block", textDecoration: "none" }}
             >
@@ -156,7 +158,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                     variant="secondaryBlack"
                     // @ts-ignore
                     as={RouterLink}
-                    to={card.url}
+                    to={cardLink}
                     width="100%"
                   >
                     {card.linkText}
@@ -168,7 +170,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             <Media at="xs">
               <Spacer mt={1} />
 
-              <RouterLink to={card.url ?? ""} noUnderline>
+              <RouterLink to={cardLink} noUnderline>
                 <Text variant="xs" color="black100">
                   {card.linkText}
                 </Text>
