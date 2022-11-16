@@ -129,7 +129,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
           }}
           my={1}
         >
-          Artists I follow ({followedArtistArtworkCount})
+          Artists You Follow ({followedArtistArtworkCount})
         </Checkbox>
 
         <ShowMore>
