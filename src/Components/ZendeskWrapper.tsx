@@ -21,6 +21,11 @@ export const ZendeskWrapper: FC<ZendeskWrapperProps> = ({
     src: `https://static.zdassets.com/ekr/snippet.js?key=${key}`,
     removeOnUnmount: true,
     onReady: () => {
+      window.zESettings = {
+        webWidget: {
+          zIndex: 99,
+        },
+      }
       window.zEmbed?.show?.()
     },
   })

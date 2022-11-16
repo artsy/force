@@ -44,6 +44,7 @@ declare global {
     ReactNativeWebView?: { postMessage: (message: string) => void }
     sd: any
     zEmbed: { show: () => void; hide: () => void }
+    zESettings: object
   }
 }
 
