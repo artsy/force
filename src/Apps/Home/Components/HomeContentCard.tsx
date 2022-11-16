@@ -35,17 +35,19 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
 
   const cardLink = card.url ?? ""
 
+  const handleClick = () => {
+    const appboy = (window as any).appboy
+    appboy.logCardClick(card)
+  }
+
   return (
     <GridColumns bg="black5" width="100%">
       <Column span={6} bg="white100">
         <RouterLink
-          to={cardLink}
-          style={{
-            display: "block",
-            width: "100%",
-            height: "100%",
-          }}
+          onClick={handleClick}
+          style={{ display: "block", height: "100%", width: "100%" }}
           tabIndex={-1}
+          to={cardLink}
         >
           <Media at="xs">
             <ResponsiveBox
@@ -55,11 +57,11 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
               bg="black10"
             >
               <Image
+                height="100%"
+                lazyLoad={index > 0}
                 src={image.src}
                 srcSet={image.srcSet}
                 width="100%"
-                height="100%"
-                lazyLoad={index > 0}
               />
             </ResponsiveBox>
           </Media>
@@ -110,9 +112,10 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             py={4}
           >
             <RouterLink
-              to={cardLink}
-              tabIndex={-1}
+              onClick={handleClick}
               style={{ display: "block", textDecoration: "none" }}
+              tabIndex={-1}
+              to={cardLink}
             >
               <Media greaterThan="xs">
                 {extras.label && (
@@ -155,10 +158,11 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
               <GridColumns>
                 <Column span={[12, 12, 6]}>
                   <Button
-                    variant="secondaryBlack"
                     // @ts-ignore
                     as={RouterLink}
+                    onClick={handleClick}
                     to={cardLink}
+                    variant="secondaryBlack"
                     width="100%"
                   >
                     {card.linkText}
@@ -170,7 +174,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             <Media at="xs">
               <Spacer mt={1} />
 
-              <RouterLink to={cardLink} noUnderline>
+              <RouterLink noUnderline onClick={handleClick} to={cardLink}>
                 <Text variant="xs" color="black100">
                   {card.linkText}
                 </Text>
