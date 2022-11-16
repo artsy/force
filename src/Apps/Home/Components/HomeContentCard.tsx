@@ -15,7 +15,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 
-export interface ContentCard {
+interface ContentCard {
   backgroundImageURL: string
   creditLine?: string
   heading?: string | JSX.Element
@@ -25,15 +25,27 @@ export interface ContentCard {
   title: string
 }
 
-export interface HomeHeroUnitProps {
-  contentCard: ContentCard
+interface HomeContentCardProps {
+  card: BrazeContentCard
   index: number
 }
 
-export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
-  contentCard,
+export const HomeContentCard: React.FC<HomeContentCardProps> = ({
+  card,
   index,
 }) => {
+  const extras = card.extras || {}
+
+  const contentCard: ContentCard = {
+    backgroundImageURL: card.imageUrl!,
+    creditLine: extras.credit,
+    heading: extras.label,
+    href: card.url!,
+    linkText: card.linkText,
+    subtitle: card.description,
+    title: card.title,
+  }
+
   const image = contentCard.backgroundImageURL
     ? cropped(contentCard.backgroundImageURL, {
         // 3:2
@@ -203,28 +215,4 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       </Column>
     </GridColumns>
   )
-}
-
-interface HomeContentCardProps {
-  card: BrazeContentCard
-  index: number
-}
-
-export const HomeContentCard: React.FC<HomeContentCardProps> = ({
-  card,
-  index,
-}) => {
-  const extras = card.extras || {}
-
-  const contentCard: ContentCard = {
-    backgroundImageURL: card.imageUrl!,
-    creditLine: extras.credit,
-    heading: extras.label,
-    href: card.url!,
-    linkText: card.linkText,
-    subtitle: card.description,
-    title: card.title,
-  }
-
-  return <HomeHeroUnit contentCard={contentCard} index={index} />
 }
