@@ -11,7 +11,6 @@ import {
   Column,
 } from "@artsy/palette"
 import { Link } from "react-head"
-import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
@@ -278,23 +277,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
     </>
   )
 }
-
-export const HomeHeroUnitFragmentContainer = createFragmentContainer(
-  HomeHeroUnit,
-  {
-    heroUnit: graphql`
-      fragment HomeHeroUnit_heroUnit on HomePageHeroUnit {
-        backgroundImageURL
-        heading
-        title
-        subtitle
-        linkText
-        href
-        creditLine
-      }
-    `,
-  }
-)
 
 export const LOGGED_OUT_HERO_UNIT: StaticHeroUnit = {
   title: "Collect art by the world’s leading artists",
