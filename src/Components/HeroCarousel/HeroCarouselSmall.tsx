@@ -15,10 +15,25 @@ import {
   SwiperRailProps,
 } from "@artsy/palette"
 
-export const HeroCarouselSmall: FC = ({ children }) => {
+interface HeroCarouselSmallProps {
+  onChange?: (index) => void
+}
+
+export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
+  children,
+  onChange,
+}) => {
   const length = Children.count(children)
 
   const [index, setIndex] = useState(0)
+
+  const handleChange = newIndex => {
+    if (onChange) {
+      onChange(newIndex)
+    }
+
+    setIndex(newIndex)
+  }
 
   return (
     <>
@@ -27,7 +42,7 @@ export const HeroCarouselSmall: FC = ({ children }) => {
         snap="center"
         Cell={Cell}
         Rail={Rail}
-        onChange={setIndex}
+        onChange={handleChange}
       >
         {children}
       </Swiper>

@@ -102,5 +102,11 @@ export const HomeContentCards: React.FC = () => {
 
   const heroCards = cards.length < 1 ? placeholderCards : realCards
 
-  return <HeroCarousel>{heroCards}</HeroCarousel>
+  const handleChange = newIndex => {
+    const appboy = (window as any).appboy
+    const card = cards[newIndex]
+    appboy.logCardImpressions([card])
+  }
+
+  return <HeroCarousel onChange={handleChange}>{heroCards}</HeroCarousel>
 }
