@@ -278,14 +278,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   )
 }
 
-export const LOGGED_OUT_HERO_UNIT: StaticHeroUnit = {
-  title: "Collect art by the world’s leading artists",
-  subtitle: "Register for updates on available works, market news, and more.",
-  href: "/signup",
-  linkText: "Sign Up",
-  backgroundImageURL: "https://files.artsy.net/homepage/signup-banner.png",
-}
-
 interface HomeContentCardProps {
   card: BrazeContentCard
   index: number
