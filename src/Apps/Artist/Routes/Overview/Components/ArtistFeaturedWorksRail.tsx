@@ -15,7 +15,6 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Skeleton } from "@artsy/palette"
 import { useJump } from "Utils/Hooks/useJump"
 import { useTranslation } from "react-i18next"
-import { useMemo } from "react"
 
 interface ArtistFeaturedWorksRailProps {
   artist: ArtistFeaturedWorksRail_artist$data
@@ -113,28 +112,28 @@ export const ArtistFeaturedWorksRailFragmentContainer = createFragmentContainer(
   }
 )
 
+const Placeholder = () => {
+  const { t } = useTranslation()
+
+  return (
+    <Skeleton>
+      <Rail
+        title={t("rails.artistFeaturedWorks.title")}
+        viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
+        getItems={() => {
+          return [...new Array(8)].map((_, i) => {
+            return <ShelfArtworkPlaceholder key={i} index={i} />
+          })
+        }}
+      />
+    </Skeleton>
+  )
+}
+
 export const ArtistFeaturedWorksRailQueryRenderer: React.FC<{
   slug: string
 }> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
-  const { t } = useTranslation()
-
-  const PLACEHOLDER = useMemo(
-    () => (
-      <Skeleton>
-        <Rail
-          title={t("rails.artistFeaturedWorks.title")}
-          viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
-          getItems={() => {
-            return [...new Array(8)].map((_, i) => {
-              return <ShelfArtworkPlaceholder key={i} index={i} />
-            })
-          }}
-        />
-      </Skeleton>
-    ),
-    [t]
-  )
 
   return (
     <Box data-test="ArtistFeaturedWorksRailQueryRenderer">
@@ -142,7 +141,7 @@ export const ArtistFeaturedWorksRailQueryRenderer: React.FC<{
         lazyLoad
         environment={relayEnvironment}
         variables={{ slug }}
-        placeholder={PLACEHOLDER}
+        placeholder={<Placeholder />}
         query={graphql`
           query ArtistFeaturedWorksRailQuery($slug: String!) {
             artist(id: $slug) {
@@ -156,7 +155,7 @@ export const ArtistFeaturedWorksRailQueryRenderer: React.FC<{
             return null
           }
           if (!props) {
-            return PLACEHOLDER
+            return <Placeholder />
           }
           if (props.artist) {
             return (
