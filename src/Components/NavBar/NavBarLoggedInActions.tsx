@@ -16,6 +16,7 @@ import {
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
+import { checkAndSyncIndicatorsCount } from "./helpers"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
@@ -25,7 +26,6 @@ import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { useIndicators } from "Components/NavBar/useIndicators"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -33,7 +33,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
-  const indicators = useIndicators({
+  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
     notifications: me?.unreadNotificationsCount,
     conversations: me?.unreadConversationCount,
   })
@@ -76,7 +76,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               fill="currentColor"
             />
 
-            {indicators?.hasNotifications &&
+            {hasNotifications &&
               (enableActivityPanel ? (
                 <NavBarNotificationIndicator
                   position="absolute"
@@ -97,9 +97,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
           fill="currentColor"
         />
 
-        {indicators?.hasConversations && (
-          <NavBarLoggedInActionsNotificationIndicator />
-        )}
+        {hasConversations && <NavBarLoggedInActionsNotificationIndicator />}
       </NavBarItemLink>
 
       <Dropdown
