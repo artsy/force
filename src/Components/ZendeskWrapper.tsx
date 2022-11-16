@@ -23,6 +23,7 @@ export const ZendeskWrapper: FC<ZendeskWrapperProps> = ({
     onReady: () => {
       window.zESettings = {
         webWidget: {
+          // keeping the widget below the cookie banner
           zIndex: 99,
         },
       }
