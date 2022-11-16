@@ -17,7 +17,6 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 
@@ -30,7 +29,6 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   useImagePerformanceObserver()
 
-  const isMounted = useDidMount()
   const { onboardingComponent } = useOnboardingModal()
 
   useAuthIntent()
@@ -109,8 +107,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
       )}
 
       {onboardingComponent}
-
-      {isMounted}
     </Flex>
   )
 }
