@@ -18,7 +18,6 @@ import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
 interface ContentCard {
   creditLine?: string
   heading?: string | JSX.Element
-  href: string
   linkText?: string
   subtitle: string
   title: string
@@ -38,7 +37,6 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   const contentCard: ContentCard = {
     creditLine: extras.credit,
     heading: extras.label,
-    href: card.url!,
     linkText: card.linkText,
     subtitle: card.description,
     title: card.title,
@@ -55,7 +53,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
     <GridColumns bg="black5" width="100%">
       <Column span={6} bg="white100">
         <RouterLink
-          to={contentCard.href ?? ""}
+          to={card.url ?? ""}
           style={{
             display: "block",
             width: "100%",
@@ -132,7 +130,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             py={4}
           >
             <RouterLink
-              to={contentCard.href ?? ""}
+              to={card.url ?? ""}
               tabIndex={-1}
               style={{ display: "block", textDecoration: "none" }}
             >
@@ -172,7 +170,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
               )}
             </RouterLink>
 
-            {contentCard.linkText && contentCard.href && (
+            {contentCard.linkText && card.url && (
               <>
                 <Media greaterThan="xs">
                   <Spacer
@@ -186,7 +184,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                         variant="secondaryBlack"
                         // @ts-ignore
                         as={RouterLink}
-                        to={contentCard.href}
+                        to={card.url}
                         width="100%"
                       >
                         {contentCard.linkText}
@@ -198,7 +196,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                 <Media at="xs">
                   <Spacer mt={1} />
 
-                  <RouterLink to={contentCard.href} noUnderline>
+                  <RouterLink to={card.url} noUnderline>
                     <Text variant="xs" color="black100">
                       {contentCard.linkText}
                     </Text>
