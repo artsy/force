@@ -133,55 +133,47 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                 {card.title}
               </Text>
 
-              {card.description && (
-                <>
-                  <Spacer mt={[1, 2]} />
+              <Spacer mt={[1, 2]} />
 
-                  <Text
-                    variant={["xs", "sm-display", "lg-display"]}
-                    color="black60"
-                    lineClamp={4}
-                  >
-                    {card.description}
-                  </Text>
-                </>
-              )}
+              <Text
+                variant={["xs", "sm-display", "lg-display"]}
+                color="black60"
+                lineClamp={4}
+              >
+                {card.description}
+              </Text>
             </RouterLink>
 
-            {card.linkText && card.url && (
-              <>
-                <Media greaterThan="xs">
-                  <Spacer
-                    // Unconventional value here to keep visual rhythm
-                    mt="30px"
-                  />
+            <Media greaterThan="xs">
+              <Spacer
+                // Unconventional value here to keep visual rhythm
+                mt="30px"
+              />
 
-                  <GridColumns>
-                    <Column span={[12, 12, 6]}>
-                      <Button
-                        variant="secondaryBlack"
-                        // @ts-ignore
-                        as={RouterLink}
-                        to={card.url}
-                        width="100%"
-                      >
-                        {card.linkText}
-                      </Button>
-                    </Column>
-                  </GridColumns>
-                </Media>
+              <GridColumns>
+                <Column span={[12, 12, 6]}>
+                  <Button
+                    variant="secondaryBlack"
+                    // @ts-ignore
+                    as={RouterLink}
+                    to={card.url}
+                    width="100%"
+                  >
+                    {card.linkText}
+                  </Button>
+                </Column>
+              </GridColumns>
+            </Media>
 
-                <Media at="xs">
-                  <Spacer mt={1} />
+            <Media at="xs">
+              <Spacer mt={1} />
 
-                  <RouterLink to={card.url} noUnderline>
-                    <Text variant="xs" color="black100">
-                      {card.linkText}
-                    </Text>
-                  </RouterLink>
-                </Media>
-              </>
-            )}
+              <RouterLink to={card.url ?? ""} noUnderline>
+                <Text variant="xs" color="black100">
+                  {card.linkText}
+                </Text>
+              </RouterLink>
+            </Media>
           </Column>
         </GridColumns>
       </Column>
