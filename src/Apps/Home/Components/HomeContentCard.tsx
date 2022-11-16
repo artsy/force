@@ -45,60 +45,56 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
           }}
           tabIndex={-1}
         >
-          {image && (
-            <>
-              <Media at="xs">
-                <ResponsiveBox
-                  aspectWidth={3}
-                  aspectHeight={2}
-                  maxWidth="100%"
-                  bg="black10"
-                >
-                  <Image
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    width="100%"
-                    height="100%"
-                    lazyLoad={index > 0}
-                  />
-                </ResponsiveBox>
-              </Media>
+          <Media at="xs">
+            <ResponsiveBox
+              aspectWidth={3}
+              aspectHeight={2}
+              maxWidth="100%"
+              bg="black10"
+            >
+              <Image
+                src={image.src}
+                srcSet={image.srcSet}
+                width="100%"
+                height="100%"
+                lazyLoad={index > 0}
+              />
+            </ResponsiveBox>
+          </Media>
 
-              <Media greaterThan="xs">
-                {className => (
+          <Media greaterThan="xs">
+            {className => (
+              <Box
+                className={className}
+                height={[300, 400, 500]}
+                position="relative"
+              >
+                <Image
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  width="100%"
+                  height="100%"
+                  style={{ objectFit: "cover" }}
+                  lazyLoad={index > 0}
+                />
+
+                {extras.credit && (
                   <Box
-                    className={className}
-                    height={[300, 400, 500]}
-                    position="relative"
+                    position="absolute"
+                    px={2}
+                    pb={1}
+                    pt={6}
+                    width="100%"
+                    bottom={0}
+                    background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
+                    left={0}
                   >
-                    <Image
-                      src={image.src}
-                      srcSet={image.srcSet}
-                      width="100%"
-                      height="100%"
-                      style={{ objectFit: "cover" }}
-                      lazyLoad={index > 0}
-                    />
-
-                    {extras.credit && (
-                      <Box
-                        position="absolute"
-                        px={2}
-                        pb={1}
-                        pt={6}
-                        width="100%"
-                        bottom={0}
-                        background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
-                        left={0}
-                      >
-                        <HomeHeroUnitCredit>{extras.credit}</HomeHeroUnitCredit>
-                      </Box>
-                    )}
+                    <HomeHeroUnitCredit>{extras.credit}</HomeHeroUnitCredit>
                   </Box>
                 )}
-              </Media>
-            </>
-          )}
+              </Box>
+            )}
+          </Media>
         </RouterLink>
       </Column>
       <Column span={6}>
