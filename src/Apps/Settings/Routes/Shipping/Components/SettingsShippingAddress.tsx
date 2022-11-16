@@ -2,6 +2,7 @@ import {
   Box,
   Clickable,
   Flex,
+  ModalDialog,
   Separator,
   Text,
   useToasts,
@@ -13,10 +14,7 @@ import { compactObject } from "Utils/compactObject"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
-import {
-  INITIAL_ADDRESS,
-  SettingsShippingAddressForm,
-} from "./SettingsShippingAddressForm"
+import { INITIAL_ADDRESS, ShippingAddressForm } from "./ShippingAddressForm"
 
 interface SettingsShippingAddressProps {
   address: SettingsShippingAddress_address$data
@@ -78,19 +76,21 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   return (
     <>
       {mode === "Editing" && (
-        <SettingsShippingAddressForm
-          onClose={handleClose}
-          address={{
-            internalID: address.internalID,
-            isDefault: address.isDefault,
-            attributes: {
-              // Backfill incase missing fields
-              ...INITIAL_ADDRESS,
-              // Remove null fields; select out only editable fields
-              ...compactObject(pick(address, Object.keys(INITIAL_ADDRESS))),
-            },
-          }}
-        />
+        <ModalDialog title={"Edit Address"} width={800} onClose={handleClose}>
+          <ShippingAddressForm
+            onClose={handleClose}
+            address={{
+              internalID: address.internalID,
+              isDefault: address.isDefault,
+              attributes: {
+                // Backfill incase missing fields
+                ...INITIAL_ADDRESS,
+                // Remove null fields; select out only editable fields
+                ...compactObject(pick(address, Object.keys(INITIAL_ADDRESS))),
+              },
+            }}
+          />
+        </ModalDialog>
       )}
 
       <Box border="1px solid" borderColor="black10" p={2}>

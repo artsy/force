@@ -6,7 +6,7 @@ import {
   GridColumns,
   Input,
   Message,
-  ModalDialog,
+  Spacer,
   useToasts,
   VisuallyHidden,
 } from "@artsy/palette"
@@ -76,7 +76,7 @@ interface SettingsShippingAddressFormProps {
   }
 }
 
-export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
+export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   onClose,
   address,
 }) => {
@@ -175,22 +175,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         submitForm,
       }) => {
         return (
-          <ModalDialog
-            title={isEditing ? "Edit Address" : "Add New Address"}
-            width={800}
-            onClose={onClose}
-            footer={
-              <Button
-                width="100%"
-                type="submit"
-                disabled={!isValid}
-                loading={isSubmitting}
-                onClick={submitForm}
-              >
-                Save
-              </Button>
-            }
-          >
+          <>
             <Form>
               <GridColumns>
                 <Column span={12}>
@@ -362,7 +347,17 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                 </VisuallyHidden>
               </GridColumns>
             </Form>
-          </ModalDialog>
+            <Spacer mt={2} />
+            <Button
+              width="100%"
+              type="submit"
+              disabled={!isValid}
+              loading={isSubmitting}
+              onClick={submitForm}
+            >
+              Save
+            </Button>
+          </>
         )
       }}
     </Formik>

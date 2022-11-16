@@ -1,11 +1,18 @@
-import { Button, Column, GridColumns, Message, Text } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Message,
+  ModalDialog,
+  Text,
+} from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddresses_me$data } from "__generated__/SettingsShippingAddresses_me.graphql"
 import { SettingsShippingAddressFragmentContainer } from "./SettingsShippingAddress"
-import { SettingsShippingAddressForm } from "./SettingsShippingAddressForm"
+import { ShippingAddressForm } from "./ShippingAddressForm"
 
 interface SettingsShippingAddressesProps {
   me: SettingsShippingAddresses_me$data
@@ -31,7 +38,13 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
   return (
     <>
       {mode === "Adding" && (
-        <SettingsShippingAddressForm onClose={handleClose} />
+        <ModalDialog
+          title={"Add New Address"}
+          width={800}
+          onClose={handleClose}
+        >
+          <ShippingAddressForm onClose={handleClose} />
+        </ModalDialog>
       )}
 
       <Text variant={["md", "lg"]} mb={4}>
