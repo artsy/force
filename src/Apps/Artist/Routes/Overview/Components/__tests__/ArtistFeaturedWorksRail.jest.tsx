@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistNotableWorksRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail"
-import { ArtistNotableWorksRail_Test_Query } from "__generated__/ArtistNotableWorksRail_Test_Query.graphql"
+import { ArtistFeaturedWorksRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistFeaturedWorksRail"
+import { ArtistFeaturedWorksRail_Test_Query } from "__generated__/ArtistFeaturedWorksRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -10,13 +10,13 @@ jest.mock("Utils/Hooks/useJump", () => ({
   useJump: () => ({ jumpTo: jest.fn() }),
 }))
 
-describe("ArtistNotableWorksRail", () => {
-  const { getWrapper } = setupTestWrapper<ArtistNotableWorksRail_Test_Query>({
-    Component: ArtistNotableWorksRailFragmentContainer,
+describe("ArtistFeaturedWorksRail", () => {
+  const { getWrapper } = setupTestWrapper<ArtistFeaturedWorksRail_Test_Query>({
+    Component: ArtistFeaturedWorksRailFragmentContainer,
     query: graphql`
-      query ArtistNotableWorksRail_Test_Query @relay_test_operation {
+      query ArtistFeaturedWorksRail_Test_Query @relay_test_operation {
         artist(id: "test") {
-          ...ArtistNotableWorksRail_artist
+          ...ArtistFeaturedWorksRail_artist
         }
       }
     `,
@@ -47,7 +47,7 @@ describe("ArtistNotableWorksRail", () => {
         slug: "artistSlug",
       }),
     })
-    expect(wrapper.text()).toContain("Notable Works")
+    expect(wrapper.text()).toContain("Featured Works")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").first().props().to).toContain(
       "/artist/artistSlug/works-for-sale"
