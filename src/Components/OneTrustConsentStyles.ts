@@ -412,8 +412,6 @@ export const OneTrustConsentStyles = createGlobalStyle`
       ${toStyle({
         boxShadow: DROP_SHADOW,
         borderTop: `1px solid ${THEME.colors.black15}`,
-        // keeping the banner below the onboarding modal
-        zIndex: "1 !important",
       })}
 
       .ot-sdk-container {
