@@ -22,7 +22,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     { name: "My Collection", url: "/settings/my-collection" },
     isInsightsEnabled && { name: "Insights", url: "/settings/insights" },
     { name: "Saves & Follows", url: "/settings/saves" },
-    { name: "Your Alerts", url: "/settings/alerts" },
+    { name: "Alerts", url: "/settings/alerts" },
     { name: "Order History", url: "/settings/purchases" },
     { name: "Bids", url: "/settings/auctions" },
     { name: "Payments", url: "/settings/payments" },

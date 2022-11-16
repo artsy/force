@@ -164,7 +164,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   return (
     <>
-      <MetaTags title="Your Alerts | Artsy" pathname="/settings/alerts" />
+      <MetaTags title="Alerts | Artsy" pathname="/settings/alerts" />
 
       <SavedSearchAlertHeader selected={sort} onSortSelect={handleSortSelect} />
 
