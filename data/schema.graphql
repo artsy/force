@@ -16317,6 +16317,9 @@ type User implements Node {
 
   # A globally unique ID.
   id: ID!
+
+  # Has the users identity been verified.
+  identityVerified: Boolean!
   inquiredArtworksConnection(
     after: String
     before: String
