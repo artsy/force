@@ -403,15 +403,15 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 order={order}
                 onChange={onChangeShippingAddress}
               />
-              <PaymentMethodSummaryItem
-                order={order}
-                onChange={onChangePayment}
-                title="Payment method"
-              />
               <ShippingArtaSummaryItemFragmentContainer
                 order={order}
                 onChange={onChangeShippingMethod}
                 title="Shipping"
+              />
+              <PaymentMethodSummaryItem
+                order={order}
+                onChange={onChangePayment}
+                title="Payment method"
               />
             </Flex>
             <Media greaterThan="xs">
