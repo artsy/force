@@ -14,7 +14,6 @@ import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
-import { useMemo } from "react"
 
 export interface ContentCard {
   backgroundImageURL: string
@@ -44,8 +43,8 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       })
     : null
 
-  const figure = useMemo(
-    () => (
+  return (
+    <GridColumns bg="black5" width="100%">
       <Column span={6} bg="white100">
         <RouterLink
           to={contentCard.href ?? ""}
@@ -114,12 +113,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
           )}
         </RouterLink>
       </Column>
-    ),
-    [contentCard.creditLine, contentCard.href, image, index]
-  )
-
-  const description = useMemo(
-    () => (
       <Column span={6}>
         <GridColumns height="100%">
           <Column
@@ -208,21 +201,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
           </Column>
         </GridColumns>
       </Column>
-    ),
-    [
-      contentCard.heading,
-      contentCard.href,
-      contentCard.linkText,
-      contentCard.subtitle,
-      contentCard.title,
-      index,
-    ]
-  )
-
-  return (
-    <GridColumns bg="black5" width="100%">
-      {figure}
-      {description}
     </GridColumns>
   )
 }
