@@ -26,7 +26,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       }),
     })
 
-    const indicator = screen.queryByLabelText("Unread notifications indicator")
+    const indicator = screen.queryByTestId("notifications-indicator")
     expect(indicator).not.toBeInTheDocument()
   })
 
@@ -38,7 +38,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       }),
     })
 
-    const indicator = screen.getByLabelText("Unread notifications indicator")
+    const indicator = screen.getByTestId("notifications-indicator")
     expect(indicator).toBeInTheDocument()
   })
 
@@ -50,7 +50,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       }),
     })
 
-    const indicator = screen.getByLabelText("Unread notifications indicator")
+    const indicator = screen.getByTestId("notifications-indicator")
     expect(indicator).toBeInTheDocument()
   })
 })

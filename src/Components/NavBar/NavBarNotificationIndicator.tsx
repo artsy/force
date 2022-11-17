@@ -8,7 +8,3 @@ export const NavBarNotificationIndicator = styled(Box)`
   background-color: ${themeGet("colors.brand")};
   border-radius: 50%;
 `
-
-NavBarNotificationIndicator.defaultProps = {
-  "aria-label": "Unread notifications indicator",
-}

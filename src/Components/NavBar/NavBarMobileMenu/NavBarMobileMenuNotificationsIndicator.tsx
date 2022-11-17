@@ -28,7 +28,12 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
   }
 
   return (
-    <NavBarNotificationIndicator position="absolute" top="5px" right="5px" />
+    <NavBarNotificationIndicator
+      position="absolute"
+      top="5px"
+      right="5px"
+      data-testid="notifications-indicator"
+    />
   )
 }
 
