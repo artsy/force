@@ -1,5 +1,4 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -21,9 +20,10 @@ import { ModalType } from "Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
 import { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { openAuthModal } from "Utils/openAuthModal"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
+import { useRouter } from "System/Router/useRouter"
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
@@ -33,7 +33,8 @@ export interface Props extends SystemContextProps {
 }
 
 export const ArtistAuctionResultItem: FC<Props> = props => {
-  const tracking = useTracking()
+  const { trackClickedAuctionResultItem } = useAuctionResultsTracking()
+  const { pathname } = useRouter().match.location
 
   const [expanded, setExpanded] = useState(false)
 
@@ -42,14 +43,16 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
 
     setExpanded(!expanded)
 
-    tracking.trackEvent({
-      context_page: DeprecatedAnalyticsSchema.PageName.ArtistAuctionResults,
-      action_type:
-        DeprecatedAnalyticsSchema.ActionType.AuctionResultItemClicked,
-      current: {
-        expanded: expand,
-      },
-    })
+    if (pathname.startsWith("/my-collection/artwork")) {
+      trackClickedAuctionResultItem(
+        expand,
+        OwnerType.myCollectionArtworkInsights
+      )
+    } else if (pathname.startsWith("/settings/insights")) {
+      trackClickedAuctionResultItem(expand, OwnerType.myCollectionInsights)
+    } else {
+      trackClickedAuctionResultItem(expand)
+    }
   }
 
   return (
