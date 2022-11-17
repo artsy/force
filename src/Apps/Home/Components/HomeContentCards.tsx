@@ -102,11 +102,11 @@ export const HomeContentCards: React.FC = () => {
 
   const heroCards = cards.length < 1 ? placeholderCards : realCards
 
-  const handleChange = newIndex => {
+  const handleChange = index => {
     const appboy = (window as any).appboy
     if (!appboy) return
 
-    const card = cards[newIndex]
+    const card = cards[index]
     appboy.logCardImpressions([card])
   }
 

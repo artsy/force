@@ -27,12 +27,12 @@ export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
 
   const [index, setIndex] = useState(0)
 
-  const handleChange = newIndex => {
+  const handleChange = index => {
     if (onChange) {
-      onChange(newIndex)
+      onChange(index)
     }
 
-    setIndex(newIndex)
+    setIndex(index)
   }
 
   return (

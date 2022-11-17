@@ -27,7 +27,7 @@ import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 interface HeroCarouselLargeProps {
   children: React.ReactNode
   fullBleed?: boolean
-  onChange?: (newIndex) => void
+  onChange?: (index) => void
 }
 
 export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({

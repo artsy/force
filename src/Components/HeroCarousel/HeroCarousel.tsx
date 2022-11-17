@@ -7,7 +7,7 @@ export interface HeroCarouselProps {
   children: ReactNode
   /** Only utilizes full-bleed at desktop sizes */
   fullBleed?: boolean
-  onChange?: (newIndex) => void
+  onChange?: (index) => void
 }
 
 export const HeroCarousel: FC<HeroCarouselProps> = ({
