@@ -12,6 +12,7 @@ import { AddToCalendar } from "./AddToCalendar"
 import { formatIsoDateNoZoneOffset } from "./helpers"
 import { AuctionDetails_sale$data } from "__generated__/AuctionDetails_sale.graphql"
 import { AuctionDetails_me$data } from "__generated__/AuctionDetails_me.graphql"
+import { AuctionDetails_viewer$data } from "__generated__/AuctionDetails_viewer.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "Apps/Auction/Components/RegisterButton"
 import { SaleDetailTimerFragmentContainer } from "Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
@@ -21,9 +22,14 @@ import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale$data
   me: AuctionDetails_me$data
+  viewer: AuctionDetails_viewer$data
 }
 
-const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
+const AuctionDetails: React.FC<AuctionDetailsProps> = ({
+  sale,
+  me,
+  viewer,
+}) => {
   const liveAuctionUrl = `${getENV("PREDICTION_URL")}/${sale.slug}`
 
   const endDate = sale.liveStartAt
@@ -32,6 +38,14 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
 
   const showCascadingEndTimeIntervalMessage: boolean =
     !!sale.cascadingEndTimeIntervalMinutes && !sale.isClosed
+
+  const getCascadingEndTimeIntervalMessage = () => {
+    if (viewer.auctionDetailsSaleArtworks?.counts?.total === 1) {
+      return `Lot close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`
+    }
+
+    return `Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`
+  }
 
   return (
     <>
@@ -75,7 +89,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
         <>
           <Spacer my={2} />
           <Text variant="sm-display" pr={2}>
-            {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
+            {getCascadingEndTimeIntervalMessage()}
           </Text>
         </>
       )}
@@ -117,6 +131,19 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment AuctionDetails_me on Me {
         ...RegisterButton_me
+      }
+    `,
+    viewer: graphql`
+      fragment AuctionDetails_viewer on Viewer
+        @argumentDefinitions(saleID: { type: "String" }) {
+        auctionDetailsSaleArtworks: saleArtworksConnection(
+          saleSlug: $saleID
+          aggregations: [TOTAL]
+        ) {
+          counts {
+            total
+          }
+        }
       }
     `,
   }

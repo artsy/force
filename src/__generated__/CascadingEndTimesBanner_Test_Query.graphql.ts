@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b6be75e76e2da7d40e0a551bac592af>>
+ * @generated SignedSource<<a7d8809f31b2eb964913de5b79211ecd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,9 @@ export type CascadingEndTimesBanner_Test_Query$variables = {};
 export type CascadingEndTimesBanner_Test_Query$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
+  } | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_viewer">;
   } | null;
 };
 export type CascadingEndTimesBanner_Test_Query = {
@@ -57,6 +60,28 @@ return {
           }
         ],
         "storageKey": "sale(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "saleID",
+                "value": "saleID"
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "CascadingEndTimesBanner_viewer"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -99,11 +124,64 @@ return {
           }
         ],
         "storageKey": "sale(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": "cascadingBannerSaleArtworks",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "TOTAL"
+                ]
+              },
+              {
+                "kind": "Literal",
+                "name": "saleSlug",
+                "value": "saleID"
+              }
+            ],
+            "concreteType": "SaleArtworksConnection",
+            "kind": "LinkedField",
+            "name": "saleArtworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FilterSaleArtworksCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "total",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "saleArtworksConnection(aggregations:[\"TOTAL\"],saleSlug:\"saleID\")"
+          }
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "73ed7a6b5d9d14ef99ebb6441754368b",
+    "cacheID": "07a06202b97318dd579d8690c1444048",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -120,16 +198,40 @@ return {
           "nullable": false,
           "plural": false,
           "type": "ID"
+        },
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.cascadingBannerSaleArtworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworksConnection"
+        },
+        "viewer.cascadingBannerSaleArtworks.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FilterSaleArtworksCounts"
+        },
+        "viewer.cascadingBannerSaleArtworks.counts.total": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
         }
       }
     },
     "name": "CascadingEndTimesBanner_Test_Query",
     "operationKind": "query",
-    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n  viewer {\n    ...CascadingEndTimesBanner_viewer_2Vgk83\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n\nfragment CascadingEndTimesBanner_viewer_2Vgk83 on Viewer {\n  cascadingBannerSaleArtworks: saleArtworksConnection(saleSlug: \"saleID\", aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b360f718b6b9e0a8aa5cff8fed562039";
+(node as any).hash = "c05d5ee0f053488e67ec4ef4bd3b86e7";
 
 export default node;

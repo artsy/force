@@ -80,7 +80,10 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           }}
           enabled={websocketEnabled}
         >
-          <CascadingEndTimesBannerFragmentContainer sale={sale} />
+          <CascadingEndTimesBannerFragmentContainer
+            sale={sale}
+            viewer={viewer}
+          />
 
           <AuctionMetaFragmentContainer sale={sale} />
 
@@ -94,7 +97,11 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
               <Spacer my={2} />
             )}
 
-            <AuctionDetailsFragmentContainer sale={sale} me={me} />
+            <AuctionDetailsFragmentContainer
+              sale={sale}
+              me={me}
+              viewer={viewer}
+            />
 
             {tabBar.isVisible && (
               // `key` is being passed to `Tabs` to ensure re-render
@@ -206,6 +213,8 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionArtworkFilter_viewer @arguments(input: $input)
       ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
       ...AuctionCurrentAuctionsRail_viewer
+      ...CascadingEndTimesBanner_viewer @arguments(saleID: $saleID)
+      ...AuctionDetails_viewer @arguments(saleID: $saleID)
 
       showFollowedArtistsTab: saleArtworksConnection(
         first: 1

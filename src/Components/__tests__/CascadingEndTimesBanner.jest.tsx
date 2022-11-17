@@ -12,6 +12,9 @@ const { renderWithRelay } = setupTestWrapperTL({
       sale(id: "example") {
         ...CascadingEndTimesBanner_sale
       }
+      viewer {
+        ...CascadingEndTimesBanner_viewer @arguments(saleID: "saleID")
+      }
     }
   `,
 })
@@ -44,6 +47,25 @@ describe("CascadingEndTimesBanner", () => {
       expect(
         screen.getByText("Lots close at 1-minute intervals.")
       ).toBeInTheDocument()
+    })
+
+    it("shows the plural form", () => {
+      renderWithRelay({
+        Sale: () => ({
+          cascadingEndTimeIntervalMinutes: 1,
+          extendedBiddingIntervalMinutes: null,
+        }),
+        Viewer: () => ({
+          cascadingBannerSaleArtworks: {
+            counts: {
+              total: 1,
+            },
+          },
+        }),
+      })
+
+      const message = "Lot close at 1-minute intervals."
+      expect(screen.getByText(message)).toBeInTheDocument()
     })
   })
 })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6e12b2e4344ae55e95008d63637073f>>
+ * @generated SignedSource<<564eef1caf4ce8f0250b9e8bbc618741>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,9 @@ export type AuctionDetailsTestQuery$variables = {};
 export type AuctionDetailsTestQuery$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionDetails_sale">;
+  } | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionDetails_viewer">;
   } | null;
 };
 export type AuctionDetailsTestQuery = {
@@ -89,6 +92,28 @@ return {
           }
         ],
         "storageKey": "sale(id:\"foo\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "saleID",
+                "value": "saleID"
+              }
+            ],
+            "kind": "FragmentSpread",
+            "name": "AuctionDetails_viewer"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -269,11 +294,64 @@ return {
           (v1/*: any*/)
         ],
         "storageKey": "sale(id:\"foo\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": "auctionDetailsSaleArtworks",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "TOTAL"
+                ]
+              },
+              {
+                "kind": "Literal",
+                "name": "saleSlug",
+                "value": "saleID"
+              }
+            ],
+            "concreteType": "SaleArtworksConnection",
+            "kind": "LinkedField",
+            "name": "saleArtworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FilterSaleArtworksCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "total",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "saleArtworksConnection(aggregations:[\"TOTAL\"],saleSlug:\"saleID\")"
+          }
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "09d48aa728c68d5ebd5f3e53c5219d6a",
+    "cacheID": "6dda38ac47fb277ba0861fe252de61d4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -312,16 +390,40 @@ return {
         "sale.requireIdentityVerification": (v5/*: any*/),
         "sale.slug": (v4/*: any*/),
         "sale.startAt": (v6/*: any*/),
-        "sale.status": (v6/*: any*/)
+        "sale.status": (v6/*: any*/),
+        "viewer": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Viewer"
+        },
+        "viewer.auctionDetailsSaleArtworks": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SaleArtworksConnection"
+        },
+        "viewer.auctionDetailsSaleArtworks.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FilterSaleArtworksCounts"
+        },
+        "viewer.auctionDetailsSaleArtworks.counts.total": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        }
       }
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
+    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n  viewer {\n    ...AuctionDetails_viewer_2Vgk83\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionDetails_viewer_2Vgk83 on Viewer {\n  auctionDetailsSaleArtworks: saleArtworksConnection(saleSlug: \"saleID\", aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f0e0d3be04977a46d0fa553af2f660b7";
+(node as any).hash = "7b2ff68551671b6281366ea67fdad057";
 
 export default node;

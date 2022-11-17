@@ -25,6 +25,9 @@ describe("AuctionDetails", () => {
         sale(id: "foo") {
           ...AuctionDetails_sale
         }
+        viewer {
+          ...AuctionDetails_viewer @arguments(saleID: "saleID")
+        }
       }
     `,
   })
@@ -84,5 +87,41 @@ describe("AuctionDetails", () => {
   it("shows the sidebar info", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("AuctionInfoSidebarFragmentContainer").length).toBe(1)
+  })
+
+  describe.only("cascading end time", () => {
+    it("singular form", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          cascadingEndTimeIntervalMinutes: 5,
+        }),
+        SaleArtworksConnection: () => ({
+          counts: {
+            total: 1,
+          },
+        }),
+      })
+
+      const message = "Lot close at 5-minute intervals"
+      expect(wrapper.text()).toContain(message)
+    })
+
+    it("plural form", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          cascadingEndTimeIntervalMinutes: 5,
+        }),
+        SaleArtworksConnection: () => ({
+          counts: {
+            total: 5,
+          },
+        }),
+      })
+
+      const message = "Lots close at 5-minute intervals"
+      expect(wrapper.text()).toContain(message)
+    })
   })
 })

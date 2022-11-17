@@ -180,7 +180,10 @@ export const ArtworkApp: React.FC<Props> = props => {
       <UseRecordArtworkView />
 
       {artwork.sale && (
-        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
+        <CascadingEndTimesBannerFragmentContainer
+          sale={artwork.sale}
+          viewer={null}
+        />
       )}
       {showUnlistedArtworkBanner && (
         <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />

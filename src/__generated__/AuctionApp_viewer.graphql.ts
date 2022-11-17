@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fa6c98da391ff659b472e7bcd0e71b6>>
+ * @generated SignedSource<<89c0b0654c9e598c9a9448fee0c478f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type AuctionApp_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionCurrentAuctionsRail_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionCurrentAuctionsRail_viewer" | "AuctionDetails_viewer" | "AuctionWorksByFollowedArtistsRail_viewer" | "CascadingEndTimesBanner_viewer">;
   readonly " $fragmentType": "AuctionApp_viewer";
 };
 export type AuctionApp_viewer$key = {
@@ -26,7 +26,15 @@ export type AuctionApp_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "saleID",
+    "variableName": "saleID"
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -55,13 +63,7 @@ const node: ReaderFragment = {
       "name": "AuctionArtworkFilter_viewer"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "saleID",
-          "variableName": "saleID"
-        }
-      ],
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "AuctionWorksByFollowedArtistsRail_viewer"
     },
@@ -69,6 +71,16 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionCurrentAuctionsRail_viewer"
+    },
+    {
+      "args": (v0/*: any*/),
+      "kind": "FragmentSpread",
+      "name": "CascadingEndTimesBanner_viewer"
+    },
+    {
+      "args": (v0/*: any*/),
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_viewer"
     },
     {
       "alias": "showFollowedArtistsTab",
@@ -137,7 +149,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "d761435e9548123e40861cc1ad7ea4a0";
+(node as any).hash = "41f7fde12cca875b875017ab20e45231";
 
 export default node;
