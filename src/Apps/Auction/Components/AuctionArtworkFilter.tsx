@@ -12,6 +12,8 @@ import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridCo
 import { useSystemContext } from "System"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -23,6 +25,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
 }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
+  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   if (!viewer.sidebarAggregations) return null
 
@@ -49,6 +52,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
         viewer={viewer}
         Filters={
           <>
+            {showKeywordFilter && <KeywordFilter />}
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />
             <MediumFilter expanded />
