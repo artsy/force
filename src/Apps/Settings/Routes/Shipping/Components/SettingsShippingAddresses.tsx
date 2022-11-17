@@ -12,7 +12,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddresses_me$data } from "__generated__/SettingsShippingAddresses_me.graphql"
 import { SettingsShippingAddressFragmentContainer } from "./SettingsShippingAddress"
-import { ShippingAddressForm } from "./ShippingAddressForm"
+import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
 
 interface SettingsShippingAddressesProps {
   me: SettingsShippingAddresses_me$data

@@ -73,7 +73,7 @@ interface SettingsShippingAddressFormProps {
     internalID: string
     isDefault: boolean
     attributes: Address
-  }
+  } | null
 }
 
 export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
@@ -84,6 +84,8 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
+
+  console.log("address", address)
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address

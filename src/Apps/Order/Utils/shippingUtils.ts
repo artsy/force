@@ -2,15 +2,14 @@ import { Address, emptyAddress } from "Components/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { pick, omit, compact } from "lodash"
-import {
-  UpdateUserAddressMutation$data,
-  UserAddressAttributes,
-} from "__generated__/UpdateUserAddressMutation.graphql"
+import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { compactObject } from "Utils/compactObject"
+import { INITIAL_ADDRESS } from "Components/Address/ShippingAddressForm"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -128,15 +127,22 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  address: SavedAddressType
-): UserAddressAttributes => {
-  return omit(
-    {
-      ...address,
-      name: address?.name || "",
+  address: SavedAddressType | null
+) => {
+  if (!address) {
+    return null
+  }
+
+  return {
+    internalID: address.internalID,
+    isDefault: address.isDefault,
+    attributes: {
+      // Backfill incase missing fields
+      ...INITIAL_ADDRESS,
+      // Remove null fields; select out only editable fields
+      ...compactObject(pick(address, Object.keys(INITIAL_ADDRESS))),
     },
-    ["isDefault", "internalID", "id", "__typename"]
-  )
+  }
 }
 
 export const getShippingOption = (requestedFulfillmentType?: string) => {

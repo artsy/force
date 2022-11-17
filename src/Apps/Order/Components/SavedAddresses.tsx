@@ -10,13 +10,14 @@ import {
   BorderBox,
   Join,
   Clickable,
+  ModalDialog,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
-import { AddressModal, ModalDetails } from "Apps/Order/Components/AddressModal"
+import { ModalDetails } from "Apps/Order/Components/AddressModal"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
@@ -28,7 +29,11 @@ import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressM
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-
+import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
+import {
+  SavedAddressType,
+  convertShippingAddressToMutationInput,
+} from "Apps/Order/Utils/shippingUtils"
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
 
@@ -75,7 +80,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const { trackEvent } = useTracking()
   const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
-  const [address, setAddress] = useState<Address | undefined | null>(null)
+  const [address, setAddress] = useState<SavedAddressType | null>(null)
   const logger = createLogger("SavedAddresses.tsx")
   const {
     onSelect,
@@ -84,10 +89,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     inCollectorProfile,
     relay,
     onAddressDelete,
-    onAddressCreate,
     selectedAddress,
     onShowToast,
-    onAddressEdit,
   } = props
 
   useEffect(() => {
@@ -146,19 +149,19 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
-  const createOrUpdateAddressSuccess = (
-    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
-  ) => {
-    refetchAddresses(() => {
-      if (address?.createUserAddress) {
-        onAddressCreate && onAddressCreate(address.createUserAddress)
-      } else if (address?.updateUserAddress) {
-        onAddressEdit && onAddressEdit(address.updateUserAddress)
-      }
-    })
+  // const createOrUpdateAddressSuccess = (
+  //   address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
+  // ) => {
+  //   refetchAddresses(() => {
+  //     if (address?.createUserAddress) {
+  //       onAddressCreate && onAddressCreate(address.createUserAddress)
+  //     } else if (address?.updateUserAddress) {
+  //       onAddressEdit && onAddressEdit(address.updateUserAddress)
+  //     }
+  //   })
 
-    onShowToast && onShowToast(true, "Saved")
-  }
+  //   onShowToast && onShowToast(true, "Saved")
+  // }
 
   const trackAddAddressClick = () => {
     trackEvent({
@@ -275,16 +278,18 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           </Button>
         )
       )}
-      <AddressModal
-        show={showAddressModal}
-        modalDetails={modalDetails}
-        closeModal={() => setShowAddressModal(false)}
-        address={address || undefined}
-        onSuccess={createOrUpdateAddressSuccess}
-        onDeleteAddress={handleDeleteAddress}
-        onError={onError}
-        me={me}
-      />
+      {showAddressModal && (
+        <ModalDialog
+          title={modalDetails?.addressModalTitle}
+          width={800}
+          onClose={() => setShowAddressModal(false)}
+        >
+          <ShippingAddressForm
+            address={convertShippingAddressToMutationInput(address)}
+            onClose={() => setShowAddressModal(false)}
+          />
+        </ModalDialog>
+      )}
     </>
   )
 

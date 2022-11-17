@@ -14,7 +14,10 @@ import { compactObject } from "Utils/compactObject"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
-import { INITIAL_ADDRESS, ShippingAddressForm } from "./ShippingAddressForm"
+import {
+  INITIAL_ADDRESS,
+  ShippingAddressForm,
+} from "Components/Address/ShippingAddressForm"
 
 interface SettingsShippingAddressProps {
   address: SettingsShippingAddress_address$data
