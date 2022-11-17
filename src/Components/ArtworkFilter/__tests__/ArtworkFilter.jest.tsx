@@ -94,7 +94,7 @@ describe("ArtworkFilter", () => {
     it("on filter", () => {
       renderWithRelay()
 
-      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Purchase"))
 
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -201,7 +201,7 @@ describe("ArtworkFilter", () => {
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
       renderWithRelay()
-      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Purchase"))
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
         ...initialArtworkFilterState,
@@ -238,7 +238,7 @@ describe("ArtworkFilter", () => {
 
     it("triggers #onChange when filters change, passing back filter state", () => {
       renderWithRelay()
-      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Purchase"))
 
       expect(onChange).toHaveBeenCalledWith({
         ...initialArtworkFilterState,
@@ -319,7 +319,7 @@ describe("ArtworkFilter", () => {
       expect(screen.getByText("Clear all")).toBeInTheDocument()
       expect(document.body).toHaveStyle("overflow-y: hidden")
 
-      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Purchase"))
       fireEvent.click(screen.getByText("Show Results"))
 
       expect(screen.queryByText("Clear all")).not.toBeInTheDocument()
