@@ -35,7 +35,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
 
   const handleClick = () => {
     const appboy = (window as any).appboy
-    appboy.logCardClick(card)
+    appboy?.logCardClick(card)
   }
 
   return (

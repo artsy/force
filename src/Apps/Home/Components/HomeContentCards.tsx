@@ -104,6 +104,8 @@ export const HomeContentCards: React.FC = () => {
 
   const handleChange = newIndex => {
     const appboy = (window as any).appboy
+    if (!appboy) return
+
     const card = cards[newIndex]
     appboy.logCardImpressions([card])
   }
