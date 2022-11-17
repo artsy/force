@@ -12,16 +12,30 @@ const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
 }) => {
   const helpArticleLink = getENV("CASCADING_AUCTION_HELP_ARTICLE_LINK")
 
+  const getMessage = () => {
+    const {
+      cascadingEndTimeIntervalMinutes,
+      extendedBiddingIntervalMinutes,
+    } = sale
+
+    if (extendedBiddingIntervalMinutes) {
+      return "Closing times may be extended due to last-minute competitive bidding"
+    }
+
+    if (sale.artworksConnection?.totalCount === 1) {
+      return `Lot close at ${cascadingEndTimeIntervalMinutes}-minute intervals`
+    }
+
+    return `Lots close at ${cascadingEndTimeIntervalMinutes}-minute intervals`
+  }
+
   if (!sale.cascadingEndTimeIntervalMinutes) {
     return null
   }
 
   return (
     <FullBleedBanner variant="brand" dismissable>
-      {sale.extendedBiddingIntervalMinutes
-        ? "Closing times may be extended due to last-minute competitive bidding"
-        : `Lots close at ${sale.cascadingEndTimeIntervalMinutes}-minute intervals`}
-      .
+      {getMessage()}.
       {!!helpArticleLink && (
         <>
           &nbsp;
@@ -41,6 +55,9 @@ export const CascadingEndTimesBannerFragmentContainer = createFragmentContainer(
       fragment CascadingEndTimesBanner_sale on Sale {
         cascadingEndTimeIntervalMinutes
         extendedBiddingIntervalMinutes
+        artworksConnection(first: 0) {
+          totalCount
+        }
       }
     `,
   }

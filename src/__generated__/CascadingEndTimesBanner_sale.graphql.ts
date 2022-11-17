@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a3959a0639d24ca982d5e37efdaef330>>
+ * @generated SignedSource<<ad909c497057f651d8a7830175ce6c21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CascadingEndTimesBanner_sale$data = {
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+  } | null;
   readonly cascadingEndTimeIntervalMinutes: number | null;
   readonly extendedBiddingIntervalMinutes: number | null;
   readonly " $fragmentType": "CascadingEndTimesBanner_sale";
@@ -39,12 +42,36 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "extendedBiddingIntervalMinutes",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 0
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "artworksConnection(first:0)"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 
-(node as any).hash = "1821c972be80a5587319bdcf90723bba";
+(node as any).hash = "a386706054a64b0dfb9cd69190807026";
 
 export default node;

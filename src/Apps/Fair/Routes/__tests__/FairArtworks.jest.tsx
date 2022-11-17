@@ -154,6 +154,9 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
               extendedBiddingPeriodMinutes: null,
               startAt: "2022-03-11T12:33:37.000Z",
               endAt: "2022-03-12T12:33:37.000Z",
+              artworksConnection: {
+                totalCount: 5,
+              },
             },
             saleArtwork: {
               id: "saleArtworkabc123",

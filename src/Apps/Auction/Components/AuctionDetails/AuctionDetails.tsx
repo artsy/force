@@ -33,6 +33,16 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
   const showCascadingEndTimeIntervalMessage: boolean =
     !!sale.cascadingEndTimeIntervalMinutes && !sale.isClosed
 
+  const getEndTimeIntervalMessage = () => {
+    const { cascadingEndTimeIntervalMinutes } = sale
+
+    if (sale.artworksConnection?.totalCount === 1) {
+      return `Lot close at ${cascadingEndTimeIntervalMinutes}-minute intervals`
+    }
+
+    return `Lots close at ${cascadingEndTimeIntervalMinutes}-minute intervals`
+  }
+
   return (
     <>
       <GridColumns>
@@ -75,7 +85,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
         <>
           <Spacer my={2} />
           <Text variant="sm-display" pr={2}>
-            {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
+            {getEndTimeIntervalMessage()}
           </Text>
         </>
       )}
@@ -112,6 +122,9 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         href
         isClosed
         cascadingEndTimeIntervalMinutes
+        artworksConnection(first: 0) {
+          totalCount
+        }
       }
     `,
     me: graphql`

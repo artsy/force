@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d09ac14c5178f4775c55dd23fa51880>>
+ * @generated SignedSource<<5c0461ad1f3c67383d282a5ecb52c86f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type LotTimer_saleArtwork$data = {
   readonly formattedStartDateTime: string | null;
   readonly lotID: string | null;
   readonly sale: {
+    readonly artworksConnection: {
+      readonly totalCount: number | null;
+    } | null;
     readonly extendedBiddingIntervalMinutes: number | null;
     readonly extendedBiddingPeriodMinutes: number | null;
     readonly internalID: string;
@@ -97,6 +100,30 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "internalID",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 0
+            }
+          ],
+          "concreteType": "ArtworkConnection",
+          "kind": "LinkedField",
+          "name": "artworksConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "totalCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "artworksConnection(first:0)"
         }
       ],
       "storageKey": null
@@ -106,6 +133,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "55716d023ef3ebdf22143acc9c455550";
+(node as any).hash = "63b5527a49052aaf0689d36943c1a576";
 
 export default node;

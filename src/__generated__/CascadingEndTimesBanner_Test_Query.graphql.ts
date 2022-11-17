@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b6be75e76e2da7d40e0a551bac592af>>
+ * @generated SignedSource<<ebd91cf3f0d9ab38516d318ab6e0f5fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,6 +92,30 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 0
+              }
+            ],
+            "concreteType": "ArtworkConnection",
+            "kind": "LinkedField",
+            "name": "artworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "artworksConnection(first:0)"
+          },
+          {
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "id",
@@ -103,7 +127,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73ed7a6b5d9d14ef99ebb6441754368b",
+    "cacheID": "2c0fbdc5bad11783bac3ba57519a397e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -113,6 +137,13 @@ return {
           "plural": false,
           "type": "Sale"
         },
+        "sale.artworksConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkConnection"
+        },
+        "sale.artworksConnection.totalCount": (v1/*: any*/),
         "sale.cascadingEndTimeIntervalMinutes": (v1/*: any*/),
         "sale.extendedBiddingIntervalMinutes": (v1/*: any*/),
         "sale.id": {
@@ -125,7 +156,7 @@ return {
     },
     "name": "CascadingEndTimesBanner_Test_Query",
     "operationKind": "query",
-    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n"
+    "text": "query CascadingEndTimesBanner_Test_Query {\n  sale(id: \"example\") {\n    ...CascadingEndTimesBanner_sale\n    id\n  }\n}\n\nfragment CascadingEndTimesBanner_sale on Sale {\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n  artworksConnection(first: 0) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

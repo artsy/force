@@ -8,11 +8,23 @@ describe("getSaleOrLotTimerInfo", () => {
       describe("when the close date/time is more than 24 hrs before closing", () => {
         const time = { days: "1", hours: "4", minutes: "00", seconds: "00" }
         const lotsAreClosing = false
-        it("formats the timer correctly", () => {
+        it("formats the timer correctly (singular form)", () => {
           const saleTimerInfo = getSaleOrLotTimerInfo(time, {
             hasStarted,
             lotsAreClosing,
             isSaleInfo,
+            totalLotsCount: 1,
+          })
+          expect(saleTimerInfo.copy).toEqual("2 Days Until Lot Start Closing")
+          expect(saleTimerInfo.color).toEqual("blue100")
+        })
+
+        it("formats the timer correctly (plural form)", () => {
+          const saleTimerInfo = getSaleOrLotTimerInfo(time, {
+            hasStarted,
+            lotsAreClosing,
+            isSaleInfo,
+            totalLotsCount: 2,
           })
           expect(saleTimerInfo.copy).toEqual("2 Days Until Lots Start Closing")
           expect(saleTimerInfo.color).toEqual("blue100")
@@ -22,10 +34,21 @@ describe("getSaleOrLotTimerInfo", () => {
       describe("when the close date/time is less than 24 hours before closing", () => {
         const time = { days: "0", hours: "23", minutes: "33", seconds: "00" }
         const hasStarted = true
-        it("formats the timer correctly", () => {
+        it("formats the timer correctly (singular form)", () => {
           const saleTimerInfo = getSaleOrLotTimerInfo(time, {
             hasStarted,
             isSaleInfo,
+            totalLotsCount: 1,
+          })
+          expect(saleTimerInfo.copy).toEqual("23h 33m Until Lot Start Closing")
+          expect(saleTimerInfo.color).toEqual("red100")
+        })
+
+        it("formats the timer correctly (plural form)", () => {
+          const saleTimerInfo = getSaleOrLotTimerInfo(time, {
+            hasStarted,
+            isSaleInfo,
+            totalLotsCount: 2,
           })
           expect(saleTimerInfo.copy).toEqual("23h 33m Until Lots Start Closing")
           expect(saleTimerInfo.color).toEqual("red100")
@@ -35,11 +58,23 @@ describe("getSaleOrLotTimerInfo", () => {
       describe("when the close date/time is less than 1 hours before closing", () => {
         const time = { days: "0", hours: "0", minutes: "58", seconds: "23" }
         const lotsAreClosing = false
-        it("formats the timer correctly", () => {
+        it("formats the timer correctly (singular form)", () => {
           const saleTimerInfo = getSaleOrLotTimerInfo(time, {
             hasStarted,
             lotsAreClosing,
             isSaleInfo,
+            totalLotsCount: 1,
+          })
+          expect(saleTimerInfo.copy).toEqual("58m 23s Until Lot Start Closing")
+          expect(saleTimerInfo.color).toEqual("red100")
+        })
+
+        it("formats the timer correctly (plural form)", () => {
+          const saleTimerInfo = getSaleOrLotTimerInfo(time, {
+            hasStarted,
+            lotsAreClosing,
+            isSaleInfo,
+            totalLotsCount: 2,
           })
           expect(saleTimerInfo.copy).toEqual("58m 23s Until Lots Start Closing")
           expect(saleTimerInfo.color).toEqual("red100")
@@ -49,11 +84,23 @@ describe("getSaleOrLotTimerInfo", () => {
       describe("when the sale has begun closing", () => {
         const time = { days: "0", hours: "0", minutes: "0", seconds: "0" }
         const lotsAreClosing = true
-        it("formats the timer correctly", () => {
+        it("formats the timer correctly (singular form)", () => {
           const saleTimerInfo = getSaleOrLotTimerInfo(time, {
             hasStarted,
             lotsAreClosing,
             isSaleInfo,
+            totalLotsCount: 1,
+          })
+          expect(saleTimerInfo.copy).toEqual("Lot are closing")
+          expect(saleTimerInfo.color).toEqual("red100")
+        })
+
+        it("formats the timer correctly (plural form)", () => {
+          const saleTimerInfo = getSaleOrLotTimerInfo(time, {
+            hasStarted,
+            lotsAreClosing,
+            isSaleInfo,
+            totalLotsCount: 2,
           })
           expect(saleTimerInfo.copy).toEqual("Lots are closing")
           expect(saleTimerInfo.color).toEqual("red100")

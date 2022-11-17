@@ -17,6 +17,9 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingPeriodMinutes: 2,
           extendedBiddingIntervalMinutes: 2,
           internalID: "sale-id",
+          artworksConnection: {
+            totalCount: 5,
+          },
         },
 
         " $fragmentType": "LotTimer_saleArtwork",
@@ -48,6 +51,9 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingPeriodMinutes: 2,
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
+            artworksConnection: {
+              totalCount: 5,
+            },
           },
 
           " $fragmentType": "LotTimer_saleArtwork",
@@ -74,6 +80,9 @@ describe("extendedBiddingInfoCopy", () => {
             extendedBiddingPeriodMinutes: 2,
             extendedBiddingIntervalMinutes: 2,
             internalID: "sale-id",
+            artworksConnection: {
+              totalCount: 5,
+            },
           },
 
           " $fragmentType": "LotTimer_saleArtwork",
@@ -97,6 +106,9 @@ describe("extendedBiddingInfoCopy", () => {
           extendedBiddingPeriodMinutes: null,
           extendedBiddingIntervalMinutes: null,
           internalID: "sale-id",
+          artworksConnection: {
+            totalCount: 5,
+          },
         },
 
         " $fragmentType": "LotTimer_saleArtwork",

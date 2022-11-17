@@ -20,6 +20,7 @@ export const getSaleOrLotTimerInfo = (
     isSaleInfo?: boolean
     urgencyIntervalMinutes?: number | null
     extendedBiddingEndAt?: string | null
+    totalLotsCount?: number | null
   }
 ): TimerInfo => {
   const { days, hours, minutes, seconds } = time
@@ -29,6 +30,7 @@ export const getSaleOrLotTimerInfo = (
     isSaleInfo,
     urgencyIntervalMinutes,
     extendedBiddingEndAt,
+    totalLotsCount,
   } = options
 
   const parsedDays = parseInt(days, 10)
@@ -54,26 +56,27 @@ export const getSaleOrLotTimerInfo = (
     copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
     color = "red100"
   } else {
+    const lotOrLots = totalLotsCount === 1 ? "Lot" : "Lots"
     // When the timer is on the sale:
     if (isSaleInfo) {
       if (lotsAreClosing) {
-        copy = "Lots are closing"
+        copy = `${lotOrLots} are closing`
         color = "red100"
         // More than 24 hours until close
       } else if (parsedDays >= 1) {
         copy = `${parsedDays + 1} Day${
           parsedDays >= 1 ? "s" : ""
-        } Until Lots Start Closing`
+        } Until ${lotOrLots} Start Closing`
       }
       // 1-24 hours until close
       else if (parsedDays < 1 && parsedHours >= 1) {
-        copy = `${parsedHours}h ${parsedMinutes}m Until Lots Start Closing`
+        copy = `${parsedHours}h ${parsedMinutes}m Until ${lotOrLots} Start Closing`
         color = "red100"
       }
 
       // <60 mins until close
       else if (parsedDays < 1 && parsedHours < 1) {
-        copy = `${parsedMinutes}m ${parsedSeconds}s Until Lots Start Closing`
+        copy = `${parsedMinutes}m ${parsedSeconds}s Until ${lotOrLots} Start Closing`
         color = "red100"
       }
 

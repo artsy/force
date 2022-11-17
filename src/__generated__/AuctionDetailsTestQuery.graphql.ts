@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6e12b2e4344ae55e95008d63637073f>>
+ * @generated SignedSource<<2d7d957338d0e298628a7107b51add25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,21 +47,27 @@ v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Bidder"
+  "type": "Int"
 },
 v4 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Bidder"
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -231,6 +237,30 @@ return {
             "name": "startAt",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 0
+              }
+            ],
+            "concreteType": "ArtworkConnection",
+            "kind": "LinkedField",
+            "name": "artworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "artworksConnection(first:0)"
+          },
           (v2/*: any*/),
           {
             "alias": null,
@@ -273,7 +303,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "09d48aa728c68d5ebd5f3e53c5219d6a",
+    "cacheID": "059b6c5baa0ffbeb47d41be5377abb17",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -283,41 +313,43 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "sale.bidder": (v3/*: any*/),
-        "sale.bidder.id": (v4/*: any*/),
-        "sale.bidder.qualifiedForBidding": (v5/*: any*/),
-        "sale.cascadingEndTimeIntervalMinutes": {
+        "sale.artworksConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Int"
+          "type": "ArtworkConnection"
         },
-        "sale.description": (v6/*: any*/),
-        "sale.endAt": (v6/*: any*/),
-        "sale.endedAt": (v6/*: any*/),
-        "sale.href": (v6/*: any*/),
-        "sale.id": (v4/*: any*/),
-        "sale.internalID": (v4/*: any*/),
-        "sale.isAuction": (v5/*: any*/),
-        "sale.isClosed": (v5/*: any*/),
-        "sale.isLiveOpen": (v5/*: any*/),
-        "sale.isPreview": (v5/*: any*/),
-        "sale.isRegistrationClosed": (v5/*: any*/),
-        "sale.liveStartAt": (v6/*: any*/),
-        "sale.liveURLIfOpen": (v6/*: any*/),
-        "sale.name": (v6/*: any*/),
-        "sale.registrationStatus": (v3/*: any*/),
-        "sale.registrationStatus.id": (v4/*: any*/),
-        "sale.registrationStatus.internalID": (v4/*: any*/),
-        "sale.requireIdentityVerification": (v5/*: any*/),
-        "sale.slug": (v4/*: any*/),
-        "sale.startAt": (v6/*: any*/),
-        "sale.status": (v6/*: any*/)
+        "sale.artworksConnection.totalCount": (v3/*: any*/),
+        "sale.bidder": (v4/*: any*/),
+        "sale.bidder.id": (v5/*: any*/),
+        "sale.bidder.qualifiedForBidding": (v6/*: any*/),
+        "sale.cascadingEndTimeIntervalMinutes": (v3/*: any*/),
+        "sale.description": (v7/*: any*/),
+        "sale.endAt": (v7/*: any*/),
+        "sale.endedAt": (v7/*: any*/),
+        "sale.href": (v7/*: any*/),
+        "sale.id": (v5/*: any*/),
+        "sale.internalID": (v5/*: any*/),
+        "sale.isAuction": (v6/*: any*/),
+        "sale.isClosed": (v6/*: any*/),
+        "sale.isLiveOpen": (v6/*: any*/),
+        "sale.isPreview": (v6/*: any*/),
+        "sale.isRegistrationClosed": (v6/*: any*/),
+        "sale.liveStartAt": (v7/*: any*/),
+        "sale.liveURLIfOpen": (v7/*: any*/),
+        "sale.name": (v7/*: any*/),
+        "sale.registrationStatus": (v4/*: any*/),
+        "sale.registrationStatus.id": (v5/*: any*/),
+        "sale.registrationStatus.internalID": (v5/*: any*/),
+        "sale.requireIdentityVerification": (v6/*: any*/),
+        "sale.slug": (v5/*: any*/),
+        "sale.startAt": (v7/*: any*/),
+        "sale.status": (v7/*: any*/)
       }
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
+    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n  artworksConnection(first: 0) {\n    totalCount\n  }\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n  artworksConnection(first: 0) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

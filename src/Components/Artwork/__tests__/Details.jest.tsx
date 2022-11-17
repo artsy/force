@@ -556,6 +556,9 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
     extendedBiddingIntervalMinutes: null,
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
+    artworksConnection: {
+      totalCount: 5,
+    },
   },
   sale_artwork: {
     lotID: "lot-id",

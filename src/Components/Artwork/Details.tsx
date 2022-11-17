@@ -306,6 +306,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
       ? updatedBiddingEndAt
       : extendedBiddingEndAt,
     urgencyIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
+    totalLotsCount: sale.artworksConnection?.totalCount,
   })
 
   let lotCloseCopy
@@ -373,6 +374,9 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         startAt
         is_auction: isAuction
         is_closed: isClosed
+        artworksConnection(first: 0) {
+          totalCount
+        }
       }
       sale_artwork: saleArtwork {
         lotID

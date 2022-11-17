@@ -23,6 +23,7 @@ export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {
     hasStarted,
     lotsAreClosing: hasEnded,
     isSaleInfo: true,
+    totalLotsCount: sale.artworksConnection?.totalCount,
   })
 
   return (
@@ -42,6 +43,9 @@ export const SaleDetailTimerFragmentContainer = createFragmentContainer(
         endAt
         endedAt
         startAt
+        artworksConnection(first: 0) {
+          totalCount
+        }
       }
     `,
   }

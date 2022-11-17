@@ -85,4 +85,36 @@ describe("AuctionDetails", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("AuctionInfoSidebarFragmentContainer").length).toBe(1)
   })
+
+  describe("cascading end time interval message", () => {
+    it("singular form", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          cascadingEndTimeIntervalMinutes: 5,
+          artworksConnection: {
+            totalCount: 1,
+          },
+        }),
+      })
+
+      const message = "Lot close at 5-minute intervals"
+      expect(wrapper.text()).toContain(message)
+    })
+
+    it("plural form", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          cascadingEndTimeIntervalMinutes: 5,
+          artworksConnection: {
+            totalCount: 5,
+          },
+        }),
+      })
+
+      const message = "Lots close at 5-minute intervals"
+      expect(wrapper.text()).toContain(message)
+    })
+  })
 })

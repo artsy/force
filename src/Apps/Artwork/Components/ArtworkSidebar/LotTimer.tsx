@@ -51,6 +51,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
     extendedBiddingEndAt: isExtended
       ? updatedBiddingEndAt
       : extendedBiddingEndAt,
+    totalLotsCount: saleArtwork.sale?.artworksConnection?.totalCount,
   })
 
   return (
@@ -96,6 +97,9 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
         extendedBiddingPeriodMinutes
         extendedBiddingIntervalMinutes
         internalID
+        artworksConnection(first: 0) {
+          totalCount
+        }
       }
     }
   `,

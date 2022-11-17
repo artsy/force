@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b26ecad03a93f18ed609a96583735a76>>
+ * @generated SignedSource<<62ceb4efc1226bdf782bf0a3a9a6dc43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,9 @@ export type Details_artwork$data = {
     readonly name: string | null;
   } | null;
   readonly sale: {
+    readonly artworksConnection: {
+      readonly totalCount: number | null;
+    } | null;
     readonly cascadingEndTimeIntervalMinutes: number | null;
     readonly endAt: string | null;
     readonly extendedBiddingIntervalMinutes: number | null;
@@ -269,6 +272,30 @@ return {
           "kind": "ScalarField",
           "name": "isClosed",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 0
+            }
+          ],
+          "concreteType": "ArtworkConnection",
+          "kind": "LinkedField",
+          "name": "artworksConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "totalCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "artworksConnection(first:0)"
         }
       ],
       "storageKey": null
@@ -367,6 +394,6 @@ return {
 };
 })();
 
-(node as any).hash = "958f68c7156c0bb40d30f343ffa6db34";
+(node as any).hash = "0303cbec2fe42b72846572318228ae6d";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f223c3d46e3176be935233811baeeb2a>>
+ * @generated SignedSource<<74390c9bd4ef4eaba02a92b5f66951db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleDetailTimer_sale$data = {
+  readonly artworksConnection: {
+    readonly totalCount: number | null;
+  } | null;
   readonly endAt: string | null;
   readonly endedAt: string | null;
   readonly startAt: string | null;
@@ -47,12 +50,36 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "startAt",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 0
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "artworksConnection(first:0)"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
 
-(node as any).hash = "451836d3b35263dfccf1a6ff546ca8c0";
+(node as any).hash = "a162d3baa71ed5077d5e40e4398fbc6d";
 
 export default node;
