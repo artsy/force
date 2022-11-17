@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { useSystemContext } from "System"
 import { getPhoneNumberInformation } from "./getPhoneNumberInformation"
 import { countries } from "Utils/countries"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 
 export interface PhoneNumber {
   isValid: boolean
@@ -54,8 +55,11 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     isValid && regionCode ? regionCode : "us"
   )
 
+  const { debouncedValue } = useDebouncedValue({ value: number, delay: 200 })
+
   useEffect(() => {
     validatePhoneNumber(number?.trim())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [number, region])
 
   useEffect(() => {
@@ -63,6 +67,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
       setNumber(national)
       regionCode && setRegion(regionCode)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [national])
 
   const handleFocus = <T extends Element>(
@@ -83,7 +88,11 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(e.target.value)
-    validatePhoneNumber(e.target.value)
+
+    // shortest international phone number is 7 digits; > 5 for extra safety
+    if (debouncedValue.length > 5) {
+      validatePhoneNumber(e.target.value)
+    }
   }
 
   const validatePhoneNumber = async (number: string) => {
