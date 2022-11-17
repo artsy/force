@@ -1,11 +1,8 @@
 import { useContext } from "react"
-import * as React from "react"
 import { graphql } from "react-relay"
-import { isServer } from "Server/isServer"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
@@ -17,10 +14,10 @@ interface NavBarMobileMenuNotificationsIndicatorProps {
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
 }) => {
-  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
-    notifications: me?.unreadNotificationsCount,
-    conversations: me?.unreadConversationCount,
-  })
+  const unreadConversationCount = me?.unreadConversationCount ?? 0
+  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
+  const hasConversations = unreadConversationCount > 0
+  const hasNotifications = unreadNotificationsCount > 0
   const shouldDisplayIndicator = hasConversations || hasNotifications
 
   if (!shouldDisplayIndicator) {
@@ -51,10 +48,6 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
 
 export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> = () => {
   const { relayEnvironment } = useContext(SystemContext)
-
-  if (isServer) {
-    return <NavBarMobileMenuNotificationsIndicator />
-  }
 
   return (
     <SystemQueryRenderer<NavBarMobileMenuNotificationsIndicatorQuery>

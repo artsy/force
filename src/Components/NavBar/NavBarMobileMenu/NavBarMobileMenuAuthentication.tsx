@@ -14,7 +14,6 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me$data } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
-import { checkAndSyncIndicatorsCount } from "Components/NavBar/helpers"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
@@ -32,15 +31,10 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
   const { trackEvent } = useTracking()
-
-  const {
-    hasConversations,
-    hasNotifications,
-    counts,
-  } = checkAndSyncIndicatorsCount({
-    notifications: me?.unreadNotificationsCount,
-    conversations: me?.unreadConversationCount,
-  })
+  const unreadConversationCount = me?.unreadConversationCount ?? 0
+  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
+  const hasConversations = unreadConversationCount > 0
+  const hasNotifications = unreadNotificationsCount > 0
 
   const menu = {
     title: "Account",
@@ -121,7 +115,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       >
         Inbox
         {hasConversations && (
-          <Box color="brand">{counts.conversations} new</Box>
+          <Box color="brand">{unreadConversationCount} new</Box>
         )}
       </NavBarMobileMenuItemLink>
 
