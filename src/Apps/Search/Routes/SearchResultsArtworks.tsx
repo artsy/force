@@ -11,6 +11,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System"
+import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
@@ -42,6 +43,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
+      Filters={<SearchResultsArtworksFilters />}
       FilterPillsSection={<ActiveFilterPills />}
       userPreferredMetric={userPreferences?.metric}
     />
