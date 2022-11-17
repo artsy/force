@@ -1,4 +1,4 @@
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { AuthContextModule } from "@artsy/cohesion"
 import {
   Column,
   Flex,
@@ -252,7 +252,7 @@ export class ArtworkGridContainer extends React.Component<
     )
 
     return (
-      <div className={className} data-test={ContextModule.artworkGrid}>
+      <div className={className} data-test="artworkGrid">
         {hasArtworks ? artworkGrids : emptyState}
       </div>
     )
