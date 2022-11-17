@@ -20,6 +20,7 @@ const AuctionMeta: React.FC<AuctionMetaProps> = props => {
       title={title}
       description={description}
       pathname={`/auction/${sale.slug}`}
+      imageURL={sale.coverImage?.url}
     />
   )
 }
@@ -32,6 +33,9 @@ export const AuctionMetaFragmentContainer = createFragmentContainer(
         name
         description(format: HTML)
         slug
+        coverImage {
+          url(version: ["wide", "source", "large_rectangle"])
+        }
       }
     `,
   }
