@@ -27,10 +27,8 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   const extras = card.extras || {}
 
   const image = cropped(card.imageUrl!, {
-    // 3:2
-    width: 910,
-    height: 607,
-    quality: 75,
+    width: 1270,
+    height: 500,
   })
 
   const cardLink = card.url ?? ""
