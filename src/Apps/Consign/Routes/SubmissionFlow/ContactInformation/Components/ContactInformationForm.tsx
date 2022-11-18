@@ -1,10 +1,12 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
-import { getPhoneNumberInformation } from "Apps/Consign/Routes/SubmissionFlow/Utils/phoneNumberUtils"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
 import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
-import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
+import {
+  PhoneNumber,
+  PhoneNumberInput,
+  PhoneNumberValidationResult,
+} from "Components/PhoneNumberInput/PhoneNumberInput"
 export interface ContactInformationFormModel {
   name: string
   email: string
@@ -29,16 +31,12 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     errors,
     setFieldValue,
   } = useFormikContext<ContactInformationFormModel>()
-  const { relayEnvironment } = useSystemContext()
 
-  const handlePhoneNumberChange = async (region, number) => {
-    if (region && number && relayEnvironment) {
-      const phoneInformation = await getPhoneNumberInformation(
-        number,
-        relayEnvironment,
-        region
-      )
-      setFieldValue("phone", phoneInformation)
+  const handlePhoneNumberValidation = (
+    validationResult: PhoneNumberValidationResult
+  ) => {
+    if (validationResult) {
+      setFieldValue("phone", validationResult)
       return
     }
 
@@ -76,9 +74,9 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         mt={4}
         phoneNumber={values.phone}
         optional={optionalPhoneNumber}
-        onChange={handlePhoneNumberChange}
+        onPhoneNumberValidation={handlePhoneNumberValidation}
         inputProps={{
-          maxLength: 256,
+          maxLength: 25,
           onBlur: handleBlur("phone"),
           placeholder: "(000) 000 0000",
         }}

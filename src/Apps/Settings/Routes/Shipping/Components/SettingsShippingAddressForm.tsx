@@ -13,9 +13,13 @@ import {
 import { Formik, Form } from "formik"
 import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
-import { useAddAddress } from "../useAddAddress"
-import { useEditAddress } from "../useEditAddress"
-import { useSetDefaultAddress } from "../useSetDefaultAddress"
+import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
+import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
+import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
+import {
+  PhoneNumberInput,
+  PhoneNumberValidationResult,
+} from "Components/PhoneNumberInput/PhoneNumberInput"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -24,6 +28,7 @@ export const INITIAL_ADDRESS = {
   addressLine2: "",
   city: "",
   phoneNumber: "",
+  phoneNumberCountryCode: "",
   postalCode: "",
   region: "",
 }
@@ -43,7 +48,8 @@ const validationSchema = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    phoneNumber: Yup.string().required("Phone Number is required"),
+    phoneNumber: Yup.string().required("Please enter a valid phone number"),
+    phoneNumberCountryCode: Yup.string(),
   }),
   isDefault: Yup.boolean().optional(),
 })
@@ -69,11 +75,28 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
 
+  const getInitialValues = () => {
+    if (!address) {
+      return INITIAL_VALUES
+    }
+
+    // in case address has no phone code, use country as phone code
+    return {
+      ...address,
+      attributes: {
+        ...address.attributes,
+        phoneNumberCountryCode: address.attributes?.phoneNumberCountryCode
+          ? address.attributes.phoneNumberCountryCode
+          : address?.attributes.country.toLowerCase(),
+      },
+    }
+  }
+
   return (
     <Formik
       validateOnMount
       validationSchema={validationSchema}
-      initialValues={address ?? INITIAL_VALUES}
+      initialValues={getInitialValues()}
       onSubmit={async ({ isDefault, attributes }, { setStatus, resetForm }) => {
         try {
           if (isEditing) {
@@ -134,10 +157,31 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         handleChange,
         handleBlur,
         setFieldValue,
+        setFieldError,
         isValid,
         isSubmitting,
         submitForm,
       }) => {
+        // incorporate phone validation result into Formik values & errors
+        const handlePhoneNumberValidation = ({
+          isValid,
+          national,
+          region,
+        }: PhoneNumberValidationResult) => {
+          if (!isValid) {
+            setFieldValue("attributes.phoneNumber", "")
+            setFieldError(
+              "attributes.phoneNumber",
+              "Please enter a valid phone number"
+            )
+            return
+          }
+
+          setFieldValue("attributes.phoneNumber", national)
+          setFieldValue("attributes.phoneNumberCountryCode", region)
+          setFieldError("attributes.phoneNumber", "")
+        }
+
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
@@ -269,21 +313,24 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                 </Column>
 
                 <Column span={12}>
-                  <Input
-                    name="attributes.phoneNumber"
-                    title="Phone Number"
-                    type="tel"
-                    description="Required for shipping logistics"
-                    placeholder="Add phone number"
-                    autoComplete="tel"
-                    value={values.attributes.phoneNumber}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                  <PhoneNumberInput
+                    phoneNumber={{
+                      isValid: isEditing,
+                      national: values.attributes.phoneNumber,
+                      regionCode: values.attributes.phoneNumberCountryCode,
+                    }}
+                    onPhoneNumberValidation={handlePhoneNumberValidation}
+                    inputProps={{
+                      maxLength: 25,
+                      onBlur: handleBlur("attributes.phoneNumber"),
+                      placeholder: "(000) 000 0000",
+                    }}
                     error={
                       touched.attributes?.phoneNumber &&
                       errors.attributes?.phoneNumber
+                        ? errors.attributes?.phoneNumber
+                        : undefined
                     }
-                    required
                   />
                 </Column>
 

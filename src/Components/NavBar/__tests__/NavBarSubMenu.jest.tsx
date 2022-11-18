@@ -32,7 +32,7 @@ describe("NavBarSubMenu", () => {
     const wrapper = getWrapper()
     const linkMenuItems = wrapper.find("a")
 
-    expect(linkMenuItems.at(0).text()).toContain("Trove: Editor's Picks")
+    expect(linkMenuItems.at(0).text()).toContain("Trove: Editors' Picks")
     expect(linkMenuItems.at(0).prop("href")).toEqual(
       "/collection/trove-editors-picks"
     )

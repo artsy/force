@@ -1,115 +1,111 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useMemo } from "react"
-import * as React from "react"
-import qs from "qs"
-import { graphql } from "react-relay"
+import { FC, useMemo } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 import { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import { FullBleedBanner } from "Components/FullBleedBanner"
-import track from "react-tracking"
-
-const FLASH_MESSAGES = {
-  confirmed: "Your email has been confirmed.",
-  already_confirmed: "You have already confirmed your email.",
-  invalid_token: "An error has occurred. Please contact support@artsy.net.",
-  blank_token: "An error has occurred. Please contact support@artsy.net.",
-}
+import { useRouter } from "System/Router/useRouter"
+import { FlashBanner_me$data } from "__generated__/FlashBanner_me.graphql"
 
 interface FlashBannerProps {
-  contentCode?: string
-  me?: {
-    canRequestEmailConfirmation: boolean
-  }
+  me?: FlashBanner_me$data
 }
 
 /**
- * @deprecated: Use `useToasts` from `@artsy/palette`
- * The component responsible for selecting a determining and displaying a flash message
+ * The component responsible for selecting a determining and
+ * displaying a flash message on the homepage.
  */
-export const FlashBanner: React.FC<FlashBannerProps> = ({
-  me,
-  contentCode: _contentCode,
-}) => {
-  const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
+const FlashBanner: FC<FlashBannerProps> = ({ me }) => {
+  const {
+    match: { location },
+  } = useRouter()
 
-  // Choose which flash message should be shown in the banner, if any
+  const canRequestEmailConfirmation = !!me?.canRequestEmailConfirmation
+
+  const contentCode = useMemo(() => {
+    if (location.query.flash_message) {
+      return location.query.flash_message
+    }
+
+    if (canRequestEmailConfirmation) {
+      return "email_confirmation_cta"
+    }
+
+    return null
+  }, [location.query.flash_message, canRequestEmailConfirmation])
+
   const content = useMemo(() => {
-    let contentCode: string | undefined | null = _contentCode
-
-    if (!contentCode) {
-      contentCode = qs.parse(window.location.search.slice(1))["flash_message"]
-    }
-
-    if (!contentCode) {
-      contentCode = canRequestEmailConfirmation
-        ? "email_confirmation_cta"
-        : null
-    }
-
-    if (!contentCode) {
-      return null
-    }
-
-    /**
-     * A map indexing keys (which may come from a contentCode prop, query string or
-     * logic internal to the component + its props) to banner content.
-     */
-
     switch (contentCode) {
       case "email_confirmation_cta":
         return <EmailConfirmationCTA />
       case "expired_token":
         return <EmailConfirmationLinkExpired />
+      case "confirmed":
+        return "Your email has been confirmed."
+      case "already_confirmed":
+        return "You have already confirmed your email."
+      case "invalid_token":
+        return "An error has occurred. Please contact support@artsy.net."
+      case "blank_token":
+        return "An error has occurred. Please contact support@artsy.net."
       default:
-        return FLASH_MESSAGES[contentCode]
+        return null
     }
-  }, [_contentCode, canRequestEmailConfirmation])
+  }, [contentCode])
 
-  if (!content) {
-    return null
-  }
+  if (!content) return null
 
   return (
-    <FullBleedBanner dismissable variant="defaultDark" data-test="flashMessage">
+    <FullBleedBanner
+      dismissable
+      variant="defaultDark"
+      data-test="flashMessage"
+      data-testid="flashMessage"
+    >
       {content}
     </FullBleedBanner>
   )
 }
 
-const TrackedFlashBanner = track({
-  context_module: DeprecatedAnalyticsSchema.ContextModule.FlashBanner,
-})(FlashBanner)
+export const FlashBannerFragmentContainer = createFragmentContainer(
+  FlashBanner,
+  {
+    me: graphql`
+      fragment FlashBanner_me on Me {
+        canRequestEmailConfirmation
+      }
+    `,
+  }
+)
 
-export const FlashBannerQueryRenderer: React.FC = () => {
-  const { relayEnvironment, user } = useSystemContext()
+export const FlashBannerQueryRenderer: FC = () => {
+  const { user } = useSystemContext()
 
   return user ? (
     <SystemQueryRenderer<FlashBannerQuery>
-      environment={relayEnvironment}
       query={graphql`
         query FlashBannerQuery {
           me {
-            canRequestEmailConfirmation
+            ...FlashBanner_me
           }
         }
       `}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
-          return null
+          return <FlashBannerFragmentContainer />
         }
 
         if (!props?.me) {
-          return null
+          return <FlashBannerFragmentContainer />
         }
 
-        return <TrackedFlashBanner me={props.me} />
+        return <FlashBannerFragmentContainer me={props.me} />
       }}
     />
   ) : (
-    <TrackedFlashBanner />
+    <FlashBannerFragmentContainer />
   )
 }

@@ -166,30 +166,32 @@ export const ArtworkDetailsQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtworkDetailsQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtworkDetailsQuery($slug: String!) {
-          artwork(id: $slug) {
-            ...ArtworkDetails_artwork
+    <Box data-test="ArtworkDetailsQueryRenderer">
+      <SystemQueryRenderer<ArtworkDetailsQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query ArtworkDetailsQuery($slug: String!) {
+            artwork(id: $slug) {
+              ...ArtworkDetails_artwork
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artwork) {
-          return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artwork) {
+            return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
+          }
+        }}
+      />
+    </Box>
   )
 }

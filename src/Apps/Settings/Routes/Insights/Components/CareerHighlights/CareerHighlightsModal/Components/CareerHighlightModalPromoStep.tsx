@@ -51,7 +51,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
 
         <Flex minWidth="45%" flexDirection="column">
           <Text variant="lg-display">
-            Discover Career Highlights for Your Artists
+            Discover career highlights for artists you collect.
           </Text>
 
           <Spacer mt={2} />
@@ -83,16 +83,10 @@ const CareerHighlightModalPromoStepMobile = () => {
   return (
     <Flex flex={1} flexDirection="column">
       <Text variant="lg-display">
-        Discover Career Highlights for Your Artists
+        Discover career highlights for artists you collect.
       </Text>
 
-      <Spacer mt={2} />
-
-      <Text variant="sm" color="black60">
-        Add artworks to reveal career highlights for your artists.
-      </Text>
-
-      <Spacer mt={4} />
+      <Spacer mt={6} />
 
       <Button
         // @ts-ignore
@@ -102,7 +96,6 @@ const CareerHighlightModalPromoStepMobile = () => {
         size="large"
         to="/my-collection/artworks/new"
         py={1}
-        mx={2}
       >
         Upload Artwork
       </Button>

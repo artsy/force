@@ -23,7 +23,7 @@ export interface WaysToBuyFilterProps {
 
 export const WAYS_TO_BUY_OPTIONS = {
   acquireable: {
-    name: "Buy Now",
+    name: "Purchase",
     countName: "ecommerce_artworks",
   },
   offerable: {
@@ -35,7 +35,7 @@ export const WAYS_TO_BUY_OPTIONS = {
     countName: "auction_artworks",
   },
   inquireableOnly: {
-    name: "Inquire",
+    name: "Contact Gallery",
     countName: "for_sale_artworks",
   },
 }

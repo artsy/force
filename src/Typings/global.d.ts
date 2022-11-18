@@ -43,7 +43,9 @@ declare global {
     OptanonWrapper: () => void
     ReactNativeWebView?: { postMessage: (message: string) => void }
     sd: any
+    // Zendesk properties
     zEmbed: { show: () => void; hide: () => void }
+    zESettings: object
   }
 }
 

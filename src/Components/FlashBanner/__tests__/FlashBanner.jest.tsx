@@ -1,334 +1,184 @@
-import "jest-styled-components"
-import { FlashBanner, FlashBannerQueryRenderer } from "Components/FlashBanner"
+import { FlashBannerFragmentContainer } from "Components/FlashBanner"
 import { graphql } from "react-relay"
-import { Banner } from "@artsy/palette"
-import { flushPromiseQueue, renderRelayTree } from "DevTools"
-import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "System/SystemContext"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useRouter } from "System/Router/useRouter"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen, fireEvent, act } from "@testing-library/react"
 
-jest.mock("react-tracking")
 jest.unmock("react-relay")
-const trackEvent = jest.fn()
+jest.mock("react-tracking")
+jest.mock("System/Router/useRouter")
 
-const { location: originalLocation } = window
-
-const getRelayWrapper = async ({
-  data,
-  mutationResults = {},
-  queryString: search = "",
-  props: passedProps = {},
-}) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  delete window.location
-  window.location = { search } as any
-
-  const wrapper = await renderRelayTree({
-    Component: props => {
-      return <FlashBanner {...props} {...passedProps} />
-    },
-    query: graphql`
-      query FlashBannerTestQuery @raw_response_type @relay_test_operation {
-        me {
-          canRequestEmailConfirmation
-        }
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: FlashBannerFragmentContainer,
+  query: graphql`
+    query FlashBanner_Test_Query @relay_test_operation {
+      me {
+        ...FlashBanner_me
       }
-    `,
-    variables: {},
-    mockData: data,
-    mockMutationResults: mutationResults,
-  })
-  return {
-    wrapper,
-  }
-}
-
-afterEach(() => {
-  window.location = originalLocation
-})
-
-beforeAll(() => {
-  ;(useTracking as jest.Mock).mockImplementation(() => {
-    return { trackEvent }
-  })
+    }
+  `,
 })
 
 describe("FlashBanner", () => {
-  it("renders nothing if no banner applies", () => {
-    const wrapper = mount(<FlashBanner />)
+  const trackEvent = jest.fn()
+  const mockUseTracking = useTracking as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
 
-    expect(wrapper.find(Banner).exists()).toBeFalsy()
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
+    mockUseRouter.mockImplementation(() => ({
+      match: { location: { query: {} } },
+    }))
   })
 
-  it("renders based on a contentCode prop", () => {
-    const wrapper = mount(<FlashBanner contentCode="already_confirmed" />)
-
-    expect(wrapper.text()).toContain("You have already confirmed your email")
+  afterAll(() => {
+    mockUseTracking.mockReset()
+    mockUseRouter.mockReset()
+    trackEvent.mockReset()
   })
 
-  it("renders based on props.me.canRequestEmailConfirmation (from relay)", async () => {
-    const { wrapper } = await getRelayWrapper({
-      data: {
-        me: { id: "woot", canRequestEmailConfirmation: true },
-      },
-    })
+  it("renders nothing if no content is applicable", () => {
+    renderWithRelay()
 
-    expect(wrapper.text()).toContain("Please verify your email address")
+    expect(screen.queryByTestId("flashMessage")).not.toBeInTheDocument()
   })
 
-  it("renders based on a flash_message query param", () => {
-    window.location = { search: "?flash_message=blank_token" } as any
+  it("renders a confirmation message if the `confirmed` code is present in the query string", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: { flash_message: "confirmed" } } },
+    }))
 
-    const wrapper = mount(<FlashBanner />)
+    renderWithRelay()
 
-    expect(wrapper.text()).toContain("An error has occurred.")
+    expect(
+      screen.getByText("Your email has been confirmed.")
+    ).toBeInTheDocument()
   })
 
-  it("returns nothing for an unsupported content code", () => {
-    const wrapper = mount(<FlashBanner contentCode="porntipsguzzardo" />)
+  it("renders an already confirmed message if the `already_confirmed` code is present in the query string", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: { flash_message: "already_confirmed" } } },
+    }))
 
-    expect(wrapper.find(Banner).exists()).toBeFalsy()
+    renderWithRelay()
+
+    expect(
+      screen.getByText("You have already confirmed your email.")
+    ).toBeInTheDocument()
   })
 
-  it("contentCode takes precedence over query string and props.me", () => {
-    window.location = { search: "?flash_message=expired_token" } as any
+  it("renders an invalid token message if the `invalid_token` code is present in the query string", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: { flash_message: "invalid_token" } } },
+    }))
 
-    const wrapper = mount(
-      <FlashBanner
-        contentCode="invalid_token"
-        me={{
-          canRequestEmailConfirmation: true,
-        }}
-      />
-    )
+    renderWithRelay()
 
-    expect(wrapper.text()).toContain("An error has occurred.")
-  })
-
-  it("query string takes precedence over props.me", () => {
-    window.location = { search: "?flash_message=expired_token" } as any
-
-    const wrapper = mount(
-      <FlashBanner
-        me={{
-          canRequestEmailConfirmation: true,
-        }}
-      />
-    )
-
-    expect(wrapper.text()).toContain("Link expired.")
-  })
-})
-
-describe("Email confirmation link expired", () => {
-  it("user is prompted to re-request email confirmation if they can", async () => {
-    const { wrapper } = await getRelayWrapper({
-      data: {
-        me: { canRequestEmailConfirmation: true },
-      },
-      queryString: "?flash_message=expired_token",
-    })
-
-    expect(wrapper.text()).toContain("Link expired.Resend verification email")
-  })
-
-  it("user seeing banner can click to re-trigger email confirmation message", async () => {
-    const { wrapper } = await getRelayWrapper({
-      data: {
-        me: { canRequestEmailConfirmation: true },
-      },
-      queryString: "?flash_message=expired_token",
-      mutationResults: {
-        sendConfirmationEmail: {
-          confirmationOrError: {
-            unconfirmedEmail: "ceo@blackwater.biz",
-          },
-        },
-      },
-    })
-
-    expect(wrapper.text()).toContain("Link expired.")
-
-    wrapper.find("button").first().simulate("click")
-    await flushPromiseQueue()
-    wrapper.update()
-
-    expect(wrapper.text()).toContain(
-      "An email has been sent to ceo@blackwater.biz"
-    )
-  })
-
-  it("user click to re-trigger is tracked", async () => {
-    const { wrapper } = await getRelayWrapper({
-      data: {
-        me: { canRequestEmailConfirmation: true },
-      },
-      queryString: "?flash_message=expired_token",
-    })
-
-    expect(wrapper.text()).toContain("Link expired.")
-
-    wrapper.find("button").first().simulate("click")
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      action_type: "Click",
-      subject: "Email Confirmation Link Expired",
-    })
-  })
-
-  it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
-    const { wrapper } = await getRelayWrapper({
-      data: {
-        me: { canRequestEmailConfirmation: true },
-      },
-      queryString: "?flash_message=expired_token",
-      mutationResults: {
-        sendConfirmationEmail: {
-          confirmationOrError: {
-            mutationError: {
-              error: "BadError",
-              message: "Something Bad",
-            },
-          },
-        },
-      },
-    })
-
-    expect(wrapper.text()).toContain("Link expired.")
-
-    wrapper.find("button").first().simulate("click")
-    await flushPromiseQueue()
-    wrapper.update()
-
-    expect(wrapper.text()).toContain("Something went wrong")
-  })
-})
-
-describe("Email Confirmation CTA", () => {
-  describe("user cannot request email confirmation", () => {
-    it("user is not prompted to request email confirmation if no logged in user is present", async () => {
-      const { wrapper } = await getRelayWrapper({ data: { me: null } })
-
-      expect(wrapper.find(Banner).exists()).toBeFalsy()
-    })
-
-    it("user is not prompted to request email confirmation if !me.canRequestEmailConfirmation", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { id: "woot", canRequestEmailConfirmation: false },
-        },
-      })
-
-      expect(wrapper.find(Banner).exists()).toBeFalsy()
-    })
-  })
-
-  describe("user can request email confirmation (me?.canRequestEmailConfirmation=true)", () => {
-    it("user is prompted to request email confirmation if they can", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: { me: { canRequestEmailConfirmation: true } },
-      })
-
-      expect(wrapper.text()).toContain("Please verify your email address")
-    })
-
-    it("user seeing banner can click to trigger email confirmation message", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: { me: { canRequestEmailConfirmation: true } },
-        mutationResults: {
-          sendConfirmationEmail: {
-            confirmationOrError: {
-              unconfirmedEmail: "ceo@blackwater.biz",
-            },
-          },
-        },
-      })
-
-      expect(wrapper.text()).toContain("Please verify your email address")
-
-      wrapper.find("button").first().simulate("click")
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain(
-        "An email has been sent to ceo@blackwater.biz"
+    expect(
+      screen.getByText(
+        "An error has occurred. Please contact support@artsy.net."
       )
+    ).toBeInTheDocument()
+  })
+
+  it("renders a blank token message if the `blank_token` code is present in the query string", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: { flash_message: "blank_token" } } },
+    }))
+
+    renderWithRelay()
+
+    expect(
+      screen.getByText(
+        "An error has occurred. Please contact support@artsy.net."
+      )
+    ).toBeInTheDocument()
+  })
+
+  it("renders an expired token message if the `expired_token` code is present in the query string", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: { flash_message: "expired_token" } } },
+    }))
+
+    renderWithRelay()
+
+    expect(screen.getByText("Link expired.")).toBeInTheDocument()
+  })
+
+  it("renders a request confirmation message if the `canRequestEmailConfirmation` flag is true on the logged in user", () => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: { location: { query: {} } },
+    }))
+
+    renderWithRelay({
+      Me: () => ({ canRequestEmailConfirmation: true }),
     })
 
-    it("user click on confirm email button is tracked", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: { me: { canRequestEmailConfirmation: true } },
-        mutationResults: {
-          sendConfirmationEmail: {
-            confirmationOrError: {
-              unconfirmedEmail: "ceo@blackwater.biz",
-            },
-          },
-        },
+    expect(
+      screen.getByText("Please verify your email address")
+    ).toBeInTheDocument()
+  })
+
+  // TODO: Move these specs into component specific specs
+  describe("Email confirmation link expired", () => {
+    it("allows the user to click to re-trigger the email confirmation message", () => {
+      ;(useRouter as jest.Mock).mockImplementation(() => ({
+        match: { location: { query: { flash_message: "expired_token" } } },
+      }))
+
+      renderWithRelay()
+
+      expect(screen.queryByText("Link expired.")).toBeInTheDocument()
+
+      act(() => {
+        fireEvent.click(screen.getByText("Resend verification email"))
       })
 
-      expect(wrapper.text()).toContain("Please verify your email address")
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action_type: "Click",
+        subject: "Email Confirmation Link Expired",
+      })
 
-      wrapper.find("button").first().simulate("click")
+      // TODO: Requires mocking of the mutation
+      // expect(screen.getByText("An email has been sent to example@example.com")).toBeInTheDocument()
+    })
 
-      expect(trackEvent).toHaveBeenCalledWith({
+    it.skip("displays an error message if the mutation fails", () => {
+      // TODO: Requires mocking of the mutation
+    })
+  })
+
+  // TODO: Move these specs into component specific specs
+  describe("Email Confirmation CTA", () => {
+    it("allows the user to request email confirmation", () => {
+      ;(useRouter as jest.Mock).mockImplementation(() => ({
+        match: { location: { query: {} } },
+      }))
+
+      renderWithRelay({
+        Me: () => ({ canRequestEmailConfirmation: true }),
+      })
+
+      expect(
+        screen.getByText("Please verify your email address")
+      ).toBeInTheDocument()
+
+      act(() => {
+        fireEvent.click(screen.getByText("Send email"))
+      })
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
         action_type: "Click",
         subject: "Email Confirmation CTA",
       })
+
+      // TODO: Requires mocking of the mutation
+      // expect(screen.getByText("An email has been sent to example@example.com")).toBeInTheDocument()
     })
 
-    it("user sees an error message if sendConfirmationEmail mutation fails", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: { me: { canRequestEmailConfirmation: true } },
-        mutationResults: {
-          sendConfirmationEmail: {
-            confirmationOrError: {
-              mutationError: {
-                error: "BadError",
-                message: "Something Bad",
-              },
-            },
-          },
-        },
-      })
-
-      expect(wrapper.text()).toContain("Please verify your email address")
-
-      wrapper.find("button").first().simulate("click")
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(wrapper.text()).toContain("Something went wrong")
-    })
-
-    it("a flash_message indicating an error supercedes the confirmation prompt", async () => {
-      const { wrapper } = await getRelayWrapper({
-        data: {
-          me: { canRequestEmailConfirmation: true },
-        },
-        queryString: "?flash_message=invalid_token",
-      })
-
-      expect(wrapper.text()).toContain("An error has occurred.")
-    })
-
-    it("does not request user-specific data from metaphysics if there is no user", () => {
-      const wrapper = mount(
-        <SystemContextProvider user={null}>
-          <FlashBannerQueryRenderer />
-        </SystemContextProvider>
-      )
-      expect(wrapper.find(SystemQueryRenderer).exists()).toBeFalsy()
-    })
-
-    it("does requests user-specific data from metaphysics if there is a user", () => {
-      const wrapper = mount(
-        <SystemContextProvider user={{ id: "someonespecial" }}>
-          <FlashBannerQueryRenderer />
-        </SystemContextProvider>
-      )
-      expect(wrapper.find(SystemQueryRenderer).prop("query")).not.toBeNull()
+    it.skip("displays an error message if the mutation fails", () => {
+      // TODO: Requires mocking of the mutation
     })
   })
 })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<281f767014d919e571d9de15ba33f92f>>
+ * @generated SignedSource<<7914484a7684e6a566a9df00c94cc6a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -434,6 +434,7 @@ return {
           "enumValues": [
             "ARTWORK_ALERT",
             "ARTWORK_PUBLISHED",
+            "PARTNER_SHOW_OPENED",
             "VIEWING_ROOM_PUBLISHED"
           ],
           "nullable": false,

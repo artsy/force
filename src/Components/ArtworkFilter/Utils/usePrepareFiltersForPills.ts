@@ -11,7 +11,7 @@ export const usePrepareFiltersForPills = () => {
   const { artistIDs = [] } = preparedFilters
 
   // Display all the followed artists that can be extracted from ARTIST aggregation
-  // when "Artists I Follow" is selected
+  // when "Artists You Follow" is selected
   if (preparedFilters?.includeArtworksByFollowedArtists) {
     const followedArtistSlugs = followedArtists.map(artist => artist.slug)
     const artistSlugs = filterArtistSlugsByAggregation(

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8734bf1cb0e7b99a4023d595da57583d>>
+ * @generated SignedSource<<80e46bcde3a4d8119042d14d41cb6509>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type SettingsShippingAddress_address$data = {
   readonly isDefault: boolean;
   readonly name: string | null;
   readonly phoneNumber: string | null;
+  readonly phoneNumberCountryCode: string | null;
   readonly postalCode: string | null;
   readonly region: string | null;
   readonly " $fragmentType": "SettingsShippingAddress_address";
@@ -94,6 +95,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "phoneNumberCountryCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "postalCode",
       "storageKey": null
     },
@@ -109,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5ddaa74cd5bb1ba03f7cb48fa204cffe";
+(node as any).hash = "8fed58260fe2f239eeb73dee64288d40";
 
 export default node;

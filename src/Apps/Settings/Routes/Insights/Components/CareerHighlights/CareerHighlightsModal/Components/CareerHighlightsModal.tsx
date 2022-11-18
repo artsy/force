@@ -13,6 +13,7 @@ import {
 } from "@artsy/palette"
 import { useCareerHighlightsStoriesContext } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/CareerHighlightsModal/Hooks/useCareerHighlightsStoriesContext"
 import { omit } from "lodash"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 
 type CareerHighlightModalProps = ModalBaseProps
 
@@ -24,6 +25,7 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
   const isMounted = useDidMount()
   const [boxProps, modalProps] = splitBoxProps(rest)
   const { dotPosition, total, back, next } = useCareerHighlightsStoriesContext()
+  const { containerRef } = useNextPrevious({ onNext: next, onPrevious: back })
 
   return (
     <ModalBase
@@ -43,6 +45,7 @@ export const CareerHighlightModal: React.FC<CareerHighlightModalProps> = ({
       {...omit(modalProps, "dialogProps")}
     >
       <Flex
+        ref={containerRef as any}
         flexDirection="column"
         width="100%"
         height={["100vh", "90%"]}

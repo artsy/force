@@ -45,9 +45,6 @@ describe("NewForYouApp", () => {
     ;(useSystemContext as jest.Mock).mockReturnValue({ isLoggedIn: false })
     renderWithRelay()
 
-    expect(
-      screen.getByText(/(^Already have an account\?)/g)
-    ).toBeInTheDocument()
     expect(screen.getByText(/(^Log in)/g)).toBeInTheDocument()
     expect(
       screen.getByText(/(to see your personalized recommendations\.$)/g)
