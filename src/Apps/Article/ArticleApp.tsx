@@ -34,13 +34,11 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
       // TODO: Onboarding is triggered based on contents of redirectTo
       // prop. Move this to `afterSignupAction.action`
       redirectTo: location.pathname,
-      afterSignUpAction: { action: "editorialSignup" },
     },
   })
 
   return (
     <ArticleAdProvider>
-      
       <ArticleMetaTagsFragmentContainer article={article} />
 
       <Join separator={<Spacer mt={4} />}>
@@ -58,7 +56,6 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "CLASSIC":
               return (
                 <>
-                  
                   <ArticleBodyFragmentContainer article={article} />
 
                   <FullBleed>
@@ -75,9 +72,7 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
             case "STANDARD":
               return (
                 <>
-                  
                   <ArticleVisibilityMetadataFragmentContainer article={article}>
-                    
                     <ArticleBodyFragmentContainer article={article} />
                   </ArticleVisibilityMetadataFragmentContainer>
 
