@@ -6,11 +6,11 @@ import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkDetailsFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
+import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
-} from "Apps/Consign/Components/SubmissionStepper"
-import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
+} from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 
 const validForm = {
   externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",

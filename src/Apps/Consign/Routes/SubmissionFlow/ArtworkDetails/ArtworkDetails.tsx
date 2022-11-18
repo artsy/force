@@ -1,8 +1,5 @@
 import { Button, Text, useToasts } from "@artsy/palette"
-import {
-  SubmissionStepper,
-  useSubmissionFlowSteps,
-} from "Apps/Consign/Components/SubmissionStepper"
+import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
@@ -35,6 +32,7 @@ import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDe
 import { LocationDescriptor } from "found"
 import { trackEvent } from "Server/analytics/helpers"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -57,6 +55,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     [...steps].indexOf("Artwork")
   )
   const isLastStep = stepIndex === steps.length - 1
+  const isFirstStep = stepIndex === 0
 
   let data: getArtworkDetailsFormInitialValuesProps = {
     type: SubmissionType.default,
@@ -128,11 +127,12 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         utmSource: utmParams?.utmSource,
         utmTerm: utmParams?.utmTerm,
         sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+        // myCollectionArtworkID is necessary in order to prevent duplication or mycollection artwork
+        myCollectionArtworkID: artworkId && isFirstStep ? artworkId : undefined,
       }
       if (artworkId && !match?.params?.id) {
         ;(submissionData as CreateSubmissionMutationInput).source =
           "MY_COLLECTION"
-        ;(submissionData as CreateSubmissionMutationInput).myCollectionArtworkID = artworkId
       }
       try {
         submissionId = await createOrUpdateConsignSubmission(

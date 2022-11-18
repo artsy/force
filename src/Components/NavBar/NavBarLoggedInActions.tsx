@@ -2,13 +2,7 @@ import { useContext } from "react"
 import * as React from "react"
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
 import { SystemContext } from "System"
-import {
-  BellIcon,
-  Dropdown,
-  EnvelopeIcon,
-  Flex,
-  SoloIcon,
-} from "@artsy/palette"
+import { BellIcon, Dropdown, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -17,8 +11,6 @@ import {
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
 import { checkAndSyncIndicatorsCount } from "./helpers"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -60,6 +52,11 @@ export const NavBarLoggedInActions: React.FC<Partial<
             ref={anchorRef as any}
             active={visible}
             {...anchorProps}
+            aria-label={
+              hasNotifications
+                ? `${me?.unreadNotificationsCount} unread notifications`
+                : "Notifications"
+            }
             onClick={event => {
               anchorProps.onClick?.(event)
 
@@ -70,34 +67,36 @@ export const NavBarLoggedInActions: React.FC<Partial<
               }
             }}
           >
-            <BellIcon
-              title="Notifications"
-              // @ts-ignore
-              fill="currentColor"
-            />
+            <BellIcon title="Notifications" fill="currentColor" />
 
-            {hasNotifications &&
-              (enableActivityPanel ? (
-                <NavBarNotificationIndicator
-                  position="absolute"
-                  top="15px"
-                  right="9px"
-                />
-              ) : (
-                <NavBarLoggedInActionsNotificationIndicator />
-              ))}
+            {hasNotifications && (
+              <NavBarNotificationIndicator
+                position="absolute"
+                top="15px"
+                right="9px"
+              />
+            )}
           </NavBarItemButton>
         )}
       </Dropdown>
 
-      <NavBarItemLink href="/user/conversations">
-        <EnvelopeIcon
-          title="Inbox"
-          // @ts-ignore
-          fill="currentColor"
-        />
+      <NavBarItemLink
+        href="/user/conversations"
+        aria-label={
+          hasConversations
+            ? `${me?.unreadConversationCount} unread conversations`
+            : "Conversations"
+        }
+      >
+        <EnvelopeIcon title="Inbox" fill="currentColor" />
 
-        {hasConversations && <NavBarLoggedInActionsNotificationIndicator />}
+        {hasConversations && (
+          <NavBarNotificationIndicator
+            position="absolute"
+            top="15px"
+            right="5px"
+          />
+        )}
       </NavBarItemLink>
 
       <Dropdown
@@ -115,11 +114,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
             active={visible}
             {...anchorProps}
           >
-            <SoloIcon
-              title="Your account"
-              // @ts-ignore
-              fill="currentColor"
-            />
+            <SoloIcon title="Your account" fill="currentColor" />
           </NavBarItemButton>
         )}
       </Dropdown>
@@ -169,16 +164,3 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
     />
   )
 }
-
-export const NavBarLoggedInActionsNotificationIndicator = styled(Flex).attrs({
-  bg: "red100",
-})`
-  border-radius: 50%;
-  width: 6px;
-  height: 6px;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: ${themeGet("space.2")};
-  right: 5px;
-`

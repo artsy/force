@@ -27,7 +27,6 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
       {!isLoggedIn && (
         <>
           <Message variant="warning">
-            Already have an account?{" "}
             <RouterLink to={`/login?redirectTo=${route.path}`}>
               Log in
             </RouterLink>{" "}

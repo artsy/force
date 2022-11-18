@@ -1,27 +1,11 @@
-import { Box, Step, Stepper, themeProps } from "@artsy/palette"
+import { Box, Step, Stepper } from "@artsy/palette"
+import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { FC } from "react"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 interface SubmissionStepperProps {
   currentStep: ReturnType<typeof useSubmissionFlowSteps>["0"]
 }
-
-function typedArray<T extends string>(...elems: T[]): T[] {
-  return elems
-}
-
-export const submissionFlowSteps = typedArray(
-  "Artwork Details",
-  "Upload Photos",
-  "Contact Information"
-)
-
-export const submissionFlowStepsMobile = typedArray(
-  "Artwork",
-  "Photos",
-  "Contact"
-)
 
 enum ALIAS {
   "Artwork Details" = "Artwork",
@@ -30,22 +14,6 @@ enum ALIAS {
   Contact = "Contact Information",
   "Upload Photos" = "Photos",
   Photos = "Upload Photos",
-}
-
-export const useSubmissionFlowSteps = () => {
-  const enableFlowReorder = useFeatureFlag(
-    "reorder-swa-artwork-submission-flow"
-  )
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  if (enableFlowReorder && isMobile) {
-    return typedArray("Contact", "Artwork", "Photos")
-  } else if (enableFlowReorder) {
-    return typedArray("Contact Information", "Artwork Details", "Upload Photos")
-  }
-  if (isMobile) {
-    return submissionFlowStepsMobile
-  }
-  return submissionFlowSteps
 }
 
 export const SubmissionStepper: FC<SubmissionStepperProps> = ({

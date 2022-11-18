@@ -2,7 +2,7 @@ import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { computeTitle } from "../../Utils/computeTitle"
+import { computeTitle } from "Apps/Artist/Utils/computeTitle"
 import loadable from "@loadable/component"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
 
@@ -13,11 +13,11 @@ const ArtistIconicCollectionsRailQueryRenderer = loadable(
       component.ArtistIconicCollectionsRailQueryRenderer,
   }
 )
-const ArtistNotableWorksRailQueryRenderer = loadable(
-  () => import("./Components/ArtistNotableWorksRail"),
+const ArtistFeaturedWorksRailQueryRenderer = loadable(
+  () => import("./Components/ArtistFeaturedWorksRail"),
   {
     resolveComponent: component =>
-      component.ArtistNotableWorksRailQueryRenderer,
+      component.ArtistFeaturedWorksRailQueryRenderer,
   }
 )
 const ArtistWorksForSaleRailQueryRenderer = loadable(
@@ -76,7 +76,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Title>{title}</Title>
 
       <Join separator={<Spacer mb={6} />}>
-        <ArtistNotableWorksRailQueryRenderer slug={artist.slug} />
+        <ArtistFeaturedWorksRailQueryRenderer slug={artist.slug} />
         <ArtistCareerHighlightsQueryRenderer slug={artist.slug} />
         <ArtistSellWithArtsyQueryRenderer slug={artist.slug} />
         <ArtistIconicCollectionsRailQueryRenderer

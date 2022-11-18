@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistOverviewRouteFragmentContainer } from "../ArtistOverviewRoute"
+import { ArtistOverviewRouteFragmentContainer } from "Apps/Artist/Routes/Overview/ArtistOverviewRoute"
 import { ArtistOverviewRoute_Test_Query } from "__generated__/ArtistOverviewRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
@@ -8,9 +8,9 @@ jest.mock("react-head", () => ({
   Title: () => null,
 }))
 jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail",
+  "Apps/Artist/Routes/Overview/Components/ArtistFeaturedWorksRail",
   () => ({
-    ArtistNotableWorksRailQueryRenderer: () => null,
+    ArtistFeaturedWorksRailQueryRenderer: () => null,
   })
 )
 jest.mock(
@@ -66,7 +66,7 @@ describe("ArtistOverviewRoute", () => {
   // FIXME: SWC_COMPILER_MIGRATION
   it.skip("renders correctly", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("ArtistNotableWorksRailQueryRenderer").length).toBe(1)
+    expect(wrapper.find("ArtistFeaturedWorksRailQueryRenderer").length).toBe(1)
     expect(wrapper.find("ArtistCareerHighlightsQueryRenderer").length).toBe(1)
     expect(
       wrapper.find("ArtistIconicCollectionsRailQueryRenderer").length

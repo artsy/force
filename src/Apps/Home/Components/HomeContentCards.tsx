@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import {
-  HomeHeroUnit,
-  StaticHeroUnit,
-} from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnit"
 import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 import {
   Box,
@@ -15,6 +11,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
+import { HomeContentCard } from "./HomeContentCard"
 
 const HomeContentCardPlaceholder = () => {
   return (
@@ -70,27 +67,6 @@ const HomeContentCardPlaceholder = () => {
   )
 }
 
-interface ContentCardProps {
-  card: BrazeContentCard
-  index: number
-}
-
-const ContentCard: React.FC<ContentCardProps> = ({ card, index }) => {
-  const extras = card.extras || {}
-
-  const heroUnit: StaticHeroUnit = {
-    backgroundImageURL: card.imageUrl!,
-    creditLine: extras.credit,
-    heading: extras.label,
-    href: card.url!,
-    linkText: card.linkText,
-    subtitle: card.description,
-    title: card.title,
-  }
-
-  return <HomeHeroUnit heroUnit={heroUnit} index={index} layout="a" />
-}
-
 export const HomeContentCards: React.FC = () => {
   const [cards, setCards] = useState<BrazeContentCard[]>([])
 
@@ -121,10 +97,18 @@ export const HomeContentCards: React.FC = () => {
   ]
 
   const realCards = cards.map((card, index) => (
-    <ContentCard card={card} key={card.id} index={index} />
+    <HomeContentCard card={card} key={card.id} index={index} />
   ))
 
   const heroCards = cards.length < 1 ? placeholderCards : realCards
 
-  return <HeroCarousel>{heroCards}</HeroCarousel>
+  const handleChange = index => {
+    const appboy = (window as any).appboy
+    if (!appboy) return
+
+    const card = cards[index]
+    appboy.logCardImpressions([card])
+  }
+
+  return <HeroCarousel onChange={handleChange}>{heroCards}</HeroCarousel>
 }

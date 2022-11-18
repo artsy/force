@@ -21,6 +21,12 @@ export const ZendeskWrapper: FC<ZendeskWrapperProps> = ({
     src: `https://static.zdassets.com/ekr/snippet.js?key=${key}`,
     removeOnUnmount: true,
     onReady: () => {
+      window.zESettings = {
+        webWidget: {
+          // keeping the widget below the cookie banner
+          zIndex: 0,
+        },
+      }
       window.zEmbed?.show?.()
     },
   })

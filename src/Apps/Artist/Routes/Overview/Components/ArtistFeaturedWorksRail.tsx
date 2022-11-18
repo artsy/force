@@ -8,18 +8,19 @@ import {
   ShelfArtworkPlaceholder,
 } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistNotableWorksRail_artist$data } from "__generated__/ArtistNotableWorksRail_artist.graphql"
-import { ArtistNotableWorksRailQuery } from "__generated__/ArtistNotableWorksRailQuery.graphql"
+import { ArtistFeaturedWorksRail_artist$data } from "__generated__/ArtistFeaturedWorksRail_artist.graphql"
+import { ArtistFeaturedWorksRailQuery } from "__generated__/ArtistFeaturedWorksRailQuery.graphql"
 import { Rail } from "Components/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Skeleton } from "@artsy/palette"
 import { useJump } from "Utils/Hooks/useJump"
+import { useTranslation } from "react-i18next"
 
-interface ArtistNotableWorksRailProps {
-  artist: ArtistNotableWorksRail_artist$data
+interface ArtistFeaturedWorksRailProps {
+  artist: ArtistFeaturedWorksRail_artist$data
 }
 
-const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
+const ArtistFeaturedWorksRail: React.FC<ArtistFeaturedWorksRailProps> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -28,6 +29,7 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  const { t } = useTranslation()
 
   const { jumpTo } = useJump({ offset: 20 })
 
@@ -39,8 +41,8 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
 
   return (
     <Rail
-      title="Notable Works"
-      viewAllLabel="View All Works"
+      title={t("rails.artistFeaturedWorks.title")}
+      viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
       viewAllHref={`/artist/${artist.slug}/works-for-sale`}
       viewAllOnClick={() => {
         jumpTo("artistContentArea")
@@ -89,11 +91,11 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
   )
 }
 
-export const ArtistNotableWorksRailFragmentContainer = createFragmentContainer(
-  ArtistNotableWorksRail,
+export const ArtistFeaturedWorksRailFragmentContainer = createFragmentContainer(
+  ArtistFeaturedWorksRail,
   {
     artist: graphql`
-      fragment ArtistNotableWorksRail_artist on Artist {
+      fragment ArtistFeaturedWorksRail_artist on Artist {
         slug
         internalID
         filterArtworksConnection(sort: "-weighted_iconicity", first: 10) {
@@ -110,36 +112,40 @@ export const ArtistNotableWorksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = (
-  <Skeleton>
-    <Rail
-      title="Notable Works"
-      viewAllLabel="View All Works"
-      getItems={() => {
-        return [...new Array(8)].map((_, i) => {
-          return <ShelfArtworkPlaceholder key={i} index={i} />
-        })
-      }}
-    />
-  </Skeleton>
-)
+const Placeholder = () => {
+  const { t } = useTranslation()
 
-export const ArtistNotableWorksRailQueryRenderer: React.FC<{
+  return (
+    <Skeleton>
+      <Rail
+        title={t("rails.artistFeaturedWorks.title")}
+        viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
+        getItems={() => {
+          return [...new Array(8)].map((_, i) => {
+            return <ShelfArtworkPlaceholder key={i} index={i} />
+          })
+        }}
+      />
+    </Skeleton>
+  )
+}
+
+export const ArtistFeaturedWorksRailQueryRenderer: React.FC<{
   slug: string
 }> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <Box data-test="ArtistNotableWorksRailQueryRenderer">
-      <SystemQueryRenderer<ArtistNotableWorksRailQuery>
+    <Box data-test="ArtistFeaturedWorksRailQueryRenderer">
+      <SystemQueryRenderer<ArtistFeaturedWorksRailQuery>
         lazyLoad
         environment={relayEnvironment}
         variables={{ slug }}
-        placeholder={PLACEHOLDER}
+        placeholder={<Placeholder />}
         query={graphql`
-          query ArtistNotableWorksRailQuery($slug: String!) {
+          query ArtistFeaturedWorksRailQuery($slug: String!) {
             artist(id: $slug) {
-              ...ArtistNotableWorksRail_artist
+              ...ArtistFeaturedWorksRail_artist
             }
           }
         `}
@@ -149,11 +155,11 @@ export const ArtistNotableWorksRailQueryRenderer: React.FC<{
             return null
           }
           if (!props) {
-            return PLACEHOLDER
+            return <Placeholder />
           }
           if (props.artist) {
             return (
-              <ArtistNotableWorksRailFragmentContainer artist={props.artist} />
+              <ArtistFeaturedWorksRailFragmentContainer artist={props.artist} />
             )
           }
         }}

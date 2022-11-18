@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6ea4acba80067d2d5b7aa69d91d0d0d>>
+ * @generated SignedSource<<a0f797ad7ba053df6d323d4c54be8999>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistNotableWorksRail_artist$data = {
+export type ArtistFeaturedWorksRail_artist$data = {
   readonly filterArtworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -22,11 +22,11 @@ export type ArtistNotableWorksRail_artist$data = {
   } | null;
   readonly internalID: string;
   readonly slug: string;
-  readonly " $fragmentType": "ArtistNotableWorksRail_artist";
+  readonly " $fragmentType": "ArtistFeaturedWorksRail_artist";
 };
-export type ArtistNotableWorksRail_artist$key = {
-  readonly " $data"?: ArtistNotableWorksRail_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistNotableWorksRail_artist">;
+export type ArtistFeaturedWorksRail_artist$key = {
+  readonly " $data"?: ArtistFeaturedWorksRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistFeaturedWorksRail_artist">;
 };
 
 const node: ReaderFragment = (function(){
@@ -48,7 +48,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistNotableWorksRail_artist",
+  "name": "ArtistFeaturedWorksRail_artist",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -109,6 +109,6 @@ return {
 };
 })();
 
-(node as any).hash = "3144f9efddcbac85711328e9ad6f1949";
+(node as any).hash = "bb89dfbbbcff1547288dee59675c0501";
 
 export default node;

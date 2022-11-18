@@ -17,8 +17,6 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { createGlobalStyle } from "styled-components"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 
@@ -31,7 +29,6 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   useImagePerformanceObserver()
 
-  const isMounted = useDidMount()
   const { onboardingComponent } = useOnboardingModal()
 
   useAuthIntent()
@@ -110,18 +107,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
       )}
 
       {onboardingComponent}
-
-      {isMounted && <OneTrustModalOverlayHotfixStyles />}
     </Flex>
   )
 }
-
-/**
- * This is a workaround for the cookie consent banner overlay appearing on top
- * of our modals. This positions it below so that modal buttons are clickable.
- */
-export const OneTrustModalOverlayHotfixStyles = createGlobalStyle`
-  #onetrust-banner-sdk {
-    z-index: 1 !important;
-  }
-`

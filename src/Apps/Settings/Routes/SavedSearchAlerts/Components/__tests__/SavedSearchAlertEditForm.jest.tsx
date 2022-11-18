@@ -104,9 +104,9 @@ describe("SavedSearchAlertEditForm", () => {
       Me: () => meMocked,
     })
 
-    expect(screen.getByText("Buy Now")).toBeInTheDocument()
+    expect(screen.getByText("Purchase")).toBeInTheDocument()
     expect(screen.getByText("Bid")).toBeInTheDocument()
-    expect(screen.getByText("Inquire")).toBeInTheDocument()
+    expect(screen.getByText("Contact Gallery")).toBeInTheDocument()
     expect(screen.getByText("Make Offer")).toBeInTheDocument()
     expect(screen.getByText("Small (under 40cm)")).toBeInTheDocument()
   })
@@ -324,7 +324,7 @@ describe("SavedSearchAlertEditForm", () => {
         Me: () => meMocked,
       })
 
-      fireEvent.click(screen.getByText("Buy Now"))
+      fireEvent.click(screen.getByText("Purchase"))
 
       const saveAlertButton = screen.getByRole("button", {
         name: "Save Alert",
@@ -433,7 +433,7 @@ const savedSearchAlertLabelsMocked = [
   {
     field: "acquireable",
     value: "true",
-    displayValue: "Buy Now",
+    displayValue: "Purchase",
   },
   {
     field: "atAuction",
@@ -443,7 +443,7 @@ const savedSearchAlertLabelsMocked = [
   {
     field: "inquireableOnly",
     value: "true",
-    displayValue: "Inquire",
+    displayValue: "Contact Gallery",
   },
   {
     field: "offerable",
