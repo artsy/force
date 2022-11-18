@@ -37,7 +37,6 @@ export interface FormProps {
   onFacebookLogin?: (e: Event) => void
   onGoogleLogin?: (e: Event) => void
   onBackButtonClicked?: (e: Event) => void
-  title?: string
   entityName?: string
   showRecaptchaDisclaimer?: boolean
 }
@@ -52,10 +51,6 @@ export const COMMERCIAL_AUTH_INTENTS = [
 ]
 
 export interface ModalOptions {
-  /**
-   * Hook to be called after the modal has closed
-   */
-  afterClose?: () => void
   /**
    * defines an action to take after the user successfully signs up
    *
@@ -79,10 +74,6 @@ export interface ModalOptions {
    * login or account creation after onboarding.
    */
   destination?: string
-  /**
-   * Prevents users from clicking outside the modal to close it
-   */
-  disableCloseOnBackgroundClick?: boolean
   /**
    * The image rendered with the modal
    */
@@ -108,10 +99,6 @@ export interface ModalOptions {
    * the page before the page on which the sign up was triggered.
    */
   signupReferer?: string
-  /**
-   * The form or modal title in case it needs to be customized
-   */
-  title?: string
   /**
    * the number of seconds before a modal was triggered
    */

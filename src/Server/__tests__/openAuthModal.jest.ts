@@ -1,4 +1,4 @@
-import { handleScrollingAuthModal, openAuthModal } from "../openAuthModal"
+import { openAuthModal } from "Server/openAuthModal"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "Server/mediator"
@@ -45,45 +45,6 @@ describe("Authentication Helpers", () => {
         intent: "followArtist",
         mode: "signup",
       })
-    })
-  })
-
-  describe("#handleScrollingAuthModal", () => {
-    it("opens the mediator with expected args", () => {
-      handleScrollingAuthModal({
-        intent: Intent.followArtist,
-        contextModule: ContextModule.popUpModal,
-      })
-      expect(window.addEventListener).toBeCalled()
-      jest.runAllTimers()
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        contextModule: "popUpModal",
-        intent: "followArtist",
-        mode: "signup",
-        triggerSeconds: 2,
-      })
-    })
-
-    it("does not open auth on mobile", () => {
-      sd.IS_MOBILE = true
-      handleScrollingAuthModal({
-        intent: Intent.followArtist,
-        contextModule: ContextModule.popUpModal,
-      })
-      expect(window.addEventListener).not.toBeCalled()
-      jest.runAllTimers()
-      expect(mediator.trigger).not.toBeCalled()
-    })
-
-    it("does not open auth if current user", () => {
-      sd.CURRENT_USER = { id: "123" }
-      handleScrollingAuthModal({
-        intent: Intent.followArtist,
-        contextModule: ContextModule.popUpModal,
-      })
-      expect(window.addEventListener).not.toBeCalled()
-      jest.runAllTimers()
-      expect(mediator.trigger).not.toBeCalled()
     })
   })
 })

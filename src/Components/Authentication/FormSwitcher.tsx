@@ -25,7 +25,6 @@ export interface FormSwitcherProps {
   onFacebookLogin?: (e: Event) => void
   onGoogleLogin?: (e: Event) => void
   options: ModalOptions
-  title?: string
   showRecaptchaDisclaimer?: boolean
   submitUrls: { [P in ModalType]: string } & {
     apple: string
@@ -58,14 +57,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
 
   componentDidMount() {
     const {
-      options: {
-        contextModule,
-        copy,
-        redirectTo,
-        intent,
-        title,
-        triggerSeconds,
-      },
+      options: { contextModule, copy, redirectTo, intent, triggerSeconds },
       type,
       tracking,
     } = this.props
@@ -73,7 +65,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     const trackingArgs: AuthImpression = {
       action: ActionType.authImpression,
       context_module: contextModule!,
-      modal_copy: copy || title,
+      modal_copy: copy,
       intent: intent!,
       trigger: triggerSeconds ? "timed" : "click",
       trigger_seconds: triggerSeconds,
@@ -121,7 +113,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
   }
 
   render() {
-    const { error, title, options, showRecaptchaDisclaimer } = this.props
+    const { error, options, showRecaptchaDisclaimer } = this.props
 
     const queryData = Object.assign(
       {},
@@ -178,7 +170,6 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     return (
       <SystemContextProvider>
         <Form
-          title={title}
           contextModule={options.contextModule!}
           error={error}
           values={defaultValues}

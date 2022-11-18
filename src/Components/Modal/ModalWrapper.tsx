@@ -2,7 +2,7 @@ import { Theme } from "@artsy/palette"
 import * as React from "react"
 import styled, { createGlobalStyle, keyframes } from "styled-components"
 import { getViewportDimensions } from "Utils/viewport"
-import FadeTransition from "../Animation/FadeTransition"
+import FadeTransition from "Components/Animation/FadeTransition"
 import { media } from "Utils/deprecatedMedia"
 
 export enum ModalWidth {
@@ -19,7 +19,6 @@ export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   fullscreenResponsiveModal?: boolean
   image?: string
   show?: boolean
-  disableCloseOnBackgroundClick?: boolean
 }
 
 export interface ModalWrapperState {
@@ -137,14 +136,7 @@ export class ModalWrapper extends React.Component<
       <Theme theme="v3">
         <Wrapper isShown={isShown || isAnimating}>
           <GlobalStyle suppressMultiMountWarning />
-          {isShown && (
-            <ModalOverlay
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              onClick={
-                this.props.disableCloseOnBackgroundClick ? null : this.close
-              }
-            />
-          )}
+          {isShown && <ModalOverlay onClick={this.close} />}
           <FadeTransition
             in={isShown}
             mountOnEnter

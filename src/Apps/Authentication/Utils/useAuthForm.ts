@@ -2,8 +2,13 @@ import { AuthenticationMetaProps } from "Apps/Authentication/Components/Authenti
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
-import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
+import {
+  AfterAuthAction,
+  AFTER_AUTH_ACTION_KEY,
+} from "Utils/Hooks/useAuthIntent"
 import { computeTitle } from "./computeTitle"
+import Cookies from "cookies-js"
+import { useEffect } from "react"
 
 interface UseAuthFormProps {
   canonical: string
@@ -12,12 +17,12 @@ interface UseAuthFormProps {
   type: ModalType
 }
 
-export function useAuthForm({
+export const useAuthForm = ({
   canonical,
   description,
   pageTitle,
   type,
-}: UseAuthFormProps) {
+}: UseAuthFormProps) => {
   const { match } = useRouter()
 
   const {
@@ -48,6 +53,14 @@ export function useAuthForm({
       }
     : afterSignUpAction
 
+  // FIXME: We have to make the cookie now because apparently passing it into
+  // options like this doesn't even work!
+  useEffect(() => {
+    if (!_afterSignUpAction) return
+
+    Cookies.set(AFTER_AUTH_ACTION_KEY, JSON.stringify(_afterSignUpAction))
+  }, [_afterSignUpAction])
+
   const meta: AuthenticationMetaProps["meta"] = {
     canonical,
     description: description ?? "",
@@ -55,7 +68,6 @@ export function useAuthForm({
   }
 
   const options: ModalOptions = {
-    afterSignUpAction: _afterSignUpAction,
     contextModule,
     copy: copyQueryParam,
     destination,
@@ -63,7 +75,6 @@ export function useAuthForm({
     oauthLogin,
     redirectTo,
     signupReferer,
-    title,
   }
 
   return {
