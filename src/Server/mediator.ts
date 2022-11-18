@@ -70,6 +70,7 @@ const once: Mediator["once"] = (
  * Event emitter used for (mostly) modal-related events
  * @param eventName name of event track
  * @param callback function to be called when named event is triggered
+ * @deprecated: Use React Context
  */
 export const mediator: Mediator = {
   emitter,
