@@ -13257,6 +13257,14 @@ type Query {
     id: String!
   ): CreditCard
   curatedMarketingCollections(size: Int): [MarketingCollection]
+
+  # A list of trending artists. Inferred from a manually curated collection of trending artworks.
+  curatedTrendingArtists(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtistConnection
   departments: [Department!]!
 
   # Get an image info
@@ -17081,6 +17089,14 @@ type Viewer {
     # The ID of the Credit Card
     id: String!
   ): CreditCard
+
+  # A list of trending artists. Inferred from a manually curated collection of trending artworks.
+  curatedTrendingArtists(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtistConnection
   departments: [Department!]!
 
   # Get an image info
