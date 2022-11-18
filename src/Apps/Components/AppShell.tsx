@@ -11,7 +11,7 @@ import createLogger from "Utils/logger"
 import { useSystemContext } from "System"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
-import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { useRunAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
@@ -34,7 +34,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const isMounted = useDidMount()
   const { onboardingComponent } = useOnboardingModal()
 
-  useAuthIntent()
+  useRunAuthIntent()
   useAuthValidation()
 
   const { children, match } = props

@@ -8,7 +8,6 @@ import { ForgotPasswordForm } from "Components/Authentication/Views/ForgotPasswo
 import { LoginForm } from "Components/Authentication/Views/LoginForm"
 import { SignUpFormQueryRenderer } from "Components/Authentication/Views/SignUpForm"
 import {
-  AfterSignUpAction,
   FormComponentType,
   InputValues,
   ModalOptions,
@@ -107,18 +106,6 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     }
   }
 
-  getAfterSignupAction = (options: ModalOptions): AfterSignUpAction => {
-    const { afterSignUpAction, action, kind, objectId } = options
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    return (
-      afterSignUpAction || {
-        action,
-        kind,
-        objectId,
-      }
-    )
-  }
-
   getEmailValue = (): string => {
     const { values } = this.props
     const isClient = typeof window !== "undefined"
@@ -141,7 +128,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
       options,
       {
         accepted_terms_of_service: true,
-        afterSignUpAction: this.getAfterSignupAction(options),
+        afterSignUpAction: options.afterSignUpAction,
         agreed_to_receive_emails: true,
         "signup-referer": options.signupReferer,
       },

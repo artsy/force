@@ -1,7 +1,7 @@
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
-import { useAuthForm } from "../useAuthForm"
+import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
@@ -15,14 +15,11 @@ describe("useAuthForm", () => {
   const mockGetENV = getENV as jest.Mock
 
   const queryParams = {
-    action: "action",
     afterSignUpAction: "afterSignUpAction",
     contextModule: "contextModule",
     copy: null,
     destination: "destination",
     intent: "intent",
-    kind: "kind",
-    objectId: "objectId",
   }
 
   beforeAll(() => {

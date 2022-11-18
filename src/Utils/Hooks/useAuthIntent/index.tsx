@@ -1,23 +1,22 @@
 import Cookies from "cookies-js"
-import { mediator } from "Server/mediator"
-import { useEffect } from "react"
+import { createContext, FC, useContext, useEffect, useState } from "react"
 import { useSystemContext } from "System"
-import { triggerEvent } from "Utils/openAuthModal"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
-import { useConnectUserToSubmission } from "Apps/Consign/Hooks/useConnectUserToSubmission"
+import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
-const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
+export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
 export type AfterAuthAction =
+  | { action: "associateSubmission"; kind: "submission"; objectId: string }
   | { action: "createAlert"; kind: "artist"; objectId: string }
   | { action: "createAlert"; kind: "artworks"; objectId: string }
   | { action: "follow"; kind: "artist"; objectId: string }
-  | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
+  | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
 
 const isValid = (value: any): value is AfterAuthAction => {
@@ -32,30 +31,41 @@ const isValid = (value: any): value is AfterAuthAction => {
 const parse = (value: any): AfterAuthAction | null => {
   try {
     const parsed = JSON.parse(value)
+
     if (!isValid(parsed)) return null
+
     return parsed
   } catch (err) {
     return null
   }
 }
 
-export const runAuthIntent = async (
-  user: User,
+export const runAuthIntent = async ({
+  user,
+  relayEnvironment,
+  onSuccess,
+}: {
+  user: User
   relayEnvironment: RelayModernEnvironment
-) => {
+  onSuccess: (value: AfterAuthAction) => void
+}) => {
   if (!user) return
 
   const afterAuthActionCookie = Cookies.get(AFTER_AUTH_ACTION_KEY)
+
   if (!afterAuthActionCookie) return
 
   const value = parse(afterAuthActionCookie)
+
   if (value === null) return
 
   try {
     await (() => {
       switch (value.action) {
         case "createAlert":
-          return triggerEvent(mediator, "auth:login:success")
+          // Do nothing. Value update triggers UI which handles mutation.
+          break
+
         case "follow":
           switch (value.kind) {
             case "artist":
@@ -65,12 +75,18 @@ export const runAuthIntent = async (
             case "profile":
               return followProfileMutation(relayEnvironment, value.objectId)
           }
+
           break
+
         case "save":
-          triggerEvent(mediator, "artwork:save", value)
           return saveArtworkMutation(relayEnvironment, value.objectId)
+
+        case "associateSubmission":
+          return associateSubmissionMutation(relayEnvironment, value.objectId)
       }
     })()
+
+    onSuccess(value)
 
     Cookies.expire(AFTER_AUTH_ACTION_KEY)
   } catch (err) {
@@ -79,21 +95,46 @@ export const runAuthIntent = async (
 }
 
 /**
- * If someone is logged out and clicks a follow or save button we create a cookie
- * specifying what action they were trying to take.
+ * If someone is logged out and clicks a follow, save button, or any other action
+ * we create a cookie specifying what action they were trying to take.
  *
  * This hook is what checks that cookie and runs that action after they are authenticated.
- *
- * Additionally, this hooks fires a hook that checks submissionId cookie and
- * adds the authenticated user to the submission when found.
  */
-export const useAuthIntent = () => {
+export const useRunAuthIntent = () => {
   const { user, relayEnvironment } = useSystemContext()
-
-  useConnectUserToSubmission()
+  const { setValue } = useAuthIntent()
 
   useEffect(() => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    runAuthIntent(user, relayEnvironment)
-  }, [relayEnvironment, user])
+    if (!relayEnvironment) return
+
+    runAuthIntent({ user, relayEnvironment, onSuccess: setValue })
+  }, [relayEnvironment, setValue, user])
+}
+
+const AuthIntentContext = createContext<{
+  value: AfterAuthAction | null
+  setValue: (value: AfterAuthAction | null) => void
+}>({
+  value: null,
+  setValue: (_value: AfterAuthAction | null) => null,
+})
+
+export const AuthIntentProvider: FC = ({ children }) => {
+  const [value, setValue] = useState<AfterAuthAction | null>(null)
+
+  return (
+    <AuthIntentContext.Provider value={{ value, setValue }}>
+      {children}
+    </AuthIntentContext.Provider>
+  )
+}
+
+/**
+ * Use to subscribe to changes in the `action` value which is set once
+ * the user is authenticated.
+ */
+export const useAuthIntent = () => {
+  const { value, setValue } = useContext(AuthIntentContext)
+
+  return { value, setValue, clearValue: () => setValue(null) }
 }

@@ -1,5 +1,6 @@
 import { AuthContextModule, AuthIntent, Intent } from "@artsy/cohesion"
 import { FormikProps } from "formik"
+import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export enum ModalType {
   login = "login",
@@ -41,12 +42,6 @@ export interface FormProps {
   showRecaptchaDisclaimer?: boolean
 }
 
-export interface AfterSignUpAction {
-  action: "save" | "follow" | "editorialSignup" | "createAlert"
-  objectId?: string
-  kind?: "artist" | "artworks" | "gene" | "profile" | "show"
-}
-
 export const COMMERCIAL_AUTH_INTENTS = [
   Intent.bid,
   Intent.buyNow,
@@ -62,11 +57,6 @@ export interface ModalOptions {
    */
   afterClose?: () => void
   /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  action?: AfterSignUpAction["action"]
-  /**
    * defines an action to take after the user successfully signs up
    *
    * @example
@@ -75,7 +65,7 @@ export interface ModalOptions {
    *   objectId: artwork.id
    * }
    */
-  afterSignUpAction?: AfterSignUpAction
+  afterSignUpAction?: AfterAuthAction
   /*
    * the location where the modal was triggered.
    */
@@ -102,11 +92,6 @@ export interface ModalOptions {
    */
   intent?: AuthIntent
   /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  kind?: AfterSignUpAction["kind"]
-  /**
    * the type of modal to display.
    */
   mode?: ModalType
@@ -114,11 +99,6 @@ export interface ModalOptions {
    * Whether or not the user is using the form via gravity's oauth flow.
    */
   oauthLogin?: boolean
-  /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  objectId?: AfterSignUpAction["objectId"]
   /**
    * the page path the user is redirected to after successfully
    * login or account creation (skips onboarding).

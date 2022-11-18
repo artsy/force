@@ -4,16 +4,17 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { AuthModalOptions, openAuthToSatisfyIntent } from "Utils/openAuthModal"
-import { mediator } from "Server/mediator"
-import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
+import { SavedSearchAlertModalContainer } from "Components/SavedSearchAlert/SavedSearchAlertModal"
 import {
   SavedSearchAlertMutationResult,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "../types"
+} from "Components/SavedSearchAlert/types"
 import { Metric } from "Utils/metrics"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { DEFAULT_FREQUENCY } from "../constants"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { mediator } from "Server/mediator"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -48,13 +49,15 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
     setVisibleForm(true)
   }
 
-  useEffect(() => {
-    mediator.on("auth:login:success", openModal)
+  const { value, clearValue } = useAuthIntent()
 
-    return () => {
-      mediator.off("auth:login:success")
-    }
-  }, [])
+  useEffect(() => {
+    if (!value || value.action !== "createAlert") return
+
+    openModal()
+
+    clearValue()
+  }, [clearValue, value])
 
   const handleOpenForm = () => {
     openModal()
@@ -95,6 +98,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   return (
     <>
       {renderButton({ onClick: handleClick })}
+
       <SavedSearchAlertModalContainer
         visible={visibleForm}
         initialValues={{

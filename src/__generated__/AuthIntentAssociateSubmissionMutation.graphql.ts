@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ffe2b95113bd15d50c9d4dce282e5e1>>
+ * @generated SignedSource<<4eb17c9228ffb48a6fbed79228e53217>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,19 +13,28 @@ export type AddUserToSubmissionMutationInput = {
   clientMutationId?: string | null;
   id: string;
 };
-export type addUserToSubmissionMutation$variables = {
+export type AuthIntentAssociateSubmissionMutation$variables = {
   input: AddUserToSubmissionMutationInput;
 };
-export type addUserToSubmissionMutation$data = {
+export type AuthIntentAssociateSubmissionMutation$data = {
   readonly addUserToSubmission: {
     readonly consignmentSubmission: {
       readonly internalID: string | null;
     } | null;
   } | null;
 };
-export type addUserToSubmissionMutation = {
-  response: addUserToSubmissionMutation$data;
-  variables: addUserToSubmissionMutation$variables;
+export type AuthIntentAssociateSubmissionMutation$rawResponse = {
+  readonly addUserToSubmission: {
+    readonly consignmentSubmission: {
+      readonly id: string;
+      readonly internalID: string | null;
+    } | null;
+  } | null;
+};
+export type AuthIntentAssociateSubmissionMutation = {
+  rawResponse: AuthIntentAssociateSubmissionMutation$rawResponse;
+  response: AuthIntentAssociateSubmissionMutation$data;
+  variables: AuthIntentAssociateSubmissionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -55,7 +64,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "addUserToSubmissionMutation",
+    "name": "AuthIntentAssociateSubmissionMutation",
     "selections": [
       {
         "alias": null,
@@ -88,7 +97,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "addUserToSubmissionMutation",
+    "name": "AuthIntentAssociateSubmissionMutation",
     "selections": [
       {
         "alias": null,
@@ -123,16 +132,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "471cabd3fefad3811aa07e659eceb0ff",
+    "cacheID": "1f0454408f898044b1b23cffbe01146f",
     "id": null,
     "metadata": {},
-    "name": "addUserToSubmissionMutation",
+    "name": "AuthIntentAssociateSubmissionMutation",
     "operationKind": "mutation",
-    "text": "mutation addUserToSubmissionMutation(\n  $input: AddUserToSubmissionMutationInput!\n) {\n  addUserToSubmission(input: $input) {\n    consignmentSubmission {\n      internalID\n      id\n    }\n  }\n}\n"
+    "text": "mutation AuthIntentAssociateSubmissionMutation(\n  $input: AddUserToSubmissionMutationInput!\n) {\n  addUserToSubmission(input: $input) {\n    consignmentSubmission {\n      internalID\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a6a0f697494fd47c1189c1852ab893fa";
+(node as any).hash = "4ca993b00e81df3e48c09706d7e76de1";
 
 export default node;
