@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec82e2cc72ea265321c7443ef39630f4>>
+ * @generated SignedSource<<aa07af4d1dde84a0c135bca9a00bc385>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,23 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
+  attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null;
+  bodyHTML?: string | null;
   bodyText: string;
   clientMutationId?: string | null;
   from: string;
+  fromId?: string | null;
   id: string;
+  replyAll?: boolean | null;
   replyToMessageID: string;
+  to?: ReadonlyArray<string | null> | null;
+};
+export type ConversationMessageAttachmentInput = {
+  id?: string | null;
+  name: string;
+  size?: string | null;
+  type: string;
+  url: string;
 };
 export type SendConversationMessageMutation$variables = {
   input: SendConversationMessageMutationInput;
