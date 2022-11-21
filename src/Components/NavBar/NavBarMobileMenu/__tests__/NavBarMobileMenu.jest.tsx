@@ -1,10 +1,10 @@
 import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
-import { NavBarMobileMenu } from "../NavBarMobileMenu"
+import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
 import { mediator } from "Server/mediator"
-import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"
-import { NavBarMobileSubMenuBack } from "../NavBarMobileSubMenu"
+import { NavBarMobileMenuTransition } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuTransition"
+import { NavBarMobileSubMenuBack } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { FeatureFlags } from "System/useFeatureFlag"
 
 jest.mock("react-tracking")
@@ -69,7 +69,6 @@ describe("NavBarMobileMenu", () => {
         ["/art-fairs", "Fairs"],
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
-        ["/nft", "NFTs"],
         ["/sell", "Sell"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
