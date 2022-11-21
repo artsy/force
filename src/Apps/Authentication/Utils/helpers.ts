@@ -24,6 +24,7 @@ import { mediator } from "Server/mediator"
 import { reportError } from "Utils/errors"
 import { trackEvent } from "Server/analytics/helpers"
 import { getENV } from "Utils/getENV"
+import { AFTER_AUTH_ACTION_KEY } from "Utils/Hooks/useAuthIntent"
 
 interface AnalyticsOptions {
   auth_redirect: string
@@ -176,20 +177,14 @@ export const maybeUpdateRedirectTo = (
 }
 
 export const setCookies = options => {
-  const { afterSignUpAction, destination, submissionId } = options
+  const { afterSignUpAction, destination } = options
 
   if (afterSignUpAction) {
-    Cookies.set("afterSignUpAction", JSON.stringify(afterSignUpAction))
+    Cookies.set(AFTER_AUTH_ACTION_KEY, JSON.stringify(afterSignUpAction))
   }
 
   if (destination) {
     Cookies.set("destination", destination, {
-      expires: 60 * 60 * 24,
-    })
-  }
-
-  if (submissionId) {
-    Cookies.set("submissionId", submissionId, {
       expires: 60 * 60 * 24,
     })
   }

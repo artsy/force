@@ -1,5 +1,4 @@
 export * from "./addAssetToConsignment"
-export * from "./addUserToSubmission"
 export * from "./CreateConsignSubmissionMutation"
 export * from "./removeAssetFromConsignmentSubmission"
 export * from "./UpdateConsignSubmissionMutation"

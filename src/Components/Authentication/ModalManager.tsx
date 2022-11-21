@@ -71,8 +71,6 @@ export class ModalManager extends Component<
   }
 
   closeModal = () => {
-    let afterClose = this.state.options?.afterClose
-
     this.setState({
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentType: null,
@@ -81,7 +79,6 @@ export class ModalManager extends Component<
 
     document.body.style.overflowY = "auto"
     this.props.onModalClose?.()
-    afterClose?.()
   }
 
   handleTypeChange = type => {
@@ -136,9 +133,6 @@ export class ModalManager extends Component<
         subtitle={this.getSubtitle()}
         type={currentType}
         image={options && options.image}
-        disableCloseOnBackgroundClick={Boolean(
-          options?.disableCloseOnBackgroundClick
-        )}
       >
         {this.state.recaptchaLoaded ? <EnableRecaptcha /> : null}
         <FormSwitcher

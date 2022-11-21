@@ -30,6 +30,7 @@ import { setupSentryClient } from "Server/setupSentryClient"
 import "System/i18n/i18n"
 import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
+import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 
 export interface BootProps {
   children: React.ReactNode
@@ -87,9 +88,11 @@ export const Boot = track(undefined, {
                   >
                     <ToastsProvider>
                       <StickyProvider>
-                        <FocusVisible />
-                        <SiftContainer />
-                        {children}
+                        <AuthIntentProvider>
+                          <FocusVisible />
+                          <SiftContainer />
+                          {children}
+                        </AuthIntentProvider>
                       </StickyProvider>
                     </ToastsProvider>
                   </ResponsiveProvider>

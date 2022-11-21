@@ -8,7 +8,6 @@ import { ForgotPasswordForm } from "Components/Authentication/Views/ForgotPasswo
 import { LoginForm } from "Components/Authentication/Views/LoginForm"
 import { SignUpFormQueryRenderer } from "Components/Authentication/Views/SignUpForm"
 import {
-  AfterSignUpAction,
   FormComponentType,
   InputValues,
   ModalOptions,
@@ -26,7 +25,6 @@ export interface FormSwitcherProps {
   onFacebookLogin?: (e: Event) => void
   onGoogleLogin?: (e: Event) => void
   options: ModalOptions
-  title?: string
   showRecaptchaDisclaimer?: boolean
   submitUrls: { [P in ModalType]: string } & {
     apple: string
@@ -59,14 +57,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
 
   componentDidMount() {
     const {
-      options: {
-        contextModule,
-        copy,
-        redirectTo,
-        intent,
-        title,
-        triggerSeconds,
-      },
+      options: { contextModule, copy, redirectTo, intent, triggerSeconds },
       type,
       tracking,
     } = this.props
@@ -74,7 +65,7 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     const trackingArgs: AuthImpression = {
       action: ActionType.authImpression,
       context_module: contextModule!,
-      modal_copy: copy || title,
+      modal_copy: copy,
       intent: intent!,
       trigger: triggerSeconds ? "timed" : "click",
       trigger_seconds: triggerSeconds,
@@ -107,18 +98,6 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     }
   }
 
-  getAfterSignupAction = (options: ModalOptions): AfterSignUpAction => {
-    const { afterSignUpAction, action, kind, objectId } = options
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    return (
-      afterSignUpAction || {
-        action,
-        kind,
-        objectId,
-      }
-    )
-  }
-
   getEmailValue = (): string => {
     const { values } = this.props
     const isClient = typeof window !== "undefined"
@@ -134,14 +113,14 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
   }
 
   render() {
-    const { error, title, options, showRecaptchaDisclaimer } = this.props
+    const { error, options, showRecaptchaDisclaimer } = this.props
 
     const queryData = Object.assign(
       {},
       options,
       {
         accepted_terms_of_service: true,
-        afterSignUpAction: this.getAfterSignupAction(options),
+        afterSignUpAction: options.afterSignUpAction,
         agreed_to_receive_emails: true,
         "signup-referer": options.signupReferer,
       },
@@ -191,7 +170,6 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
     return (
       <SystemContextProvider>
         <Form
-          title={title}
           contextModule={options.contextModule!}
           error={error}
           values={defaultValues}

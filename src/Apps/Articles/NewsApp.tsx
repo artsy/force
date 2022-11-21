@@ -27,9 +27,6 @@ const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
       contextModule: ContextModule.popUpModal,
       copy: "Sign up for the latest in art market news",
       destination: location.pathname,
-      afterSignUpAction: {
-        action: "editorialSignup",
-      },
     },
   })
 

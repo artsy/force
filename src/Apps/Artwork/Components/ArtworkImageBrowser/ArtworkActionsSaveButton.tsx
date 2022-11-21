@@ -16,8 +16,8 @@ import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System"
 import { useTranslation } from "react-i18next"
-import { mediator } from "Server/mediator"
 import styled from "styled-components"
+import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -43,9 +43,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     liveStartAt,
     registrationEndsAt,
   } = artwork.sale ?? {}
+
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.isSaved
   const registrationAttempted = !!registrationStatus
+
   const ignoreAuctionRegistrationPopover =
     !isLoggedIn ||
     !liveStartAt ||
@@ -54,23 +56,27 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     isLiveOpen ||
     registrationAttempted
 
-  const openAuctionRegistrationPopover = useCallback(() => {
-    if (!ignoreAuctionRegistrationPopover) {
-      setPopoverVisible(true)
-    }
+  const maybeOpenAuctionRegistrationPopover = useCallback(() => {
+    if (ignoreAuctionRegistrationPopover) return
+
+    setPopoverVisible(true)
   }, [ignoreAuctionRegistrationPopover])
 
-  const onPopoverClosed = useCallback(() => {
+  const handleClose = useCallback(() => {
     setPopoverVisible(false)
   }, [])
 
-  useEffect(() => {
-    mediator.on("artwork:save", openAuctionRegistrationPopover)
+  const { value, clearValue } = useAuthIntent()
 
-    return () => {
-      mediator.off("artwork:save")
-    }
-  }, [openAuctionRegistrationPopover])
+  useEffect(() => {
+    // If we are coming in after authentication triggered by a save
+    // *maybe* open the auction registration popover
+    if (!value || value.action !== "save") return
+
+    maybeOpenAuctionRegistrationPopover()
+
+    clearValue()
+  }, [value, maybeOpenAuctionRegistrationPopover, clearValue])
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
@@ -80,7 +86,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     return (
       <Popover
         visible={popoverVisible}
-        onClose={onPopoverClosed}
+        onClose={handleClose}
         title={
           <Text variant="sm-display">
             {t(

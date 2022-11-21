@@ -1,5 +1,6 @@
 import { AuthContextModule, AuthIntent, Intent } from "@artsy/cohesion"
 import { FormikProps } from "formik"
+import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export enum ModalType {
   login = "login",
@@ -36,15 +37,8 @@ export interface FormProps {
   onFacebookLogin?: (e: Event) => void
   onGoogleLogin?: (e: Event) => void
   onBackButtonClicked?: (e: Event) => void
-  title?: string
   entityName?: string
   showRecaptchaDisclaimer?: boolean
-}
-
-export interface AfterSignUpAction {
-  action: "save" | "follow" | "editorialSignup" | "createAlert"
-  objectId?: string
-  kind?: "artist" | "artworks" | "gene" | "profile" | "show"
 }
 
 export const COMMERCIAL_AUTH_INTENTS = [
@@ -58,15 +52,6 @@ export const COMMERCIAL_AUTH_INTENTS = [
 
 export interface ModalOptions {
   /**
-   * Hook to be called after the modal has closed
-   */
-  afterClose?: () => void
-  /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  action?: AfterSignUpAction["action"]
-  /**
    * defines an action to take after the user successfully signs up
    *
    * @example
@@ -75,7 +60,7 @@ export interface ModalOptions {
    *   objectId: artwork.id
    * }
    */
-  afterSignUpAction?: AfterSignUpAction
+  afterSignUpAction?: AfterAuthAction
   /*
    * the location where the modal was triggered.
    */
@@ -90,10 +75,6 @@ export interface ModalOptions {
    */
   destination?: string
   /**
-   * Prevents users from clicking outside the modal to close it
-   */
-  disableCloseOnBackgroundClick?: boolean
-  /**
    * The image rendered with the modal
    */
   image?: string
@@ -101,11 +82,6 @@ export interface ModalOptions {
    * the action taken that prompted user to signup or login.
    */
   intent?: AuthIntent
-  /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  kind?: AfterSignUpAction["kind"]
   /**
    * the type of modal to display.
    */
@@ -115,11 +91,6 @@ export interface ModalOptions {
    */
   oauthLogin?: boolean
   /**
-   * MOBILE ONLY
-   * Used to construct afterSignupAction from query params
-   */
-  objectId?: AfterSignUpAction["objectId"]
-  /**
    * the page path the user is redirected to after successfully
    * login or account creation (skips onboarding).
    */
@@ -128,10 +99,6 @@ export interface ModalOptions {
    * the page before the page on which the sign up was triggered.
    */
   signupReferer?: string
-  /**
-   * The form or modal title in case it needs to be customized
-   */
-  title?: string
   /**
    * the number of seconds before a modal was triggered
    */

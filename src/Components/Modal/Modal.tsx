@@ -13,7 +13,6 @@ export interface ModalProps extends React.HTMLProps<Modal> {
   image?: string
   show?: boolean
   title?: string
-  disableCloseOnBackgroundClick?: boolean
 }
 
 /**
@@ -56,7 +55,6 @@ export class Modal extends React.Component<ModalProps> {
       onClose,
       show,
       title,
-      disableCloseOnBackgroundClick,
     } = this.props
 
     return (
@@ -66,7 +64,6 @@ export class Modal extends React.Component<ModalProps> {
         width={isWide ? ModalWidth.Wide : ModalWidth.Normal}
         image={image}
         fullscreenResponsiveModal
-        disableCloseOnBackgroundClick={disableCloseOnBackgroundClick}
       >
         <Clickable
           position="absolute"
