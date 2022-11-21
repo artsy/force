@@ -5,7 +5,6 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Router/RouterLink"
-import { Media } from "Utils/Responsive"
 
 export const InsightsHeader: React.FC = () => {
   const {
@@ -29,11 +28,9 @@ export const InsightsHeader: React.FC = () => {
                     py={[1, 2]}
                   >
                     <Flex flex={1} alignItems="center">
-                      <Media greaterThan="xs">
-                        <Text variant="lg-display">
-                          Gain deeper knowledge of your collection.
-                        </Text>
-                      </Media>
+                      <Text variant="lg-display">
+                        Gain deeper knowledge of your collection.
+                      </Text>
                     </Flex>
                     <Button
                       // @ts-ignore

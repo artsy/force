@@ -38,7 +38,9 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
 
       {!!isInsightsEnabled && (
         <>
-          <InsightsHeader />
+          <Media greaterThan="xs">
+            <InsightsHeader />
+          </Media>
 
           <Join separator={<Spacer my={[4, 6]} />}>
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
