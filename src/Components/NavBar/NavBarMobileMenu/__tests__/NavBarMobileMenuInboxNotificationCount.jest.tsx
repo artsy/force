@@ -1,20 +1,30 @@
-import { mount } from "enzyme"
-import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenuInboxNotificationCount"
+import { screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { NavBarMobileMenuInboxNotificationCountFragmentContainer } from "../NavBarMobileMenuInboxNotificationCount"
 
-jest.mock("Server/isServer", () => ({
-  isServer: false,
-}))
+jest.unmock("react-relay")
 
-jest.mock("cookies-js", () => ({
-  get: jest.fn().mockReturnValue(2),
-}))
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: NavBarMobileMenuInboxNotificationCountFragmentContainer,
+  query: graphql`
+    query NavBarMobileMenuInboxNotificationCount_test_Query
+      @relay_test_operation {
+      me {
+        ...NavBarMobileMenuInboxNotificationCount_me
+      }
+    }
+  `,
+})
 
 describe("NavBarMobileMenuInboxNotificationCount", () => {
-  const getWrapper = () => {
-    return mount(<NavBarMobileMenuInboxNotificationCount />)
-  }
-
   it("renders the correct count", () => {
-    expect(getWrapper().text()).toContain("2")
+    renderWithRelay({
+      Me: () => ({
+        unreadConversationCount: 2,
+      }),
+    })
+
+    expect(screen.getByText("2")).toBeInTheDocument()
   })
 })

@@ -1,15 +1,10 @@
 import { useContext } from "react"
 import * as React from "react"
 import { graphql } from "react-relay"
-import { isServer } from "Server/isServer"
 import styled from "styled-components"
 import { NavBarMobileMenuInboxNotificationCountQuery } from "__generated__/NavBarMobileMenuInboxNotificationCountQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  getConversationCount,
-  updateConversationCache,
-} from "Components/NavBar/helpers"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuInboxNotificationCount_me$data } from "__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
@@ -21,12 +16,9 @@ interface NavBarMobileMenuInboxNotificationCountProps {
 export const NavBarMobileMenuInboxNotificationCount: React.FC<NavBarMobileMenuInboxNotificationCountProps> = ({
   me,
 }) => {
-  const conversationCount =
-    me?.unreadConversationCount || getConversationCount()
+  const conversationCount = me?.unreadConversationCount
 
-  updateConversationCache(me?.unreadConversationCount)
-
-  if (getConversationCount() === 0) return null
+  if (conversationCount === 0) return null
 
   return (
     <Container variant="xs" lineHeight={1} bg="brand" color="white100">
@@ -35,7 +27,7 @@ export const NavBarMobileMenuInboxNotificationCount: React.FC<NavBarMobileMenuIn
   )
 }
 
-const NavBarMobileMenuInboxNotificationCountFragmentContainer = createFragmentContainer(
+export const NavBarMobileMenuInboxNotificationCountFragmentContainer = createFragmentContainer(
   NavBarMobileMenuInboxNotificationCount,
   {
     me: graphql`
@@ -49,9 +41,7 @@ const NavBarMobileMenuInboxNotificationCountFragmentContainer = createFragmentCo
 export const NavBarMobileMenuInboxNotificationCountQueryRenderer: React.FC<{}> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
-  return isServer ? (
-    <NavBarMobileMenuInboxNotificationCount />
-  ) : (
+  return (
     <SystemQueryRenderer<NavBarMobileMenuInboxNotificationCountQuery>
       environment={relayEnvironment}
       query={graphql`

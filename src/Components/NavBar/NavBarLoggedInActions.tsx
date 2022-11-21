@@ -10,7 +10,6 @@ import {
   NavBarLoggedInActionsQuery$data,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
 import { isServer } from "Server/isServer"
-import { checkAndSyncIndicatorsCount } from "./helpers"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -25,10 +24,10 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
-  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
-    notifications: me?.unreadNotificationsCount,
-    conversations: me?.unreadConversationCount,
-  })
+  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
+  const unreadConversationCount = me?.unreadConversationCount ?? 0
+  const hasConversations = unreadConversationCount > 0
+  const hasNotifications = unreadNotificationsCount > 0
 
   return (
     <>
@@ -36,9 +35,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
         zIndex={Z.dropdown}
         dropdown={
           enableActivityPanel ? (
-            <NavBarNewNotifications
-              unreadCounts={me?.unreadNotificationsCount ?? 0}
-            />
+            <NavBarNewNotifications unreadCounts={unreadNotificationsCount} />
           ) : (
             <NavBarNotificationsQueryRenderer />
           )
