@@ -10,9 +10,22 @@ import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/Submiss
 import { flushPromiseQueue } from "DevTools"
 import { useRouter } from "System/Router/useRouter"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+
+jest.mock("Utils/Hooks/useDebounce", () => {
+  const originalUseDebouncedValue = jest.requireActual(
+    "Utils/Hooks/useDebounce"
+  )
+
+  return {
+    useDebouncedValue: jest
+      .fn()
+      .mockImplementation(originalUseDebouncedValue.useDebouncedValue),
+  }
+})
 
 const mockMe = {
   internalID: "123",
@@ -122,6 +135,12 @@ const getInput = name =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
 describe("Save and Continue button", () => {
+  beforeAll(() => {
+    ;(useDebouncedValue as jest.Mock).mockImplementation(() => ({
+      debouncedValue: "+1 415-555-0132",
+    }))
+  })
+
   describe("with valid phone number", () => {
     beforeAll(() => {
       mockGetPhoneNumberInformation.mockResolvedValue({

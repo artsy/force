@@ -8,10 +8,11 @@ import {
   SelectProps,
   Text,
 } from "@artsy/palette"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSystemContext } from "System"
 import { getPhoneNumberInformation } from "./getPhoneNumberInformation"
 import { countries } from "Utils/countries"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 
 export interface PhoneNumber {
   isValid: boolean
@@ -48,22 +49,13 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   const { relayEnvironment } = useSystemContext()
 
   const [number, setNumber] = useState(isValid && national ? national : "")
-  const [focus, setFocus] = useState(false)
-  const [hover, setHover] = useState(false)
-  const [region, setRegion] = useState(
+  const [countryCode, setCountryCode] = useState(
     isValid && regionCode ? regionCode : "us"
   )
+  const [focus, setFocus] = useState(false)
+  const [hover, setHover] = useState(false)
 
-  useEffect(() => {
-    validatePhoneNumber(number?.trim())
-  }, [number, region])
-
-  useEffect(() => {
-    if (isValid && !number && national) {
-      setNumber(national)
-      regionCode && setRegion(regionCode)
-    }
-  }, [national])
+  const { debouncedValue } = useDebouncedValue({ value: number, delay: 50 })
 
   const handleFocus = <T extends Element>(
     value: boolean,
@@ -83,19 +75,25 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNumber(e.target.value)
-    validatePhoneNumber(e.target.value)
+    validatePhoneNumber(e.target.value, countryCode)
   }
 
-  const validatePhoneNumber = async (number: string) => {
-    if (relayEnvironment) {
+  const handleCountryCodeChange = (countryCode: string) => {
+    setCountryCode(countryCode)
+    validatePhoneNumber(number, countryCode)
+  }
+
+  const validatePhoneNumber = async (number: string, countryCode: string) => {
+    // shortest international phone number is 7 digits; > 5 for extra safety
+    if (relayEnvironment && debouncedValue.length > 5) {
       const phoneInformation = await getPhoneNumberInformation(
         number,
         relayEnvironment,
-        region
+        countryCode
       )
       onPhoneNumberValidation({
         ...phoneInformation,
-        region,
+        region: countryCode,
       } as PhoneNumberValidationResult)
     }
   }
@@ -119,10 +117,10 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             {...(selectProps || {})}
             name="countryCode"
             options={countries}
-            selected={region}
+            selected={countryCode}
             focus={focus}
             hover={hover}
-            onSelect={setRegion}
+            onSelect={handleCountryCodeChange}
             onBlur={handleFocus(false, selectProps?.onBlur)}
             onFocus={handleFocus(true, selectProps?.onFocus)}
             onMouseOver={handleHover(true, selectProps?.onMouseOver)}

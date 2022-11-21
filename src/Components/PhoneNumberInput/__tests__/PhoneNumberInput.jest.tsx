@@ -72,25 +72,35 @@ describe("PhoneNumberInput", () => {
     expect(wrapper.find(Select).prop("selected")).toBe("us")
   })
 
-  describe("fires the passed onPhoneNumberValidation with correct params", () => {
-    beforeEach(() => {
-      wrapper = renderPhoneNumberInput()
+  describe("when input value change", () => {
+    it("does not validate number if less than 6 characters", () => {
+      wrapper = renderPhoneNumberInput({
+        phoneNumber: {
+          isValid: false,
+          national: "",
+        },
+      })
+
+      wrapper
+        .find("input[name='phone']")
+        .simulate("change", { target: { value: "12345" } })
+
+      expect(mockOnPhoneNumberValidation).not.toHaveBeenCalled()
+      expect(mockGetPhoneNumberInformation).not.toHaveBeenCalled()
     })
 
-    beforeAll(() => {
+    it("validates number if more than 5 characters", () => {
       mockGetPhoneNumberInformation.mockResolvedValue(mockUsPhoneNumber)
-    })
 
-    it("when input change", () => {
+      wrapper = renderPhoneNumberInput()
+
       wrapper
         .find("input[name='phone']")
         .simulate("change", { target: { value: "(415) 555-0133" } })
 
-      expect(mockOnPhoneNumberValidation).toHaveBeenCalled()
-      expect(mockOnPhoneNumberValidation).toHaveBeenLastCalledWith({
-        ...mockUsPhoneNumber,
-        region: "us",
-      })
+      wrapper.update()
+
+      expect(mockGetPhoneNumberInformation).toHaveBeenCalled()
     })
 
     it("when select change", () => {
