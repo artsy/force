@@ -79,7 +79,7 @@ const MetadataField = ({ label, value }) => {
   return (
     <>
       <Media greaterThan="xs">
-        <Box mb={1} display="flex">
+        <Box mb={0.5} display="flex">
           <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
             {label}
           </Text>
@@ -92,7 +92,7 @@ const MetadataField = ({ label, value }) => {
         </Box>
       </Media>
       <Media at="xs">
-        <Flex flexDirection="row" justifyContent="space-between" mb={0.5}>
+        <Flex flexDirection="row" justifyContent="space-between" mb={1}>
           <Text variant="sm" color="black100" pr={1}>
             {label}
           </Text>
