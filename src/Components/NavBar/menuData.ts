@@ -263,6 +263,10 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               text: "Design",
               href: "/collection/design",
             },
+            {
+              text: "NFTs",
+              href: "/collect?additional_gene_ids[0]=nft",
+            },
           ],
         },
         dividerBelow: true,
