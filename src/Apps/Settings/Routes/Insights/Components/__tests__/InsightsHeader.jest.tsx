@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { useSystemContext } from "System"
-import { Breakpoint } from "Utils/Responsive"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
 
 jest.mock("System/useSystemContext")
@@ -10,9 +9,9 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 
 describe("InsightsHeader", () => {
-  const renderComponent = (breakpoint: Breakpoint) =>
+  const renderComponent = () =>
     render(
-      <MockBoot breakpoint={breakpoint}>
+      <MockBoot>
         <InsightsHeader />
       </MockBoot>
     )
@@ -25,25 +24,12 @@ describe("InsightsHeader", () => {
     }))
   })
 
-  describe("In mobile view", () => {
-    it("renders only the Upload artwork CTA", () => {
-      renderComponent("xs")
+  it("renders the Upload artwork CTA and the textual content", () => {
+    renderComponent()
 
-      expect(
-        screen.queryByText("Gain deeper knowledge of your collection.")
-      ).not.toBeInTheDocument()
-      expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-    })
-  })
-
-  describe("In desktop view", () => {
-    it("renders the Upload artwork CTA and the textual content", () => {
-      renderComponent("lg")
-
-      expect(
-        screen.getByText("Gain deeper knowledge of your collection.")
-      ).toBeInTheDocument()
-      expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-    })
+    expect(
+      screen.getByText("Gain deeper knowledge of your collection.")
+    ).toBeInTheDocument()
+    expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
   })
 })
