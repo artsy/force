@@ -14,6 +14,7 @@ import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFi
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Join, Spacer } from "@artsy/palette"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -51,12 +52,12 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
         ]}
         viewer={viewer}
         Filters={
-          <>
+          <Join separator={<Spacer mt={4} />}>
             {showKeywordFilter && <KeywordFilter />}
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />
             <MediumFilter expanded />
-          </>
+          </Join>
         }
         FilterPillsSection={<ActiveFilterPills />}
       />

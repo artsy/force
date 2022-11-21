@@ -25,6 +25,7 @@ import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/Active
 import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { Join, Spacer } from "@artsy/palette"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair$data
@@ -51,7 +52,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // For some reason, they are undefined when `useSystemContext()` is referenced
   // in <ArtistsFilter />. So, pass as props for now.
   const Filters = (
-    <>
+    <Join separator={<Spacer mt={4} />}>
       {showKeywordFilter && <KeywordFilter />}
       <PartnersFilter label="Exhibitors" expanded />
       <ArtistsFilter fairID={fair.internalID} expanded />
@@ -65,7 +66,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       <ArtworkLocationFilter expanded />
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
-    </>
+    </Join>
   )
 
   return (
