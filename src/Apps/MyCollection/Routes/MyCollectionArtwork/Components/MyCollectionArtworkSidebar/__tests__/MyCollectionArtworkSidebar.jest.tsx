@@ -3,34 +3,43 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { MyCollectionArtworkSidebarTestQuery } from "__generated__/MyCollectionArtworkSidebarTestQuery.graphql"
 import { MyCollectionArtworkSidebarFragmentContainer } from ".."
+import { MockBoot } from "DevTools/MockBoot"
+import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkSidebar", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkSidebarTestQuery
-  >({
-    Component: props => {
-      if (props?.artwork) {
-        return (
-          <MyCollectionArtworkSidebarFragmentContainer {...(props as any)} />
-        )
-      }
-      return null
-    },
-    query: graphql`
-      query MyCollectionArtworkSidebarTestQuery @relay_test_operation {
-        artwork(id: "foo") {
-          ...MyCollectionArtworkSidebarTitleInfo_artwork
-          ...MyCollectionArtworkSidebarMetadata_artwork
+  const getWrapper = (breakpoint: Breakpoint = "lg") => {
+    return setupTestWrapperTL<MyCollectionArtworkSidebarTestQuery>({
+      Component: props => {
+        if (props?.artwork) {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <MyCollectionArtworkSidebarFragmentContainer
+                {...(props as any)}
+              />
+            </MockBoot>
+          )
         }
-      }
-    `,
-  })
+        return null
+      },
+      query: graphql`
+        query MyCollectionArtworkSidebarTestQuery @relay_test_operation {
+          artwork(id: "foo") {
+            ...MyCollectionArtworkSidebarTitleInfo_artwork
+            ...MyCollectionArtworkSidebarMetadata_artwork
+          }
+        }
+      `,
+    })
+  }
 
   describe("for artwork with metadata", () => {
     beforeEach(() => {
-      renderWithRelay({ Artwork: () => mockResolversWithData }, false)
+      getWrapper().renderWithRelay(
+        { Artwork: () => mockResolversWithData },
+        false
+      )
     })
 
     it("displays artists names and title with the artist url", () => {
@@ -66,8 +75,18 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("Berlin")).toBeInTheDocument()
     })
 
+    it("displays attribution class as name when at xs", () => {
+      getWrapper("xs").renderWithRelay(
+        { Artwork: () => mockResolversWithData },
+        false
+      )
+
+      expect(screen.getByText("Unique")).toBeInTheDocument()
+    })
+
     describe("when metric is set to 'cm'", () => {
       beforeEach(() => {
+        const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(
           { Artwork: () => ({ ...mockResolversWithData, metric: "cm" }) },
           false
@@ -86,7 +105,7 @@ describe("MyCollectionArtworkSidebar", () => {
 
   describe("for artwork with minimal metadata", () => {
     beforeEach(() => {
-      renderWithRelay({ Artwork: () => emptyMockResolvers }, false)
+      getWrapper().renderWithRelay({ Artwork: () => emptyMockResolvers }, false)
     })
 
     it("displays artists names and title", () => {
@@ -143,6 +162,7 @@ const mockResolversWithData = {
   provenance: "Bought in a gallery",
   attributionClass: {
     shortDescription: "This is a unique work",
+    name: "Unique",
   },
   pricePaid: {
     display: "€25,300",

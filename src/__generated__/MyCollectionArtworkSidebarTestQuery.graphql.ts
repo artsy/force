@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc827e65a1ba029ff300da1ba797376b>>
+ * @generated SignedSource<<a229b90b0efc3573defd7d367df15fa4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -202,6 +202,13 @@ return {
                 "name": "shortDescription",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": null
@@ -238,7 +245,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64f14afd74105a367adeccdc9ede1433",
+    "cacheID": "c7495ef4f39614a0e05b0e3cca8e60ed",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -265,6 +272,7 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v3/*: any*/),
+        "artwork.attributionClass.name": (v2/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
         "artwork.date": (v2/*: any*/),
@@ -292,7 +300,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    name\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
   }
 };
 })();

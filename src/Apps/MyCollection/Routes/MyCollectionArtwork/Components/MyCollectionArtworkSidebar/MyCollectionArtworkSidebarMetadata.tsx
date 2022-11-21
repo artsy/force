@@ -1,6 +1,7 @@
-import { Box, Text } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 
 export interface MyCollectionArtworkSidebarMetadataProps {
@@ -25,10 +26,15 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
     <>
       <MetadataField label="Medium" value={category} />
       <MetadataField label="Materials" value={medium} />
-      <MetadataField
-        label="Rarity"
-        value={attributionClass?.shortDescription}
-      />
+      <Media greaterThan="xs">
+        <MetadataField
+          label="Rarity"
+          value={attributionClass?.shortDescription}
+        />
+      </Media>
+      <Media at="xs">
+        <MetadataField label="Rarity" value={attributionClass?.name} />
+      </Media>
       <MetadataField
         label="Dimensions"
         value={metric === "in" ? dimensions?.in : dimensions?.cm}
@@ -56,6 +62,7 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
         provenance
         attributionClass {
           shortDescription
+          name
         }
         pricePaid {
           display
@@ -70,17 +77,37 @@ const MetadataField = ({ label, value }) => {
   const emptyValue = "----"
 
   return (
-    <Box mb={[1, 0.5]} display="flex">
-      <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
-        {label}
-      </Text>
+    <>
+      <Media greaterThan="xs">
+        <Box mb={1} display="flex">
+          <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
+            {label}
+          </Text>
 
-      <Box display="flex" flex={1} flexDirection="column">
-        <WrappedText variant="sm" color={value ? "black100" : "black60"}>
-          {value || emptyValue}
-        </WrappedText>
-      </Box>
-    </Box>
+          <Box display="flex" flex={1} flexDirection="column">
+            <WrappedText variant="sm" color={value ? "black100" : "black60"}>
+              {value || emptyValue}
+            </WrappedText>
+          </Box>
+        </Box>
+      </Media>
+      <Media at="xs">
+        <Flex flexDirection="row" justifyContent="space-between" mb={0.5}>
+          <Text variant="sm" color="black100" pr={1}>
+            {label}
+          </Text>
+
+          <Text
+            style={{ flex: 1, maxWidth: "70%" }}
+            variant="sm"
+            textAlign="right"
+            color={value ? "black100" : "black60"}
+          >
+            {value || emptyValue}
+          </Text>
+        </Flex>
+      </Media>
+    </>
   )
 }
 
