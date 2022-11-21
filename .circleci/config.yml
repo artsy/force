@@ -5,8 +5,8 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
+  node: circleci/node@5.0.3
   slack: circleci/slack@4.10.1
-  yarn: artsy/yarn@6.4.0
 
 jobs:
   run_deepcrawl_automator:
@@ -144,18 +144,6 @@ jobs:
       - EXPERIMENTAL_SWC_COMPILER_ENABLED: false
     steps:
       - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
-
-  type-check:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    environment:
-      - NODE_ENV: test
-    steps:
-      - run: yarn type-check
 
   check-pr:
     docker:
@@ -312,15 +300,19 @@ workflows:
                 command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
 
       # Test steps
-      - test:
+      - node/test:
           <<: *not_staging_or_release
-          context: hokusai
+          name: test
+          pkg-manager: yarn
+          test-results-for: jest
           requires:
             - builder-image-push
 
-      - type-check:
+      - node/run:
           <<: *not_staging_or_release
-          context: hokusai
+          name: type-check
+          pkg-manager: yarn
+          yarn-run: type-check
           requires:
             - builder-image-push
 
@@ -330,9 +322,11 @@ workflows:
           requires:
             - builder-image-push
 
-      - relay-check:
+      - node/run:
           <<: *not_staging_or_release
-          context: hokusai
+          name: relay-check
+          pkg-manager: yarn
+          yarn-run: relay
           requires:
             - builder-image-push
 
@@ -431,15 +425,17 @@ workflows:
                 command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
 
       # Docs / Storybooks
-      - yarn/run:
+      - node/run:
           <<: *only_main
           name: build-docs
-          script: "build-storybook"
+          pkg-manager: yarn
+          yarn-run: build-storybook
           post-steps:
             - persist_to_workspace:
                 root: .
                 paths:
                   - storybook-static
+
       - upload-docs:
           <<: *only_main
           context: static-sites-uploader
