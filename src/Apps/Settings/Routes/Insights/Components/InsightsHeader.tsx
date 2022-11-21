@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { Box, Button, DROP_SHADOW, Flex, FullBleed, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -40,7 +41,9 @@ export const InsightsHeader: React.FC = () => {
                       size={["small", "large"]}
                       variant="primaryBlack"
                       to="/my-collection/artworks/new"
-                      onClick={() => trackAddCollectedArtwork()}
+                      onClick={() =>
+                        trackAddCollectedArtwork(OwnerType.myCollectionInsights)
+                      }
                     >
                       Upload Artwork
                     </Button>

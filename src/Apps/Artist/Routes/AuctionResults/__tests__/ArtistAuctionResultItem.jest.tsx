@@ -6,6 +6,10 @@ import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({ match: { location: { pathname: "anything" } } }),
+}))
+
 describe("ArtistAuctionResultItem", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     ArtistAuctionResultItemTestQuery

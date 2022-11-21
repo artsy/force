@@ -1,6 +1,7 @@
+import { OwnerType } from "@artsy/cohesion"
 import { renderHook } from "@testing-library/react-hooks"
 import { useTracking } from "react-tracking"
-import { useMyCollectionTracking } from "../useMyCollectionTracking"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 
 jest.mock("react-tracking")
 
@@ -27,14 +28,27 @@ describe("useMyCollectionTracking", () => {
     jest.clearAllMocks()
   })
 
-  it("#addCollectedArtwork", () => {
-    setupHook().addCollectedArtwork()
+  describe("#addCollectedArtwork", () => {
+    it("tracks without specifying owner type", () => {
+      setupHook().addCollectedArtwork()
 
-    expect(trackingSpy).toBeCalledWith({
-      action: "addCollectedArtwork",
-      context_module: "myCollectionHome",
-      context_owner_type: "myCollection",
-      platform: "web",
+      expect(trackingSpy).toBeCalledWith({
+        action: "addCollectedArtwork",
+        context_module: "myCollectionHome",
+        context_owner_type: "myCollection",
+        platform: "web",
+      })
+    })
+
+    it("track with specific owner type", () => {
+      setupHook().addCollectedArtwork(OwnerType.myCollectionInsights)
+
+      expect(trackingSpy).toBeCalledWith({
+        action: "addCollectedArtwork",
+        context_module: "myCollectionHome",
+        context_owner_type: "myCollectionInsights",
+        platform: "web",
+      })
     })
   })
 
