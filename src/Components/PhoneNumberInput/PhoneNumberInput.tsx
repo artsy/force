@@ -99,17 +99,15 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" {...props}>
-      <Flex>
-        <Text variant="xs" mb={0.5} mr={0.5}>
-          Phone number
-        </Text>
-        {!!optional && (
-          <Text variant="xs" color="black60">
-            (Optional)
-          </Text>
+    <Box width="100%" {...props}>
+      <Text variant="xs" mb={0.5}>
+        Phone number
+        {!optional && (
+          <Box as="span" color="brand">
+            *
+          </Box>
         )}
-      </Flex>
+      </Text>
 
       <Flex>
         <Box minWidth={120} maxWidth="35%">
@@ -126,32 +124,23 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             onMouseOver={handleHover(true, selectProps?.onMouseOver)}
             onMouseOut={handleHover(false, selectProps?.onMouseOut)}
             error={!!error}
-            style={{
-              borderRight: "none",
-              letterSpacing: "1px",
-            }}
           />
         </Box>
-        <Flex flexDirection="column" width="100%">
-          <Box height="100%"></Box>
-          <Input
-            {...(inputProps || {})}
-            name="phone"
-            type="tel"
-            value={number}
-            focus={focus}
-            hover={hover}
-            onBlur={handleFocus(false, inputProps?.onBlur)}
-            onFocus={handleFocus(true, inputProps?.onFocus)}
-            onMouseOver={handleHover(true, inputProps?.onMouseOver)}
-            onMouseOut={handleHover(false, inputProps?.onMouseOut)}
-            onChange={handleNumberChange}
-            style={{
-              borderLeft: "none",
-            }}
-            error={!!error}
-          />
-        </Flex>
+
+        <Input
+          {...(inputProps || {})}
+          name="phone"
+          type="tel"
+          value={number}
+          focus={focus}
+          hover={hover}
+          onBlur={handleFocus(false, inputProps?.onBlur)}
+          onFocus={handleFocus(true, inputProps?.onFocus)}
+          onMouseOver={handleHover(true, inputProps?.onMouseOver)}
+          onMouseOut={handleHover(false, inputProps?.onMouseOut)}
+          onChange={handleNumberChange}
+          error={!!error}
+        />
       </Flex>
 
       {error && (
@@ -159,6 +148,6 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
           {error}
         </Text>
       )}
-    </Flex>
+    </Box>
   )
 }
