@@ -25,6 +25,9 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { Join, Spacer } from "@artsy/palette"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -41,9 +44,11 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
   const { match } = useRouter()
   const { pathname } = usePathnameComplete()
   const { userPreferences } = useSystemContext()
+  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   const Filters = (
-    <>
+    <Join separator={<Spacer mt={4} />}>
+      {showKeywordFilter && <KeywordFilter />}
       {!isArtistCollection && <ArtistsFilter expanded />}
       <AttributionClassFilter expanded />
       <MediumFilter expanded />
@@ -56,7 +61,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       <TimePeriodFilter expanded />
       <ColorFilter expanded />
       <PartnersFilter expanded />
-    </>
+    </Join>
   )
 
   return (
