@@ -89,8 +89,6 @@ describe("InquiryBasicInfo", () => {
     fill(wrapper, "profession", "Carpenter")
     fill(wrapper, "phone", "555-555-5555")
 
-    wrapper.find('[role="checkbox"]').first().simulate("click")
-
     wrapper.find("form").simulate("submit")
 
     await flushPromiseQueue()
@@ -98,7 +96,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       profession: "Carpenter",
       phone: "555-555-5555",
-      shareFollows: false,
+      shareFollows: true,
     })
 
     expect(mockNext).toBeCalled()
