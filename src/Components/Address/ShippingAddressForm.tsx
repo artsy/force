@@ -3,15 +3,19 @@ import {
   Button,
   Checkbox,
   Column,
+  Flex,
   GridColumns,
   Input,
   Message,
+  ModalDialog,
   Spacer,
   useToasts,
   VisuallyHidden,
+  Text,
+  Clickable,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
@@ -74,18 +78,21 @@ interface SettingsShippingAddressFormProps {
     isDefault: boolean
     attributes: Address
   } | null
-  onSuccess?(): void
+  onSuccess?: (id: string) => void
+  onDelete?: (id: string) => void
 }
 
 export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   onClose,
   address,
   onSuccess,
+  onDelete,
 }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
@@ -129,7 +136,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            onSuccess && onSuccess()
+            onSuccess?.(address!.internalID)
 
             sendToast({
               variant: "success",
@@ -149,7 +156,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            onSuccess && onSuccess()
+            if (id) onSuccess?.(id)
 
             sendToast({
               variant: "success",
@@ -334,6 +341,55 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
                   >
                     Set as Default
                   </Checkbox>
+
+                  {onDelete && (
+                    <Flex mt={2} flexDirection="column" alignItems="center">
+                      <Clickable
+                        data-test="deleteButton"
+                        onClick={() => setShowDeleteDialog(true)}
+                      >
+                        <Text variant="xs" color="red100">
+                          Delete address
+                        </Text>
+                      </Clickable>
+                    </Flex>
+                  )}
+                  {showDeleteDialog && (
+                    <ModalDialog
+                      data-test="deleteAddressDialog"
+                      title="Delete address?"
+                      onClose={() => setShowDeleteDialog(false)}
+                      width="350px"
+                    >
+                      <Text variant="xs">
+                        This will remove this address from your saved
+                        addressess.
+                      </Text>
+                      <Spacer mb={2} />
+                      <Flex justifyContent="flex-end">
+                        <Button
+                          variant="secondaryNeutral"
+                          size="small"
+                          onClick={() => setShowDeleteDialog(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Spacer mr={1} />
+                        <Button
+                          size="small"
+                          onClick={() => {
+                            setShowDeleteDialog(false)
+                            onClose()
+                            if (address?.internalID && onDelete) {
+                              onDelete(address.internalID)
+                            }
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </Flex>
+                    </ModalDialog>
+                  )}
                 </Column>
 
                 {status?.error && (

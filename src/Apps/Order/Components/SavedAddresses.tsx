@@ -25,8 +25,6 @@ import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { useSystemContext } from "System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
@@ -47,7 +45,6 @@ interface SavedAddressesProps {
   addressCount?: number
   onAddressDelete?: (removedAddressId: string) => void
   selectedAddress?: string
-  onShowToast?: (isShow: boolean, action: string) => void
 }
 
 type Address = NonNullable<
@@ -84,7 +81,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     relay,
     onAddressDelete,
     selectedAddress,
-    onShowToast,
   } = props
 
   useEffect(() => {
@@ -118,7 +114,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = async (addressID: string) => {
-    let response = await deleteUserAddress(
+    await deleteUserAddress(
       relayEnvironment!,
       addressID,
       () => {
@@ -130,9 +126,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       },
       onError
     )
-    if (!response.deleteUserAddress?.userAddressOrErrors.errors) {
-      onShowToast && onShowToast(true, "Deleted")
-    }
   }
 
   const handleEditAddress = (address: Address, index: number) => {
@@ -144,12 +137,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
-  const onSuccess = (
-    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
-  ) => {
+  const onSuccess = (id: string) => {
     refetchAddresses()
-
-    onShowToast && onShowToast(true, "Saved")
+    onSelect?.(id)
   }
 
   const trackAddAddressClick = () => {
@@ -277,7 +267,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             address={
               modalDetails?.addressModalAction === "editUserAddress"
                 ? convertShippingAddressToMutationInput(address)
-                : null
+                : undefined
+            }
+            onDelete={
+              modalDetails?.addressModalAction === "editUserAddress"
+                ? handleDeleteAddress
+                : undefined
             }
             onClose={() => setShowAddressModal(false)}
             onSuccess={onSuccess}

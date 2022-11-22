@@ -10,6 +10,7 @@ import {
 } from "__generated__/SetShippingMutation.graphql"
 import { compactObject } from "Utils/compactObject"
 import { INITIAL_ADDRESS } from "Components/Address/ShippingAddressForm"
+import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -127,7 +128,7 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  address: SavedAddressType | null
+  address: SavedAddressType | SettingsShippingAddress_address$data | null
 ) => {
   if (!address) {
     return null
