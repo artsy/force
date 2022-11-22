@@ -2,7 +2,6 @@ import {
   Banner,
   Box,
   Button,
-  Checkbox,
   Input,
   Skeleton,
   SkeletonBox,
@@ -57,10 +56,6 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
   const handleLocation = (place: Place) => {
     setState(prevState => ({ ...prevState, location: normalizePlace(place) }))
-  }
-
-  const handleSelect = (value: boolean) => {
-    setState(prevState => ({ ...prevState, shareFollows: value }))
   }
 
   const handleInputChange = (name: "profession" | "otherRelevantPositions") => (
@@ -127,10 +122,6 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
         mb={2}
       />
 
-      <Checkbox onSelect={handleSelect} selected={state.shareFollows} mb={2}>
-        Share followed artists, categories, and galleries
-      </Checkbox>
-
       <Button
         type="submit"
         width="100%"
@@ -167,10 +158,6 @@ const InquiryBasicInfoPlaceholder: React.FC = () => {
       </SkeletonText>
 
       <SkeletonBox height={50} mb={2} />
-
-      <SkeletonText variant="sm" mb={2}>
-        Share followed artists, categories, and galleries
-      </SkeletonText>
 
       <SkeletonBox height={50} />
     </Skeleton>
