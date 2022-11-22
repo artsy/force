@@ -66,14 +66,14 @@ describe("InquiryBasicInfo", () => {
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
 
-    fill(wrapper, "phone", "555-555-5555")
+    fill(wrapper, "otherRelevantPositions", "Software Engineer")
 
     wrapper.find("form").simulate("submit")
 
     await flushPromiseQueue()
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
-      phone: "555-555-5555",
+      otherRelevantPositions: "Software Engineer",
       shareFollows: true,
     })
 
@@ -87,7 +87,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockNext).not.toBeCalled()
 
     fill(wrapper, "profession", "Carpenter")
-    fill(wrapper, "phone", "555-555-5555")
+    fill(wrapper, "otherRelevantPositions", "Gallery Owner")
 
     wrapper.find('[role="checkbox"]').first().simulate("click")
 
@@ -97,7 +97,7 @@ describe("InquiryBasicInfo", () => {
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       profession: "Carpenter",
-      phone: "555-555-5555",
+      otherRelevantPositions: "Gallery Owner",
       shareFollows: false,
     })
 

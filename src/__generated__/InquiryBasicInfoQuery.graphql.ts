@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3162e7b1b22bf3ba0241ab8a711b164>>
+ * @generated SignedSource<<172e058d555ef5dc49fba124383e0e6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -159,7 +159,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "phone",
+            "name": "otherRelevantPositions",
             "storageKey": null
           },
           {
@@ -176,12 +176,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b19a3cf4c7a4fca9fc7280ffc8a1a166",
+    "cacheID": "4b472894bfd896cea754a1ed8d959b26",
     "id": null,
     "metadata": {},
     "name": "InquiryBasicInfoQuery",
     "operationKind": "query",
-    "text": "query InquiryBasicInfoQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  phone\n  profession\n}\n"
+    "text": "query InquiryBasicInfoQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
   }
 };
 })();

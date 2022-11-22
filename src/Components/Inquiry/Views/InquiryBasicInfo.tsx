@@ -63,7 +63,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
     setState(prevState => ({ ...prevState, shareFollows: value }))
   }
 
-  const handleInputChange = (name: "profession" | "phone") => (
+  const handleInputChange = (name: "profession" | "otherRelevantPositions") => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -110,7 +110,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       />
 
       <LocationAutocompleteInput
-        title="Location"
+        title="Primary Location"
         name="location"
         placeholder="Location"
         onChange={handleLocation}
@@ -119,12 +119,11 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       />
 
       <Input
-        title="Phone Number"
-        name="phone"
-        placeholder="Phone number"
-        type="tel"
-        onChange={handleInputChange("phone")}
-        defaultValue={me?.phone ?? undefined}
+        title="Other relevant positions"
+        name="otherRelevantPositions"
+        placeholder="Memberships, institutions, positions"
+        onChange={handleInputChange("otherRelevantPositions")}
+        defaultValue={me?.otherRelevantPositions ?? undefined}
         mb={2}
       />
 
@@ -193,7 +192,7 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         location {
           display
         }
-        phone
+        otherRelevantPositions
         profession
       }
     `,
