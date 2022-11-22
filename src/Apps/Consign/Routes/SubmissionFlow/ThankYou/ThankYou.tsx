@@ -37,7 +37,7 @@ export const ThankYou: React.FC = () => {
               <Text>
                 We will email you within 1-3 days to confirm if your artwork has
                 been accepted or not. In the meantime your submission will
-                appear in the feature, My Collection, on the Artsy app.
+                appear in the feature, My Collection.
               </Text>
               <Text mt={2}>
                 With low fees, informed pricing, and multiple sales options, why
