@@ -58,6 +58,9 @@ describe("InquiryBasicInfo", () => {
     expect(wrapper.html()).toContain(
       "Tell Example Partner a little bit about yourself."
     )
+    expect(wrapper.html()).toContain(
+      "Galleries are more likely to respond to collectors who share their profile."
+    )
   })
 
   it("updates the collector profile when the form is submitted", async () => {
@@ -66,14 +69,14 @@ describe("InquiryBasicInfo", () => {
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
 
-    fill(wrapper, "otherRelevantPositions", "Software Engineer")
+    fill(wrapper, "otherRelevantPositions", "Collector")
 
     wrapper.find("form").simulate("submit")
 
     await flushPromiseQueue()
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
-      otherRelevantPositions: "Software Engineer",
+      otherRelevantPositions: "Collector",
       shareFollows: true,
     })
 
@@ -87,7 +90,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockNext).not.toBeCalled()
 
     fill(wrapper, "profession", "Carpenter")
-    fill(wrapper, "otherRelevantPositions", "Gallery Owner")
+    fill(wrapper, "otherRelevantPositions", "Artist")
 
     wrapper.find("form").simulate("submit")
 
@@ -95,7 +98,7 @@ describe("InquiryBasicInfo", () => {
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       profession: "Carpenter",
-      otherRelevantPositions: "Gallery Owner",
+      otherRelevantPositions: "Artist",
       shareFollows: true,
     })
 

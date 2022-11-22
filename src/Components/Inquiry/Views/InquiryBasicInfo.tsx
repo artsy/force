@@ -85,8 +85,13 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg-display" mb={2} pr={2}>
+      <Text variant="lg-display" pr={2}>
         Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
+      </Text>
+
+      <Text variant="xs" mb={2} color="black60">
+        Galleries are more likely to respond to collectors who share their
+        profile.
       </Text>
 
       {mode === "Error" && (
@@ -137,8 +142,13 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 const InquiryBasicInfoPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg-display" mb={2}>
+      <SkeletonText variant="lg-display">
         Tell Example Partner a little bit about yourself.
+      </SkeletonText>
+
+      <SkeletonText variant="xs" mb={2}>
+        Galleries are more likely to respond to collectors who share their
+        profile.
       </SkeletonText>
 
       <SkeletonText variant="xs" mb={0.5}>
