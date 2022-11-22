@@ -1,6 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
 import { PriceEstimateContactInformationFragmentContainer } from "Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
@@ -46,12 +46,15 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-jest.mock("Components/PhoneNumberInput/getPhoneNumberInformation", () => ({
-  ...jest.requireActual(
-    "Components/PhoneNumberInput/getPhoneNumberInformation"
-  ),
-  getPhoneNumberInformation: jest.fn(),
-}))
+jest.mock(
+  "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation",
+  () => ({
+    ...jest.requireActual(
+      "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
+    ),
+    getPhoneNumberInformation: jest.fn(),
+  })
+)
 
 jest.mock("../Mutations/useRequestPriceEstimate", () => ({
   ...jest.requireActual("../Mutations/useRequestPriceEstimate"),

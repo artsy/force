@@ -2,8 +2,8 @@ import { mount, ReactWrapper } from "enzyme"
 import {
   PhoneNumberInput,
   PhoneNumberInputProps,
-} from "Components/PhoneNumberInput/PhoneNumberInput"
-import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
+} from "Components/PhoneNumberInputDeprecated/PhoneNumberInput"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
 import { Input, Select } from "@artsy/palette"
 
 jest.mock("react-relay")

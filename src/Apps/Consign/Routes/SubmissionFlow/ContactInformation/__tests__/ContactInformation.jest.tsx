@@ -5,7 +5,7 @@ import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { getPhoneNumberInformation } from "Components/PhoneNumberInput/getPhoneNumberInformation"
+import { getPhoneNumberInformation } from "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
 import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/ContactInformation"
 import { flushPromiseQueue } from "DevTools"
 import { useRouter } from "System/Router/useRouter"
@@ -88,12 +88,15 @@ jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
   createOrUpdateConsignSubmission: jest.fn(),
 }))
 
-jest.mock("Components/PhoneNumberInput/getPhoneNumberInformation", () => ({
-  ...jest.requireActual(
-    "Components/PhoneNumberInput/getPhoneNumberInformation"
-  ),
-  getPhoneNumberInformation: jest.fn(),
-}))
+jest.mock(
+  "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation",
+  () => ({
+    ...jest.requireActual(
+      "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
+    ),
+    getPhoneNumberInformation: jest.fn(),
+  })
+)
 
 const mockCreateOrUpdateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
 const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock

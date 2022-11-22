@@ -6,7 +6,7 @@ import {
   PhoneNumber,
   PhoneNumberInput,
   PhoneNumberValidationResult,
-} from "Components/PhoneNumberInput/PhoneNumberInput"
+} from "Components/PhoneNumberInputDeprecated/PhoneNumberInput"
 export interface ContactInformationFormModel {
   name: string
   email: string
