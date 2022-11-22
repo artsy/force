@@ -74,8 +74,6 @@ import { compact } from "lodash"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import {
   ActionType,
   ClickedSelectShippingOption,
@@ -508,11 +506,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleAddressEdit = (
-    editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
-  ) => {
+  const handleAddressEdit = (editedAddressId: string) => {
     // reload shipping quotes if selected address edited
-    if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
+    if (selectedAddressID === editedAddressId) {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
 
@@ -522,12 +518,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleAddressCreate = (
-    createdAddress: CreateUserAddressMutation$data["createUserAddress"]
-  ) => {
-    if (createdAddress?.userAddressOrErrors?.internalID) {
-      selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
-    }
+  const handleAddressCreate = (createdAddressId: string) => {
+    createdAddressId && selectSavedAddress(createdAddressId)
   }
 
   const renderArtaErrorMessage = () => {
@@ -634,6 +626,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onSelect={selectSavedAddressWithTracking}
                 inCollectorProfile={false}
                 onAddressDelete={handleAddressDelete}
+                onAddressEdit={handleAddressEdit}
+                onAddressCreate={handleAddressCreate}
               />
             </Collapse>
 

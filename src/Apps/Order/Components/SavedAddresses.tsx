@@ -43,7 +43,9 @@ interface SavedAddressesProps {
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
-  onAddressDelete?: (removedAddressId: string) => void
+  onAddressDelete?: (id: string) => void
+  onAddressEdit?: (id: string) => void
+  onAddressCreate?: (id: string) => void
   selectedAddress?: string
 }
 
@@ -80,6 +82,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     inCollectorProfile,
     relay,
     onAddressDelete,
+    onAddressEdit,
+    onAddressCreate,
     selectedAddress,
   } = props
 
@@ -138,8 +142,11 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const onSuccess = (id: string) => {
-    refetchAddresses()
-    onSelect?.(id)
+    if (modalDetails?.addressModalAction === "editUserAddress") {
+      refetchAddresses(() => onAddressEdit?.(id))
+    } else {
+      refetchAddresses(() => onAddressCreate?.(id))
+    }
   }
 
   const trackAddAddressClick = () => {
