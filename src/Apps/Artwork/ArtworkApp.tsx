@@ -226,6 +226,8 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <OtherWorksQueryRenderer slug={artwork.slug} />
 
+      <div>Related works go here</div>
+
       {artwork.artist && (
         <>
           <Spacer mt={6} />

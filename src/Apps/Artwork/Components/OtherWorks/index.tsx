@@ -6,7 +6,6 @@ import {
   Header,
   HeaderPlaceholder,
 } from "Apps/Artwork/Components/OtherWorks/Header"
-import { RelatedWorksArtworkGridRefetchContainer } from "Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
 import { SystemContextProps, withSystemContext } from "System"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
@@ -68,17 +67,13 @@ const contextGridTypeToV2ContextModule = (contextGridType: string) => {
 
 export const OtherWorks = track()(
   ({ artwork }: { artwork: OtherWorks_artwork$data } & SystemContextProps) => {
-    const { context, contextGrids, sale } = artwork
+    const { context, contextGrids } = artwork
 
     const tracking = useTracking()
 
     const gridsToShow = compact(
       (contextGrids ?? []).filter(grid => {
-        return (
-          !!grid &&
-          (grid.artworksConnection?.edges ?? []).length > 0 &&
-          grid.__typename !== "RelatedArtworkGrid"
-        )
+        return !!grid && (grid.artworksConnection?.edges ?? []).length > 0
       })
     )
 
@@ -123,22 +118,14 @@ export const OtherWorks = track()(
           </Join>
         )}
 
-        {!(
-          context &&
-          context.__typename === "ArtworkContextAuction" &&
-          !(sale && sale.is_closed)
-        ) && (
-          <>
-            <Spacer mt={6} />
-
-            <RelatedWorksArtworkGridRefetchContainer artwork={artwork} />
-          </>
-        )}
-
+        {/*
+        TODO: Appears to never be true? Maybe this was supposed to match
+        context.__typename === "Sale"
+        or contextGrids[i] === "ArtworkContextAuction"
+        */}
         {context && context.__typename === "ArtworkContextAuction" && (
           <>
             <Spacer mt={6} />
-
             <OtherAuctionsQueryRenderer />
           </>
         )}
@@ -166,7 +153,6 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...RelatedWorksArtworkGrid_artwork
         ...ArtistSeriesArtworkRail_artwork
         slug
         internalID
