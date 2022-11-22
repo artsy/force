@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   InquiryContextContextQueryRenderer,
   InquiryProvider,
@@ -37,7 +37,6 @@ const InquiryDialog: React.FC = () => {
   const { onClose, current, View } = useInquiryContext()
 
   switch (current) {
-    case "Confirmation":
     case "Done":
       return <View />
 
