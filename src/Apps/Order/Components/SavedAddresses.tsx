@@ -46,12 +46,6 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   onAddressDelete?: (removedAddressId: string) => void
-  onAddressCreate?: (
-    address: CreateUserAddressMutation$data["createUserAddress"]
-  ) => void
-  onAddressEdit?: (
-    address: UpdateUserAddressMutation$data["updateUserAddress"]
-  ) => void
   selectedAddress?: string
   onShowToast?: (isShow: boolean, action: string) => void
 }
@@ -99,6 +93,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // FIXME: Remove this disable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.addressConnection?.totalCount])
+
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -149,19 +144,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
-  // const createOrUpdateAddressSuccess = (
-  //   address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
-  // ) => {
-  //   refetchAddresses(() => {
-  //     if (address?.createUserAddress) {
-  //       onAddressCreate && onAddressCreate(address.createUserAddress)
-  //     } else if (address?.updateUserAddress) {
-  //       onAddressEdit && onAddressEdit(address.updateUserAddress)
-  //     }
-  //   })
+  const onSuccess = (
+    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
+  ) => {
+    refetchAddresses()
 
-  //   onShowToast && onShowToast(true, "Saved")
-  // }
+    onShowToast && onShowToast(true, "Saved")
+  }
 
   const trackAddAddressClick = () => {
     trackEvent({
@@ -285,8 +274,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           onClose={() => setShowAddressModal(false)}
         >
           <ShippingAddressForm
-            address={convertShippingAddressToMutationInput(address)}
+            address={
+              modalDetails?.addressModalAction === "editUserAddress"
+                ? convertShippingAddressToMutationInput(address)
+                : null
+            }
             onClose={() => setShowAddressModal(false)}
+            onSuccess={onSuccess}
           />
         </ModalDialog>
       )}

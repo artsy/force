@@ -74,18 +74,18 @@ interface SettingsShippingAddressFormProps {
     isDefault: boolean
     attributes: Address
   } | null
+  onSuccess?(): void
 }
 
 export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   onClose,
   address,
+  onSuccess,
 }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
-
-  console.log("address", address)
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
@@ -129,6 +129,8 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
+            onSuccess && onSuccess()
+
             sendToast({
               variant: "success",
               message: `Address updated successfully.`,
@@ -146,6 +148,8 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
                 variables: { input: { userAddressID: id } },
               })
             }
+
+            onSuccess && onSuccess()
 
             sendToast({
               variant: "success",
