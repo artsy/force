@@ -74,7 +74,7 @@ export const CtaBannerContent = () => {
 
   return (
     <Media greaterThan="xs">
-      <AppContainer py={[1, 2]}>
+      <AppContainer py={2}>
         <HorizontalPadding>
           <Flex
             justifyContent="space-between"

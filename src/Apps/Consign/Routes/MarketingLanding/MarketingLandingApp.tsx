@@ -5,6 +5,7 @@ import { Join, Spacer } from "@artsy/palette"
 import {
   SellMeta,
   CtaBanner,
+  CtaSection,
   FAQ,
   Header,
   HowItWorks,
@@ -12,7 +13,6 @@ import {
   SoldRecentlyOnArtsyQueryRenderer,
   WhySellWithArtsy,
 } from "./Components"
-import { CtaSection } from "Apps/Consign/Routes/MarketingLanding/Components/CtaSection"
 
 export const MarketingLandingApp = () => {
   const {
