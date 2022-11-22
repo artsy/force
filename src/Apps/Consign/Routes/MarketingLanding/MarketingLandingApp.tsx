@@ -12,6 +12,7 @@ import {
   SoldRecentlyOnArtsyQueryRenderer,
   WhySellWithArtsy,
 } from "./Components"
+import { CtaSection } from "Apps/Consign/Routes/MarketingLanding/Components/CtaSection"
 
 export const MarketingLandingApp = () => {
   const {
@@ -51,6 +52,8 @@ export const MarketingLandingApp = () => {
         <HowItWorks />
 
         <SoldRecentlyOnArtsyQueryRenderer />
+
+        <CtaSection />
 
         <FAQ />
       </Join>
