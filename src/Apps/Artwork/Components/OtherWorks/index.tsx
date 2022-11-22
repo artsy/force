@@ -139,7 +139,7 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment OtherWorks_artwork on Artwork {
-        contextGrids {
+        contextGrids(includeRelatedArtworks: false) {
           __typename
           title
           ctaTitle

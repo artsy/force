@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e82efbdb60f2025f86b628e3c993f018>>
+ * @generated SignedSource<<a77c2b5fb9d3ca4d1742f772cfa2d443>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -67,7 +67,13 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "includeRelatedArtworks",
+          "value": false
+        }
+      ],
       "concreteType": null,
       "kind": "LinkedField",
       "name": "contextGrids",
@@ -141,7 +147,7 @@ return {
           "storageKey": "artworksConnection(first:8)"
         }
       ],
-      "storageKey": null
+      "storageKey": "contextGrids(includeRelatedArtworks:false)"
     },
     {
       "args": null,
@@ -214,6 +220,6 @@ return {
 };
 })();
 
-(node as any).hash = "566381bd443dfcd9f6bd85cda8d7ef69";
+(node as any).hash = "0efdf87b1d36ab162d432a06d0283ef2";
 
 export default node;
