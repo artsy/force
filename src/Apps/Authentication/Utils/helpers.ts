@@ -158,18 +158,18 @@ export const updateURLWithOnboardingParam = (url: string) => {
   return updatedRedirectTo
 }
 
-const isAbleToTriggerOnboarding = ({
+export const isAbleToTriggerOnboarding = ({
   type,
   intent,
 }: {
   type: ModalType
   intent?: AuthIntent
 }) => {
-  // Only trigger onboarding for sign ups without a commercial intent
-  return !!(
+  return (
+    // Only trigger onboarding for sign ups...
     type === ModalType.signup &&
-    intent &&
-    !COMMERCIAL_AUTH_INTENTS.includes(intent)
+    // ...without a commercial intent
+    !(intent && COMMERCIAL_AUTH_INTENTS.includes(intent))
   )
 }
 
