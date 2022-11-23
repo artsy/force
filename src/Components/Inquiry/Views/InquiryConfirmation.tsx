@@ -14,13 +14,11 @@ export const InquiryConfirmation: React.FC = () => {
 
       <Spacer mt={4} />
 
-      <Box p={1} backgroundColor="black10">
-        <Text variant="sm">
-          The seller should respond to your inquiry within 3 days.
-        </Text>
-      </Box>
+      <Text variant="sm-display">
+        We'll send you an email if the gallery replies to your inquiry.
+      </Text>
 
-      <Text variant="sm" my={2}>
+      <Text variant="sm-display" my={2}>
         Conversation with the gallery will continue{" "}
         <RouterLink to="/user/conversations" onClick={next}>
           in the Inbox.
