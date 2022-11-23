@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a2edbaf030c2ea5762223145af508d7>>
+ * @generated SignedSource<<054b81ab89169a890e149145dd7691dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type InquiryBasicInfo_me$data = {
   readonly location: {
     readonly display: string | null;
   } | null;
-  readonly phone: string | null;
+  readonly otherRelevantPositions: string | null;
   readonly profession: string | null;
   readonly " $fragmentType": "InquiryBasicInfo_me";
 };
@@ -51,7 +51,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "phone",
+      "name": "otherRelevantPositions",
       "storageKey": null
     },
     {
@@ -66,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a81073b62e4c18fa1ed1176610967ac9";
+(node as any).hash = "b4b856fd600bad84721eee98e80fb2e9";
 
 export default node;

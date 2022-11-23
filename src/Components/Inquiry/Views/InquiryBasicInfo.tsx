@@ -58,7 +58,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
     setState(prevState => ({ ...prevState, location: normalizePlace(place) }))
   }
 
-  const handleInputChange = (name: "profession" | "phone") => (
+  const handleInputChange = (name: "profession" | "otherRelevantPositions") => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -85,8 +85,13 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg-display" mb={2} pr={2}>
+      <Text variant="lg-display" pr={2}>
         Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
+      </Text>
+
+      <Text variant="xs" mb={2} color="black60">
+        Galleries are more likely to respond to collectors who share their
+        profile.
       </Text>
 
       {mode === "Error" && (
@@ -105,7 +110,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       />
 
       <LocationAutocompleteInput
-        title="Location"
+        title="Primary Location"
         name="location"
         placeholder="Location"
         onChange={handleLocation}
@@ -114,12 +119,11 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       />
 
       <Input
-        title="Phone Number"
-        name="phone"
-        placeholder="Phone number"
-        type="tel"
-        onChange={handleInputChange("phone")}
-        defaultValue={me?.phone ?? undefined}
+        title="Other relevant positions"
+        name="otherRelevantPositions"
+        placeholder="Memberships, institutions, positions"
+        onChange={handleInputChange("otherRelevantPositions")}
+        defaultValue={me?.otherRelevantPositions ?? undefined}
         mb={2}
       />
 
@@ -138,8 +142,13 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 const InquiryBasicInfoPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg-display" mb={2}>
+      <SkeletonText variant="lg-display">
         Tell Example Partner a little bit about yourself.
+      </SkeletonText>
+
+      <SkeletonText variant="xs" mb={2}>
+        Galleries are more likely to respond to collectors who share their
+        profile.
       </SkeletonText>
 
       <SkeletonText variant="xs" mb={0.5}>
@@ -180,7 +189,7 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         location {
           display
         }
-        phone
+        otherRelevantPositions
         profession
       }
     `,

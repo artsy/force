@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<477df430be176ec4fa4558345e4505f7>>
+ * @generated SignedSource<<cc72ec70a8c3b4fe39575788f5580261>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -162,7 +162,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "phone",
+            "name": "otherRelevantPositions",
             "storageKey": null
           },
           {
@@ -179,7 +179,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "63b28423738c12d0a249d1f77d6bdb66",
+    "cacheID": "bca73cc165f1bf630d87c939340909dc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -213,13 +213,13 @@ return {
         },
         "me.location.display": (v3/*: any*/),
         "me.location.id": (v2/*: any*/),
-        "me.phone": (v3/*: any*/),
+        "me.otherRelevantPositions": (v3/*: any*/),
         "me.profession": (v3/*: any*/)
       }
     },
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  phone\n  profession\n}\n"
+    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  otherRelevantPositions\n  profession\n}\n"
   }
 };
 })();
