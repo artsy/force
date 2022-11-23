@@ -6,10 +6,12 @@ import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
+import { InquiryConfirmation } from "./Views/InquiryConfirmation"
 
 const VIEWS = {
   Account: InquiryAccount,
   BasicInfo: InquiryBasicInfoQueryRenderer,
+  Confirmation: InquiryConfirmation,
   Inquiry: InquiryInquiryQueryRenderer,
   Specialist: InquirySpecialist,
 }
@@ -49,6 +51,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
                   false: ["BasicInfo"],
                 },
               },
+              "Confirmation",
             ],
           },
         },
