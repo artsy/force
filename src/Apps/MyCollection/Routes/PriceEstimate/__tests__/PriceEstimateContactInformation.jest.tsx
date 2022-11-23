@@ -1,6 +1,5 @@
 import { ActionType } from "@artsy/cohesion"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { getPhoneNumberInformation } from "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
 import { PriceEstimateContactInformationFragmentContainer } from "Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
@@ -46,16 +45,6 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-jest.mock(
-  "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation",
-  () => ({
-    ...jest.requireActual(
-      "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
-    ),
-    getPhoneNumberInformation: jest.fn(),
-  })
-)
-
 jest.mock("../Mutations/useRequestPriceEstimate", () => ({
   ...jest.requireActual("../Mutations/useRequestPriceEstimate"),
   useRequestPriceEstimate: jest.fn(() => ({
@@ -73,7 +62,6 @@ jest.mock("@artsy/palette", () => {
 const mockRequestPriceEstimate = jest.fn()
 const mockTracking = useTracking as jest.Mock
 const mockTrackEvent = jest.fn()
-const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
 const mockSendToast = jest.fn()
 
 const getWrapper = (user?: User) =>
@@ -115,7 +103,6 @@ const getInput = name =>
 
 describe("Price Estimate Contact Information", () => {
   beforeAll(() => {
-    mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
     mockTracking.mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
@@ -155,7 +142,9 @@ describe("Save and Continue button", () => {
       Artwork: () => mockArtwork,
     })
 
-    expect(getSubmitButton()).toBeDisabled()
+    await waitFor(() => {
+      expect(getSubmitButton()).toBeDisabled()
+    })
 
     simulateTyping("name", "Banksy")
 
@@ -169,7 +158,7 @@ describe("Save and Continue button", () => {
       expect(getSubmitButton()).toBeDisabled()
     })
 
-    simulateTyping("phone", "(415) 555-0132")
+    simulateTyping("phoneNumber", "(415) 555-0132")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeEnabled()
@@ -182,7 +171,9 @@ describe("Save and Continue button", () => {
       Artwork: () => mockArtwork,
     })
 
-    expect(getSubmitButton()).toBeEnabled()
+    await waitFor(() => {
+      expect(getSubmitButton()).toBeEnabled()
+    })
   })
 
   it("is disabled when phone number is not valid", async () => {
@@ -193,7 +184,7 @@ describe("Save and Continue button", () => {
 
     simulateTyping("name", "Banksy")
     simulateTyping("email", "banksy@test.test")
-    simulateTyping("phone", "123")
+    simulateTyping("phoneNumber", "123")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeDisabled()
@@ -223,10 +214,10 @@ it("fields are pre-populating from user profile", async () => {
 
   expect(getInput("name")).toHaveValue(mockMe.name)
   expect(getInput("email")).toHaveValue(mockMe.email)
-  expect(getInput("phone")).toHaveValue(mockMe.phoneNumber.national)
+  expect(getInput("phoneNumber")).toHaveValue(mockMe.phoneNumber.national)
 })
 
-it("submiting a valid form", async () => {
+it("submitting a valid form", async () => {
   getWrapper().renderWithRelay({
     Me: () => mockMe,
     Artwork: () => mockArtwork,
@@ -242,7 +233,7 @@ it("submiting a valid form", async () => {
           artworkId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
           requesterEmail: "serge@test.test",
           requesterName: "Serge",
-          requesterPhoneNumber: "+1 415-555-0132",
+          requesterPhoneNumber: "+1 (415) 555-0132",
         },
       },
     })
