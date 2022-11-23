@@ -25,7 +25,7 @@ export type Context = {
   collectorLevel?: number | null
   isLoggedIn: boolean
   location?: Location | null
-  phone?: string | null
+  otherRelevantPositions?: string | null
   profession?: string | null
   requiresReload: boolean
   shareFollows: boolean
@@ -36,7 +36,7 @@ export const DEFAULT_CONTEXT: Context = {
   collectorLevel: null,
   isLoggedIn: false,
   location: null,
-  phone: null,
+  otherRelevantPositions: null,
   profession: null,
   requiresReload: false,
   shareFollows: false,
@@ -192,7 +192,7 @@ const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
       collectorLevel: me?.collectorLevel,
       isLoggedIn: !!me,
       location: !!me?.location?.city ? { city: me.location.city } : null,
-      phone: me?.phone,
+      otherRelevantPositions: me?.otherRelevantPositions,
       profession: me?.profession,
       shareFollows: !!me?.shareFollows,
     })
@@ -210,7 +210,7 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
         location {
           city
         }
-        phone
+        otherRelevantPositions
         profession
         shareFollows
       }

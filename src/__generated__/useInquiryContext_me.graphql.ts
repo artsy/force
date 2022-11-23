@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<165467a9c2c301017b7a08a8a1b163be>>
+ * @generated SignedSource<<c8b146d89c73e6bc65252b522a3dfcf6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type useInquiryContext_me$data = {
   readonly location: {
     readonly city: string | null;
   } | null;
-  readonly phone: string | null;
+  readonly otherRelevantPositions: string | null;
   readonly profession: string | null;
   readonly shareFollows: boolean;
   readonly " $fragmentType": "useInquiryContext_me";
@@ -60,7 +60,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "phone",
+      "name": "otherRelevantPositions",
       "storageKey": null
     },
     {
@@ -82,6 +82,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f6f02118337f7dc8e2bdc79c66959b04";
+(node as any).hash = "c0c1a7db2bdd89bbf53666b0c0e61b1b";
 
 export default node;
