@@ -1477,7 +1477,6 @@ describe("Shipping", () => {
             const newAddress = {
               addressLine1: "Test input 'addressLine1'",
               addressLine2: "Test input 'addressLine2'",
-              addressLine3: "",
               city: "Test input 'city'",
               country: "US",
               name: "Test input 'name'",
@@ -1496,7 +1495,12 @@ describe("Shipping", () => {
               .find("SavedAddresses")
               .props()
               // @ts-ignore
-              .onAddressEdit({ userAddressOrErrors: { internalID: "2" } })
+              .onAddressEdit({
+                userAddressOrErrors: {
+                  internalID: "2",
+                  ...newAddress,
+                },
+              })
 
             expect(updateAddressSpy).toHaveBeenCalledTimes(1)
             expect(updateAddressSpy).toHaveBeenCalledWith(
@@ -1504,6 +1508,7 @@ describe("Shipping", () => {
               "2",
               {
                 ...newAddress,
+                addressLine3: "",
                 phoneNumber: "422-424-4242",
               },
               expect.anything(),
@@ -1522,14 +1527,8 @@ describe("Shipping", () => {
                     id: "2939023",
                     phoneNumber: "422-424-4242",
                     shipping: {
-                      addressLine1: "401 Broadway",
-                      addressLine2: "Floor 25",
-                      city: "New York",
-                      country: "US",
-                      name: "Test Name",
-                      phoneNumber: "422-424-4242",
-                      postalCode: "10013",
-                      region: "NY",
+                      ...newAddress,
+                      phoneNumber: "",
                     },
                   },
                 },
