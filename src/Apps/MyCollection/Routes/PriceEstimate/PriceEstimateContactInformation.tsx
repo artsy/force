@@ -20,6 +20,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { countries } from "Utils/countries"
 import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import {
@@ -32,12 +33,12 @@ const getContactInformationFormInitialValues = (
 ): ContactInformationFormModel => ({
   name: me?.name || "",
   email: me?.email || "",
-  phone: {
-    isValid: !!me?.phoneNumber?.isValid,
-    national: me?.phoneNumber?.national ?? undefined,
-    international: me?.phoneNumber?.international ?? undefined,
-    regionCode: me?.phoneNumber?.regionCode ?? undefined,
-  },
+  phoneNumber:
+    me?.phoneNumber?.national ||
+    me?.phone ||
+    me?.phoneNumber?.international ||
+    "",
+  phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
 })
 
 export interface PriceEstimateContactInformationProps {
@@ -63,7 +64,8 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
   const handleSubmit = async ({
     name,
     email,
-    phone,
+    phoneNumber,
+    phoneNumberCountryCode,
   }: ContactInformationFormModel) => {
     try {
       trackEvent({
@@ -74,13 +76,18 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         user_email: me?.email,
       })
 
+      const phoneNumberCountryCodeNumeric = countries.find(
+        country => country.value === phoneNumberCountryCode
+      )?.countryCode
+      const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric}${phoneNumber}`
+
       await submitMutation({
         variables: {
           input: {
             artworkId: artwork.internalID,
             requesterEmail: email,
             requesterName: name,
-            requesterPhoneNumber: phone.international,
+            requesterPhoneNumber: phoneNumberInternational,
           },
         },
       })

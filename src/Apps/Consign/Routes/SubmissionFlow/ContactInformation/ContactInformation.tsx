@@ -7,6 +7,7 @@ import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import { countries } from "Utils/countries"
 import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
@@ -31,12 +32,12 @@ const getContactInformationFormInitialValues = (
 ): ContactInformationFormModel => ({
   name: me?.name || "",
   email: me?.email || "",
-  phone: {
-    isValid: !!me?.phoneNumber?.isValid,
-    national: me?.phoneNumber?.national ?? undefined,
-    international: me?.phoneNumber?.international ?? undefined,
-    regionCode: me?.phoneNumber?.regionCode ?? undefined,
-  },
+  phoneNumber:
+    me?.phoneNumber?.national ||
+    me?.phone ||
+    me?.phoneNumber?.international ||
+    "",
+  phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
 })
 
 export interface ContactInformationProps {
@@ -73,13 +74,19 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   const handleSubmit = async ({
     name,
     email,
-    phone,
+    phoneNumber,
+    phoneNumberCountryCode,
   }: ContactInformationFormModel) => {
     if (!(await handleRecaptcha("submission_submit"))) return
 
     if (relayEnvironment) {
       try {
         const submissionEmail = email.trim()
+
+        const phoneNumberCountryCodeNumeric = countries.find(
+          country => country.value === phoneNumberCountryCode
+        )?.countryCode
+        const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric}${phoneNumber}`
 
         const submissionId = await createOrUpdateConsignSubmission(
           relayEnvironment,
@@ -88,7 +95,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
             artistID: stepIndex === 0 ? "" : undefined,
             userName: name.trim(),
             userEmail: submissionEmail,
-            userPhone: phone.international,
+            userPhone: phoneNumberInternational,
             state: isLastStep ? "SUBMITTED" : "DRAFT",
             sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
             // myCollectionArtworkID is necessary in order to prevent duplication or mycollection artwork
