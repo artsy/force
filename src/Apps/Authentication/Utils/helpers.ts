@@ -45,7 +45,6 @@ export const handleSubmit = async (
   const {
     contextModule,
     copy,
-    destination,
     redirectTo,
     intent,
     signupReferer,
@@ -71,7 +70,7 @@ export const handleSubmit = async (
 
       if (analytics) {
         const options: AnalyticsOptions = {
-          auth_redirect: redirectTo || destination!,
+          auth_redirect: redirectTo!,
           context_module: contextModule!,
           modal_copy: copy,
           intent,
@@ -177,16 +176,10 @@ export const maybeUpdateRedirectTo = (
 }
 
 export const setCookies = options => {
-  const { afterSignUpAction, destination } = options
+  const { afterSignUpAction } = options
 
   if (afterSignUpAction) {
     Cookies.set(AFTER_AUTH_ACTION_KEY, JSON.stringify(afterSignUpAction))
-  }
-
-  if (destination) {
-    Cookies.set("destination", destination, {
-      expires: 60 * 60 * 24,
-    })
   }
 }
 

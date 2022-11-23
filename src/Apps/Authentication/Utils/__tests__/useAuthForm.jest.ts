@@ -19,7 +19,6 @@ describe("useAuthForm", () => {
     afterSignUpAction: "afterSignUpAction",
     contextModule: "contextModule",
     copy: null,
-    destination: "destination",
     intent: "intent",
   }
 
@@ -60,7 +59,6 @@ describe("useAuthForm", () => {
       options: {
         contextModule: "contextModule",
         copy: null,
-        destination: "destination",
         intent: "intent",
         redirectTo: "/redirect-to",
         signupReferer: "/someReferer",

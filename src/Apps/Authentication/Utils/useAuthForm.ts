@@ -29,7 +29,6 @@ export const useAuthForm = ({
     afterSignUpAction,
     contextModule,
     copy: copyQueryParam,
-    destination,
     intent,
     oauthLogin,
     // FIXME: Convection should link using the `afterSignUpAction` param, not `submissionId`
@@ -70,7 +69,6 @@ export const useAuthForm = ({
   const options: ModalOptions = {
     contextModule,
     copy: copyQueryParam,
-    destination,
     intent,
     oauthLogin,
     redirectTo,

@@ -8,24 +8,18 @@ import { getENV } from "Utils/getENV"
 import { ArticlesApp_viewer$data } from "__generated__/ArticlesApp_viewer.graphql"
 import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
 
 interface ArticlesAppProps {
   viewer: ArticlesApp_viewer$data
 }
 
 const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
-  const {
-    match: { location },
-  } = useRouter()
-
   useScrollToOpenAuthModal({
     key: "editorial-signup-dismissed",
     modalOptions: {
       intent: Intent.viewEditorial,
       contextModule: ContextModule.popUpModal,
       copy: "Sign up for the latest in art market news",
-      destination: location.pathname,
     },
   })
 

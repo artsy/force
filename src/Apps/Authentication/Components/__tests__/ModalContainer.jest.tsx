@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { ModalManager } from "Components/Authentication/ModalManager"
-import { ModalContainer } from "../ModalContainer"
+import { ModalContainer } from "Apps/Authentication/Components/ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { mediator } from "Server/mediator"
@@ -54,16 +54,6 @@ describe("ModalContainer", () => {
     // FIXME: reaction migration
     // @ts-ignore
     expect(form.currentType).toBe("reset_password")
-  })
-
-  it("Sets a cookie when opening the modal", () => {
-    mount(<ModalContainer />)
-    mediator.trigger("open:auth", {
-      mode: ModalType.login,
-      destination: "foo",
-    } as ModalOptions)
-
-    expect(cookieSet).toBeCalledWith("destination", "foo", { expires: 86400 })
   })
 
   it("onSocialAuthEvent sets cookie on signup with expected args", () => {

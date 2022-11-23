@@ -70,11 +70,6 @@ export interface ModalOptions {
    */
   copy?: string
   /**
-   * the page path the user is redirected to after successfully
-   * login or account creation after onboarding.
-   */
-  destination?: string
-  /**
    * The image rendered with the modal
    */
   image?: string
