@@ -26,7 +26,7 @@ import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEsti
 import {
   contactInformationValidationSchema,
   validate,
-} from "./Utils/validation"
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
@@ -79,7 +79,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
       const phoneNumberCountryCodeNumeric = countries.find(
         country => country.value === phoneNumberCountryCode
       )?.countryCode
-      const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric}${phoneNumber}`
+      const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric} ${phoneNumber.trim()}`
 
       await submitMutation({
         variables: {
