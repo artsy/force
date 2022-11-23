@@ -5,7 +5,7 @@ interface CountryData {
   value: string
 }
 
-export const countryCodes = {
+export const COUNTRY_CODES = {
   BD: "880",
   BE: "32",
   BF: "226",
@@ -258,7 +258,7 @@ export const countryCodes = {
   MZ: "258",
 }
 
-export const countryList: CountryData[] = [
+export const COUNTRIES: CountryData[] = [
   {
     country: "United States",
     countryCode: "1",
@@ -1713,7 +1713,7 @@ export const countryList: CountryData[] = [
   },
 ]
 
-export const countries: CountryData[] = countryList.sort(
+export const countries: CountryData[] = COUNTRIES.sort(
   (a, b) =>
     Math.floor(Math.log10(Math.abs(Number(a.countryCode)))) -
       Math.floor(Math.log10(Math.abs(Number(b.countryCode)))) ||

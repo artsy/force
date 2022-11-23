@@ -2,10 +2,9 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
-import { CtaBannerContent } from "../CtaBanner"
+import { CtaBannerContent } from "Apps/Consign/Routes/MarketingLanding/Components/CtaBanner"
 
 jest.mock("react-tracking")
-
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   ...jest.requireActual("System/Analytics/AnalyticsContext"),
   useAnalyticsContext: jest.fn(() => ({
@@ -60,46 +59,6 @@ describe("CtaBannerContent", () => {
     })
   })
 
-  describe("mobile", () => {
-    describe("not logged in", () => {
-      beforeEach(() => {
-        renderComponent("xs")
-      })
-
-      it("renders correctly", () => {
-        expect(
-          screen.queryByText(
-            "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
-          )
-        ).not.toBeInTheDocument()
-        expect(screen.getByText("Get in Touch")).toBeInTheDocument()
-        expect(screen.getByText("Submit an Artwork")).toBeInTheDocument()
-      })
-
-      sharedTests()
-    })
-
-    describe("logged in", () => {
-      beforeEach(() => {
-        renderComponent("xs", testUser)
-      })
-
-      it("tracks get in touch click", () => {
-        fireEvent.click(screen.getByText("Get in Touch"))
-
-        expect(trackEvent).toHaveBeenCalled()
-        expect(trackEvent).toHaveBeenCalledWith({
-          action: "clickedGetInTouch",
-          context_module: "StickyBanner",
-          context_page_owner_type: "sell",
-          label: "Get in Touch",
-          user_id: testUser.id,
-          user_email: testUser.email,
-        })
-      })
-    })
-  })
-
   describe("desktop", () => {
     describe("not logged in", () => {
       beforeEach(() => {
@@ -137,6 +96,24 @@ describe("CtaBannerContent", () => {
           user_email: testUser.email,
         })
       })
+    })
+  })
+})
+
+describe("mWeb", () => {
+  describe("not logged in", () => {
+    beforeEach(() => {
+      renderComponent("xs")
+    })
+
+    it("doesn't render the component", () => {
+      expect(
+        screen.queryByText(
+          "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
+        )
+      ).not.toBeInTheDocument()
+      expect(() => screen.getByText("Get in Touch")).toThrow()
+      expect(() => screen.getByText("Submit an Artwork")).toThrow()
     })
   })
 })
