@@ -7,7 +7,7 @@ import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { countries } from "Utils/countries"
+import { COUNTRY_CODES } from "Utils/countries"
 import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
@@ -82,10 +82,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     if (relayEnvironment) {
       try {
         const submissionEmail = email.trim()
-        const phoneNumberCountryCodeNumeric = countries.find(
-          country => country.value === phoneNumberCountryCode
-        )?.countryCode
-        const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric} ${phoneNumber.trim()}`
+        const phoneNumberInternational = `+${
+          COUNTRY_CODES[phoneNumberCountryCode.toLocaleUpperCase()]
+        } ${phoneNumber.trim()}`
 
         const submissionId = await createOrUpdateConsignSubmission(
           relayEnvironment,

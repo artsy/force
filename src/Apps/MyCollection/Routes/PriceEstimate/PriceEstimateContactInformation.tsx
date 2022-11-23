@@ -20,7 +20,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { countries } from "Utils/countries"
+import { COUNTRY_CODES } from "Utils/countries"
 import { PriceEstimateContactInformation_artwork$data } from "__generated__/PriceEstimateContactInformation_artwork.graphql"
 import { PriceEstimateContactInformation_me$data } from "__generated__/PriceEstimateContactInformation_me.graphql"
 import {
@@ -76,10 +76,9 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
         user_email: me?.email,
       })
 
-      const phoneNumberCountryCodeNumeric = countries.find(
-        country => country.value === phoneNumberCountryCode
-      )?.countryCode
-      const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric} ${phoneNumber.trim()}`
+      const phoneNumberInternational = `+${
+        COUNTRY_CODES[phoneNumberCountryCode.toLocaleUpperCase()]
+      } ${phoneNumber.trim()}`
 
       await submitMutation({
         variables: {
