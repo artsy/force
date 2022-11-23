@@ -33,6 +33,7 @@ import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtwo
 import { useCallback, useEffect } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
+import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -226,7 +227,9 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <OtherWorksQueryRenderer slug={artwork.slug} />
 
-      <div>Related works go here</div>
+      <Spacer mt={6} />
+
+      <RelatedWorksQueryRenderer slug={artwork.slug} />
 
       {artwork.artist && (
         <>
