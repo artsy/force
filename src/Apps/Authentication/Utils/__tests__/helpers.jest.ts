@@ -2,6 +2,7 @@ import {
   apiAuthWithRedirectUrl,
   getRedirect,
   handleSubmit,
+  isAbleToTriggerOnboarding,
   maybeUpdateRedirectTo,
   setCookies,
   updateURLWithOnboardingParam,
@@ -41,6 +42,46 @@ jest.mock("sharify", () => {
 })
 
 describe("Authentication Helpers", () => {
+  describe("isAbleToTriggerOnboarding", () => {
+    it("returns true if the user is able to trigger onboarding", () => {
+      expect(isAbleToTriggerOnboarding({ type: ModalType.signup })).toBe(true)
+
+      expect(isAbleToTriggerOnboarding({ type: ModalType.login })).toBe(false)
+
+      expect(isAbleToTriggerOnboarding({ type: ModalType.forgot })).toBe(false)
+
+      expect(
+        isAbleToTriggerOnboarding({
+          type: ModalType.signup,
+          intent: Intent.buyNow,
+        })
+      ).toBe(false)
+
+      expect(
+        isAbleToTriggerOnboarding({
+          type: ModalType.login,
+          intent: Intent.buyNow,
+        })
+      ).toBe(false)
+
+      expect(
+        isAbleToTriggerOnboarding({
+          type: ModalType.signup,
+          intent: Intent.followGene,
+        })
+      ).toBe(true)
+
+      COMMERCIAL_AUTH_INTENTS.forEach(intent => {
+        expect(
+          isAbleToTriggerOnboarding({
+            type: ModalType.signup,
+            intent,
+          })
+        ).toBe(false)
+      })
+    })
+  })
+
   const mockGetENV = getENV as jest.Mock
 
   beforeEach(() => {
