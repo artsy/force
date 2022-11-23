@@ -18,8 +18,8 @@ import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
 import {
   PhoneNumberInput,
-  PhoneNumberValidationResult,
-} from "Components/PhoneNumberInput/PhoneNumberInput"
+  validatePhoneNumber,
+} from "Components/PhoneNumberInput"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -28,7 +28,7 @@ export const INITIAL_ADDRESS = {
   addressLine2: "",
   city: "",
   phoneNumber: "",
-  phoneNumberCountryCode: "",
+  phoneNumberCountryCode: "us",
   postalCode: "",
   region: "",
 }
@@ -40,7 +40,7 @@ const INITIAL_VALUES = {
 
 type Address = typeof INITIAL_ADDRESS
 
-const validationSchema = Yup.object().shape({
+const VALIDATION_SCHEMA = Yup.object().shape({
   attributes: Yup.object().shape({
     name: Yup.string().required("Name is required"),
     country: Yup.string().required("Country is required"),
@@ -48,8 +48,21 @@ const validationSchema = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    phoneNumber: Yup.string().required("Please enter a valid phone number"),
-    phoneNumberCountryCode: Yup.string(),
+    phoneNumber: Yup.string()
+      .required("Phone Number is required")
+      .test({
+        name: "phone-number-is-valid",
+        message: "Please enter a valid phone number",
+        test: (national, context) => {
+          return validatePhoneNumber({
+            national: `${national}`,
+            regionCode: `${context.parent.phoneNumberCountryCode}`,
+          })
+        },
+      }),
+    phoneNumberCountryCode: Yup.string().required(
+      "Phone Number Country Code is required"
+    ),
   }),
   isDefault: Yup.boolean().optional(),
 })
@@ -80,11 +93,11 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
       return INITIAL_VALUES
     }
 
-    // in case address has no phone code, use country as phone code
     return {
       ...address,
       attributes: {
         ...address.attributes,
+        // In case address has no phone code, use country as phone code
         phoneNumberCountryCode: address.attributes?.phoneNumberCountryCode
           ? address.attributes.phoneNumberCountryCode
           : address?.attributes.country.toLowerCase(),
@@ -95,7 +108,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
   return (
     <Formik
       validateOnMount
-      validationSchema={validationSchema}
+      validationSchema={VALIDATION_SCHEMA}
       initialValues={getInitialValues()}
       onSubmit={async ({ isDefault, attributes }, { setStatus, resetForm }) => {
         try {
@@ -157,31 +170,10 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
         handleChange,
         handleBlur,
         setFieldValue,
-        setFieldError,
         isValid,
         isSubmitting,
         submitForm,
       }) => {
-        // incorporate phone validation result into Formik values & errors
-        const handlePhoneNumberValidation = ({
-          isValid,
-          national,
-          region,
-        }: PhoneNumberValidationResult) => {
-          if (!isValid) {
-            setFieldValue("attributes.phoneNumber", "")
-            setFieldError(
-              "attributes.phoneNumber",
-              "Please enter a valid phone number"
-            )
-            return
-          }
-
-          setFieldValue("attributes.phoneNumber", national)
-          setFieldValue("attributes.phoneNumberCountryCode", region)
-          setFieldError("attributes.phoneNumber", "")
-        }
-
         return (
           <ModalDialog
             title={isEditing ? "Edit Address" : "Add New Address"}
@@ -314,22 +306,30 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
 
                 <Column span={12}>
                   <PhoneNumberInput
-                    phoneNumber={{
-                      isValid: isEditing,
-                      national: values.attributes.phoneNumber,
-                      regionCode: values.attributes.phoneNumberCountryCode,
-                    }}
-                    onPhoneNumberValidation={handlePhoneNumberValidation}
                     inputProps={{
-                      maxLength: 25,
-                      onBlur: handleBlur("attributes.phoneNumber"),
+                      name: "attributes.phoneNumber",
+                      onBlur: handleBlur,
+                      onChange: handleChange,
                       placeholder: "(000) 000 0000",
+                      value: values.attributes.phoneNumber,
                     }}
+                    selectProps={{
+                      name: "attributes.phoneNumberCountryCode",
+                      onBlur: handleBlur,
+                      selected: values.attributes.phoneNumberCountryCode,
+                      onSelect: value => {
+                        setFieldValue(
+                          "attributes.phoneNumberCountryCode",
+                          value
+                        )
+                      },
+                    }}
+                    required
                     error={
-                      touched.attributes?.phoneNumber &&
-                      errors.attributes?.phoneNumber
-                        ? errors.attributes?.phoneNumber
-                        : undefined
+                      (touched.attributes?.phoneNumberCountryCode &&
+                        errors.attributes?.phoneNumberCountryCode) ||
+                      (touched.attributes?.phoneNumber &&
+                        errors.attributes?.phoneNumber)
                     }
                   />
                 </Column>

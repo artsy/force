@@ -2,15 +2,13 @@ import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
-import {
-  PhoneNumber,
-  PhoneNumberInput,
-  PhoneNumberValidationResult,
-} from "Components/PhoneNumberInput/PhoneNumberInput"
+import { PhoneNumberInput } from "Components/PhoneNumberInput"
+
 export interface ContactInformationFormModel {
   name: string
   email: string
-  phone: PhoneNumber & { international?: string }
+  phoneNumber: string
+  phoneNumberCountryCode: string
 }
 
 export interface ContactInformationFormProps extends BoxProps {
@@ -31,22 +29,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
     errors,
     setFieldValue,
   } = useFormikContext<ContactInformationFormModel>()
-
-  const handlePhoneNumberValidation = (
-    validationResult: PhoneNumberValidationResult
-  ) => {
-    if (validationResult) {
-      setFieldValue("phone", validationResult)
-      return
-    }
-
-    setFieldValue("phone", {
-      international: "",
-      isValid: false,
-      national: "",
-      originalNumber: "",
-    })
-  }
 
   return (
     <Box {...rest}>
@@ -72,15 +54,26 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
       />
       <PhoneNumberInput
         mt={4}
-        phoneNumber={values.phone}
-        optional={optionalPhoneNumber}
-        onPhoneNumberValidation={handlePhoneNumberValidation}
         inputProps={{
-          maxLength: 25,
-          onBlur: handleBlur("phone"),
+          name: "phoneNumber",
+          onBlur: handleBlur,
+          onChange: handleChange,
           placeholder: "(000) 000 0000",
+          value: values.phoneNumber,
         }}
-        error={touched.phone && (errors.phone as string)}
+        selectProps={{
+          name: "phoneNumberCountryCode",
+          onBlur: handleBlur,
+          selected: values.phoneNumberCountryCode,
+          onSelect: value => {
+            setFieldValue("phoneNumberCountryCode", value)
+          },
+        }}
+        required
+        error={
+          (touched.phoneNumberCountryCode && errors.phoneNumberCountryCode) ||
+          (touched.phoneNumber && errors.phoneNumber)
+        }
       />
     </Box>
   )

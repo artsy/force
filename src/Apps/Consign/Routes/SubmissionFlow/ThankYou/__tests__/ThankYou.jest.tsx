@@ -1,6 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
-import { ThankYou } from "../ThankYou"
+import { ThankYou } from "Apps/Consign/Routes/SubmissionFlow/ThankYou/ThankYou"
 import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
@@ -57,7 +57,7 @@ describe("ThankYou page", () => {
 
       expect(text).toContain("Your artwork has been submitted")
       expect(text).toContain(
-        "We will email you within 1-3 days to confirm if your artwork has been accepted or not. In the meantime your submission will appear in the feature, My Collection, on the Artsy app."
+        "We will email you within 1-3 days to confirm if your artwork has been accepted or not. In the meantime your submission will appear in the feature, My Collection."
       )
       expect(text).toContain(
         "With low fees, informed pricing, and multiple sales options, why not submit another piece with Artsy."

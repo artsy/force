@@ -26,10 +26,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.76.0":
-  version "4.76.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.76.0.tgz#ec89e13d63fc3bee9bd025cd0b40cdf6da2dc69a"
-  integrity sha512-WeOeBsv4LAOkiiFatL9+1tPthOO+AsVkldQsc52lahABhxrlxx5fc2XOM9MzS54d3xPanJED/82ELg4lyR624g==
+"@artsy/cohesion@4.77.0":
+  version "4.77.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.77.0.tgz#32099c6a3e62a4e225704b0269d44ce46daec415"
+  integrity sha512-bqM1CxsPJ94fP+xz9dECNeAke019n3cb2y0+IXCM7CtBjTeWhKjXDBsMWO9YfBQ3Du3VAqOZ5fgClpxWDAU6yA==
   dependencies:
     core-js "3"
 
@@ -75,12 +75,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@25.1.1":
-  version "25.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-25.1.1.tgz#bbdc102a033ed702a36e8d2bc36dc9c31ccb66b1"
-  integrity sha512-67gYvKwfsol98Or1F9QA9IyGPzmYEuckfkoaAZquuCRv47Uk7EaJ2tg/Z6WeUZpA+5bj+O2JQHfIAEEL027IsQ==
+"@artsy/palette-charts@25.1.2":
+  version "25.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-25.1.2.tgz#c7c9b8dddb6eff5890c22ac39f4fba0270769ef8"
+  integrity sha512-tLmgZPSXL+Knjm57IOP32fc+Um6kvG38rVcqaVhskwOLQEOZ4sbRc78v/hkLfyd9P+r/yWDdgQhJcqvtzpVjcg==
   dependencies:
-    "@artsy/palette" "^26.1.1"
+    "@artsy/palette" "^26.1.2"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -92,10 +92,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
   integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@26.1.1", "@artsy/palette@^26.1.1":
-  version "26.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-26.1.1.tgz#a8dff05bd05543585f59c0f0a795cfb93ea35cda"
-  integrity sha512-VjvEevpEtAmxZLU3PE+AAXJI/cb7RxcPS3QavK9WV/ked+a4QJX6uVVScaEsZbrybGKb6YeKBi/xYA3hRhnV2A==
+"@artsy/palette@26.1.2", "@artsy/palette@^26.1.2":
+  version "26.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-26.1.2.tgz#ce7655abc91f9735d6a452ea747fcf3443efda7b"
+  integrity sha512-XeCycq6UGz4aRKBaAB2Ety9pVB76jKEBWhx+B5ofpqrlQDRJeE6yUqMkK1L/X6idJk27I5IcNeRJtZxuXO/0XQ==
   dependencies:
     "@artsy/palette-tokens" "^4.0.1"
     "@seznam/compose-react-refs" "^1.0.6"

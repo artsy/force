@@ -73,36 +73,9 @@ export const CtaBannerContent = () => {
   }
 
   return (
-    <AppContainer py={[1, 2]}>
-      <HorizontalPadding>
-        <Media at="xs">
-          <Flex>
-            <Button
-              // @ts-ignore
-              as={RouterLink}
-              to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-              width="100%"
-              onClick={trackGetInTouchClick}
-              variant="primaryWhite"
-              size="small"
-              mr={2}
-            >
-              Get in Touch
-            </Button>
-            <Button
-              // @ts-ignore
-              as={RouterLink}
-              to="/sell/submission/artwork-details"
-              onClick={trackSubmitClick}
-              size="small"
-              width="100%"
-            >
-              Submit an Artwork
-            </Button>
-          </Flex>
-        </Media>
-
-        <Media greaterThanOrEqual="sm">
+    <Media greaterThan="xs">
+      <AppContainer py={2}>
+        <HorizontalPadding>
           <Flex
             justifyContent="space-between"
             alignItems="center"
@@ -133,8 +106,8 @@ export const CtaBannerContent = () => {
               </Button>
             </Flex>
           </Flex>
-        </Media>
-      </HorizontalPadding>
-    </AppContainer>
+        </HorizontalPadding>
+      </AppContainer>
+    </Media>
   )
 }

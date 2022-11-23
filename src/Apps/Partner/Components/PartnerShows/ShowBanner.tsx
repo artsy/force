@@ -166,7 +166,7 @@ export const ShowBannerFragmentContainer = createFragmentContainer(ShowBanner, {
       }
       coverImage {
         medium: cropped(
-          width: 600
+          width: 910
           height: 480
           version: ["normalized", "larger", "large"]
         ) {
