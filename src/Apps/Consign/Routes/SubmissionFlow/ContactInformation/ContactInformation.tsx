@@ -82,11 +82,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     if (relayEnvironment) {
       try {
         const submissionEmail = email.trim()
-
         const phoneNumberCountryCodeNumeric = countries.find(
           country => country.value === phoneNumberCountryCode
         )?.countryCode
-        const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric}${phoneNumber}`
+        const phoneNumberInternational = `+${phoneNumberCountryCodeNumeric} ${phoneNumber.trim()}`
 
         const submissionId = await createOrUpdateConsignSubmission(
           relayEnvironment,

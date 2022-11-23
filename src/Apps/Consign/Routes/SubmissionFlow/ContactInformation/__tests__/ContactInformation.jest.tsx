@@ -5,27 +5,13 @@ import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
-import { getPhoneNumberInformation } from "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
 import { ContactInformationFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/ContactInformation/ContactInformation"
 import { flushPromiseQueue } from "DevTools"
 import { useRouter } from "System/Router/useRouter"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
-import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-
-jest.mock("Utils/Hooks/useDebounce", () => {
-  const originalUseDebouncedValue = jest.requireActual(
-    "Utils/Hooks/useDebounce"
-  )
-
-  return {
-    useDebouncedValue: jest
-      .fn()
-      .mockImplementation(originalUseDebouncedValue.useDebouncedValue),
-  }
-})
 
 const mockMe = {
   internalID: "123",
@@ -88,18 +74,7 @@ jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
   createOrUpdateConsignSubmission: jest.fn(),
 }))
 
-jest.mock(
-  "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation",
-  () => ({
-    ...jest.requireActual(
-      "Components/PhoneNumberInputDeprecated/getPhoneNumberInformation"
-    ),
-    getPhoneNumberInformation: jest.fn(),
-  })
-)
-
 const mockCreateOrUpdateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
-const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
 const mockTracking = useTracking as jest.Mock
 const mockTrackEvent = jest.fn()
 
@@ -138,17 +113,8 @@ const getInput = name =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
 describe("Save and Continue button", () => {
-  beforeAll(() => {
-    ;(useDebouncedValue as jest.Mock).mockImplementation(() => ({
-      debouncedValue: "+1 415-555-0132",
-    }))
-  })
-
   describe("with valid phone number", () => {
     beforeAll(() => {
-      mockGetPhoneNumberInformation.mockResolvedValue({
-        isValid: true,
-      })
       mockTracking.mockImplementation(() => ({
         trackEvent: mockTrackEvent,
       }))
@@ -169,7 +135,9 @@ describe("Save and Continue button", () => {
         ConsignmentSubmission: () => mockSubmission,
       })
 
-      expect(getSubmitButton()).toBeDisabled()
+      await waitFor(() => {
+        expect(getSubmitButton()).toBeDisabled()
+      })
 
       simulateTyping("name", "Banksy")
 
@@ -183,7 +151,7 @@ describe("Save and Continue button", () => {
         expect(getSubmitButton()).toBeDisabled()
       })
 
-      simulateTyping("phone", "(415) 555-0132")
+      simulateTyping("phoneNumber", "(415) 555-0132")
 
       await waitFor(() => {
         expect(getSubmitButton()).toBeEnabled()
@@ -193,9 +161,6 @@ describe("Save and Continue button", () => {
 
   describe("with an invalid phone number", () => {
     beforeAll(() => {
-      mockGetPhoneNumberInformation.mockResolvedValue({
-        isValid: false,
-      })
       mockTracking.mockImplementation(() => ({
         trackEvent: mockTrackEvent,
       }))
@@ -209,7 +174,7 @@ describe("Save and Continue button", () => {
 
       simulateTyping("name", "Banksy")
       simulateTyping("email", "banksy@test.test")
-      simulateTyping("phone", "+1 123")
+      simulateTyping("phoneNumber", "123")
 
       await waitFor(() => {
         expect(getSubmitButton()).toBeDisabled()
@@ -224,13 +189,13 @@ describe("Save and Continue button", () => {
 
       simulateTyping("name", "Banksy")
       simulateTyping("email", "banksy@test.test")
-      simulateTyping("phone", "+1 415-555-0132")
+      simulateTyping("phoneNumber", "415-555-0132")
 
       await waitFor(() => {
         expect(getSubmitButton()).toBeEnabled()
       })
 
-      simulateTyping("phone", "")
+      simulateTyping("phoneNumber", "")
 
       await waitFor(() => {
         expect(getSubmitButton()).toBeDisabled()
@@ -241,7 +206,6 @@ describe("Save and Continue button", () => {
 
 describe("Contact Information step", () => {
   beforeAll(() => {
-    mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
     mockTracking.mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
@@ -287,10 +251,10 @@ describe("Contact Information step", () => {
 
       expect(getInput("name")).not.toHaveValue()
       expect(getInput("email")).not.toHaveValue()
-      expect(getInput("phone")).not.toHaveValue()
+      expect(getInput("phoneNumber")).not.toHaveValue()
     })
 
-    it("submiting a valid form", async () => {
+    it("submitting a valid form", async () => {
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         ConsignmentSubmission: () => mockSubmission,
@@ -298,7 +262,7 @@ describe("Contact Information step", () => {
 
       simulateTyping("name", "Banksy")
       simulateTyping("email", "banksy@test.test")
-      simulateTyping("phone", "333")
+      simulateTyping("phoneNumber", "415-555-0132")
 
       mockCreateOrUpdateConsignSubmission.mockResolvedValueOnce(
         mockSubmission.externalId
@@ -336,7 +300,7 @@ describe("Contact Information step", () => {
 
       expect(getInput("name")).toHaveValue(mockMe.name)
       expect(getInput("email")).toHaveValue(mockMe.email)
-      expect(getInput("phone")).toHaveValue(mockMe.phoneNumber.national)
+      expect(getInput("phoneNumber")).toHaveValue(mockMe.phoneNumber.national)
     })
 
     it("submiting a valid form", async () => {
@@ -360,7 +324,7 @@ describe("Contact Information step", () => {
           externalId: mockSubmission.externalId,
           userName: "Serge",
           userEmail: "serge@test.test",
-          userPhone: "+1 415-555-0132",
+          userPhone: "+1 (415) 555-0132",
           state: "SUBMITTED",
           sessionID: "SessionID",
         })
@@ -421,7 +385,7 @@ describe("Contact Information step", () => {
 
     simulateTyping("name", " Banksy  ")
     simulateTyping("email", "  banksy@test.test  ")
-    simulateTyping("phone", "  +1 415-555-0132  ")
+    simulateTyping("phoneNumber", "  415-555-0132  ")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeEnabled()
@@ -485,7 +449,7 @@ describe("Contact Information step", () => {
 
     simulateTyping("email", "banksy@test.test")
 
-    simulateTyping("phone", "(415) 555-0132")
+    simulateTyping("phoneNumber", "(415) 555-0132")
 
     await waitFor(() => {
       expect(getSubmitButton()).toBeEnabled()
