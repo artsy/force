@@ -91,7 +91,7 @@ export const handleSubmit = async (
             analyticsOptions = tracks.createdAccount(
               options,
               res?.user?.id,
-              !redirectTo
+              isAbleToTriggerOnboarding({ type, intent })
             )
             break
           case ModalType.forgot:
@@ -158,21 +158,31 @@ export const updateURLWithOnboardingParam = (url: string) => {
   return updatedRedirectTo
 }
 
+const isAbleToTriggerOnboarding = ({
+  type,
+  intent,
+}: {
+  type: ModalType
+  intent?: AuthIntent
+}) => {
+  // Only trigger onboarding for sign ups without a commercial intent
+  return !!(
+    type === ModalType.signup &&
+    intent &&
+    !COMMERCIAL_AUTH_INTENTS.includes(intent)
+  )
+}
+
 export const maybeUpdateRedirectTo = (
   type: ModalType,
   redirectTo: string = "/",
   intent: AuthIntent
 ): string | URL => {
-  if (type !== ModalType.signup) {
-    return redirectTo
+  if (isAbleToTriggerOnboarding({ type, intent })) {
+    return updateURLWithOnboardingParam(redirectTo)
   }
 
-  if (COMMERCIAL_AUTH_INTENTS.includes(intent)) {
-    return redirectTo
-  } else {
-    const url = updateURLWithOnboardingParam(redirectTo)
-    return url
-  }
+  return redirectTo
 }
 
 export const setCookies = options => {

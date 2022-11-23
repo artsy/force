@@ -114,6 +114,7 @@ describe("Authentication Helpers", () => {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           email: "foo@foo.com",
@@ -176,6 +177,7 @@ describe("Authentication Helpers", () => {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           name: "foo",
@@ -221,7 +223,7 @@ describe("Authentication Helpers", () => {
             ]
           `)
         expect(window.location.assign).toBeCalledWith(
-          "https://artsy.net/?onboarding=true"
+          "https://artsy.net/articles?onboarding=true"
         )
       })
     })
@@ -244,6 +246,7 @@ describe("Authentication Helpers", () => {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           email: "foo@foo.com",
