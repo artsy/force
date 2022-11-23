@@ -124,7 +124,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
           return (
             !!context.current?.profession &&
             !!context.current?.location?.city &&
-            !!context.current?.phone &&
+            !!context.current?.otherRelevantPositions &&
             !!context.current?.shareFollows
           )
         },
@@ -132,7 +132,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
           const hasBasicInfo =
             !!context.current?.profession &&
             !!context.current?.location?.city &&
-            !!context.current?.phone &&
+            !!context.current?.otherRelevantPositions &&
             !!context.current?.shareFollows
 
           const isCollector = (context.current?.collectorLevel ?? 0) >= 3

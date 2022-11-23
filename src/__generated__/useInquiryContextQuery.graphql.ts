@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d7b3bd3a8fd78eec5db951ff77da47a>>
+ * @generated SignedSource<<39d588da108410944641340fe2c8f12c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,7 +100,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "phone",
+            "name": "otherRelevantPositions",
             "storageKey": null
           },
           {
@@ -124,12 +124,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2879f4614eb61ed0475a21159c962f1c",
+    "cacheID": "2524a8c8fad5a6418555dc39fd08ff59",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  phone\n  profession\n  shareFollows\n}\n"
+    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
   }
 };
 })();
