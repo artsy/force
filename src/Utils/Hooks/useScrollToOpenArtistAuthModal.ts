@@ -79,7 +79,6 @@ export const useScrollToOpenArtistAuthModal = () => {
           openAuthModal(mediator, {
             contextModule: ContextModule.popUpModal,
             copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
-            destination: location.href,
             // TODO: Onboarding is triggered based on contents of redirectTo
             // prop. Move this to `afterSignupAction` prop
             redirectTo: location.href,

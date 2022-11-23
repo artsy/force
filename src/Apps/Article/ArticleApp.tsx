@@ -30,7 +30,6 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
       intent: Intent.viewEditorial,
       contextModule: ContextModule.popUpModal,
       copy: "Sign up for the latest in art market news",
-      destination: location.pathname,
       // TODO: Onboarding is triggered based on contents of redirectTo
       // prop. Move this to `afterSignupAction.action`
       redirectTo: location.pathname,

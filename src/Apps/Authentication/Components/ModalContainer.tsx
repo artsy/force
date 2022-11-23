@@ -21,7 +21,6 @@ export class ModalContainer extends Component<any> {
   }
 
   onOpenAuth = (options: ModalOptions) => {
-    options.destination = options.destination || location.href
     if (options && (options.mode as any) === "register") {
       options.mode = ModalType.signup
     }
@@ -46,7 +45,6 @@ export class ModalContainer extends Component<any> {
   onSocialAuthEvent = ({
     contextModule,
     copy,
-    destination,
     intent,
     mode,
     redirectTo,
@@ -54,7 +52,7 @@ export class ModalContainer extends Component<any> {
     triggerSeconds,
   }: SocialAuthArgs) => {
     const options = {
-      auth_redirect: redirectTo || destination,
+      auth_redirect: redirectTo,
       context_module: contextModule,
       modal_copy: copy,
       intent,

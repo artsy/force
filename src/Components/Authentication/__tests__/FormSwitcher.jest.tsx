@@ -1,11 +1,11 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Clickable, Button } from "@artsy/palette"
 import { mount } from "enzyme"
-import { ForgotPasswordForm } from "../Views/ForgotPasswordForm"
-import { LoginForm } from "../Views/LoginForm"
-import { SignUpFormQueryRenderer } from "../Views/SignUpForm"
-import { FormSwitcher } from "../FormSwitcher"
-import { ModalType } from "../Types"
+import { ForgotPasswordForm } from "Components/Authentication/Views/ForgotPasswordForm"
+import { LoginForm } from "Components/Authentication/Views/LoginForm"
+import { SignUpFormQueryRenderer } from "Components/Authentication/Views/SignUpForm"
+import { FormSwitcher } from "Components/Authentication/FormSwitcher"
+import { ModalType } from "Components/Authentication/Types"
 import { mockLocation } from "DevTools/mockLocation"
 
 describe("FormSwitcher", () => {
@@ -18,7 +18,6 @@ describe("FormSwitcher", () => {
         options={{
           contextModule: ContextModule.header,
           copy: "Foo Bar",
-          destination: "/collect",
           intent: Intent.followArtist,
           redirectTo: "/foo",
           triggerSeconds: 1,
@@ -76,7 +75,7 @@ describe("FormSwitcher", () => {
         .simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
-        "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
+        "/signup?contextModule=header&copy=Foo%20Bar&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
       )
     })
 
@@ -126,7 +125,7 @@ describe("FormSwitcher", () => {
       )
 
       expect((window.location.assign as any).mock.calls[0][0]).toEqual(
-        "/users/auth/apple?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1&accepted_terms_of_service=true&afterSignUpAction=&agreed_to_receive_emails=true&signup-referer=&redirect-to=%2Ffoo&signup-intent=followArtist&service=apple"
+        "/users/auth/apple?contextModule=header&copy=Foo%20Bar&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1&accepted_terms_of_service=true&afterSignUpAction=&agreed_to_receive_emails=true&signup-referer=&redirect-to=%2Ffoo&signup-intent=followArtist&service=apple"
       )
     })
   })

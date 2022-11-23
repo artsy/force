@@ -9,24 +9,17 @@ import { NewsIndexArticlesPaginationContainer } from "./Components/NewsIndexArti
 import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd"
 import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
-
 interface NewsAppProps {
   viewer: NewsApp_viewer$data
 }
 
 const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
-  const {
-    match: { location },
-  } = useRouter()
-
   useScrollToOpenAuthModal({
     key: "editorial-signup-dismissed",
     modalOptions: {
       intent: Intent.viewEditorial,
       contextModule: ContextModule.popUpModal,
       copy: "Sign up for the latest in art market news",
-      destination: location.pathname,
     },
   })
 

@@ -4,10 +4,10 @@ import { MockBoot, MockRouter } from "DevTools"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import qs from "qs"
-import { authenticationRoutes } from "../authenticationRoutes"
-import { checkForRedirect } from "../Server/checkForRedirect"
-import { setReferer } from "../Server/setReferer"
-import { redirectIfLoggedIn } from "../Server/redirectIfLoggedIn"
+import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
+import { checkForRedirect } from "Apps/Authentication/Server/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Server/setReferer"
+import { redirectIfLoggedIn } from "Apps/Authentication/Server/redirectIfLoggedIn"
 import { getENV } from "Utils/getENV"
 
 jest.mock("../Server/checkForRedirect", () => ({
@@ -133,7 +133,6 @@ describe("authenticationRoutes", () => {
       it("sets cookie with passed login params on mount", async () => {
         const queryParams = {
           action: "follow",
-          destination: "/foo",
           kind: "artist",
           objectId: 123,
           redirectTo: "/bar",
@@ -219,7 +218,6 @@ describe("authenticationRoutes", () => {
       it("sets cookie with passed login params on mount", async () => {
         const queryParams = {
           action: "follow",
-          destination: "/foo",
           kind: "artist",
           objectId: 123,
           redirectTo: "/bar",

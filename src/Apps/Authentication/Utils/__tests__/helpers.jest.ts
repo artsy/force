@@ -5,7 +5,7 @@ import {
   maybeUpdateRedirectTo,
   setCookies,
   updateURLWithOnboardingParam,
-} from "../helpers"
+} from "Apps/Authentication/Utils/helpers"
 import {
   COMMERCIAL_AUTH_INTENTS,
   ModalType,
@@ -84,17 +84,6 @@ describe("Authentication Helpers", () => {
       expect(cookie[0]).toBe("afterSignUpAction")
       expect(cookie[1]).toMatch("an action")
     })
-
-    it("Sets a cookie with expiration for destination", () => {
-      setCookies({
-        destination: "/foo",
-      })
-      const cookie = CookiesSet.mock.calls[0]
-
-      expect(cookie[0]).toBe("destination")
-      expect(cookie[1]).toMatch("/foo")
-      expect(cookie[2].expires).toBe(86400)
-    })
   })
 
   describe("#handleSubmit", () => {
@@ -124,8 +113,8 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           email: "foo@foo.com",
@@ -187,8 +176,8 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           name: "foo",
@@ -234,7 +223,7 @@ describe("Authentication Helpers", () => {
             ]
           `)
         expect(window.location.assign).toBeCalledWith(
-          "https://artsy.net/?onboarding=true"
+          "https://artsy.net/articles?onboarding=true"
         )
       })
     })
@@ -256,8 +245,8 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
           triggerSeconds: 2,
+          redirectTo: "/articles",
         },
         {
           email: "foo@foo.com",
@@ -318,7 +307,6 @@ describe("Authentication Helpers", () => {
         {
           contextModule: ContextModule.popUpModal,
           intent: Intent.viewEditorial,
-          destination: "/articles",
           triggerSeconds: 2,
         },
         {
