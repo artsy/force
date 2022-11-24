@@ -11,6 +11,7 @@ import {
   Join,
   Clickable,
   ModalDialog,
+  ModalWidth,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
@@ -267,7 +268,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       {showAddressModal && (
         <ModalDialog
           title={modalDetails?.addressModalTitle}
-          width={800}
+          width={ModalWidth.Wide}
           onClose={() => setShowAddressModal(false)}
         >
           <ShippingAddressForm

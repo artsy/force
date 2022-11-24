@@ -4,6 +4,7 @@ import {
   GridColumns,
   Message,
   ModalDialog,
+  ModalWidth,
   Text,
 } from "@artsy/palette"
 import { FC } from "react"
@@ -40,7 +41,7 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
       {mode === "Adding" && (
         <ModalDialog
           title={"Add New Address"}
-          width={800}
+          width={ModalWidth.Wide}
           onClose={handleClose}
         >
           <ShippingAddressForm onClose={handleClose} />

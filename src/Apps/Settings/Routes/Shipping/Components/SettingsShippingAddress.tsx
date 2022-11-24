@@ -3,6 +3,7 @@ import {
   Clickable,
   Flex,
   ModalDialog,
+  ModalWidth,
   Separator,
   Text,
   useToasts,
@@ -75,7 +76,11 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
   return (
     <>
       {mode === "Editing" && (
-        <ModalDialog title={"Edit Address"} width={800} onClose={handleClose}>
+        <ModalDialog
+          title={"Edit Address"}
+          width={ModalWidth.Wide}
+          onClose={handleClose}
+        >
           <ShippingAddressForm
             onClose={handleClose}
             address={convertShippingAddressToMutationInput(address)}
