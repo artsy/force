@@ -127,7 +127,9 @@ describe("ArtworkSidebar2Artists", () => {
       })
 
       expect(
-        screen.queryByText("Be covered by the Artsy Guarantee")
+        screen.queryByText(
+          "Be covered by the Artsy Guarantee when you checkout with Artsy"
+        )
       ).toBeInTheDocument()
     })
 
@@ -139,7 +141,9 @@ describe("ArtworkSidebar2Artists", () => {
       })
 
       expect(
-        screen.queryByText("Be covered by the Artsy Guarantee")
+        screen.queryByText(
+          "Be covered by the Artsy Guarantee when you checkout with Artsy"
+        )
       ).not.toBeInTheDocument()
     })
 
@@ -150,7 +154,9 @@ describe("ArtworkSidebar2Artists", () => {
         }),
       })
 
-      const button = screen.getByText("Be covered by the Artsy Guarantee")
+      const button = screen.getByText(
+        "Be covered by the Artsy Guarantee when you checkout with Artsy"
+      )
 
       fireEvent.click(button)
 
@@ -162,7 +168,7 @@ describe("ArtworkSidebar2Artists", () => {
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
             "expand": true,
-            "subject": "Be covered by the Artsy Guarantee",
+            "subject": "Be covered by the Artsy Guarantee when you checkout with Artsy",
           },
         ]
       `)
@@ -177,7 +183,7 @@ describe("ArtworkSidebar2Artists", () => {
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
             "expand": false,
-            "subject": "Be covered by the Artsy Guarantee",
+            "subject": "Be covered by the Artsy Guarantee when you checkout with Artsy",
           },
         ]
       `)

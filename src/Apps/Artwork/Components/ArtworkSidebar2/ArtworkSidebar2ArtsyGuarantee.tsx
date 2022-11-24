@@ -23,7 +23,7 @@ export const ArtworkSidebar2ArtsyGuarantee: React.FC<{}> = () => {
       <Text variant="sm" color="black60">
         <Flex flexDirection="row" alignItems="center">
           <SecureLockIcon {...iconProps} />
-          <Text>{t("artworkPage.sidebar.artsyGuarantee.securePayment")}</Text>
+          <Text>{t("artworkPage.sidebar.artsyGuarantee.secureCheckout")}</Text>
         </Flex>
         <Spacer mt={1} />
         <Flex flexDirection="row" alignItems="center">

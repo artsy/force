@@ -63,8 +63,8 @@
         "shipsFrom": "Ships from"
       },
       "artsyGuarantee": {
-        "expandableLabel": "Be covered by the Artsy Guarantee",
-        "securePayment": "Secure Payment",
+        "expandableLabel": "Be covered by the Artsy Guarantee when you checkout with Artsy",
+        "secureCheckout": "Secure Checkout",
         "moneyBack": "Money-Back Guarantee",
         "authenticity": "Authenticity Guarantee",
         "learnMore": "Learn more"
