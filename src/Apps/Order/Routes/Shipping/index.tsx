@@ -54,6 +54,7 @@ import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
   startingAddress,
+  MutationAddressResponse,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
   getDefaultShippingQuoteId,
@@ -156,6 +157,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
       setDeletedAddressID(undefined)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressList, deletedAddressID])
 
   const touchedAddress = () => {
@@ -217,7 +219,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const selectShipping = async () => {
+  const selectShipping = async (editedAddress?: MutationAddressResponse) => {
     if (shippingOption === "SHIP") {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
@@ -253,10 +255,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       const shipToAddress = isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
-            addressList.find(
-              address => address.internalID == selectedAddressID
-            )!
+            editedAddress
+              ? editedAddress
+              : addressList.find(
+                  address => address.internalID == selectedAddressID
+                )!
           )
+
       const shipToPhoneNumber = isCreateNewAddress()
         ? phoneNumber
         : addressList.find(address => address.internalID == selectedAddressID)
@@ -512,7 +517,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       setShippingQuoteId(undefined)
 
       if (checkIfArtsyShipping()) {
-        selectShipping()
+        selectShipping(editedAddress.userAddressOrErrors)
       }
     }
   }

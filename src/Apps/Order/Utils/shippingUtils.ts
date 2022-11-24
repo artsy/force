@@ -6,7 +6,7 @@ import {
   UpdateUserAddressMutation$data,
   UserAddressAttributes,
 } from "__generated__/UpdateUserAddressMutation.graphql"
-import { NEW_ADDRESS } from "../Components/SavedAddresses"
+import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
@@ -112,7 +112,7 @@ export const startingAddress = (
   return initialAddress
 }
 
-type MutationAddressResponse = NonNullable<
+export type MutationAddressResponse = NonNullable<
   UpdateUserAddressMutation$data["updateUserAddress"]
 >["userAddressOrErrors"]
 
