@@ -19,7 +19,7 @@ export const SecurePayment: React.FC<SecurePaymentProps> = ({
     return (
       <TrustSignal
         Icon={<LockIcon />}
-        label="Secure payment"
+        label="Secure Checkout"
         description={
           <>
             {"Secure transactions by credit card through Stripe."}
