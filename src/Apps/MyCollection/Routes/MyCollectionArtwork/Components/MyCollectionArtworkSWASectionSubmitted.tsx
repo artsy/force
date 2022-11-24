@@ -20,8 +20,8 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
           help center
         </RouterLink>{" "}
         or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsymail.com"} color="black100">
-          sell@artsymail.com
+        <RouterLink to={"mailto:sell@artsy.net"} color="black100">
+          sell@artsy.net
         </RouterLink>
       </Text>
     </>
