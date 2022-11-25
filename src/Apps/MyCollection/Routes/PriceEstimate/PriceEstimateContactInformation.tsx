@@ -101,7 +101,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
       sendToast({
         variant: "error",
         message: "An error occurred",
-        description: "Please contact sell@artsymail.com",
+        description: "Please contact sell@artsy.net",
       })
     }
   }

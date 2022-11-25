@@ -1,6 +1,6 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { mount } from "enzyme"
-import { MyCollectionArtworkSWAHowItWorksModal } from "../MyCollectionArtworkSWAHowItWorksModal"
+import { MyCollectionArtworkSWAHowItWorksModal } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSWAHowItWorksModal"
 
 jest.unmock("react-relay")
 const onClose = jest.fn()
@@ -21,7 +21,7 @@ describe("MyCollectionArtworkSWAHowItWorksModal", () => {
   it("renders the support mailto link", async () => {
     const wrapper = getWrapper()
 
-    expect(wrapper.html()).toContain("mailto:sell@artsymail.com")
+    expect(wrapper.html()).toContain("mailto:sell@artsy.net")
   })
 
   it("navigates to the Collector Help Center article", () => {
