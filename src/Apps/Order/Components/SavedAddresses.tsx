@@ -28,7 +28,10 @@ import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
+import {
+  ShippingAddress,
+  ShippingAddressForm,
+} from "Components/Address/ShippingAddressForm"
 import {
   SavedAddressType,
   convertShippingAddressToMutationInput,
@@ -45,7 +48,10 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   onAddressDelete?: (id: string) => void
-  onAddressEdit?: (id: string) => void
+  onAddressEdit?: (address: {
+    internalID: string
+    attributes: ShippingAddress
+  }) => void
   onAddressCreate?: (id: string) => void
   selectedAddress?: string
 }
@@ -142,11 +148,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
-  const onSuccess = (id: string) => {
+  const onSuccess = (address: {
+    attributes: ShippingAddress
+    internalID: string
+  }) => {
     if (modalDetails?.addressModalAction === "editUserAddress") {
-      refetchAddresses(() => onAddressEdit?.(id))
+      refetchAddresses(() => onAddressEdit?.(address))
     } else {
-      refetchAddresses(() => onAddressCreate?.(id))
+      refetchAddresses(() => onAddressCreate?.(address.internalID))
     }
   }
 

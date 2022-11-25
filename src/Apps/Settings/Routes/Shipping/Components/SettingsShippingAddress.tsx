@@ -13,8 +13,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 import { useDeleteAddress } from "Apps/Settings/Routes/Shipping/useDeleteAddress"
-import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
 import { convertShippingAddressToMutationInput } from "Apps/Order/Utils/shippingUtils"
+import { ShippingAddressForm } from "Components/Address/ShippingAddressForm"
 
 interface SettingsShippingAddressProps {
   address: SettingsShippingAddress_address$data

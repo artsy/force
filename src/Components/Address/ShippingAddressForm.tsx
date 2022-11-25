@@ -42,7 +42,7 @@ const INITIAL_VALUES = {
   isDefault: false,
 }
 
-type Address = typeof INITIAL_ADDRESS
+export type ShippingAddress = typeof INITIAL_ADDRESS
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   attributes: Yup.object().shape({
@@ -76,9 +76,12 @@ interface SettingsShippingAddressFormProps {
   address?: {
     internalID: string
     isDefault: boolean
-    attributes: Address
+    attributes: ShippingAddress
   } | null
-  onSuccess?: (id: string) => void
+  onSuccess?: (address: {
+    internalID?: string
+    attributes?: ShippingAddress
+  }) => void
   onDelete?: (id: string) => void
 }
 
@@ -136,7 +139,10 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            onSuccess?.(address!.internalID)
+            onSuccess?.({
+              attributes: attributes,
+              internalID: address!.internalID,
+            })
 
             sendToast({
               variant: "success",
@@ -156,7 +162,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            if (id) onSuccess?.(id)
+            if (id) onSuccess?.({ internalID: id })
 
             sendToast({
               variant: "success",

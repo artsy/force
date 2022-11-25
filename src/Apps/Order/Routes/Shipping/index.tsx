@@ -54,7 +54,6 @@ import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
   startingAddress,
-  MutationAddressResponse,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
   getDefaultShippingQuoteId,
@@ -62,6 +61,7 @@ import {
   getShippingQuotes,
   getShippingOption,
   ShippingQuotesType,
+  MutationAddressResponse,
 } from "Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
@@ -84,6 +84,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
+import { ShippingAddress } from "Components/Address/ShippingAddressForm"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -506,20 +507,29 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleAddressEdit = (editedAddressId: string) => {
+  const handleAddressEdit = (editedAddress: {
+    internalID: string
+    attributes: ShippingAddress
+  }) => {
     // reload shipping quotes if selected address edited
-    if (selectedAddressID === editedAddressId) {
+    if (selectedAddressID === editedAddress.internalID) {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
 
+      //TODO: we need ability to set shipping with address containing country code
+      const {
+        phoneNumberCountryCode,
+        ...addressWithoutCountryCode
+      } = editedAddress.attributes
+
       if (checkIfArtsyShipping()) {
-        selectShipping(editedAddress.userAddressOrErrors)
+        selectShipping(addressWithoutCountryCode)
       }
     }
   }
 
-  const handleAddressCreate = (createdAddressId: string) => {
-    createdAddressId && selectSavedAddress(createdAddressId)
+  const handleAddressCreate = (createdAddressID: string) => {
+    createdAddressID && selectSavedAddress(createdAddressID)
   }
 
   const renderArtaErrorMessage = () => {
