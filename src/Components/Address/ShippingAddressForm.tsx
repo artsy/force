@@ -140,7 +140,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
             }
 
             onSuccess?.({
-              attributes: attributes,
+              attributes,
               internalID: address!.internalID,
             })
 
@@ -162,7 +162,10 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            if (id) onSuccess?.({ internalID: id })
+            onSuccess?.({
+              attributes,
+              internalID: id,
+            })
 
             sendToast({
               variant: "success",

@@ -49,19 +49,18 @@ import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
+import { COUNTRY_CODES } from "Utils/countries"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,
   startingAddress,
-  convertShippingAddressForExchange,
   defaultShippingAddressIndex,
   getDefaultShippingQuoteId,
   getSelectedShippingQuoteId,
   getShippingQuotes,
   getShippingOption,
   ShippingQuotesType,
-  MutationAddressResponse,
 } from "Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
@@ -70,7 +69,7 @@ import {
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { setShipping } from "Apps/Order/Mutations/SetShipping"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
-import { compact } from "lodash"
+import { compact, omit } from "lodash"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
@@ -218,7 +217,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const selectShipping = async (editedAddress?: MutationAddressResponse) => {
+  const selectShipping = async () => {
     if (shippingOption === "SHIP") {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
@@ -250,21 +249,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
 
     try {
-      // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = isCreateNewAddress()
-        ? address
-        : convertShippingAddressForExchange(
-            editedAddress
-              ? editedAddress
-              : addressList.find(
-                  address => address.internalID == selectedAddressID
-                )!
-          )
+      let phoneNumberFormatted: string = `+${
+        COUNTRY_CODES[address?.phoneNumberCountryCode?.toLocaleUpperCase()]
+      } ${address?.phoneNumber.trim()}`
 
-      const shipToPhoneNumber = isCreateNewAddress()
-        ? phoneNumber
-        : addressList.find(address => address.internalID == selectedAddressID)
-            ?.phoneNumber
+      const addressFinal = omit(address, ["phoneNumberCountryCode"])
+      addressFinal.phoneNumber = phoneNumberFormatted
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
@@ -276,8 +266,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           input: {
             id: props.order.internalID,
             fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
-            shipping: shipToAddress,
-            phoneNumber: shipToPhoneNumber,
+            shipping: addressFinal,
+            phoneNumber: phoneNumberFormatted,
           },
         })
       ).commerceSetShipping?.orderOrError
@@ -511,25 +501,24 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     internalID: string
     attributes: ShippingAddress
   }) => {
+    setAddress(editedAddress.attributes)
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress.internalID) {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
 
-      //TODO: we need ability to set shipping with address containing country code
-      const {
-        phoneNumberCountryCode,
-        ...addressWithoutCountryCode
-      } = editedAddress.attributes
-
       if (checkIfArtsyShipping()) {
-        selectShipping(addressWithoutCountryCode)
+        selectShipping()
       }
     }
   }
 
-  const handleAddressCreate = (createdAddressID: string) => {
-    createdAddressID && selectSavedAddress(createdAddressID)
+  const handleAddressCreate = (newAddress: {
+    internalID: string
+    attributes: ShippingAddress
+  }) => {
+    setAddress(newAddress.attributes)
+    selectSavedAddress(newAddress.internalID)
   }
 
   const renderArtaErrorMessage = () => {
