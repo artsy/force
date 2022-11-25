@@ -147,7 +147,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         sendToast({
           variant: "error",
           message: "An error occurred",
-          description: "Please contact sell@artsymail.com",
+          description: "Please contact sell@artsy.net",
         })
         return
       }

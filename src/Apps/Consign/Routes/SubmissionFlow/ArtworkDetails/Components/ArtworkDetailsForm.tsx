@@ -27,7 +27,7 @@ import { useState } from "react"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
-import { postalCodeValidators } from "../../Utils/validation"
+import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export enum SubmissionType {
@@ -177,7 +177,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       sendToast({
         variant: "error",
         message: "An error occurred",
-        description: "Please contact sell@artsymail.com",
+        description: "Please contact sell@artsy.net",
       })
 
       return

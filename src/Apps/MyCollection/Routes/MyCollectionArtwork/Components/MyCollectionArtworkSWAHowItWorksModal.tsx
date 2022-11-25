@@ -58,9 +58,7 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text>
         Or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsymail.com"}>
-          sell@artsymail.com
-        </RouterLink>
+        <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>
         {"."}
       </Text>
     </ModalDialog>
