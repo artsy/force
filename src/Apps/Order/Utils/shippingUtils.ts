@@ -1,7 +1,7 @@
-import { Address, emptyAddress } from "Components/AddressForm"
+import { emptyAddress } from "Components/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
-import { pick, omit, compact } from "lodash"
+import { pick, compact } from "lodash"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import {
@@ -115,17 +115,6 @@ export const startingAddress = (
 export type MutationAddressResponse = NonNullable<
   UpdateUserAddressMutation$data["updateUserAddress"]
 >["userAddressOrErrors"]
-
-// Gravity address has isDefault and addressLine3 but exchange does not
-export const convertShippingAddressForExchange = (
-  address: SavedAddressType | MutationAddressResponse
-): Address => {
-  return Object.assign(
-    {},
-    emptyAddress,
-    omit(address, ["id", "isDefault", "internalID", "addressLine3", "errors"])
-  )
-}
 
 export const convertShippingAddressToMutationInput = (
   address: SavedAddressType | SettingsShippingAddress_address$data | null

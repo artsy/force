@@ -1,7 +1,7 @@
 import { Flex, Join, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
-import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
+import { TwoColumnSplit } from "Apps/Order/Components/TwoColumnLayout"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 
 export interface Address {
@@ -12,7 +12,8 @@ export interface Address {
   addressLine2: string
   city: string
   region: string
-  phoneNumber?: string
+  phoneNumber: string
+  phoneNumberCountryCode: string
 }
 
 export type AddressErrors = Partial<Address>
@@ -31,6 +32,7 @@ export const emptyAddress: Address = {
   city: "",
   region: "",
   phoneNumber: "",
+  phoneNumberCountryCode: "",
 }
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {

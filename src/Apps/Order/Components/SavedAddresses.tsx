@@ -52,7 +52,10 @@ interface SavedAddressesProps {
     internalID: string
     attributes: ShippingAddress
   }) => void
-  onAddressCreate?: (id: string) => void
+  onAddressCreate?: (address: {
+    internalID: string
+    attributes: ShippingAddress
+  }) => void
   selectedAddress?: string
 }
 
@@ -155,7 +158,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     if (modalDetails?.addressModalAction === "editUserAddress") {
       refetchAddresses(() => onAddressEdit?.(address))
     } else {
-      refetchAddresses(() => onAddressCreate?.(address.internalID))
+      refetchAddresses(() => onAddressCreate?.(address))
     }
   }
 
