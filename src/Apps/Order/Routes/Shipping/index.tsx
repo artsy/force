@@ -83,7 +83,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
-import { ShippingAddress } from "Components/Address/ShippingAddressForm"
+import { AddressValues } from "Components/Address/ShippingAddressForm"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -249,7 +249,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
 
     try {
-      let phoneNumberFormatted: string = `+${
+      const phoneNumberFormatted: string = `+${
         COUNTRY_CODES[address?.phoneNumberCountryCode?.toLocaleUpperCase()]
       } ${address?.phoneNumber.trim()}`
 
@@ -497,10 +497,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleAddressEdit = (editedAddress: {
-    internalID: string
-    attributes: ShippingAddress
-  }) => {
+  const handleAddressEdit = (editedAddress: AddressValues) => {
     setAddress(editedAddress.attributes)
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress.internalID) {
@@ -513,10 +510,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleAddressCreate = (newAddress: {
-    internalID: string
-    attributes: ShippingAddress
-  }) => {
+  const handleAddressCreate = (newAddress: AddressValues) => {
     setAddress(newAddress.attributes)
     selectSavedAddress(newAddress.internalID)
   }

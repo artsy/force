@@ -29,8 +29,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import {
-  ShippingAddress,
   ShippingAddressForm,
+  AddressValues,
 } from "Components/Address/ShippingAddressForm"
 import {
   SavedAddressType,
@@ -48,14 +48,8 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   onAddressDelete?: (id: string) => void
-  onAddressEdit?: (address: {
-    internalID: string
-    attributes: ShippingAddress
-  }) => void
-  onAddressCreate?: (address: {
-    internalID: string
-    attributes: ShippingAddress
-  }) => void
+  onAddressEdit?: (address: AddressValues) => void
+  onAddressCreate?: (address: AddressValues) => void
   selectedAddress?: string
 }
 
@@ -151,10 +145,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
-  const onSuccess = (address: {
-    attributes: ShippingAddress
-    internalID: string
-  }) => {
+  const onSuccess = (address: AddressValues) => {
     if (modalDetails?.addressModalAction === "editUserAddress") {
       refetchAddresses(() => onAddressEdit?.(address))
     } else {

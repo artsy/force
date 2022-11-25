@@ -40,9 +40,12 @@ export const INITIAL_ADDRESS = {
 const INITIAL_VALUES = {
   attributes: INITIAL_ADDRESS,
   isDefault: false,
+  internalID: "",
 }
 
 export type ShippingAddress = typeof INITIAL_ADDRESS
+
+export type AddressValues = typeof INITIAL_VALUES
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   attributes: Yup.object().shape({
@@ -73,15 +76,8 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
 interface SettingsShippingAddressFormProps {
   onClose(): void
-  address?: {
-    internalID: string
-    isDefault: boolean
-    attributes: ShippingAddress
-  } | null
-  onSuccess?: (address: {
-    internalID?: string
-    attributes?: ShippingAddress
-  }) => void
+  address?: AddressValues | null
+  onSuccess?: (Address: AddressValues) => void
   onDelete?: (id: string) => void
 }
 
@@ -95,7 +91,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
   const { sendToast } = useToasts()
-  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   // If an address is passed in, we are editing an existing address
   const isEditing = !!address
@@ -142,6 +138,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
             onSuccess?.({
               attributes,
               internalID: address!.internalID,
+              isDefault,
             })
 
             sendToast({
@@ -162,10 +159,12 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
               })
             }
 
-            onSuccess?.({
-              attributes,
-              internalID: id,
-            })
+            if (id)
+              onSuccess?.({
+                attributes,
+                internalID: id,
+                isDefault,
+              })
 
             sendToast({
               variant: "success",
