@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a81f221c361b8ab1c7a249a61018fea1>>
+ * @generated SignedSource<<a77c2b5fb9d3ca4d1742f772cfa2d443>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,7 +36,7 @@ export type OtherWorks_artwork$data = {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
   } | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork" | "RelatedWorksArtworkGrid_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
   readonly " $fragmentType": "OtherWorks_artwork";
 };
 export type OtherWorks_artwork$key = {
@@ -67,7 +67,13 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "includeRelatedArtworks",
+          "value": false
+        }
+      ],
       "concreteType": null,
       "kind": "LinkedField",
       "name": "contextGrids",
@@ -141,12 +147,7 @@ return {
           "storageKey": "artworksConnection(first:8)"
         }
       ],
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "RelatedWorksArtworkGrid_artwork"
+      "storageKey": "contextGrids(includeRelatedArtworks:false)"
     },
     {
       "args": null,
@@ -219,6 +220,6 @@ return {
 };
 })();
 
-(node as any).hash = "aaea80834413bdf2196a4490426d4adc";
+(node as any).hash = "0efdf87b1d36ab162d432a06d0283ef2";
 
 export default node;

@@ -90,26 +90,6 @@ describe("OtherWorks", () => {
     expect(component.text()).toContain("Other works from Gagosian Gallery")
   })
 
-  it("excludes the related artwork grid", () => {
-    genericOtherWorksData.contextGrids = [
-      {
-        __typename: "ArtistArtworkGrid",
-        title: "Other works by Andy Warhol",
-        ctaTitle: "View all works by Andy Warhol",
-        ctaHref: "/artist/andy-warhol",
-        artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
-      },
-      {
-        __typename: "RelatedArtworkGrid",
-        title: "Related works",
-        artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
-      },
-    ]
-    const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-    expect(component.find(Header).length).toEqual(1)
-    expect(component.text()).toContain("Other works by Andy Warhol")
-  })
-
   it("renders only grids with artworks", () => {
     genericOtherWorksData.contextGrids = [
       {
@@ -140,47 +120,11 @@ describe("OtherWorks", () => {
   })
 
   describe("Context-specific behavior", () => {
-    it("renders a RelatedWorks grid for ArtworkContextArtist", () => {
-      genericOtherWorksData.context.__typename = "ArtworkContextArtist"
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(1)
-      expect(component.find("OtherAuctionsQueryRenderer").length).toEqual(0)
-    })
-
-    it("renders a RelatedWorks grid for ArtworkContextPartnerShow", () => {
-      genericOtherWorksData.context.__typename = "ArtworkContextPartnerShow"
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(1)
-      expect(component.find("OtherAuctionsQueryRenderer").length).toEqual(0)
-    })
-
-    it("renders a RelatedWorks grid for ArtworkContextFair", () => {
-      genericOtherWorksData.context.__typename = "ArtworkContextFair"
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(1)
-      expect(component.find("OtherAuctionsQueryRenderer").length).toEqual(0)
-    })
-
-    it("renders RelatedWorks and OtherAuctions for ArtworkContextAuction if the auction is closed", () => {
-      genericOtherWorksData.context.__typename = "ArtworkContextAuction"
-      genericOtherWorksData.sale = { is_closed: true }
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(1)
-      expect(component.find("OtherAuctionsQueryRenderer").length).toEqual(1)
-    })
-
-    it("renders OtherAuctions but no RelatedWorks grid for ArtworkContextAuction if the auction is open", () => {
+    it("renders OtherAuctions for ArtworkContextAuction if the auction is open", () => {
       genericOtherWorksData.context.__typename = "ArtworkContextAuction"
       genericOtherWorksData.sale = { is_closed: false }
       const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(0)
       expect(component.find("OtherAuctionsQueryRenderer").length).toEqual(1)
-    })
-
-    it("safely renders when there's a missing layer", () => {
-      genericOtherWorksData.layer = null
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find("RelatedWorksArtworkGrid").length).toEqual(1)
     })
   })
 })

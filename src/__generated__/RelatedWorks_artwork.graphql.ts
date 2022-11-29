@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ee1d05dea900f5de5a40735ed818bae>>
+ * @generated SignedSource<<ab63df39a0e072163ed6e108259815ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RelatedWorksArtworkGrid_artwork$data = {
+export type RelatedWorks_artwork$data = {
   readonly layer: {
     readonly artworksConnection: {
       readonly edges: ReadonlyArray<{
@@ -22,16 +22,13 @@ export type RelatedWorksArtworkGrid_artwork$data = {
     } | null;
     readonly name: string | null;
   } | null;
-  readonly layers: ReadonlyArray<{
-    readonly internalID: string;
-    readonly name: string | null;
-  } | null> | null;
   readonly slug: string;
-  readonly " $fragmentType": "RelatedWorksArtworkGrid_artwork";
+  readonly title: string | null;
+  readonly " $fragmentType": "RelatedWorks_artwork";
 };
-export type RelatedWorksArtworkGrid_artwork$key = {
-  readonly " $data"?: RelatedWorksArtworkGrid_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
+export type RelatedWorks_artwork$key = {
+  readonly " $data"?: RelatedWorks_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RelatedWorks_artwork">;
 };
 
 const node: ReaderFragment = (function(){
@@ -39,55 +36,30 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "layerId"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RelatedWorksArtworkGrid_artwork",
+  "name": "RelatedWorks_artwork",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
-      "concreteType": "ArtworkLayer",
-      "kind": "LinkedField",
-      "name": "layers",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "title",
       "storageKey": null
     },
-    (v1/*: any*/),
     {
       "alias": null,
       "args": [
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "id",
-          "variableName": "layerId"
+          "value": "main"
         }
       ],
       "concreteType": "ArtworkLayer",
@@ -95,7 +67,13 @@ return {
       "name": "layer",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": [
@@ -131,7 +109,7 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    (v1/*: any*/)
+                    (v0/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -142,7 +120,7 @@ return {
           "storageKey": "artworksConnection(first:8)"
         }
       ],
-      "storageKey": null
+      "storageKey": "layer(id:\"main\")"
     }
   ],
   "type": "Artwork",
@@ -150,6 +128,6 @@ return {
 };
 })();
 
-(node as any).hash = "c94051a248fa232b6664a79ce100df6d";
+(node as any).hash = "e2f0dd241e2e7cc1d487c556d35e739b";
 
 export default node;
