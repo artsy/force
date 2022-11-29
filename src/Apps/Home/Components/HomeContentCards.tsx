@@ -67,6 +67,43 @@ const HomeContentCardPlaceholder = () => {
   )
 }
 
+const FALLBACK_CARDS_TIMEOUT = 1000
+
+const makeContentCard = ({ id }): BrazeContentCard => {
+  return {
+    aspectRatio: 1.0,
+    categories: [],
+    clicked: false,
+    created: null,
+    description: "",
+    dismissCard: () => {},
+    dismissed: false,
+    dismissible: false,
+    expiresAt: null,
+    id,
+    pinned: false,
+    removeAllSubscriptions: () => {},
+    removeSubscription: () => {},
+    subscribeToClickedEvent: () => "",
+    subscribeToDismissedEvent: () => "",
+    title: "",
+    updated: new Date(),
+    viewed: false,
+  }
+}
+
+const fallbackCards: BrazeContentCard[] = [
+  makeContentCard({ id: 1 }),
+  makeContentCard({ id: 2 }),
+]
+const sortContentCards = cards => {
+  return cards.sort((lhs, rhs) => {
+    const lhsPosition = (lhs.extras || {}).position || lhs.id
+    const rhsPosition = (rhs.extras || {}).position || rhs.id
+    return lhsPosition > rhsPosition ? 1 : -1
+  })
+}
+
 export const HomeContentCards: React.FC = () => {
   const [cards, setCards] = useState<BrazeContentCard[]>([])
 
@@ -76,29 +113,39 @@ export const HomeContentCards: React.FC = () => {
 
       if (!appboy) return
 
-      appboy.subscribeToContentCardsUpdates(async () => {
+      const subscriptionId = appboy.subscribeToContentCardsUpdates(async () => {
         const response = await appboy.getCachedContentCards()
-        const { cards: updatedCards } = response
-        const sortedCards = updatedCards.sort((lhs, rhs) => {
-          const lhsPosition = (lhs.extras || {}).position || lhs.id
-          const rhsPosition = (rhs.extras || {}).position || rhs.id
-          return lhsPosition > rhsPosition ? 1 : -1
-        })
+        const sortedCards = sortContentCards(response.cards)
         setCards(sortedCards)
       })
 
-      appboy.requestContentCardsRefresh()
+      const timeoutId = setTimeout(() => {
+        appboy.removeSubscription(subscriptionId)
+        setCards(fallbackCards)
+      }, FALLBACK_CARDS_TIMEOUT)
+
+      appboy.requestContentCardsRefresh(
+        () => {
+          console.log("success!")
+          clearTimeout(timeoutId)
+        },
+        () => {
+          clearTimeout(timeoutId)
+          setCards(fallbackCards)
+        }
+      )
     })
   }, [])
 
   const placeholderCards = [
-    <HomeContentCardPlaceholder />,
-    <HomeContentCardPlaceholder />,
+    <HomeContentCardPlaceholder key={1} />,
+    <HomeContentCardPlaceholder key={2} />,
   ]
 
-  const realCards = cards.map((card, index) => (
-    <HomeContentCard card={card} key={card.id} index={index} />
-  ))
+  const realCards = cards.map((card, index) => {
+    console.log({ id: card.id })
+    return <HomeContentCard card={card} key={card.id} index={index} />
+  })
 
   const heroCards = cards.length < 1 ? placeholderCards : realCards
 
