@@ -75,10 +75,12 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 })
 
 interface SettingsShippingAddressFormProps {
-  onClose(): void
+  onClose?(): void
   address?: AddressValues | null
   onSuccess?: (Address: AddressValues) => void
   onDelete?: (id: string) => void
+  setSaveAddress?: (saveAddress: boolean) => void
+  saveAddress?: boolean
 }
 
 export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
@@ -86,6 +88,8 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
   address,
   onSuccess,
   onDelete,
+  setSaveAddress,
+  saveAddress,
 }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
@@ -173,7 +177,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
           }
 
           resetForm()
-          onClose()
+          onClose?.()
         } catch (err) {
           console.error(err)
 
@@ -341,14 +345,24 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
                 </Column>
 
                 <Column span={12}>
-                  <Checkbox
-                    selected={values.isDefault}
-                    onSelect={value => {
-                      setFieldValue("isDefault", value)
-                    }}
-                  >
-                    Set as Default
-                  </Checkbox>
+                  {setSaveAddress ? (
+                    <Checkbox
+                      onSelect={selected => setSaveAddress?.(selected)}
+                      selected={saveAddress}
+                      data-test="save-address-checkbox"
+                    >
+                      Save shipping address for later use
+                    </Checkbox>
+                  ) : (
+                    <Checkbox
+                      selected={values.isDefault}
+                      onSelect={value => {
+                        setFieldValue("isDefault", value)
+                      }}
+                    >
+                      Set as Default
+                    </Checkbox>
+                  )}
 
                   {onDelete && (
                     <Flex mt={2} flexDirection="column" alignItems="center">
@@ -387,7 +401,7 @@ export const ShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
                           size="small"
                           onClick={() => {
                             setShowDeleteDialog(false)
-                            onClose()
+                            onClose?.()
                             if (address?.internalID && onDelete) {
                               onDelete(address.internalID)
                             }

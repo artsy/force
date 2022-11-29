@@ -2,7 +2,6 @@ import {
   BorderedRadio,
   Box,
   Button,
-  Checkbox,
   Collapse,
   Flex,
   RadioGroup,
@@ -31,18 +30,9 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import {
-  validateAddress,
-  validatePhoneNumber,
-} from "Apps/Order/Utils/formValidators"
+import { validatePhoneNumber } from "Apps/Order/Utils/formValidators"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Address,
-  AddressChangeHandler,
-  AddressErrors,
-  AddressForm,
-  AddressTouched,
-} from "Components/AddressForm"
+import { Address } from "Components/AddressForm"
 import { Router } from "found"
 import { FC, useState, useEffect } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
@@ -119,8 +109,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
     defaultShippingAddressIndex(props.me, props.order)
   )
-  const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
-  const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
 
   const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
     startingPhoneNumber(props.me, props.order)
@@ -157,19 +145,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressList, deletedAddressID])
-
-  const touchedAddress = () => {
-    return {
-      name: true,
-      country: true,
-      postalCode: true,
-      addressLine1: true,
-      addressLine2: true,
-      city: true,
-      region: true,
-      phoneNumber: true,
-    }
-  }
 
   const handleAddressDelete = (deletedAddressID: string) => {
     setDeletedAddressID(deletedAddressID)
@@ -218,28 +193,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const selectShipping = async () => {
-    if (shippingOption === "SHIP") {
-      if (isCreateNewAddress()) {
-        // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber(phoneNumber)
-        if (hasErrors && hasError) {
-          setAddressErrors(errors!)
-          setAddressTouched(touchedAddress)
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
-        } else if (hasErrors) {
-          setAddressErrors(errors!)
-          setAddressTouched(touchedAddress)
-          return
-        } else if (hasError) {
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
-        }
-      }
-    } else {
+    if (shippingOption === "PICKUP") {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         setPhoneNumberError(error!)
@@ -418,22 +372,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     </>
   )
 
-  const onAddressChange: AddressChangeHandler = (newAddress, key) => {
-    const { errors } = validateAddress(newAddress)
-    setAddress(newAddress)
-    setAddressErrors({
-      ...addressErrors,
-      ...errors,
-    })
-    setAddressTouched({
-      ...addressTouched,
-      [key]: true,
-    })
-
-    setShippingQuotes(null)
-    setShippingQuoteId(undefined)
-  }
-
   const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
     const { error } = validatePhoneNumber(newPhoneNumber)
 
@@ -539,11 +477,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const artwork = getOrderArtwork()
   const shippingSelected =
     !artwork?.pickup_available || shippingOption === "SHIP"
-  const showAddressForm =
-    shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
-
-  const showSavedAddresses =
-    shippingSelected && addressList && addressList.length > 0
+  const showSavedAddresses = shippingSelected
 
   const isArtsyShipping = checkIfArtsyShipping()
 
@@ -617,46 +551,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 me={props.me}
                 selectedAddress={selectedAddressID}
                 onSelect={selectSavedAddressWithTracking}
-                inCollectorProfile={false}
                 onAddressDelete={handleAddressDelete}
                 onAddressEdit={handleAddressEdit}
                 onAddressCreate={handleAddressCreate}
+                setSaveAddress={setSaveAddress}
+                saveAddress={saveAddress}
+                onContinue={onContinueButtonPressed}
               />
             </Collapse>
-
-            <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-              {isArtsyShipping &&
-                shippingQuotes &&
-                shippingQuotes.length === 0 &&
-                renderArtaErrorMessage()}
-              <AddressForm
-                value={address}
-                errors={addressErrors}
-                touched={addressTouched}
-                onChange={onAddressChange}
-                domesticOnly={artwork?.onlyShipsDomestically!}
-                euOrigin={artwork?.euShippingOrigin!}
-                shippingCountry={artwork?.shippingCountry!}
-                showPhoneNumberInput={false}
-              />
-              <Spacer mb={2} />
-              <PhoneNumberForm
-                value={phoneNumber}
-                errors={phoneNumberError}
-                touched={phoneNumberTouched}
-                onChange={onPhoneNumberChange}
-                label="Required for shipping logistics"
-              />
-              <Checkbox
-                onSelect={selected => setSaveAddress(selected)}
-                selected={saveAddress}
-                data-test="save-address-checkbox"
-              >
-                Save shipping address for later use
-              </Checkbox>
-              <Spacer mt={4} />
-            </Collapse>
-
             <Collapse
               data-test="phoneNumberCollapse"
               open={shippingOption === "PICKUP"}
@@ -693,14 +595,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             </Collapse>
 
             <Media greaterThan="xs">
-              <Button
-                onClick={onContinueButtonPressed}
-                loading={isCommittingMutation}
-                variant="primaryBlack"
-                width="50%"
-              >
-                Save and Continue
-              </Button>
+              {addressList.length > 0 && (
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="50%"
+                >
+                  Save and Continue
+                </Button>
+              )}
             </Media>
           </Flex>
         }

@@ -1,22 +1,15 @@
 import {
-  Box,
   Button,
   RadioGroup,
   BorderedRadio,
   Spacer,
-  Flex,
-  Text,
-  Separator,
-  BorderBox,
-  Join,
-  Clickable,
   ModalDialog,
   ModalWidth,
+  Collapse,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import { ModalDetails } from "Apps/Order/Components/AddressModal"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
@@ -43,7 +36,6 @@ interface SavedAddressesProps {
   onChangeAddressCount?: (active?: number) => void
   me: SavedAddresses_me$data
   onSelect?: (string) => void
-  inCollectorProfile: boolean
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
@@ -51,6 +43,9 @@ interface SavedAddressesProps {
   onAddressEdit?: (address: AddressValues) => void
   onAddressCreate?: (address: AddressValues) => void
   selectedAddress?: string
+  setSaveAddress?: (saveAddress: boolean) => void
+  saveAddress?: boolean
+  onContinue?: () => void
 }
 
 type Address = NonNullable<
@@ -83,12 +78,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onSelect,
     onChangeAddressCount,
     me,
-    inCollectorProfile,
     relay,
     onAddressDelete,
     onAddressEdit,
     onAddressCreate,
     selectedAddress,
+    setSaveAddress,
+    saveAddress,
   } = props
 
   useEffect(() => {
@@ -161,113 +157,66 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
   }
 
-  const collectorProfileAddressItems = addressList.map((address, index) => {
-    if (!address) {
-      return null
-    }
+  const addAddressButton = (
+    <Button
+      mt={[2, 4]}
+      mb={2}
+      data-test="shippingButton"
+      variant="secondaryBlack"
+      onClick={() => {
+        trackAddAddressClick()
+        setShowAddressModal(true),
+          setModalDetails({
+            addressModalTitle: "Add address",
+            addressModalAction: "createUserAddress",
+          })
+      }}
+    >
+      Add a new address
+    </Button>
+  )
 
-    const isDefaultAddress = address.isDefault
+  const addressItem = compact(addressList).map((address, index) => {
     return (
-      <BorderBox
-        p={2}
-        mb={2}
-        width={340}
-        flexDirection="column"
-        key={"addressIndex" + index}
+      <BorderedRadio
+        value={address.internalID}
+        key={index}
+        position="relative"
+        data-test="savedAddress"
       >
         <SavedAddressItem
           index={index}
           address={address}
           handleClickEdit={() => handleEditAddress(address, index)}
         />
-        <Box mt="auto">
-          <Separator my={2} />
-          <ModifyAddressWrapper width="100%">
-            {isDefaultAddress && (
-              <Box mr={[2, 1]}>
-                <Text textAlign="left" variant="sm">
-                  Default Address
-                </Text>
-              </Box>
-            )}
-            <Box ml="auto">
-              <Clickable
-                mr={[2, 1]}
-                textDecoration="underline"
-                data-test="editAddressInProfileClick"
-                onClick={() => handleEditAddress(address, index)}
-              >
-                <Text
-                  variant="sm"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  data-test="editAddressInProfile"
-                >
-                  Edit
-                </Text>
-              </Clickable>
-
-              <Clickable
-                textDecoration="underline"
-                data-test="deleteAddressInProfile"
-                onClick={() => handleDeleteAddress(address.internalID)}
-              >
-                <Text
-                  variant="sm"
-                  color="red100"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete
-                </Text>
-              </Clickable>
-            </Box>
-          </ModifyAddressWrapper>
-        </Box>
-      </BorderBox>
+      </BorderedRadio>
     )
   })
 
-  const addAddressButton = (
+  return (
     <>
-      {inCollectorProfile ? (
-        <Button
-          mb={2}
-          mt={[2, 4]}
-          data-test="profileButton"
-          variant="secondaryBlack"
-          onClick={() => {
-            setShowAddressModal(true),
-              setModalDetails({
-                addressModalTitle: "Add new address",
-                addressModalAction: "createUserAddress",
-              })
-          }}
-        >
-          Add a new address
-        </Button>
-      ) : (
-        addressList.length > 0 && (
-          <Button
-            mt={[2, 4]}
-            mb={2}
-            data-test="shippingButton"
-            variant="secondaryBlack"
-            onClick={() => {
-              trackAddAddressClick()
-              setShowAddressModal(true),
-                setModalDetails({
-                  addressModalTitle: "Add address",
-                  addressModalAction: "createUserAddress",
-                })
-            }}
+      <Collapse open={addressList.length > 0}>
+        <>
+          <RadioGroup
+            onSelect={onSelect}
+            defaultValue={selectedAddress || defaultAddressIndex(addressList)}
           >
-            Add a new address
-          </Button>
-        )
-      )}
+            {addressItem}
+          </RadioGroup>
+          <Spacer mb={14} />
+          {addAddressButton}
+        </>
+      </Collapse>
+      <Collapse open={addressList.length === 0}>
+        <ShippingAddressForm
+          onSuccess={onSuccess}
+          setSaveAddress={setSaveAddress}
+          saveAddress={saveAddress}
+        />
+      </Collapse>
+
+      <Spacer mb={4} />
+
       {showAddressModal && (
         <ModalDialog
           title={modalDetails?.addressModalTitle}
@@ -292,59 +241,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       )}
     </>
   )
-
-  const addressItems = compact(addressList).map((address, index) => {
-    return (
-      <BorderedRadio
-        value={address.internalID}
-        key={index}
-        position="relative"
-        data-test="savedAddress"
-      >
-        <SavedAddressItem
-          index={index}
-          address={address}
-          handleClickEdit={() => handleEditAddress(address, index)}
-        />
-      </BorderedRadio>
-    )
-  })
-
-  return inCollectorProfile ? (
-    <>
-      <Flex flexWrap="wrap" flexDirection="row">
-        <Join separator={<Spacer mr={2} />}>
-          {collectorProfileAddressItems.length ? (
-            collectorProfileAddressItems
-          ) : (
-            <Text color="black60" variant="sm">
-              Please add an address for a faster checkout experience in the
-              future.
-            </Text>
-          )}
-        </Join>
-      </Flex>
-      {addAddressButton}
-    </>
-  ) : (
-    <>
-      <RadioGroup
-        onSelect={onSelect}
-        defaultValue={selectedAddress || defaultAddressIndex(addressList)}
-      >
-        {addressItems}
-      </RadioGroup>
-      <Spacer mb={14} />
-      {addAddressButton}
-      <Spacer mb={4} />
-    </>
-  )
 }
-
-const ModifyAddressWrapper = styled(Flex)`
-  align-self: flex-end;
-  justify-content: space-between;
-`
 
 export const SavedAddressesFragmentContainer = createRefetchContainer(
   SavedAddresses,
