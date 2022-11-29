@@ -71,6 +71,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: buyerGuaranteeRoutes },
     { routes: categoriesRoutes },
     { routes: collectRoutes },
+    { routes: collectorProfileRoutes },
     { routes: consignRoutes },
     { routes: consignFromMyCollectionRoutes },
     { routes: contactRoutes },

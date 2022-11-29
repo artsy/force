@@ -149,6 +149,7 @@ const PERMANENT_REDIRECTS = {
     "/article/artsy-editorial-inside-biennale-ep-9-peoples-choice",
   "/editorial": "/articles",
   "/auction-partnerships": "https://partners.artsy.net/auction-partnerships/",
+  "/collector-profile": "/collector-profile/collection",
 }
 
 const router = express.Router()
