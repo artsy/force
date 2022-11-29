@@ -34,7 +34,7 @@ export const Inquiry: React.FC<InquiryProps> = ({
 }
 
 const InquiryDialog: React.FC = () => {
-  const { onClose, current, View } = useInquiryContext()
+  const { onClose, next, current, View } = useInquiryContext()
 
   return (
     <Box
@@ -52,8 +52,8 @@ const InquiryDialog: React.FC = () => {
         pt={2}
         px={1}
         mx={0.5}
-        onClick={onClose}
-        aria-label="Close"
+        onClick={current === "BasicInfo" ? next : onClose}
+        aria-label={current === "BasicInfo" ? "Skip" : "Close"}
       >
         <CloseIcon fill="black100" display="block" />
       </Clickable>
