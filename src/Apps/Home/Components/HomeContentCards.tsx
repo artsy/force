@@ -119,23 +119,17 @@ export const HomeContentCards: React.FC = () => {
         setCards(sortedCards)
       })
 
-      const timeoutId = setTimeout(() => {
+      setTimeout(() => {
+        console.log(cards.length)
+        if (cards.length > 0) return
+
         appboy.removeSubscription(subscriptionId)
         setCards(fallbackCards)
       }, FALLBACK_CARDS_TIMEOUT)
 
-      appboy.requestContentCardsRefresh(
-        () => {
-          console.log("success!")
-          clearTimeout(timeoutId)
-        },
-        () => {
-          clearTimeout(timeoutId)
-          setCards(fallbackCards)
-        }
-      )
+      appboy.requestContentCardsRefresh()
     })
-  }, [])
+  }, [cards.length])
 
   const placeholderCards = [
     <HomeContentCardPlaceholder key={1} />,
@@ -147,7 +141,7 @@ export const HomeContentCards: React.FC = () => {
     return <HomeContentCard card={card} key={card.id} index={index} />
   })
 
-  const heroCards = cards.length < 1 ? placeholderCards : realCards
+  const heroCards = cards.length == 0 ? placeholderCards : realCards
 
   const handleChange = index => {
     const appboy = (window as any).appboy
