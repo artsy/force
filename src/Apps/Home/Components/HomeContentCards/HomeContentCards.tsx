@@ -3,6 +3,8 @@ import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 import { BrazeCards } from "./BrazeCards"
 import { FallbackCards } from "./FallbackCards"
 import { PlaceholderCards } from "./PlaceholderCards"
+import { useRouter } from "System/Router/useRouter"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 
 const sortCards = (lhs, rhs) => {
   const lhsPosition = (lhs.extras || {}).position || lhs.id
@@ -10,7 +12,16 @@ const sortCards = (lhs, rhs) => {
   return lhsPosition > rhsPosition ? 1 : -1
 }
 
+const DEFAULT_TIMEOUT_AMOUNT = 1000
+
 export const HomeContentCards: React.FC = () => {
+  const { match } = useRouter()
+  const { brazeTimeoutAmount } = paramsToCamelCase(match?.location.query) as {
+    brazeTimeoutAmount?: number
+  }
+
+  const timeoutAmount = brazeTimeoutAmount ?? DEFAULT_TIMEOUT_AMOUNT
+
   const [exceededTimeout, setExceededTimeout] = useState(false)
   const [appboy, setAppboy] = useState<any>(null)
   const [cards, setCards] = useState<BrazeContentCard[]>([])
@@ -37,7 +48,7 @@ export const HomeContentCards: React.FC = () => {
 
       appboy.removeSubscription(subscriptionId)
       setExceededTimeout(true)
-    }, 1000)
+    }, timeoutAmount)
 
     appboy.requestContentCardsRefresh()
 
@@ -45,7 +56,7 @@ export const HomeContentCards: React.FC = () => {
       appboy.removeSubscription(subscriptionId)
       clearTimeout(timeout)
     }
-  }, [appboy])
+  }, [appboy, timeoutAmount])
 
   useEffect(() => {
     cardsLengthRef.current = cards.length
