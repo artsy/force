@@ -7,7 +7,9 @@ import {
 } from "@artsy/palette"
 import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
+
 import { FC, MouseEvent, useState } from "react"
+import { graphql } from "react-relay"
 
 const BTN_WIDTH = 40
 const BTN_HEIGHT = 40
@@ -69,6 +71,21 @@ export const ArtQuizDislikeButton: FC<ClickableProps> = ({ ...rest }) => {
   const handleClick = () => {
     stepBackward()
   }
+
+  const { submitMutation } = useMutation<ArtQuizDislikeButtonMutation>({
+    mutation: graphql`
+      mutation ArtQuizDislikeButtonMutation($artworkID: String!) {
+        dislikeArtwork(input: { artworkID: $artworkID, remove: false }) {
+          artwork {
+            isDisliked
+            id
+          }
+        }
+      }
+    `,
+  })
+
+  // submit mutation on click w/ a try catch for error handling
 
   return (
     <Clickable
