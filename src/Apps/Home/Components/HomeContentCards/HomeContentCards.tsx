@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
-import { HomeContentCard } from "./HomeContentCard"
+import { BrazeCards } from "./BrazeCards"
 import { PlaceholderCards } from "./PlaceholderCards"
 
 export const HomeContentCards: React.FC = () => {
@@ -36,27 +35,5 @@ export const HomeContentCards: React.FC = () => {
 
   if (!hasBrazeCards) return <PlaceholderCards />
 
-  const handleChange = index => {
-    const card = cards[index]
-    appboy.logCardImpressions([card])
-  }
-
-  return (
-    <HeroCarousel onChange={handleChange}>
-      {cards.map((card, index) => {
-        const handleClick = () => {
-          appboy.logCardClick(card)
-        }
-
-        return (
-          <HomeContentCard
-            card={card}
-            index={index}
-            key={card.id}
-            onClick={handleClick}
-          />
-        )
-      })}
-    </HeroCarousel>
-  )
+  return <BrazeCards appboy={appboy} cards={cards} />
 }
