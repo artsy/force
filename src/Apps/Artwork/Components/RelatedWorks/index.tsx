@@ -96,7 +96,7 @@ export const RelatedWorksQueryRenderer: React.FC<{
     <Box data-test="RelatedWorksQueryRenderer">
       <SystemQueryRenderer<RelatedWorksQuery>
         lazyLoad
-        lazyLoadThreshold={200}
+        lazyLoadThreshold={500}
         environment={relayEnvironment}
         variables={{ slug }}
         placeholder={PLACEHOLDER}
