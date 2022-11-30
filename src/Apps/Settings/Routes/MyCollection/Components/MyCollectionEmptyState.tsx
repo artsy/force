@@ -1,4 +1,5 @@
 import {
+  Banner,
   Button,
   Column,
   GridColumns,
@@ -18,8 +19,13 @@ const image = resized(
     height: 652,
   }
 )
+interface EmptyStateProps {
+  usedForLoggedOutState: boolean
+}
 
-const DesktopLayout: React.FC = () => {
+const DesktopLayout: React.FC<EmptyStateProps> = ({
+  usedForLoggedOutState,
+}) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -43,6 +49,14 @@ const DesktopLayout: React.FC = () => {
         >
           Upload Artwork
         </Button>
+        {!!usedForLoggedOutState && (
+          <Banner mt={4} variant="defaultLight">
+            <Text variant="sm">
+              Already have artworks in My Collection?{" "}
+              <RouterLink to={null}>Log In</RouterLink> to view them.
+            </Text>
+          </Banner>
+        )}
       </Column>
 
       <Column span={6}>
@@ -61,7 +75,7 @@ const DesktopLayout: React.FC = () => {
   )
 }
 
-const MobileLayout: React.FC = () => {
+const MobileLayout: React.FC<EmptyStateProps> = () => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -105,14 +119,14 @@ const MobileLayout: React.FC = () => {
   )
 }
 
-export const MyCollectionEmptyState: React.FC = () => {
+export const MyCollectionEmptyState: React.FC<EmptyStateProps> = () => {
   return (
     <>
       <Media at="xs">
-        <MobileLayout />
+        <MobileLayout usedForLoggedOutState />
       </Media>
       <Media greaterThan="xs">
-        <DesktopLayout />
+        <DesktopLayout usedForLoggedOutState />
       </Media>
     </>
   )

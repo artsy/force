@@ -5,13 +5,16 @@ import { MyCollectionAppDownload } from "./MyCollectionAppDownload"
 import { MyCollectionBenefits } from "./MyCollectionBenefits"
 import { MyCollectionEmptyState } from "./MyCollectionEmptyState"
 
-export const EmptyMyCollectionPage: React.FC = () => {
+export interface EmptyMyCollectionPageProps {
+  usedForLoggedOutState: boolean
+}
+export const EmptyMyCollectionPage: React.FC<EmptyMyCollectionPageProps> = () => {
   const enableMyCollectionPhase3 = useFeatureFlag("my-collection-web-phase-3")
 
   return (
     <Join separator={<Spacer my={6} />}>
       {enableMyCollectionPhase3 ? (
-        <MyCollectionEmptyState />
+        <MyCollectionEmptyState usedForLoggedOutState />
       ) : (
         <MyCollectionAppDownload />
       )}

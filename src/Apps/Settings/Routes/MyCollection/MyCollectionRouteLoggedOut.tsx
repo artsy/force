@@ -1,10 +1,5 @@
-import { Flex, Text } from "@artsy/palette"
+import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 
 export const MyCollectionRouteLoggedOut: React.FC<any> = () => {
-  console.log("[LOGD] lalalalal")
-  return (
-    <Flex backgroundColor={"red"}>
-      <Text>Hello</Text>
-    </Flex>
-  )
+  return <EmptyMyCollectionPage usedForLoggedOutState={true} />
 }
