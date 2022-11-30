@@ -91,16 +91,20 @@ export const HomeContentCards: React.FC = () => {
     })
   }, [])
 
-  const placeholderCards = [
-    <HomeContentCardPlaceholder />,
-    <HomeContentCardPlaceholder />,
-  ]
+  const hasBrazeCards = cards.length > 0
+
+  if (!hasBrazeCards) {
+    return (
+      <HeroCarousel>
+        <HomeContentCardPlaceholder />
+        <HomeContentCardPlaceholder />
+      </HeroCarousel>
+    )
+  }
 
   const realCards = cards.map((card, index) => (
     <HomeContentCard card={card} key={card.id} index={index} />
   ))
-
-  const heroCards = cards.length < 1 ? placeholderCards : realCards
 
   const handleChange = index => {
     const appboy = (window as any).appboy
@@ -110,5 +114,5 @@ export const HomeContentCards: React.FC = () => {
     appboy.logCardImpressions([card])
   }
 
-  return <HeroCarousel onChange={handleChange}>{heroCards}</HeroCarousel>
+  return <HeroCarousel onChange={handleChange}>{realCards}</HeroCarousel>
 }
