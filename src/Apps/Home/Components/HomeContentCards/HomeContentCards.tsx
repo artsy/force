@@ -3,6 +3,12 @@ import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 import { BrazeCards } from "./BrazeCards"
 import { PlaceholderCards } from "./PlaceholderCards"
 
+const sortCards = (lhs, rhs) => {
+  const lhsPosition = (lhs.extras || {}).position || lhs.id
+  const rhsPosition = (rhs.extras || {}).position || rhs.id
+  return lhsPosition > rhsPosition ? 1 : -1
+}
+
 export const HomeContentCards: React.FC = () => {
   const [appboy, setAppboy] = useState<any>(null)
   const [cards, setCards] = useState<BrazeContentCard[]>([])
@@ -20,12 +26,7 @@ export const HomeContentCards: React.FC = () => {
 
     appboy.subscribeToContentCardsUpdates(async () => {
       const response = await appboy.getCachedContentCards()
-      const { cards: updatedCards } = response
-      const sortedCards = updatedCards.sort((lhs, rhs) => {
-        const lhsPosition = (lhs.extras || {}).position || lhs.id
-        const rhsPosition = (rhs.extras || {}).position || rhs.id
-        return lhsPosition > rhsPosition ? 1 : -1
-      })
+      const sortedCards = response.cards.sort(sortCards)
       setCards(sortedCards)
     })
 
