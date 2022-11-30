@@ -6,7 +6,7 @@ import { MyCollectionBenefits } from "./MyCollectionBenefits"
 import { MyCollectionEmptyState } from "./MyCollectionEmptyState"
 
 export interface EmptyMyCollectionPageProps {
-  loggedOutState: boolean
+  loggedOutState?: boolean
 }
 
 export const EmptyMyCollectionPage: React.FC<EmptyMyCollectionPageProps> = () => {

@@ -8,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { EmptyMyCollectionPageProps } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
@@ -19,11 +20,10 @@ const image = resized(
     height: 652,
   }
 )
-interface EmptyStateProps {
-  loggedOutState: boolean
-}
 
-const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
+const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -73,7 +73,9 @@ const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
   )
 }
 
-const MobileLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
+const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -125,7 +127,7 @@ const MobileLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
   )
 }
 
-export const MyCollectionEmptyState: React.FC<EmptyStateProps> = () => {
+export const MyCollectionEmptyState: React.FC<EmptyMyCollectionPageProps> = () => {
   return (
     <>
       <Media at="xs">
