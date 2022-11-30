@@ -43,7 +43,7 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => (loggedOutState ? {} : trackAddCollectedArtwork())}
+          onClick={() => (!!loggedOutState ? {} : trackAddCollectedArtwork())}
         >
           Upload Artwork
         </Button>
@@ -109,7 +109,7 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => (loggedOutState ? {} : trackAddCollectedArtwork())}
+          onClick={() => (!!loggedOutState ? {} : trackAddCollectedArtwork())}
           width="100%"
         >
           Upload Artwork
