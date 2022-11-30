@@ -24,13 +24,17 @@ export const HomeContentCards: React.FC = () => {
   useEffect(() => {
     if (!appboy) return
 
-    appboy.subscribeToContentCardsUpdates(async () => {
+    const subscriptionId = appboy.subscribeToContentCardsUpdates(async () => {
       const response = await appboy.getCachedContentCards()
       const sortedCards = response.cards.sort(sortCards)
       setCards(sortedCards)
     })
 
     appboy.requestContentCardsRefresh()
+
+    return () => {
+      appboy.removeSubscription(subscriptionId)
+    }
   }, [appboy])
 
   useEffect(() => {
