@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
+import Braze from "@braze/web-sdk"
 import { BrazeCards } from "./BrazeCards"
 import { FallbackCards } from "./FallbackCards"
 import { PlaceholderCards } from "./PlaceholderCards"
@@ -23,24 +23,23 @@ export const HomeContentCards: React.FC = () => {
   const timeoutAmount = brazeTimeoutAmount ?? DEFAULT_TIMEOUT_AMOUNT
 
   const [exceededTimeout, setExceededTimeout] = useState(false)
-  const [appboy, setAppboy] = useState<any>(null)
-  const [cards, setCards] = useState<BrazeContentCard[]>([])
+  const [appboy, setAppboy] = useState<typeof Braze | null>(null)
+  const [cards, setCards] = useState<Braze.CaptionedImage[]>([])
   const cardsLengthRef = useRef(cards.length)
 
   useEffect(() => {
     window.analytics?.ready(() => {
-      const appboy = (window as any).appboy
-      setAppboy(appboy)
+      setAppboy(window.appboy)
     })
   })
 
   useEffect(() => {
     if (!appboy) return
 
-    const subscriptionId = appboy.subscribeToContentCardsUpdates(async () => {
-      const response = await appboy.getCachedContentCards()
+    const subscriptionId = appboy.subscribeToContentCardsUpdates(() => {
+      const response = appboy.getCachedContentCards()
       const sortedCards = response.cards.sort(sortCards)
-      setCards(sortedCards)
+      setCards(sortedCards as Braze.CaptionedImage[])
     })
 
     const timeout = setTimeout(() => {
