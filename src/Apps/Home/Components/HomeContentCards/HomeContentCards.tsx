@@ -32,10 +32,6 @@ export const HomeContentCards: React.FC = () => {
 
   if (!hasBrazeCards) return <PlaceholderCards />
 
-  const realCards = cards.map((card, index) => (
-    <HomeContentCard card={card} key={card.id} index={index} />
-  ))
-
   const handleChange = index => {
     const appboy = (window as any).appboy
     if (!appboy) return
@@ -44,5 +40,11 @@ export const HomeContentCards: React.FC = () => {
     appboy.logCardImpressions([card])
   }
 
-  return <HeroCarousel onChange={handleChange}>{realCards}</HeroCarousel>
+  return (
+    <HeroCarousel onChange={handleChange}>
+      {cards.map((card, index) => {
+        return <HomeContentCard card={card} key={card.id} index={index} />
+      })}
+    </HeroCarousel>
+  )
 }
