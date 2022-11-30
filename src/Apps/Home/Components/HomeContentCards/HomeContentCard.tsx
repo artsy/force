@@ -18,11 +18,13 @@ import { HomeHeroUnitCredit } from "Apps/Home/Components/HomeHeroUnits/HomeHeroU
 interface HomeContentCardProps {
   card: BrazeContentCard
   index: number
+  onClick: () => void
 }
 
 export const HomeContentCard: React.FC<HomeContentCardProps> = ({
   card,
   index,
+  onClick,
 }) => {
   const extras = card.extras || {}
 
@@ -33,16 +35,11 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
 
   const cardLink = card.url ?? ""
 
-  const handleClick = () => {
-    const appboy = (window as any).appboy
-    appboy?.logCardClick(card)
-  }
-
   return (
     <GridColumns bg="black5" width="100%">
       <Column span={6} bg="white100">
         <RouterLink
-          onClick={handleClick}
+          onClick={onClick}
           style={{ display: "block", height: "100%", width: "100%" }}
           tabIndex={-1}
           to={cardLink}
@@ -110,7 +107,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             py={4}
           >
             <RouterLink
-              onClick={handleClick}
+              onClick={onClick}
               style={{ display: "block", textDecoration: "none" }}
               tabIndex={-1}
               to={cardLink}
@@ -158,7 +155,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                   <Button
                     // @ts-ignore
                     as={RouterLink}
-                    onClick={handleClick}
+                    onClick={onClick}
                     to={cardLink}
                     variant="secondaryBlack"
                     width="100%"
@@ -172,7 +169,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             <Media at="xs">
               <Spacer mt={1} />
 
-              <RouterLink noUnderline onClick={handleClick} to={cardLink}>
+              <RouterLink noUnderline onClick={onClick} to={cardLink}>
                 <Text variant="xs" color="black100">
                   {card.linkText}
                 </Text>

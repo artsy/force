@@ -43,7 +43,18 @@ export const HomeContentCards: React.FC = () => {
   return (
     <HeroCarousel onChange={handleChange}>
       {cards.map((card, index) => {
-        return <HomeContentCard card={card} key={card.id} index={index} />
+        const handleClick = () => {
+          const appboy = (window as any).appboy
+          appboy?.logCardClick(card)
+        }
+        return (
+          <HomeContentCard
+            card={card}
+            index={index}
+            key={card.id}
+            onClick={handleClick}
+          />
+        )
       })}
     </HeroCarousel>
   )
