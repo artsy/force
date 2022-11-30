@@ -1,9 +1,9 @@
 import {
-  Banner,
   Button,
   Column,
   GridColumns,
   Image,
+  Message,
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
@@ -48,12 +48,12 @@ const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
           Upload Artwork
         </Button>
         {!!loggedOutState && (
-          <Banner mt={4} variant="defaultLight">
+          <Message mt={4} variant="info">
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
               <RouterLink to={null}>Log In</RouterLink> to view them.
             </Text>
-          </Banner>
+          </Message>
         )}
       </Column>
 
@@ -113,12 +113,12 @@ const MobileLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
           Upload Artwork
         </Button>
         {!!loggedOutState && (
-          <Banner mt={2} variant="defaultLight">
+          <Message mt={2} variant="info">
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
               <RouterLink to={null}>Log In</RouterLink> to view them.
             </Text>
-          </Banner>
+          </Message>
         )}
       </Column>
     </GridColumns>
