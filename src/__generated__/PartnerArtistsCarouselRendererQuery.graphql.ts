@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d43a481fb20601facdd09811eace446>>
+ * @generated SignedSource<<9b5bb7f0e197a7009d138ae611f2532c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,14 +49,14 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v5 = [
@@ -158,8 +158,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -233,7 +233,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v3/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -251,7 +251,7 @@ return {
                     "name": "artist",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -338,30 +338,30 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:20,hasPublishedArtworks:true)"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a8ee1695898bf7e65cd792861505aa6c",
+    "cacheID": "cd1117bbc36041bbdc09ea38202b67cb",
     "id": null,
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment CellPartnerArtist_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    href\n    initials\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      node {\n        id\n        internalID\n        slug\n      }\n      ...CellPartnerArtist_partnerArtist\n      id\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment CellPartnerArtist_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    href\n    initials\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      node {\n        internalID\n        slug\n        id\n      }\n      ...CellPartnerArtist_partnerArtist\n      id\n    }\n  }\n}\n"
   }
 };
 })();

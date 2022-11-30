@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5927a23c8c757080e40c12a0b4a7626>>
+ * @generated SignedSource<<f7c646b8571c7b83b5c3b077dd6005d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type PartnerArtistsCarousel_partner$data = {
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly id: string;
         readonly internalID: string;
         readonly slug: string;
       } | null;
@@ -88,13 +87,6 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "internalID",
                   "storageKey": null
                 },
@@ -119,6 +111,6 @@ return {
 };
 })();
 
-(node as any).hash = "bf6706f7c3451b1c2bd2d7347757ccd1";
+(node as any).hash = "5a2a04dc5419e09f9180b7b52bae6077";
 
 export default node;

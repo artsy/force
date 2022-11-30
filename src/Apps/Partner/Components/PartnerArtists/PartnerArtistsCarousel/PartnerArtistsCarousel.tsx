@@ -65,7 +65,6 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              id
               internalID
               slug
             }
