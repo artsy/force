@@ -20,12 +20,10 @@ const image = resized(
   }
 )
 interface EmptyStateProps {
-  usedForLoggedOutState: boolean
+  loggedOutState: boolean
 }
 
-const DesktopLayout: React.FC<EmptyStateProps> = ({
-  usedForLoggedOutState,
-}) => {
+const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -49,7 +47,7 @@ const DesktopLayout: React.FC<EmptyStateProps> = ({
         >
           Upload Artwork
         </Button>
-        {!!usedForLoggedOutState && (
+        {!!loggedOutState && (
           <Banner mt={4} variant="defaultLight">
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
@@ -123,10 +121,10 @@ export const MyCollectionEmptyState: React.FC<EmptyStateProps> = () => {
   return (
     <>
       <Media at="xs">
-        <MobileLayout usedForLoggedOutState />
+        <MobileLayout loggedOutState />
       </Media>
       <Media greaterThan="xs">
-        <DesktopLayout usedForLoggedOutState />
+        <DesktopLayout loggedOutState />
       </Media>
     </>
   )

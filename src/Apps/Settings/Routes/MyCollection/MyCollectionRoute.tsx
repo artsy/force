@@ -179,7 +179,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           />
         </>
       ) : (
-        <EmptyMyCollectionPage />
+        <EmptyMyCollectionPage loggedOutState={false} />
       )}
     </>
   )

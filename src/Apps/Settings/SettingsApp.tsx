@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { MyCollectionRouteLoggedOut } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOut"
+import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
@@ -20,7 +20,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
 
   if (!isLoggedIn) {
-    return <MyCollectionRouteLoggedOut />
+    return <MyCollectionRouteLoggedOutState />
   }
 
   const tabs = compact([
