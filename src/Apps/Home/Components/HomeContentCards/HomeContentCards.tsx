@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 import { BrazeCards } from "./BrazeCards"
 import { PlaceholderCards } from "./PlaceholderCards"
@@ -6,6 +6,7 @@ import { PlaceholderCards } from "./PlaceholderCards"
 export const HomeContentCards: React.FC = () => {
   const [appboy, setAppboy] = useState<any>(null)
   const [cards, setCards] = useState<BrazeContentCard[]>([])
+  const cardsLengthRef = useRef(cards.length)
 
   useEffect(() => {
     window.analytics?.ready(() => {
@@ -31,7 +32,11 @@ export const HomeContentCards: React.FC = () => {
     appboy.requestContentCardsRefresh()
   }, [appboy])
 
-  const hasBrazeCards = appboy && cards.length > 0
+  useEffect(() => {
+    cardsLengthRef.current = cards.length
+  }, [cards])
+
+  const hasBrazeCards = appboy && cardsLengthRef.current > 0
 
   if (!hasBrazeCards) return <PlaceholderCards />
 
