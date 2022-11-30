@@ -1,14 +1,5 @@
 /* eslint-disable jest/expect-expect */
 
-describe("/my-collection", () => {
-  describe("unauthenticated", () => {
-    it("redirects to the login page", () => {
-      cy.visit("/my-collection")
-      cy.contains("Log in to Artsy")
-    })
-  })
-})
-
 describe("/my-collection/artwork/:artworkID", () => {
   before(() => {
     cy.visit("/my-collection/artwork/trudy-benson-boost")
