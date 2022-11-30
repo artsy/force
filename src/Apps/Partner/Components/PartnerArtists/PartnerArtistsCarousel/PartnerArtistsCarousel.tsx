@@ -6,8 +6,8 @@ import { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtist
 import { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
-import { extractNodes } from "Utils/extractNodes"
+import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
+import { compact } from "lodash"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 
@@ -27,25 +27,27 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   ) {
     return null
   }
-
-  const artists = extractNodes(partner.artistsConnection)
+  const { slug } = partner
+  const artists = compact(partner.artistsConnection.edges)
 
   return (
     <Shelf alignItems="flex-start">
-      {artists.map(artist => (
-        <CellArtistFragmentContainer
-          key={artist.internalID}
-          artist={artist}
-          to={`/partner/${partner.slug}/artists/${artist.slug}`}
-          FollowButton={
-            <FollowArtistButtonQueryRenderer
-              id={artist.internalID}
-              contextModule={ContextModule.recommendedArtistsRail}
-              size="small"
-            />
-          }
-        />
-      ))}
+      {artists
+        .filter(artist => artist !== null)
+        .map(artist => (
+          <CellPartnerArtistFragmentContainer
+            key={artist.node?.internalID}
+            artistPartnerEdge={artist}
+            to={`/partner/${slug}/artists/${artist.node?.slug}`}
+            FollowButton={
+              <FollowArtistButtonQueryRenderer
+                id={artist.node?.internalID!}
+                contextModule={ContextModule.recommendedArtistsRail}
+                size="small"
+              />
+            }
+          />
+        ))}
     </Shelf>
   )
 }
@@ -63,10 +65,11 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              ...CellArtist_artist
+              id
               internalID
               slug
             }
+            ...CellPartnerArtist_partnerArtist
           }
         }
       }

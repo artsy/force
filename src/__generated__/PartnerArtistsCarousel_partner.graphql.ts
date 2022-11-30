@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<736e947799c840b8ef0d535bd4854ba2>>
+ * @generated SignedSource<<f5927a23c8c757080e40c12a0b4a7626>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,11 @@ export type PartnerArtistsCarousel_partner$data = {
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
         readonly internalID: string;
         readonly slug: string;
-        readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
       } | null;
+      readonly " $fragmentSpreads": FragmentRefs<"CellPartnerArtist_partnerArtist">;
     } | null> | null;
   } | null;
   readonly slug: string;
@@ -84,9 +85,11 @@ return {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
                   "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArtist_artist"
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
                 },
                 {
                   "alias": null,
@@ -98,6 +101,11 @@ return {
                 (v0/*: any*/)
               ],
               "storageKey": null
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "CellPartnerArtist_partnerArtist"
             }
           ],
           "storageKey": null
@@ -111,6 +119,6 @@ return {
 };
 })();
 
-(node as any).hash = "29d1837af9e22e88c9fd85a64a7317f2";
+(node as any).hash = "bf6706f7c3451b1c2bd2d7347757ccd1";
 
 export default node;
