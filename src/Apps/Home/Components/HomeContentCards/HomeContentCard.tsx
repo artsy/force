@@ -18,7 +18,7 @@ import { HomeHeroUnitCredit } from "Apps/Home/Components/HomeHeroUnits/HomeHeroU
 interface HomeContentCardProps {
   card: BrazeContentCard
   index: number
-  onClick: () => void
+  onClick?: () => void
 }
 
 export const HomeContentCard: React.FC<HomeContentCardProps> = ({
