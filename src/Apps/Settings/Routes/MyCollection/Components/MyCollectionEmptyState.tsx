@@ -43,7 +43,7 @@ const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => trackAddCollectedArtwork()}
+          onClick={() => (loggedOutState ? {} : trackAddCollectedArtwork())}
         >
           Upload Artwork
         </Button>
@@ -73,7 +73,7 @@ const DesktopLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
   )
 }
 
-const MobileLayout: React.FC<EmptyStateProps> = () => {
+const MobileLayout: React.FC<EmptyStateProps> = ({ loggedOutState }) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -107,11 +107,19 @@ const MobileLayout: React.FC<EmptyStateProps> = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
-          onClick={() => trackAddCollectedArtwork()}
+          onClick={() => (loggedOutState ? {} : trackAddCollectedArtwork())}
           width="100%"
         >
           Upload Artwork
         </Button>
+        {!!loggedOutState && (
+          <Banner mt={2} variant="defaultLight">
+            <Text variant="sm">
+              Already have artworks in My Collection?{" "}
+              <RouterLink to={null}>Log In</RouterLink> to view them.
+            </Text>
+          </Banner>
+        )}
       </Column>
     </GridColumns>
   )
