@@ -13,7 +13,7 @@ import {
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
-import { HomeHeroUnitCredit } from "./HomeHeroUnits/HomeHeroUnitCredit"
+import { HomeHeroUnitCredit } from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnitCredit"
 
 interface HomeContentCardProps {
   card: BrazeContentCard
