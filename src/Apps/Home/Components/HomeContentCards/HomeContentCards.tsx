@@ -5,11 +5,13 @@ import { HomeContentCard } from "./HomeContentCard"
 import { PlaceholderCards } from "./PlaceholderCards"
 
 export const HomeContentCards: React.FC = () => {
+  const [appboy, setAppboy] = useState<any>(null)
   const [cards, setCards] = useState<BrazeContentCard[]>([])
 
   useEffect(() => {
     window.analytics?.ready(() => {
       const appboy = (window as any).appboy
+      setAppboy(appboy)
 
       if (!appboy) return
 
@@ -28,14 +30,11 @@ export const HomeContentCards: React.FC = () => {
     })
   }, [])
 
-  const hasBrazeCards = cards.length > 0
+  const hasBrazeCards = appboy && cards.length > 0
 
   if (!hasBrazeCards) return <PlaceholderCards />
 
   const handleChange = index => {
-    const appboy = (window as any).appboy
-    if (!appboy) return
-
     const card = cards[index]
     appboy.logCardImpressions([card])
   }
@@ -44,9 +43,9 @@ export const HomeContentCards: React.FC = () => {
     <HeroCarousel onChange={handleChange}>
       {cards.map((card, index) => {
         const handleClick = () => {
-          const appboy = (window as any).appboy
-          appboy?.logCardClick(card)
+          appboy.logCardClick(card)
         }
+
         return (
           <HomeContentCard
             card={card}
