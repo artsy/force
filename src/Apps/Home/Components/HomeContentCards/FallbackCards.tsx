@@ -1,6 +1,6 @@
 import { HomeContentCard } from "./HomeContentCard"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
+import Braze from "@braze/web-sdk"
 
 const makeContentCard = ({
   imageUrl,
@@ -11,7 +11,7 @@ const makeContentCard = ({
   linkText,
   description,
   title,
-}): BrazeContentCard => {
+}): Braze.CaptionedImage => {
   const extras = {
     credit,
     label,

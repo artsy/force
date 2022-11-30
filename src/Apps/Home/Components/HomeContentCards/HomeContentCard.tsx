@@ -1,4 +1,4 @@
-import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
+import Braze from "@braze/web-sdk"
 import * as React from "react"
 import {
   Box,
@@ -16,7 +16,7 @@ import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnitCredit"
 
 interface HomeContentCardProps {
-  card: BrazeContentCard
+  card: Braze.CaptionedImage
   index: number
   onClick?: () => void
 }

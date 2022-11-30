@@ -1,11 +1,11 @@
 import React from "react"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
+import Braze from "@braze/web-sdk"
 import { HomeContentCard } from "./HomeContentCard"
 
 interface BrazeCardsProps {
-  appboy: any
-  cards: BrazeContentCard[]
+  appboy: typeof Braze
+  cards: Braze.CaptionedImage[]
 }
 
 export const BrazeCards: React.FC<BrazeCardsProps> = ({ appboy, cards }) => {
