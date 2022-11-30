@@ -1,9 +1,11 @@
 import { Text } from "@artsy/palette"
+import { MyCollectionRouteLoggedOut } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOut"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 
@@ -14,7 +16,12 @@ interface SettingsAppProps {
 }
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
+  const { isLoggedIn } = useSystemContext()
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+
+  if (!isLoggedIn) {
+    return <MyCollectionRouteLoggedOut />
+  }
 
   const tabs = compact([
     { name: "Edit Settings", url: "/settings/edit-settings" },
