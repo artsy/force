@@ -1,6 +1,7 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
+  Clickable,
   Column,
   GridColumns,
   Image,
@@ -72,8 +73,7 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
           <Message mt={4} variant="info">
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
-              <RouterLink
-                to={null}
+              <Clickable
                 onClick={() => {
                   mediator &&
                     openAuthModal(mediator, {
@@ -85,7 +85,7 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
                 }}
               >
                 Log In
-              </RouterLink>{" "}
+              </Clickable>{" "}
               to view them.
             </Text>
           </Message>
@@ -173,8 +173,7 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
           <Message mt={2} variant="info">
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
-              <RouterLink
-                to={null}
+              <Clickable
                 onClick={() => {
                   mediator &&
                     openAuthModal(mediator, {
@@ -186,7 +185,7 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
                 }}
               >
                 Log In
-              </RouterLink>{" "}
+              </Clickable>{" "}
               to view them.
             </Text>
           </Message>
