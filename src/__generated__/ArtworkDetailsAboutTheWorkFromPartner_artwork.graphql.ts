@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8070b1279dd9790c6a98b0d38989250>>
+ * @generated SignedSource<<785fa4da46e0a27b92be4a3b5e70b04b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = {
     readonly profile: {
       readonly internalID: string;
     } | null;
+    readonly type: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   } | null;
   readonly " $fragmentType": "ArtworkDetailsAboutTheWorkFromPartner_artwork";
@@ -66,6 +67,13 @@ return {
           "kind": "FragmentSpread",
           "name": "EntityHeaderPartner_partner"
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "type",
+          "storageKey": null
+        },
         (v0/*: any*/),
         {
           "alias": null,
@@ -88,6 +96,6 @@ return {
 };
 })();
 
-(node as any).hash = "7cc5f0c68d11938096b84f141385db48";
+(node as any).hash = "75b448a21f7fdfc143486518df0e1992";
 
 export default node;
