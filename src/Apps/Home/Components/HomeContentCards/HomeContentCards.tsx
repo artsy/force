@@ -12,11 +12,12 @@ const sortCards = (lhs, rhs) => {
   return lhsPosition > rhsPosition ? 1 : -1
 }
 
-const DEFAULT_TIMEOUT_AMOUNT = 5000
+export const DEFAULT_TIMEOUT_AMOUNT = 5000
 
 export const HomeContentCards: React.FC = () => {
   const { match } = useRouter()
-  const { brazeTimeoutAmount } = paramsToCamelCase(match?.location.query) as {
+  const query = match?.location.query ?? {}
+  const { brazeTimeoutAmount } = paramsToCamelCase(query) as {
     brazeTimeoutAmount?: number
   }
 
