@@ -1,4 +1,4 @@
-import { Text } from "@artsy/palette"
+import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -29,7 +29,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     <>
       <MetaTags title="Collector Profile | Artsy" />
 
-      <Text>Sup</Text>
+      <CollectorProfileHeaderFragmentContainer />
 
       <RouteTabs fill my={[2, 4]}>
         {TABS.map(tab => {
