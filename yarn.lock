@@ -26,10 +26,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.81.0":
-  version "4.81.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.81.0.tgz#60d24598ca2f04bf78f04ed133d7be33012c9e3a"
-  integrity sha512-GlU8SOoupz0o+gSAxRpOr1jR3oSEw+A6nhlDMYaN0++MZQ9OnZvvwR9gSjDNLNx03syPEzggmdBKyOMo1vrqng==
+"@artsy/cohesion@4.82.0":
+  version "4.82.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.82.0.tgz#94fc9cf8aa5b0441d1597cb71bfb63f6158f1e26"
+  integrity sha512-YqhaKfseDzw7P67PEhvSoEao9bx65m5ABewy55rfQZIqcIIEhgpt0ALMMVuNGktNBVVXkVp/zN7chZjExDJv9Q==
   dependencies:
     core-js "3"
 
