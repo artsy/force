@@ -74,6 +74,7 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
               <Clickable
+                textDecoration="underline"
                 onClick={() => {
                   mediator &&
                     openAuthModal(mediator, {
@@ -174,6 +175,7 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
             <Text variant="sm">
               Already have artworks in My Collection?{" "}
               <Clickable
+                textDecoration="underline"
                 onClick={() => {
                   mediator &&
                     openAuthModal(mediator, {
