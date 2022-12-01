@@ -22,14 +22,14 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
-  it("renders a link to gallery partner", () => {
+  it("renders a link when partner page is valid", () => {
     renderWithRelay({
       Artwork: () => ({
         partner: {
-          type: "Gallery",
           name: "Nice Gallery",
-          slug: "nice-gallery",
-          href: "/auction/nice-gallery",
+          href: "/partner/nice-gallery",
+          partnerPageEligible: true,
+          isDefaultProfilePublic: true,
         },
       }),
     })
@@ -37,23 +37,39 @@ describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
     expect(screen.queryByText("Nice Gallery")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/auction/nice-gallery"
+      "/partner/nice-gallery"
     )
   })
 
-  it("does not render a link to auction partner", () => {
+  it("does not render a link when partner is ineligible for a page", () => {
     renderWithRelay({
       Artwork: () => ({
         partner: {
-          type: "Auction House",
           name: "Hammer Time",
-          slug: "hammer-time",
-          href: "/auction/hammer-time",
+          href: null,
+          partnerPageEligible: false,
+          isDefaultProfilePublic: true,
         },
       }),
     })
 
     expect(screen.queryByText("Hammer Time")).toBeInTheDocument()
+    expect(screen.queryByRole("link")).not.toBeInTheDocument()
+  })
+
+  it("does not render a link when partner profile is private", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        partner: {
+          name: "Galerie Edge Case",
+          href: "/partner/galerie-edge-case",
+          partnerPageEligible: true,
+          isDefaultProfilePublic: false,
+        },
+      }),
+    })
+
+    expect(screen.queryByText("Galerie Edge Case")).toBeInTheDocument()
     expect(screen.queryByRole("link")).not.toBeInTheDocument()
   })
 })

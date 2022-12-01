@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37b939303822997b28ffafd33816ad66>>
+ * @generated SignedSource<<c4afdbf9e8673fc952dd1d3d99389a22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,15 +108,21 @@ v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Boolean"
 },
 v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "type": "Image"
 },
 v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -339,6 +345,20 @@ return {
                 ],
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerPageEligible",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isDefaultProfilePublic",
+                "storageKey": null
+              },
               (v5/*: any*/)
             ],
             "storageKey": null
@@ -350,7 +370,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e12538d5944580f1cb6086040598591",
+    "cacheID": "ce1ece39a2b91d68d82458ac701c8150",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -381,6 +401,7 @@ return {
         "artwork.partner.id": (v10/*: any*/),
         "artwork.partner.initials": (v9/*: any*/),
         "artwork.partner.internalID": (v10/*: any*/),
+        "artwork.partner.isDefaultProfilePublic": (v11/*: any*/),
         "artwork.partner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -402,20 +423,21 @@ return {
         "artwork.partner.locationsConnection.edges.node.city": (v9/*: any*/),
         "artwork.partner.locationsConnection.edges.node.id": (v10/*: any*/),
         "artwork.partner.name": (v9/*: any*/),
+        "artwork.partner.partnerPageEligible": (v11/*: any*/),
         "artwork.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "artwork.partner.profile.avatar": (v11/*: any*/),
-        "artwork.partner.profile.avatar.cropped": (v12/*: any*/),
-        "artwork.partner.profile.avatar.cropped.src": (v13/*: any*/),
-        "artwork.partner.profile.avatar.cropped.srcSet": (v13/*: any*/),
-        "artwork.partner.profile.icon": (v11/*: any*/),
-        "artwork.partner.profile.icon.cropped": (v12/*: any*/),
-        "artwork.partner.profile.icon.cropped.src": (v13/*: any*/),
-        "artwork.partner.profile.icon.cropped.srcSet": (v13/*: any*/),
+        "artwork.partner.profile.avatar": (v12/*: any*/),
+        "artwork.partner.profile.avatar.cropped": (v13/*: any*/),
+        "artwork.partner.profile.avatar.cropped.src": (v14/*: any*/),
+        "artwork.partner.profile.avatar.cropped.srcSet": (v14/*: any*/),
+        "artwork.partner.profile.icon": (v12/*: any*/),
+        "artwork.partner.profile.icon.cropped": (v13/*: any*/),
+        "artwork.partner.profile.icon.cropped.src": (v14/*: any*/),
+        "artwork.partner.profile.icon.cropped.srcSet": (v14/*: any*/),
         "artwork.partner.profile.id": (v10/*: any*/),
         "artwork.partner.profile.internalID": (v10/*: any*/),
         "artwork.partner.slug": (v10/*: any*/),
@@ -424,7 +446,7 @@ return {
     },
     "name": "ArtworkDetailsAboutTheWorkFromPartner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAboutTheWorkFromPartner_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    type\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetailsAboutTheWorkFromPartner_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

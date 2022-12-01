@@ -71,7 +71,9 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
 
     if (!additionalInformation && !partner) return null
 
-    const isNotAuctionPartner = !partner?.type?.match(/Auction/)
+    const canLink = Boolean(
+      partner?.partnerPageEligible && partner?.isDefaultProfilePublic
+    )
 
     return (
       <StackableBorderBox
@@ -81,7 +83,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
         {partner && (
           <EntityHeaderPartnerFragmentContainer
             partner={partner}
-            displayLink={isNotAuctionPartner}
+            displayLink={canLink}
             FollowButton={
               partner.profile ? (
                 <FollowProfileButtonQueryRenderer
@@ -117,7 +119,8 @@ export const ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer = createFrag
         additionalInformation(format: HTML)
         partner {
           ...EntityHeaderPartner_partner
-          type
+          partnerPageEligible
+          isDefaultProfilePublic
           internalID
           profile {
             internalID
