@@ -1,18 +1,12 @@
 import {
   Clickable,
   ClickableProps,
-  CloseIcon,
   HeartFillIcon,
   HeartIcon,
 } from "@artsy/palette"
 import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
-
 import { FC, MouseEvent, useState } from "react"
-import { graphql } from "react-relay"
-
-const BTN_WIDTH = 40
-const BTN_HEIGHT = 40
 
 // TODO: Re-evaluate necessity of this component
 // Maybe just add a size prop to existing button
@@ -21,6 +15,8 @@ export const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
   slug,
   ...rest
 }) => {
+  const BTN_WIDTH = 40
+  const BTN_HEIGHT = 40
   const [isHovered, setIsHovered] = useState(false)
   const { currentArtwork, stepForward } = useArtQuizContext()
 
@@ -60,42 +56,6 @@ export const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
       ) : (
         <HeartIcon height={BTN_HEIGHT} width={BTN_WIDTH} />
       )}
-    </Clickable>
-  )
-}
-
-// TODO: Add mutation and animation
-// Ask lois about possibility of a bold version of this icon
-export const ArtQuizDislikeButton: FC<ClickableProps> = ({ ...rest }) => {
-  const { stepBackward } = useArtQuizContext()
-  const handleClick = () => {
-    stepBackward()
-  }
-
-  const { submitMutation } = useMutation<ArtQuizDislikeButtonMutation>({
-    mutation: graphql`
-      mutation ArtQuizDislikeButtonMutation($artworkID: String!) {
-        dislikeArtwork(input: { artworkID: $artworkID, remove: false }) {
-          artwork {
-            isDisliked
-            id
-          }
-        }
-      }
-    `,
-  })
-
-  // submit mutation on click w/ a try catch for error handling
-
-  return (
-    <Clickable
-      display="flex"
-      p={0.5}
-      onClick={handleClick}
-      alignItems="center"
-      {...rest}
-    >
-      <CloseIcon height={BTN_HEIGHT} width={BTN_WIDTH} />
     </Clickable>
   )
 }

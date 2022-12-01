@@ -11,10 +11,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
-import {
-  ArtQuizDislikeButton,
-  ArtQuizSaveButton,
-} from "Apps/ArtQuiz/Components/ArtQuizButtons"
+import { ArtQuizSaveButton } from "Apps/ArtQuiz/Components/ArtQuizSaveButton"
+import { ArtQuizDislikeButton } from "Apps/ArtQuiz/Components/ArtQuizDislikeButton"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FC, useEffect, useState } from "react"
 import { useWindowSize } from "Utils/Hooks/useWindowSize"
@@ -134,7 +132,7 @@ export const ArtQuizMain: FC = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <ArtQuizDislikeButton px={6} />
+          <ArtQuizDislikeButton slug={currentArtwork.slug} px={6} />
           <ArtQuizSaveButton slug={currentArtwork.slug} px={6} />
         </Flex>
       </CSSGrid>
