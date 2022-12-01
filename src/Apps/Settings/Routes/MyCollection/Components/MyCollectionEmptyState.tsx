@@ -1,3 +1,4 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Column,
@@ -9,13 +10,12 @@ import {
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EmptyMyCollectionPageProps } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
+import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
+import { openAuthModal } from "Utils/openAuthModal"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { openAuthModal } from "Utils/openAuthModal"
-import { useSystemContext } from "System/SystemContext"
-import { ModalType } from "Components/Authentication/Types"
-import { ContextModule, Intent } from "@artsy/cohesion"
 
 const image = resized(
   "https://files.artsy.net/images/my-coll-get-app-img.jpg",
