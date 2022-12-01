@@ -1,19 +1,47 @@
 import { Avatar, Flex, UserSingleIcon } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
+import { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
 
-export const CollectorProfileHeaderAvatar: React.FC = ({}) => {
+interface CollectorProfileHeaderAvatarProps {
+  me: CollectorProfileHeaderAvatar_me$data
+}
+
+const CollectorProfileHeaderAvatar: React.FC<CollectorProfileHeaderAvatarProps> = ({
+  me,
+}) => {
+  if (!me.icon?.resized?.src) {
+    return <NoAvatarComponent />
+  }
+
   return (
     <>
       <Media lessThan="sm">
-        <Avatar size="xs" />
+        <Avatar size="xs" lazyLoad {...me.icon.resized} />
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <Avatar size="md" />
+        <Avatar size="md" lazyLoad {...me.icon.resized} />
       </Media>
     </>
   )
 }
+
+export const CollectorProfileHeaderAvatarFragmentContainer = createFragmentContainer(
+  CollectorProfileHeaderAvatar,
+  {
+    me: graphql`
+      fragment CollectorProfileHeaderAvatar_me on Me {
+        icon {
+          resized(height: 200, width: 200, version: "large_square") {
+            src
+            srcSet
+          }
+        }
+      }
+    `,
+  }
+)
 
 const NoAvatarComponent: React.FC = () => {
   return (

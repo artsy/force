@@ -29,7 +29,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     <>
       <MetaTags title="Collector Profile | Artsy" />
 
-      <CollectorProfileHeaderFragmentContainer />
+      <CollectorProfileHeaderFragmentContainer me={me} />
 
       <RouteTabs fill my={[2, 4]}>
         {TABS.map(tab => {
@@ -51,6 +51,7 @@ export const CollectorProfileAppFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment CollectorProfileApp_me on Me {
+        ...CollectorProfileHeader_me
         name
       }
     `,

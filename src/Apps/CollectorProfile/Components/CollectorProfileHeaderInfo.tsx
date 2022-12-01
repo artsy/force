@@ -7,25 +7,60 @@ import {
   Text,
 } from "@artsy/palette"
 import { FC, Fragment } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-
-interface CollectorProfileHeaderInfoProps {
-  type: "Location" | "Profession" | "OtherRelevantPositions"
-  value: string
-}
+import { CollectorProfileHeaderInfo_me$data } from "__generated__/CollectorProfileHeaderInfo_me.graphql"
 
 const M_ICON_SIZE = 14
 const D_ICON_SIZE = 18
 
-export const CollectorProfileHeaderInfo: FC<CollectorProfileHeaderInfoProps> = ({
-  type,
-  value,
-}) => {
-  let Icon: FC<IconProps> = Fragment
+interface CollectorProfileHeaderInfoProps {
+  me: CollectorProfileHeaderInfo_me$data
+}
 
-  if (!value) {
-    return null
+const CollectorProfileHeaderInfo: FC<CollectorProfileHeaderInfoProps> = ({
+  me,
+}) => {
+  const { location, profession, otherRelevantPositions } = me
+
+  return (
+    <Flex>
+      {!!location?.display && (
+        <InfoField type="Location" value={location.display} />
+      )}
+      {!!profession && <InfoField type="Profession" value={profession} />}
+      {!!otherRelevantPositions && (
+        <InfoField
+          type="OtherRelevantPositions"
+          value={otherRelevantPositions}
+        />
+      )}
+    </Flex>
+  )
+}
+
+export const CollectorProfileHeaderInfoFragmentContainer = createFragmentContainer(
+  CollectorProfileHeaderInfo,
+  {
+    me: graphql`
+      fragment CollectorProfileHeaderInfo_me on Me {
+        location {
+          display
+        }
+        profession
+        otherRelevantPositions
+      }
+    `,
   }
+)
+
+interface InfoFieldProps {
+  type: "Location" | "Profession" | "OtherRelevantPositions"
+  value: string
+}
+
+const InfoField: FC<InfoFieldProps> = ({ type, value }) => {
+  let Icon: FC<IconProps> = Fragment
 
   switch (type) {
     case "Location":
