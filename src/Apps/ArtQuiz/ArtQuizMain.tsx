@@ -2,12 +2,11 @@ import {
   ArrowLeftIcon,
   Clickable,
   CloseIcon,
-  CSSGrid,
+  Column,
   Flex,
   FullBleed,
+  GridColumns,
   Image,
-  ResponsiveBox,
-  Spinner,
   Text,
 } from "@artsy/palette"
 import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
@@ -15,129 +14,65 @@ import {
   ArtQuizDislikeButton,
   ArtQuizSaveButton,
 } from "Apps/ArtQuiz/Components/ArtQuizButtons"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { FC, useEffect, useState } from "react"
-import { useWindowSize } from "Utils/Hooks/useWindowSize"
-
-const DESKTOP_ROW_HEIGHT = 120
-const DESKTOP_IMAGE_PY = 40
-const MOBILE_ROW_HEIGHT = 80
-const MOBILE_ADDRESS_BAR_HEIGHT = 55
+import { FullyResponsiveBox } from "Components/FullyResponsiveBox"
+import { FC } from "react"
 
 export const ArtQuizMain: FC = () => {
-  const { desktop, mobile } = useNavBarHeight()
   const {
     artworksTotalCount,
     currentArtwork,
     currentIndex,
   } = useArtQuizContext()
-  const { height, width } = useWindowSize()
-
-  const aspectRatio = currentArtwork.image?.aspectRatio ?? 1
-
-  const [maxHeight, setMaxHeight] = useState<number>(0)
-
-  useEffect(() => {
-    if (height && width > 768) {
-      setMaxHeight(height - DESKTOP_ROW_HEIGHT * 2 - DESKTOP_IMAGE_PY - desktop)
-    }
-    if (height && width < 768) {
-      setMaxHeight(
-        height - MOBILE_ROW_HEIGHT * 2 - MOBILE_ADDRESS_BAR_HEIGHT - mobile
-      )
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [height, width])
 
   return (
-    // Should we lift this FullBleed up into the ArtQuizApp?
-    // Maybe not relevant to the results page
-    <FullBleed
-      height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
-      justifyContent="center"
-    >
-      <CSSGrid
-        gridTemplateAreas={[
-          `"header"
-          "image"
-          "controls"`,
-          `"back progress skip"
-          ". image ."
-          ". controls ."`,
-        ]}
-        gridTemplateColumns={["1fr", "2fr 8fr 2fr"]}
-        gridTemplateRows={[
-          `${MOBILE_ROW_HEIGHT}px 1fr ${MOBILE_ROW_HEIGHT}px`,
-          `${DESKTOP_ROW_HEIGHT}px 1fr ${DESKTOP_ROW_HEIGHT}px`,
-        ]}
-        height="100%"
-        pb={6}
-      >
-        <Clickable
-          alignSelf={"center"}
-          gridArea={["header", "back"]}
-          justifySelf={["flex-start", "flex-end"]}
-          px={[2, 0]}
-        >
-          <ArrowLeftIcon />
-        </Clickable>
-        <Text
-          gridArea={["header", "progress"]}
-          alignSelf="center"
-          justifySelf="center"
-        >
-          {`${currentIndex + 1} / ${artworksTotalCount}`}
-        </Text>
-        <Clickable
-          gridArea={["header", "skip"]}
-          alignSelf="center"
-          justifySelf={["flex-end", "flex-start"]}
-          px={[2, 0]}
-        >
-          <CloseIcon />
-        </Clickable>
+    <FullBleed height="100%" display="flex" flexDirection="column">
+      <GridColumns p={4}>
+        <Column span={4} display="flex" justifyContent="center">
+          <Clickable>
+            <ArrowLeftIcon />
+          </Clickable>
+        </Column>
 
-        <Flex gridArea="image" justifyContent="center" alignItems="center">
-          {/** The appearance/disappearance of this loader is startling and poor UX.
-           * We should definitely work on smoothing this visual transition out as part of
-           * the animation user story. */}
-          {!maxHeight && (
-            <>
-              <Text>Loading images...</Text>
-              <Spinner />
-            </>
-          )}
-          {!!maxHeight && (
-            <ResponsiveBox
-              display="grid"
-              gridArea="image"
-              aspectWidth={aspectRatio}
-              aspectHeight={1}
-              maxHeight={maxHeight}
-              p={[0, 2]}
-            >
-              <Image
-                alt={currentArtwork.title}
-                src={currentArtwork.image?.url}
-                preventRightClick={true}
-                height="100%"
-                width="100%"
-              />
-            </ResponsiveBox>
-          )}
-        </Flex>
+        <Column span={4} display="flex" justifyContent="center">
+          <Text variant="sm-display">{`${
+            currentIndex + 1
+          } / ${artworksTotalCount}`}</Text>
+        </Column>
 
-        <Flex
-          gridArea="controls"
-          width="100%"
-          height="100%"
-          alignItems="center"
-          justifyContent="center"
+        <Column span={4} display="flex" justifyContent="center">
+          <Clickable>
+            <CloseIcon />
+          </Clickable>
+        </Column>
+      </GridColumns>
+
+      <Flex justifyContent="center" alignItems="center" flex={1}>
+        <FullyResponsiveBox
+          key={currentArtwork.image.url}
+          aspectWidth={currentArtwork.image.width}
+          aspectHeight={currentArtwork.image.height}
+          bg="black10"
         >
-          <ArtQuizDislikeButton px={6} />
-          <ArtQuizSaveButton slug={currentArtwork.slug} px={6} />
-        </Flex>
-      </CSSGrid>
+          <Image
+            // TODO: Needs srcSet
+            src={currentArtwork.image.url}
+            height="100%"
+            width="100%"
+            alt={currentArtwork.title}
+            lazyLoad
+          />
+        </FullyResponsiveBox>
+      </Flex>
+
+      <GridColumns p={4}>
+        <Column span={6} display="flex" justifyContent="center">
+          <ArtQuizDislikeButton />
+        </Column>
+
+        <Column span={6} display="flex" justifyContent="center">
+          <ArtQuizSaveButton slug={currentArtwork.slug} />
+        </Column>
+      </GridColumns>
     </FullBleed>
   )
 }

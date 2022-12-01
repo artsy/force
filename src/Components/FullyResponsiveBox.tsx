@@ -3,17 +3,22 @@ import { FC, useEffect, useState } from "react"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { scale } from "proportional-scale"
 
-interface ArticleZoomGalleryResponsiveBoxProps extends BoxProps {
+interface FullyResponsiveBoxProps extends BoxProps {
   aspectWidth: number
   aspectHeight: number
 }
 
 /**
- * - We can't create a grey placeholder box using `ResponsiveBox` because it has to be both width and height constrained.
- * - We can't create a grey placeholder box using native CSS `aspect-ratio` because it is uncenterable using flexbox as of March 2022.
- * - Instead: we just manually measure and create a grey placeholder box using JS.
+ * - We can't create a grey placeholder box using `ResponsiveBox` because it
+ *   has to be both width and height constrained.
+ *
+ * - We can't create a grey placeholder box using native CSS `aspect-ratio`
+ *   because it is uncenterable using flexbox as of March 2022.
+ *
+ * - Instead: we just manually measure and create a box that scales responsively
+ *   along both axes using measurements obtained via a MutationObserver.
  */
-export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBoxProps> = ({
+export const FullyResponsiveBox: FC<FullyResponsiveBoxProps> = ({
   aspectWidth,
   aspectHeight,
   children,

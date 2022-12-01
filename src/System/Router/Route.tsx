@@ -9,6 +9,7 @@ import { NextFunction } from "express";
 interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   children?: AppRouteConfig[]
+  // FIXME: This is named poorly and doesn't do anything
   displayFullPage?: boolean
   fetchIndicator?: FetchIndicator
   hideNav?: boolean

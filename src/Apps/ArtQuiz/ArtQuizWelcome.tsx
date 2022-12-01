@@ -8,7 +8,6 @@ import {
   FullBleed,
   ArtsyLogoIcon,
 } from "@artsy/palette"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
@@ -19,62 +18,62 @@ interface ArtQuizWelcomeProps {
 }
 
 export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
-  const { desktop, mobile } = useNavBarHeight()
   const { t } = useTranslation()
 
   return (
-    <FullBleed
-      height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
-    >
-      <Box height="100%" padding={0}>
-        <SplitLayout
-          hideLogo
-          left={
-            <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkBlackIcon height="65px" width="65px" fill="white100" />
-            </Flex>
-          }
-          leftProps={{ display: ["none", "block"] }}
-          right={
-            <Flex flexDirection="column" justifyContent="center" p={[2, 4]}>
-              <Box width="100%" my={6}>
-                <ArtsyLogoIcon mb={2} />
-                <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
+    <FullBleed height="100%">
+      <SplitLayout
+        hideLogo
+        left={
+          <Flex height="100%" alignItems="center" justifyContent="center">
+            <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
+          </Flex>
+        }
+        leftProps={{ display: ["none", "block"] }}
+        right={
+          <Flex flexDirection="column" justifyContent="center" p={[2, 4]}>
+            <Box width="100%" my={6}>
+              <ArtsyLogoIcon />
 
-                <Spacer my={6} />
+              <Spacer mt={2} />
 
-                <Text variant={["md", "lg"]}>
-                  {t("artQuizPage.welcomeScreen.subtitle1")}
-                </Text>
+              <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
 
-                <Spacer my={2} />
+              <Spacer mt={6} />
 
-                <Text variant={["md", "lg-display"]}>
-                  {t("artQuizPage.welcomeScreen.subtitle2")}
-                </Text>
-              </Box>
+              <Text variant={["md", "lg"]}>
+                {t("artQuizPage.welcomeScreen.subtitle1")}
+              </Text>
 
-              <Spacer my={6} />
+              <Spacer mt={2} />
 
-              <Box width="100%" my={6}>
-                <Button width="100%" onClick={onStartQuiz}>
-                  {t("artQuizPage.welcomeScreen.getStartedButton")}
-                </Button>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  variant="tertiary"
-                  mt={1}
-                  width="100%"
-                  to="/"
-                >
-                  {t("artQuizPage.welcomeScreen.skipButton")}
-                </Button>
-              </Box>
-            </Flex>
-          }
-        />
-      </Box>
+              <Text variant={["md", "lg-display"]}>
+                {t("artQuizPage.welcomeScreen.subtitle2")}
+              </Text>
+            </Box>
+
+            <Spacer mt={6} />
+
+            <Box width="100%">
+              <Button width="100%" onClick={onStartQuiz}>
+                {t("artQuizPage.welcomeScreen.getStartedButton")}
+              </Button>
+
+              <Spacer mt={1} />
+
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                variant="tertiary"
+                width="100%"
+                to="/"
+              >
+                {t("artQuizPage.welcomeScreen.skipButton")}
+              </Button>
+            </Box>
+          </Flex>
+        }
+      />
     </FullBleed>
   )
 }

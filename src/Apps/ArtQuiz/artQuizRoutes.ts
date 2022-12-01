@@ -13,8 +13,6 @@ const ArtQuizResults = loadable(() => import("./ArtQuizResults"), {
 export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
-    displayFullPage: true,
-    hideFooter: true,
     onServerSideRender: ({ req, res }) => {
       if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
         res.redirect("/")
@@ -27,11 +25,11 @@ export const artQuizRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
+        hideFooter: true,
         getComponent: () => ArtQuizApp,
       },
       {
         path: "results",
-        displayFullPage: true,
         hideFooter: true,
         getComponent: () => ArtQuizResults,
         onClientSideRender: () => {
