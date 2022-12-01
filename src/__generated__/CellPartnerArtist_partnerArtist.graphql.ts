@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<195aa26c82736caf967c4f01c9e8af1c>>
+ * @generated SignedSource<<c80255c07a02b22eaae35d53b515e815>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,9 @@ export type CellPartnerArtist_partnerArtist$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly partner: {
+    readonly slug: string;
+  } | null;
   readonly " $fragmentType": "CellPartnerArtist_partnerArtist";
 };
 export type CellPartnerArtist_partnerArtist$key = {
@@ -38,7 +41,15 @@ export type CellPartnerArtist_partnerArtist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CellPartnerArtist_partnerArtist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -158,13 +169,7 @@ const node: ReaderFragment = {
           "name": "internalID",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -188,12 +193,25 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "ArtistPartnerEdge",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "7a4f059eb9251c901b915ff7cd6cfb0c";
+(node as any).hash = "9b89afc9b05920bb74367262ff9f6fc3";
 
 export default node;

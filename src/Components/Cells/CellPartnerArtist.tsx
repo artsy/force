@@ -31,14 +31,16 @@ const CellPartnerArtist: FC<CellPartnerArtistProps> = ({
   ...rest
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
-  const artwork = extractNodes(artistPartnerEdge.artworksConnection)
-  const image = artwork[0].image?.cropped
+  const [artwork] = extractNodes(artistPartnerEdge.artworksConnection)
+  const image = artwork.image?.cropped
+  const partnerSlug = artistPartnerEdge.partner?.slug
+  const artistSlug = artistPartnerEdge.artist?.slug
 
   if (!artistPartnerEdge.artist) return null
 
   return (
     <RouterLink
-      to={artistPartnerEdge.artist.href!}
+      to={`/partner/${partnerSlug}/artists/${artistSlug}`}
       display="block"
       textDecoration="none"
       width={width}
@@ -133,6 +135,9 @@ export const CellPartnerArtistFragmentContainer = createFragmentContainer(
           name
           href
           initials
+        }
+        partner {
+          slug
         }
       }
     `,
