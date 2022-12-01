@@ -46,6 +46,11 @@ const SavesAndFollowsRoute = loadable(
   }
 )
 
+// Redirect home if the user is not logged in
+const handleServerSideRender = () => {
+  // TODO: Redirect to the logged out experience once released
+}
+
 export const collectorProfileRoutes: AppRouteConfig[] = [
   {
     path: "/collector-profile",
@@ -81,6 +86,14 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           SavesAndFollowsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query collectorProfileRoutes_SavesAndFollowsRouteQuery {
+            me {
+              ...CollectorProfileSavesAndFollowsRoute_me
+            }
+          }
+        `,
       },
     ],
   },
