@@ -141,7 +141,11 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = ({ quiz }) => {
           justifyContent="center"
         >
           <ArtQuizDislikeButton px={6} />
-          <ArtQuizSaveButton slug={currentArtwork.slug} px={6} />
+          <ArtQuizSaveButton
+            artwork={currentArtwork}
+            stepForward={() => {}}
+            px={6}
+          />
         </Flex>
       </CSSGrid>
     </FullBleed>

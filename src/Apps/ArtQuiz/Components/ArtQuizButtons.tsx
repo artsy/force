@@ -15,8 +15,8 @@ const BTN_HEIGHT = 40
 // Maybe just add a size prop to existing button
 // Depends on how animations implementation goes
 export const ArtQuizSaveButton: FC<
-  { artwork: any; slug: string; stepForward: () => void } & ClickableProps
-> = ({ artwork, slug, stepForward, ...rest }) => {
+  { artwork: any; stepForward: () => void } & ClickableProps
+> = ({ artwork, stepForward, ...rest }) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const { handleSave } = useSaveArtwork({
