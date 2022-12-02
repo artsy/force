@@ -313,7 +313,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       {shouldRenderButtons && <Spacer y={2} />}
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
-        <Join separator={<Spacer x={1} mt={1} />}>
+        <Join separator={<Spacer x={1} y={1} />}>
           {!!isCreateAlertAvailable && (
             <ArtworkSidebarCreateAlertButtonFragmentContainer
               artwork={artwork}

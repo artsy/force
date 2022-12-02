@@ -53,7 +53,7 @@ const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
         href={worksForSaleHref}
       />
 
-      <Spacer my={4} />
+      <Spacer y={4} />
 
       <ArtworkGrid
         artworks={artist.artworksConnection!}

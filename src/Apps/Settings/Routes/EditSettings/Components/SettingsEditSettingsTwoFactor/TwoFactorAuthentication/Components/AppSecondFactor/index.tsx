@@ -10,14 +10,14 @@ import {
 import * as React from "react"
 import { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "System"
 import { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
-import { ApiError } from "../../ApiError"
-import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
+import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 
@@ -197,7 +197,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
           </Text>
         </Box>
 
-        <Spacer x={[0, 2]} mt={[2, 0]} />
+        <Spacer x={[0, 2]} y={[2, 0]} />
 
         <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
           {isEnabled ? (

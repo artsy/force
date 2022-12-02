@@ -112,8 +112,9 @@ const WhyUseArtsy: React.FC = () => {
           />
         </ResponsiveBox>
       </Column>
+
       <Column span={6} pt={[2, 0]}>
-        <Join separator={<Spacer my={2} />}>
+        <Join separator={<Spacer y={2} />}>
           <Text variant={["md", "lg"]} mb={1}>
             Why Use Artsy for Appraisal and Collection Management Services
           </Text>

@@ -53,7 +53,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <CuritorialRailsTabBarFragmentContainer viewer={viewer} />
 
-      <Spacer my={12} />
+      <Spacer y={12} />
 
       <RouteTabs fill>
         <RouteTab exact to="/auctions">

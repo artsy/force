@@ -217,7 +217,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet

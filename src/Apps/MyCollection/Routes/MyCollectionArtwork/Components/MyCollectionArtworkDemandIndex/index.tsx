@@ -64,7 +64,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
         </Flex>
       </Media>
 
-      <Spacer m={2} />
+      <Spacer x={2} y={2} />
 
       <Text variant={"xl"} color={demandRankColor}>
         {adjustedDemandRank}

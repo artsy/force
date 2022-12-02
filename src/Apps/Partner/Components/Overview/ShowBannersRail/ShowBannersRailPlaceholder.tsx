@@ -46,7 +46,7 @@ export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProp
         </Column>
       </GridColumns>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Flex alignItems="center">
         <Box flex={1}>

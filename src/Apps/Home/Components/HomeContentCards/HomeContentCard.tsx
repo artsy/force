@@ -147,7 +147,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             <Media greaterThan="xs">
               <Spacer
                 // Unconventional value here to keep visual rhythm
-                mt="30px"
+                y="30px"
               />
 
               <GridColumns>

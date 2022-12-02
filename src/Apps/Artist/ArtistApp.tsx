@@ -57,7 +57,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
     <PageWrapper artist={artist}>
       <ArtistHeaderFragmentContainer artist={artist} />
 
-      <Spacer my={[4, 12]} />
+      <Spacer y={[4, 12]} />
 
       <Jump id="artistContentArea" />
 

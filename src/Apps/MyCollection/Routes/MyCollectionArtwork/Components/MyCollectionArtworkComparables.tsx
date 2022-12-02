@@ -31,7 +31,7 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
         Comparable Works
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Column span={9}>
         <Spacer y={[2, 0]} />

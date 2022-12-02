@@ -10,7 +10,7 @@ interface AuctionInfoSidebarProps {
 
 const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
   return (
-    <Join separator={<Spacer my={1} />}>
+    <Join separator={<Spacer y={1} />}>
       <LiveAuctionToolTip show={!!sale.liveStartAt} />
 
       <Box>

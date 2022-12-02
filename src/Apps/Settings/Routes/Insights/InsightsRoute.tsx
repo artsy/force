@@ -42,7 +42,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
             <InsightsHeader />
           </Media>
 
-          <Join separator={<Spacer my={[4, 6]} />}>
+          <Join separator={<Spacer y={[4, 6]} />}>
             <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
             {!!isCareerHighlightEnabled && (

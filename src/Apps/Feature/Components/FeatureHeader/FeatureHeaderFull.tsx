@@ -50,7 +50,7 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
         </FullBleedHeader>
       ) : (
         <FullBleed px={4} pt={4}>
-          <Join separator={<Spacer my={1} />}>
+          <Join separator={<Spacer y={1} />}>
             <Text variant={["xl", "xxl"]} as="h1" textAlign="center">
               {name}
             </Text>

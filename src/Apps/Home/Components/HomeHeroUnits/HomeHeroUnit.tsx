@@ -202,7 +202,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 <Media greaterThan="xs">
                   <Spacer
                     // Unconventional value here to keep visual rhythm
-                    mt="30px"
+                    y="30px"
                   />
 
                   <GridColumns>

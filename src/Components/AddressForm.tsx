@@ -1,7 +1,7 @@
 import { Flex, Join, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
-import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
+import { TwoColumnSplit } from "Apps/Order/Components/TwoColumnLayout"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 
 export interface Address {
@@ -146,7 +146,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
           {(lockCountryToOrigin || lockCountriesToEU) && (
             <>
-              <Spacer m={0.5} />
+              <Spacer x={0.5} y={0.5} />
               <Text variant="xs" color="black60">
                 {lockCountriesToEU
                   ? "Continental Europe shipping only."

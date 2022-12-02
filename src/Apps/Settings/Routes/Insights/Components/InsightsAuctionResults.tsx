@@ -23,7 +23,7 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
         Recently Sold at Auctions
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Column span={9}>
         <Spacer y={[2, 0]} />

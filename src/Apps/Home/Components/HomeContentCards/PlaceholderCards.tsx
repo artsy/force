@@ -50,7 +50,7 @@ export const PlaceholderCards = () => {
               <Media greaterThan="xs">
                 <Spacer
                   // Unconventional value here to keep visual rhythm
-                  mt="30px"
+                  y="30px"
                 />
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>
@@ -99,7 +99,7 @@ export const PlaceholderCards = () => {
               <Media greaterThan="xs">
                 <Spacer
                   // Unconventional value here to keep visual rhythm
-                  mt="30px"
+                  y="30px"
                 />
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>

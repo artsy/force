@@ -24,7 +24,7 @@ const InsightsOverview: React.FC<InsightsOverviewProps> = ({ info }) => {
         </Text>
       </Box>
 
-      <Spacer m={2} />
+      <Spacer x={2} y={2} />
 
       <Box minWidth={[150, 290]}>
         <Text variant={["xs", "sm-display"]} mb={[0, 0.5]}>

@@ -31,7 +31,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
             <Timer variant="xs" color="black100" endDate={registrationEndsAt} />
           </Box>
 
-          <Spacer y={1} ml={1} />
+          <Spacer y={1} x={1} />
 
           <Button
             // @ts-ignore

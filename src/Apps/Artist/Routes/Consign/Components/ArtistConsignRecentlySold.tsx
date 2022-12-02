@@ -27,7 +27,7 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
     <SectionContainer textAlign="center">
       <Subheader>Works by {artist.name} recently sold on Artsy</Subheader>
 
-      <Spacer my={4} />
+      <Spacer y={4} />
 
       <Shelf>
         {artworks.map(artwork => (

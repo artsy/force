@@ -56,10 +56,10 @@ export const ArtQuizResultsLoader = () => {
               ) : (
                 <Flex height="6px" />
               )}
-              <Spacer my={2} />
+              <Spacer y={2} />
               <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
 
-              <Spacer my={2} />
+              <Spacer y={2} />
 
               <Text variant={["sm", "md"]} color="black60">
                 {t(keypath)}

@@ -121,7 +121,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
         }) => {
           return (
             <Form>
-              <Join separator={<Spacer my={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 {needsIdentityVerification ? (
                   <IdentityVerificationWarning />
                 ) : (
@@ -130,7 +130,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
                       <>
                         <Column span={12}>
                           <ConditionsOfSaleMessage additionalText=" and provide a valid phone number." />
-                          <Spacer my={2} />
+                          <Spacer y={2} />
                           <Input
                             name="phoneNumber"
                             title="Phone Number"

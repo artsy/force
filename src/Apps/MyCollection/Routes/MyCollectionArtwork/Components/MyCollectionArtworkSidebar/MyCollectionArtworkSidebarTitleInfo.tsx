@@ -25,7 +25,7 @@ const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTi
         {date && date.replace(/\s+/g, "").length > 0 && ", " + date}
       </Text>
 
-      <Spacer m={[4, 2]} />
+      <Spacer x={[4, 2]} y={[4, 2]} />
     </>
   )
 }

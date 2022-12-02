@@ -109,7 +109,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             <Text variant={["lg-display", "xl"]}>
               <h1>Collect art and design online</h1>
             </Text>
-            <Spacer my={1} />
+            <Spacer y={1} />
             <Text variant="sm-display">
               <RouterLink to="/collections">Browse by collection</RouterLink>
             </Text>
@@ -119,7 +119,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
           <CollectionsHubsNav marketingCollections={marketingCollections} />
 
-          <Spacer my={6} />
+          <Spacer y={6} />
         </Box>
 
         <Box>
