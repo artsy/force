@@ -3,7 +3,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage$data } from "__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
-import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
 import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
@@ -16,8 +15,6 @@ import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRa
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
-import { useRouter } from "System/Router/useRouter"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { HomeContentCards } from "./Components/HomeContentCards"
 
 interface HomeAppProps {
@@ -29,13 +26,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
-  const { match } = useRouter()
-  const { brazeContentCards } = paramsToCamelCase(match?.location.query) as {
-    brazeContentCards?: boolean
-  }
-  const showBrazeContentCards = !!brazeContentCards
-  const showHomeHeroUnits = !showBrazeContentCards && !!homePage
-
   return (
     <>
       <HomeMeta />
@@ -44,11 +34,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer mt={[2, 0]} />
 
-      {showBrazeContentCards && <HomeContentCards />}
-
-      {showHomeHeroUnits && (
-        <HomeHeroUnitsFragmentContainer homePage={homePage} />
-      )}
+      <HomeContentCards />
 
       <Spacer mt={[4, 6]} />
 

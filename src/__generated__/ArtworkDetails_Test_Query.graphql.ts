@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f84d8b7c428c37a0d88821bbc525c6b>>
+ * @generated SignedSource<<f85a4de7c6ff0c6cac64dd2e41ca9490>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,6 +144,12 @@ v15 = {
   "type": "String"
 },
 v16 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Boolean"
+},
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -359,6 +365,20 @@ return {
                   },
                   (v6/*: any*/)
                 ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerPageEligible",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isDefaultProfilePublic",
                 "storageKey": null
               },
               (v6/*: any*/)
@@ -587,7 +607,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9330c53a31e9452a342f32ca248e9c8e",
+    "cacheID": "b15db8171354d63f093e763a12a5f413",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -621,22 +641,17 @@ return {
         "artwork.articles.thumbnailImage.cropped.src": (v15/*: any*/),
         "artwork.articles.thumbnailImage.cropped.srcSet": (v15/*: any*/),
         "artwork.articles.thumbnailTitle": (v11/*: any*/),
-        "artwork.canRequestLotConditionsReport": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "artwork.canRequestLotConditionsReport": (v16/*: any*/),
         "artwork.category": (v11/*: any*/),
-        "artwork.certificateOfAuthenticity": (v16/*: any*/),
+        "artwork.certificateOfAuthenticity": (v17/*: any*/),
         "artwork.certificateOfAuthenticity.details": (v11/*: any*/),
         "artwork.certificateOfAuthenticity.label": (v11/*: any*/),
-        "artwork.conditionDescription": (v16/*: any*/),
+        "artwork.conditionDescription": (v17/*: any*/),
         "artwork.conditionDescription.details": (v11/*: any*/),
         "artwork.conditionDescription.label": (v11/*: any*/),
         "artwork.description": (v11/*: any*/),
         "artwork.exhibition_history": (v11/*: any*/),
-        "artwork.framed": (v16/*: any*/),
+        "artwork.framed": (v17/*: any*/),
         "artwork.framed.details": (v11/*: any*/),
         "artwork.framed.label": (v11/*: any*/),
         "artwork.id": (v12/*: any*/),
@@ -672,6 +687,7 @@ return {
         "artwork.partner.id": (v12/*: any*/),
         "artwork.partner.initials": (v11/*: any*/),
         "artwork.partner.internalID": (v12/*: any*/),
+        "artwork.partner.isDefaultProfilePublic": (v16/*: any*/),
         "artwork.partner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -693,6 +709,7 @@ return {
         "artwork.partner.locationsConnection.edges.node.city": (v11/*: any*/),
         "artwork.partner.locationsConnection.edges.node.id": (v12/*: any*/),
         "artwork.partner.name": (v11/*: any*/),
+        "artwork.partner.partnerPageEligible": (v16/*: any*/),
         "artwork.partner.profile": {
           "enumValues": null,
           "nullable": true,
@@ -714,14 +731,14 @@ return {
         "artwork.provenance": (v11/*: any*/),
         "artwork.publisher": (v11/*: any*/),
         "artwork.series": (v11/*: any*/),
-        "artwork.signatureInfo": (v16/*: any*/),
+        "artwork.signatureInfo": (v17/*: any*/),
         "artwork.signatureInfo.details": (v11/*: any*/),
         "artwork.signatureInfo.label": (v11/*: any*/)
       }
     },
     "name": "ArtworkDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -44,7 +44,7 @@
         "expandableLabel": "Details",
         "frame": "Frame",
         "AuthenticityCertificate": {
-          "includes": "This work includes a ",
+          "includes": "Includes a ",
           "certificateOfAuthenticity": "Certificate of Authenticity"
         },
         "AuthenticityCertificateModal": {

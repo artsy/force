@@ -71,6 +71,10 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
 
     if (!additionalInformation && !partner) return null
 
+    const canLink = Boolean(
+      partner?.partnerPageEligible && partner?.isDefaultProfilePublic
+    )
+
     return (
       <StackableBorderBox
         flexDirection="column"
@@ -79,6 +83,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
         {partner && (
           <EntityHeaderPartnerFragmentContainer
             partner={partner}
+            displayLink={canLink}
             FollowButton={
               partner.profile ? (
                 <FollowProfileButtonQueryRenderer
@@ -114,6 +119,8 @@ export const ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer = createFrag
         additionalInformation(format: HTML)
         partner {
           ...EntityHeaderPartner_partner
+          partnerPageEligible
+          isDefaultProfilePublic
           internalID
           profile {
             internalID

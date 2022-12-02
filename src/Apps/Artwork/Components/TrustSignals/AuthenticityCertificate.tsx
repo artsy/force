@@ -39,7 +39,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
       <Flex>
         <CertificateIcon mr={1} />
         <Text variant="xs" color="black100">
-          This work includes a{" "}
+          Includes a{" "}
           <Clickable onClick={handleClick} textDecoration="underline">
             Certificate of Authenticity
           </Clickable>
