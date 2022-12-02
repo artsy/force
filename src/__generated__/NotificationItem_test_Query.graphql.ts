@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed95c1958acc02a370c3f080531c906d>>
+ * @generated SignedSource<<336fecbab1445687adb43d59cc6f254d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -182,6 +182,13 @@ return {
                   },
                   {
                     "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "objectsCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
@@ -288,7 +295,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6ce2b155e5ad31fe483b6902a8d7ef0b",
+    "cacheID": "bfe1b092fb363ea3d7b24e5250deb8c7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -369,6 +376,12 @@ return {
           "plural": false,
           "type": "NotificationTypesEnum"
         },
+        "notificationsConnection.edges.node.objectsCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
         "notificationsConnection.edges.node.publishedAt": (v4/*: any*/),
         "notificationsConnection.edges.node.targetHref": (v4/*: any*/),
         "notificationsConnection.edges.node.title": (v4/*: any*/)
@@ -376,7 +389,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
