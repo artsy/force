@@ -306,7 +306,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               value={getValue(customSize.width[0])}
               onChange={handleInputChange("width", 0)}
             />
-            <Spacer mx={0.5} />
+            <Spacer x={1} />
             <NumericInput
               label={metricLabel}
               name="width_max"
@@ -328,7 +328,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               onChange={handleInputChange("height", 0)}
             />
 
-            <Spacer mx={0.5} />
+            <Spacer x={1} />
 
             <NumericInput
               label={metricLabel}
