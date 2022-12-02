@@ -100,7 +100,7 @@ describe("ArtworkSidebar2Details", () => {
       }),
     })
 
-    expect(screen.queryByText(/This work includes a/)).toBeInTheDocument()
+    expect(screen.queryByText(/Includes a/)).toBeInTheDocument()
     expect(
       screen.queryByText("Certificate of Authenticity")
     ).toBeInTheDocument()
