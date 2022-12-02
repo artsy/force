@@ -12,7 +12,7 @@ const sortCards = (lhs, rhs) => {
   return lhsPosition > rhsPosition ? 1 : -1
 }
 
-export const DEFAULT_TIMEOUT_AMOUNT = 5000
+export const DEFAULT_TIMEOUT_AMOUNT = 1000
 
 export const HomeContentCards: React.FC = () => {
   const { match } = useRouter()
