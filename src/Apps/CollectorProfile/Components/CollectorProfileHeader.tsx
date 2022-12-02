@@ -37,7 +37,10 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Flex>
 
         <Media lessThan="sm">
-          <RouterLink to="">
+          <RouterLink
+            // TODO: CX-3174
+            to=""
+          >
             <SettingsIcon />
           </RouterLink>
         </Media>
@@ -46,6 +49,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
           <Button
             // @ts-ignore
             as={RouterLink}
+            // TODO: CX-3174
             to=""
             variant="secondaryBlack"
             size="large"
