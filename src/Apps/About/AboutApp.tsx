@@ -14,8 +14,10 @@ import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
-import { FullBleedHeader } from "Components/FullBleedHeader"
-import styled from "styled-components"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader"
 import { useJump } from "Utils/Hooks/useJump"
 
 export const AboutApp: React.FC = () => {
@@ -27,31 +29,18 @@ export const AboutApp: React.FC = () => {
         imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
-
-      <FullBleedHeader src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png">
+      <FullBleedHeader
+        src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png"
+        caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
+            Day Lily 1, 1969."
+      >
         <FullBleedHeaderOverlay
           alignItems="center"
-          color="white100"
+          justifyContent="flex-start"
           p={4}
-          position="relative"
         >
-          <Flex width="100%" flexDirection="column">
-            <Text variant="xxl" as="h1">
-              The Future of Art Collecting
-            </Text>
-          </Flex>
-          <Text
-            variant={["xs", "sm"]}
-            position="absolute"
-            bottom={0}
-            right={0}
-            textAlign="right"
-            p={1}
-            color="white100"
-            fontStyle="italic"
-          >
-            Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
-            Day Lily 1, 1969.
+          <Text variant={["xl", "xxl"]} as="h1" color="white100">
+            The Future of Art Collecting
           </Text>
         </FullBleedHeaderOverlay>
       </FullBleedHeader>
@@ -63,6 +52,7 @@ export const AboutApp: React.FC = () => {
           <Text as="h1" variant={["lg", "xl"]}>
             Artsy is for art collecting.
           </Text>
+
           <Text variant={["sm-display", "lg-display"]} mt={2}>
             As the leading marketplace for art by the world’s emerging and
             established artists, we’ve made it easy for new and experienced
@@ -74,11 +64,11 @@ export const AboutApp: React.FC = () => {
 
       <Spacer y={6} />
 
-      <GridColumns>
+      <GridColumns gridRowGap={4}>
         {SECTION_DATA.map((section, index) => {
           return (
             <Column span={6}>
-              <Section {...section} key={index} mb={2} />
+              <Section {...section} key={index} />
             </Column>
           )
         })}
@@ -87,20 +77,9 @@ export const AboutApp: React.FC = () => {
       <Spacer y={6} />
 
       <AboutArtworksRailQueryRenderer />
-
-      <Spacer my={12} />
     </>
   )
 }
-
-const FullBleedHeaderOverlay = styled(Flex)`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.25);
-`
 
 interface SectionProps {
   imageUrl: string
@@ -167,7 +146,7 @@ const Section: React.FC<SectionProps & BoxProps> = ({
           </Text>
         </ResponsiveBox>
 
-        <Spacer my={1} />
+        <Spacer y={1} />
 
         <Flex
           justifyContent="space-between"
@@ -178,6 +157,7 @@ const Section: React.FC<SectionProps & BoxProps> = ({
             <Text variant={["lg", "xl"]}>{title}</Text>
             <Text variant="sm">{description}</Text>
           </Box>
+
           <Button
             // @ts-ignore
             as={RouterLink}
