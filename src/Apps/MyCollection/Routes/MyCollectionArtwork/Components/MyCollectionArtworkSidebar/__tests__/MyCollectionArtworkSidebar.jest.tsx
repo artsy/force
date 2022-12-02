@@ -61,7 +61,7 @@ describe("MyCollectionArtworkSidebar", () => {
         })
       ).toBeInTheDocument()
       expect(screen.getByText("Bought in a gallery")).toBeInTheDocument()
-      expect(screen.getByText("This is a unique work")).toBeInTheDocument()
+      expect(screen.getByText("Unique work")).toBeInTheDocument()
       expect(screen.getByText("€25,300")).toBeInTheDocument()
       expect(screen.getByText("Berlin")).toBeInTheDocument()
     })
@@ -142,7 +142,7 @@ const mockResolversWithData = {
   },
   provenance: "Bought in a gallery",
   attributionClass: {
-    shortDescription: "This is a unique work",
+    shortDescription: "Unique work",
   },
   pricePaid: {
     display: "€25,300",
