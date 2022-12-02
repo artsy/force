@@ -1,6 +1,3 @@
-// test showing all data
-// test showing only location and positions
-
 import { screen } from "@testing-library/react"
 import { CollectorProfileHeaderInfoFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeaderInfo"
 import { MockBoot } from "DevTools"
