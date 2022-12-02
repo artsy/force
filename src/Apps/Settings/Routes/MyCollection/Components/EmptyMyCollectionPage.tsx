@@ -1,4 +1,5 @@
 import { Join, Spacer } from "@artsy/palette"
+import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { HowMyCollectionWorks } from "./HowMyCollectionWorks"
 import { MyCollectionAppDownload } from "./MyCollectionAppDownload"
@@ -9,15 +10,14 @@ export interface EmptyMyCollectionPageProps {
   loggedOutState?: boolean
 }
 
-export const EmptyMyCollectionPage: React.FC<EmptyMyCollectionPageProps> = ({
-  loggedOutState,
-}) => {
+export const EmptyMyCollectionPage: React.FC = () => {
   const enableMyCollectionPhase3 = useFeatureFlag("my-collection-web-phase-3")
+  const { isLoggedIn } = useSystemContext()
 
   return (
     <Join separator={<Spacer my={6} />}>
       {enableMyCollectionPhase3 ? (
-        <MyCollectionEmptyState loggedOutState={loggedOutState} />
+        <MyCollectionEmptyState loggedOutState={!isLoggedIn} />
       ) : (
         <MyCollectionAppDownload />
       )}
