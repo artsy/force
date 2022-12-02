@@ -11867,6 +11867,8 @@ type Partner implements Node {
   fullProfileEligible: Boolean
     @deprecated(reason: "Prefer displayFullPartnerPage")
   hasFairPartnership: Boolean
+
+  # The url for a partner. May be `null` if partner is not eligible for page.
   href: String
 
   # A globally unique ID.
