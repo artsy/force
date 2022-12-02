@@ -62,9 +62,11 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
       <Spacer mt={2} />
 
       <Box mb={2}>
-        {!!bio && <Text variant={["xs", "sm-display"]}>{bio}</Text>}
-
-        <Spacer mt={[1, 2]} />
+        {!!bio && (
+          <Text mb={[1, 2]} variant={["xs", "sm-display"]}>
+            {bio}
+          </Text>
+        )}
 
         <CollectorProfileHeaderInfoFragmentContainer me={me} />
       </Box>
