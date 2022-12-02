@@ -1,5 +1,5 @@
 export const ArtworkWithClassification = {
-  attribution_class: { short_description: "This is a unique work" },
+  attribution_class: { short_description: "Unique work" },
 }
 
 export const ArtworkWithoutClassification = { attribution_class: null }

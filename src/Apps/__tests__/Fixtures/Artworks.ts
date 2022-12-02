@@ -216,7 +216,7 @@ export const MultipleArtistsArtwork = {
   collecting_institution: null,
   edition_of: null,
   attribution_class: {
-    short_description: "This is part of a limited edition set",
+    short_description: "Part of a limited edition set",
   },
   edition_sets: [],
   sale_message: "$1,800",
@@ -465,7 +465,7 @@ export const RegularArtworkWithTwoEditions = {
   collecting_institution: null,
   edition_of: null,
   attribution_class: {
-    short_description: "This is part of a limited edition set",
+    short_description: "Part of a limited edition set",
   },
   edition_sets: [
     {
