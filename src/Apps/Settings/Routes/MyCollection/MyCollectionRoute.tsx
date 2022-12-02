@@ -16,6 +16,7 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
 import { FC, Fragment, useCallback, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
@@ -35,6 +36,8 @@ interface MyCollectionRouteProps {
 }
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -179,7 +182,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           />
         </>
       ) : (
-        <EmptyMyCollectionPage />
+        <EmptyMyCollectionPage loggedOutState={!isLoggedIn} />
       )}
     </>
   )

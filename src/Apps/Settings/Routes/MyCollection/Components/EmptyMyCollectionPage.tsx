@@ -9,13 +9,15 @@ export interface EmptyMyCollectionPageProps {
   loggedOutState?: boolean
 }
 
-export const EmptyMyCollectionPage: React.FC<EmptyMyCollectionPageProps> = () => {
+export const EmptyMyCollectionPage: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
   const enableMyCollectionPhase3 = useFeatureFlag("my-collection-web-phase-3")
 
   return (
     <Join separator={<Spacer my={6} />}>
       {enableMyCollectionPhase3 ? (
-        <MyCollectionEmptyState loggedOutState />
+        <MyCollectionEmptyState loggedOutState={loggedOutState} />
       ) : (
         <MyCollectionAppDownload />
       )}

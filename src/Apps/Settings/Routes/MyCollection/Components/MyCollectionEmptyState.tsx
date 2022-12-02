@@ -43,7 +43,7 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
           Access price and market insights and build an online record of your
           collection.
         </Text>
-        {loggedOutState ? (
+        {!!loggedOutState ? (
           <Button
             variant="primaryBlack"
             onClick={() =>
@@ -141,7 +141,7 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
           Access price and market insights and build an online record of your
           collection.
         </Text>
-        {loggedOutState ? (
+        {!!loggedOutState ? (
           <Button
             variant="primaryBlack"
             onClick={() =>
@@ -197,14 +197,16 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
   )
 }
 
-export const MyCollectionEmptyState: React.FC<EmptyMyCollectionPageProps> = () => {
+export const MyCollectionEmptyState: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
   return (
     <>
       <Media at="xs">
-        <MobileLayout loggedOutState />
+        <MobileLayout loggedOutState={loggedOutState} />
       </Media>
       <Media greaterThan="xs">
-        <DesktopLayout loggedOutState />
+        <DesktopLayout loggedOutState={loggedOutState} />
       </Media>
     </>
   )
