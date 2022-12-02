@@ -101,7 +101,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           </nav>
         )}
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         {activeFigure.__typename === "Image" && (
           <ArtworkLightboxFragmentContainer
@@ -122,7 +122,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           />
         )}
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         {figures.length > 1 && (
           <>

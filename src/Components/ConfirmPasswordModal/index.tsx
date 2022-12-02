@@ -101,7 +101,7 @@ export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
                 Cancel
               </Button>
 
-              <Spacer ml={1} />
+              <Spacer x={1} />
 
               <Button
                 flex={1}

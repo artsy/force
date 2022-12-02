@@ -164,7 +164,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                       isMyCollectionArtwork
                     />
 
-                    <Spacer mt={4} />
+                    <Spacer y={4} />
                   </Fragment>
                 )
               })}

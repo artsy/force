@@ -47,12 +47,12 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
         <Box bg="black10" height={100} />
       )}
 
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       <Box px={2}>
         {sale.partner && <Text variant="xs">{sale.partner.name}</Text>}
 
-        <Spacer mt={1} />
+        <Spacer y={1} />
 
         <Text variant="lg-display">{sale.name}</Text>
 

@@ -56,7 +56,7 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
     <>
       <Text variant="xl">Upcoming Shows</Text>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <Jump id={jump} />
 

@@ -52,7 +52,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // For some reason, they are undefined when `useSystemContext()` is referenced
   // in <ArtistsFilter />. So, pass as props for now.
   const Filters = (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {showKeywordFilter && <KeywordFilter />}
       <PartnersFilter label="Exhibitors" expanded />
       <ArtistsFilter fairID={fair.internalID} expanded />

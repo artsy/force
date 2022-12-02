@@ -76,7 +76,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
         Content={
           <>
             <Title>{flowName} status | Artsy</Title>
-            <Join separator={<Spacer mb={[2, 4]} />}>
+            <Join separator={<Spacer y={[2, 4]} />}>
               {description && <Message>{description}</Message>}
               {alertMessage && (
                 <Message variant="alert" title={alertMessageTitle!}>
@@ -94,7 +94,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
               )}
               {shouldContinueToInbox ? (
                 <>
-                  <Spacer mb={2} />
+                  <Spacer y={2} />
                   <Text>{continueToInboxText}</Text>
                 </>
               ) : showTransactionSummary ? (

@@ -239,7 +239,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         }
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <AppContainer>
         <Formik<ArtworkModel>
@@ -330,15 +330,15 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 </Text>
               )}
 
-              <Spacer mb={4} />
+              <Spacer y={4} />
 
               {!onlyPhotos && <MyCollectionArtworkFormDetails />}
 
-              <Spacer mb={4} />
+              <Spacer y={4} />
 
               <MyCollectionArtworkFormImages ref={artworkFormImagesRef} />
 
-              <Spacer mt={6} />
+              <Spacer y={6} />
 
               {isEditing && !onlyPhotos && (
                 <>
@@ -354,7 +354,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                     </Clickable>
                   </Flex>
 
-                  <Spacer mt={6} />
+                  <Spacer y={6} />
                 </>
               )}
 
@@ -393,7 +393,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         </Formik>
       </AppContainer>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
     </>
   )
 }

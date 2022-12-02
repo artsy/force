@@ -27,7 +27,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   return (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {showKeywordFilter && <KeywordFilter />}
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <AttributionClassFilter expanded />

@@ -129,17 +129,17 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
         </Flex>
       </Media>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <LoadingArea isLoading={isLoading}>
-        <Join separator={<Spacer mt={6} />}>
+        <Join separator={<Spacer y={6} />}>
           {shows.map(show => {
             return <FairBoothRail key={show.id} show={show} />
           })}
         </Join>
       </LoadingArea>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Pagination
         hasNextPage={!!fair.exhibitors?.pageInfo.hasNextPage}

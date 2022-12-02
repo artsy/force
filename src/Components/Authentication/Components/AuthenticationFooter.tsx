@@ -39,7 +39,7 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
           case "login": {
             return (
               <>
-                <Join separator={<Spacer mt={2} />}>
+                <Join separator={<Spacer y={2} />}>
                   <Button
                     color="black100"
                     onClick={onAppleLogin}
@@ -68,7 +68,7 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
                     Continue with Facebook
                   </Button>
                 </Join>
-                <Spacer mt={2} />
+                <Spacer y={2} />
                 <Box>
                   {"Don't have an account? "}
                   <Clickable
@@ -111,9 +111,9 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
 
           case "signup": {
             return (
-              <Join separator={<Spacer mt={1} />}>
+              <Join separator={<Spacer y={1} />}>
                 <Box>
-                  <Join separator={<Spacer mt={2} />}>
+                  <Join separator={<Spacer y={2} />}>
                     <Button
                       color="black100"
                       onClick={onAppleLogin}

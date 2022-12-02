@@ -127,7 +127,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
               // @ts-ignore
               onSubmit={handleSubmit}
             >
-              <Join separator={<Spacer mt={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <Input
                   autoFocus
                   error={nameErrorMessage}

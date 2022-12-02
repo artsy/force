@@ -34,8 +34,8 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
       <Spacer my={2} />
 
       <Column span={9}>
-        <Spacer mt={[2, 0]} />
-        <Join separator={<Spacer mt={2} />}>
+        <Spacer y={[2, 0]} />
+        <Join separator={<Spacer y={2} />}>
           {results.map((result, index) => {
             return (
               <ArtistAuctionResultItemFragmentContainer

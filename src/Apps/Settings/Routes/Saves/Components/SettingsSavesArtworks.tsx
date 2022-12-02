@@ -69,7 +69,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
                 <Fragment key={artwork.internalID}>
                   <ArtworkGridItemFragmentContainer artwork={artwork} />
 
-                  <Spacer mt={4} />
+                  <Spacer y={4} />
                 </Fragment>
               )
             })}

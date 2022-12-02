@@ -54,7 +54,7 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
 
       {followedArtists.length > 0 ? (
         <>
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {followedArtists.map(({ internalID, artist }) => {
               if (!artist) return null
 
@@ -132,7 +132,7 @@ const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
       </SkeletonText>
     </Skeleton>
 
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {[...new Array(4)].map((_, i) => {
         return <Fragment key={i}>{ARTIST_RAIL_PLACEHOLDER}</Fragment>
       })}

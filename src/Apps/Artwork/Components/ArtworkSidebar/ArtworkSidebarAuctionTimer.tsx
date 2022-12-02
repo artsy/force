@@ -22,13 +22,13 @@ export const ArtworkSidebarAuctionTimer: React.FC<ArtworkSidebarAuctionTimerProp
         !lotIsClosed(sale, saleArtwork) &&
         (sale?.cascadingEndTimeIntervalMinutes ? (
           <>
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <LotTimerFragmentContainer saleArtwork={saleArtwork} />
           </>
         ) : (
           <>
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <AuctionTimerFragmentContainer sale={sale} />
           </>

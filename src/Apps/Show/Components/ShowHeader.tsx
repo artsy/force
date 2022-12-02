@@ -18,7 +18,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Join separator={<Spacer mb={1} />}>
+      <Join separator={<Spacer y={1} />}>
         <Text variant="xs">Show</Text>
 
         <Box>

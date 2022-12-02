@@ -84,7 +84,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
         </Text>
       </Box>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Shelf>
         {artworks.map((artwork, index) => {

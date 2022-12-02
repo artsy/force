@@ -35,7 +35,7 @@ const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
 
   return (
     <Provider inject={[new FollowArtistPopoverState({ excludeArtistIds })]}>
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       <Join separator={<Separator my={1} />}>
         {suggestedArtists.map(artist => {
@@ -115,7 +115,7 @@ export const FollowArtistPopoverQueryRenderer = ({
 export const FollowArtistPopoverPlaceholder: React.FC = () => {
   return (
     <>
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       <Join separator={<Separator my={1} />}>
         <FollowArtistPopoverRowPlaceholder />

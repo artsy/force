@@ -39,7 +39,7 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
   return (
     <>
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         <FairAbout fair={fair} />
 
         {hasArticles && (

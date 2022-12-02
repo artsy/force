@@ -164,7 +164,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <Spacer mt={4} />
+        <Spacer y={4} />
 
         <Box my={2}>
           {currentFairs.length === 0 && (

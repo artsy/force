@@ -24,7 +24,7 @@ const BankSetupErrorMessage = () => {
           Refresh the page or select another payment method.
         </Text>
       </Message>
-      <Spacer mt={2} />
+      <Spacer y={2} />
     </>
   )
 }
@@ -145,7 +145,7 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
     >
       <LoadingArea isLoading={isStripePaymentElementLoading}>
         {isStripePaymentElementLoading && <Box height={300}></Box>}
-        <Spacer mt={2} />
+        <Spacer y={2} />
         {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm order={order} onError={onError} />

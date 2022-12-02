@@ -189,7 +189,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             <Text variant="sm-display" mb={2} fontWeight="bold">
               Attachments
             </Text>
-            <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
+            <Join separator={<Spacer y={1} />}>{attachmentItems}</Join>
           </Box>
         </StackableBorderBox>
       )}

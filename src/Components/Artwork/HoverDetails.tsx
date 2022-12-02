@@ -26,7 +26,7 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
 
   return (
     <HoverContainer>
-      <Join separator={<Spacer mr={0.5} />}>
+      <Join separator={<Spacer x={0.5} />}>
         {pills.map((pill, index) => {
           const isLastPill = index === pills.length - 1
 

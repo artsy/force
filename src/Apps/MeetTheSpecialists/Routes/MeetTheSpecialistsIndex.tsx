@@ -25,13 +25,13 @@ export const MeetTheSpecialistsIndex: FC = () => {
         pathname="/meet-the-specialists"
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text as="h1" variant={["xl", "xxl"]}>
         {t`specialists.meetTheSpecialists`}
       </Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <GridColumns>
         <Column span={8}>
@@ -39,7 +39,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
             {t`specialists.ourTeamIsReady`}
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="xs">
             Have a question about Artsy? Check out our{" "}
@@ -55,7 +55,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <Join separator={<Separator my={12} />}>
         {SPECIALISTS.map(({ i18nKey, specialists }) => {
@@ -66,7 +66,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
               </Column>
 
               <Column span={8}>
-                <Join separator={<Spacer mt={4} />}>
+                <Join separator={<Spacer y={4} />}>
                   {specialists.map(specialist => (
                     <Flex key={specialist.email}>
                       <Avatar
@@ -89,7 +89,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
                           {specialist.location}
                         </Text>
 
-                        <Spacer mt={2} />
+                        <Spacer y={2} />
 
                         <Text
                           variant="sm-display"

@@ -65,7 +65,7 @@ export const StickyFooter: FC<StickyFooterProps> = ({
           </Clickable>
           .
         </Text>
-        <Spacer mb={2} />
+        <Spacer y={2} />
       </FooterContainer>
     </>
   )

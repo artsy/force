@@ -51,7 +51,7 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
 
       <Text variant="xl">{artist.name} Articles</Text>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <LoadingArea isLoading={isLoading}>
         <GridColumns gridRowGap={[2, 4]}>

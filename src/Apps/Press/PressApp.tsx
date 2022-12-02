@@ -17,7 +17,7 @@ const PressApp: FC<PressAppProps> = ({ page }) => {
     <>
       <MetaTags title={`${page.name} | Artsy`} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text variant="xl">Artsy Press</Text>
 
@@ -28,7 +28,7 @@ const PressApp: FC<PressAppProps> = ({ page }) => {
         </a>
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <RouteTabs fill>
         <RouteTab to="/press/in-the-media">Artsy in the Media</RouteTab>
@@ -38,7 +38,7 @@ const PressApp: FC<PressAppProps> = ({ page }) => {
         </RouteTab>
       </RouteTabs>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={8} start={3}>

@@ -51,7 +51,7 @@ export const CareerHighlightModalStep: React.FC<CareerHighlightModalStepProps> =
 
       <Text variant={["lg-display", "lg"]}>{label}</Text>
 
-      <Spacer mb={4} />
+      <Spacer y={4} />
 
       <Flex mt={2} flexDirection="column" overflowY="auto">
         {careerHighlights.map((careerHighlightArtist, index) => (
@@ -94,7 +94,7 @@ export const STEPS_PLACEHOLDER = (
       Artists were reviewed by major art publications.
     </SkeletonText>
 
-    <Spacer mb={4} />
+    <Spacer y={4} />
 
     <Flex mt={2} flexDirection="column" overflowY="auto">
       {Array.from({ length: 4 }).map((_, i) => (

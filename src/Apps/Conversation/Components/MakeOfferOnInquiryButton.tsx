@@ -37,7 +37,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
 
   return (
     <>
-      <Spacer ml={isPurchaseButtonPresent ? 1 : 0} />
+      <Spacer x={isPurchaseButtonPresent ? 1 : 0} />
       {!isUniqueArtwork ? (
         // Opens a modal window to select an edition set on non-unique artworks
         <Button

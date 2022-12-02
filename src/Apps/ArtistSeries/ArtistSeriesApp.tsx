@@ -35,7 +35,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
 
         <ArtistSeriesHeader artistSeries={artistSeries} />
 
-        <Spacer mt={6} />
+        <Spacer y={6} />
 
         <ArtistSeriesArtworksFilter
           artistSeries={artistSeries}
@@ -46,7 +46,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
 
         {(railArtist?.length ?? 0) > 0 && (
           <>
-            <Spacer mt={6} />
+            <Spacer y={6} />
 
             <OtherArtistSeriesRail
               artist={(railArtist ?? [])[0]!}

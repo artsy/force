@@ -114,7 +114,7 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
               // @ts-ignore
               onSubmit={handleSubmit}
             >
-              <Join separator={<Spacer mt={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <ArtsyLogoBlackIcon />
 
                 <Text variant="lg-display">{verb} Your Password</Text>

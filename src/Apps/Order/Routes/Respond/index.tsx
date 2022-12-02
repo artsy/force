@@ -232,7 +232,7 @@ export const RespondRoute: FC<RespondProps> = ({
               useLastSubmittedOffer
             />
           </Flex>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <RadioGroup
             onSelect={responseOption =>
               setResponseOption(responseOption as ResponseOptions)
@@ -251,7 +251,7 @@ export const RespondRoute: FC<RespondProps> = ({
               data-test="SendCounteroffer"
             >
               <Collapse open={responseOption === "COUNTER"}>
-                <Spacer mb={2} />
+                <Spacer y={2} />
                 <OfferInput
                   id="RespondForm_RespondValue"
                   showError={isFormDirty && offerValue <= 0}
@@ -260,9 +260,9 @@ export const RespondRoute: FC<RespondProps> = ({
                 />
                 {!order.isInquiryOrder && (
                   <>
-                    <Spacer mb={1} />
+                    <Spacer y={1} />
                     <RevealButton align="left" buttonLabel="Add note to seller">
-                      <Spacer mb={1} />
+                      <Spacer y={1} />
                       <OfferNote
                         onChange={setOfferNoteValue}
                         artworkId={artwork?.slug!}
@@ -281,7 +281,7 @@ export const RespondRoute: FC<RespondProps> = ({
             >
               <Flex position="relative">
                 <Collapse open={responseOption === "DECLINE"}>
-                  <Spacer mb={1} />
+                  <Spacer y={1} />
                   <Text variant="xs" color="black60">
                     Declining an offer will end the negotiation process on this
                     offer.
@@ -290,7 +290,7 @@ export const RespondRoute: FC<RespondProps> = ({
               </Flex>
             </BorderedRadio>
           </RadioGroup>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Flex flexDirection="column" />
           <Media greaterThan="xs">
             <Button
@@ -317,7 +317,7 @@ export const RespondRoute: FC<RespondProps> = ({
             contextModule={ContextModule.ordersRespond}
             contextPageOwnerType={OwnerType.ordersRespond}
           />
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <Media at="xs">
             <>
               <Button

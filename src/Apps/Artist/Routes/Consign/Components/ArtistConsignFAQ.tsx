@@ -20,7 +20,7 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
     <SectionContainer>
       <Subheader>Frequently asked questions</Subheader>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns>
         <Column span={[12, 12, 8]} start={[1, 1, 3]}>

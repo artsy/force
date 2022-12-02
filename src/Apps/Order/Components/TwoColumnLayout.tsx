@@ -17,7 +17,7 @@ export const TwoColumnSplit = ({ children, ...props }) => {
       <Media at="xs">
         <Flex flexDirection={"column"} {...props}>
           <Box width="100%">{firstColumn}</Box>
-          <Spacer mr={null} mb={ROW_SPACE} />
+          <Spacer x={null} mb={ROW_SPACE} />
           <Box width="100%">{secondColumn}</Box>
         </Flex>
       </Media>
@@ -25,7 +25,7 @@ export const TwoColumnSplit = ({ children, ...props }) => {
       <Media greaterThan="xs">
         <Flex flexDirection="row" {...props}>
           <Box width={columnRatioWidth(4, CONTENT_SPAN)}>{firstColumn}</Box>
-          <Spacer mr={COL_SPACE} mb={null} />
+          <Spacer x={COL_SPACE} mb={null} />
           <Box width={columnRatioWidth(3, CONTENT_SPAN)}>{secondColumn}</Box>
         </Flex>
       </Media>

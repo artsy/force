@@ -38,11 +38,11 @@ const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
         title="Artsy News"
       />
 
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <Text variant="xl">Editorial</Text>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <ArticlesIndexArticlesPaginationContainer viewer={viewer} />
     </>

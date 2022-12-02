@@ -49,7 +49,7 @@ export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
 
       {length > 1 && (
         <>
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <ProgressDots variant="dash" amount={length} activeIndex={index} />
         </>

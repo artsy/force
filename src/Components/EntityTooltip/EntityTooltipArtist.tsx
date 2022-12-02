@@ -53,7 +53,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
       {images.length > 0 && (
         <RouterLink to={artist.href} display="block" onClick={handleClick}>
           <HorizontalOverflow mb={2}>
-            <Join separator={<Spacer ml={1} />}>
+            <Join separator={<Spacer x={1} />}>
               {images.map((image, i) => {
                 if (!image || !image.resized) return null
                 return (
@@ -124,7 +124,7 @@ const EntityTooltipArtistPlaceholder: FC = () => {
   return (
     <Skeleton p={2} width={300}>
       <HorizontalOverflow mb={2}>
-        <Join separator={<Spacer ml={1} />}>
+        <Join separator={<Spacer x={1} />}>
           {[...new Array(8)].map((_, i) => {
             return (
               <SkeletonBox

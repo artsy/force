@@ -15,7 +15,7 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = ({
   const geneFamilies = extractNodes(geneFamiliesConnection)
 
   return (
-    <Join separator={<Spacer mt={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {geneFamilies.map(geneFamily => {
         return (
           <GeneFamilyFragmentContainer

@@ -14,7 +14,7 @@ export const CollectionsHubRails: React.FC<CollectionsHubRailsProps> = ({
   linkedCollections,
 }) => {
   return (
-    <Join separator={<Spacer mt={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {linkedCollections.map((collectionGroup, index) => {
         switch (collectionGroup.groupType) {
           case "ArtistSeries":

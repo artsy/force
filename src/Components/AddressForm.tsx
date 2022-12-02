@@ -114,7 +114,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const lockCountriesToEU = onlyLocalShipping && euOrigin
 
   return (
-    <Join separator={<Spacer mb={2} />}>
+    <Join separator={<Spacer y={2} />}>
       <Flex flexDirection="column">
         <Input
           id="AddressForm_name"
@@ -231,7 +231,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               error={getError("phoneNumber")}
             />
           </Flex>
-          <Spacer mb={2} />
+          <Spacer y={2} />
         </>
       )}
     </Join>

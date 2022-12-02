@@ -83,7 +83,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
         All Articles for {name} on Artsy
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <LoadingArea isLoading={isLoading}>
         <GridColumns gridRowGap={4}>

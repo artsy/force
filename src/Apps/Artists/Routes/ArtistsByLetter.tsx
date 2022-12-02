@@ -105,7 +105,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
         </Column>
       </GridColumns>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <LoadingArea isLoading={isLoading}>
         <Columns>

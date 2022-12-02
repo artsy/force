@@ -56,7 +56,7 @@ export const AboutApp: React.FC = () => {
         </FullBleedHeaderOverlay>
       </FullBleedHeader>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Box textAlign="center" width="100%">
         <Box maxWidth={950} margin="auto">
@@ -72,7 +72,7 @@ export const AboutApp: React.FC = () => {
         </Box>
       </Box>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <GridColumns>
         {SECTION_DATA.map((section, index) => {
@@ -84,7 +84,7 @@ export const AboutApp: React.FC = () => {
         })}
       </GridColumns>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <AboutArtworksRailQueryRenderer />
 

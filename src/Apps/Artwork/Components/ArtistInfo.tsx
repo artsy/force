@@ -68,7 +68,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
 
           {showArtistBio && (
             <>
-              <Spacer mt={2} />
+              <Spacer y={2} />
 
               <ArtistBioFragmentContainer
                 bio={artist}

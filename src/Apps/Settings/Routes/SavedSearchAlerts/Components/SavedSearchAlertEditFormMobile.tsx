@@ -18,7 +18,7 @@ export const SavedSearchAlertEditFormMobile: React.FC<EditAlertFormBase> = ({
       }}
       onClose={onCloseClick}
     >
-      <Spacer mt={4} />
+      <Spacer y={4} />
       <SavedSearchAlertEditFormQueryRenderer
         editAlertEntity={editAlertEntity}
         onDeleteClick={onDeleteClick}

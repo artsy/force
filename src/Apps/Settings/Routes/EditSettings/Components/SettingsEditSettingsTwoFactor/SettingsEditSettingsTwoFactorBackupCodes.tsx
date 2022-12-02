@@ -88,7 +88,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
           </Text>
         </Box>
 
-        <Spacer ml={[0, 2]} mt={[2, 0]} />
+        <Spacer x={[0, 2]} mt={[2, 0]} />
 
         <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
           {me.backupSecondFactors?.length ? (
@@ -101,7 +101,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
                 Show
               </Button>
 
-              <Spacer ml={1} />
+              <Spacer x={1} />
 
               <Button
                 onClick={() => setShowConfirmPassword(true)}

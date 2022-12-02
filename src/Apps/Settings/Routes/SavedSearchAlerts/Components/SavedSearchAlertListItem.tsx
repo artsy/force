@@ -85,7 +85,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           >
             <Text variant="sm">Edit</Text>
           </Clickable>
-          <Spacer ml={2} />
+          <Spacer x={2} />
           <RouterLink to={viewAllHref} textDecoration="underline">
             <Text variant="sm">View All</Text>
           </RouterLink>

@@ -44,7 +44,7 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
         </GridColumns>
 
         <Box data-test="collections-list">
-          <Join separator={<Spacer mt={6} />}>
+          <Join separator={<Spacer y={6} />}>
             {sorted.map((category, i) => {
               return (
                 <CollectionsCategoryFragmentContainer

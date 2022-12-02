@@ -34,7 +34,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
           </Text>
         </RouterLink>
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <ArticleShare
           description={article.thumbnailTitle}

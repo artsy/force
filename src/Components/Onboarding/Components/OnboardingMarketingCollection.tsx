@@ -45,7 +45,7 @@ const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
         </Box>
       </Flex>
 
-      <Spacer mb={4} />
+      <Spacer y={4} />
 
       {artworks.length === 0 ? (
         <Message title="No results found" />
@@ -56,7 +56,7 @@ const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
               <Fragment key={artwork.internalID}>
                 <ArtworkGridItemFragmentContainer artwork={artwork} />
 
-                <Spacer mb={2} />
+                <Spacer y={2} />
               </Fragment>
             )
           })}

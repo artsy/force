@@ -78,12 +78,12 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mt={4} />
+        <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
         />
-        <Spacer mb={2} />
+        <Spacer y={2} />
       </>
     )
   }
@@ -91,7 +91,7 @@ export const PaymentContent: FC<Props> = props => {
   return (
     <>
       <Text variant="lg-display">Payment method</Text>
-      <Spacer mb={2} />
+      <Spacer y={2} />
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
@@ -103,9 +103,9 @@ export const PaymentContent: FC<Props> = props => {
           method => method
         )}
       </RadioGroup>
-      <Spacer mb={4} />
+      <Spacer y={4} />
       <Text variant="lg-display">Payment details</Text>
-      <Spacer mb={2} />
+      <Spacer y={2} />
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
@@ -115,18 +115,18 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mt={4} />
+        <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
         />
-        <Spacer mb={2} />
+        <Spacer y={2} />
       </Collapse>
 
       {/* US Bank transfer */}
       <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
-        <Spacer mb={2} />
+        <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
           <BankAccountPickerFragmentContainer
             me={me}
@@ -139,7 +139,7 @@ export const PaymentContent: FC<Props> = props => {
       {/* SEPA bank transfer */}
       <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
-        <Spacer mb={2} />
+        <Spacer y={2} />
         {selectedPaymentMethod === "SEPA_DEBIT" && (
           <BankAccountPickerFragmentContainer
             me={me}
@@ -152,12 +152,12 @@ export const PaymentContent: FC<Props> = props => {
       {/* Wire transfer */}
       <Collapse open={selectedPaymentMethod === "WIRE_TRANSFER"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
-        <Spacer mt={4} />
+        <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
         />
-        <Spacer mb={2} />
+        <Spacer y={2} />
       </Collapse>
     </>
   )
@@ -310,7 +310,7 @@ const getPaymentMethodInfo = (
               content={
                 <>
                   <Text variant="xs">SEPA countries</Text>
-                  <Spacer mb={2} />
+                  <Spacer y={2} />
                   <Text variant="xs">
                     Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech
                     Republic, Denmark, Estonia, Finland, France, Germany,

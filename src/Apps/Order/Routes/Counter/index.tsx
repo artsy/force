@@ -143,7 +143,7 @@ export const CounterRoute: FC<CounterProps> = props => {
               showOfferNote={true}
             />
           </Flex>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media greaterThan="xs">
             <Button
               onClick={onSubmitButtonPressed}
@@ -153,7 +153,7 @@ export const CounterRoute: FC<CounterProps> = props => {
             >
               Submit
             </Button>
-            <Spacer mb={2} />
+            <Spacer y={2} />
             <ConditionsOfSaleDisclaimer />
           </Media>
         </Flex>
@@ -171,7 +171,7 @@ export const CounterRoute: FC<CounterProps> = props => {
             contextModule={ContextModule.ordersCounter}
             contextPageOwnerType={OwnerType.ordersCounter}
           />
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media at="xs">
             <>
               <Button
@@ -182,7 +182,7 @@ export const CounterRoute: FC<CounterProps> = props => {
               >
                 Submit
               </Button>
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <ConditionsOfSaleDisclaimer />
             </>
           </Media>

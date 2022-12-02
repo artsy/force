@@ -201,7 +201,7 @@ export const Footer: React.FC<FooterProps> = props => {
           </Media>
 
           <Flex alignItems="center">
-            <Join separator={<Spacer ml={2} />}>
+            <Join separator={<Spacer x={2} />}>
               <Dropdown
                 dropdown={
                   <Image

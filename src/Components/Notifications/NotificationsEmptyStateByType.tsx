@@ -34,7 +34,7 @@ export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTy
       <Text variant="sm-display" textAlign="center">
         {state.title}
       </Text>
-      <Spacer mt={2} />
+      <Spacer y={2} />
       <Text variant="xs" color="black60" textAlign="center">
         {state.message}
       </Text>

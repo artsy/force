@@ -17,7 +17,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
     <>
       <FeatureMeta feature={feature} />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         <FeatureHeader feature={feature} />
 
         {(feature.description || feature.callout) && (
@@ -35,7 +35,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
           </>
         )}
 
-        <Join separator={<Spacer mt={6} />}>
+        <Join separator={<Spacer y={6} />}>
           {feature.sets?.edges &&
             feature.sets.edges.length > 0 &&
             feature.sets.edges.map(

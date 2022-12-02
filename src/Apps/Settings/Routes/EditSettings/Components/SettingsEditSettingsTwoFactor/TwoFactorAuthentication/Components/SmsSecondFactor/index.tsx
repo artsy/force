@@ -189,14 +189,14 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
               </Text>
             )}
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm" color="black60">
               Security codes will be sent to your mobile phone.
             </Text>
           </Box>
 
-          <Spacer ml={[0, 2]} mt={[2, 0]} />
+          <Spacer x={[0, 2]} mt={[2, 0]} />
 
           <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
             {isEnabled ? (
@@ -211,7 +211,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
                   Disable
                 </Button>
 
-                <Spacer ml={1} />
+                <Spacer x={1} />
 
                 <Button
                   width={["100%", "auto"]}

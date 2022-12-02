@@ -56,7 +56,7 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
         />
       </GridColumns>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Button
         // @ts-ignore

@@ -30,7 +30,7 @@ export const OnboardingWelcome = () => {
               Welcome to Artsy{user ? `, ${user.name}` : ""}.
             </Text>
 
-            <Spacer mt={[2, 4]} />
+            <Spacer y={[2, 4]} />
 
             <Text variant={["md", "lg-display"]} ref={register(2)}>
               Ready to find art you love? Start building your profile and tailor

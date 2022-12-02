@@ -16,7 +16,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
   }
 
   return (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {subsections.map(({ internalID, title, body, image, caption }) => {
         const img = image?.imageURLs?.normalized
           ? resized(image?.imageURLs?.normalized, {
@@ -40,7 +40,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
 
             {img && (
               <>
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 <ResponsiveBox
                   aspectWidth={image?.width ?? 1}

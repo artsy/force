@@ -27,7 +27,7 @@ export const PriceDatabase = () => {
         <PriceDatabaseSearch />
 
         <Media lessThan="sm">
-          <Spacer mt={4} />
+          <Spacer y={4} />
         </Media>
         <Media greaterThanOrEqual="sm">
           <Separator mt={4} />

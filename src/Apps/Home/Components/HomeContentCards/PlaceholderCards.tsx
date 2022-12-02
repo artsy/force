@@ -36,12 +36,12 @@ export const PlaceholderCards = () => {
             >
               <Media greaterThan="xs">
                 <SkeletonText variant="xs">Artsy Auction</SkeletonText>
-                <Spacer mt={2} />
+                <Spacer y={2} />
               </Media>
               <SkeletonText variant={["lg-display", "xl", "xl"]}>
                 <h1>Post-War and Contemporary</h1>
               </SkeletonText>
-              <Spacer mt={[1, 2]} />
+              <Spacer y={[1, 2]} />
               <SkeletonText variant={["xs", "sm-display", "lg-display"]}>
                 Bid on works by Alice Neel, Ugo Rondinone, Robert Nava, and
                 more—and benefit the Immediate Abortion Access Fund to support
@@ -55,7 +55,7 @@ export const PlaceholderCards = () => {
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>
               <Media at="xs">
-                <Spacer mt={1} />
+                <Spacer y={1} />
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>
             </Column>
@@ -85,12 +85,12 @@ export const PlaceholderCards = () => {
             >
               <Media greaterThan="xs">
                 <SkeletonText variant="xs">Artsy Auction</SkeletonText>
-                <Spacer mt={2} />
+                <Spacer y={2} />
               </Media>
               <SkeletonText variant={["lg-display", "xl", "xl"]}>
                 Post-War and Contemporary
               </SkeletonText>
-              <Spacer mt={[1, 2]} />
+              <Spacer y={[1, 2]} />
               <SkeletonText variant={["xs", "sm-display", "lg-display"]}>
                 Bid on works by Alice Neel, Ugo Rondinone, Robert Nava, and
                 more—and benefit the Immediate Abortion Access Fund to support
@@ -104,7 +104,7 @@ export const PlaceholderCards = () => {
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>
               <Media at="xs">
-                <Spacer mt={1} />
+                <Spacer y={1} />
                 <SkeletonBox mt={2} width={200} height={50} />
               </Media>
             </Column>

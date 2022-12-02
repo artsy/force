@@ -101,7 +101,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
         </GridColumns>
       </LoadingArea>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <PaginationFragmentContainer
         hasNextPage={hasNextPage}

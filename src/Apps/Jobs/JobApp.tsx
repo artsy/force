@@ -30,7 +30,7 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
         Join Our Team
       </TopContextBar>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text variant="xl" as="h1">
         {job.title}
@@ -40,11 +40,11 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
         {job.location}
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={8} start={3}>
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             <PageHTML dangerouslySetInnerHTML={{ __html: job.content }} />
 
             <Separator my={2} />

@@ -37,7 +37,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
         pathname="galleries"
       />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex

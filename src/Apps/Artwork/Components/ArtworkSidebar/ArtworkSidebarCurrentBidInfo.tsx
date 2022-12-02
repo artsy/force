@@ -132,7 +132,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     <>
       {dialogComponent}
 
-      {isNewArtworkSidebarEnabled ? <Spacer mt={2} /> : <Separator my={2} />}
+      {isNewArtworkSidebarEnabled ? <Spacer y={2} /> : <Separator my={2} />}
 
       <Flex width="100%" flexDirection="row" justifyContent="space-between">
         <Text variant="lg-display" pr={1}>
@@ -179,7 +179,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
 
       {artwork.sale && artwork.sale.is_with_buyers_premium && (
         <>
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           <Text variant="xs" color="black60">
             This auction has a{" "}

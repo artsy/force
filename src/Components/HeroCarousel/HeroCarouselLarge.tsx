@@ -121,11 +121,11 @@ export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
               />
             </Box>
 
-            <Spacer ml={2} />
+            <Spacer x={2} />
 
             <ShelfPrevious onClick={handlePrev} />
 
-            <Spacer ml={1} />
+            <Spacer x={1} />
 
             <ShelfNext onClick={handleNext} />
           </Flex>

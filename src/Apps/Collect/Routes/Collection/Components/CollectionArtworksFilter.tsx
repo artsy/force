@@ -44,7 +44,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
   const { userPreferences } = useSystemContext()
 
   const Filters = (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {!isArtistCollection && <ArtistsFilter expanded />}
       <AttributionClassFilter expanded />
       <MediumFilter expanded />

@@ -72,7 +72,7 @@ export const InquiryResetPassword: React.FC = () => {
         </Text>
       )}
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         display="block"

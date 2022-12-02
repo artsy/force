@@ -57,9 +57,9 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
 
   return (
     <>
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {articles.map(article => {
           return (
             <Fragment key={article.internalID}>
@@ -208,7 +208,7 @@ const ArticleInfiniteScrollPlaceholder: FC = () => {
         </SkeletonText>
       </FullBleed>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Skeleton>
         <SkeletonText variant="xs" mb={1}>
@@ -219,13 +219,13 @@ const ArticleInfiniteScrollPlaceholder: FC = () => {
 
         <SkeletonText variant="xxl">Artsy Editors</SkeletonText>
 
-        <Spacer mt={4} />
+        <Spacer y={4} />
 
         <GridColumns gridRowGap={4}>
           <Column span={[12, 8, 8, 6]}>
             <SkeletonText variant="xs">Jan 01, 0000 00:00PM</SkeletonText>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <FadeOut>
               <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
@@ -239,7 +239,7 @@ const ArticleInfiniteScrollPlaceholder: FC = () => {
               Related Stories
             </SkeletonText>
 
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               {new Array(3).fill(0).map((_, i) => (
                 <Flex key={i}>
                   <SkeletonBox width={100} height={100} mr={2} />

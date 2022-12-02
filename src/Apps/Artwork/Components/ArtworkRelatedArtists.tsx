@@ -73,7 +73,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       <Box data-test={ContextModule.relatedArtistsRail}>
         <Text variant="lg-display">Related artists</Text>
 
-        <Spacer mt={4} />
+        <Spacer y={4} />
 
         <GridColumns>
           {artists.map((node, index) => {
@@ -95,7 +95,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
           })}
         </GridColumns>
 
-        <Spacer mt={4} />
+        <Spacer y={4} />
 
         {relay.hasMore() && (
           <ShowMoreButton onClick={fetchData} loading={fetchingNextPage} />
@@ -185,7 +185,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Text variant="lg-display">Related artists</Text>
 
-    <Spacer mt={4} />
+    <Spacer y={4} />
 
     <GridColumns>
       {[...new Array(4)].map((node, index) => {

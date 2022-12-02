@@ -13,7 +13,7 @@ export const MyCollectionInsightsSelectArtistModal: React.FC = () => {
     <Box>
       <Text variant={["lg-display", "lg"]}>Select Artist</Text>
 
-      <Spacer mb={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <SearchInputContainer
         value={query}
@@ -21,7 +21,7 @@ export const MyCollectionInsightsSelectArtistModal: React.FC = () => {
         placeholder="Search for artists in your collection"
       />
 
-      <Spacer mb={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <Box>
         <Text variant={["sm-display", "md"]}>

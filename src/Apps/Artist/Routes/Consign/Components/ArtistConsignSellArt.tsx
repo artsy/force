@@ -25,13 +25,13 @@ const ArtistConsignSellArt: React.FC<ArtistConsignSellArtProps> = ({
         From Your Collection
       </Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Text variant="sm-display">
         With Artsy's expert guidance, selling is simple
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Button
         // @ts-ignore

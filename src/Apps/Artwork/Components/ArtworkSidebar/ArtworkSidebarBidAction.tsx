@@ -201,7 +201,7 @@ export class ArtworkSidebarBidAction extends React.Component<
         <>
           <PreviewAction />
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
         </>
@@ -239,7 +239,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               Enter live bidding
             </Button>
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
@@ -263,7 +263,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               </Button>
             )}
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
@@ -301,7 +301,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           <>
             <RegisterToBidButton onClick={this.redirectToRegister} />
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             <IdentityVerificationDisclaimer />
           </>
@@ -331,7 +331,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               </Tooltip>
             </Flex>
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             <Select
               variant="default"
@@ -339,7 +339,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               onSelect={this.setMaxBid}
             />
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             <Button
               width="100%"

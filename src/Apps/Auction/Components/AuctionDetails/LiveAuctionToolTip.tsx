@@ -19,7 +19,7 @@ export const LiveAuctionToolTip: React.FC<LiveAuctionToolTipProps> = ({
         alignItems="center"
         lineHeight={1}
       >
-        Live Auction <Spacer mr={0.5} />
+        Live Auction <Spacer x={0.5} />
         <Tooltip
           content="Participating in a live auction means you’ll be competing
 					against bidders in real time on an auction room floor. You can

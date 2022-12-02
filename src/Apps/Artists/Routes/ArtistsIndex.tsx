@@ -53,7 +53,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
       </GridColumns>
 
       <Media greaterThan="xs">
-        <Spacer mt={6} />
+        <Spacer y={6} />
 
         {artists && (
           <Shelf my={2}>
@@ -74,10 +74,10 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
         )}
       </Media>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       {genes && (
-        <Join separator={<Spacer mt={6} />}>
+        <Join separator={<Spacer y={6} />}>
           {genes?.map((gene, i) => {
             if (
               !gene ||

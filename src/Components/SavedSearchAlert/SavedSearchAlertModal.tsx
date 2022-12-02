@@ -126,7 +126,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               </Button>
             }
           >
-            <Join separator={<Spacer mt={4} />}>
+            <Join separator={<Spacer y={4} />}>
               <Input
                 title="Alert Name"
                 name="name"
@@ -140,7 +140,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
               <Box>
                 <Text variant="xs">Filters</Text>
-                <Spacer mt={2} />
+                <Spacer y={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills
                     items={pills}
@@ -157,7 +157,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                     selected={values.email}
                   />
                 </Box>
-                <Spacer mt={4} />
+                <Spacer y={4} />
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Mobile Alerts</Text>
                   <Checkbox
@@ -173,7 +173,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
 
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 {values.push && (
                   <FrequenceRadioButtons

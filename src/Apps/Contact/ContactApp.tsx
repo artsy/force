@@ -11,7 +11,7 @@ export const ContactApp: React.FC = () => {
         pathname="/contact"
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
@@ -106,7 +106,7 @@ export const ContactApp: React.FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
@@ -148,7 +148,7 @@ export const ContactApp: React.FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>

@@ -55,7 +55,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
         currentBidChanged={currentBidChanged}
         artwork={artwork}
       />
-      <Spacer mt={2} />
+      <Spacer y={2} />
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
     </>
   )

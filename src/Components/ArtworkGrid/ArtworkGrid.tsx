@@ -397,7 +397,7 @@ export const ArtworkGridPlaceholder: React.FC<ArtworkGridPlaceholderProps> = ({
 
             <MetadataPlaceholder />
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
           </div>
         )
       })}

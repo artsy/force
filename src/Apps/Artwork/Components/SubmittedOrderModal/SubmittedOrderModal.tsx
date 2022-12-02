@@ -32,7 +32,7 @@ const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({ slug, me }) => {
   return (
     <ModalDialog title={title as string} onClose={handleClose}>
       <Message>{description}</Message>
-      <Spacer mb={2} />
+      <Spacer y={2} />
       <Text>{continueToInboxText}</Text>
       <RouterLink to="/user/conversations" onClick={handleClose}>
         <Button mt={2} width="100%">

@@ -6,7 +6,7 @@ export const CompleteFailed: React.FC = () => {
     <>
       <Text variant="xl">Identity verification failed</Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Message
         variant="error"
@@ -16,7 +16,7 @@ export const CompleteFailed: React.FC = () => {
         <a href="mailto:verification@artsy.net">verification@artsy.net</a>.
       </Message>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         width="100%"

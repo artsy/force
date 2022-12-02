@@ -185,7 +185,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     if (offer?.note) {
       return (
         <>
-          <Spacer mt={2} />
+          <Spacer y={2} />
           <Text variant="sm" fontWeight="bold" color="black100">
             Your note
           </Text>
@@ -200,7 +200,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   return (
     <StepSummaryItem {...others}>
       {renderPriceEntry()}
-      <Spacer mb={2} />
+      <Spacer y={2} />
       <Entry
         label={shippingDisplayLabel(shippingNotCalculated)}
         value={shippingDisplayAmount()}
@@ -212,14 +212,14 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
-      <Spacer mb={2} />
+      <Spacer y={2} />
       <Entry
         label="Total"
         value={buyerTotalDisplayAmount()}
         final
         data-test="buyerTotalDisplayAmount"
       />
-      <Spacer mb={2} />
+      <Spacer y={2} />
       <Text variant="xs" color="black60">
         *Additional duties and taxes{" "}
         <a
@@ -232,7 +232,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       </Text>
       {shippingNotCalculated() && (
         <>
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <Text variant="xs" color="black60">
             **Shipping costs to be confirmed by gallery. You will be able to
             review the total price before payment.

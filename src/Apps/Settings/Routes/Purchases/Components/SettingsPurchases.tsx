@@ -64,7 +64,7 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
 
   return !loading ? (
     <>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {orders.map(order => (
           <SettingsPurchasesRowFragmentContainer
             key={order.code}
@@ -83,7 +83,7 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
       )}
     </>
   ) : (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {[...new Array(10)].map((_, i) => {
         return <SettingsPurchasesRowPlaceholder key={i} />
       })}

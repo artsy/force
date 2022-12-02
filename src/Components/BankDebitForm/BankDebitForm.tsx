@@ -106,7 +106,7 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
           },
         }}
       />
-      <Spacer mt={4} />
+      <Spacer y={4} />
       {/* Display checkbox for saving account only for ACH */}
       {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
         <Flex>
@@ -145,12 +145,12 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
       )}
 
       {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-      <Spacer mt={4} />
+      <Spacer y={4} />
       <SaveAndContinueButton
         testId={`saveNew${upperFirst(camelCase(selectedPaymentMethod))}`}
         disabled={!stripe || bankAccountHasInsufficientFunds}
       />
-      <Spacer mb={2} />
+      <Spacer y={2} />
     </form>
   )
 }

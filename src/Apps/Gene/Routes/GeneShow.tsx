@@ -78,7 +78,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <GeneArtworkFilterRefetchContainer gene={gene} />
     </>

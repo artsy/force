@@ -19,7 +19,7 @@ const PartnersRails: FC<PartnersRailsProps> = ({ viewer, type }) => {
   const categories = shuffle(compact(viewer.partnerCategories))
 
   return (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {categories.map(partnerCategory => {
         return (
           <PartnersRailQueryRenderer
@@ -53,7 +53,7 @@ const PartnersRailsFragmentContainer = createFragmentContainer(PartnersRails, {
 const PartnersRailsPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {[...new Array(15)].map((_, i) => {
           return (
             <Rail

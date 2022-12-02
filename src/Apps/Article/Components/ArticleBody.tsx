@@ -60,7 +60,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
         <ArticleHeroFragmentContainer article={article} />
 
-        <Spacer mt={4} />
+        <Spacer y={4} />
 
         <GridColumns gridRowGap={4}>
           <Column {...(centered ? CENTERED_LAYOUT_COLUMNS : { span: 7 })}>
@@ -85,7 +85,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                   </Text>
                 </RouterLink>
 
-                <Spacer mt={2} />
+                <Spacer y={2} />
               </>
             )}
 
@@ -111,7 +111,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
               />
             </Flex>
 
-            <Spacer mt={6} />
+            <Spacer y={6} />
 
             {/* Begin article contents */}
 
@@ -124,7 +124,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
               />
             )}
 
-            <Join separator={<Spacer mt={4} />}>
+            <Join separator={<Spacer y={4} />}>
               {article.sections.map((section, i) => {
                 const isFirst = article.layout === "FEATURE" && i === 0
                 const isLast = i === article.sections.length - 1
@@ -168,7 +168,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                     Related Stories
                   </Text>
 
-                  <Join separator={<Spacer mt={2} />}>
+                  <Join separator={<Spacer y={2} />}>
                     {article.relatedArticles.map(relatedArticle => {
                       const img = relatedArticle.thumbnailImage?.cropped
 
@@ -211,7 +211,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 </>
               )}
 
-              <Spacer mt={6} />
+              <Spacer y={6} />
 
               <ArticleAd
                 bg="black5"

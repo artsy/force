@@ -41,7 +41,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
 
   return (
     <>
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Jump id="top" />
 
@@ -49,7 +49,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
         Articles
       </Text>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <LoadingArea isLoading={isLoading}>
         <GridColumns gridRowGap={[2, 4]}>

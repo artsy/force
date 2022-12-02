@@ -37,7 +37,7 @@ const ArtworkSidebar2Links: React.FC<ArtworkSidebar2LinksProps> = ({
 
   return (
     <>
-      <Spacer mt={2} />
+      <Spacer y={2} />
       {isInOpenAuction && (
         <>
           <Text variant="xs" color="black60">
@@ -49,7 +49,7 @@ const ArtworkSidebar2Links: React.FC<ArtworkSidebar2LinksProps> = ({
               {t("artworkPage.sidebar.conditionsOfSaleLink")}
             </RouterLink>
           </Text>
-          <Spacer mt={1} />
+          <Spacer y={1} />
         </>
       )}
       <Text variant="xs" color="black60">

@@ -174,7 +174,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
             </Text>
           )}
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm" color="black60">
             Generate secure authentication codes using an application such as{" "}
@@ -197,7 +197,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
           </Text>
         </Box>
 
-        <Spacer ml={[0, 2]} mt={[2, 0]} />
+        <Spacer x={[0, 2]} mt={[2, 0]} />
 
         <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
           {isEnabled ? (
@@ -212,7 +212,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
                 Disable
               </Button>
 
-              <Spacer ml={1} />
+              <Spacer x={1} />
 
               <Button
                 width={["100%", "auto"]}

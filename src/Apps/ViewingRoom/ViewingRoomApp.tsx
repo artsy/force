@@ -38,7 +38,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         </FullBleedBanner>
       )}
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         <ViewingRoomHeader viewingRoom={viewingRoom} />
 
         {viewingRoom.status === "live" || isPreviewable ? (

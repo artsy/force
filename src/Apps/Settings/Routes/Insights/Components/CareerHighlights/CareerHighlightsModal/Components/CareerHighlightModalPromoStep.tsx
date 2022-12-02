@@ -47,20 +47,20 @@ const CareerHighlightModalPromoStepDesktop = () => {
           />
         </ResponsiveBox>
 
-        <Spacer mr={4} />
+        <Spacer x={4} />
 
         <Flex minWidth="45%" flexDirection="column">
           <Text variant="lg-display">
             Discover career highlights for artists you collect.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm-display">
             Add artworks to reveal career highlights for your artists.
           </Text>
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Button
             // @ts-ignore
@@ -86,7 +86,7 @@ const CareerHighlightModalPromoStepMobile = () => {
         Discover career highlights for artists you collect.
       </Text>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <Button
         // @ts-ignore

@@ -43,7 +43,7 @@ const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
         </Text>
       </Flex>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Shelf alignItems="flex-start">
         {articles.map(article => {

@@ -109,7 +109,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
 
       {!isMyCollectionArtwork && (
         <>
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <ArtworkActions
             artwork={artwork}

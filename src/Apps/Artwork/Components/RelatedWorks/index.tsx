@@ -33,7 +33,7 @@ export const RelatedWorks: React.FC<RelatedWorksProps> = ({ artwork }) => {
     <Box data-testid={ContextModule.relatedWorksRail}>
       <Header title="Related works" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <ArtworkGrid
         contextModule={ContextModule.relatedWorksRail}
@@ -56,7 +56,7 @@ const PLACEHOLDER = (
     <Box>
       <HeaderPlaceholder title="Related works" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
     </Box>

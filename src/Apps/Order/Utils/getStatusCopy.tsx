@@ -93,7 +93,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
               period, your order will be eligible for cancellation by the
               gallery.
             </Text>
-            <Spacer mt={2} />
+            <Spacer y={2} />
             <Text>
               1. &nbsp; Find the order total and Artsy’s banking details below.
             </Text>
@@ -116,12 +116,12 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             >
               Send wire transfer to
             </Text>
-            <Spacer mt={1} />
+            <Spacer y={1} />
             <Text>Account name: Art.sy Inc.</Text>
             <Text>Account number: 4243851425</Text>
             <Text>Routing number: 121000248</Text>
             <Text>International SWIFT: WFBIUS6S</Text>
-            <Spacer mt={2} />
+            <Spacer y={2} />
             <Text
               variant={["xs", "sm-display"]}
               fontWeight="bold"
@@ -129,11 +129,11 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             >
               Bank address
             </Text>
-            <Spacer mt={1} />
+            <Spacer y={1} />
             <Text>Wells Fargo Bank, N.A.</Text>
             <Text>420 Montgomery Street</Text>
             <Text>San Francisco, CA 9410</Text>
-            <Spacer mt={2} />
+            <Spacer y={2} />
             <Text fontStyle="italic">
               Add order number #{order.code} to the notes section in your wire
               transfer.
@@ -204,7 +204,7 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
           <>
             Thank you for your response. The seller will be informed of your
             decision to end the negotiation process.
-            <Spacer mb={2} />
+            <Spacer y={2} />
             We’d love to get your feedback. Contact{" "}
             <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
             comments you have.
@@ -311,11 +311,11 @@ export const shipmentDescription = (
         !isDelivered &&
         " " +
           "Our delivery provider will call you to provide a delivery window when it arrives in your area."}
-      <Spacer mb={2} />
+      <Spacer y={2} />
       {shipmentData.shipperName && (
         <>
           Shipper: {shipmentData.shipperName}
-          <Spacer mb={1} />
+          <Spacer y={1} />
         </>
       )}
       {hasTrackingInfo &&
@@ -396,7 +396,7 @@ export const trackingInfo = (
   return (
     <>
       Tracking: {node}
-      <Spacer mb={1} />
+      <Spacer y={1} />
     </>
   )
 }

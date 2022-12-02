@@ -242,7 +242,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           </Column>
         </GridColumns>
 
-        <Spacer mt={4} />
+        <Spacer y={4} />
       </Media>
 
       <GridColumns>
@@ -257,11 +257,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             toggleMobileActionSheet={toggleMobileActionSheet}
           />
 
-          <Spacer mt={[2, 0]} />
+          <Spacer y={[2, 0]} />
 
           {results.length > 0 ? (
             <LoadingArea isLoading={isLoading}>
-              <Join separator={<Spacer mt={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 {results.map((result, index) => {
                   return (
                     <ArtistAuctionResultItemFragmentContainer

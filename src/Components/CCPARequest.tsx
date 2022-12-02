@@ -130,10 +130,10 @@ export const CCPARequest: FC<CCPARequestProps> = ({ onClose }) => {
               information or to submit a request.
             </Text>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <Form>
-              <Join separator={<Spacer mt={1} />}>
+              <Join separator={<Spacer y={1} />}>
                 <TextArea
                   title="Your Message"
                   name="notes"
