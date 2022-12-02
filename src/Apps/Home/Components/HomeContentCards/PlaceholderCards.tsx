@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react"
-import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
-import { CaptionedImage as BrazeContentCard } from "@braze/web-sdk"
 import {
   Box,
   ResponsiveBox,
@@ -11,9 +8,9 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
-import { HomeContentCard } from "./HomeContentCard"
+import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 
-const HomeContentCardPlaceholder = () => {
+const PlaceholderCard = () => {
   return (
     <GridColumns bg="black5" width="100%">
       <Column span={6} bg="black30">
@@ -67,48 +64,11 @@ const HomeContentCardPlaceholder = () => {
   )
 }
 
-export const HomeContentCards: React.FC = () => {
-  const [cards, setCards] = useState<BrazeContentCard[]>([])
-
-  useEffect(() => {
-    window.analytics?.ready(() => {
-      const appboy = (window as any).appboy
-
-      if (!appboy) return
-
-      appboy.subscribeToContentCardsUpdates(async () => {
-        const response = await appboy.getCachedContentCards()
-        const { cards: updatedCards } = response
-        const sortedCards = updatedCards.sort((lhs, rhs) => {
-          const lhsPosition = (lhs.extras || {}).position || lhs.id
-          const rhsPosition = (rhs.extras || {}).position || rhs.id
-          return lhsPosition > rhsPosition ? 1 : -1
-        })
-        setCards(sortedCards)
-      })
-
-      appboy.requestContentCardsRefresh()
-    })
-  }, [])
-
-  const placeholderCards = [
-    <HomeContentCardPlaceholder />,
-    <HomeContentCardPlaceholder />,
-  ]
-
-  const realCards = cards.map((card, index) => (
-    <HomeContentCard card={card} key={card.id} index={index} />
-  ))
-
-  const heroCards = cards.length < 1 ? placeholderCards : realCards
-
-  const handleChange = index => {
-    const appboy = (window as any).appboy
-    if (!appboy) return
-
-    const card = cards[index]
-    appboy.logCardImpressions([card])
-  }
-
-  return <HeroCarousel onChange={handleChange}>{heroCards}</HeroCarousel>
+export const PlaceholderCards = () => {
+  return (
+    <HeroCarousel>
+      <PlaceholderCard />
+      <PlaceholderCard />
+    </HeroCarousel>
+  )
 }

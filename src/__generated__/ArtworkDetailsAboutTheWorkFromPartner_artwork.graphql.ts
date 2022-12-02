@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8070b1279dd9790c6a98b0d38989250>>
+ * @generated SignedSource<<51cdde4bc13b09e733c2f1cc8aa4470d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,8 @@ export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = {
   readonly additionalInformation: string | null;
   readonly partner: {
     readonly internalID: string;
+    readonly isDefaultProfilePublic: boolean | null;
+    readonly partnerPageEligible: boolean | null;
     readonly profile: {
       readonly internalID: string;
     } | null;
@@ -66,6 +68,20 @@ return {
           "kind": "FragmentSpread",
           "name": "EntityHeaderPartner_partner"
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "partnerPageEligible",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isDefaultProfilePublic",
+          "storageKey": null
+        },
         (v0/*: any*/),
         {
           "alias": null,
@@ -88,6 +104,6 @@ return {
 };
 })();
 
-(node as any).hash = "7cc5f0c68d11938096b84f141385db48";
+(node as any).hash = "f165a849b0452676734f114abcc0c8f0";
 
 export default node;
