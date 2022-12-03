@@ -77,7 +77,7 @@ export const SidebarExpandable: React.FC<ExpandableProps> = ({
         (typeof children === "function"
           ? children({ setExpanded, expanded })
           : children)}
-      <Spacer mt={2} />
+      <Spacer y={2} />
     </Box>
   )
 }

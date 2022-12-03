@@ -57,7 +57,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
           return (
             <>
               <Box my={4}>
-                <Join separator={<Spacer mb={0.5} />}>
+                <Join separator={<Spacer y={0.5} />}>
                   <AuctionLotInfoFragmentContainer
                     saleArtwork={lotStanding?.saleArtwork!}
                   />

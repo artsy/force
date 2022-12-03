@@ -185,7 +185,7 @@ export const AddressModal: React.FC<Props> = ({
                   </Banner>
                 )}
                 <AddressModalFields />
-                <Spacer mb={2} />
+                <Spacer y={2} />
                 {user &&
                   !userHasLabFeature(user, "Phone Number Validation") && (
                     <Input
@@ -247,7 +247,7 @@ export const AddressModal: React.FC<Props> = ({
                     </Flex>
                   </Flex>
                 )}
-                <Spacer mb={2} />
+                <Spacer y={2} />
                 {(!address?.isDefault || createMutation) && (
                   <Checkbox
                     onSelect={selected => {
@@ -297,7 +297,7 @@ export const AddressModal: React.FC<Props> = ({
           <Text variant="xs">
             This will remove this address from your saved addressess.
           </Text>
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <Flex justifyContent="flex-end">
             <Button
               variant="secondaryNeutral"
@@ -306,7 +306,7 @@ export const AddressModal: React.FC<Props> = ({
             >
               Cancel
             </Button>
-            <Spacer mr={1} />
+            <Spacer x={1} />
             <Button
               size="small"
               onClick={() => {

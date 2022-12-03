@@ -51,7 +51,7 @@ const CellSale: FC<CellSaleProps> = ({ sale, ...rest }) => {
         )}
       </ResponsiveBox>
 
-      <Spacer my={0.5} />
+      <Spacer y={0.5} />
 
       <Text variant="sm-display">{sale.name}</Text>
       <Text variant="sm-display" color="black60">
@@ -68,7 +68,7 @@ export const CellSalePlaceholder: FC = () => {
         <SkeletonBox width="100%" height="100%" />
       </ResponsiveBox>
 
-      <Spacer my={0.5} />
+      <Spacer y={0.5} />
 
       <SkeletonText variant="sm-display">
         Impact: Artists in Support of Refugees from Ukraine

@@ -57,9 +57,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             <BackToFairBanner show={show} />
           )}
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {Number(show?.images?.length) > 0 && (
               <ShowInstallShots show={show} />
             )}
@@ -73,7 +73,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
                 {!hasAbout && show.href && (
                   <>
-                    <Spacer mt={1} />
+                    <Spacer y={1} />
 
                     <RouterLink to={`${show.href}/info`}>
                       <Text variant="sm">More info</Text>

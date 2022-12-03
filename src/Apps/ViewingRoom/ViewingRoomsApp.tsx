@@ -18,9 +18,9 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
     <>
       <ViewingRoomsMeta />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         <Text variant="xl" as="h1">
           Viewing Rooms
         </Text>

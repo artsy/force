@@ -127,7 +127,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
           }) => {
             return (
               <Form>
-                <Join separator={<Spacer mt={2} />}>
+                <Join separator={<Spacer y={2} />}>
                   {hasPassword && (
                     <PasswordInput
                       name="currentPassword"

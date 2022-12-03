@@ -44,7 +44,7 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {(set.name || set.description) && <FeatureSetMeta set={set} />}
 
         <FeatureSetContainer set={set}>

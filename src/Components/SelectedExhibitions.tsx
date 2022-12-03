@@ -116,7 +116,7 @@ const FullExhibitionList: React.FC<FullExhibitionListProps> = props => {
   } = props
 
   return (
-    <Join separator={<Spacer mt={1} />}>
+    <Join separator={<Spacer y={1} />}>
       {toPairs(groupBy(props.exhibitions, ({ start_at }) => start_at))
         .reverse()
         .map(([year, exhibitions]) => (

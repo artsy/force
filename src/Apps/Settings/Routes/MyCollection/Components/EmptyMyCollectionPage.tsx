@@ -9,7 +9,7 @@ export const EmptyMyCollectionPage: React.FC = () => {
   const enableMyCollectionPhase3 = useFeatureFlag("my-collection-web-phase-3")
 
   return (
-    <Join separator={<Spacer my={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {enableMyCollectionPhase3 ? (
         <MyCollectionEmptyState />
       ) : (

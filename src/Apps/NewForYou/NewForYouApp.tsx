@@ -18,12 +18,12 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
 
   return (
     <>
-      <Spacer mt={2} />
+      <Spacer y={2} />
       <MetaTags title="New For You" />
       <Text variant="xl" mt={4}>
         New Works for You
       </Text>
-      <Spacer mt={4} />
+      <Spacer y={4} />
       {!isLoggedIn && (
         <>
           <Message variant="warning">
@@ -32,7 +32,7 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
             </RouterLink>{" "}
             to see your personalized recommendations.
           </Message>
-          <Spacer mt={4} />
+          <Spacer y={4} />
         </>
       )}
 

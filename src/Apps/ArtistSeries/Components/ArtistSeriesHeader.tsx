@@ -42,7 +42,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
         {artist.name}
       </TopContextBar>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={6}>

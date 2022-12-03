@@ -55,7 +55,7 @@ const IMAGES = [
 
 export const Compression = () => {
   return (
-    <Join separator={<Spacer mt={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {IMAGES.map(image => {
         return (
           <HorizontalOverflow key={image.src}>

@@ -123,7 +123,7 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
         </Text>
       </Flex>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       {children}
     </>

@@ -31,7 +31,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
       </Box>
 
       <Flex mt={2}>
-        <Join separator={<Spacer mx={2} />}>
+        <Join separator={<Spacer x={4} />}>
           <RouterLink to="/example" exact>
             <Text>Welcome</Text>
           </RouterLink>

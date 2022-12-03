@@ -99,7 +99,7 @@ export const ThankYou: React.FC = () => {
       <DownloadApp mb={[2, 6]} />
 
       <SoldRecentlyOnArtsyQueryRenderer />
-      <Spacer mt={6} />
+      <Spacer y={6} />
       <FAQ shouldTrackClickEvent />
     </>
   )

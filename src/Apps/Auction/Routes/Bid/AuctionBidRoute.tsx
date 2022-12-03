@@ -118,7 +118,7 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
         }) => {
           return (
             <Form>
-              <Join separator={<Spacer my={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <AuctionLotInfoFragmentContainer
                   saleArtwork={artwork.saleArtwork!}
                 />

@@ -7,7 +7,7 @@ import { YearCreated } from "./YearCreated"
 
 export const AuctionFilters: React.FC = () => {
   return (
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       <MediumFilter />
       <SizeFilter />
       <YearCreated />

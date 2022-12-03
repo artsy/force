@@ -61,7 +61,7 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
         Works By Artists You Follow
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       {savedArtworks.length === 0 ? (
         <>
@@ -118,7 +118,7 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
               </Column>
             </GridColumns>
 
-            <Spacer my={4} />
+            <Spacer y={4} />
 
             {viewerArtist && (
               <WorksForYouArtistFeedPaginationContainer viewer={viewerArtist} />

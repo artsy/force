@@ -87,7 +87,7 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
       >
         {formik => (
           <form onSubmit={formik.handleSubmit}>
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               <LocationAutocompleteInput
                 name="location"
                 title="Primary Location"

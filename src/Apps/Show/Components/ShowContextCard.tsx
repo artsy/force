@@ -85,7 +85,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
             {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <FairCard fair={fair} />
 
-            <Spacer mb={2} />
+            <Spacer y={2} />
             <Box>
               {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <Text variant="xl">{fair.name}</Text>

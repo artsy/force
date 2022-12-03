@@ -39,7 +39,7 @@ export const ArticlesIndexArticles: FC<ArticlesIndexArticlesProps> = ({
 
   return (
     <>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {articles.map((article, i) => {
           return (
             <ArticlesIndexArticleFragmentContainer

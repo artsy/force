@@ -86,14 +86,14 @@ export const OnboardingQuestionThree: FC = () => {
             Almost done! What would you like to see first?
           </Text>
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           <Text variant="sm-display" ref={register(2)}>
             Choose one to start exploring.
           </Text>
 
           <Box ref={register(3)} mt={4}>
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               {options.map(option => {
                 return (
                   <Pill

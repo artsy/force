@@ -31,7 +31,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
             <Timer variant="xs" color="black100" endDate={registrationEndsAt} />
           </Box>
 
-          <Spacer mt={1} ml={1} />
+          <Spacer y={1} x={1} />
 
           <Button
             // @ts-ignore
@@ -48,7 +48,7 @@ const ArtworkAuctionRegistrationPanel: React.FC<ArtworkAuctionRegistrationPanelP
 
   return (
     <Box>
-      <Spacer mt={1} />
+      <Spacer y={1} />
       <Button
         // @ts-ignore
         as={RouterLink}

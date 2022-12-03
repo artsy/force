@@ -24,7 +24,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollection
         Track price stability or growth of your artists
       </Text>
 
-      <Spacer mb={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <Flex
         flexDirection={"row"}
@@ -36,7 +36,7 @@ export const MyCollectionInsightsMedianSalePriceAtAuction: React.FC<MyCollection
           displayLink={false}
         />
 
-        <Spacer ml={4} />
+        <Spacer x={4} />
 
         <Clickable
           color="black60"

@@ -25,7 +25,7 @@ export const ArtAppraisalsApp: React.FC = () => {
         pathname="/art-appraisals"
       />
 
-      <Join separator={<Spacer mt={[6, 12]} />}>
+      <Join separator={<Spacer y={[6, 12]} />}>
         <Header />
         <WhyUseArtsy />
         <MeetOurSpecialists />
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
               beneficiaries of estates.
             </Text>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <Media greaterThan="xs">
               <Button
@@ -112,8 +112,9 @@ const WhyUseArtsy: React.FC = () => {
           />
         </ResponsiveBox>
       </Column>
+
       <Column span={6} pt={[2, 0]}>
-        <Join separator={<Spacer my={2} />}>
+        <Join separator={<Spacer y={2} />}>
           <Text variant={["md", "lg"]} mb={1}>
             Why Use Artsy for Appraisal and Collection Management Services
           </Text>

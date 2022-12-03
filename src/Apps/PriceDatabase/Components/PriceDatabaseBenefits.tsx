@@ -99,11 +99,11 @@ const Section: React.FC<{
       <Media lessThan="md">
         {jsxPosition === "left" && (
           <>
-            <Spacer height={40} />
+            <Spacer y={4} />
             {jsx}
           </>
         )}
-        <Spacer height={20} />
+        <Spacer y={2} />
         <Text as="h1" variant="lg-display" mt={2}>
           {title}
         </Text>
@@ -111,11 +111,11 @@ const Section: React.FC<{
         <Text variant="sm">{text}</Text>
         {jsxPosition === "right" && (
           <>
-            <Spacer height={20} />
+            <Spacer y={2} />
             {jsx}
           </>
         )}
-        <Spacer height={40} />
+        <Spacer y={4} />
       </Media>
       <Media greaterThanOrEqual="md">
         <GridColumns my={4} gridRowGap={[2, 0]}>

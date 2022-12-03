@@ -16,7 +16,7 @@ export const OnboardingApp: FC = () => {
     <OnboardingProvider onClose={handleDone}>
       <OnboardingDebug />
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Box height={700} border="1px dotted" borderColor="black10">
         <OnboardingSteps />

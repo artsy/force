@@ -130,7 +130,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
           Let us know how to reach you
         </Text>
 
-        <Spacer my={6} />
+        <Spacer y={6} />
 
         <Formik<ContactInformationFormModel>
           validateOnMount
@@ -147,7 +147,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
                 optionalPhoneNumber
               />
 
-              <Spacer my={6} />
+              <Spacer y={6} />
 
               <Text variant="xs" color="black60">
                 By continuing, you agree to{" "}
@@ -162,7 +162,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
                 .
               </Text>
 
-              <Spacer my={2} />
+              <Spacer y={2} />
 
               <Button
                 data-testid="submit-button"

@@ -68,7 +68,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Text>
       </FullBleedHeader>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <GridColumns gridRowGap={4}>
         <Column span={6} start={4} textAlign="center">
@@ -179,7 +179,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <GridColumns gridRowGap={4}>
         <Column span={6} order={1}>
@@ -293,7 +293,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <FullBleed bg="black5">
         <AppContainer>
@@ -302,7 +302,7 @@ export const BuyerGuaranteeIndex: FC = () => {
               The Artsy Guarantee
             </Text>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <Media greaterThanOrEqual="sm">
               <BuyerGuaranteeTableDesktop />
@@ -312,7 +312,7 @@ export const BuyerGuaranteeIndex: FC = () => {
               <BuyerGuaranteeTableMobile />
             </Media>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <Flex justifyContent="center">
               <Button

@@ -392,7 +392,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         <Text variant="sm" color="black60">
           Be notified when a similar work is available
         </Text>
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </>
@@ -435,7 +435,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           {(artwork.edition_sets?.length ?? 0) < 2 ? (
             artwork.sale_message && (
               <>
-                <Spacer mt={2} />
+                <Spacer y={2} />
                 {this.renderSaleMessage(artwork.sale_message)}
               </>
             )
@@ -454,7 +454,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {shouldRenderButtons &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
-              <Spacer mt={1} />
+              <Spacer y={1} />
             )}
 
           {artworkEcommerceAvailable && !isSold && (
@@ -475,7 +475,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           ) : (
             <>
               {this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
-              {shouldRenderButtons && artwork.sale_message && <Spacer mt={2} />}
+              {shouldRenderButtons && artwork.sale_message && <Spacer y={2} />}
             </>
           )}
 
@@ -492,7 +492,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {isOfferable && (
             <>
-              <Spacer mt={2} />
+              <Spacer y={2} />
               <Button
                 variant={isAcquireable ? "secondaryBlack" : "primaryBlack"}
                 width="100%"
@@ -507,7 +507,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {isInquireable && (
             <>
-              <Spacer mt={isSecondaryContactGalleryButton ? 2 : 0} />
+              <Spacer y={isSecondaryContactGalleryButton ? 2 : 0} />
               <Button
                 width="100%"
                 size="large"

@@ -1,10 +1,10 @@
 import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { OnboardingWelcomeAnimatedPanel } from "Components/Onboarding/Components/OnboardingWelcomeAnimatedPanel"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
 export const OnboardingWelcome = () => {
@@ -30,7 +30,7 @@ export const OnboardingWelcome = () => {
               Welcome to Artsy{user ? `, ${user.name}` : ""}.
             </Text>
 
-            <Spacer mt={[2, 4]} />
+            <Spacer y={[2, 4]} />
 
             <Text variant={["md", "lg-display"]} ref={register(2)}>
               Ready to find art you love? Start building your profile and tailor
@@ -38,7 +38,7 @@ export const OnboardingWelcome = () => {
             </Text>
           </Box>
 
-          <Spacer my={1} />
+          <Spacer y={1} />
 
           <Box width="100%">
             <Button

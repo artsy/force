@@ -11,15 +11,15 @@ import {
 import * as React from "react"
 import { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-// eslint-disable-next-line no-restricted-imports
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { useSystemContext } from "System"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
-import { ApiError } from "../../ApiError"
-import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
+import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
+import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
 import { isArtsyEmail } from "./isArtsyEmail"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
@@ -189,14 +189,14 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
               </Text>
             )}
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm" color="black60">
               Security codes will be sent to your mobile phone.
             </Text>
           </Box>
 
-          <Spacer ml={[0, 2]} mt={[2, 0]} />
+          <Spacer x={[0, 2]} y={[2, 0]} />
 
           <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
             {isEnabled ? (
@@ -211,7 +211,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
                   Disable
                 </Button>
 
-                <Spacer ml={1} />
+                <Spacer x={1} />
 
                 <Button
                   width={["100%", "auto"]}

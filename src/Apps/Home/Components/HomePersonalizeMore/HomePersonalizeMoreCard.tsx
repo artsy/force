@@ -51,11 +51,11 @@ export const HomePersonalizeMoreCard: FC<HomePersonalizeMoreCardProps> = ({
         <Box>
           <Text variant="lg-display">{title}</Text>
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           <Text variant="sm">{subtitle}</Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
         </Box>
 
         <Box>

@@ -613,7 +613,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     </Collapse>
                   </BorderedRadio>
                 </RadioGroup>
-                <Spacer mb={4} />
+                <Spacer y={4} />
               </>
             )}
 
@@ -654,7 +654,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingCountry={artwork?.shippingCountry!}
                 showPhoneNumberInput={false}
               />
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <PhoneNumberForm
                 value={phoneNumber}
                 errors={phoneNumberError}
@@ -669,7 +669,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               >
                 Save shipping address for later use
               </Checkbox>
-              <Spacer mt={4} />
+              <Spacer y={4} />
             </Collapse>
 
             <Collapse
@@ -684,7 +684,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onChange={onPhoneNumberChange}
                 label="Number to contact you for pickup logistics"
               />
-              <Spacer mt={4} />
+              <Spacer y={4} />
             </Collapse>
 
             <Collapse
@@ -704,7 +704,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingQuotes={compact(shippingQuotes)}
                 onSelect={handleShippingQuoteSelected}
               />
-              <Spacer mt={4} />
+              <Spacer y={4} />
             </Collapse>
 
             <Media greaterThan="xs">
@@ -732,7 +732,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               contextModule={ContextModule.ordersShipping}
               contextPageOwnerType={OwnerType.ordersShipping}
             />
-            <Spacer mb={[2, 4]} />
+            <Spacer y={[2, 4]} />
             <Media at="xs">
               <Button
                 onClick={onContinueButtonPressed}

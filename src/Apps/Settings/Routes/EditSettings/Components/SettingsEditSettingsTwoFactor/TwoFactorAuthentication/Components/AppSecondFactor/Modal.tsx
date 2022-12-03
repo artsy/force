@@ -174,7 +174,7 @@ const InnerForm: React.FC<InnerFormProps> = ({
   }
 
   return (
-    <Join separator={<Spacer mt={2} />}>
+    <Join separator={<Spacer y={2} />}>
       <Text variant="sm" color="black60">
         An authenticator app lets you generate security codes.
       </Text>

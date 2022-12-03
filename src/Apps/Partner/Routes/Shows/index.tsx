@@ -33,7 +33,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({ partner }) => {
 
   return (
     <>
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         {firstFeaturedEvent?.isFeatured && (
           <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
         )}

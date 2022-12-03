@@ -55,7 +55,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         </GridColumns>
       </RouterLink>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <GridColumns>
         <Column span={6}>
@@ -72,7 +72,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
                   endDate=""
                 />
 
-                <Spacer mt={4} />
+                <Spacer y={4} />
               </>
             )}
           </Box>

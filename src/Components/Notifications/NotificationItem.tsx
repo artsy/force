@@ -55,10 +55,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
 
         <Text variant="sm-display">{item.message}</Text>
 
-        <Spacer mb={1} />
+        <Spacer y={1} />
 
         <Flex flexDirection="row" alignItems="center">
-          <Join separator={<Spacer ml={1} />}>
+          <Join separator={<Spacer x={1} />}>
             {artworks.map(artwork => {
               const image = artwork.image?.thumb
 

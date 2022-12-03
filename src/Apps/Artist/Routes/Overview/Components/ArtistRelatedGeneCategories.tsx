@@ -23,7 +23,7 @@ const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
     <>
       <Text variant="lg-display">Related Categories</Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Box mb={-1}>
         {categories.map(category => {

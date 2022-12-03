@@ -28,7 +28,7 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
     <SectionContainer bg="black100">
       <Subheader textColor="white100">Market trends</Subheader>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns>
         <Statistic
@@ -50,7 +50,7 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
         />
       </GridColumns>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Button
         variant="primaryWhite"

@@ -28,9 +28,9 @@ export const ShowsIndex: React.FC<ShowsIndexProps> = ({
     <>
       <ShowsMeta />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         <ShowsHeaderFragmentContainer viewer={viewer} />
 
         <Text as="h1" variant="xl">

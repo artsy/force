@@ -56,7 +56,7 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
       <>
         <Media at="xs">{this.renderReadMore("xs")}</Media>
         <Media greaterThan="xs">{this.renderReadMore()}</Media>
-        <Spacer mt={2} />
+        <Spacer y={2} />
       </>
     )
   }

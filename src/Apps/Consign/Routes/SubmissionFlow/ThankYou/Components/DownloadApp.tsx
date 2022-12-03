@@ -67,7 +67,7 @@ export const DownloadApp: React.FC<BoxProps> = props => {
           <Text variant="xl" mb={1}>
             View&nbsp;My&nbsp;Collection on the Artsy&nbsp;App
           </Text>
-          <Spacer mt={2} />
+          <Spacer y={2} />
           <DownloadAppBadges
             contextModule={ContextModule.consignSubmissionFlow}
             justifyContent="flex-start"

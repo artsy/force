@@ -17,7 +17,7 @@ export const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
 
   return (
     <BorderBox flexDirection="column">
-      <Join separator={<Spacer mt={2} />}>
+      <Join separator={<Spacer y={2} />}>
         {articles.map((article, index) => {
           if (!article) return null
 

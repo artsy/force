@@ -31,7 +31,7 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
     <SectionContainer height="100%" bg="black10" textAlign="center">
       <Subheader>How to sell your collection with Artsy</Subheader>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <GridColumns>
         <Section
@@ -56,7 +56,7 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
         />
       </GridColumns>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Button
         // @ts-ignore

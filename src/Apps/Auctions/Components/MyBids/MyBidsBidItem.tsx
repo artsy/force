@@ -62,7 +62,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
           )}
         </Box>
 
-        <Spacer mr={1} />
+        <Spacer x={1} />
 
         <Flex flex={1} minWidth={0}>
           <Box overflow="hidden" pr={1}>

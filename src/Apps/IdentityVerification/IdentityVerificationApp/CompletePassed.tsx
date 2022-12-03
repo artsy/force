@@ -7,7 +7,7 @@ export const CompletePassed: React.FC = () => {
     <>
       <Text variant="xl">Identity verification complete</Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Message
         variant="success"
@@ -16,7 +16,7 @@ export const CompletePassed: React.FC = () => {
         Thank you for completing identity verification.
       </Message>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         // @ts-ignore

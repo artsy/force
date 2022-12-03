@@ -308,7 +308,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   return inCollectorProfile ? (
     <>
       <Flex flexWrap="wrap" flexDirection="row">
-        <Join separator={<Spacer mr={2} />}>
+        <Join separator={<Spacer x={2} />}>
           {collectorProfileAddressItems.length ? (
             collectorProfileAddressItems
           ) : (
@@ -329,9 +329,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       >
         {addressItems}
       </RadioGroup>
-      <Spacer mb={14} />
+      <Spacer y={14} />
       {addAddressButton}
-      <Spacer mb={4} />
+      <Spacer y={4} />
     </>
   )
 }

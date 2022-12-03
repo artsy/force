@@ -35,7 +35,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
 
   return (
     <>
-      <Spacer mt={1} />
+      <Spacer y={1} />
       <Flex>
         <CertificateIcon mr={1} />
         <Text variant="xs" color="black100">
@@ -67,7 +67,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
               estates or foundations are often the issuing party.
             </Text>
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm">
               COAs typically include the name of the artist, the details (title,
@@ -75,7 +75,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
               possible an image of the work.
             </Text>
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm">
               Read more about artwork authenticity in our{" "}

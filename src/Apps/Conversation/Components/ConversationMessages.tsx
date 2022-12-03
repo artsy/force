@@ -144,7 +144,7 @@ export const ConversationMessages = ({
                         messageGroup.length - 1 === messageIndex
                       }
                     />
-                    <Spacer mb={spaceAfter} />
+                    <Spacer y={spaceAfter} />
                   </Fragment>
                 )
               }

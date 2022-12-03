@@ -147,7 +147,7 @@ export const InquirySignUp: React.FC = () => {
           my={1}
         />
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <Button
           type="submit"
@@ -159,7 +159,7 @@ export const InquirySignUp: React.FC = () => {
           Sign up and send message
         </Button>
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <Text variant="xs" color="black60">
           By signing up, you agree to our{" "}

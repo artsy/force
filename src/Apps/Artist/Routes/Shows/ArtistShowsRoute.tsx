@@ -23,7 +23,7 @@ const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
         <Message>There aren’t any shows at this time.</Message>
       )}
 
-      <Join separator={<Spacer mb={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {viewer.currentShows && (
           <ArtistShowsGroupRefetchContainer
             artist={viewer.currentShows}

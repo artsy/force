@@ -34,7 +34,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 
       <GridColumns>
         <Column span={8}>
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {about && (
               <Box>
                 <Text as="h3" variant="lg-display" mb={2}>
@@ -71,7 +71,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 
         {hasLocation && (
           <Column span={4}>
-            <Join separator={<Spacer mt={4} />}>
+            <Join separator={<Spacer y={4} />}>
               {partner && partner.__typename === "Partner" && (
                 <Box>
                   <Text as="h2" variant="lg-display" mb={2}>
@@ -110,7 +110,7 @@ const EventList: React.FC<{ events: ShowInfoProps["show"]["events"] }> = ({
         Events
       </Text>
 
-      <Join separator={<Spacer mt="2" />}>
+      <Join separator={<Spacer y="2" />}>
         {events.map((event, index) => {
           if (!event) return null
 

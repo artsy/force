@@ -53,7 +53,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
     >
       <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
 
-      <Spacer ml={PILL_HORIZONTAL_MARGIN_SIZE} />
+      <Spacer x={PILL_HORIZONTAL_MARGIN_SIZE} />
 
       <SavedSearchCreateAlertButton
         entity={savedSearchEntity}

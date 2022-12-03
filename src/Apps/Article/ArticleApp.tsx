@@ -40,7 +40,7 @@ const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
     <ArticleAdProvider>
       <ArticleMetaTagsFragmentContainer article={article} />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {(() => {
           switch (article.layout) {
             case "SERIES":

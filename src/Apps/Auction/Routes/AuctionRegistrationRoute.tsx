@@ -16,7 +16,7 @@ import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/Condition
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { ErrorStatus } from "../Components/Form/ErrorStatus"
+import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
 
 export interface AuctionRegistrationRouteProps {
@@ -75,7 +75,7 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
         {({ isSubmitting, isValid }) => {
           return (
             <Form>
-              <Join separator={<Spacer my={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <AddressFormWithCreditCard />
 
                 {needsIdentityVerification && <IdentityVerificationWarning />}

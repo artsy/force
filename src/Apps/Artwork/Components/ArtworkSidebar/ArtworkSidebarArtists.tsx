@@ -16,7 +16,7 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
   if (!artists) return null
 
   return (
-    <Join separator={<Spacer mt={2} />}>
+    <Join separator={<Spacer y={2} />}>
       {artists.map(artist => {
         if (!artist || !artist.name) return null
 

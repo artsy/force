@@ -52,7 +52,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
   return (
     <Container>
       <Flex alignItems="flex-end">
-        <Join separator={<Spacer ml={FIGURE_GUTTER_WIDTH} />}>
+        <Join separator={<Spacer x={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
             return (
               <ArticleSectionImageCollectionImageFragmentContainer
@@ -65,10 +65,10 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
         </Join>
       </Flex>
 
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       <Flex alignItems="flex-start">
-        <Join separator={<Spacer ml={FIGURE_GUTTER_WIDTH} />}>
+        <Join separator={<Spacer x={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
             return (
               <Box key={i} flex={1} overflow="hidden">

@@ -34,11 +34,11 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <FairHeaderImageFragmentContainer fair={fair} />
 
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <FairHeaderFragmentContainer fair={fair} />
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Jump id="FairTabs" />
 

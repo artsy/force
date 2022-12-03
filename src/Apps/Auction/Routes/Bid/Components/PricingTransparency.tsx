@@ -23,7 +23,7 @@ const PricingTransparency: React.FC<PricingTransparencyQuery$data> = props => {
   const calculatedCost = props.artwork?.saleArtwork?.calculatedCost
 
   return (
-    <Join separator={<Spacer my={1} />}>
+    <Join separator={<Spacer y={1} />}>
       <Text variant="sm-display" fontWeight="bold">
         Summary
       </Text>
@@ -56,7 +56,7 @@ const Row: React.FC = ({ children }) => {
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Join separator={<Spacer my={1} />}>
+    <Join separator={<Spacer y={1} />}>
       <Text variant="sm-display" fontWeight="bold">
         Summary
       </Text>

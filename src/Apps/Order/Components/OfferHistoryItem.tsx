@@ -44,7 +44,7 @@ const OfferHistoryItem: React.FC<
       )}
       {lastOffer?.note && (
         <>
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <Text variant={["xs", "sm"]} color="black100" fontWeight="semibold">
             {lastOffer.fromParticipant === "SELLER"
               ? "Seller's note"
@@ -53,12 +53,12 @@ const OfferHistoryItem: React.FC<
           <Text variant="xs" color="black60">
             {lastOffer.note}
           </Text>
-          <Spacer mb={1} />
+          <Spacer y={1} />
         </>
       )}
       {previousOffers && previousOffers.length > 0 && (
         <>
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <RevealButton buttonLabel="Show offer history">
             <Flex m={0} flexDirection="column">
               <Text

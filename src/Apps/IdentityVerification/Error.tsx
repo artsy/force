@@ -7,7 +7,7 @@ export const Error: React.FC = () => {
     <>
       <MetaTags title="Artsy | ID Verification" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns>
         <Column span={[12, 8, 6]} start={[1, 3, 4]}>

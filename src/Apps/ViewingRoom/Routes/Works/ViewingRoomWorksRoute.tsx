@@ -26,7 +26,7 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
   return (
     <GridColumns>
       <Column span={6} start={4}>
-        <Join separator={<Spacer my={6} />}>
+        <Join separator={<Spacer y={6} />}>
           {artworks.map(artwork => {
             const images = compact(artwork.images ?? [])
 

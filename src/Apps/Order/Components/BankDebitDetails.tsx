@@ -8,7 +8,7 @@ export const BankDebitDetails = (props: Props) => {
   return (
     <Flex alignItems="center">
       <InstitutionIcon fill="green100" />
-      <Spacer ml={0.5} />
+      <Spacer x={0.5} />
       <Text
         variant="sm-display"
         color="black100"

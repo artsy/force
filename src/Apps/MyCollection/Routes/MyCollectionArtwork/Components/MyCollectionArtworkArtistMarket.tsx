@@ -67,7 +67,7 @@ export const MyCollectionArtworkArtistMarket = ({
         </Text>
       </Media>
 
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <GridColumns>
         {!!annualValueSoldDisplayText && (
@@ -133,7 +133,7 @@ const SalePriceEstimatePerformance = ({ value }: { value: number }) => {
         <Arrow fill={color} width={25} height={25} />
       </Media>
 
-      <Spacer mr={1} />
+      <Spacer x={1} />
 
       <Text variant={["lg", "xl", "xl"]} fontWeight="medium" color={color}>
         {Math.abs(value)}%

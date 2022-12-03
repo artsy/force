@@ -32,13 +32,13 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <FlashBannerQueryRenderer />
 
-      <Spacer mt={[2, 0]} />
+      <Spacer y={[2, 0]} />
 
       <HomeContentCards />
 
-      <Spacer mt={[4, 6]} />
+      <Spacer y={[4, 6]} />
 
-      <Join separator={<Spacer mt={[6, 12]} />}>
+      <Join separator={<Spacer y={[6, 12]} />}>
         {featuredEventsOrderedSet && (
           <>
             <HomeFeaturedEventsRailFragmentContainer

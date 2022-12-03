@@ -219,7 +219,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
         )}
       </GridColumns>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <FullBleed bg="black5" p={1}>
         <ArticleAd unit="Desktop_InContentLB2" size="970x250" />

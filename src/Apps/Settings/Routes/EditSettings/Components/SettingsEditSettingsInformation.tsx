@@ -114,7 +114,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
           isValid,
         }) => (
           <Form>
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               <Input
                 title="Full Name"
                 name="name"

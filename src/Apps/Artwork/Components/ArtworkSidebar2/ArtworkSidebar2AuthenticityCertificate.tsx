@@ -72,7 +72,7 @@ export const ArtworkSidebar2AuthenticityCertificate: React.FC<ArtworkSidebar2Aut
               )}
             </Text>
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm">
               {t(
@@ -80,7 +80,7 @@ export const ArtworkSidebar2AuthenticityCertificate: React.FC<ArtworkSidebar2Aut
               )}
             </Text>
 
-            <Spacer mt={2} />
+            <Spacer y={2} />
 
             <Text variant="sm">
               {t(

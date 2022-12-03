@@ -60,7 +60,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
 
       <Column span={6}>
         {biographyBlurb && (
-          <Join separator={<Spacer mt={2} />}>
+          <Join separator={<Spacer y={2} />}>
             {biographyBlurb.text && (
               <HTML variant="sm">
                 <ReadMore maxChars={320} content={biographyBlurb.text} />

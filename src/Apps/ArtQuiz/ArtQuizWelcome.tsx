@@ -41,20 +41,20 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
                 <ArtsyLogoIcon mb={2} />
                 <Text variant={["xl", "xxl"]}>{t("artQuizPage.title")}</Text>
 
-                <Spacer my={6} />
+                <Spacer y={6} />
 
                 <Text variant={["md", "lg"]}>
                   {t("artQuizPage.welcomeScreen.subtitle1")}
                 </Text>
 
-                <Spacer my={2} />
+                <Spacer y={2} />
 
                 <Text variant={["md", "lg-display"]}>
                   {t("artQuizPage.welcomeScreen.subtitle2")}
                 </Text>
               </Box>
 
-              <Spacer my={6} />
+              <Spacer y={6} />
 
               <Box width="100%" my={6}>
                 <Button width="100%" onClick={onStartQuiz}>

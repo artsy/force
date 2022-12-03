@@ -191,7 +191,7 @@ const Hello = () => {
   return (
     <>
       <Box>Hello!</>
-      <Spacer my={2} />
+      <Spacer y={2} />
     </>
   )
 }
@@ -206,7 +206,7 @@ const App = () => {
   return (
     <>
       <Hello />
-      <Spacer my={2} />
+      <Spacer y={2} />
       <World />
     </>
   )

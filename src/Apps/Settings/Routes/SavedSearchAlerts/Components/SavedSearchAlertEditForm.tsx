@@ -176,7 +176,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
         return (
           <Box>
-            <Join separator={<Spacer mt={[4, 6]} />}>
+            <Join separator={<Spacer y={[4, 6]} />}>
               <Input
                 title="Alert Name"
                 name="name"
@@ -190,7 +190,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
               <Box>
                 <Text variant="xs">Filters</Text>
-                <Spacer mt={2} />
+                <Spacer y={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills
                     items={pills}
@@ -220,7 +220,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   </Message>
                 )}
 
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 <Checkbox
                   onSelect={selected => {
@@ -236,7 +236,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   Mobile Alerts
                 </Checkbox>
 
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 {values.push && (
                   <FrequenceRadioButtons
@@ -249,7 +249,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               </Box>
 
               <Media greaterThanOrEqual="md">
-                <Spacer mt={6} />
+                <Spacer y={6} />
 
                 <Flex>
                   <Button
@@ -259,7 +259,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   >
                     Delete Alert
                   </Button>
-                  <Spacer ml={2} />
+                  <Spacer x={2} />
                   <Button
                     flex={1}
                     loading={isSubmitting}
@@ -272,7 +272,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               </Media>
 
               <Media lessThan="md">
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 <Button
                   loading={isSubmitting}
@@ -283,7 +283,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   Save Alert
                 </Button>
 
-                <Spacer mt={1} />
+                <Spacer y={1} />
 
                 <Button
                   variant="secondaryBlack"

@@ -44,7 +44,7 @@ export const PopoverLinks: React.FC<AddToCalendarProps> = props => {
 
   return (
     <Text variant="xs" width={300}>
-      <Join separator={<Spacer mb={1} />}>
+      <Join separator={<Spacer y={1} />}>
         <a
           href={googleUrl}
           onClick={() => trackClick("google")}

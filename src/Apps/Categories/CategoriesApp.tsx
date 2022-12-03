@@ -20,11 +20,11 @@ const CategoriesApp: React.FC<CategoriesAppProps> = ({
     <>
       <MetaTags pathname="categories" />
 
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <CategoriesIntro />
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <Sticky>
         {({ stuck }) => {
@@ -34,20 +34,20 @@ const CategoriesApp: React.FC<CategoriesAppProps> = ({
               style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
             >
               <AppContainer maxWidth="none">
-                <Spacer mt={1} />
+                <Spacer y={1} />
 
                 <StickyNavFragmentContainer
                   geneFamiliesConnection={geneFamiliesConnection}
                 />
 
-                <Spacer mt={1} />
+                <Spacer y={1} />
               </AppContainer>
             </FullBleed>
           )
         }}
       </Sticky>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <GeneFamiliesFragmentContainer
         geneFamiliesConnection={geneFamiliesConnection}

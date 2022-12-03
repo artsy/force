@@ -24,7 +24,7 @@ export const AuctionResultPerformance = ({
     >
       <Arrow fill={color} width={10} height={10} />
 
-      <Spacer mr="3px" />
+      <Spacer x="3px" />
 
       <Text variant="xs" fontWeight="medium" color={color}>
         {text} est

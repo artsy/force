@@ -36,7 +36,7 @@ export const FooterDownloadAppBanner = () => {
           Get the Artsy app
         </Text>
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <DownloadAppBadges contextModule={ContextModule.footer} />
       </Column>

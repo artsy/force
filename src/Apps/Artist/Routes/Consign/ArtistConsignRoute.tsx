@@ -20,7 +20,7 @@ const ArtistConsignRoute: React.FC<ConsignRouteProps> = ({ artist }) => {
   return (
     <>
       {/* Offset needed to combat the spacer that exists in the Artist page layout */}
-      <Spacer mt={[-2, -4]} />
+      <Spacer y={[-2, -4]} />
 
       <ArtistConsignMetaFragmentContainer artist={artist} />
 

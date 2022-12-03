@@ -45,12 +45,12 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
-      <Spacer my={4} />
+      <Spacer y={4} />
       <Flex alignItems="center" justifyContent="space-between">
         {!!sale.cascadingEndTimeIntervalMinutes && (
           <>
             <SaleDetailTimerFragmentContainer sale={sale} />
-            <Spacer my={2} />
+            <Spacer y={2} />
           </>
         )}
       </Flex>
@@ -73,14 +73,14 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
 
       {showCascadingEndTimeIntervalMessage && (
         <>
-          <Spacer my={2} />
+          <Spacer y={2} />
           <Text variant="sm-display" pr={2}>
             {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
           </Text>
         </>
       )}
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <GridColumns>
         <Column span={9}>

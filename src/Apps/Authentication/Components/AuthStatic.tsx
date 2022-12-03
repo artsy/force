@@ -35,7 +35,7 @@ export const AuthStatic: React.FC<AuthStaticProps> = ({
             {description}
           </Text>
         )}
-        <Spacer my={0.5} />
+        <Spacer y={0.5} />
         <FormSwitcher
           type={type}
           isStatic

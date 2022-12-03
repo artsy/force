@@ -104,7 +104,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       <FrameWithRecentlyViewed>
         {showCollectionHubs && (
           <>
-            <Spacer mt={6} />
+            <Spacer y={6} />
 
             <CollectionsHubRails
               linkedCollections={collection.linkedCollections}
@@ -112,7 +112,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           </>
         )}
 
-        <Spacer mt={6} />
+        <Spacer y={6} />
 
         <CollectionArtworksFilterRefetchContainer
           collection={collection}
@@ -131,7 +131,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
         {collection.linkedCollections.length === 0 &&
           typeof window !== "undefined" && (
             <LazyLoadComponent threshold={1000}>
-              <Spacer mt={6} />
+              <Spacer y={6} />
 
               <RelatedCollectionsRail
                 collections={collection.relatedCollections}

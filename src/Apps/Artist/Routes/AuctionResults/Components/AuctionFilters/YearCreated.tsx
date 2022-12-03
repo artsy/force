@@ -75,7 +75,7 @@ export const YearCreated: React.FC = () => {
               }}
               selected={`${createdAfterYear}`}
             />
-            <Spacer mr={1} />
+            <Spacer x={1} />
 
             <Select
               title="Latest"
@@ -99,7 +99,7 @@ export const YearCreated: React.FC = () => {
             </Clickable>
           )}
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Checkbox
             selected={allowEmptyCreatedDates}

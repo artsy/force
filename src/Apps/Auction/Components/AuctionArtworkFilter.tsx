@@ -52,7 +52,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
         ]}
         viewer={viewer}
         Filters={
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {showKeywordFilter && <KeywordFilter />}
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />

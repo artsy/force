@@ -23,12 +23,12 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
         Recently Sold at Auctions
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Column span={9}>
-        <Spacer mt={[2, 0]} />
+        <Spacer y={[2, 0]} />
 
-        <Join separator={<Spacer mt={2} />}>
+        <Join separator={<Spacer y={2} />}>
           {auctionResults.map((result, index) => {
             return (
               <ArtistAuctionResultItemFragmentContainer

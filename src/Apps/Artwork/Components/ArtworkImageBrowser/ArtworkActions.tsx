@@ -164,7 +164,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
       )}
 
       <Container>
-        <Join separator={<Spacer mx={0} />}>
+        <Join separator={<Spacer x={0} />}>
           <Media greaterThan="xs">
             <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
               {displayableActions.map(action => {

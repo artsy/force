@@ -70,7 +70,7 @@ export class PricingContextModal extends Component<State> {
             </Button>
           }
         >
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm">
             This feature aims to provide insight into the range of prices for an
@@ -78,7 +78,7 @@ export class PricingContextModal extends Component<State> {
             the artist at different price points.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm">
             The graph displays current and past list prices for works that are
@@ -86,7 +86,7 @@ export class PricingContextModal extends Component<State> {
             included in the graph are only from galleries and dealers on Artsy.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm">
             Artwork prices are affected by{" "}

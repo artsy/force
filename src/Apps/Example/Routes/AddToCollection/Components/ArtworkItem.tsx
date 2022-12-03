@@ -28,7 +28,7 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
         {[artwork.title, artwork.date].filter(Boolean).join(", ")}
       </Text>
 
-      <Spacer my={1} />
+      <Spacer y={1} />
 
       <Button
         size="small"

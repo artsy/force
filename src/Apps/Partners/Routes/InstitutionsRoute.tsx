@@ -38,7 +38,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
         pathname="institutions"
       />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <Flex justifyContent="space-between" alignItems="center">

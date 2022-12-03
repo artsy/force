@@ -40,7 +40,7 @@ export const Example = () => {
         <Text variant="sm">Header placeholder</Text>
       </Box>
 
-      <Spacer height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]} />
+      <Spacer y={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]} />
 
       {[...new Array(10)].map((_, i) => {
         return (

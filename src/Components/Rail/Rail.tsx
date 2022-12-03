@@ -1,5 +1,5 @@
 import { Shelf, ShelfProps, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { RailHeaderProps } from "."
 import { RailHeader } from "./RailHeader"
 
@@ -18,7 +18,7 @@ export const Rail: React.FC<RailProps> = ({
   return (
     <>
       <RailHeader {...railHeaderProps} />
-      <Spacer mt={4} />
+      <Spacer y={4} />
       <Shelf alignItems={alignItems} showProgress={showProgress}>
         {React.Children.map(getItems(), (child, index) => {
           return <React.Fragment key={index}>{child}</React.Fragment>

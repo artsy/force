@@ -59,7 +59,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
 
       {followedCategories.length > 0 ? (
         <>
-          <Join separator={<Spacer mt={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {followedCategories.map(({ internalID, category }) => {
               if (!category) return null
 
@@ -141,7 +141,7 @@ const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (
       </SkeletonText>
     </Skeleton>
 
-    <Join separator={<Spacer mt={4} />}>
+    <Join separator={<Spacer y={4} />}>
       {[...new Array(4)].map((_, i) => {
         return <Fragment key={i}>{CATEGORY_RAIL_PLACEHOLDER}</Fragment>
       })}

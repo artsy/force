@@ -100,7 +100,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
               // @ts-ignore
               onSubmit={handleSubmit}
             >
-              <Join separator={<Spacer mt={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <Input
                   error={
                     (!this.state.isSocialSignUp &&

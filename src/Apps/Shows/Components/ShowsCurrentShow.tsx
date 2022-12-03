@@ -39,12 +39,12 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
           {show.name}
         </Text>
 
-        <Spacer mt={1} />
+        <Spacer y={1} />
 
         <Text variant="sm-display">{subtitle}</Text>
       </RouterLink>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Masonry columnCount={[2, 3, 4]}>
         {artworks.map(artwork => {
@@ -52,7 +52,7 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
             <React.Fragment key={artwork.internalID}>
               <GridItem artwork={artwork} />
 
-              <Spacer mt={4} />
+              <Spacer y={4} />
             </React.Fragment>
           )
         })}
@@ -60,7 +60,7 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
 
       {remaining > 0 && (
         <Flex flexDirection="column" justifyContent="center">
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Button
             variant="secondaryBlack"
@@ -117,11 +117,11 @@ export const ShowsCurrentShowPlaceholder: React.FC = () => (
 
     <SkeletonText variant="lg-display">Name of the Show</SkeletonText>
 
-    <Spacer mt={1} />
+    <Spacer y={1} />
 
     <SkeletonText variant="sm-display">Jan 0 – Feb 0, City Name</SkeletonText>
 
-    <Spacer mt={4} />
+    <Spacer y={4} />
 
     <Masonry columnCount={[2, 3, 4]}>
       {[...new Array(11)].map((_, i) => {
@@ -135,7 +135,7 @@ export const ShowsCurrentShowPlaceholder: React.FC = () => (
               <SkeletonBox width="100%" height="100%" />
             </ResponsiveBox>
 
-            <Spacer mt={1} />
+            <Spacer y={1} />
 
             <SkeletonText variant="sm-display">Artist Name</SkeletonText>
             <SkeletonText variant="sm-display">
@@ -144,7 +144,7 @@ export const ShowsCurrentShowPlaceholder: React.FC = () => (
             <SkeletonText variant="xs">Partner Name</SkeletonText>
             <SkeletonText variant="xs">$00,000</SkeletonText>
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
           </Box>
         )
       })}

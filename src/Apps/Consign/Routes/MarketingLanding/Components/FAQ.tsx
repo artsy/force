@@ -121,7 +121,7 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
       <Text mb={4} variant="lg-display" id="jump--faq">
         Frequently Asked Questions
       </Text>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {FAQList.map(({ label, value }) => (
           <Expandable onFocus={() => trackClickedFAQ(label)} label={label}>
             {value}

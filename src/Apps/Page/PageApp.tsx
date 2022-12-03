@@ -41,7 +41,7 @@ const PageApp: FC<PageAppProps> = ({ page }) => {
         pathname={canonical}
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={8} start={3}>

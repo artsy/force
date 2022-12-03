@@ -19,7 +19,7 @@ export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
         </Clickable>
       </Flex>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <SavedSearchAlertEditFormQueryRenderer
         editAlertEntity={editAlertEntity}

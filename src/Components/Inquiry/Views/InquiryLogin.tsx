@@ -188,7 +188,7 @@ export const InquiryLogin: React.FC = () => {
           />
         )}
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <Button
           type="submit"
@@ -200,7 +200,7 @@ export const InquiryLogin: React.FC = () => {
           Login and Send Message
         </Button>
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <Flex alignItems="center" justifyContent="flex-end">
           <Clickable textDecoration="underline" onClick={handleClick}>

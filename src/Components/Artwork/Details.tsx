@@ -220,7 +220,7 @@ export const Details: React.FC<DetailsProps> = ({
     <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
-          <Join separator={<Spacer mx={0.5} />}>
+          <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
               <Text variant="xs">
                 Lot {rest.artwork?.sale_artwork?.lotLabel}
