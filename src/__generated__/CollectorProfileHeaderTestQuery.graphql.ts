@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a33dac7cea89609eb0ec5afda723547a>>
+ * @generated SignedSource<<6276bad8db8d8fb8884347c223cf2a01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectorProfileRoutes_CollectorProfileQuery$variables = {};
-export type collectorProfileRoutes_CollectorProfileQuery$data = {
+export type CollectorProfileHeaderTestQuery$variables = {};
+export type CollectorProfileHeaderTestQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileApp_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeader_me">;
   } | null;
 };
-export type collectorProfileRoutes_CollectorProfileQuery = {
-  response: collectorProfileRoutes_CollectorProfileQuery$data;
-  variables: collectorProfileRoutes_CollectorProfileQuery$variables;
+export type CollectorProfileHeaderTestQuery = {
+  response: CollectorProfileHeaderTestQuery$data;
+  variables: CollectorProfileHeaderTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -28,13 +28,31 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "name": "CollectorProfileHeaderTestQuery",
     "selections": [
       {
         "alias": null,
@@ -47,7 +65,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectorProfileApp_me"
+            "name": "CollectorProfileHeader_me"
           }
         ],
         "storageKey": null
@@ -60,7 +78,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "name": "CollectorProfileHeaderTestQuery",
     "selections": [
       {
         "alias": null,
@@ -183,16 +201,53 @@ return {
     ]
   },
   "params": {
-    "cacheID": "297b97d004b7f53bd845e3cf95688b90",
+    "cacheID": "19f6b80141584852465290432fe1d14e",
     "id": null,
-    "metadata": {},
-    "name": "collectorProfileRoutes_CollectorProfileQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.bio": (v1/*: any*/),
+        "me.createdAt": (v1/*: any*/),
+        "me.icon": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.icon.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "me.icon.resized.src": (v2/*: any*/),
+        "me.icon.resized.srcSet": (v2/*: any*/),
+        "me.id": (v3/*: any*/),
+        "me.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "MyLocation"
+        },
+        "me.location.display": (v1/*: any*/),
+        "me.location.id": (v3/*: any*/),
+        "me.name": (v1/*: any*/),
+        "me.otherRelevantPositions": (v1/*: any*/),
+        "me.profession": (v1/*: any*/)
+      }
+    },
+    "name": "CollectorProfileHeaderTestQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_CollectorProfileQuery {\n  me {\n    ...CollectorProfileApp_me\n    id\n  }\n}\n\nfragment CollectorProfileApp_me on Me {\n  ...CollectorProfileHeader_me\n  name\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
+    "text": "query CollectorProfileHeaderTestQuery {\n  me {\n    ...CollectorProfileHeader_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment CollectorProfileHeaderInfo_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  otherRelevantPositions\n}\n\nfragment CollectorProfileHeader_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  ...CollectorProfileHeaderInfo_me\n  name\n  bio\n  createdAt\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a741e51fd09181fa3f4498d97579e413";
+(node as any).hash = "436ffea3deb99417d2a8b8fec13facb9";
 
 export default node;
