@@ -17,7 +17,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
 
   return (
     <>
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <Flex>
         <CollectorProfileHeaderAvatarFragmentContainer me={me} />
@@ -59,7 +59,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Media>
       </Flex>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Box mb={2}>
         {!!bio && (
