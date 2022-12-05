@@ -1,10 +1,10 @@
 // Modernized version of src/desktop/apps/authentication/helpers.ts
 // - Wraps auth related functions in consistent Promise interface
-// - Automatically handles CSRF token, session ID, ReCaptcha token
+// - Automatically handles CSRF token, session ID, reCAPTCHA token
 
-import { data as sd } from "sharify"
 import Cookies from "cookies-js"
-import { recaptcha as _recaptcha } from "Utils/recaptcha"
+import { getENV } from "Utils/getENV"
+import { recaptcha as _recaptcha, RecaptchaAction } from "Utils/recaptcha"
 
 const headers = {
   Accept: "application/json",
@@ -17,7 +17,9 @@ export const login = async (args: {
   password: string
   authenticationCode: string
 }) => {
-  const loginUrl = `${sd.APP_URL}${sd.AP.loginPagePath}`
+  recaptcha("login_submit")
+
+  const loginUrl = `${getENV("APP_URL")}${getENV("AP").loginPagePath}`
 
   const response = await fetch(loginUrl, {
     headers,
@@ -28,7 +30,7 @@ export const login = async (args: {
       password: args.password,
       otp_attempt: args.authenticationCode.replace(/ /g, ""),
       otpRequired: !!args.authenticationCode,
-      session_id: sd.SESSION_ID,
+      session_id: getENV("SESSION_ID"),
       _csrf: Cookies.get("CSRF_TOKEN"),
     }),
   })
@@ -51,13 +53,20 @@ export const login = async (args: {
  * Triggers a password reset (sends an email with password reset instructions)
  */
 export const forgotPassword = async (args: { email: string }) => {
-  const forgotPasswordUrl = `${sd.API_URL}/api/v1/users/send_reset_password_instructions`
+  recaptcha("forgot_submit")
+
+  const forgotPasswordUrl = `${getENV(
+    "API_URL"
+  )}/api/v1/users/send_reset_password_instructions`
 
   const response = await fetch(forgotPasswordUrl, {
-    headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
+    headers: { ...headers, "X-XAPP-TOKEN": getENV("ARTSY_XAPP_TOKEN") },
     method: "POST",
     credentials: "same-origin",
-    body: JSON.stringify({ email: args.email, session_id: sd.SESSION_ID }),
+    body: JSON.stringify({
+      email: args.email,
+      session_id: getENV("SESSION_ID"),
+    }),
   })
 
   if (response.ok) {
@@ -65,7 +74,12 @@ export const forgotPassword = async (args: { email: string }) => {
   }
 
   const err = await response.text()
-  return await Promise.reject(new Error(err))
+
+  try {
+    return Promise.reject(new Error(JSON.parse(err).error))
+  } catch {
+    return Promise.reject(new Error(err))
+  }
 }
 
 /**
@@ -76,10 +90,10 @@ export const resetPassword = async (args: {
   password: string
   passwordConfirmation: string
 }) => {
-  const resetPasswordUrl = `${sd.API_URL}/api/v1/users/reset_password`
+  const resetPasswordUrl = `${getENV("API_URL")}/api/v1/users/reset_password`
 
   const response = await fetch(resetPasswordUrl, {
-    headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
+    headers: { ...headers, "X-XAPP-TOKEN": getENV("ARTSY_XAPP_TOKEN") },
     method: "PUT",
     credentials: "same-origin",
     body: JSON.stringify({
@@ -106,9 +120,8 @@ export const resetPassword = async (args: {
   return await Promise.reject(new Error(JSON.stringify(err)))
 }
 
-// TODO: Handle recaptcha impressions
-const recaptcha = () => {
-  return new Promise(resolve => _recaptcha("signup_submit", resolve))
+const recaptcha = (action: RecaptchaAction) => {
+  return new Promise(resolve => _recaptcha(action, resolve))
 }
 
 /**
@@ -119,9 +132,9 @@ export const signUp = async (args: {
   email: string
   password: string
 }) => {
-  const signUpUrl = `${sd.APP_URL}${sd.AP.signupPagePath}`
+  const signUpUrl = `${getENV("APP_URL")}${getENV("AP").signupPagePath}`
 
-  const recaptchaToken = await recaptcha()
+  const recaptchaToken = await recaptcha("signup_submit")
 
   return await fetch(signUpUrl, {
     headers: {
@@ -135,7 +148,7 @@ export const signUp = async (args: {
       name: args.name,
       email: args.email,
       password: args.password,
-      session_id: sd.SESSION_ID,
+      session_id: getENV("SESSION_ID"),
       _csrf: Cookies.get("CSRF_TOKEN"),
       accepted_terms_of_service: true,
       recaptcha_token: recaptchaToken,
@@ -151,7 +164,7 @@ export const signUp = async (args: {
 }
 
 export const logout = async () => {
-  const logoutUrl = `${sd.APP_URL}${sd.AP.logoutPath}`
+  const logoutUrl = `${getENV("APP_URL")}${getENV("AP").logoutPath}`
 
   const response = await fetch(logoutUrl, {
     headers: {
@@ -165,6 +178,24 @@ export const logout = async () => {
 
   if (response.ok) {
     return await response.json()
+  }
+
+  const err = await response.json()
+  return Promise.reject(new Error(err.error))
+}
+
+/**
+ * Returns a token used to authenticate with Gravity
+ */
+export const getTrustToken = async (accessToken: string): Promise<string> => {
+  const response = await fetch(`${getENV("APP_URL")}/api/v1/me/trust_token`, {
+    method: "POST",
+    headers: { "X-Access-Token": accessToken },
+  })
+
+  if (response.ok) {
+    const body = await response.json()
+    return body.trust_token
   }
 
   const err = await response.json()
