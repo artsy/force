@@ -11,24 +11,17 @@ Links should point to specific commits, and not a branch (in case the branch or 
 
 # Table of Contents
 
-- [Current Preferred Practices](#current-preferred-practices)
-- [When writing UI, use Palette](#when-writing-ui-use-palette)
-- [For routing, use our framework](#for-routing-use-our-framework)
-- [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
-- [Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags](#avoid-copying-and-try-to-fix--ts-expect-error-please_fix_me_strict_null_check_migration-flags)
-- [Use Relay for network requests](#use-relay-for-network-requests)
-- [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
-- [Keep file structure organized](#keep-file-structure-organized)
-- [Naming, imports and exports](#naming-imports-and-exports)
-- [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
-- [Avoid inner spacing margins](#avoid-inner-spacing-margins)
-- [Write unit tests for new components](#write-unit-tests-for-new-components)
-  - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
-- [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
-- [Adding global script tags](#adding-global-script-tags)
+- [Current tech stack](#current-tech-stack)
+- [TypeScript](#typescript)
+- [UI](#ui)
+- [Routing](#routing)
+- [Relay](#relay)
+- [Code organization](#Code-organization)
+- [Code style](#code-style)
+- [Testing](#testing)
 - [Tracking Events](#tracking-events)
 
-## Current Preferred Practices
+## Current tech stack
 
 The app is currently written responsively in React. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
 
@@ -299,7 +292,7 @@ We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-
 
 When adding global script tags (for, say, marketing-related needs), we need to add it to two places: our old app template and our new. See [this PR](https://github.com/artsy/force/pull/7640) for an implementation example.
 
-### Tracking Events
+## Tracking Events
 
 We use [react-tracking](https://github.com/nytimes/react-tracking) for tracking events defined in [artsy/cohesion](https://github.com/artsy/cohesion). To use, import the hook as well as the associated schema bits:
 
