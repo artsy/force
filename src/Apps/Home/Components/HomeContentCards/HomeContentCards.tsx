@@ -5,6 +5,7 @@ import { FallbackCards } from "./FallbackCards"
 import { PlaceholderCards } from "./PlaceholderCards"
 import { useRouter } from "System/Router/useRouter"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { HomeErrorBoundary } from "./HomeErrorBoundary"
 
 const sortCards = (lhs, rhs) => {
   const lhsPosition = (lhs.extras || {}).position || lhs.id
@@ -75,4 +76,12 @@ export const HomeContentCards: React.FC = () => {
     return exceededTimeout ? <FallbackCards /> : <PlaceholderCards />
 
   return <BrazeCards appboy={appboy} cards={cards} />
+}
+
+export const SafeHomeContentCards = () => {
+  return (
+    <HomeErrorBoundary>
+      <HomeContentCards />
+    </HomeErrorBoundary>
+  )
 }
