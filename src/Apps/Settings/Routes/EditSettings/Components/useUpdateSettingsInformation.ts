@@ -11,9 +11,10 @@ export const useUpdateSettingsInformation = () => {
         updateMyUserProfile(input: $input) {
           me {
             ...SettingsEditSettingsInformation_me
-            name
             email
             phone
+            priceRangeMin
+            priceRangeMax
           }
           userOrError {
             ... on UpdateMyProfileMutationSuccess {

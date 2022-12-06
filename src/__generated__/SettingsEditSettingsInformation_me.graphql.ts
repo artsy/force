@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca86b304c89fcb50d7ff4eb6e1db156c>>
+ * @generated SignedSource<<8dfeed1b299657d9175de4634adc9a31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsInformation_me$data = {
   readonly email: string | null;
-  readonly name: string | null;
   readonly paddleNumber: string | null;
   readonly phone: string | null;
+  readonly priceRange: string | null;
+  readonly priceRangeMax: number | null;
+  readonly priceRangeMin: number | null;
   readonly " $fragmentType": "SettingsEditSettingsInformation_me";
 };
 export type SettingsEditSettingsInformation_me$key = {
@@ -39,13 +41,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "paddleNumber",
       "storageKey": null
     },
@@ -55,12 +50,33 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "phone",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRange",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMin",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceRangeMax",
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "4b58a8c8a4bb4bcbc13fd9519056de2a";
+(node as any).hash = "ca1583e8b5be5ddeb9a3f5d0a8d18257";
 
 export default node;

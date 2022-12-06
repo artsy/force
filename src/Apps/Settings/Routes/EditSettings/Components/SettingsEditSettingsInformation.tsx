@@ -3,11 +3,13 @@ import {
   Input,
   Join,
   PasswordInput,
+  Select,
   Spacer,
   Text,
   useToasts,
 } from "@artsy/palette"
-import { email, name, password } from "Components/Authentication/Validators"
+import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
+import { email, password } from "Components/Authentication/Validators"
 import { Form, Formik } from "formik"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,14 +35,15 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
 
       <Formik
         initialValues={{
-          name: me.name ?? "",
           email: me.email ?? "",
           phone: me.phone ?? "",
+          priceRange: me.priceRange ?? "",
+          priceRangeMax: me.priceRangeMax,
+          priceRangeMin: me.priceRangeMin,
           password: "",
         }}
         validationSchema={Yup.object().shape({
           email,
-          name,
           // Requires password when email is changed
           password: password.when("email", {
             is: email => email !== me.email,
@@ -58,10 +61,21 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             }
           ),
         })}
-        onSubmit={async ({ email, name, password, phone }, { resetForm }) => {
+        onSubmit={async (
+          { email, password, phone, priceRangeMin, priceRangeMax },
+          { setFieldValue }
+        ) => {
           try {
             const { updateMyUserProfile } = await submitMutation({
-              variables: { input: { email, name, password, phone } },
+              variables: {
+                input: {
+                  email,
+                  password,
+                  phone,
+                  priceRangeMin,
+                  priceRangeMax,
+                },
+              },
               rejectIf: res => {
                 return res.updateMyUserProfile?.userOrError?.mutationError
               },
@@ -84,14 +98,9 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
 
             const updatedMe = updateMyUserProfile?.me
 
-            resetForm({
-              values: {
-                name: updatedMe?.name ?? name,
-                email: updatedMe?.email ?? email,
-                phone: updatedMe?.phone ?? phone,
-                password: "",
-              },
-            })
+            setFieldValue("email", updatedMe?.email ?? email)
+            setFieldValue("phone", updatedMe?.phone ?? phone)
+            setFieldValue("password", "")
           } catch (err) {
             console.error(err)
 
@@ -109,24 +118,13 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
           errors,
           handleBlur,
           handleChange,
+          setFieldValue,
           isSubmitting,
           values,
           isValid,
         }) => (
           <Form>
             <Join separator={<Spacer y={2} />}>
-              <Input
-                title="Full Name"
-                name="name"
-                error={errors.name}
-                placeholder="Enter your full name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                autoComplete="name"
-              />
-
               <Input
                 title="Email"
                 name="email"
@@ -150,6 +148,24 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 type="tel"
                 autoComplete="tel"
                 error={errors.phone}
+              />
+
+              <Select
+                title="Price Range"
+                options={PRICE_BUCKETS}
+                selected={values.priceRange}
+                onSelect={value => {
+                  setFieldValue("priceRange", value)
+
+                  // We don't actually accept a priceRange,
+                  // so have to split it into min/max
+                  const [priceRangeMin, priceRangeMax] = value
+                    .split(":")
+                    .map(n => parseInt(n, 10))
+
+                  setFieldValue("priceRangeMin", priceRangeMin)
+                  setFieldValue("priceRangeMax", priceRangeMax)
+                }}
               />
 
               {me.paddleNumber && (
@@ -199,9 +215,11 @@ export const SettingsEditSettingsInformationFragmentContainer = createFragmentCo
     me: graphql`
       fragment SettingsEditSettingsInformation_me on Me {
         email
-        name
         paddleNumber
         phone
+        priceRange
+        priceRangeMin
+        priceRangeMax
       }
     `,
   }
