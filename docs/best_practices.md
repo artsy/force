@@ -96,7 +96,6 @@ Within a sub-app, things are typically structured like so:
 │   │   └── Bar.jest.tsx
 │   ├── Foo.tsx
 │   ├── Bar.tsx
-|   ├── index.ts
 ├── Routes
 │   ├── Home
 │   │   ├── HomeApp.tsx
@@ -114,9 +113,7 @@ Within a sub-app, things are typically structured like so:
 
 #### Should I use an index file?
 
-Generally, the following rule applies:
-One file? No index file.
-Multiple files? use a folder and an index file to export them.
+Generally, we would like to avoid using index files as much as possible as they can lead to refactoring nightmares, increase noise in the file structure, and can mess up VSCode’s auto-import.
 
 If there's a component that might be shared across multiple sub-apps, it should go in the top-level [`/Components`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Components) folder.
 
