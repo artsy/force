@@ -11,7 +11,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 
 # Table of Contents
 
-- [Current tech stack](#current-tech-stack)
+- [Current Tech Stack](#current-tech-stack)
 - [TypeScript](#typescript)
 - [UI](#ui)
 - [Routing](#routing)
@@ -21,7 +21,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Testing](#testing)
 - [Tracking Events](#tracking-events)
 
-## Current tech stack
+## Current Tech Stack
 
 The app is currently written responsively in React. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
 
