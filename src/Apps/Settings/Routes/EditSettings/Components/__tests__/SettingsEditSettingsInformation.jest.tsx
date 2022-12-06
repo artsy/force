@@ -1,7 +1,7 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SettingsEditSettingsInformationFragmentContainer } from "../SettingsEditSettingsInformation"
+import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
 
 jest.unmock("react-relay")
 
@@ -20,8 +20,9 @@ describe("SettingsEditSettingsInformation", () => {
   it("renders the form", () => {
     renderWithRelay()
 
-    expect(screen.queryByText("Full Name")).toBeInTheDocument()
     expect(screen.queryByText("Email")).toBeInTheDocument()
+    expect(screen.queryByText("Price Range")).toBeInTheDocument()
+    expect(screen.queryByText("Mobile Number")).toBeInTheDocument()
     expect(screen.queryByText("Password")).not.toBeInTheDocument()
   })
 
