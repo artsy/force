@@ -15,7 +15,7 @@ import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRa
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
-import { HomeContentCards } from "./Components/HomeContentCards"
+import { SafeHomeContentCards } from "./Components/HomeContentCards"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage$data | null
@@ -34,7 +34,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer y={[2, 0]} />
 
-      <HomeContentCards />
+      <SafeHomeContentCards />
 
       <Spacer y={[4, 6]} />
 
