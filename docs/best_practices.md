@@ -1,4 +1,4 @@
-Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Older code is often left un-updated. It can be difficult to orient oneself around what the current preferred practices are.
+Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Older code is often left un-updated. It can be difficult to orient oneself around what the current preferred practices are, but we try to keep this doc as up to date as much as possible and appreciate your contribution toward this.
 
 This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next. This is a living document, expected to be updated regularly, with links to:
 
@@ -11,32 +11,48 @@ Links should point to specific commits, and not a branch (in case the branch or 
 
 # Table of Contents
 
-- [Current Preferred Practices](#current-preferred-practices)
-- [When writing UI, use Palette](#when-writing-ui-use-palette)
-- [For routing, use our framework](#for-routing-use-our-framework)
-- [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
-- [Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags](#avoid-copying-and-try-to-fix--ts-expect-error-please_fix_me_strict_null_check_migration-flags)
-- [Use Relay for network requests](#use-relay-for-network-requests)
-- [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
-- [Keep file structure organized](#keep-file-structure-organized)
-- [Naming, imports and exports](#naming-imports-and-exports)
-- [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
-- [Avoid inner spacing margins](#avoid-inner-spacing-margins)
-- [Write unit tests for new components](#write-unit-tests-for-new-components)
-  - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
-- [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
-- [Adding global script tags](#adding-global-script-tags)
+- [Current Tech Stack](#current-tech-stack)
+- [TypeScript](#typescript)
+- [UI](#ui)
+- [Routing](#routing)
+- [Relay](#relay)
+- [Code organization](#Code-organization)
+- [Code style](#code-style)
+- [Testing](#testing)
 - [Tracking Events](#tracking-events)
 
-## Current Preferred Practices
+## Current Tech Stack
 
 The app is currently written responsively in React. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
 
+## TypeScript
+
+We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety and prevent runtime bugs.
+
+### Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags
+
+Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
+
+## UI
+
 ### When writing UI, use Palette
 
-Our design system [Palette](https://github.com/artsy/palette) is used for most UI needs. Check out [the docs](https://palette.artsy.net/)!
+Our design system [Palette](https://github.com/artsy/palette) is used for most UI needs.
+
+- Check out [the docs](https://palette.artsy.net/).
+- Checkout the Storybook including components in accordance with the most recent design system [here](https://palette-storybook.artsy.net/).
 
 > If interested in some of the lower-level particulars of how Palette was built, see the [styled-system](https://styled-system.com/) docs.
+
+### Commonly used components
+
+- [Box](https://palette.artsy.net/elements/box/) - is a div which we can pass extra props to, like margins for example. The content is displayed vertically.
+
+- [Flex](https://palette.artsy.net/elements/flex/) - It is a Box with display=flex . The content is displayed vertically horizontally.
+
+Other commonly used components include [Separator](https://palette.artsy.net/elements/separator/), [Spacer](https://palette.artsy.net/elements/spacer/), etc.
+
+## Routing
 
 ### For routing, use our framework
 
@@ -44,13 +60,7 @@ Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are
 
 To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/docs/adding_new_app.md).
 
-### Leverage TypeScript to prevent runtime bugs
-
-We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
-
-### Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags
-
-Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
+## Relay
 
 ### Use Relay for network requests
 
@@ -65,6 +75,8 @@ Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), 
 ### Prefer Relay containers (higher order components) over relay-hooks
 
 We have a preference for Relay containers due to [`relay-hooks`](https://github.com/relay-tools/relay-hooks) hooks not being compatible with Relay containers which represent the majority of our components using Relay. (This could change once Relay releases its official hooks implementation.)
+
+## Code organization
 
 ### Keep file structure organized
 
@@ -97,9 +109,15 @@ Within a sub-app, things are typically structured like so:
 │       │   ├── Bar.tsx
 ```
 
+#### Should I use an index file?
+
+Generally, we would like to avoid using index files as much as possible as they can lead to refactoring nightmares, increase noise in the file structure, and can mess up VSCode’s auto-import.
+
 If there's a component that might be shared across multiple sub-apps, it should go in the top-level [`/Components`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Components) folder.
 
 Framework code is located in [`/System`](https://github.com/artsy/force/tree/main/src/System).
+
+## Code Style
 
 ### Naming, imports and exports
 
@@ -234,6 +252,8 @@ const App = () => {
 
 The reasoning is components without inner margins are portable, and layouts should always be defined from the parent.
 
+## Testing
+
 ### Write unit tests for new components
 
 We use [Jest](https://jestjs.io/) for our unit tests.
@@ -267,7 +287,7 @@ We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-
 
 When adding global script tags (for, say, marketing-related needs), we need to add it to two places: our old app template and our new. See [this PR](https://github.com/artsy/force/pull/7640) for an implementation example.
 
-### Tracking Events
+## Tracking Events
 
 We use [react-tracking](https://github.com/nytimes/react-tracking) for tracking events defined in [artsy/cohesion](https://github.com/artsy/cohesion). To use, import the hook as well as the associated schema bits:
 
