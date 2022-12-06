@@ -46,7 +46,6 @@ export const NavBarUserMenu: React.FC = () => {
   const hasPartnerAccess = Boolean(user?.has_partner_access)
 
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -84,11 +83,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="View your Saves &amp; Follows"
-        to={
-          isCollectorProfileEnabled
-            ? "/collector-profile/saves"
-            : "/settings/saves"
-        }
+        to="/settings/saves"
         onClick={trackClick}
       >
         <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
@@ -104,11 +99,7 @@ export const NavBarUserMenu: React.FC = () => {
 
       <NavBarMenuItemLink
         aria-label="View your Collection"
-        to={
-          isCollectorProfileEnabled
-            ? "/collector-profile/collection"
-            : "/settings/my-collection"
-        }
+        to="/settings/my-collection"
         onClick={trackClick}
       >
         <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
@@ -117,11 +108,7 @@ export const NavBarUserMenu: React.FC = () => {
       {isInsightsEnabled && (
         <NavBarMenuItemLink
           aria-label="View your Collection's Insights"
-          to={
-            isCollectorProfileEnabled
-              ? "/collector-profile/insights"
-              : "/settings/insights"
-          }
+          to="/settings/insights"
           onClick={trackClick}
         >
           <GraphIcon mr={1} aria-hidden="true" /> Insights

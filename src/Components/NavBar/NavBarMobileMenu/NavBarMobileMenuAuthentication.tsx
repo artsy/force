@@ -30,7 +30,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
   const { mediator } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
@@ -50,9 +49,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       },
       {
         text: "Saves & Follows",
-        href: isCollectorProfileEnabled
-          ? "/collector-profile/saves"
-          : "/settings/saves",
+        href: "/settings/saves",
       },
       {
         text: "Auctions",
@@ -64,15 +61,11 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       },
       {
         text: "My Collection",
-        href: isCollectorProfileEnabled
-          ? "/collector-profile/collection"
-          : "/settings/my-collection",
+        href: "/settings/my-collection",
       },
       isInsightsEnabled && {
         text: "Insights",
-        href: isCollectorProfileEnabled
-          ? "/collector-profile/insights"
-          : "/settings/insights",
+        href: "/settings/insights",
       },
       {
         text: "Settings",
