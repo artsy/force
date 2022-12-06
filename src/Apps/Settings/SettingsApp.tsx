@@ -15,6 +15,17 @@ interface SettingsAppProps {
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
+  const tabsWhenCollectorProfileEnabled = compact([
+    { name: "Edit Profile", url: "/settings/edit-settings" },
+    { name: "Saved Alerts", url: "/settings/alerts" },
+    { name: "Account", url: "/settings/edit-profile" },
+    { name: "Order History", url: "/settings/purchases" },
+    { name: "Bids", url: "/settings/auctions" },
+    { name: "Payments", url: "/settings/payments" },
+    { name: "Shipping", url: "/settings/shipping" },
+  ])
 
   const tabs = compact([
     { name: "Edit Settings", url: "/settings/edit-settings" },
@@ -38,13 +49,21 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       </Text>
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
-        {tabs.map(tab => {
-          return (
-            <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
-              {tab.name}
-            </RouteTab>
-          )
-        })}
+        {isCollectorProfileEnabled
+          ? tabsWhenCollectorProfileEnabled.map(tab => {
+              return (
+                <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
+                  {tab.name}
+                </RouteTab>
+              )
+            })
+          : tabs.map(tab => {
+              return (
+                <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
+                  {tab.name}
+                </RouteTab>
+              )
+            })}
       </RouteTabs>
 
       {children}
