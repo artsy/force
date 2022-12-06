@@ -46,15 +46,16 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
         {!!loggedOutState ? (
           <Button
             variant="primaryBlack"
-            onClick={() =>
+            onClick={() => {
               mediator &&
-              openAuthModal(mediator, {
-                mode: ModalType.login,
-                intent: Intent.login,
-                contextModule: ContextModule.myCollectionHome,
-                copy: "Log in to upload works to My Collection",
-              })
-            }
+                openAuthModal(mediator, {
+                  mode: ModalType.login,
+                  intent: Intent.login,
+                  contextModule: ContextModule.myCollectionHome,
+                  copy: "Log in to upload works to My Collection",
+                })
+              trackAddCollectedArtwork()
+            }}
           >
             Upload Artwork
           </Button>
@@ -144,15 +145,16 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
         {!!loggedOutState ? (
           <Button
             variant="primaryBlack"
-            onClick={() =>
+            onClick={() => {
               mediator &&
-              openAuthModal(mediator, {
-                mode: ModalType.login,
-                intent: Intent.login,
-                contextModule: ContextModule.myCollectionHome,
-                copy: "Log in to upload works to My Collection",
-              })
-            }
+                openAuthModal(mediator, {
+                  mode: ModalType.login,
+                  intent: Intent.login,
+                  contextModule: ContextModule.myCollectionHome,
+                  copy: "Log in to upload works to My Collection",
+                })
+              trackAddCollectedArtwork()
+            }}
             width="100%"
           >
             Upload Artwork
