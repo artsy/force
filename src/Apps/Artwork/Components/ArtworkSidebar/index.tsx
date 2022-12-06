@@ -70,7 +70,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
 
@@ -78,8 +78,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {is_in_auction ? (
         <>
-          <Spacer mt={2} />
-          <Join separator={<Spacer mt={2} />}>
+          <Spacer y={2} />
+          <Join separator={<Spacer y={2} />}>
             <ArtworkSidebarAuctionPartnerInfoFragmentContainer
               artwork={artwork}
             />
@@ -101,14 +101,14 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </>
       ) : (
         <>
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <ArtworkSidebarCommercialFragmentContainer artwork={artwork} />
         </>
       )}
 
       {shouldRenderArtworkBadges && (
-        <Join separator={<Spacer mt={2} />}>
+        <Join separator={<Spacer y={2} />}>
           <Separator mt={2} />
 
           <SecurePaymentFragmentContainer artwork={artwork} />

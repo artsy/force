@@ -6,10 +6,8 @@ import { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtist
 import { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
-import { extractNodes } from "Utils/extractNodes"
-import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ContextModule } from "@artsy/cohesion"
+import { CellPartnerArtistFragmentContainer } from "Components/Cells/CellPartnerArtist"
+import { compact } from "lodash"
 
 const PAGE_SIZE = 20
 
@@ -27,23 +25,14 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   ) {
     return null
   }
-
-  const artists = extractNodes(partner.artistsConnection)
+  const artists = compact(partner.artistsConnection.edges)
 
   return (
     <Shelf alignItems="flex-start">
       {artists.map(artist => (
-        <CellArtistFragmentContainer
-          key={artist.internalID}
-          artist={artist}
-          to={`/partner/${partner.slug}/artists/${artist.slug}`}
-          FollowButton={
-            <FollowArtistButtonQueryRenderer
-              id={artist.internalID}
-              contextModule={ContextModule.recommendedArtistsRail}
-              size="small"
-            />
-          }
+        <CellPartnerArtistFragmentContainer
+          key={artist.node?.internalID}
+          artistPartnerEdge={artist}
         />
       ))}
     </Shelf>
@@ -63,10 +52,10 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              ...CellArtist_artist
               internalID
               slug
             }
+            ...CellPartnerArtist_partnerArtist
           }
         }
       }

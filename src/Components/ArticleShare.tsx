@@ -26,7 +26,7 @@ export const ArticleShare: FC<ArticleShareProps> = ({
 
   return (
     <Flex {...rest}>
-      <Join separator={<Spacer ml={2} />}>
+      <Join separator={<Spacer x={2} />}>
         <Box
           as="a"
           display="flex"

@@ -17,7 +17,7 @@ const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
     <>
       <MetaTags title={`${viewer?.soloShows?.name} - CV | Artsy`} />
 
-      <Join separator={<Spacer mb={4} />}>
+      <Join separator={<Spacer y={4} />}>
         <ArtistCVGroupRefetchContainer
           artist={viewer.soloShows!}
           title={t("artistPage.cv.soloTitle")}

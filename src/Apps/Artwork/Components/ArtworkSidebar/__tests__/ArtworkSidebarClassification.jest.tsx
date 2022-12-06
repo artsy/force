@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { ArtworkSidebarClassificationFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarClassification"
+import { ArtworkSidebarClassificationFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarClassification"
 import { screen, fireEvent } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
@@ -38,12 +38,12 @@ describe("ArtworkSidebarClassification", () => {
       renderWithRelay({
         Artwork: () => ({
           attributionClass: {
-            shortArrayDescription: ["This is", "a unique work"],
+            shortArrayDescription: ["", "Unique work"],
           },
         }),
       })
 
-      expect(screen.getByText("a unique work")).toBeInTheDocument()
+      expect(screen.getByText("Unique work")).toBeInTheDocument()
     })
 
     describe("modal pop up", () => {
@@ -51,7 +51,7 @@ describe("ArtworkSidebarClassification", () => {
         renderWithRelay({
           Artwork: () => ({
             attributionClass: {
-              shortArrayDescription: ["This is", "a unique work"],
+              shortArrayDescription: ["", "Unique work"],
             },
           }),
         })
@@ -60,7 +60,7 @@ describe("ArtworkSidebarClassification", () => {
           screen.queryByText("ArtworkSidebarClassificationsModalQueryRenderer")
         ).not.toBeInTheDocument()
 
-        fireEvent.click(screen.getByText("a unique work"))
+        fireEvent.click(screen.getByText("Unique work"))
 
         expect(trackEvent).toBeCalledWith({
           action_type: "Click",
@@ -81,7 +81,7 @@ describe("ArtworkSidebarClassification", () => {
           Artwork: () => ({ attributionClass: null }),
         })
 
-        expect(screen.queryByText("a unique work")).not.toBeInTheDocument()
+        expect(screen.queryByText("Unique work")).not.toBeInTheDocument()
       })
     })
   })

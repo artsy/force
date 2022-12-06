@@ -12,7 +12,7 @@ export const InquiryConfirmation: React.FC = () => {
         Your message has been sent
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Box p={1} backgroundColor="black10">
         <Text variant="sm-display">

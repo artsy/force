@@ -34,7 +34,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
         </Text>
       </Checkbox>
 
-      <Spacer my={1} />
+      <Spacer y={1} />
 
       {showErrorMessage && (
         <Text variant="xs" my={1} color="red100">

@@ -40,7 +40,7 @@ export const OnboardingThankYou: FC<OnboardingThankYouProps> = ({
     >
       <Spinner position="static" color="blue100" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text variant="lg-display">{message}</Text>
     </Flex>

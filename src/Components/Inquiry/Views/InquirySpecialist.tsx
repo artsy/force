@@ -136,7 +136,7 @@ export const InquirySpecialist: React.FC = () => {
         </>
       )}
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         type="submit"

@@ -37,13 +37,13 @@ const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
 
           <Text variant="lg-display">{article.description}</Text>
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Text variant="md" color="black60">
             {article.byline}
           </Text>
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Text variant="xs" fontWeight="bold">
             {article.publishedAt}

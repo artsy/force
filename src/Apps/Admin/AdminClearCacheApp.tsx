@@ -41,7 +41,7 @@ export const AdminClearCacheApp: FC = () => {
     <>
       <MetaTags title="Clear Cache | Artsy" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Button onClick={handleClick} loading={mode === "Loading"}>
         Clear Force cache

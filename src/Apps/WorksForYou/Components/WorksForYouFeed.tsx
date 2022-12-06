@@ -59,7 +59,7 @@ export const WorksForYouFeed: React.FC<WorksForYouFeedProps> = ({
               href={worksForSaleHref}
             />
 
-            <Spacer my={4} />
+            <Spacer y={4} />
 
             <ArtworkGrid
               artworks={artwork.artworksConnection!}

@@ -27,13 +27,13 @@ export const InfoSection: React.FC<InfoSectionProps> = ({
         return <TextWithNewlines variant="sm">{info}</TextWithNewlines>
       }
       default: {
-        return <Join separator={<Spacer mt={1} />}>{info}</Join>
+        return <Join separator={<Spacer y={1} />}>{info}</Join>
       }
     }
   }
 
   return (
-    <Join separator={<Spacer mt={1} />}>
+    <Join separator={<Spacer y={1} />}>
       {label && <Text variant="xs">{label}</Text>}
       <Info />
     </Join>

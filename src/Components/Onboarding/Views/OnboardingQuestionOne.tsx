@@ -72,10 +72,10 @@ export const OnboardingQuestionOne: FC = () => {
             Have you purchased art before?
           </Text>
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Box ref={register(2)}>
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               {QUESTION_1.map(option => {
                 return (
                   <Pill

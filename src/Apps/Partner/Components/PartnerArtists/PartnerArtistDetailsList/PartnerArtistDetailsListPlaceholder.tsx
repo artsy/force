@@ -11,7 +11,7 @@ export const PartnerArtistDetailsListPlaceholder: React.FC<PartnerArtistDetailsL
 }) => {
   return (
     <Skeleton>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {[...Array(count)].map((_, i) => (
           <PartnerArtistDetailsPlaceholder key={i} />
         ))}

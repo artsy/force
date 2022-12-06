@@ -15,7 +15,7 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
   const count = set?.orderedItems?.edges?.length ?? 0
 
   if (set.layout === "FULL") {
-    return <Join separator={<Spacer mt={4} />}>{children}</Join>
+    return <Join separator={<Spacer y={4} />}>{children}</Join>
   }
 
   switch (set.itemType) {

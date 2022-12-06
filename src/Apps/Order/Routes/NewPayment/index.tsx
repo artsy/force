@@ -262,10 +262,10 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
                   countdownEnd={order.stateExpiresAt!}
                 />
               </Flex>
-              <Spacer mb={[2, 4]} />
+              <Spacer y={[2, 4]} />
             </>
           )}
-          <Join separator={<Spacer mb={4} />}>
+          <Join separator={<Spacer y={4} />}>
             <CreditCardPickerFragmentContainer
               order={order}
               me={me}
@@ -288,7 +288,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
             contextModule={ContextModule.ordersNewPayment}
             contextPageOwnerType={OwnerType.ordersNewPayment}
           />
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media at="xs">
             <>
               <ContinueButton onClick={onContinue} loading={isLoading} />

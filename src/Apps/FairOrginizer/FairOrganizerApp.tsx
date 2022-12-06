@@ -31,15 +31,15 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 
       <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <FairOrganizerPastEventsRail fairOrganizer={fairOrganizer} />
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
     </>

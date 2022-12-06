@@ -21,7 +21,7 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
     <Tabs mb={4}>
       {showWorksForYouTab && (
         <Tab name="Works For You">
-          <Join separator={<Spacer mt={2} />}>
+          <Join separator={<Spacer y={2} />}>
             <MyBidsFragmentContainer me={viewer.me!} />
 
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />

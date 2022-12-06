@@ -10,15 +10,15 @@ export const ArtQuizResults: FC = () => {
       <Text mt={6} variant={["lg", "xl"]}>
         {t("artQuizPage.results.title")}
       </Text>
-      <Spacer mt={1} />
+      <Spacer y={1} />
       <Text color="black60" variant={["sm", "md"]}>
         {t("artQuizPage.results.subtitle")}
       </Text>
-      <Spacer mt={4} />
+      <Spacer y={4} />
       <Button variant="secondaryBlack">
         {t("artQuizPage.results.emailButton")}
       </Button>
-      <Spacer mt={6} />
+      <Spacer y={6} />
       <Tabs fill>
         <Tab name={t("artQuizPage.results.tabs.worksYouLiked")} />
         <Tab name={t("artQuizPage.results.tabs.recommendedCollections")} />

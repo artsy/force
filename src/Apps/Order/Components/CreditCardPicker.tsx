@@ -301,7 +301,7 @@ export class CreditCardPicker extends React.Component<
                   </BorderedRadio>,
                 ])}
             </RadioGroup>
-            <Spacer mb={1} />
+            <Spacer y={1} />
             {!isEigen && (
               <Text variant="xs">
                 <Link href="/user/payments" target="_blank">
@@ -313,7 +313,7 @@ export class CreditCardPicker extends React.Component<
         )}
 
         <Collapse open={this.state.creditCardSelection.type === "new"}>
-          {userHasExistingCards && <Spacer mb={2} />}
+          {userHasExistingCards && <Spacer y={2} />}
           <Flex flexDirection="column">
             <CreditCardInput
               title="Credit card"
@@ -326,7 +326,7 @@ export class CreditCardPicker extends React.Component<
 
             {!this.isPickup() && (
               <>
-                <Spacer mb={2} />
+                <Spacer y={2} />
                 <Checkbox
                   selected={hideBillingAddress}
                   onSelect={this.handleChangeHideBillingAddress.bind(this)}
@@ -337,7 +337,7 @@ export class CreditCardPicker extends React.Component<
               </>
             )}
             <Collapse open={this.needsAddress()}>
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <AddressForm
                 value={address}
                 errors={addressErrors}
@@ -346,9 +346,9 @@ export class CreditCardPicker extends React.Component<
                 isCollapsed={hideBillingAddress}
                 billing
               />
-              <Spacer mb={2} />
+              <Spacer y={2} />
             </Collapse>
-            <Spacer mb={1} />
+            <Spacer y={1} />
             <Checkbox
               data-test="SaveNewCreditCard"
               selected={this.state.saveNewCreditCard}

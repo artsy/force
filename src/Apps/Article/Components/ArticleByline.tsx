@@ -23,7 +23,7 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
 
   return (
     <Box maxWidth={OPTIMAL_READING_WIDTH}>
-      <Join separator={<Spacer mt={2} />}>
+      <Join separator={<Spacer y={2} />}>
         {article.authors.map(author => {
           const image = author.image?.cropped
 

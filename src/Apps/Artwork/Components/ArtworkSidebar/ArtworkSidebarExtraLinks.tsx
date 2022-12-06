@@ -127,7 +127,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
         >
           Conditions of Sale
         </Link>
-        .<Spacer mb={1} />
+        .<Spacer y={1} />
       </Container>
     )
   }

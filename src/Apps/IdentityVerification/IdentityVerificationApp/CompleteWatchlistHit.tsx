@@ -7,7 +7,7 @@ export const CompleteWatchlistHit: React.FC = () => {
     <>
       <Text variant="xl">Artsy is reviewing your identity verification</Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Message
         variant="info"
@@ -17,7 +17,7 @@ export const CompleteWatchlistHit: React.FC = () => {
         possible. In the meantime, you can still browse works on Artsy.
       </Message>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         // @ts-ignore

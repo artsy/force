@@ -12,7 +12,7 @@ const sortCards = (lhs, rhs) => {
   return lhsPosition > rhsPosition ? 1 : -1
 }
 
-export const DEFAULT_TIMEOUT_AMOUNT = 5000
+export const DEFAULT_TIMEOUT_AMOUNT = 1000
 
 export const HomeContentCards: React.FC = () => {
   const { match } = useRouter()
@@ -29,17 +29,28 @@ export const HomeContentCards: React.FC = () => {
   const cardsLengthRef = useRef(cards.length)
 
   useEffect(() => {
-    window.analytics?.ready(() => {
+    if (appboy) return
+
+    if (window.appboy) {
       setAppboy(window.appboy)
-    })
-  })
+    } else if (window.analytics) {
+      window.analytics.ready(() => {
+        setAppboy(window.appboy)
+      })
+    } else {
+      setExceededTimeout(true)
+    }
+  }, [appboy])
 
   useEffect(() => {
     if (!appboy) return
 
     const subscriptionId = appboy.subscribeToContentCardsUpdates(() => {
+      if (cardsLengthRef.current > 0) return
+
       const response = appboy.getCachedContentCards()
       const sortedCards = response.cards.sort(sortCards)
+      cardsLengthRef.current = sortedCards.length
       setCards(sortedCards as Braze.CaptionedImage[])
     })
 
@@ -57,10 +68,6 @@ export const HomeContentCards: React.FC = () => {
       clearTimeout(timeout)
     }
   }, [appboy, timeoutAmount])
-
-  useEffect(() => {
-    cardsLengthRef.current = cards.length
-  }, [cards])
 
   const hasBrazeCards = appboy && cardsLengthRef.current > 0
 

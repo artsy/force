@@ -68,7 +68,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
 
           {showArtistBio && (
             <>
-              <Spacer mt={2} />
+              <Spacer y={2} />
 
               <ArtistBioFragmentContainer
                 bio={artist}
@@ -164,7 +164,9 @@ const PLACEHOLDER = (
   <Skeleton>
     <StackableBorderBox flexDirection="column">
       <SkeletonBox width="100%" height={90} />
-      <Spacer my={1} />
+
+      <Spacer y={1} />
+
       <SkeletonText variant="sm">
         Perhaps the most influential artist of the 20th century, Pablo Picasso
         may be best known for pioneering Cubism and fracturing the

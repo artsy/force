@@ -58,7 +58,7 @@ export class ForgotPasswordForm extends Component<
               // @ts-ignore
               onSubmit={handleSubmit}
             >
-              <Join separator={<Spacer mt={2} />}>
+              <Join separator={<Spacer y={2} />}>
                 <Input
                   error={touched.email && errors.email}
                   placeholder="Enter your email address"

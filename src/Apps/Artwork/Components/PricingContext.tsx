@@ -123,7 +123,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
           <Text variant="xs">Browse works in this category</Text>
         </Link>
 
-        <Spacer mt={2} />
+        <Spacer y={2} />
 
         <BarChart
           // TODO: use artwork's currency
@@ -226,7 +226,7 @@ const PLACEHOLDER = (
         Price ranges of small prints by Pablo Picasso
       </SkeletonText>
       <SkeletonText variant="xs">Browse works in this category</SkeletonText>
-      <Spacer mt={2} />
+      <Spacer y={2} />
       <SkeletonBox width="100%" height={100} />
     </StackableBorderBox>
   </Skeleton>

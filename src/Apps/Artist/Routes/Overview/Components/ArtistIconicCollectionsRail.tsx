@@ -81,7 +81,7 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
                   />
                 </>
               )}
-              <Spacer my={1} />
+              <Spacer y={1} />
               <Text variant="sm-display">{formattedTitle}</Text>
               <Text variant="sm-display" color="black60">
                 {formattedPrice}

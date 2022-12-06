@@ -13,7 +13,7 @@ export const FrameWithRecentlyViewed: React.FC<FrameWithRecentlyViewedProps> = (
     <Flex flexDirection="column">
       {children}
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <RecentlyViewed />
     </Flex>

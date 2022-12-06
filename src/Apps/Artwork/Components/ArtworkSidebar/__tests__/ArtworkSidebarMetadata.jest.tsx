@@ -7,10 +7,10 @@ import {
   FilledOutMetadataOneEditionSet,
   FilledOutMetadataNoSizeInfo,
   MetadataForAuctionWork,
-} from "../../../../__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarMetadata"
-import { ArtworkSidebarClassification } from "../../ArtworkSidebar/ArtworkSidebarClassification"
-import { ArtworkSidebarMetadataFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarMetadata"
-import { ArtworkSidebarSizeInfo } from "../../ArtworkSidebar/ArtworkSidebarSizeInfo"
+} from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarMetadata"
+import { ArtworkSidebarClassification } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarClassification"
+import { ArtworkSidebarMetadataFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarMetadata"
+import { ArtworkSidebarSizeInfo } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarSizeInfo"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
@@ -84,7 +84,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.text()).toContain("This is a unique work")
+      expect(wrapper?.text()).toContain("Unique work")
     })
   })
 
@@ -114,7 +114,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.text()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("Part of a limited edition set")
     })
   })
 
@@ -143,7 +143,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.text()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("Part of a limited edition set")
     })
   })
 
@@ -205,7 +205,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.text()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("Part of a limited edition set")
     })
   })
 })

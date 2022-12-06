@@ -39,7 +39,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
     <>
       <Text variant="lg-display">Your Auctions and Bids</Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Shelf alignItems="flex-start">
         {active.map((activeSale, index) => {

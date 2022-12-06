@@ -194,7 +194,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                       artwork={artwork}
                     />
 
-                    <Spacer m={6} />
+                    <Spacer x={6} y={6} />
 
                     {!!enableMyCollectionPhase4ArticlesRail && (
                       <ArtistCurrentArticlesRailQueryRenderer
@@ -211,7 +211,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   artwork={artwork}
                 />
 
-                <Spacer m={6} />
+                <Spacer x={6} y={6} />
 
                 {!!enableMyCollectionPhase4ArticlesRail && (
                   <ArtistCurrentArticlesRailQueryRenderer
@@ -230,7 +230,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <>
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
-            <Spacer m={[4, 6]} />
+            <Spacer x={[4, 6]} y={[4, 6]} />
 
             {!!enableMyCollectionPhase4ArticlesRail && (
               <ArtistCurrentArticlesRailQueryRenderer

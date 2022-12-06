@@ -34,7 +34,7 @@ const AuctionFAQRoute: React.FC<AuctionFAQRouteProps> = ({ viewer }) => {
         Auction FAQs
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Text variant="sm-display" color="black100">
         How can we help you? Below are answers to some of the most common
@@ -44,7 +44,7 @@ const AuctionFAQRoute: React.FC<AuctionFAQRouteProps> = ({ viewer }) => {
         <a href="mailto:support@artsy.net">contact us</a>.
       </Text>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Section title="Bidding" content={biddingContent} />
       <Section

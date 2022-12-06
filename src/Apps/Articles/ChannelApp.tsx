@@ -55,7 +55,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
 
               {channel.links.length > 0 && (
                 <Text variant="xs" display="flex" mt={[4, 0]}>
-                  <Join separator={<Spacer ml={1} />}>
+                  <Join separator={<Spacer x={1} />}>
                     {channel.links.map(link => (
                       <RouterLink
                         key={link.url}
@@ -73,7 +73,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
         </FullBleedHeader>
       ) : (
         <>
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Text variant="xxl" as="h1">
             {channel.name}
@@ -87,11 +87,11 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
         </>
       )}
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text variant="lg-display">Latest Articles</Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <ChannelArticlesPaginationContainer channel={channel} />
     </ArticleAdProvider>

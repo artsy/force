@@ -44,7 +44,7 @@ export const MarketingLandingApp = () => {
 
       <CtaBanner />
 
-      <Join separator={<Spacer mt={[6, 12]} />}>
+      <Join separator={<Spacer y={[6, 12]} />}>
         <PromoSpace />
 
         <WhySellWithArtsy />

@@ -30,7 +30,7 @@ export const GeneFamily: React.FC<GeneFamilyProps> = ({ geneFamily }) => {
         {name}
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Masonry columnCount={[1, 3]}>
         {sortedGenes?.map(gene => {
@@ -41,7 +41,7 @@ export const GeneFamily: React.FC<GeneFamilyProps> = ({ geneFamily }) => {
                   {gene?.displayName || gene?.name}
                 </Text>
               </RouterLink>
-              <Spacer mb={1} />
+              <Spacer y={1} />
             </Box>
           )
         })}

@@ -21,7 +21,7 @@ export const InstitutionPartnershipsHero: FC = () => {
                   Artsy for Museums
                 </Text>
 
-                <Spacer mt={2} />
+                <Spacer y={2} />
 
                 <Text variant="sm" color="white100">
                   Promoting the collections and exhibitions of the Musée du
@@ -29,7 +29,7 @@ export const InstitutionPartnershipsHero: FC = () => {
                   and over 700 major museums and institutions worldwide.
                 </Text>
 
-                <Spacer mt={[4, 6]} />
+                <Spacer y={[4, 6]} />
 
                 <Button
                   size={["small", "large"]}

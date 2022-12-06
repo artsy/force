@@ -34,9 +34,9 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
 
   return (
     <>
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {fair.exhibitorsGroupedByName.map(exhibitorsGroup => {
           if (!exhibitorsGroup?.exhibitors?.length || !exhibitorsGroup.letter) {
             return null
@@ -49,7 +49,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
               <Box key={letter}>
                 <Text variant="lg-display">{letter}</Text>
 
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 <FairExhibitorsGroupFragmentContainer
                   exhibitorsGroup={exhibitorsGroup}

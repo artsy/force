@@ -20,7 +20,7 @@ export const SavedSearchAlertEditFormPlaceholder = () => {
 
       <SkeletonBox width="100%" height={50} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <SkeletonText variant="xs" mb={2}>
         Filters
@@ -40,24 +40,24 @@ export const SavedSearchAlertEditFormPlaceholder = () => {
 
       <CheckboxSkeleton>Email Alerts</CheckboxSkeleton>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <CheckboxSkeleton>Mobile Alerts</CheckboxSkeleton>
 
       <Media greaterThan="md">
-        <Spacer mt={6} />
+        <Spacer y={6} />
         <Flex>
           <SkeletonBox flex={1} height={50} />
-          <Spacer ml={2} />
+          <Spacer x={2} />
           <SkeletonBox flex={1} height={50} />
         </Flex>
       </Media>
 
       <Media lessThan="md">
-        <Spacer mt={4} />
+        <Spacer y={4} />
         <Flex>
           <SkeletonBox flex={1} height={50} />
-          <Spacer mt={1} />
+          <Spacer y={1} />
           <SkeletonBox flex={1} height={50} />
         </Flex>
       </Media>

@@ -46,18 +46,18 @@ export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProp
         </Column>
       </GridColumns>
 
-      <Spacer my={2} />
+      <Spacer y={2} />
 
       <Flex alignItems="center">
         <Box flex={1}>
           <ProgressDots variant="dash" amount={count} activeIndex={-1} />
         </Box>
 
-        <Spacer ml={2} />
+        <Spacer x={2} />
 
         <ShelfPrevious />
 
-        <Spacer ml={1} />
+        <Spacer x={1} />
 
         <ShelfNext />
       </Flex>

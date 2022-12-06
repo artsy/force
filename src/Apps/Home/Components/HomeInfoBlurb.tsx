@@ -12,7 +12,7 @@ export const HomeInfoBlurb: React.FC = () => {
       bg="black5"
       p={4}
     >
-      <Join separator={<Spacer mt={2} />}>
+      <Join separator={<Spacer y={2} />}>
         {/* TODO: Unable to adjust width, height, fill, etc... */}
         <ArtsyLogoIcon name="Artsy" />
 

@@ -37,9 +37,9 @@ const InsightsMedianSalePrice: React.FC<InsightsMedianSalePriceProps> = ({
         Median Auction Price in the Last 3 Years
       </Text>
 
-      <Spacer mb={1} />
+      <Spacer y={1} />
 
-      <Join separator={<Spacer mb={1} />}>
+      <Join separator={<Spacer y={1} />}>
         {groupedMedianSalePrices.map(artistMedianSalePrices => {
           const [firstElement] = artistMedianSalePrices
 

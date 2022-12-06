@@ -2,7 +2,7 @@ import { BoxProps, Flex, HTML, FullBleed, Box } from "@artsy/palette"
 import { FC, HTMLAttributes, MutableRefObject, ReactNode, useRef } from "react"
 import styled from "styled-components"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FullBleedHeaderPicture } from "./FullBleedHeaderPicture"
 
 export type FullBleedHeaderProps = BoxProps &

@@ -75,13 +75,13 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
     <>
       <SearchMeta term={term} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       {hasResults ? (
         <>
           <TotalResults count={totalCount} term={term} />
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Sticky>
             {({ stuck }) => {
@@ -102,7 +102,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
             }}
           </Sticky>
 
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <Jump id="searchResultTabs" />
 
@@ -116,7 +116,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
         </>
       )}
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <RecentlyViewed />
     </>

@@ -15,7 +15,7 @@ export const Processing: React.FC = () => {
     <>
       <MetaTags title="Artsy | ID Verification" />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns>
         <Column span={[12, 8, 6]} start={[1, 3, 4]}>
@@ -23,7 +23,7 @@ export const Processing: React.FC = () => {
             Your verification is processing
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Message
             variant="info"
@@ -33,7 +33,7 @@ export const Processing: React.FC = () => {
             complete. In the meantime, you can still browse on Artsy.
           </Message>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Button
             width="100%"

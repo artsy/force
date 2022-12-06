@@ -80,7 +80,7 @@ export const OtherWorks = track()(
     return (
       <>
         {gridsToShow && gridsToShow.length > 0 && (
-          <Join separator={<Spacer mt={6} />}>
+          <Join separator={<Spacer y={6} />}>
             {gridsToShow.map((grid, index) => {
               const contextModule = contextGridTypeToV2ContextModule(
                 grid.__typename
@@ -94,7 +94,7 @@ export const OtherWorks = track()(
 
                   {grid.artworksConnection && (
                     <>
-                      <Spacer mt={4} />
+                      <Spacer y={4} />
 
                       <ArtworkGrid
                         artworks={grid.artworksConnection}
@@ -125,7 +125,7 @@ export const OtherWorks = track()(
         */}
         {context && context.__typename === "ArtworkContextAuction" && (
           <>
-            <Spacer mt={6} />
+            <Spacer y={6} />
             <OtherAuctionsQueryRenderer />
           </>
         )}
@@ -172,7 +172,7 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Join separator={<Spacer mt={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {[...new Array(2)].map((_, i) => {
         return (
           <Box key={i}>
@@ -181,7 +181,7 @@ const PLACEHOLDER = (
               buttonHref
             />
 
-            <Spacer mt={4} />
+            <Spacer y={4} />
 
             <ArtworkGridPlaceholder columnCount={[2, 3, 4, 4]} />
           </Box>

@@ -26,7 +26,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 
       <FullBleedHeader src={HEADER_IMAGE_URL} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={6}>
@@ -45,7 +45,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             from you.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm">
             <RouterLink to="/article/artsy-jobs-life-artsy">
@@ -59,7 +59,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             </RouterLink>
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="sm">
             Check us out on{" "}

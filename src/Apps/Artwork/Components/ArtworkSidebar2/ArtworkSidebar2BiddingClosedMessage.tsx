@@ -25,7 +25,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
           <Text variant="sm" color="black60" pt={0.5}>
             {t(`artworkPage.sidebar.createAlert.description`)}
           </Text>
-          <Spacer mt={2} />
+          <Spacer y={2} />
           <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
         </>
       )}

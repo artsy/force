@@ -388,7 +388,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         currentStep="Review"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
-          <Join separator={<Spacer mb={4} />}>
+          <Join separator={<Spacer y={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
               {isEigen && (
                 <>
@@ -416,9 +416,9 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
-              <Spacer mb={4} />
+              <Spacer y={4} />
               <SubmitButton />
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>
           </Join>
@@ -436,10 +436,10 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               contextModule={ContextModule.ordersReview}
               contextPageOwnerType={OwnerType.ordersReview}
             />
-            <Spacer mb={[2, 4]} />
+            <Spacer y={[2, 4]} />
             <Media at="xs">
               <SubmitButton />
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>
           </Flex>

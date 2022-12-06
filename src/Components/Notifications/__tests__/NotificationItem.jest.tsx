@@ -62,6 +62,31 @@ describe("NotificationItem", () => {
     expect(screen.getAllByRole("img")).toHaveLength(4)
   })
 
+  describe("the remaining artworks count", () => {
+    it("should NOT be rendered if there are less or equal to 4", () => {
+      renderWithRelay({
+        Notification: () => notification,
+      })
+
+      const label = screen.queryByLabelText("Remaining artworks count")
+      expect(label).not.toBeInTheDocument()
+    })
+
+    it("should be rendered if there are more than 4", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          objectsCount: 10,
+          artworksConnection: {
+            ...notification.artworksConnection,
+          },
+        }),
+      })
+
+      expect(screen.getByText("+ 6")).toBeInTheDocument()
+    })
+  })
+
   describe("Unread notification indicator", () => {
     it("should NOT be rendered by default", () => {
       renderWithRelay({
@@ -166,6 +191,7 @@ const notification = {
   publishedAt: "2 days ago",
   isUnread: false,
   notificationType: "ARTWORK_PUBLISHED",
+  objectsCount: 0,
   artworksConnection: {
     edges: artworks,
   },

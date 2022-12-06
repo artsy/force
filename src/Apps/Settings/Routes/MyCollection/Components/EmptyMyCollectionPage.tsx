@@ -15,7 +15,7 @@ export const EmptyMyCollectionPage: React.FC = () => {
   const { isLoggedIn } = useSystemContext()
 
   return (
-    <Join separator={<Spacer my={6} />}>
+    <Join separator={<Spacer y={6} />}>
       {enableMyCollectionPhase3 ? (
         <MyCollectionEmptyState loggedOutState={!isLoggedIn} />
       ) : (

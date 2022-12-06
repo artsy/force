@@ -36,7 +36,7 @@ export const WhySellWithArtsy = () => (
   <GridColumns gridRowGap={[4, 2]}>
     <Column span={[12, 6]}>
       <Box maxWidth={620}>
-        <Join separator={<Spacer mt={4} />}>
+        <Join separator={<Spacer y={4} />}>
           <Text variant="lg-display">Why Sell with Artsy</Text>
 
           {reasons.map(reason => (

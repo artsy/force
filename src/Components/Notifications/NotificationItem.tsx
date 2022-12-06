@@ -17,6 +17,7 @@ const UNREAD_INDICATOR_SIZE = 8
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const { trackEvent } = useTracking()
   const artworks = extractNodes(item.artworksConnection)
+  const remainingArtworksCount = item.objectsCount - 4
 
   const getNotificationType = () => {
     if (item.notificationType === "ARTWORK_ALERT") {
@@ -55,10 +56,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
 
         <Text variant="sm-display">{item.message}</Text>
 
-        <Spacer mb={1} />
+        <Spacer y={1} />
 
         <Flex flexDirection="row" alignItems="center">
-          <Join separator={<Spacer ml={1} />}>
+          <Join separator={<Spacer x={1} />}>
             {artworks.map(artwork => {
               const image = artwork.image?.thumb
 
@@ -75,6 +76,17 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
               )
             })}
           </Join>
+
+          {remainingArtworksCount > 0 && (
+            <Text
+              variant="xs"
+              color="black60"
+              aria-label="Remaining artworks count"
+              ml={1}
+            >
+              + {remainingArtworksCount}
+            </Text>
+          )}
         </Flex>
       </Flex>
 
@@ -103,6 +115,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         targetHref
         isUnread
         notificationType
+        objectsCount
         artworksConnection(first: 4) {
           edges {
             node {

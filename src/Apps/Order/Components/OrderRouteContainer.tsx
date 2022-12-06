@@ -10,7 +10,7 @@ export const OrderRouteContainer = ({
 }) => (
   <>
     <OrderStepper currentStep={currentStep} steps={steps} />
-    <Spacer mb={4} />
+    <Spacer y={4} />
     <TwoColumnLayout Content={content} Sidebar={sidebar} />
   </>
 )

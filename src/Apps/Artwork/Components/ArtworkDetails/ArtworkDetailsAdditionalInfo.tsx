@@ -123,7 +123,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   return (
     <StackableBorderBox flexDirection="column">
-      <Join separator={<Spacer mt={1} />}>
+      <Join separator={<Spacer y={1} />}>
         {displayItems.map(({ title, value }, index) => (
           <ArtworkDefinitionList key={title + index} term={title}>
             <HTML variant="xs" color="black60">

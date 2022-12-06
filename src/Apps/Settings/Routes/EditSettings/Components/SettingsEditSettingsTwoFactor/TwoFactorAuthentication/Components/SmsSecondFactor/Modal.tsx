@@ -164,14 +164,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
             Artsy.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <CountrySelect
             selected={form.values.countryCode}
             onSelect={value => form.setFieldValue("countryCode", value)}
           />
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           <Input
             autoComplete="tel"
@@ -219,7 +219,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
             your phone number.
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Input
             autoComplete="off"
@@ -250,7 +250,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
               Back
             </Button>
 
-            <Spacer ml={1} />
+            <Spacer x={1} />
 
             <Button
               flex={1}

@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
                   </Button>
                 </Flex>
 
-                <Spacer ml={[0, 2]} />
+                <Spacer x={[0, 2]} />
 
                 <Flex flex={1}>
                   <Button

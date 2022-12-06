@@ -74,7 +74,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
       {collection.showHeaderArtworksRail && !collection.headerImage && (
         <>
-          <Spacer mt={6} />
+          <Spacer y={6} />
 
           <CollectionDefaultHeaderFragmentContainer
             headerArtworks={artworks}
@@ -85,7 +85,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
         </>
       )}
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       {collection.showFeaturedArtists && featuredArtists && hasMultipleArtists && (
         <>

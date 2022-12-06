@@ -13,7 +13,7 @@ export const AddressFormWithCreditCard: React.FC = () => {
   } = useFormContext()
 
   return (
-    <Join separator={<Spacer my={2} />}>
+    <Join separator={<Spacer y={2} />}>
       <Text variant="sm-display">
         Registration is free. A valid credit card is required in order to bid.
         Please enter your credit card information below. The name on your Artsy

@@ -383,13 +383,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
               <>
-                <Spacer mt={4} />
+                <Spacer y={4} />
                 <SaveAndContinueButton
                   media={{ at: "xs" }}
                   onClick={handleSetPayment}
                   loading={isSavingPayment}
                 />
-                <Spacer mb={2} />
+                <Spacer y={2} />
               </>
             )}
           </Flex>

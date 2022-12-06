@@ -64,7 +64,7 @@ export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsE
             {mode === "Copied" ? "Copied" : "Copy"}
           </Button>
 
-          <Spacer ml={1} />
+          <Spacer x={1} />
         </>
       )}
 

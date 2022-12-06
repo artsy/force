@@ -25,7 +25,7 @@ export const ArtworkSidebar2ArtsyGuarantee: React.FC<{}> = () => {
           <SecureLockIcon {...iconProps} />
           <Text>{t("artworkPage.sidebar.artsyGuarantee.secureCheckout")}</Text>
         </Flex>
-        <Spacer mt={1} />
+        <Spacer y={1} />
         <Flex flexDirection="row" alignItems="center">
           <Flex
             mr={1}
@@ -38,12 +38,12 @@ export const ArtworkSidebar2ArtsyGuarantee: React.FC<{}> = () => {
           </Flex>
           <Text>{t("artworkPage.sidebar.artsyGuarantee.moneyBack")}</Text>
         </Flex>
-        <Spacer mt={1} />
+        <Spacer y={1} />
         <Flex flexDirection="row" alignItems="center">
           <VerifiedIcon {...iconProps} />
           <Text>{t("artworkPage.sidebar.artsyGuarantee.authenticity")}</Text>
         </Flex>
-        <Spacer mt={1} />
+        <Spacer y={1} />
       </Text>
       <a
         href="https://artsy.net/buyer-guarantee"

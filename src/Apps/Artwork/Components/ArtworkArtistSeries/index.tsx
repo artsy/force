@@ -36,7 +36,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
         </>
       )}
 
-      {hasArtistSeriesArtworks && !!artistArtistSeries && <Spacer mt={6} />}
+      {hasArtistSeriesArtworks && !!artistArtistSeries && <Spacer y={6} />}
 
       {!!artistArtistSeries && (
         <>

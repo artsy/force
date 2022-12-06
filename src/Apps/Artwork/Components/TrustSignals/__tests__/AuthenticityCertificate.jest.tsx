@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { AuthenticityCertificateFragmentContainer } from "../AuthenticityCertificate"
+import { AuthenticityCertificateFragmentContainer } from "Apps/Artwork/Components/TrustSignals/AuthenticityCertificate"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -27,7 +27,7 @@ describe("AuthenticityCertificate", () => {
       },
     })
     expect(component.text()).not.toContain(
-      "This work includes a Certificate of Authenticity."
+      "Includes a Certificate of Authenticity."
     )
   })
 
@@ -42,7 +42,7 @@ describe("AuthenticityCertificate", () => {
       },
     })
     expect(component.text()).not.toContain(
-      "This work includes a Certificate of Authenticity."
+      "Includes a Certificate of Authenticity."
     )
   })
 
@@ -57,7 +57,7 @@ describe("AuthenticityCertificate", () => {
       },
     })
     expect(component.text()).toContain(
-      "This work includes a Certificate of Authenticity."
+      "Includes a Certificate of Authenticity."
     )
   })
 

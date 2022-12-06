@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<19625adaf7953ef2040a8e491473c452>>
+ * @generated SignedSource<<eae5d144508edd8daae57f7f81eb7979>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type NotificationItem_item$data = {
   readonly isUnread: boolean;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
+  readonly objectsCount: number;
   readonly publishedAt: string;
   readonly targetHref: string;
   readonly title: string;
@@ -93,6 +94,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "notificationType",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "objectsCount",
       "storageKey": null
     },
     {
@@ -195,6 +203,6 @@ return {
 };
 })();
 
-(node as any).hash = "0c7fd1b2f003203f3cc4357db75fcccd";
+(node as any).hash = "1cd24fdc7ec71bb7334d69135fbfd0ce";
 
 export default node;

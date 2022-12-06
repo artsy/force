@@ -66,7 +66,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
 
   return (
     <Jump id="articlesGrid">
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <LoadingArea isLoading={isLoading}>
         <GridColumns gridRowGap={[2, 4]}>
@@ -80,7 +80,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         </GridColumns>
       </LoadingArea>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <PaginationFragmentContainer
         hasNextPage={hasNextPage}

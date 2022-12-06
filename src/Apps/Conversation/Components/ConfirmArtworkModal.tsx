@@ -57,7 +57,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           <Button variant="secondaryBlack" flexGrow={1} onClick={closeModal}>
             Cancel
           </Button>
-          <Spacer m={1} />
+          <Spacer x={1} y={1} />
           <ConfirmArtworkButtonFragmentContainer
             artwork={artwork}
             disabled={!!isEdition && !selectedEdition}

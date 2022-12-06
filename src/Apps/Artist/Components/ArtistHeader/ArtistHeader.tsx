@@ -92,7 +92,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           <Column span={6}>
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
-            <Spacer mb={4} />
+            <Spacer y={4} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
@@ -107,7 +107,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                     />
                   </HTML>
                 </Text>
-                <Spacer mb={2} />
+                <Spacer y={2} />
               </>
             )}
             {!hideBioInHeaderIfPartnerSupplied && (

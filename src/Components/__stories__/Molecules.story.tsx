@@ -45,7 +45,7 @@ export default {
 export const Headers = () => {
   return (
     <Page>
-      <Join separator={<Spacer mb={12} />}>
+      <Join separator={<Spacer y={12} />}>
         <HeaderWithCoverImage />
         <HeaderWithCarousel />
         <HeaderArtist />
@@ -60,7 +60,7 @@ export const Headers = () => {
 export const Content = () => {
   return (
     <Page>
-      <Join separator={<Spacer mb={12} />}>
+      <Join separator={<Spacer y={12} />}>
         <Content2Up />
         <Content4Up />
         <ContentFixedLeftScrollRight />
@@ -73,7 +73,7 @@ export const Content = () => {
 export const Carousels = () => {
   return (
     <Page>
-      <Join separator={<Spacer mb={12} />}>
+      <Join separator={<Spacer y={12} />}>
         <CarouselArtworkLarge />
         <CarouselArtworkMedium />
         <CarouselArtworkSmall />
@@ -91,7 +91,7 @@ export const Carousels = () => {
 export const Editorial = () => {
   return (
     <Page>
-      <Join separator={<Spacer mb={12} />}>
+      <Join separator={<Spacer y={12} />}>
         <TextCentered />
         <TextFixedLeftScrollRight />
         <TextScrollLeftFixedRight />

@@ -53,7 +53,7 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
         </Button>
       }
     >
-      <Join separator={<Spacer my={1} />}>
+      <Join separator={<Spacer y={1} />}>
         {viewer && viewer.artworkAttributionClasses
           ? viewer.artworkAttributionClasses.map(classification => {
               if (!classification) return null

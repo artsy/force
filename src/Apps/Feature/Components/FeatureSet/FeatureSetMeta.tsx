@@ -13,7 +13,7 @@ export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
 }) => {
   return (
     <Box {...rest}>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {set.name && <Text variant={["lg-display", "xl"]}>{set.name}</Text>}
 
         {set.description && (

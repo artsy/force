@@ -98,7 +98,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
               </Column>
 
               <Column span={8}>
-                <Join separator={<Spacer mt={1} />}>
+                <Join separator={<Spacer y={1} />}>
                   {filteredJobs.map(job => (
                     <JobLinkFragmentContainer key={job.id} job={job} />
                   ))}
@@ -127,7 +127,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
               </Column>
 
               <Column span={8}>
-                <Join separator={<Spacer mt={2} />}>
+                <Join separator={<Spacer y={2} />}>
                   {department.jobs.map(job => {
                     return <JobLinkFragmentContainer key={job.id} job={job} />
                   })}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e885066017662c98ec6aedeb3c62a840>>
+ * @generated SignedSource<<36494bcf7e7cc99f5608a91b066fc17e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,7 +45,21 @@ v2 = {
   "name": "slug",
   "storageKey": null
 },
-v3 = [
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -60,14 +74,7 @@ v3 = [
     "name": "srcSet",
     "storageKey": null
   }
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -150,13 +157,101 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v3/*: any*/),
+                      (v2/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "first",
+                        "value": 1
+                      }
+                    ],
+                    "concreteType": "ArtworkConnection",
+                    "kind": "LinkedField",
+                    "name": "artworksConnection",
+                    "plural": false,
+                    "selections": [
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
+                        "concreteType": "ArtworkEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Artwork",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 334
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "version",
+                                        "value": [
+                                          "larger",
+                                          "large"
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 445
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": (v5/*: any*/),
+                                    "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
+                                  }
+                                ],
+                                "storageKey": null
+                              },
+                              (v4/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
-                      },
+                      }
+                    ],
+                    "storageKey": "artworksConnection(first:1)"
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Artist",
+                    "kind": "LinkedField",
+                    "name": "artist",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -237,52 +332,25 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v3/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": "cropped(height:45,width:45)"
                           }
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "image",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 334
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": [
-                                  "larger",
-                                  "large"
-                                ]
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 445
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v3/*: any*/),
-                            "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Partner",
+                    "kind": "LinkedField",
+                    "name": "partner",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
                       (v4/*: any*/)
                     ],
                     "storageKey": null
@@ -301,12 +369,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f0031a1815908cedc67afc72226f607",
+    "cacheID": "f2d900078a6a20d1ae0d289d4190a385",
     "id": null,
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment CellPartnerArtist_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  artist {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    href\n    initials\n    id\n  }\n  partner {\n    slug\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      node {\n        internalID\n        slug\n        id\n      }\n      ...CellPartnerArtist_partnerArtist\n      id\n    }\n  }\n}\n"
   }
 };
 })();

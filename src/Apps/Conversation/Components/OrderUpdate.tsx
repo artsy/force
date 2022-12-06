@@ -117,7 +117,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
           </Flex>
         </Flex>
       </Flex>
-      <Spacer mb={5} />
+      <Spacer y={5} />
     </Flex>
   )
 }

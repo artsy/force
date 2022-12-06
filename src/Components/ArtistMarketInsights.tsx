@@ -107,7 +107,7 @@ export class MarketInsights extends Component<MarketInsightsProps> {
       <>
         <Container flexDirection="column">
           <div>
-            <Join separator={<Spacer mt={1} />}>
+            <Join separator={<Spacer y={1} />}>
               {this.renderAuctionHighlight()}
               {this.renderGalleryRepresentation()}
               {this.renderPermanentCollection()}

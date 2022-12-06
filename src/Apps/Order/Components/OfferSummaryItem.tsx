@@ -30,7 +30,7 @@ const OfferSummaryItem = ({
       )}
       {offerNote && (
         <>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Text variant={["xs", "sm-display"]} color="black100">
             Your note
           </Text>

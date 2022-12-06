@@ -71,13 +71,12 @@ describe("ArtworkSidebar2Details", () => {
     renderWithRelay({
       Artwork: () => ({
         attributionClass: {
-          shortArrayDescription: ["This is a", "unique work"],
+          shortArrayDescription: ["", "Unique work"],
         },
       }),
     })
 
-    expect(screen.queryByText("This is a")).toBeInTheDocument()
-    expect(screen.queryByText("unique work")).toBeInTheDocument()
+    expect(screen.queryByText("Unique work")).toBeInTheDocument()
   })
 
   it("doesn't render the classification when it is not there", () => {
@@ -100,7 +99,7 @@ describe("ArtworkSidebar2Details", () => {
       }),
     })
 
-    expect(screen.queryByText(/This work includes a/)).toBeInTheDocument()
+    expect(screen.queryByText(/Includes a/)).toBeInTheDocument()
     expect(
       screen.queryByText("Certificate of Authenticity")
     ).toBeInTheDocument()

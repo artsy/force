@@ -186,7 +186,7 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
               onChange={handleChange(0)}
             />
 
-            <Spacer mx={0.5} />
+            <Spacer x={1} />
 
             <NumericInput
               label="$USD"

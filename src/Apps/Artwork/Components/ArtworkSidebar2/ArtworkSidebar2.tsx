@@ -94,15 +94,15 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
 
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
       {isInAuction ? (
         <>
           <Separator />
-          <Spacer mt={2} />
+          <Spacer y={2} />
           <ArtworkSidebar2EstimatedValueFragmentContainer artwork={artwork} />
-          <Join separator={<Spacer mt={2} />}>
+          <Join separator={<Spacer y={2} />}>
             {hasEnded ? (
               <ArtworkSidebar2BiddingClosedMessageFragmentContainer
                 artwork={artwork}
@@ -117,7 +117,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
           {!hasEnded && (
             <ArtworkSidebar2AuctionTimerFragmentContainer artwork={artwork} />
           )}
-          <Spacer mt={2} />
+          <Spacer y={2} />
         </>
       ) : (
         <ArtworkSidebar2CommercialButtonsFragmentContainer artwork={artwork} />
@@ -147,11 +147,11 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
         </>
       )}
       <Separator />
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
       {(!shouldHideDetailsCreateAlertCTA ||
         checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
         <ArtworkSidebar2CreateArtworkAlertFragmentContainer artwork={artwork} />

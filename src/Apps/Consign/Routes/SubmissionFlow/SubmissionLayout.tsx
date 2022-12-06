@@ -16,7 +16,7 @@ export const SubmissionLayout: React.FC = ({ children }) => {
         description="Get competitive offers from the world's top auction houses and galleries to sell art from your collection. Submit today at no cost."
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <AppContainer>
         <HorizontalPadding>
@@ -28,7 +28,7 @@ export const SubmissionLayout: React.FC = ({ children }) => {
         </HorizontalPadding>
       </AppContainer>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
     </>
   )
 }

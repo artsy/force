@@ -16,7 +16,7 @@ export const DownloadAppBadgesDark: React.FC<FlexProps> = ({
       <Flex justifyContent={justifyContent}>
         <AppStoreBadge />
 
-        <Spacer ml={2} />
+        <Spacer x={2} />
 
         <PlayStoreBadge />
       </Flex>

@@ -41,7 +41,7 @@ describe("HomeContentCards", () => {
     expect(screen.getByText("FallbackCards")).toBeInTheDocument()
   })
 
-  it.skip("renders braze cards when they are returned", () => {
+  it("renders braze cards when they are returned", () => {
     const mockUpdater = callback => callback()
     window.appboy.subscribeToContentCardsUpdates = mockUpdater
     window.appboy.getCachedContentCards = () => ({ cards: [{}] } as any)

@@ -60,7 +60,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
         Linked Accounts
       </Text>
 
-      <Join separator={<Spacer mt={2} />}>
+      <Join separator={<Spacer y={2} />}>
         <SettingsEditSettingsLinkedAccountsButton
           me={me}
           provider="FACEBOOK"

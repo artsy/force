@@ -25,7 +25,7 @@ export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = pro
         month
       </Subheader>
 
-      <Spacer my={1} />
+      <Spacer y={1} />
 
       <Text variant="lg-display">
         Over {roundedUniqueVisitors} Artsy collectors are looking for works by

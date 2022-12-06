@@ -138,3 +138,7 @@ export const useAuthIntent = () => {
 
   return { value, setValue, clearValue: () => setValue(null) }
 }
+
+export const setAfterAuthAction = (afterAuthAction: AfterAuthAction) => {
+  Cookies.set(AFTER_AUTH_ACTION_KEY, JSON.stringify(afterAuthAction))
+}

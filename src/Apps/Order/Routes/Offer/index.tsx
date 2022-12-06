@@ -262,20 +262,20 @@ export const OfferRoute: FC<OfferRouteProps> = ({
 
           {!order.isInquiryOrder && (
             <>
-              <Spacer mb={4} />
+              <Spacer y={4} />
               <OfferNote
                 onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
                 artworkId={artworkId!}
               />
             </>
           )}
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Message variant="info" title="All offers are binding">
             If your offer is accepted, payment will be processed immediately.
             Please note that this sale is not final until your offer is
             accepted.
           </Message>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media greaterThan="xs">
             <Button
               onClick={onContinueButtonPressed}
@@ -309,7 +309,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
             contextModule={ContextModule.ordersOffer}
             contextPageOwnerType={OwnerType.ordersOffer}
           />
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media at="xs">
             <>
               <Button

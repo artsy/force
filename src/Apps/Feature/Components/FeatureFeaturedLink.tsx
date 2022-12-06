@@ -58,7 +58,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
-        <Spacer mt={1} />
+        <Spacer y={1} />
 
         {subtitle && (
           <Text variant="xs" fontWeight="bold">

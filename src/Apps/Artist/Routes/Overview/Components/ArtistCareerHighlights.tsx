@@ -1,4 +1,4 @@
-import { Box, Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
@@ -22,9 +22,12 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
   const { t } = useTranslation()
+
   const { credit, partner, text } = artist.biographyBlurb!
+
   const showPartnerBio =
     Boolean(credit) && Boolean(text) && partner?.profile?.href
+
   const partnerHref = `${getENV("APP_URL")}/partner${partner?.profile?.href}`
 
   const displayInsightAchievements = artist.insightAchievements.length > 0
@@ -38,20 +41,23 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
     <>
       {showPartnerBio && (
         <>
-          <Box>
-            <Text variant="xs" mb={1}>
-              Bio
-            </Text>
-            <Text mb={1} variant="sm">
-              <RouterLink to={partnerHref}>{credit}</RouterLink>
-            </Text>
-            <HTML html={text!} variant="sm" />
-          </Box>
-          <Spacer my={2} />
+          <Text variant="xs" mb={1}>
+            Bio
+          </Text>
+
+          <Text mb={1} variant="sm">
+            <RouterLink to={partnerHref}>{credit}</RouterLink>
+          </Text>
+
+          <HTML html={text!} variant="sm" />
+
+          <Spacer y={2} />
+
           <RouterLink to={`/artist/${artist.slug}/cv`}>
             {t("artistPage.overview.cvLink")}
           </RouterLink>
-          <Spacer my={4} />
+
+          <Spacer y={4} />
         </>
       )}
 

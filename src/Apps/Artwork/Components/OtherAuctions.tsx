@@ -24,7 +24,7 @@ export const OtherAuctions: React.FC<OtherAuctionsProps> = ({
     <>
       <Header title="Other auctions" buttonHref={sd.APP_URL + "/auctions"} />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         {sales.map(sale => {

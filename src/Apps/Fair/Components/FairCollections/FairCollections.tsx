@@ -16,7 +16,7 @@ export const FairCollections: React.FC<FairCollectionsProps> = ({
     <Box {...rest}>
       <Text variant="lg">Curated Highlights</Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Shelf>
         {fair.marketingCollections.map((collection, index) => {

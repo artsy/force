@@ -19,7 +19,7 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6} start={4}>
-        <Join separator={<Spacer mt={4} />}>
+        <Join separator={<Spacer y={4} />}>
           <ViewingRoomIntro viewingRoom={viewingRoom} />
 
           <ViewingRoomWorks viewingRoom={viewingRoom} />

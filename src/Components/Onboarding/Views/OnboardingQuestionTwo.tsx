@@ -45,14 +45,14 @@ export const OnboardingQuestionTwo: FC = () => {
             What do you love most about art?
           </Text>
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
 
           <Text variant="sm-display" ref={register(2)}>
             Choose as many as you like.
           </Text>
 
           <Box ref={register(3)} mt={4}>
-            <Join separator={<Spacer mt={2} />}>
+            <Join separator={<Spacer y={2} />}>
               {QUESTION_2.map(option => {
                 return (
                   <Pill

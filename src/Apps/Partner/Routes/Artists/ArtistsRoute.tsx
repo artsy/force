@@ -35,7 +35,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 
   return (
     <Box mt={4}>
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         <Text variant="lg-display">Artists</Text>
 
         <PartnerArtistsFragmentContainer partner={partner} />

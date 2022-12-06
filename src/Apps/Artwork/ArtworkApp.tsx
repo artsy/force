@@ -58,8 +58,8 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
   slug,
 }) => (
   <>
-    <Spacer mt={6} />
-    <Join separator={<Spacer mt={2} />}>
+    <Spacer y={6} />
+    <Join separator={<Spacer y={2} />}>
       <ArtworkDetailsQueryRenderer slug={slug} />
 
       <PricingContextQueryRenderer slug={slug} />
@@ -219,27 +219,27 @@ export const ArtworkApp: React.FC<Props> = props => {
         />
       </Media>
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <OtherWorksQueryRenderer slug={artwork.slug} />
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <RelatedWorksQueryRenderer slug={artwork.slug} />
 
       {artwork.artist && (
         <>
-          <Spacer mt={6} />
+          <Spacer y={6} />
 
           <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
         </>
       )}
 
-      <Spacer mt={6} />
+      <Spacer y={6} />
 
       <RecentlyViewed />
 

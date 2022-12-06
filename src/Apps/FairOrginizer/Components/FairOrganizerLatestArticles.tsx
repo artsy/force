@@ -30,7 +30,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
         Latest from {name}
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <GridColumns gridRowGap={4}>
         {/* Latest article */}

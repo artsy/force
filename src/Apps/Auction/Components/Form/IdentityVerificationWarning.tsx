@@ -8,14 +8,14 @@ export const IdentityVerificationWarning: React.FC = () => {
         This auction requires Artsy to verify your identity before bidding.
       </Text>
 
-      <Spacer my={1} />
+      <Spacer y={1} />
 
       <Text variant="sm-display">
         After you register, you’ll receive an email with a link to complete
         identity verification.
       </Text>
 
-      <Spacer my={1} />
+      <Spacer y={1} />
 
       <Text variant="sm-display">
         To complete your registration, please confirm that you agree to the{" "}

@@ -36,7 +36,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
             {code}
           </Text>
 
-          <Spacer mb={2} />
+          <Spacer y={2} />
 
           <Text variant="sm-display" color="black60">
             Please contact{" "}

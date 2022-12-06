@@ -84,14 +84,14 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
           <AuctionMetaFragmentContainer sale={sale} />
 
-          <Join separator={<Spacer my={4} />}>
+          <Join separator={<Spacer y={4} />}>
             {sale.coverImage?.url ? (
               <FullBleedHeader
                 fixed={isFullBleedHeaderFixed}
                 src={sale.coverImage.url}
               />
             ) : (
-              <Spacer my={2} />
+              <Spacer y={2} />
             )}
 
             <AuctionDetailsFragmentContainer sale={sale} me={me} />
@@ -140,7 +140,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                   </Text>
                 </Message>
 
-                <Spacer my={2} />
+                <Spacer y={2} />
 
                 <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
               </>

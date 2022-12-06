@@ -102,7 +102,7 @@ export const Reject: FC<RejectProps> = ({
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />
             </Flex>
-            <Spacer mb={2} />
+            <Spacer y={2} />
           </Media>
           <Flex flexDirection="column">
             <CountdownTimer
@@ -121,7 +121,7 @@ export const Reject: FC<RejectProps> = ({
               </Text>
             </StepSummaryItem>
           </Flex>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media greaterThan="xs">
             <Button
               onClick={onSubmit}
@@ -131,7 +131,7 @@ export const Reject: FC<RejectProps> = ({
             >
               Submit
             </Button>
-            <Spacer mb={2} />
+            <Spacer y={2} />
             <ConditionsOfSaleDisclaimer />
           </Media>
         </Flex>
@@ -142,7 +142,7 @@ export const Reject: FC<RejectProps> = ({
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />
             </Flex>
-            <Spacer mb={2} />
+            <Spacer y={2} />
           </Media>
           <Media at="xs">
             <>
@@ -154,7 +154,7 @@ export const Reject: FC<RejectProps> = ({
               >
                 Submit
               </Button>
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <ConditionsOfSaleDisclaimer />
             </>
           </Media>

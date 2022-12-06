@@ -257,7 +257,7 @@ export const BaseArtworkFilter: React.FC<
                     >
                       <Flex justifyContent="space-between" alignItems="center">
                         <FilterIcon fill="white100" />
-                        <Spacer mr={0.5} />
+                        <Spacer x={0.5} />
                         Filter
                         {appliedFiltersTotalCount > 0
                           ? ` • ${appliedFiltersTotalCount}`
@@ -272,7 +272,7 @@ export const BaseArtworkFilter: React.FC<
             }}
           </Sticky>
 
-          <Spacer mb={2} />
+          <Spacer y={2} />
 
           {FilterPillsSection}
 
@@ -280,7 +280,7 @@ export const BaseArtworkFilter: React.FC<
             {totalCountLabel}
           </Text>
 
-          <Spacer mb={2} />
+          <Spacer y={2} />
 
           <ArtworkFilterArtworkGrid
             filtered_artworks={viewer.filtered_artworks!}

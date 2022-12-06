@@ -62,7 +62,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                 // FIXME:
                 contextModule={ContextModule.artworkRecentlySoldGrid as any}
               >
-                <Spacer mt={4} />
+                <Spacer y={4} />
 
                 <Flex
                   flexDirection="row"
@@ -139,7 +139,7 @@ const PLACEHOLDER = (
         return [...new Array(20)].map((_, i) => {
           return (
             <ShelfArtworkPlaceholder index={i} hideSaleInfo>
-              <Spacer mt={4} />
+              <Spacer y={4} />
 
               <Flex
                 flexDirection="row"

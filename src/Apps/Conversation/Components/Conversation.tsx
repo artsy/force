@@ -240,7 +240,7 @@ const Conversation: React.FC<ConversationProps> = props => {
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
-            <Spacer mt={["75px", "75px", 2]} />
+            <Spacer y={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />

@@ -126,7 +126,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
     case "BASIC": {
       return (
         <>
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           {article.hero.embed && (
             <ResponsiveBox
@@ -167,7 +167,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
 
       return (
         <>
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <GridColumns>
             <Column {...CENTERED_LAYOUT_COLUMNS}>
@@ -187,7 +187,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
 
           {image && (
             <>
-              <Spacer mt={4} />
+              <Spacer y={4} />
 
               <FullBleed>
                 <Box mx={[2, 4]}>

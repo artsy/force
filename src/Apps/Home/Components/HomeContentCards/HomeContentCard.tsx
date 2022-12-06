@@ -119,7 +119,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                       {extras.label}
                     </Text>
 
-                    <Spacer mt={2} />
+                    <Spacer y={2} />
                   </>
                 )}
               </Media>
@@ -133,7 +133,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
                 {card.title}
               </Text>
 
-              <Spacer mt={[1, 2]} />
+              <Spacer y={[1, 2]} />
 
               <Text
                 variant={["xs", "sm-display", "lg-display"]}
@@ -147,7 +147,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             <Media greaterThan="xs">
               <Spacer
                 // Unconventional value here to keep visual rhythm
-                mt="30px"
+                y="30px"
               />
 
               <GridColumns>
@@ -167,7 +167,7 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
             </Media>
 
             <Media at="xs">
-              <Spacer mt={1} />
+              <Spacer y={1} />
 
               <RouterLink noUnderline onClick={onClick} to={cardLink}>
                 <Text variant="xs" color="black100">

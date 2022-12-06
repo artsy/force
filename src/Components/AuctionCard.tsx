@@ -89,7 +89,7 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {
         )}
       </ResponsiveBox>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       {!sale.isGalleryAuction && !sale.isBenefit && (
         <>
@@ -97,7 +97,7 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {
             {sale.name}
           </Text>
 
-          <Spacer mt={1} />
+          <Spacer y={1} />
         </>
       )}
 

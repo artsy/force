@@ -27,7 +27,7 @@ export const InstitutionPartnershipsApp: FC = () => {
         pathname="/institution-partnerships"
       />
 
-      <Join separator={<Spacer mt={6} />}>
+      <Join separator={<Spacer y={6} />}>
         <InstitutionPartnershipsHero />
 
         <GridColumns>

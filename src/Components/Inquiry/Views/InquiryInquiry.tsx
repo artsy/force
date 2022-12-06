@@ -187,7 +187,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         </>
       )}
 
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       {mode === "Confirm" && (
         <Banner variant="defaultLight">
@@ -196,7 +196,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         </Banner>
       )}
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Button
         type="submit"
@@ -283,7 +283,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
 
       <SkeletonBox height={120} />
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <SkeletonBox height={50} />
     </Skeleton>

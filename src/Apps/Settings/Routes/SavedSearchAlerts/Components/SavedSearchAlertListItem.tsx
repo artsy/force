@@ -15,7 +15,7 @@ import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
-import { EditAlertEntity } from "../types"
+import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -64,7 +64,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           >
             {item.userAlertSettings.name}
           </Text>
-          <Spacer m={2} />
+          <Spacer x={2} y={2} />
           <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
             <Flex flexDirection="row" alignItems="center">
               <Text variant="sm">{toggleExpandFiltersText}</Text>
@@ -85,13 +85,13 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           >
             <Text variant="sm">Edit</Text>
           </Clickable>
-          <Spacer ml={2} />
+          <Spacer x={2} />
           <RouterLink to={viewAllHref} textDecoration="underline">
             <Text variant="sm">View All</Text>
           </RouterLink>
         </Flex>
       </Flex>
-      <Spacer my={2} />
+      <Spacer y={2} />
       <GridColumns>
         <Column span={[12, 8]}>
           {isExpanded &&

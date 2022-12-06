@@ -26,7 +26,7 @@ export const UnlistedBannerModal: React.FC<UnlistedBannerModalProps> = ({
         Private listings are shared by galleries with select collectors. You
         need a link to find them - they won't appear in searches on Artsy.
       </Text>
-      <Spacer mt={2} />
+      <Spacer y={2} />
       <Text variant="sm">
         Use the heart icon to add a private listing to your Saves, for easy
         access.

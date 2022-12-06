@@ -55,7 +55,7 @@ const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
         </ResponsiveBox>
       )}
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       {show.partner && (
         <Text variant={variants.primary}>{show.partner.name}</Text>
@@ -65,7 +65,7 @@ const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
         {show.name}
       </Text>
 
-      <Spacer mt={1} />
+      <Spacer y={1} />
 
       <ShowsShowDatesFragmentContainer
         show={show}

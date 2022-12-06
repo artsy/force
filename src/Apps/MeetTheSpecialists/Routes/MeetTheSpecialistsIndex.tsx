@@ -25,13 +25,13 @@ export const MeetTheSpecialistsIndex: FC = () => {
         pathname="/meet-the-specialists"
       />
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
 
       <Text as="h1" variant={["xl", "xxl"]}>
         {t`specialists.meetTheSpecialists`}
       </Text>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <GridColumns>
         <Column span={8}>
@@ -39,7 +39,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
             {t`specialists.ourTeamIsReady`}
           </Text>
 
-          <Spacer mt={2} />
+          <Spacer y={2} />
 
           <Text variant="xs">
             Have a question about Artsy? Check out our{" "}
@@ -55,7 +55,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
         </Column>
       </GridColumns>
 
-      <Spacer mt={12} />
+      <Spacer y={12} />
 
       <Join separator={<Separator my={12} />}>
         {SPECIALISTS.map(({ i18nKey, specialists }) => {
@@ -66,7 +66,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
               </Column>
 
               <Column span={8}>
-                <Join separator={<Spacer mt={4} />}>
+                <Join separator={<Spacer y={4} />}>
                   {specialists.map(specialist => (
                     <Flex key={specialist.email}>
                       <Avatar
@@ -89,7 +89,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
                           {specialist.location}
                         </Text>
 
-                        <Spacer mt={2} />
+                        <Spacer y={2} />
 
                         <Text
                           variant="sm-display"
@@ -157,7 +157,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     title: "Senior Private Sales Director",
     location: "London",
     email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/Adriana_Almeida.jpg",
+    image: "https://files.artsy.net/images/Adriana.jpg",
   },
   {
     name: "Meave Hamill",
@@ -199,6 +199,12 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/cperkins_headshot-copy.jpg",
   },
   {
+    name: "Akilah Chandler",
+    title: "Private Sales & Advisory Business Associate",
+    email: "akilah.chandler@artsymail.com",
+    image: "https://files.artsy.net/images/AkilahChandler.jpg",
+  },
+  {
     name: "Sarah Punzel",
     title: "Private Sales Coordinator",
     location: "New York",
@@ -224,7 +230,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Erica Lyon",
-    title: "Associate Director of Partner Auctions",
+    title: "Director of Business Strategy and Operations",
     location: "New York",
     email: "erica@artsy.net",
     image: "https://files.artsy.net/images/ericalyonheadshot.jpeg",
@@ -246,7 +252,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
 
   {
     name: "Alan Zeng",
-    title: "Senior Specialist, Street Art",
+    title: "Senior Specialist & Head of Street Art",
     location: "New York",
     email: "alan@artsy.net",
     image: "https://files.artsy.net/images/alan.png",
@@ -257,13 +263,6 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "celine.cunha@artsymail.com",
     image: "https://files.artsy.net/images/Celine_Cunha_Krieger.png",
-  },
-  {
-    name: "Simon Wills",
-    title: "Trusts & Estates Senior Manager",
-    location: "New York",
-    email: "simon.wills@artsymail.com",
-    image: "https://files.artsy.net/images/simon_wills.png",
   },
 ]
 
@@ -301,16 +300,10 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/vanessa_zingale.png",
   },
   {
-    name: "Katerina Blackwood",
-    title: "Manager, Collector Services",
-    email: "katerina.blackwood@artsy.net",
-    image: "https://files.artsy.net/images/Katerina.jpg",
-  },
-  {
-    name: "Louis Denizet",
-    title: "Manager, Collector Services",
-    email: "louis.denizet@artsy.net",
-    image: "https://files.artsy.net/images/Louis.jpg",
+    name: "Caroline Targgart",
+    title: "Client Development Manager",
+    email: "caroline.targgart@artsy.net",
+    image: "https://files.artsy.net/images/CarolineTarggart.jpg",
   },
   {
     name: "Dana Rodriguez",

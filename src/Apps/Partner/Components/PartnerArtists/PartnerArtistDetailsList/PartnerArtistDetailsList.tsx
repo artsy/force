@@ -63,7 +63,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
   return (
     <Box ref={containerRef as any}>
-      <Join separator={<Spacer mt={4} />}>
+      <Join separator={<Spacer y={4} />}>
         {partner.artists?.edges?.map(edge => {
           if (!edge) return null
 
@@ -79,7 +79,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
       {isLoading && (
         <>
-          <Spacer mt={4} />
+          <Spacer y={4} />
 
           <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
         </>

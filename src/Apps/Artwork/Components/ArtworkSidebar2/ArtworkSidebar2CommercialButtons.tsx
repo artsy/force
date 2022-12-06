@@ -289,7 +289,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
       {(artwork?.editionSets?.length ?? 0) < 2 ? (
         <>
           <SaleMessage saleMessage={artwork.saleMessage} />
-          {!!isCreateAlertAvailable && <Spacer mt={1} />}
+          {!!isCreateAlertAvailable && <Spacer y={1} />}
         </>
       ) : (
         <>
@@ -303,17 +303,17 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
           {!!selectedEditionSet && (
             <>
               <Separator />
-              <Spacer mt={4} />
+              <Spacer y={4} />
               <SaleMessage saleMessage={selectedEditionSet.saleMessage} />
             </>
           )}
         </>
       )}
 
-      {shouldRenderButtons && <Spacer mt={2} />}
+      {shouldRenderButtons && <Spacer y={2} />}
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
-        <Join separator={<Spacer ml={1} mt={1} />}>
+        <Join separator={<Spacer x={1} y={1} />}>
           {!!isCreateAlertAvailable && (
             <ArtworkSidebarCreateAlertButtonFragmentContainer
               artwork={artwork}
@@ -359,7 +359,7 @@ const ArtworkSidebar2CommerialButtons: React.FC<ArtworkSidebar2CommercialButtons
         </Join>
       </Flex>
 
-      <Spacer mt={4} />
+      <Spacer y={4} />
       <ErrorToast onClose={onCloseModal} show={isErrorModalVisible} />
     </>
   )

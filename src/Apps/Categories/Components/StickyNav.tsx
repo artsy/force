@@ -22,7 +22,7 @@ const StickyNav: React.FC<StickyNavProps> = ({ geneFamiliesConnection }) => {
     // TODO: Simplify layout
     <HorizontalOverflow my={-1} py={1}>
       <AppContainer display="flex">
-        <Spacer pr={[2, 4]} />
+        <Spacer x={[2, 4]} />
 
         {geneFamilies.map((geneFamily, i) => {
           return (
@@ -31,12 +31,12 @@ const StickyNav: React.FC<StickyNavProps> = ({ geneFamiliesConnection }) => {
                 {geneFamily.name}
               </Pill>
 
-              {i !== geneFamilies.length - 1 ? <Spacer pr={1} /> : null}
+              {i !== geneFamilies.length - 1 ? <Spacer x={1} /> : null}
             </Flex>
           )
         })}
 
-        <Spacer pr={[2, 4]} />
+        <Spacer x={[2, 4]} />
       </AppContainer>
     </HorizontalOverflow>
   )

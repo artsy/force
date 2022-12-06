@@ -267,7 +267,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />
             </Flex>
-            <Spacer mb={2} />
+            <Spacer y={2} />
           </Media>
           <Flex flexDirection="column">
             <CountdownTimer
@@ -283,7 +283,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
               onChange={onChangeResponse}
             />
           </Flex>
-          <Spacer mb={[2, 4]} />
+          <Spacer y={[2, 4]} />
           <Media greaterThan="xs">
             <Button
               onClick={onSubmit}
@@ -293,7 +293,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
             >
               Submit
             </Button>
-            <Spacer mb={2} />
+            <Spacer y={2} />
             <ConditionsOfSaleDisclaimer />
           </Media>
         </Flex>
@@ -315,7 +315,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
             contextModule={ContextModule.ordersAccept}
             contextPageOwnerType={OwnerType.ordersAccept}
           />
-          <Spacer mb={2} />
+          <Spacer y={2} />
           <Media at="xs">
             <>
               <Button
@@ -326,7 +326,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
               >
                 Submit
               </Button>
-              <Spacer mb={2} />
+              <Spacer y={2} />
               <ConditionsOfSaleDisclaimer />
             </>
           </Media>

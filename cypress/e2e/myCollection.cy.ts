@@ -8,6 +8,6 @@ describe("/my-collection/artwork/:artworkID", () => {
   it("renders page content", () => {
     cy.get("h1").should("contain", "Trudy Benson")
     cy.get("h1").should("contain", "Boost, 2022")
-    cy.contains("This is a unique work")
+    cy.contains("Unique work")
   })
 })
