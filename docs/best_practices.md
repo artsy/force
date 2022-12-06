@@ -74,8 +74,6 @@ Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), 
 
 ### Prefer Relay containers (higher order components) over relay-hooks
 
-QUESTION: Is that still the case? Do we prefer HOC over hooks? Or should we update this part?
-
 We have a preference for Relay containers due to [`relay-hooks`](https://github.com/relay-tools/relay-hooks) hooks not being compatible with Relay containers which represent the majority of our components using Relay. (This could change once Relay releases its official hooks implementation.)
 
 ## Code organization
