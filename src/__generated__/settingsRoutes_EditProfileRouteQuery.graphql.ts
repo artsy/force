@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<770fff5bb8a8fa8926de5ee3fa01de24>>
+ * @generated SignedSource<<4561dd8244bdb968713f42c85a74a938>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "__typename",
   "storageKey": null
 },
 v1 = {
@@ -34,6 +34,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -80,34 +87,22 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "MyLocation",
-            "kind": "LinkedField",
-            "name": "location",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": null
-              },
-              (v0/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "email",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "profession",
+            "name": "paddleNumber",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "shareFollows",
+            "name": "phone",
             "storageKey": null
           },
           {
@@ -134,96 +129,139 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "CollectorProfileType",
-            "kind": "LinkedField",
-            "name": "collectorProfile",
-            "plural": false,
-            "selections": [
+            "kind": "ScalarField",
+            "name": "hasPassword",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasSecondFactorEnabled",
+            "storageKey": null
+          },
+          {
+            "alias": "appSecondFactors",
+            "args": [
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "UserInterest",
-                "kind": "LinkedField",
-                "name": "userInterests",
-                "plural": true,
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "app"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v0/*: any*/),
+              {
+                "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "category",
+                    "name": "name",
                     "storageKey": null
-                  },
+                  }
+                ],
+                "type": "AppSecondFactor",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": "secondFactors(kinds:[\"app\"])"
+          },
+          {
+            "alias": "smsSecondFactors",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "sms"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v0/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "interest",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "slug",
-                            "storageKey": null
-                          }
-                        ],
-                        "type": "Artist",
-                        "abstractKey": null
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v0/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
-                      }
-                    ],
+                    "kind": "ScalarField",
+                    "name": "formattedPhoneNumber",
                     "storageKey": null
-                  },
-                  (v0/*: any*/)
+                  }
                 ],
+                "type": "SmsSecondFactor",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": "secondFactors(kinds:[\"sms\"])"
+          },
+          {
+            "alias": "backupSecondFactors",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "backup"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v0/*: any*/)
+            ],
+            "storageKey": "secondFactors(kinds:[\"backup\"])"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AuthenticationType",
+            "kind": "LinkedField",
+            "name": "authentications",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "provider",
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v0/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4617bc1987b8cba9cc567e1ebeadfe2b",
+    "cacheID": "f5257b1f9bc70038ef8b5e887a8cfa2e",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_EditProfileRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n}\n"
+    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsPassword_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsLinkedAccounts_me\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n\nfragment SettingsEditSettingsPassword_me on Me {\n  hasPassword\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();
