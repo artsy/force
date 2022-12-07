@@ -103,6 +103,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -224,6 +225,7 @@ export const normalizePlace = (
     postalCode: components.postalCode?.long_name,
     country: components.country?.long_name,
     countryCode: withCountryCode ? components.country?.short_name : undefined,
+    coordinates: [place.geometry.location.lat(), place.geometry.location.lng()],
   }
 }
 
