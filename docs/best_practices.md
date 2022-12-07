@@ -1,5 +1,5 @@
 Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques.
-It can be tricky to be sure about what the current preferred practices are, and this is why we try to use this doc as the main source of truth, keep this it up to date as much as possible, and appreciate your contribution toward doing this. 🙏
+It can be tricky to be sure about what the current preferred practices are, and this is why we try to use this doc as the main source of truth, keep this up to date as much as possible, and appreciate your contribution toward doing this. 🙏
 
 This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next, with links to:
 
@@ -8,7 +8,7 @@ This document is a map. Not of Force at a specific time, but a map of how we got
 - Conversations on Slack
 - Blog posts
 
-Links should point main and not specific commits. Broken docs are better than outdated ones.
+Links should point to `main` and not specific commits. Broken docs are better than outdated ones.
 
 # Table of Contents
 
