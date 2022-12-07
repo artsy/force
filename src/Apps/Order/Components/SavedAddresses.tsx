@@ -145,30 +145,51 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onShowToast && onShowToast(true, "Saved")
   }
 
-  const trackAddAddressClick = () => {
+  const handleAddNewAddressClick = () => {
     trackEvent({
       action: ActionType.clickedAddNewShippingAddress,
       context_page_owner_type: OwnerType.ordersShipping,
       context_module: ContextModule.ordersShipping,
     })
+
+    setShowAddressModal(true)
+    setModalDetails({
+      addressModalTitle: "Add address",
+      addressModalAction: "createUserAddress",
+    })
   }
 
-  const addAddressButton = (
+  return (
     <>
+      <RadioGroup
+        onSelect={onSelect}
+        defaultValue={selectedAddress || defaultAddressIndex(addressList)}
+      >
+        {compact(addressList).map((address, index) => {
+          return (
+            <BorderedRadio
+              value={address.internalID}
+              key={index}
+              position="relative"
+              data-test="savedAddress"
+            >
+              <SavedAddressItem
+                index={index}
+                address={address}
+                handleClickEdit={() => handleEditAddress(address, index)}
+              />
+            </BorderedRadio>
+          )
+        })}
+      </RadioGroup>
+      <Spacer y={14} />
       {addressList.length > 0 && (
         <Button
           mt={[2, 4]}
           mb={2}
           data-test="shippingButton"
           variant="secondaryBlack"
-          onClick={() => {
-            trackAddAddressClick()
-            setShowAddressModal(true),
-              setModalDetails({
-                addressModalTitle: "Add address",
-                addressModalAction: "createUserAddress",
-              })
-          }}
+          onClick={handleAddNewAddressClick}
         >
           Add a new address
         </Button>
@@ -183,36 +204,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         onError={onError}
         me={me}
       />
-    </>
-  )
-
-  const addressItems = compact(addressList).map((address, index) => {
-    return (
-      <BorderedRadio
-        value={address.internalID}
-        key={index}
-        position="relative"
-        data-test="savedAddress"
-      >
-        <SavedAddressItem
-          index={index}
-          address={address}
-          handleClickEdit={() => handleEditAddress(address, index)}
-        />
-      </BorderedRadio>
-    )
-  })
-
-  return (
-    <>
-      <RadioGroup
-        onSelect={onSelect}
-        defaultValue={selectedAddress || defaultAddressIndex(addressList)}
-      >
-        {addressItems}
-      </RadioGroup>
-      <Spacer y={14} />
-      {addAddressButton}
       <Spacer y={4} />
     </>
   )
