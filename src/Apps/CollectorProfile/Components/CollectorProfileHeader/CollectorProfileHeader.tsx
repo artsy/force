@@ -17,17 +17,12 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
 
   return (
     <>
-      <Spacer mt={[2, 4]} />
+      <Spacer y={[2, 4]} />
 
       <Flex>
         <CollectorProfileHeaderAvatarFragmentContainer me={me} />
 
-        <Flex
-          flex={1}
-          flexDirection="column"
-          justifyContent="center"
-          ml={[1, 2]}
-        >
+        <Flex flex={1} flexDirection="column" justifyContent="center">
           <Text variant={["md", "xl"]}>{name}</Text>
           {!!createdAt && (
             <Text variant={["xs", "sm-display"]} color="black60">
@@ -59,7 +54,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Media>
       </Flex>
 
-      <Spacer mt={2} />
+      <Spacer y={2} />
 
       <Box mb={2}>
         {!!bio && (

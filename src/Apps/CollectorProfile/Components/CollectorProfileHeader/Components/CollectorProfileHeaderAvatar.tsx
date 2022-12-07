@@ -17,11 +17,11 @@ const CollectorProfileHeaderAvatar: React.FC<CollectorProfileHeaderAvatarProps> 
   return (
     <>
       <Media lessThan="sm">
-        <Avatar size="xs" lazyLoad {...me.icon.resized} />
+        <Avatar size="xs" lazyLoad {...me.icon.resized} mr={[1, 2]} />
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <Avatar size="md" lazyLoad {...me.icon.resized} />
+        <Avatar size="md" lazyLoad {...me.icon.resized} mr={[1, 2]} />
       </Media>
     </>
   )
@@ -52,6 +52,7 @@ const NoAvatarComponent: React.FC = () => {
       justifyContent="center"
       alignItems="center"
       backgroundColor="black10"
+      mr={[1, 2]}
     >
       <UserSingleIcon />
     </Flex>

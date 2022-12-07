@@ -15,10 +15,14 @@ interface SettingsAppProps {
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const tabs = compact([
     { name: "Edit Settings", url: "/settings/edit-settings" },
-    { name: "Collector Profile", url: "/settings/edit-profile" },
+    {
+      name: isCollectorProfileEnabled ? "Edit Profile" : "Collector Profile",
+      url: "/settings/edit-profile",
+    },
     { name: "My Collection", url: "/settings/my-collection" },
     isInsightsEnabled && { name: "Insights", url: "/settings/insights" },
     { name: "Saves & Follows", url: "/settings/saves" },
