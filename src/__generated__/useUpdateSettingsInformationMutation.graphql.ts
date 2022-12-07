@@ -52,6 +52,7 @@ export type EditableLocation = {
   address?: string | null;
   address2?: string | null;
   city?: string | null;
+  coordinates?: ReadonlyArray<number> | null;
   country?: string | null;
   countryCode?: string | null;
   postalCode?: string | null;

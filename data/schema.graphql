@@ -6586,6 +6586,14 @@ type Conversation implements Node {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  deletedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 
   # The participant who initiated the conversation
   from: ConversationInitiator!
@@ -7349,6 +7357,32 @@ type DeleteBankAccountPayload {
   me: Me
 }
 
+type DeleteConversationFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteConversationMutationInput {
+  clientMutationId: String
+
+  # The id of the conversation to be deleted.
+  id: String!
+}
+
+type DeleteConversationMutationPayload {
+  clientMutationId: String
+
+  # On success: the conversation that was soft deleted.
+  conversationOrError: DeleteConversationResponseOrError
+}
+
+union DeleteConversationResponseOrError =
+    DeleteConversationFailure
+  | DeleteConversationSuccess
+
+type DeleteConversationSuccess {
+  conversation: Conversation
+}
+
 input DeleteCreditCardInput {
   clientMutationId: String
   id: String!
@@ -7615,6 +7649,9 @@ input EditableLocation {
 
   # The city the location is based in
   city: String
+
+  # The optional location coordinates. [lat, lng]
+  coordinates: [Float!]
 
   # The county the location is based in
   country: String
@@ -9016,6 +9053,7 @@ type GravityMutationError {
   error: String
   fieldErrors: [FieldErrorResults]
   message: String!
+  statusCode: Int
   type: String
 }
 
@@ -11012,6 +11050,11 @@ type Mutation {
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
 
+  # Soft-delete a conversation.
+  deleteConversation(
+    input: DeleteConversationMutationInput!
+  ): DeleteConversationMutationPayload
+
   # Remove a credit card
   deleteCreditCard(input: DeleteCreditCardInput!): DeleteCreditCardPayload
 
@@ -11162,6 +11205,16 @@ type Mutation {
     input: UpdateAppSecondFactorInput!
   ): UpdateAppSecondFactorPayload
 
+  # Updates an artwork.
+  updateArtwork(
+    input: UpdateArtworkMutationInput!
+  ): UpdateArtworkMutationPayload
+
+  # Updates the flags on a partner.
+  updateCMSLastAccessTimestamp(
+    input: UpdateCMSLastAccessTimestampMutationInput!
+  ): UpdateCMSLastAccessTimestampMutationPayload
+
   # Updating a collector profile (loyalty applicant status).
   updateCollectorProfile(
     input: UpdateCollectorProfileInput!
@@ -11180,6 +11233,11 @@ type Mutation {
   updateConversation(
     input: UpdateConversationMutationInput!
   ): UpdateConversationMutationPayload
+
+  # Update a message.
+  updateMessage(
+    input: UpdateMessageMutationInput!
+  ): UpdateMessageMutationPayload
 
   # Updates the logged in user's password
   updateMyPassword(
@@ -15807,6 +15865,57 @@ type UpdateAppSecondFactorPayload {
   secondFactorOrErrors: AppSecondFactorOrErrorsUnion!
 }
 
+type updateArtworkFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateArtworkMutationInput {
+  # The availability of the artwork
+  availability: String
+  clientMutationId: String
+
+  # The id of the artwork to update.
+  id: String!
+}
+
+type UpdateArtworkMutationPayload {
+  # On success: the artwork updated.
+  artworkOrError: updateArtworkResponseOrError
+  clientMutationId: String
+}
+
+union updateArtworkResponseOrError = updateArtworkFailure | updateArtworkSuccess
+
+type updateArtworkSuccess {
+  artwork: Artwork
+}
+
+type UpdateCMSLastAccessTimestampFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateCMSLastAccessTimestampMutationInput {
+  clientMutationId: String
+
+  # The id of the partner to update.
+  id: String!
+}
+
+type UpdateCMSLastAccessTimestampMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated partner. On error: the error that occurred.
+  partnerOrError: UpdateCMSLastAccessTimestampResponseOrError
+}
+
+union UpdateCMSLastAccessTimestampResponseOrError =
+    UpdateCMSLastAccessTimestampFailure
+  | UpdateCMSLastAccessTimestampSuccess
+
+type UpdateCMSLastAccessTimestampSuccess {
+  partner: Partner
+}
+
 input UpdateCollectorProfileInput {
   # List of affiliated auction house ids, referencing Galaxy.
   affiliatedAuctionHouseIds: [String]
@@ -15930,12 +16039,48 @@ input UpdateConversationMutationInput {
   # The id of the conversation to be updated.
   conversationId: String!
 
+  # Mark the conversation as dismissed
+  dismissed: Boolean
+
   # The message id to mark as read.
-  fromLastViewedMessageId: String!
+  fromLastViewedMessageId: String
+
+  # The seller outcome for the conversation. Options include `already_contacted`, `dont_trust`, `other`, `work_unavailable`.
+  sellerOutcome: String
+
+  # The seller outcome comment for the conversation.
+  sellerOutcomeComment: String
 }
 
 type UpdateConversationMutationPayload {
   clientMutationId: String
+  conversation: Conversation
+}
+
+type updateMessageFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateMessageMutationInput {
+  clientMutationId: String
+
+  # The id of the message to be updated.
+  id: String!
+
+  # Mark the message as spam
+  spam: Boolean!
+}
+
+type UpdateMessageMutationPayload {
+  clientMutationId: String
+
+  # On success: the updated conversation
+  conversationOrError: updateMessageResponseOrError
+}
+
+union updateMessageResponseOrError = updateMessageFailure | updateMessageSuccess
+
+type updateMessageSuccess {
   conversation: Conversation
 }
 

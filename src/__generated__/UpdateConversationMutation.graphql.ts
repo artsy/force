@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<96055c823e8b4d5f55d20ab44c25af59>>
+ * @generated SignedSource<<86e8cc52ff4edc532ff08a038c5ea404>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateConversationMutationInput = {
   clientMutationId?: string | null;
   conversationId: string;
-  fromLastViewedMessageId: string;
+  dismissed?: boolean | null;
+  fromLastViewedMessageId?: string | null;
+  sellerOutcome?: string | null;
+  sellerOutcomeComment?: string | null;
 };
 export type UpdateConversationMutation$variables = {
   input: UpdateConversationMutationInput;
