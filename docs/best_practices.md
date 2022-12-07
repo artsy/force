@@ -23,7 +23,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 
 ## Current Tech Stack
 
-The app is currently written responsively in React. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
+The app is currently written responsively in React. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away [by our framework](#for-routing-use-our-framework) (see below).
 
 ## TypeScript
 
@@ -58,7 +58,7 @@ Other commonly used components include [Separator](https://palette.artsy.net/ele
 
 Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/main/src/routes.tsx).
 
-To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/docs/adding_new_app.md).
+To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/main/docs/adding_new_app.md).
 
 ## Relay
 
