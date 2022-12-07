@@ -42,6 +42,9 @@ export const INITIAL_ADDRESS = {
   isDefault: false,
 }
 
+export const GENERIC_FAIL_MESSAGE =
+  "Sorry there has been an issue saving your address. Please try again."
+
 export interface ModalDetails {
   addressModalTitle: string
   addressModalAction: AddressModalAction
@@ -145,9 +148,7 @@ export const AddressModal: React.FC<Props> = ({
               actions: FormikHelpers<FormikFormT>
             ) => {
               const handleError = message => {
-                setCreateUpdateError(
-                  "Sorry there has been an issue saving your address. Please try again."
-                )
+                setCreateUpdateError(GENERIC_FAIL_MESSAGE)
                 actions?.setSubmitting(false)
                 onError(message)
               }
