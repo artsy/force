@@ -114,7 +114,7 @@
     "ejs": "3.1.7",
     "es7-object-polyfill": "0.0.7",
     "eventemitter3": "4.0.7",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "express-ipfilter": "0.2.1",
     "express-request-id": "1.4.0",
     "farce": "0.4.5",
