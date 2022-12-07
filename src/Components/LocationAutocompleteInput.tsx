@@ -15,6 +15,7 @@ import {
   ChangeEvent,
   FC,
   useMemo,
+  useCallback,
 } from "react"
 import { debounce } from "lodash"
 
@@ -80,7 +81,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     return res?.predictions
   }
 
-  const updateSuggestions = async (value: string) => {
+  const updateSuggestions = useCallback(async (value: string) => {
     setSuggestions([])
     if (!value.trim()) return
 
@@ -99,12 +100,11 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     } catch {
       setIsLoading(false)
     }
-  }
+  }, [])
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [updateSuggestions]
   )
 
   const handleSelect = async (option: AutocompleteInputOptionType) => {
