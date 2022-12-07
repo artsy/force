@@ -1,13 +1,14 @@
-Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Older code is often left un-updated. It can be difficult to orient oneself around what the current preferred practices are, but we try to keep this doc as up to date as much as possible and appreciate your contribution toward this.
+Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques.
+It can be tricky to be sure about what the current preferred practices are, and this is why we try to use this doc as the main source of truth, keep this up to date as much as possible, and appreciate your contribution toward doing this. 🙏
 
-This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next. This is a living document, expected to be updated regularly, with links to:
+This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next, with links to:
 
-- Example code.
-- Pull requests with interesting discussions.
-- Conversations on Slack.
-- Blog posts.
+- Example code
+- Pull requests with interesting discussions
+- Conversations on Slack
+- Blog posts
 
-Links should point to specific commits, and not a branch (in case the branch or file is deleted, these links should always work). But it's possible that a file is outdated, that our understanding has moved on since it was linked to; in that case, please update this document.
+Links should point to `main` and not specific commits. Broken docs are better than outdated ones.
 
 # Table of Contents
 
