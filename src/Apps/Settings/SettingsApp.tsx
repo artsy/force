@@ -59,7 +59,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
             <TopContextBar
               displayBackArrow
               useWithoutSeparator
-              href={"/collector-profile"} // TODO: use onClick and router or
+              href="/collector-profile" // TODO: use onClick and router or
               // something else to make sure we're coming back to the correct
               // tab of collector profile
             >
