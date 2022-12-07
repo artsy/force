@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e5a66c3a982ef8996f649b4b913ae32>>
+ * @generated SignedSource<<4514e282880062071adcc5a12ba89349>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,6 +51,7 @@ export type EditableLocation = {
   address?: string | null;
   address2?: string | null;
   city?: string | null;
+  coordinates?: ReadonlyArray<number> | null;
   country?: string | null;
   countryCode?: string | null;
   postalCode?: string | null;
