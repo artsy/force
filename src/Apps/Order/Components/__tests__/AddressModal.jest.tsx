@@ -232,6 +232,7 @@ describe("AddressModal", () => {
 
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
+
     it("shows generic error when mutation returns error", async () => {
       let wrapper = getWrapper(testAddressModalProps)
 
@@ -249,92 +250,5 @@ describe("AddressModal", () => {
 
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
-  })
-
-  // it("sets formik error when mutation returns phone validation error", async () => {
-  //   let wrapper = getWrapper(testAddressModalProps)
-
-  //   commitMutation.mockImplementationOnce((_, { onCompleted }) =>
-  //     onCompleted({
-  //       updateUserAddress: {
-  //         userAddressOrErrors: {
-  //           errors: [
-  //             {
-  //               message:
-  //                 "Validation failed for phone: not a valid phone number",
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     })
-  //   )
-
-  //   const formik = wrapper.find("Formik").first()
-  //   const setFieldError = jest.fn()
-
-  //   const onSubmit = formik.props().onSubmit as any
-  //   onSubmit(validAddress as any, {
-  //     setFieldError: setFieldError,
-  //     setSubmitting: jest.fn(),
-  //   })
-
-  //   await wrapper.update()
-
-  //   await tick()
-
-  //   expect(setFieldError).toHaveBeenCalledWith(
-  //     "phoneNumber",
-  //     "Please enter a valid phone number"
-  //   )
-  // })
-})
-
-describe("AddressModal feature flag", () => {
-  beforeEach(() => {
-    testAddressModalProps = {
-      show: true,
-      address: savedAddress,
-      onSuccess: jest.fn(),
-      onError: jest.fn(),
-      onDeleteAddress: jest.fn(),
-      modalDetails: {
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
-      },
-      me: {
-        id: "1234",
-        addressConnection: {
-          totalCount: 0,
-          edges: [],
-        },
-
-        " $fragmentType": "SavedAddresses_me",
-      },
-      closeModal: jest.fn(),
-    }
-    commitMutation.mockReset()
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        user: { lab_features: ["Phone Number Validation"] },
-        isLoggedIn: true,
-        relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
-    })
-  })
-
-  // FIXME: Palette 18.16.1 breaks this spec somehow
-  // https://github.com/artsy/palette/pull/1111
-  // https://github.com/artsy/palette/pull/1112
-  it.skip("renders dropdown phone input field when feat flag present", () => {
-    const wrapper = getWrapper(testAddressModalProps)
-    expect(
-      wrapper.find("Input[data-test='phoneInputWithoutValidationFlag']").length
-    ).toBe(0)
   })
 })
