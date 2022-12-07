@@ -1,29 +1,22 @@
 import { useState } from "react"
 import * as React from "react"
+import * as Yup from "yup"
 import {
   Button,
   Clickable,
   Checkbox,
   Flex,
-  Input,
   ModalDialog,
   Spacer,
   Text,
   Banner,
-  Select,
-  Box,
   ModalWidth,
 } from "@artsy/palette"
 import {
   SavedAddressType,
   convertShippingAddressToMutationInput,
 } from "Apps/Order/Utils/shippingUtils"
-import { Formik, FormikHelpers, FormikProps } from "formik"
-import {
-  removeEmptyKeys,
-  validateAddress,
-  validatePhoneNumber,
-} from "Apps/Order/Utils/formValidators"
+import { Formik, FormikHelpers, Form } from "formik"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
@@ -32,8 +25,23 @@ import { useSystemContext } from "System/SystemContext"
 import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefaultAddress"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
-import { countries } from "Utils/countries"
-import { userHasLabFeature } from "Utils/user"
+import {
+  PhoneNumberInput,
+  validatePhoneNumber,
+} from "Components/PhoneNumberInput"
+
+export const INITIAL_ADDRESS = {
+  name: "",
+  country: "US",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  phoneNumber: "",
+  phoneNumberCountryCode: "us",
+  postalCode: "",
+  region: "",
+  isDefault: false,
+}
 
 export interface ModalDetails {
   addressModalTitle: string
@@ -65,6 +73,35 @@ export const GENERIC_FAIL_MESSAGE =
 
 export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
+type FormikFormT = SavedAddressType & {
+  phoneNumberCountryCode: string
+}
+
+const VALIDATION_SCHEMA = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  country: Yup.string().required("Country is required"),
+  addressLine1: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  region: Yup.string().required("Region is required"),
+  postalCode: Yup.string().required("Postal Code is required"),
+  phoneNumber: Yup.string()
+    .required("Phone Number is required")
+    .test({
+      name: "phone-number-is-valid",
+      message: "Please enter a valid phone number",
+      test: (national, context) => {
+        return validatePhoneNumber({
+          national: `${national}`,
+          regionCode: `${context.parent.phoneNumberCountryCode}`,
+        })
+      },
+    }),
+  phoneNumberCountryCode: Yup.string().required(
+    "Phone Number Country Code is required"
+  ),
+  isDefault: Yup.boolean().optional(),
+})
+
 export const AddressModal: React.FC<Props> = ({
   show,
   closeModal,
@@ -75,32 +112,32 @@ export const AddressModal: React.FC<Props> = ({
   modalDetails,
   me,
 }) => {
-  const [_countryCode, setCountryCode] = useState<string>("us")
-
   const title = modalDetails?.addressModalTitle
   const createMutation =
     modalDetails?.addressModalAction === "createUserAddress"
-  const validator = (values: any) => {
-    const validationResult = validateAddress(values)
-    const phoneValidation = validatePhoneNumber(values.phoneNumber)
-    const errors = Object.assign({}, validationResult.errors, {
-      phoneNumber: phoneValidation.error,
-    })
-    const errorsTrimmed = removeEmptyKeys(errors)
-    return errorsTrimmed
-  }
-  const { relayEnvironment, user } = useSystemContext()
 
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
 
+  const { relayEnvironment } = useSystemContext()
   if (!relayEnvironment) return null
 
   const handleModalClose = () => {
     closeModal()
     setCreateUpdateError(null)
+  }
+
+  const getInitialValues = () => {
+    if (!address) {
+      return INITIAL_ADDRESS
+    }
+
+    return {
+      ...address,
+      phoneNumberCountryCode: address?.country?.toLowerCase() || "us",
+    }
   }
 
   return (
@@ -113,11 +150,11 @@ export const AddressModal: React.FC<Props> = ({
         >
           <Formik
             validateOnMount
-            initialValues={createMutation ? { country: "US" } : { ...address }}
-            validate={validator}
+            validationSchema={VALIDATION_SCHEMA}
+            initialValues={getInitialValues()}
             onSubmit={(
-              values: SavedAddressType,
-              actions: FormikHelpers<SavedAddressType>
+              values: FormikFormT,
+              actions: FormikHelpers<FormikFormT>
             ) => {
               const handleError = message => {
                 const userMessage: Record<string, string> | null =
@@ -153,7 +190,9 @@ export const AddressModal: React.FC<Props> = ({
 
                 setCreateUpdateError(null)
               }
+
               const addressInput = convertShippingAddressToMutationInput(values)
+              console.log({ XXXXX_addressInput: addressInput })
               if (createMutation) {
                 createUserAddress(
                   relayEnvironment,
@@ -177,116 +216,93 @@ export const AddressModal: React.FC<Props> = ({
               }
             }}
           >
-            {(formik: FormikProps<SavedAddressType>) => (
-              <form onSubmit={formik.handleSubmit}>
-                {createUpdateError && (
-                  <Banner my={2} data-test="credit-card-error" variant="error">
-                    {createUpdateError}
-                  </Banner>
-                )}
-                <AddressModalFields />
-                <Spacer y={2} />
-                {user &&
-                  !userHasLabFeature(user, "Phone Number Validation") && (
-                    <Input
-                      title="Phone number"
-                      description="Required for shipping logistics"
-                      placeholder="Add phone number"
-                      name="phoneNumber"
-                      type="tel"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.phoneNumber && formik.errors.phoneNumber
-                      }
-                      value={formik.values?.phoneNumber || ""}
-                      data-test="phoneInputWithoutValidationFlag"
-                    />
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              setFieldValue,
+              isValid,
+              isSubmitting,
+              submitForm,
+            }) => {
+              return (
+                <Form>
+                  {createUpdateError && (
+                    <Banner
+                      my={2}
+                      data-test="credit-card-error"
+                      variant="error"
+                    >
+                      {createUpdateError}
+                    </Banner>
                   )}
-                {user && userHasLabFeature(user, "Phone Number Validation") && (
-                  <Flex>
-                    <Box style={{ maxWidth: "35%" }}>
-                      <Select
-                        title="Phone number"
-                        description="Only used for shipping purposes"
-                        options={countries}
-                        onSelect={cc => {
-                          setCountryCode(cc)
-                        }}
-                        style={{
-                          letterSpacing: "1px",
-                          borderRight: "none",
-                        }}
-                        data-test="countryDropdown"
-                      />
-                    </Box>
-                    <Flex
-                      flexDirection="column"
-                      style={{
-                        width: "100%",
-                      }}
-                    >
-                      <Box height="100%"></Box>
-                      <Input
-                        title=""
-                        description=""
-                        placeholder={"Add phone number"}
-                        name="phoneNumber"
-                        type="tel"
-                        onChange={formik.handleChange}
-                        onBlur={e => {
-                          formik.handleBlur
-                        }}
-                        error={
-                          formik.touched.phoneNumber &&
-                          formik.errors.phoneNumber
-                        }
-                        value={formik.values?.phoneNumber ?? ""}
-                        style={{ borderLeft: "none" }}
-                      />
-                    </Flex>
-                  </Flex>
-                )}
-                <Spacer y={2} />
-                {(!address?.isDefault || createMutation) && (
-                  <Checkbox
-                    onSelect={selected => {
-                      formik.setFieldValue("isDefault", selected)
+                  <AddressModalFields />
+                  <Spacer y={2} />
+                  <PhoneNumberInput
+                    inputProps={{
+                      name: "phoneNumber",
+                      onBlur: handleBlur,
+                      onChange: handleChange,
+                      placeholder: "(000) 000 0000",
+                      value: values?.phoneNumber || "",
                     }}
-                    selected={formik.values?.isDefault}
-                    data-test="setAsDefault"
-                  >
-                    Set as default
-                  </Checkbox>
-                )}
-                {!createMutation && (
-                  <Flex mt={2} flexDirection="column" alignItems="center">
-                    <Clickable
-                      data-test="deleteButton"
-                      onClick={() => setShowDialog(true)}
+                    selectProps={{
+                      name: "phoneNumberCountryCode",
+                      onBlur: handleBlur,
+                      selected: values?.phoneNumberCountryCode,
+                      onSelect: value => {
+                        setFieldValue("phoneNumberCountryCode", value)
+                      },
+                    }}
+                    required
+                    error={touched.phoneNumber && errors.phoneNumber}
+                  />
+
+                  <Spacer y={2} />
+                  {(!address?.isDefault || createMutation) && (
+                    <Checkbox
+                      onSelect={selected => {
+                        setFieldValue("isDefault", selected)
+                      }}
+                      selected={values?.isDefault}
+                      data-test="setAsDefault"
                     >
-                      <Text variant="xs" color="red100">
-                        Delete address
-                      </Text>
-                    </Clickable>
-                  </Flex>
-                )}
-                <Button
-                  data-test="saveButton"
-                  type="submit"
-                  variant="primaryBlack"
-                  loading={formik.isSubmitting}
-                  disabled={Object.keys(formik.errors).length > 0}
-                  width="100%"
-                  mt={2}
-                >
-                  Save
-                </Button>
-              </form>
-            )}
+                      Set as default
+                    </Checkbox>
+                  )}
+                  {!createMutation && (
+                    <Flex mt={2} flexDirection="column" alignItems="center">
+                      <Clickable
+                        data-test="deleteButton"
+                        onClick={() => setShowDialog(true)}
+                      >
+                        <Text variant="xs" color="red100">
+                          Delete address
+                        </Text>
+                      </Clickable>
+                    </Flex>
+                  )}
+                  <Button
+                    data-test="saveButton"
+                    onClick={submitForm}
+                    type="submit"
+                    variant="primaryBlack"
+                    loading={isSubmitting}
+                    disabled={!isValid}
+                    width="100%"
+                    mt={2}
+                  >
+                    Save
+                  </Button>
+                </Form>
+              )
+            }}
           </Formik>
         </ModalDialog>
       )}
+
       {showDialog && (
         <ModalDialog
           data-test="deleteAddressDialog"
