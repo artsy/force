@@ -5,9 +5,13 @@ import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { createMockEnvironment } from "relay-test-utils"
+import { useSystemContext } from "System/useSystemContext"
 import { Breakpoint } from "Utils/Responsive"
 import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+
+jest.mock("System/useSystemContext")
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -59,6 +63,17 @@ jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
 const mockUploadPhoto = uploadPhotoToS3 as jest.Mock
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+
+beforeAll(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+    featureFlags: {
+      "cx-my-collection-personal-artists-for-web": {
+        flagEnabled: true,
+      },
+    },
+    relayEnvironment: createMockEnvironment(),
+  }))
+})
 
 describe("Edit artwork", () => {
   const mockuseTracking = useTracking as jest.Mock
@@ -147,6 +162,49 @@ describe("Edit artwork", () => {
       expect(
         screen.getByPlaceholderText("City where artwork is located")
       ).toHaveValue("Berlin")
+    })
+  })
+
+  describe("when the user enters an artist name", () => {
+    it("creates a new personal artist for the user", async () => {
+      getWrapper().renderWithRelay({ Artwork: () => mockArtwork })
+
+      fireEvent.change(screen.getByPlaceholderText("Enter full name"), {
+        target: { value: "Test-Artist-Name" },
+      })
+
+      fireEvent.click(screen.getByTestId("save-button"))
+
+      await flushPromiseQueue()
+
+      expect(mockSubmitArtwork).toHaveBeenCalledWith(
+        expect.objectContaining({
+          rejectIf: expect.any(Function),
+          variables: {
+            input: {
+              artistIds: [""],
+              artists: [{ displayName: "Test-Artist-Name" }],
+              artworkId: "62fc96c48d3ff8000b556c3a",
+              artworkLocation: "Berlin",
+              attributionClass: "LIMITED_EDITION",
+              category: "Drawing, Collage or other Work on Paper",
+              date: "1975",
+              depth: "2",
+              editionNumber: "1",
+              editionSize: "2",
+              externalImageUrls: [],
+              height: "8.75",
+              medium: "Charcoal on paper",
+              metric: "in",
+              pricePaidCents: 400000,
+              pricePaidCurrency: "EUR",
+              provenance: "Fooo",
+              title: "Untitled",
+              width: "11",
+            },
+          },
+        })
+      )
     })
   })
 
