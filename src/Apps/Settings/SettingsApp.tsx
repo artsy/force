@@ -2,11 +2,13 @@ import { Text } from "@artsy/palette"
 import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { TopContextBar } from "Components/TopContextBar"
 import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Media } from "Utils/Responsive"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
@@ -52,9 +54,22 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       <MetaTags title="Settings | Artsy" />
 
       {isCollectorProfileEnabled ? (
-        <Text variant={["lg-display", "lg-display"]} my={[4, 6]}>
-          Settings
-        </Text>
+        <>
+          <Media greaterThan="xs">
+            <TopContextBar
+              displayBackArrow
+              useWithoutSeparator
+              href={"/collector-profile"} // TODO: use onClick and router or
+              // something else to make sure we're coming back to the correct
+              // tab of collector profile
+            >
+              Back to Collector Profile
+            </TopContextBar>
+          </Media>
+          <Text variant={["lg-display", "lg-display"]} mb={[4, 6]} mt={[2, 4]}>
+            Settings
+          </Text>
+        </>
       ) : (
         <Text variant={["lg-display", "xl"]} mt={4}>
           Hi, {me.name}
