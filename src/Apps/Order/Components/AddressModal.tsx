@@ -1,5 +1,4 @@
 import { useState } from "react"
-import * as React from "react"
 import * as Yup from "yup"
 import {
   Button,
@@ -12,19 +11,19 @@ import {
   Banner,
   ModalWidth,
 } from "@artsy/palette"
+import { Formik, FormikHelpers, Form } from "formik"
+import { useSystemContext } from "System/SystemContext"
+import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
+import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import {
   SavedAddressType,
   convertShippingAddressToMutationInput,
 } from "Apps/Order/Utils/shippingUtils"
-import { Formik, FormikHelpers, Form } from "formik"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
-import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
-import { AddressModalFields } from "Components/Address/AddressModalFields"
-import { useSystemContext } from "System/SystemContext"
 import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefaultAddress"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
+import { AddressModalFields } from "Components/Address/AddressModalFields"
 import {
   PhoneNumberInput,
   validatePhoneNumber,
@@ -60,16 +59,6 @@ export interface Props {
   modalDetails?: ModalDetails
   me: SavedAddresses_me$data
 }
-
-const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
-  "Validation failed for phone: not a valid phone number": {
-    field: "phoneNumber",
-    message: "Please enter a valid phone number",
-  },
-}
-
-export const GENERIC_FAIL_MESSAGE =
-  "Sorry there has been an issue saving your address. Please try again."
 
 export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
@@ -112,8 +101,7 @@ export const AddressModal: React.FC<Props> = ({
   modalDetails,
   me,
 }) => {
-  const title = modalDetails?.addressModalTitle
-  const createMutation =
+  const isCreateMutation =
     modalDetails?.addressModalAction === "createUserAddress"
 
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
@@ -129,7 +117,7 @@ export const AddressModal: React.FC<Props> = ({
     setCreateUpdateError(null)
   }
 
-  const getInitialValues = () => {
+  const getInitialFormValues = () => {
     if (!address) {
       return INITIAL_ADDRESS
     }
@@ -144,28 +132,24 @@ export const AddressModal: React.FC<Props> = ({
     <>
       {show && (
         <ModalDialog
-          title={title}
+          title={modalDetails?.addressModalTitle}
           onClose={handleModalClose}
           width={ModalWidth.Wide}
         >
           <Formik
             validateOnMount
             validationSchema={VALIDATION_SCHEMA}
-            initialValues={getInitialValues()}
+            initialValues={getInitialFormValues()}
             onSubmit={(
               values: FormikFormT,
               actions: FormikHelpers<FormikFormT>
             ) => {
               const handleError = message => {
-                const userMessage: Record<string, string> | null =
-                  SERVER_ERROR_MAP[message]
-                if (userMessage) {
-                  actions.setFieldError(userMessage.field, userMessage.message)
-                } else {
-                  setCreateUpdateError(GENERIC_FAIL_MESSAGE)
-                }
+                setCreateUpdateError(
+                  "Sorry there has been an issue saving your address. Please try again."
+                )
                 actions?.setSubmitting(false)
-                onError && onError(message)
+                onError(message)
               }
 
               const handleSuccess = savedAddress => {
@@ -185,15 +169,15 @@ export const AddressModal: React.FC<Props> = ({
                     onError
                   )
                 } else {
-                  onSuccess && onSuccess(savedAddress)
+                  onSuccess(savedAddress)
                 }
 
                 setCreateUpdateError(null)
               }
 
               const addressInput = convertShippingAddressToMutationInput(values)
-              console.log({ XXXXX_addressInput: addressInput })
-              if (createMutation) {
+
+              if (isCreateMutation) {
                 createUserAddress(
                   relayEnvironment,
                   addressInput,
@@ -261,7 +245,7 @@ export const AddressModal: React.FC<Props> = ({
                   />
 
                   <Spacer y={2} />
-                  {(!address?.isDefault || createMutation) && (
+                  {(!address?.isDefault || isCreateMutation) && (
                     <Checkbox
                       onSelect={selected => {
                         setFieldValue("isDefault", selected)
@@ -272,7 +256,7 @@ export const AddressModal: React.FC<Props> = ({
                       Set as default
                     </Checkbox>
                   )}
-                  {!createMutation && (
+                  {!isCreateMutation && (
                     <Flex mt={2} flexDirection="column" alignItems="center">
                       <Clickable
                         data-test="deleteButton"
