@@ -1,4 +1,5 @@
-Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Older code is often left un-updated. It can be difficult to orient oneself around what the current preferred practices are, but we try to keep this doc as up to date as much as possible and appreciate your contribution toward this.
+Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Code will often get outdated.
+It can be tricky to be sure about what the current preferred practices are, and this is why we try to use this doc as the main source of truth, keep this it up to date as much as possible, and appreciate your contribution toward doing this. 🙏
 
 This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next, with links to:
 
