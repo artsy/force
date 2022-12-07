@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a2c8b7aeccb1ea08fa0ca03c32c3c17>>
+ * @generated SignedSource<<b2166c781268c501e1a8dcfc198f4c67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -86,6 +86,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "paddleNumber",
             "storageKey": null
           },
@@ -130,7 +137,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9af2e9e9849b7836f29bd3d76d1aafb7",
+    "cacheID": "3f491ef23d59c097bac59b4018329499",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -147,6 +154,7 @@ return {
           "plural": false,
           "type": "ID"
         },
+        "me.name": (v0/*: any*/),
         "me.paddleNumber": (v0/*: any*/),
         "me.phone": (v0/*: any*/),
         "me.priceRange": (v0/*: any*/),
@@ -156,7 +164,7 @@ return {
     },
     "name": "SettingsEditSettingsInformation_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();

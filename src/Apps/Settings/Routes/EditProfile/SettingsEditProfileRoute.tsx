@@ -8,6 +8,9 @@ import { SettingsEditSettingsTwoFactorFragmentContainer } from "Apps/Settings/Ro
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsLinkedAccounts"
 import { SettingsEditSettingsEmailPreferences } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsDeleteAccount } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { SettingsEditProfileAboutYouFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
+import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileArtistsYouCollect/SettingsEditProfileArtistsYouCollect"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
@@ -16,21 +19,28 @@ interface SettingsEditProfileRouteProps {
 const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
   me,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   return (
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
-          <SettingsEditSettingsInformationFragmentContainer me={me} />
+          {isCollectorProfileEnabled ? (
+            <>
+              <SettingsEditSettingsInformationFragmentContainer me={me} />
+              <SettingsEditSettingsPasswordFragmentContainer me={me} />
+              <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
+              <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
+              <SettingsEditSettingsEmailPreferences />
+              <SettingsEditSettingsDeleteAccount />
+            </>
+          ) : (
+            <>
+              <SettingsEditProfileAboutYouFragmentContainer me={me} />
 
-          <SettingsEditSettingsPasswordFragmentContainer me={me} />
-
-          <SettingsEditSettingsTwoFactorFragmentContainer me={me} />
-
-          <SettingsEditSettingsLinkedAccountsFragmentContainer me={me} />
-
-          <SettingsEditSettingsEmailPreferences />
-
-          <SettingsEditSettingsDeleteAccount />
+              <SettingsEditProfileArtistsYouCollectFragmentContainer me={me} />
+            </>
+          )}
         </Join>
       </Column>
     </GridColumns>
@@ -42,6 +52,9 @@ export const SettingsEditProfileRouteFragmentContainer = createFragmentContainer
   {
     me: graphql`
       fragment SettingsEditProfileRoute_me on Me {
+        ...SettingsEditProfileAboutYou_me
+        ...SettingsEditProfileArtistsYouCollect_me
+
         ...SettingsEditSettingsInformation_me
         ...SettingsEditSettingsPassword_me
         ...SettingsEditSettingsTwoFactor_me

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d68bd36a4258212e2eba70aede3dca09>>
+ * @generated SignedSource<<1da68bc5faf93f0603a777b7edd3a75a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileRoute_me$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me" | "SettingsEditSettingsLinkedAccounts_me" | "SettingsEditSettingsPassword_me" | "SettingsEditSettingsTwoFactor_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileAboutYou_me" | "SettingsEditProfileArtistsYouCollect_me" | "SettingsEditSettingsInformation_me" | "SettingsEditSettingsLinkedAccounts_me" | "SettingsEditSettingsPassword_me" | "SettingsEditSettingsTwoFactor_me">;
   readonly " $fragmentType": "SettingsEditProfileRoute_me";
 };
 export type SettingsEditProfileRoute_me$key = {
@@ -25,6 +25,16 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "SettingsEditProfileRoute_me",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SettingsEditProfileAboutYou_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SettingsEditProfileArtistsYouCollect_me"
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -50,6 +60,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5892ff48e936804c6358e08fe4bb6da8";
+(node as any).hash = "4f410b2a037c247d551a4b381e7b333f";
 
 export default node;

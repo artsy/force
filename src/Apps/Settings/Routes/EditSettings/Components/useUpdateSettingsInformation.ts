@@ -12,6 +12,7 @@ export const useUpdateSettingsInformation = () => {
           me {
             ...SettingsEditSettingsInformation_me
             email
+            name
             phone
             priceRangeMin
             priceRangeMax
