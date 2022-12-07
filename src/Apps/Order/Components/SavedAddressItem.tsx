@@ -75,12 +75,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         top={2}
         right={2}
         tabIndex={0}
-        onClick={event => {
-          event.preventDefault()
-          event.stopPropagation()
-
-          handleClickEdit(index)
-        }}
+        onClick={() => handleClickEdit(index)}
         onKeyPress={event => {
           event.preventDefault()
           event.stopPropagation()
