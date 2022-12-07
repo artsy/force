@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<770fff5bb8a8fa8926de5ee3fa01de24>>
+ * @generated SignedSource<<a8045f54007fef4c65429fe579c43abc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,20 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -163,24 +177,12 @@ return {
                     "name": "interest",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
                           (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -211,6 +213,145 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "paddleNumber",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "phone",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasPassword",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "hasSecondFactorEnabled",
+            "storageKey": null
+          },
+          {
+            "alias": "appSecondFactors",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "app"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/),
+                  (v3/*: any*/)
+                ],
+                "type": "AppSecondFactor",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": "secondFactors(kinds:[\"app\"])"
+          },
+          {
+            "alias": "smsSecondFactors",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "sms"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "formattedPhoneNumber",
+                    "storageKey": null
+                  }
+                ],
+                "type": "SmsSecondFactor",
+                "abstractKey": null
+              }
+            ],
+            "storageKey": "secondFactors(kinds:[\"sms\"])"
+          },
+          {
+            "alias": "backupSecondFactors",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kinds",
+                "value": [
+                  "backup"
+                ]
+              }
+            ],
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": "secondFactors(kinds:[\"backup\"])"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AuthenticationType",
+            "kind": "LinkedField",
+            "name": "authentications",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "provider",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v0/*: any*/)
         ],
         "storageKey": null
@@ -218,12 +359,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4617bc1987b8cba9cc567e1ebeadfe2b",
+    "cacheID": "3417f8493d63fd5731ae55590ff3d0a4",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_EditProfileRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n}\n"
+    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsPassword_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsLinkedAccounts_me\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n\nfragment SettingsEditSettingsPassword_me on Me {\n  hasPassword\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();

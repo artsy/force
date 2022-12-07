@@ -165,7 +165,7 @@ export const SettingsEditProfileAboutYouFragmentContainer = createFragmentContai
   }
 )
 
-const PRICE_BUCKETS = [
+export const PRICE_BUCKETS = [
   { text: "Select a price range", value: "" },
   { text: "Under $500", value: "-1:500" },
   { text: "Under $2,500", value: "-1:2500" },

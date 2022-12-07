@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd9142308b551e68c325f51ce9c4ae3c>>
+ * @generated SignedSource<<4c44d97626ab9ecbbfc10b385c3e6571>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -69,6 +69,8 @@ export type useUpdateSettingsInformationMutation$data = {
       readonly email: string | null;
       readonly name: string | null;
       readonly phone: string | null;
+      readonly priceRangeMax: number | null;
+      readonly priceRangeMin: number | null;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
     } | null;
     readonly userOrError: {
@@ -112,14 +114,14 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "email",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
@@ -133,17 +135,31 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "priceRangeMin",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "message",
+  "name": "priceRangeMax",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "message",
+  "storageKey": null
+},
+v9 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -161,7 +177,7 @@ v7 = {
           "name": "type",
           "storageKey": null
         },
-        (v6/*: any*/),
+        (v8/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -184,8 +200,8 @@ v7 = {
           "name": "fieldErrors",
           "plural": true,
           "selections": [
-            (v2/*: any*/),
-            (v6/*: any*/)
+            (v3/*: any*/),
+            (v8/*: any*/)
           ],
           "storageKey": null
         }
@@ -196,7 +212,7 @@ v7 = {
   "type": "UpdateMyProfileMutationFailure",
   "abstractKey": null
 },
-v8 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -233,7 +249,9 @@ return {
               },
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -256,7 +274,7 @@ return {
                     "name": "user",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -264,7 +282,7 @@ return {
                 "type": "UpdateMyProfileMutationSuccess",
                 "abstractKey": null
               },
-              (v7/*: any*/)
+              (v9/*: any*/)
             ],
             "storageKey": null
           }
@@ -297,8 +315,8 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -307,7 +325,16 @@ return {
                 "storageKey": null
               },
               (v4/*: any*/),
-              (v8/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "priceRange",
+                "storageKey": null
+              },
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v10/*: any*/)
             ],
             "storageKey": null
           },
@@ -337,8 +364,8 @@ return {
                     "name": "user",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v8/*: any*/)
+                      (v7/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -346,7 +373,7 @@ return {
                 "type": "UpdateMyProfileMutationSuccess",
                 "abstractKey": null
               },
-              (v7/*: any*/)
+              (v9/*: any*/)
             ],
             "storageKey": null
           }
@@ -356,16 +383,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3b677675af93b6b4796cb95699e6911f",
+    "cacheID": "fbad94103a650700d2a8a721d7efcb76",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      name\n      email\n      phone\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
+    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phone\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();
 
-(node as any).hash = "75b2af000cf6f99e786ce594039695c4";
+(node as any).hash = "65ca00baec1f5255d94c86ca12840e11";
 
 export default node;

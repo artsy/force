@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebb1efc33ceb87240f739851e46935dd>>
+ * @generated SignedSource<<b2166c781268c501e1a8dcfc198f4c67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,12 @@ var v0 = {
   "nullable": true,
   "plural": false,
   "type": "String"
+},
+v1 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
 };
 return {
   "fragment": {
@@ -101,6 +107,27 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "priceRange",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceRangeMin",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "priceRangeMax",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -110,7 +137,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "91824ee31706e1ce1a02ef530fad7257",
+    "cacheID": "3f491ef23d59c097bac59b4018329499",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -129,12 +156,15 @@ return {
         },
         "me.name": (v0/*: any*/),
         "me.paddleNumber": (v0/*: any*/),
-        "me.phone": (v0/*: any*/)
+        "me.phone": (v0/*: any*/),
+        "me.priceRange": (v0/*: any*/),
+        "me.priceRangeMax": (v1/*: any*/),
+        "me.priceRangeMin": (v1/*: any*/)
       }
     },
     "name": "SettingsEditSettingsInformation_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
+    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();
