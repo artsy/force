@@ -46,9 +46,9 @@ Our design system [Palette](https://github.com/artsy/palette) is used for most U
 
 ### Commonly used components
 
-- [Box](https://palette.artsy.net/elements/box/) - is a div which we can pass extra props to, like margins for example. The content is displayed vertically.
+- [Box](https://palette.artsy.net/elements/box/) - is a div which we can pass extra props to, like margins for example. Use this as a container for displaying content vertically.
 
-- [Flex](https://palette.artsy.net/elements/flex/) - It is a Box with display=flex . The content is displayed vertically horizontally.
+- [Flex](https://palette.artsy.net/elements/flex/) - It is a Box with display=flex. Use this as a container for displaying content horizontally.
 
 Other commonly used components include [Separator](https://palette.artsy.net/elements/separator/), [Spacer](https://palette.artsy.net/elements/spacer/), etc.
 
