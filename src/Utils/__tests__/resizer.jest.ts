@@ -1,4 +1,4 @@
-import { crop, resize } from "../resizer"
+import { crop, resize } from "Utils/resizer"
 
 jest.mock("sharify", () => ({
   data: {
@@ -15,7 +15,9 @@ describe("resizer", () => {
         quality: 80,
       })
       expect(url).toMatch("d7hftxdivxxvm")
-      expect(url).toMatch("&width=100&height=100&quality=80")
+      expect(url).toMatch("width=100")
+      expect(url).toMatch("height=100")
+      expect(url).toMatch("quality=80")
     })
   })
 
@@ -25,7 +27,8 @@ describe("resizer", () => {
         width: 100,
       })
       expect(url).toMatch("d7hftxdivxxvm")
-      expect(url).toMatch("&width=100&quality=80")
+      expect(url).toMatch("width=100")
+      expect(url).toMatch("quality=80")
       expect(url).toMatch("resize_to=width")
     })
 
@@ -34,7 +37,8 @@ describe("resizer", () => {
         height: 100,
       })
       expect(url).toMatch("d7hftxdivxxvm")
-      expect(url).toMatch("&height=100&quality=80")
+      expect(url).toMatch("height=100")
+      expect(url).toMatch("quality=80")
       expect(url).toMatch("resize_to=height")
     })
   })

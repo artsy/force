@@ -45,7 +45,6 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
     width: 325,
     height: 244,
     quality: 75,
-    convert_to: "jpg",
   })
 
   return (

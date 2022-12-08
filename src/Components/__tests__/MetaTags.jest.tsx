@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { MetaTags } from "../MetaTags"
+import { MetaTags } from "Components/MetaTags"
 import { MockBoot } from "DevTools"
 
 jest.mock("Utils/getENV", () => ({
@@ -78,7 +78,7 @@ describe("MetaTags", () => {
         name: null,
         property: "og:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200",
       },
       {
         content: "308278682573501",
@@ -107,7 +107,7 @@ describe("MetaTags", () => {
         name: null,
         property: "twitter:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200",
       },
     ])
   })
@@ -156,7 +156,7 @@ describe("MetaTags", () => {
         name: null,
         property: "og:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
       },
       {
         content: "308278682573501",
@@ -184,7 +184,7 @@ describe("MetaTags", () => {
         name: null,
         property: "twitter:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200",
       },
     ])
   })
@@ -270,7 +270,7 @@ describe("MetaTags", () => {
         name: null,
         property: "og:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200",
       },
       {
         content: "308278682573501",
@@ -299,7 +299,7 @@ describe("MetaTags", () => {
         name: null,
         property: "twitter:image",
         content:
-          "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
+          "?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200",
       },
     ])
   })
