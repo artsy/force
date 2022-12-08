@@ -1,4 +1,10 @@
-import { login, forgotPassword, signUp, resetPassword, logout } from "../auth"
+import {
+  login,
+  forgotPassword,
+  signUp,
+  resetPassword,
+  logout,
+} from "Utils/auth"
 
 jest.mock("sharify", () => ({
   data: {
@@ -78,6 +84,22 @@ describe("forgotPassword", () => {
     )
 
     expect(res).toEqual({ success: true })
+  })
+
+  it("parses the error JSON and rejects with the message", () => {
+    const mockFetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        text: () => Promise.resolve(JSON.stringify({ error: "error message" })),
+      })
+    )
+
+    // @ts-ignore
+    global.fetch = mockFetch
+
+    return expect(forgotPassword({ email: "example@example" })).rejects.toEqual(
+      new Error("error message")
+    )
   })
 })
 

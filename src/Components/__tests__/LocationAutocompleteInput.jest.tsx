@@ -3,7 +3,7 @@ import {
   LocationAutocompleteInput,
   normalizePlace,
   Place,
-} from "../LocationAutocompleteInput"
+} from "Components/LocationAutocompleteInput"
 import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "DevTools"
 
@@ -152,6 +152,7 @@ describe("normalizePlace", () => {
       stateCode: "NY",
       postalCode: "10536",
       country: "United States",
+      coordinates: [40.0000001, -70.123456789],
     })
   })
 
@@ -163,6 +164,7 @@ describe("normalizePlace", () => {
       postalCode: "10536",
       country: "United States",
       countryCode: "US",
+      coordinates: [40.0000001, -70.123456789],
     })
   })
 
@@ -213,4 +215,10 @@ const fullPlace = {
   formatted_address: "Katonah, NY 10536, USA",
   place_id: "ChIJ8bo5-U6wwokR59MuIVs88nQ",
   types: ["locality", "political"],
+  geometry: {
+    location: {
+      lat: () => 40.0000001,
+      lng: () => -70.123456789,
+    },
+  },
 }

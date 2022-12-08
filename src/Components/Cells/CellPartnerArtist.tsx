@@ -32,7 +32,7 @@ const CellPartnerArtist: FC<CellPartnerArtistProps> = ({
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const [artwork] = extractNodes(artistPartnerEdge.artworksConnection)
-  const image = artwork.image?.cropped
+  const image = artwork?.image?.cropped
   const partnerSlug = artistPartnerEdge.partner?.slug
   const artistSlug = artistPartnerEdge.artist?.slug
 

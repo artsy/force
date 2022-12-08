@@ -222,7 +222,6 @@ export const settingsRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           MyCollectionRoute.preload()
         },
-        onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_MyCollectionRouteQuery {
             me {

@@ -72,7 +72,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.83.0",
+    "@artsy/cohesion": "4.84.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/eigen-web-association": "^1.5.3",
@@ -114,7 +114,7 @@
     "ejs": "3.1.7",
     "es7-object-polyfill": "0.0.7",
     "eventemitter3": "4.0.7",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "express-ipfilter": "0.2.1",
     "express-request-id": "1.4.0",
     "farce": "0.4.5",
@@ -157,7 +157,7 @@
     "prop-types": "15.7.2",
     "proportional-scale": "^4.0.0",
     "qrcode.react": "1.0.0",
-    "qs": "6.5.2",
+    "qs": "6.5.3",
     "react": "17.0.2",
     "react-autosuggest": "9.4.3",
     "react-dfp": "^0.21.0",

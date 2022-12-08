@@ -157,7 +157,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     title: "Senior Private Sales Director",
     location: "London",
     email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/Adriana_Almeida.jpg",
+    image: "https://files.artsy.net/images/Adriana.jpg",
   },
   {
     name: "Meave Hamill",
@@ -199,6 +199,12 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/cperkins_headshot-copy.jpg",
   },
   {
+    name: "Akilah Chandler",
+    title: "Private Sales & Advisory Business Associate",
+    email: "akilah.chandler@artsymail.com",
+    image: "https://files.artsy.net/images/AkilahChandler.jpg",
+  },
+  {
     name: "Sarah Punzel",
     title: "Private Sales Coordinator",
     location: "New York",
@@ -224,7 +230,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Erica Lyon",
-    title: "Associate Director of Partner Auctions",
+    title: "Director of Business Strategy and Operations",
     location: "New York",
     email: "erica@artsy.net",
     image: "https://files.artsy.net/images/ericalyonheadshot.jpeg",
@@ -246,7 +252,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
 
   {
     name: "Alan Zeng",
-    title: "Senior Specialist, Street Art",
+    title: "Senior Specialist & Head of Street Art",
     location: "New York",
     email: "alan@artsy.net",
     image: "https://files.artsy.net/images/alan.png",
@@ -257,13 +263,6 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "celine.cunha@artsymail.com",
     image: "https://files.artsy.net/images/Celine_Cunha_Krieger.png",
-  },
-  {
-    name: "Simon Wills",
-    title: "Trusts & Estates Senior Manager",
-    location: "New York",
-    email: "simon.wills@artsymail.com",
-    image: "https://files.artsy.net/images/simon_wills.png",
   },
 ]
 
@@ -301,16 +300,10 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/vanessa_zingale.png",
   },
   {
-    name: "Katerina Blackwood",
-    title: "Manager, Collector Services",
-    email: "katerina.blackwood@artsy.net",
-    image: "https://files.artsy.net/images/Katerina.jpg",
-  },
-  {
-    name: "Louis Denizet",
-    title: "Manager, Collector Services",
-    email: "louis.denizet@artsy.net",
-    image: "https://files.artsy.net/images/Louis.jpg",
+    name: "Caroline Targgart",
+    title: "Client Development Manager",
+    email: "caroline.targgart@artsy.net",
+    image: "https://files.artsy.net/images/CarolineTarggart.jpg",
   },
   {
     name: "Dana Rodriguez",

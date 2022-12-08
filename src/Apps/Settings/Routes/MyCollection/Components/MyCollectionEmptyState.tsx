@@ -1,13 +1,20 @@
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
+  Clickable,
   Column,
   GridColumns,
   Image,
+  Message,
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
+import { EmptyMyCollectionPageProps } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
+import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
+import { openAuthModal } from "Utils/openAuthModal"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
@@ -19,7 +26,10 @@ const image = resized(
   }
 )
 
-const DesktopLayout: React.FC = () => {
+const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
+  const { mediator } = useSystemContext()
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -33,16 +43,55 @@ const DesktopLayout: React.FC = () => {
           Access price and market insights and build an online record of your
           collection.
         </Text>
-
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          variant="primaryBlack"
-          to="/my-collection/artworks/new"
-          onClick={() => trackAddCollectedArtwork()}
-        >
-          Upload Artwork
-        </Button>
+        {!!loggedOutState ? (
+          <Button
+            variant="primaryBlack"
+            onClick={() => {
+              mediator &&
+                openAuthModal(mediator, {
+                  mode: ModalType.login,
+                  intent: Intent.login,
+                  contextModule: ContextModule.myCollectionHome,
+                  copy: "Log in to upload works to My Collection",
+                })
+              trackAddCollectedArtwork()
+            }}
+          >
+            Upload Artwork
+          </Button>
+        ) : (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            variant="primaryBlack"
+            to="/my-collection/artworks/new"
+            onClick={() => trackAddCollectedArtwork()}
+          >
+            Upload Artwork
+          </Button>
+        )}
+        {!!loggedOutState && (
+          <Message mt={4} variant="info">
+            <Text variant="sm">
+              Already have artworks in My Collection?{" "}
+              <Clickable
+                textDecoration="underline"
+                onClick={() => {
+                  mediator &&
+                    openAuthModal(mediator, {
+                      mode: ModalType.login,
+                      intent: Intent.login,
+                      contextModule: ContextModule.myCollectionHome,
+                      copy: "Log in to view My Collection",
+                    })
+                }}
+              >
+                Log In
+              </Clickable>{" "}
+              to view them.
+            </Text>
+          </Message>
+        )}
       </Column>
 
       <Column span={6}>
@@ -61,7 +110,10 @@ const DesktopLayout: React.FC = () => {
   )
 }
 
-const MobileLayout: React.FC = () => {
+const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
+  const { mediator } = useSystemContext()
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -90,29 +142,73 @@ const MobileLayout: React.FC = () => {
           Access price and market insights and build an online record of your
           collection.
         </Text>
-        <Button
-          // @ts-ignore
-          as={RouterLink}
-          variant="primaryBlack"
-          to="/my-collection/artworks/new"
-          onClick={() => trackAddCollectedArtwork()}
-          width="100%"
-        >
-          Upload Artwork
-        </Button>
+        {!!loggedOutState ? (
+          <Button
+            variant="primaryBlack"
+            onClick={() => {
+              mediator &&
+                openAuthModal(mediator, {
+                  mode: ModalType.login,
+                  intent: Intent.login,
+                  contextModule: ContextModule.myCollectionHome,
+                  copy: "Log in to upload works to My Collection",
+                })
+              trackAddCollectedArtwork()
+            }}
+            width="100%"
+          >
+            Upload Artwork
+          </Button>
+        ) : (
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            variant="primaryBlack"
+            to="/my-collection/artworks/new"
+            onClick={() => trackAddCollectedArtwork()}
+            width="100%"
+          >
+            Upload Artwork
+          </Button>
+        )}
+
+        {!!loggedOutState && (
+          <Message mt={2} variant="info">
+            <Text variant="sm">
+              Already have artworks in My Collection?{" "}
+              <Clickable
+                textDecoration="underline"
+                onClick={() => {
+                  mediator &&
+                    openAuthModal(mediator, {
+                      mode: ModalType.login,
+                      intent: Intent.login,
+                      contextModule: ContextModule.myCollectionHome,
+                      copy: "Log in to view My Collection",
+                    })
+                }}
+              >
+                Log In
+              </Clickable>{" "}
+              to view them.
+            </Text>
+          </Message>
+        )}
       </Column>
     </GridColumns>
   )
 }
 
-export const MyCollectionEmptyState: React.FC = () => {
+export const MyCollectionEmptyState: React.FC<EmptyMyCollectionPageProps> = ({
+  loggedOutState,
+}) => {
   return (
     <>
       <Media at="xs">
-        <MobileLayout />
+        <MobileLayout loggedOutState={loggedOutState} />
       </Media>
       <Media greaterThan="xs">
-        <DesktopLayout />
+        <DesktopLayout loggedOutState={loggedOutState} />
       </Media>
     </>
   )

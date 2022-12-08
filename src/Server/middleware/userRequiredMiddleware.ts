@@ -3,8 +3,8 @@ import { match } from "path-to-regexp"
 const USER_REQUIRED_ROUTES = [
   "/notifications",
   "/orders(.*)",
+  "/my-collection/artworks(.*)",
   "/settings/alerts",
-  "/settings/my-collection",
   "/settings/payments",
   "/settings/purchases(.*)",
   "/settings/shipping",
