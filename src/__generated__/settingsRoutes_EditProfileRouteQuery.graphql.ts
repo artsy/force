@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c923167819b2987fe925a58069a8397a>>
+ * @generated SignedSource<<cb9109ae1e85172a49577d7c8a1886b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -92,7 +99,28 @@ return {
                 "name": "display",
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v0/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -174,13 +202,7 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -259,8 +281,64 @@ return {
                   }
                 ],
                 "storageKey": "resized(height:200,version:\"large_square\",width:200)"
+              },
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "thumbnail"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"thumbnail\")"
               }
             ],
+            "storageKey": null
+          },
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "otherRelevantPositions",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "bio",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "emailConfirmed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "identityVerified",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "canRequestEmailConfirmation",
             "storageKey": null
           },
           (v0/*: any*/)
@@ -270,12 +348,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60fda52d9e796b7c89018951eb3c545f",
+    "cacheID": "6e864292c478d596562487f77dc3bac9",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_EditProfileRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileFields_me\n}\n"
+    "text": "query settingsRoutes_EditProfileRouteQuery {\n  me {\n    ...SettingsEditProfileRoute_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileAboutYou_me on Me {\n  location {\n    display\n    id\n  }\n  profession\n  shareFollows\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  icon {\n    url(version: \"thumbnail\")\n  }\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  emailConfirmed\n  identityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileRoute_me on Me {\n  ...SettingsEditProfileAboutYou_me\n  ...SettingsEditProfileArtistsYouCollect_me\n  ...SettingsEditProfileFields_me\n}\n"
   }
 };
 })();
