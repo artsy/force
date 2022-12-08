@@ -15,6 +15,7 @@ import {
   ChangeEvent,
   FC,
   useMemo,
+  useCallback,
 } from "react"
 import { debounce } from "lodash"
 
@@ -80,7 +81,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     return res?.predictions
   }
 
-  const updateSuggestions = async (value: string) => {
+  const updateSuggestions = useCallback(async (value: string) => {
     setSuggestions([])
     if (!value.trim()) return
 
@@ -99,11 +100,11 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
     } catch {
       setIsLoading(false)
     }
-  }
+  }, [])
 
   const handleSuggestionsFetchRequested = useMemo(
     () => debounce(updateSuggestions, DEBOUNCE_DELAY),
-    []
+    [updateSuggestions]
   )
 
   const handleSelect = async (option: AutocompleteInputOptionType) => {
@@ -224,6 +225,7 @@ export const normalizePlace = (
     postalCode: components.postalCode?.long_name,
     country: components.country?.long_name,
     countryCode: withCountryCode ? components.country?.short_name : undefined,
+    coordinates: [place.geometry.location.lat(), place.geometry.location.lng()],
   }
 }
 
