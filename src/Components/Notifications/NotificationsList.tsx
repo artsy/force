@@ -18,6 +18,7 @@ import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentin
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
+import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 
 interface NotificationsListQueryRendererProps {
   type: NotificationType
@@ -199,13 +200,8 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
           )
         }
 
-        // TODO: Style loading state
         if (!props || !props.viewer) {
-          return (
-            <Flex justifyContent="center" my={2}>
-              <Text variant="xs">Loading</Text>
-            </Flex>
-          )
+          return <NotificationsListPlaceholder />
         }
 
         return (
