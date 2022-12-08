@@ -4,7 +4,7 @@ import {
   AuctionResultsFilterContextProvider,
   initialAuctionResultsFilterState,
   useAuctionResultsFilterContext,
-} from "../AuctionResultsFilterContext"
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 
 describe("AuctionResultsFilterContext", () => {
   let context: ReturnType<typeof useAuctionResultsFilterContext>
@@ -87,6 +87,25 @@ describe("AuctionResultsFilterContext", () => {
               context.setFilter?.("allowEmptyCreatedDates", false)
               setTimeout(() => {
                 expect(context.filters?.allowEmptyCreatedDates).toEqual(false)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe("#setFilter for includeUpcoming", () => {
+        it("should set includeUpcoming to true", () => {
+          return new Promise<void>(done => {
+            getWrapper({
+              filters: {
+                includeUpcoming: true,
+              },
+            })
+            act(() => {
+              context.setFilter?.("includeUpcoming", false)
+              setTimeout(() => {
+                expect(context.filters?.includeUpcoming).toEqual(false)
                 done()
               })
             })

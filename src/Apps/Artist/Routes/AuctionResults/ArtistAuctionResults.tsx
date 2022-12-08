@@ -332,6 +332,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           createdAfterYear: { type: "Int" }
           createdBeforeYear: { type: "Int" }
           allowEmptyCreatedDates: { type: "Boolean" }
+          includeUpcoming: { type: "Boolean" }
         ) {
         slug
         internalID
@@ -349,6 +350,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           earliestCreatedYear: $createdAfterYear
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
+          includeUpcoming: $includeUpcoming
         ) {
           createdYearRange {
             startAt
@@ -386,6 +388,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $createdBeforeYear: Int
       $createdAfterYear: Int
       $allowEmptyCreatedDates: Boolean
+      $includeUpcoming: Boolean
     ) {
       artist(id: $artistID) {
         ...ArtistAuctionResults_artist
@@ -402,6 +405,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             createdAfterYear: $createdAfterYear
             createdBeforeYear: $createdBeforeYear
             allowEmptyCreatedDates: $allowEmptyCreatedDates
+            includeUpcoming: $includeUpcoming
           )
       }
     }
