@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f59faa68298d3dd21e478ca327b092a>>
+ * @generated SignedSource<<ba1662f6511a1371b5460d333c3a95dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomeTrendingArtistsRail_viewer$data = {
-  readonly artistsConnection: {
+  readonly curatedTrendingArtists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
@@ -39,17 +39,12 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 99
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "TRENDING_DESC"
+          "value": 20
         }
       ],
       "concreteType": "ArtistConnection",
       "kind": "LinkedField",
-      "name": "artistsConnection",
+      "name": "curatedTrendingArtists",
       "plural": false,
       "selections": [
         {
@@ -94,13 +89,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artistsConnection(first:99,sort:\"TRENDING_DESC\")"
+      "storageKey": "curatedTrendingArtists(first:20)"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "b7b7d2b5aa747dcbd490ee8e82545413";
+(node as any).hash = "5497b01030956d7818f10980b8096eb9";
 
 export default node;
