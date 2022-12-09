@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.1.3.tgz#2ecbcce843bfcbcebbc38990b55910fb0b7ef8eb"
   integrity sha512-yynmzMBv+sCzxIp7RzJeIaQM7bwlyLPyuF4eJKkHPA5UGcpPoMLuZ6b2bTCAzKig4GenocElJSWW4ZXxl6x4ug==
 
-"@artsy/img@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@artsy/img/-/img-0.1.2.tgz#8b55e6062fd6cc89415b5d08b7ccc4c4398bd35c"
-  integrity sha512-b6tqRUvBg03k2/PjCZMeLunR/mvvgP63ocI7fOLz0PdewPj7yrwfoPWhFw7t4SR7rrQq8XxWUb22yicNtAWOZQ==
+"@artsy/img@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/img/-/img-1.0.0.tgz#537162b159085758663e757bdaabba01b1b0d73f"
+  integrity sha512-rtc/vn5rSt3Roo/hVbZBicE/OgNFqc36CMDeqvA/Y4s52Q8omCUw9lTHogiMHziOGubZq9HckDjsUE79mlvnJQ==
   dependencies:
     md5 "^2.3.0"
 

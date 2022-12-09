@@ -1,10 +1,10 @@
-import { configure } from "@artsy/img"
+import { configureImageServices } from "@artsy/img"
 import { getENV } from "./getENV"
 
 export const GEMINI_CLOUDFRONT_URL =
   getENV("GEMINI_CLOUDFRONT_URL") ?? "https://d7hftxdivxxvm.cloudfront.net"
 
-const services = configure({
+const services = configureImageServices({
   gemini: {
     endpoint: GEMINI_CLOUDFRONT_URL,
   },
