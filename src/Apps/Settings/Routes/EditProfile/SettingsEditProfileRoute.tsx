@@ -11,7 +11,6 @@ import { SettingsEditSettingsDeleteAccount } from "Apps/Settings/Routes/EditSett
 import { SettingsEditProfileAboutYouFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileArtistsYouCollect/SettingsEditProfileArtistsYouCollect"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
@@ -21,18 +20,6 @@ const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
   me,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  if (isCollectorProfileEnabled) {
-    return (
-      <GridColumns>
-        <Column span={8}>
-          <Join separator={<Separator my={6} />}>
-            <SettingsEditProfileFieldsFragmentContainer me={me} />
-          </Join>
-        </Column>
-      </GridColumns>
-    )
-  }
 
   return (
     <GridColumns>

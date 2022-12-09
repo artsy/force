@@ -83,7 +83,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           <Flex alignItems="center">
             <CollectorProfileHeaderAvatarFragmentContainer me={me} />
 
-            <Text>Choose Image</Text>
+            <Text>Choose an Image</Text>
           </Flex>
 
           <Input
