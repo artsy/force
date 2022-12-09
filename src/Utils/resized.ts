@@ -35,7 +35,6 @@ export const resized = (
     width,
     ...rest
   }: {
-    convert_to?: string
     height?: number
     quality?: number | [number, number]
     width?: number
@@ -52,7 +51,6 @@ export const resized = (
   })
 
   return {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }
@@ -72,7 +70,6 @@ export const cropped = (
     width,
     ...rest
   }: {
-    convert_to?: string
     height: number
     quality?: number | [number, number]
     width: number
@@ -89,7 +86,6 @@ export const cropped = (
   })
 
   return {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }

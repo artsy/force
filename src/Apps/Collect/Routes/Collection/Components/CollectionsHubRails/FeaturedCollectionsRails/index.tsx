@@ -79,7 +79,6 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
     width: 325,
     height: 244,
     quality: 75,
-    convert_to: "jpg",
   })
 
   return (
