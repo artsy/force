@@ -1,15 +1,11 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import {
-  MyCollectionArtworkForm,
-  MyCollectionArtworkFormFragmentContainer,
-} from "Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
 import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
-import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -77,14 +73,14 @@ describe("Edit artwork", () => {
       Component: (props: any) => {
         return (
           <MockBoot breakpoint={breakpoint}>
-            <MyCollectionArtworkFormFragmentContainer {...props} />
+            <MyCollectionEditArtworkFragmentContainer {...props} />
           </MockBoot>
         )
       },
       query: graphql`
-        query MyCollectionArtworkFormTest_Query($slug: String!) {
+        query MyCollectionEditArtworkTest_Query($slug: String!) {
           artwork(id: $slug) {
-            ...MyCollectionArtworkForm_artwork
+            ...MyCollectionEditArtwork_artwork
           }
         }
       `,
@@ -449,111 +445,3 @@ describe("Edit artwork", () => {
     })
   })
 })
-
-describe("Create artwork", () => {
-  const getWrapper = (breakpoint: Breakpoint = "lg") => {
-    render(
-      <MockBoot breakpoint={breakpoint}>
-        <MyCollectionArtworkForm />
-      </MockBoot>
-    )
-  }
-
-  describe("Initial render", () => {
-    it("doesn't populate inputs", async () => {
-      getWrapper()
-
-      expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-      expect(screen.getByTestId("save-button")).toBeDisabled()
-
-      expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-
-      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
-    })
-  })
-
-  describe("Back Link behavior", () => {
-    it("opens modal on press when the form has been changed", async () => {
-      getWrapper()
-
-      fireEvent.change(
-        screen.getByTestId("my-collection-artwork-details-title"),
-        {
-          target: { value: "Some new value" },
-        }
-      )
-
-      fireEvent.click(screen.getByText("Back"))
-      fireEvent.click(screen.getByText("Leave Without Saving"))
-
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
-    })
-
-    it("navigates to the previous screen when the form has not been changed", async () => {
-      getWrapper()
-
-      fireEvent.click(screen.getByText("Back"))
-
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/internal-id",
-      })
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
-    })
-  })
-})
-
-const mockArtwork = {
-  artist: {
-    internalID: "4d8b929e4eb68a1b2c0002f2",
-    name: "Willem de Kooning",
-    formattedNationalityAndBirthday: "Dutch-American, 1904–1997",
-    targetSupply: {
-      isP1: true,
-    },
-  },
-  consignmentSubmission: null,
-  artistNames: "Willem de Kooning",
-  category: "Drawing, Collage or other Work on Paper",
-  pricePaid: {
-    display: "€4,000",
-    minor: 400000,
-    currencyCode: "EUR",
-  },
-  date: "1975",
-  depth: "2",
-  dimensions: {
-    in: "8 3/4 × 11 × 2 in",
-    cm: "22.2 × 27.9 × 5.1 cm",
-  },
-  editionSize: "2",
-  editionNumber: "1",
-  height: "8.75",
-  attributionClass: {
-    name: "Limited edition",
-  },
-  id: "QXJ0d29yazo2MmZjOTZjNDhkM2ZmODAwMGI1NTZjM2E=",
-  images: [
-    {
-      isDefault: true,
-      imageURL:
-        "https://d2v80f5yrouhh2.cloudfront.net/FV2gbZ1UDy7Y5qTZSv-Gwg/:version.jpg",
-      width: 640,
-      height: 501,
-      internalID: "62fc96c4aa88f0000d053af7",
-    },
-  ],
-  internalID: "62fc96c48d3ff8000b556c3a",
-  isEdition: true,
-  medium: "Charcoal on paper",
-  metric: "in",
-  artworkLocation: "Berlin",
-  provenance: "Fooo",
-  slug: "62fc96c48d3ff8000b556c3a",
-  title: "Untitled",
-  width: "11",
-  " $fragmentType": "MyCollectionArtworkForm_artwork",
-} as MyCollectionArtworkForm_artwork$data
