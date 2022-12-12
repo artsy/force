@@ -13,7 +13,6 @@ import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollection
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
-const mockRouterGo = jest.fn()
 const mockSubmitArtwork = jest.fn().mockResolvedValue({
   myCollectionUpdateArtwork: {
     artworkOrError: { artwork: { internalID: "internal-id" } },
@@ -30,7 +29,6 @@ jest.mock("System/Router/useRouter", () => ({
     router: {
       push: mockRouterPush,
       replace: mockRouterReplace,
-      go: mockRouterGo,
     },
   })),
 }))
@@ -167,7 +165,9 @@ describe("Edit artwork", () => {
       fireEvent.click(screen.getByText("Back"))
       fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(mockRouterGo).toHaveBeenCalledWith(-1)
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
     })
 
     it("navigates to the previous screen when the form has not been changed", async () => {
@@ -177,7 +177,9 @@ describe("Edit artwork", () => {
 
       fireEvent.click(screen.getByText("Back"))
 
-      expect(mockRouterGo).toHaveBeenCalledWith(-1)
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
     })
   })
 
@@ -484,7 +486,9 @@ describe("Create artwork", () => {
       fireEvent.click(screen.getByText("Back"))
       fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(mockRouterGo).toHaveBeenCalledWith(-1)
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
     })
 
     it("navigates to the previous screen when the form has not been changed", async () => {
