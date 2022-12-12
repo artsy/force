@@ -100,9 +100,9 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           />
 
           <LocationAutocompleteInput
-            name="location"
             title="Primary Location"
             placeholder="City name"
+            name="location"
             maxLength={256}
             spellCheck={false}
             value={values.displayLocation.display ?? undefined}
