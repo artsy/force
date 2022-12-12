@@ -11,7 +11,7 @@ if [ "${NODE_ENV}" != "production" ]; then
   fi
   OPT+=(--preserve-symlinks)
 
-  yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src/dev.js
+  yarn concurrently 'yarn relay --watch' 'node --max_old_space_size=3072 ./src/dev.js'
 else
   exec node "${OPT[@]}" ./server.dist.js
 fi
