@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b860c8597fe9c2883608e663ef27ef9>>
+ * @generated SignedSource<<4e903951829dff1d1b2afe0eab457fb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,17 +85,12 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 99
-              },
-              {
-                "kind": "Literal",
-                "name": "sort",
-                "value": "TRENDING_DESC"
+                "value": 20
               }
             ],
             "concreteType": "ArtistConnection",
             "kind": "LinkedField",
-            "name": "artistsConnection",
+            "name": "curatedTrendingArtists",
             "plural": false,
             "selections": [
               {
@@ -267,7 +262,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "artistsConnection(first:99,sort:\"TRENDING_DESC\")"
+            "storageKey": "curatedTrendingArtists(first:20)"
           }
         ],
         "storageKey": null
@@ -275,12 +270,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "127fa7db5d972c8c6de6cd0f458c5af5",
+    "cacheID": "aaf58b8cb9fe515031c69e0c56061ddb",
     "id": null,
     "metadata": {},
     "name": "HomeTrendingArtistsRailQuery",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  curatedTrendingArtists(first: 20) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

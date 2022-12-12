@@ -28,7 +28,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const artists = extractNodes(viewer.artistsConnection)
+  const artists = extractNodes(viewer.curatedTrendingArtists)
 
   if (artists.length === 0) {
     return null
@@ -96,7 +96,7 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment HomeTrendingArtistsRail_viewer on Viewer {
-        artistsConnection(sort: TRENDING_DESC, first: 99) {
+        curatedTrendingArtists(first: 20) {
           edges {
             node {
               ...CellArtist_artist
