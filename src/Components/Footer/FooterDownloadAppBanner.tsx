@@ -2,17 +2,17 @@ import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { DownloadAppBadges } from "../DownloadAppBadges/DownloadAppBadges"
+import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 
-const DESKTOP_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
-  { width: 1220, quality: 50 }
-)
+const APP_BANNER_SRC =
+  "https://files.artsy.net/images/App_Download_Banner_1200x2440_2x-1656078840527.jpg"
 
-const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
-  { width: 725, quality: 50 }
-)
+const DESKTOP_COVER_IMAGE = resized(APP_BANNER_SRC, {
+  width: 1220,
+  quality: 50,
+})
+
+const MOBILE_COVER_IMAGE = resized(APP_BANNER_SRC, { width: 725, quality: 50 })
 
 export const FooterDownloadAppBanner = () => {
   return (
