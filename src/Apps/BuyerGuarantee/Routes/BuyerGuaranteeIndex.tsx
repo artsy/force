@@ -14,7 +14,10 @@ import {
   Text,
   VerifiedIcon,
 } from "@artsy/palette"
-import { FullBleedHeader } from "Components/FullBleedHeader"
+import {
+  FullBleedHeader,
+  FullBleedHeaderOverlay,
+} from "Components/FullBleedHeader"
 import {
   ChatIcon,
   MoneyBackIcon,
@@ -51,21 +54,20 @@ export const BuyerGuaranteeIndex: FC = () => {
         src="https://files.artsy.net/images/normalizedheaderimage.jpeg"
         caption="Sophie Treppendahl, Swimming Hole, 2019. Courtesy of the artist and Kenise Barnes Fine Art."
       >
-        <Text
-          variant="xxl"
-          color="white100"
-          as="h1"
-          display="flex"
-          justifyContent="center"
+        <FullBleedHeaderOverlay
           alignItems="center"
-          position="absolute"
-          top={0}
-          left={0}
-          width="100%"
-          height="100%"
+          justifyContent={["center", "flex-start"]}
+          p={4}
         >
-          The Artsy Guarantee
-        </Text>
+          <Text
+            variant={["xl", "xxl"]}
+            as="h1"
+            color="white100"
+            textAlign={["center", "left"]}
+          >
+            The Artsy Guarantee
+          </Text>
+        </FullBleedHeaderOverlay>
       </FullBleedHeader>
 
       <Spacer y={6} />
@@ -74,7 +76,11 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={6} start={4} textAlign="center">
           <Text variant="lg-display">
             Artsy is the safest place to buy the art you love.
-            <br />
+          </Text>
+
+          <Spacer y={1} />
+
+          <Text variant="lg-display">
             Every purchase made exclusively with Artsy’s secure checkout
             benefits from our full suite of buyer protections.
           </Text>

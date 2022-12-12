@@ -36,10 +36,15 @@ export const AboutApp: React.FC = () => {
       >
         <FullBleedHeaderOverlay
           alignItems="center"
-          justifyContent="flex-start"
+          justifyContent={["center", "flex-start"]}
           p={4}
         >
-          <Text variant={["xl", "xxl"]} as="h1" color="white100">
+          <Text
+            variant={["xl", "xxl"]}
+            as="h1"
+            color="white100"
+            textAlign={["center", "left"]}
+          >
             The Future of Art Collecting
           </Text>
         </FullBleedHeaderOverlay>
