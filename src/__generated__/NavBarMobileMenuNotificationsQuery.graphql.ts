@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4fb57372670c72191a1934af768b79af>>
+ * @generated SignedSource<<747746856dd96664527fde19964c617a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuAuthenticationQuery$variables = {};
-export type NavBarMobileMenuAuthenticationQuery$data = {
+export type NavBarMobileMenuNotificationsQuery$variables = {};
+export type NavBarMobileMenuNotificationsQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotifications_me">;
   } | null;
 };
-export type NavBarMobileMenuAuthenticationQuery = {
-  response: NavBarMobileMenuAuthenticationQuery$data;
-  variables: NavBarMobileMenuAuthenticationQuery$variables;
+export type NavBarMobileMenuNotificationsQuery = {
+  response: NavBarMobileMenuNotificationsQuery$data;
+  variables: NavBarMobileMenuNotificationsQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "NavBarMobileMenuAuthenticationQuery",
+    "name": "NavBarMobileMenuNotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -39,7 +39,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "NavBarMobileMenuAuthentication_me"
+            "name": "NavBarMobileMenuNotifications_me"
           }
         ],
         "storageKey": null
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "NavBarMobileMenuAuthenticationQuery",
+    "name": "NavBarMobileMenuNotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -89,15 +89,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "76d9ca236aa01d121759c56f226c9ae5",
+    "cacheID": "39206ca2cdfd556ca2f6fe9de2325df5",
     "id": null,
     "metadata": {},
-    "name": "NavBarMobileMenuAuthenticationQuery",
+    "name": "NavBarMobileMenuNotificationsQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuAuthenticationQuery {\n  me {\n    ...NavBarMobileMenuAuthentication_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuAuthentication_me on Me {\n  unreadNotificationsCount\n  unreadConversationCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsQuery {\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadNotificationsCount\n  unreadConversationCount\n}\n"
   }
 };
 
-(node as any).hash = "b0e54621e10a919fd2f43333607d0e20";
+(node as any).hash = "9cbec92f7b8abd6956467afaba7b829d";
 
 export default node;
