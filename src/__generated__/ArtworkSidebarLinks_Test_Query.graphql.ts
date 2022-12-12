@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbd69c7a28df70ad1ed02785d92efbb5>>
+ * @generated SignedSource<<9f2061289c75cf6ebeba7dfe1d291f4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarArtists_Test_Query$variables = {};
-export type ArtworkSidebarArtists_Test_Query$data = {
+export type ArtworkSidebarLinks_Test_Query$variables = {};
+export type ArtworkSidebarLinks_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarLinks_artwork">;
   } | null;
 };
-export type ArtworkSidebarArtists_Test_Query = {
-  response: ArtworkSidebarArtists_Test_Query$data;
-  variables: ArtworkSidebarArtists_Test_Query$variables;
+export type ArtworkSidebarLinks_Test_Query = {
+  response: ArtworkSidebarLinks_Test_Query$data;
+  variables: ArtworkSidebarLinks_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -46,14 +46,14 @@ v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkSidebarArtists_Test_Query",
+    "name": "ArtworkSidebarLinks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -66,7 +66,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarArtists_artwork"
+            "name": "ArtworkSidebarLinks_artwork"
           }
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
@@ -79,7 +79,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkSidebarArtists_Test_Query",
+    "name": "ArtworkSidebarLinks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -93,29 +93,22 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "culturalMaker",
+            "name": "isInAuction",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artist",
+            "concreteType": "Sale",
             "kind": "LinkedField",
-            "name": "artists",
-            "plural": true,
+            "name": "sale",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
+                "name": "isClosed",
                 "storageKey": null
               },
               (v1/*: any*/)
@@ -129,7 +122,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ad2720fe53b17d686c2a6f35ae1f81d6",
+    "cacheID": "83e4f584a88872f9688a3a3252019f82",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -139,26 +132,25 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artists": {
+        "artwork.id": (v2/*: any*/),
+        "artwork.isInAuction": (v3/*: any*/),
+        "artwork.sale": {
           "enumValues": null,
           "nullable": true,
-          "plural": true,
-          "type": "Artist"
+          "plural": false,
+          "type": "Sale"
         },
-        "artwork.artists.id": (v2/*: any*/),
-        "artwork.artists.name": (v3/*: any*/),
-        "artwork.artists.slug": (v2/*: any*/),
-        "artwork.culturalMaker": (v3/*: any*/),
-        "artwork.id": (v2/*: any*/)
+        "artwork.sale.id": (v2/*: any*/),
+        "artwork.sale.isClosed": (v3/*: any*/)
       }
     },
-    "name": "ArtworkSidebarArtists_Test_Query",
+    "name": "ArtworkSidebarLinks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  culturalMaker\n  artists {\n    slug\n    name\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarLinks_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarLinks_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarLinks_artwork on Artwork {\n  isInAuction\n  sale {\n    isClosed\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ff1310dd6cab87827347822fe46e3989";
+(node as any).hash = "b436a73c857764ea6a5c26c8bc6c4511";
 
 export default node;

@@ -1,146 +1,235 @@
-import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar"
-import { ArtworkSidebarArtists } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
-import { ArtworkSidebarMetadata } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarMetadata"
+import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
-import { setupTestWrapper, setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen } from "@testing-library/react"
-import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "../ArtworkSidebarBiddingClosedMessage"
-import { Settings } from "luxon"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ArtworkSidebarFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
 
 jest.unmock("react-relay")
-jest.mock("../ArtworkSidebarClassification", () => ({
-  ArtworkSidebarClassificationFragmentContainer: () => <div />,
-}))
-jest.mock("react-tracking", () => ({
-  useTracking: () => ({ trackEvent: jest.fn() }),
-}))
 
-const ARTWORKSIDEBAR_TEST_QUERY = graphql`
+jest.mock("react-tracking")
+
+const ArtworkSidebar_TEST_QUERY = graphql`
   query ArtworkSidebar_Test_Query @relay_test_operation {
     artwork(id: "josef-albers-homage-to-the-square-85") {
       ...ArtworkSidebar_artwork
     }
-    me {
-      ...ArtworkSidebar_me
-    }
   }
 `
 
-const { getWrapper } = setupTestWrapper({
-  Component: ArtworkSidebarFragmentContainer,
-  query: ARTWORKSIDEBAR_TEST_QUERY,
-})
-
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtworkSidebarFragmentContainer,
-  query: ARTWORKSIDEBAR_TEST_QUERY,
+  query: ArtworkSidebar_TEST_QUERY,
 })
 
-describe("ArtworkSidebar", () => {
-  it("renders ArtworkSidebarArtists component", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find(ArtworkSidebarArtists).length).toBe(1)
+describe("ArtworkSidebarArtists", () => {
+  const trackEvent = jest.fn()
+  const mockTracking = useTracking as jest.Mock
+
+  beforeAll(() => {
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
-  it("renders Metadata component", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find(ArtworkSidebarMetadata).length).toBe(1)
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
-  describe("bidding closed", () => {
-    it("shows bidding closed when endAt is in the past and lot has not been extended", () => {
-      const wrapper = getWrapper({
-        SaleArtwork: () => ({
-          extendedBiddingEndAt: null,
-          endAt: "2022-03-12T12:33:37.000Z",
-        }),
+  describe("should display the create alert section", () => {
+    it("renders the create alert section", () => {
+      renderWithRelay()
+
+      expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Get notifications for similar works/i)
+      ).toBeInTheDocument()
+    })
+
+    it("for artworks that are on loan", () => {
+      renderWithRelay({
         Artwork: () => ({
-          is_in_auction: true,
+          saleMessage: "On loan",
         }),
       })
-      expect(
-        wrapper.find(ArtworkSidebarBiddingClosedMessageFragmentContainer).length
-      ).toBe(1)
-    })
-    it("shows bidding closed when endAt and extendedBiddingEndAt are in the past", () => {
-      const wrapper = getWrapper({
-        SaleArtwork: () => ({
-          extendedBiddingEndAt: "2022-03-12T12:35:37.000Z",
-          endAt: "2022-03-12T12:33:37.000Z",
-        }),
-        Artwork: () => ({
-          is_in_auction: true,
-        }),
-      })
-      expect(
-        wrapper.find(ArtworkSidebarBiddingClosedMessageFragmentContainer).length
-      ).toBe(1)
-    })
-    it("does not show bidding closed when endAt is in the past and extendedBiddingEndAt is in the future", () => {
-      Settings.now = jest.fn(() =>
-        new Date("2022-03-12T12:33:37.000Z").getTime()
+
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
       )
-      const wrapper = getWrapper({
-        SaleArtwork: () => ({
-          extendedBiddingEndAt: "2022-03-12T12:34:37.000Z",
-          endAt: "2022-03-12T12:32:37.000Z",
-          endedAt: null,
-        }),
+
+      expect(button).toBeInTheDocument()
+      expect(description).toBeInTheDocument()
+    })
+
+    it("for artworks that are on a permanent collection", () => {
+      renderWithRelay({
         Artwork: () => ({
-          is_in_auction: true,
+          saleMessage: "Permanent collection",
+        }),
+      })
+
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
+
+      expect(button).toBeInTheDocument()
+      expect(description).toBeInTheDocument()
+    })
+  })
+
+  describe("should not display the create alert section", () => {
+    it("for bidding closed artworks if there are no associated artists", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: true,
+          artists: [],
         }),
         Sale: () => ({
-          isClosed: false,
+          isClosed: true,
         }),
       })
+
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
+
+      expect(button).not.toBeInTheDocument()
+      expect(description).not.toBeInTheDocument()
+    })
+  })
+
+  it("if there are no associated artists", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        artists: [],
+      }),
+    })
+
+    const button = screen.queryByText(/Create Alert/i)
+    const description = screen.queryByText(
+      /Get notifications for similar works/i
+    )
+
+    expect(button).not.toBeInTheDocument()
+    expect(description).not.toBeInTheDocument()
+  })
+
+  describe("Artsy Guarantee section", () => {
+    it("should be displayed when eligible for artsy guarantee", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleForArtsyGuarantee: true,
+        }),
+      })
+
       expect(
-        wrapper.find(ArtworkSidebarBiddingClosedMessageFragmentContainer).length
-      ).toBe(0)
+        screen.queryByText(
+          "Be covered by the Artsy Guarantee when you checkout with Artsy"
+        )
+      ).toBeInTheDocument()
+    })
+
+    it("should not be displayed when ineligible for artsy guarantee", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleForArtsyGuarantee: false,
+        }),
+      })
+
+      expect(
+        screen.queryByText(
+          "Be covered by the Artsy Guarantee when you checkout with Artsy"
+        )
+      ).not.toBeInTheDocument()
+    })
+
+    it("should track click to expand/collapse the Artsy Guarantee section", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleForArtsyGuarantee: true,
+        }),
+      })
+
+      const button = screen.getByText(
+        "Be covered by the Artsy Guarantee when you checkout with Artsy"
+      )
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": true,
+            "subject": "Be covered by the Artsy Guarantee when you checkout with Artsy",
+          },
+        ]
+      `)
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": false,
+            "subject": "Be covered by the Artsy Guarantee when you checkout with Artsy",
+          },
+        ]
+      `)
     })
   })
 
-  it("renders the create alert section", () => {
-    renderWithRelay()
+  describe("Shipping and Taxes section", () => {
+    it("should track click to expand/collapse the Shipping and Taxes section", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isSold: false,
+          isAcquireable: true,
+        }),
+      })
 
-    expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
-    expect(
-      screen.queryByText(/Be notified when a similar work is available/i)
-    ).toBeInTheDocument()
-  })
+      const button = screen.getByText("Shipping and Taxes")
 
-  it("hide the create alert section if there are no associated artists", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        artists: [],
-      }),
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": true,
+            "subject": "Shipping and Taxes",
+          },
+        ]
+      `)
+
+      fireEvent.click(button)
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "toggledAccordion",
+            "context_module": "artworkSidebar",
+            "context_owner_type": "artwork",
+            "expand": false,
+            "subject": "Shipping and Taxes",
+          },
+        ]
+      `)
     })
-
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Be notified when a similar work is available/i
-    )
-
-    expect(button).not.toBeInTheDocument()
-    expect(description).not.toBeInTheDocument()
-  })
-
-  it("hide the create alert section for bidding closed artworks if there are no associated artists", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        is_in_auction: true,
-        artists: [],
-      }),
-      Sale: () => ({
-        isClosed: true,
-      }),
-    })
-
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Be notified when a similar work is available/i
-    )
-
-    expect(button).not.toBeInTheDocument()
-    expect(description).not.toBeInTheDocument()
   })
 })

@@ -1,7 +1,7 @@
 import {
   ArtworkSidebarAuctionProgressBar,
   ArtworkSidebarAuctionProgressBarProps,
-} from "../ArtworkSidebarAuctionProgressBar"
+} from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
 import { mount } from "enzyme"
 import "jest-styled-components"
 

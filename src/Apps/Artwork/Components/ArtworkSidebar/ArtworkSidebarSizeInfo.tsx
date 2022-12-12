@@ -1,40 +1,60 @@
 import { Box, Text } from "@artsy/palette"
-import { Component } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
+import { Media } from "Utils/Responsive"
 import { ArtworkSidebarSizeInfo_piece$data } from "__generated__/ArtworkSidebarSizeInfo_piece.graphql"
 
-export interface ArtworkSidebarSizeInfoProps {
+interface ArtworkSidebarSizeInfoProps {
   piece: ArtworkSidebarSizeInfo_piece$data
 }
 
-export class ArtworkSidebarSizeInfo extends Component<
-  ArtworkSidebarSizeInfoProps
-> {
-  sizeInfoMissing = (dimensions, edition_of) => {
+const ArtworkSidebarSizeInfo: React.FC<ArtworkSidebarSizeInfoProps> = ({
+  piece,
+}) => {
+  const { dimensions, editionOf } = piece
+
+  const hasInDimensions = !!dimensions?.in
+  const hasCmDimensions = !!dimensions?.cm
+
+  const renderDimensions = () => {
+    if (hasInDimensions && hasCmDimensions) {
+      return `${dimensions.in} | ${dimensions.cm}`
+    }
+
+    return dimensions?.in ?? dimensions?.cm
+  }
+
+  const label = renderDimensions()
+
+  const sizeInfoMissing = (dimensions, editionOf) => {
     const dimensionsPresent =
       /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
 
-    return !edition_of?.length && !dimensionsPresent
+    return !editionOf?.length && !dimensionsPresent
   }
 
-  render() {
-    const {
-      piece: { dimensions, edition_of },
-    } = this.props
-
-    if (this.sizeInfoMissing(dimensions, edition_of)) {
-      return null
-    }
-
-    return (
-      <Box color="black60">
-        {dimensions?.in && <Text variant="sm-display">{dimensions.in}</Text>}
-        {dimensions?.cm && <Text variant="sm-display">{dimensions.cm}</Text>}
-        {edition_of && <Text variant="sm-display">{edition_of}</Text>}
-      </Box>
-    )
+  if (sizeInfoMissing(dimensions, editionOf)) {
+    return null
   }
+
+  return (
+    <React.Fragment data-testid="size-info">
+      <Media greaterThanOrEqual="md">
+        <Box color="black60">
+          {!!label && <Text variant="sm-display">{label}</Text>}
+          {editionOf && <Text variant="sm-display">{editionOf}</Text>}
+        </Box>
+      </Media>
+
+      <Media lessThan="md">
+        <Box color="black60">
+          {hasInDimensions && <Text variant="sm-display">{dimensions.in}</Text>}
+          {hasCmDimensions && <Text variant="sm-display">{dimensions.cm}</Text>}
+          {editionOf && <Text variant="sm-display">{editionOf}</Text>}
+        </Box>
+      </Media>
+    </React.Fragment>
+  )
 }
 
 export const ArtworkSidebarSizeInfoFragmentContainer = createFragmentContainer(
@@ -46,7 +66,7 @@ export const ArtworkSidebarSizeInfoFragmentContainer = createFragmentContainer(
           in
           cm
         }
-        edition_of: editionOf
+        editionOf
       }
     `,
   }

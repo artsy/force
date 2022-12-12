@@ -1,16 +1,16 @@
-import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
-import { FC, useState } from "react"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 
-export interface ArtworkSidebarClassificationProps {
+interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork$data
 }
 
-export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps> = ({
+const ArtworkSidebarClassification: React.FC<ArtworkSidebarClassificationProps> = ({
   artwork,
 }) => {
   const { trackEvent } = useTracking()
@@ -28,11 +28,11 @@ export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps>
 
   const closeModal = () => setIsModalOpen(false)
 
-  if (!artwork.attributionClass) {
+  if (!artwork.attributionClass?.shortArrayDescription?.length) {
     return null
   }
 
-  const { shortArrayDescription } = artwork.attributionClass
+  const shortArrayDescription = artwork.attributionClass?.shortArrayDescription
 
   return (
     <>
@@ -40,14 +40,13 @@ export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps>
         onClose={closeModal}
         show={isModalOpen}
       />
-      <Flex mt={2}>
+      <Flex alignItems="center" data-testid="artwork-classification">
         <ArtworkIcon mr={1} />
-        <Text variant="xs" color="black100">
+        <Text variant="sm-display" color="black60">
           {shortArrayDescription![0]}{" "}
           <Clickable onClick={openModal} textDecoration="underline">
             {shortArrayDescription![1]}
           </Clickable>
-          .
         </Text>
       </Flex>
     </>

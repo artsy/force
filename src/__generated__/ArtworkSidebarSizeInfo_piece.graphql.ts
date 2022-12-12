@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07a3862ba1efff7b8e96d88c93005d67>>
+ * @generated SignedSource<<05bf6da652c6ca1ab9ae378c61902043>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type ArtworkSidebarSizeInfo_piece$data = {
     readonly cm: string | null;
     readonly in: string | null;
   } | null;
-  readonly edition_of: string | null;
+  readonly editionOf: string | null;
   readonly " $fragmentType": "ArtworkSidebarSizeInfo_piece";
 };
 export type ArtworkSidebarSizeInfo_piece$key = {
@@ -55,7 +55,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "edition_of",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "editionOf",
@@ -66,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isSellable"
 };
 
-(node as any).hash = "084d24d3f414c5839dbc469b7d8c1810";
+(node as any).hash = "a986776b32a0b3f3f9bab3199809c7e2";
 
 export default node;

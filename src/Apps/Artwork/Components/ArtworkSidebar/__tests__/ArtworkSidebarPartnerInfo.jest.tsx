@@ -130,7 +130,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
 
     it("auction lot doesn't display button", () => {
       renderWithRelay({
-        Artwork: () => ArtworkInNonAuctionSale,
+        Artwork: () => ({ ...ArtworkInNonAuctionSale, isInAuction: true }),
       })
 
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()

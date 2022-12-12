@@ -1,62 +1,57 @@
-import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
+import { Box, Button, Flex, Text } from "@artsy/palette"
 import { limitWithCount } from "Apps/Artwork/Utils/limitWithCount"
-import { createFragmentContainer, graphql } from "react-relay"
-import { FC } from "react"
-import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
-import { RouterLink } from "System/Router/RouterLink"
 import { useInquiry } from "Components/Inquiry/useInquiry"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTranslation } from "react-i18next"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
+import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { themeGet } from "@styled-system/theme-get"
 
-export interface ArtworkSidebarPartnerInfoProps {
+interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork$data
+}
+
+interface PartnerNameProps {
+  partner: ArtworkSidebarPartnerInfoProps["artwork"]["partner"]
+  sale: ArtworkSidebarPartnerInfoProps["artwork"]["sale"]
 }
 
 const PartnerContainer = styled(Box)`
   word-break: break-word;
 `
 
-export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
+const StyledPartnerLink = styled(RouterLink)`
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: ${themeGet("colors.black100")};
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
   const {
-    sale,
-    partner,
     internalID,
-    slug,
+    isInAuction,
     isInquireable,
-    is_in_auction,
+    partner,
+    sale,
+    slug,
   } = artwork
+
+  const { t } = useTranslation()
+  const { trackEvent } = useTracking()
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
   })
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
-  const { trackEvent } = useTracking()
-
-  const renderPartnerName = () => {
-    if (sale) {
-      return (
-        <Text variant="sm-display">
-          <RouterLink to={sale.href ?? ""}>{sale.name}</RouterLink>
-        </Text>
-      )
-    }
-
-    if (!partner) {
-      return null
-    }
-
-    return partner.href ? (
-      <Text variant="sm-display">
-        <RouterLink to={partner.href}>{partner.name}</RouterLink>
-      </Text>
-    ) : (
-      <Text variant="sm-display">{partner.name}</Text>
-    )
-  }
 
   const handleInquiry = () => {
     trackEvent({
@@ -69,33 +64,59 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     showInquiry()
   }
 
+  const hasCities = partner?.cities && partner.cities.length > 0
+
+  if (!partner) {
+    return null
+  }
+
   return (
     <>
-      <Separator my={2} />
-      <Flex justifyContent="space-between">
+      <Flex alignItems="center" justifyContent="space-between">
         <PartnerContainer>
-          {renderPartnerName()}
-          {partner?.cities && partner.cities.length > 0 && (
-            <Text variant="xs" color="black60" mt={0.5}>
+          <PartnerName partner={partner} sale={sale} />
+          {hasCities && (
+            <Text variant="xs" color="black60">
               {limitWithCount(partner.cities as string[], 2).join(", ")}
             </Text>
           )}
         </PartnerContainer>
 
-        {isCBNEnabled && !isInquireable && !is_in_auction && (
-          <Button
-            variant="secondaryBlack"
-            size="small"
-            onClick={handleInquiry}
-            ml={1}
-          >
-            Contact Gallery
+        {isCBNEnabled && !isInquireable && !isInAuction && (
+          <Button size="small" variant="secondaryBlack" onClick={handleInquiry}>
+            {t("artworkPage.sidebar.partner.contactGalleryCta")}
           </Button>
         )}
 
         {inquiryComponent}
       </Flex>
     </>
+  )
+}
+
+const PartnerName: React.FC<PartnerNameProps> = ({ partner, sale }) => {
+  if (sale) {
+    return (
+      <Text variant="sm-display">
+        <StyledPartnerLink textDecoration="none" to={sale.href ?? ""}>
+          {sale.name}
+        </StyledPartnerLink>
+      </Text>
+    )
+  }
+
+  if (!partner) {
+    return null
+  }
+
+  return partner.href ? (
+    <Text variant="sm-display">
+      <StyledPartnerLink textDecoration="none" to={partner.href}>
+        {partner.name}
+      </StyledPartnerLink>
+    </Text>
+  ) : (
+    <Text variant="sm-display">{partner.name}</Text>
   )
 }
 
@@ -107,7 +128,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
-        is_in_auction: isInAuction
+        isInAuction
         partner {
           name
           href
