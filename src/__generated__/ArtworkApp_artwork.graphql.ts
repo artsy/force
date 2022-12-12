@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ed6f62eb1e87c1a7ead68d75d94ff1f>>
+ * @generated SignedSource<<9476d7857f52cf299c5edd35c1bf7025>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,7 @@ export type ArtworkApp_artwork$data = {
   } | null;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar2_artwork" | "ArtworkTopContextBar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -238,7 +238,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebar2_artwork"
+      "name": "ArtworkSidebar_artwork"
     }
   ],
   "type": "Artwork",
@@ -246,6 +246,6 @@ return {
 };
 })();
 
-(node as any).hash = "61dafad70d3700b7810de60a383648da";
+(node as any).hash = "b7807de55978a8a18608c20c352a8886";
 
 export default node;

@@ -30,7 +30,7 @@ import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
-import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
+import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 
 export interface Props {
@@ -201,7 +201,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         </Column>
 
         <Column span={4} pt={[0, 2]}>
-          <ArtworkSidebar2FragmentContainer artwork={artwork} me={me} />
+          <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
 
@@ -330,12 +330,12 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkMeta_artwork
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
-        ...ArtworkSidebar2_artwork
+        ...ArtworkSidebar_artwork
       }
     `,
     me: graphql`
       fragment ArtworkApp_me on Me {
-        ...ArtworkSidebar2_me
+        ...ArtworkSidebar_me
         ...SubmittedOrderModal_me
       }
     `,
