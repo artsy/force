@@ -168,8 +168,20 @@ describe("NavBarMobileMenu", () => {
     })
 
     it("tracks link clicks", () => {
-      const linkContainer = getMobileMenuLinkContainer("notAdmin")
-      linkContainer.find("a")[2].simulate("click")
+      const linkContainer = getMobileMenuLinkContainer("notAdmin", [], {
+        "force-enable-new-activity-panel": {
+          flagEnabled: true,
+          variant: {
+            name: "enabled",
+            enabled: true,
+          },
+        },
+      })
+
+      // at(0) - Activity link
+      // at(1) - Inbox link
+      // at(2) - Buy link
+      linkContainer.find("a").at(2).simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
