@@ -1,4 +1,4 @@
-import { LotTimer } from "Apps/Artwork/Components/ArtworkSidebar/LotTimer"
+import { LotTimer } from "Apps/Artwork/Components/ArtworkSidebar2/LotTimer"
 import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
 import "jest-styled-components"

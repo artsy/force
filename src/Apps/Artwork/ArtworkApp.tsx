@@ -9,7 +9,6 @@ import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
-import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
@@ -31,7 +30,6 @@ import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 
@@ -75,7 +73,6 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 )
 
 export const ArtworkApp: React.FC<Props> = props => {
-  const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -204,11 +201,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         </Column>
 
         <Column span={4} pt={[0, 2]}>
-          {isNewArtworkSidebarEnabled ? (
-            <ArtworkSidebar2FragmentContainer artwork={artwork} me={me} />
-          ) : (
-            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
-          )}
+          <ArtworkSidebar2FragmentContainer artwork={artwork} me={me} />
         </Column>
       </GridColumns>
 
@@ -336,14 +329,12 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkRelatedArtists_artwork
         ...ArtworkMeta_artwork
         ...ArtworkTopContextBar_artwork
-        ...ArtworkSidebar_artwork
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar2_artwork
       }
     `,
     me: graphql`
       fragment ArtworkApp_me on Me {
-        ...ArtworkSidebar_me
         ...ArtworkSidebar2_me
         ...SubmittedOrderModal_me
       }

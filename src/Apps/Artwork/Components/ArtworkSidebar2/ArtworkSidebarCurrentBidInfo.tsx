@@ -7,7 +7,6 @@ import {
   Clickable,
   Flex,
   LosingBidIcon,
-  Separator,
   Spacer,
   Text,
   WinningBidIcon,
@@ -15,9 +14,7 @@ import {
 import { useDialog } from "Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
-import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 import { ArtworkSidebar2BiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebar2BiddingClosedMessage"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
@@ -47,7 +44,6 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
   artwork,
   currentBidChanged,
 }) => {
-  const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
   const { trackEvent } = useTracking()
 
   const { dialogComponent, showDialog, hideDialog } = useDialog({
@@ -77,10 +73,8 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
   }
 
   if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
-    return isNewArtworkSidebarEnabled ? (
+    return (
       <ArtworkSidebar2BiddingClosedMessageFragmentContainer artwork={artwork} />
-    ) : (
-      <ArtworkSidebarBiddingClosedMessageFragmentContainer artwork={artwork} />
     )
   }
 
@@ -132,7 +126,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     <>
       {dialogComponent}
 
-      {isNewArtworkSidebarEnabled ? <Spacer y={2} /> : <Separator my={2} />}
+      <Spacer y={2} />
 
       <Flex width="100%" flexDirection="row" justifyContent="space-between">
         <Text variant="lg-display" pr={1}>

@@ -16,7 +16,7 @@ import {
   SaleRequiringIDV,
   UserPendingIDV,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarBidAction"
-import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBidAction"
+import { ArtworkSidebarBidActionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebarBidAction"
 import { renderRelayTree } from "DevTools"
 import { merge } from "lodash"
 import { graphql } from "react-relay"

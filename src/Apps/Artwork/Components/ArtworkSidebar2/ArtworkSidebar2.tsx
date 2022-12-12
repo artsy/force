@@ -20,7 +20,7 @@ import { ArtworkSidebar2CommercialButtonsFragmentContainer } from "./ArtworkSide
 import { ArtworkSidebar2EstimatedValueFragmentContainer } from "./ArtworkSidebar2EstimatedValue"
 import { ArtworkSidebar2BiddingClosedMessageFragmentContainer } from "./ArtworkSidebar2BiddingClosedMessage"
 import { ArtworkSidebar2AuctionTimerFragmentContainer } from "./ArtworkSidebar2AuctionTimer"
-import { ArtworkSidebarAuctionPollingRefetchContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionInfoPolling"
+import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ArtworkSidebarProps {

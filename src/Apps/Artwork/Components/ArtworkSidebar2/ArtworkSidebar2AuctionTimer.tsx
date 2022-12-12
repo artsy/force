@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionTimerFragmentContainer } from "Components/AuctionTimer"
 
 import { ArtworkSidebar2AuctionTimer_artwork$data } from "__generated__/ArtworkSidebar2AuctionTimer_artwork.graphql"
-import { LotTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/LotTimer"
+import { LotTimerFragmentContainer } from "./LotTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 
 interface ArtworkSidebar2AuctionTimerProps {

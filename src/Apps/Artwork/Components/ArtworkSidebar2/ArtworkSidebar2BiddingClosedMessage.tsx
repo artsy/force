@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebarCreateAlertButton"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebar2BiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebar2BiddingClosedMessage_artwork.graphql"
 

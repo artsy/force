@@ -29,7 +29,7 @@ import {
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
-import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar2/ArtworkSidebarAuctionTimer"
 
 interface AuctionBidRouteProps {
   artwork: AuctionBidRoute_artwork$data
