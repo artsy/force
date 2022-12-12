@@ -3,7 +3,7 @@ import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "Components/NavBar/NavBar"
-import { NavBarMobileMenuInboxNotificationCountQueryRenderer as NavBarMobileMenuInboxNotificationCount } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
+import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { mediator } from "Server/mediator"
 
 jest.mock("Components/Search/SearchBar", () => {
@@ -146,12 +146,12 @@ describe("NavBar", () => {
       expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
     })
 
-    it("shows the inbox notifications count when there are conversations", () => {
+    it("shows the unread notifications indicator", () => {
       const wrapper = getWrapper({
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+        user: { type: "NotAdmin" },
       })
-      expect(wrapper.find(NavBarMobileMenuInboxNotificationCount).length).toBe(
+      expect(wrapper.find(NavBarMobileMenuNotificationsIndicator).length).toBe(
         1
       )
     })
