@@ -109,6 +109,12 @@ export const FullBleedHeaderOverlay = styled(Flex)`
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0.25)
   );
+
+  /**
+   * Promotes element to composite layer to prevent disappearing content on
+   * scroll in mobile Webkit browsers. Bug apparently caused by interaction with clip-path.
+   **/
+  transform: translateZ(0);
 `
 
 FullBleedHeaderOverlay.defaultProps = {
