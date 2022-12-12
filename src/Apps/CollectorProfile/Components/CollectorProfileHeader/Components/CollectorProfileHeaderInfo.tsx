@@ -24,7 +24,7 @@ const CollectorProfileHeaderInfo: FC<CollectorProfileHeaderInfoProps> = ({
   const { location, profession, otherRelevantPositions } = me
 
   return (
-    <Flex>
+    <Flex flexWrap="wrap">
       {!!location?.display && (
         <InfoField type="Location" value={location.display} />
       )}
