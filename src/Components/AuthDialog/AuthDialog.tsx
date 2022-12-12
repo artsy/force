@@ -64,12 +64,12 @@ const IMAGE = {
     "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 
-const IMG = resized(IMAGE.src, { width: 450 })
-
 const AuthDialogLeftPanel: FC = () => {
+  const img = resized(IMAGE.src, { width: 450 })
+
   return (
     <Image
-      {...IMG}
+      {...img}
       width="100%"
       height="100%"
       lazyLoad
