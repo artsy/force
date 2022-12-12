@@ -9,8 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { editProfileVerificationSchema } from "Apps/Auction/Components/Form/Utils"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
+import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
 import {
   LocationAutocompleteInput,
   normalizePlace,
