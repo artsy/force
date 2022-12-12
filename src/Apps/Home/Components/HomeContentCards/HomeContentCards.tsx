@@ -36,6 +36,7 @@ export const HomeContentCards: React.FC = () => {
       setAppboy(window.appboy)
     } else if (window.analytics) {
       window.analytics.ready(() => {
+        !window.appboy && setExceededTimeout(true)
         setAppboy(window.appboy)
       })
     } else {
