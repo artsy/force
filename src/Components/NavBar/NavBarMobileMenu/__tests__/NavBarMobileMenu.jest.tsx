@@ -53,7 +53,7 @@ describe("NavBarMobileMenu", () => {
 
     wrapper
       .find("a")
-      .at(length - 4)
+      .at(length - 3)
       .simulate("click")
 
     expect(mediator.trigger).toBeCalledWith("auth:logout")
@@ -169,7 +169,7 @@ describe("NavBarMobileMenu", () => {
 
     it("tracks link clicks", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
-      linkContainer.find("a").first().simulate("click")
+      linkContainer.find("a")[2].simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",

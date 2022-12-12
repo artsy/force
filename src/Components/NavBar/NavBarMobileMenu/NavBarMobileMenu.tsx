@@ -15,6 +15,8 @@ import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import { useSystemContext } from "System"
+import { NavBarMobileMenuNotificationsQueryRenderer } from "./NavBarMobileMenuNotifications"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
@@ -27,6 +29,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   onNavButtonClick,
   onClose,
 }) => {
+  const { isLoggedIn } = useSystemContext()
   const { downloadAppUrl } = useDeviceDetection()
   const { trackEvent } = useTracking()
 
@@ -71,6 +74,8 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
           </NavBarMobileMenuItemButton>
 
           <NavBarMobileMenuTransition isOpen={isOpen} py={2}>
+            {isLoggedIn && <NavBarMobileMenuNotificationsQueryRenderer />}
+
             <NavBarMobileMenuItemLink
               to="/collect"
               color="black100"

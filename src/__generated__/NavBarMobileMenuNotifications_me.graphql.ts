@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c16a60cdc27939da2dcd047350f2428>>
+ * @generated SignedSource<<256df34dea610f5b0f0c98e34048963f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,21 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuAuthentication_me$data = {
+export type NavBarMobileMenuNotifications_me$data = {
   readonly unreadConversationCount: number;
   readonly unreadNotificationsCount: number;
-  readonly " $fragmentType": "NavBarMobileMenuAuthentication_me";
+  readonly " $fragmentType": "NavBarMobileMenuNotifications_me";
 };
-export type NavBarMobileMenuAuthentication_me$key = {
-  readonly " $data"?: NavBarMobileMenuAuthentication_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
+export type NavBarMobileMenuNotifications_me$key = {
+  readonly " $data"?: NavBarMobileMenuNotifications_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotifications_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NavBarMobileMenuAuthentication_me",
+  "name": "NavBarMobileMenuNotifications_me",
   "selections": [
     {
       "alias": null,
@@ -45,6 +45,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "55605d871ddab628fa4b2e82b5e91142";
+(node as any).hash = "0064720241150f809384bc103216037a";
 
 export default node;

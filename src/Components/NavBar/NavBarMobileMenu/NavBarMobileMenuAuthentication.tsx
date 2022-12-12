@@ -1,40 +1,17 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box } from "@artsy/palette"
 import { ModalType } from "Components/Authentication/Types"
 import { compact } from "lodash"
 import * as React from "react"
-import { useContext } from "react"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "react-relay"
-import { isServer } from "Server/isServer"
-import styled from "styled-components"
-import { SystemContext, useSystemContext } from "System"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
-import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
-import { NavBarMobileMenuAuthentication_me$data } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
-import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { ActionType } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
+import { Separator } from "@artsy/palette"
 
-interface NavBarMobileMenuLoggedInProps {
-  me?: NavBarMobileMenuAuthentication_me$data | null
-}
-
-export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> = ({
-  me,
-}) => {
+export const NavBarMobileMenuLoggedIn: React.FC = () => {
   const { mediator } = useSystemContext()
-  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
-  const { trackEvent } = useTracking()
-  const unreadConversationCount = me?.unreadConversationCount ?? 0
-  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
-  const hasConversations = unreadConversationCount > 0
-  const hasNotifications = unreadNotificationsCount > 0
 
   const menu = {
     title: "Account",
@@ -95,77 +72,12 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
     <>
       <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
 
-      {enableActivityPanel && (
-        <NavBarMobileMenuItemLink
-          to="/notifications"
-          onClick={() => {
-            trackEvent({
-              action: ActionType.clickedNotificationsBell,
-            })
-          }}
-        >
-          Activity
-          {hasNotifications && <Indicator />}
-        </NavBarMobileMenuItemLink>
-      )}
-
-      <NavBarMobileMenuItemLink
-        to="/user/conversations"
-        justifyContent="space-between"
-      >
-        Inbox
-        {hasConversations && (
-          <Box color="brand">{unreadConversationCount} new</Box>
-        )}
-      </NavBarMobileMenuItemLink>
+      <Separator my={1} />
 
       <NavBarMobileMenuItemLink to="/works-for-you">
         Works for you
       </NavBarMobileMenuItemLink>
     </>
-  )
-}
-
-const NavBarMobileMenuLoggedInFragmentContainer = createFragmentContainer(
-  NavBarMobileMenuLoggedIn,
-  {
-    me: graphql`
-      fragment NavBarMobileMenuAuthentication_me on Me {
-        unreadNotificationsCount
-        unreadConversationCount
-      }
-    `,
-  }
-)
-
-export const NavBarMobileMenuLoggedInQueryRenderer: React.FC<{}> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
-
-  return isServer ? (
-    <NavBarMobileMenuLoggedInFragmentContainer />
-  ) : (
-    <SystemQueryRenderer<NavBarMobileMenuAuthenticationQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query NavBarMobileMenuAuthenticationQuery {
-          me {
-            ...NavBarMobileMenuAuthentication_me
-          }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props || !props.me) {
-          return <NavBarMobileMenuLoggedIn />
-        }
-
-        return <NavBarMobileMenuLoggedInFragmentContainer me={props.me} />
-      }}
-    />
   )
 }
 
@@ -194,13 +106,8 @@ export const NavBarMobileMenuAuthentication: React.FC = () => {
   const { isLoggedIn } = useSystemContext()
 
   return isLoggedIn ? (
-    <NavBarMobileMenuLoggedInQueryRenderer />
+    <NavBarMobileMenuLoggedIn />
   ) : (
     <NavBarMobileMenuLoggedOut />
   )
 }
-
-const Indicator = styled(NavBarNotificationIndicator)`
-  margin-left: 5px;
-  margin-top: -15px;
-`
