@@ -24,7 +24,7 @@ export const HomeContentCards: React.FC = () => {
 
   const timeoutAmount = brazeTimeoutAmount ?? DEFAULT_TIMEOUT_AMOUNT
 
-  const [exceededTimeout, setExceededTimeout] = useState(false)
+  const [renderFallback, setRenderFallback] = useState(false)
   const [appboy, setAppboy] = useState<typeof Braze | null>(null)
   const [cards, setCards] = useState<Braze.CaptionedImage[]>([])
   const cardsLengthRef = useRef(cards.length)
@@ -36,11 +36,11 @@ export const HomeContentCards: React.FC = () => {
       setAppboy(window.appboy)
     } else if (window.analytics) {
       window.analytics.ready(() => {
-        !window.appboy && setExceededTimeout(true)
+        !window.appboy && setRenderFallback(true)
         setAppboy(window.appboy)
       })
     } else {
-      setExceededTimeout(true)
+      setRenderFallback(true)
     }
   }, [appboy])
 
@@ -60,7 +60,7 @@ export const HomeContentCards: React.FC = () => {
       if (cardsLengthRef.current > 0) return
 
       appboy.removeSubscription(subscriptionId)
-      setExceededTimeout(true)
+      setRenderFallback(true)
     }, timeoutAmount)
 
     appboy.requestContentCardsRefresh()
@@ -74,7 +74,7 @@ export const HomeContentCards: React.FC = () => {
   const hasBrazeCards = appboy && cardsLengthRef.current > 0
 
   if (!hasBrazeCards)
-    return exceededTimeout ? <FallbackCards /> : <PlaceholderCards />
+    return renderFallback ? <FallbackCards /> : <PlaceholderCards />
 
   return <BrazeCards appboy={appboy} cards={cards} />
 }
