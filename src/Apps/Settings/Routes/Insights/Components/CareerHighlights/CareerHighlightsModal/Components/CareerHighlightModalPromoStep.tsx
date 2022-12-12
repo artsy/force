@@ -11,23 +11,15 @@ import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-const { src: mSrc, srcSet: mSrcSet } = cropped(
-  "https://files.artsy.net/images/CareerHighlightModalPromoImageMobile.png",
-  {
-    height: 900,
-    width: 750,
-  }
-)
-
-const { src: dSrc, srcSet: dSrcSet } = cropped(
-  "https://files.artsy.net/images/CareerHighlightModalPromoImage.png",
-  {
-    height: 550,
-    width: 380,
-  }
-)
-
 const CareerHighlightModalPromoStepDesktop = () => {
+  const { src: dSrc, srcSet: dSrcSet } = cropped(
+    "https://files.artsy.net/images/CareerHighlightModalPromoImage.png",
+    {
+      height: 550,
+      width: 380,
+    }
+  )
+
   return (
     <Flex flex={1} flexDirection="column">
       <ArtsyLogoBlackIcon />
@@ -80,6 +72,14 @@ const CareerHighlightModalPromoStepDesktop = () => {
 }
 
 const CareerHighlightModalPromoStepMobile = () => {
+  const { src: mSrc, srcSet: mSrcSet } = cropped(
+    "https://files.artsy.net/images/CareerHighlightModalPromoImageMobile.png",
+    {
+      height: 900,
+      width: 750,
+    }
+  )
+
   return (
     <Flex flex={1} flexDirection="column">
       <Text variant="lg-display">
