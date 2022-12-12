@@ -80,8 +80,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = ({
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
     isSold
 
-  const isNotClosedSale = sale && !sale.isClosed
-  const shoudlDisplayLotLabel = isInAuction && isNotClosedSale && lotLabel
+  const shoudlDisplayLotLabel = !!isInAuction && !!lotLabel
 
   return (
     <Flex flexDirection="column" data-test={ContextModule.artworkSidebar}>
