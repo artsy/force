@@ -1,18 +1,12 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
-import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
-
-// const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
-//   resolveComponent: component => component.ArtQuizAppFragmentContainer,
-// })
 
 const ArtQuizWelcome = loadable(() => import("./Routes/ArtQuizWelcome"), {
   resolveComponent: component => component.ArtQuizWelcome,
 })
 
-const ArtQuizMain = loadable(() => import("./Routes/ArtQuizMain"), {
-  resolveComponent: component => component.ArtQuizMainFragmentContainer,
+const ArtQuizArtworks = loadable(() => import("./Routes/ArtQuizArtworks"), {
+  resolveComponent: component => component.ArtQuizArtworks,
 })
 
 const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
@@ -22,80 +16,34 @@ const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
 export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
-    displayFullPage: true,
-    hideFooter: true,
     onServerSideRender: ({ res }) => {
       if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
         res.redirect("/")
+        return
       }
+
       res.redirect("/art-quiz/welcome")
     },
     onClientSideRender: () => {
       ArtQuizWelcome.preload()
-      ArtQuizMain.preload()
+      ArtQuizArtworks.preload()
       ArtQuizResults.preload()
     },
     children: [
       {
         path: "welcome",
+        hideFooter: true,
         getComponent: () => ArtQuizWelcome,
-        query: graphql`
-          query artQuizRoutes_WelcomeQuery {
-            viewer {
-              quizConnection {
-                completedAt
-              }
-            }
-          }
-        `,
-        render: ({ Component, props }) => {
-          if (!(Component && props)) {
-            return
-          }
-          const { viewer } = props as any
-
-          if (!viewer?.quizConnection) {
-            return
-          }
-
-          const { completedAt } = viewer.quizConnection
-
-          if (completedAt) {
-            throw new RedirectException("/art-quiz/results")
-          }
-
-          return <Component {...props} />
-        },
       },
       {
         path: "artworks",
-        getComponent: () => ArtQuizMain,
-        query: graphql`
-          query artQuizRoutes_MainQuery {
-            viewer {
-              quizConnection {
-                ...ArtQuizMain_quiz
-              }
-            }
-          }
-        `,
-        render: ({ Component, props }) => {
-          if (!(Component && props)) {
-            return
-          }
-
-          const { viewer } = props as any
-
-          return <Component {...props} quiz={viewer.quizConnection} />
-        },
+        hideFooter: true,
+        getComponent: () => ArtQuizArtworks,
       },
       {
         path: "results",
-        getComponent: () => ArtQuizResults,
         hideFooter: true,
-        onClientSideRender: () => {
-          ArtQuizResults.preload()
-        },
+        getComponent: () => ArtQuizResults,
       },
     ],
   },

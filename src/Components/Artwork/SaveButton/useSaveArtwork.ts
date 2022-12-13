@@ -14,7 +14,7 @@ interface UseSaveArtwork {
   isSaved: boolean
   artwork: Artwork
   contextModule: AuthContextModule
-  onSave?({ action: string, artwork: Artwork }): void
+  onSave?({ action, artwork }: { action: string; artwork: Artwork }): void
 }
 
 export const useSaveArtwork = ({
