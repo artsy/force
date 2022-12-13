@@ -3,6 +3,7 @@ import { Variant } from "unleash-client"
 import { ActionType } from "@artsy/cohesion"
 import { formatOwnerTypes } from "Server/getContextPage"
 import { useRouter } from "./Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -41,6 +42,22 @@ export function useFeatureVariant(featureName: string): Variant | null {
       "[Force] Error: cannot find variant on featureFlags: ",
       featureFlags
     )
+    return null
+  }
+
+  return variant
+}
+
+export const getFeatureVariant = (featureName: string): Variant | null => {
+  const featureFlags = getENV("FEATURE_FLAGS")
+  const variant = featureFlags?.[featureName]?.variant
+
+  if (!variant) {
+    console.error(
+      "[Force] Error: cannot find variant on featureFlags: ",
+      featureFlags
+    )
+
     return null
   }
 

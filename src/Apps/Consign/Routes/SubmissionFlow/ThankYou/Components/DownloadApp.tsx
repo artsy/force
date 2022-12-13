@@ -14,23 +14,6 @@ import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadge
 import { resized } from "Utils/resized"
 import styled from "styled-components"
 
-const DESKTOP_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
-  { width: 1220, quality: 50 }
-)
-
-const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
-  { width: 725, quality: 50 }
-)
-
-const BANNER_FRONT_PART = resized(
-  "https://files.artsy.net/images/consign_thank_you_page_banner_foreground.png",
-  {
-    width: 432,
-  }
-)
-
 const BannerFrontPartStyledImage = styled(Image)`
   position: absolute;
   width: 432px;
@@ -51,6 +34,23 @@ const BannerFrontPartStyledImage = styled(Image)`
 `
 
 export const DownloadApp: React.FC<BoxProps> = props => {
+  const desktopBackgroundImage = resized(
+    "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
+    { width: 1220, quality: 50 }
+  )
+
+  const mobileBackgroundImage = resized(
+    "https://files.artsy.net/images/consign_thank_you_page_banner_background.png",
+    { width: 725, quality: 50 }
+  )
+
+  const bannerForeground = resized(
+    "https://files.artsy.net/images/consign_thank_you_page_banner_foreground.png",
+    {
+      width: 432,
+    }
+  )
+
   return (
     <GridColumns {...props}>
       <Column
@@ -80,8 +80,8 @@ export const DownloadApp: React.FC<BoxProps> = props => {
         <Media at="xs">
           <Box position="relative" mx={[-2, -4]}>
             <Image
-              src={MOBILE_COVER_IMAGE.src}
-              srcSet={MOBILE_COVER_IMAGE.srcSet}
+              src={mobileBackgroundImage.src}
+              srcSet={mobileBackgroundImage.srcSet}
               height={140}
               width="100%"
               lazyLoad
@@ -91,8 +91,8 @@ export const DownloadApp: React.FC<BoxProps> = props => {
             />
 
             <BannerFrontPartStyledImage
-              src={BANNER_FRONT_PART.src}
-              srcSet={BANNER_FRONT_PART.srcSet}
+              src={bannerForeground.src}
+              srcSet={bannerForeground.srcSet}
               lazyLoad
               alt=""
               style={{ objectPosition: "top", objectFit: "cover" }}
@@ -103,8 +103,8 @@ export const DownloadApp: React.FC<BoxProps> = props => {
         <Media greaterThan="xs">
           <Box position="relative" mr={[-2, -4]}>
             <Image
-              src={DESKTOP_COVER_IMAGE.src}
-              srcSet={DESKTOP_COVER_IMAGE.srcSet}
+              src={desktopBackgroundImage.src}
+              srcSet={desktopBackgroundImage.srcSet}
               height={240}
               width="100%"
               lazyLoad
@@ -114,8 +114,8 @@ export const DownloadApp: React.FC<BoxProps> = props => {
             />
 
             <BannerFrontPartStyledImage
-              src={BANNER_FRONT_PART.src}
-              srcSet={BANNER_FRONT_PART.srcSet}
+              src={bannerForeground.src}
+              srcSet={bannerForeground.srcSet}
               lazyLoad
               alt=""
               style={{ objectPosition: "top", objectFit: "cover" }}

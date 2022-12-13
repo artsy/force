@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { sendToVolley, VolleyMetric } from "Server/volley"
 import { getENV } from "Utils/getENV"
-import { GEMINI_CLOUDFRONT_URL } from "Utils/resizer"
+import { GEMINI_CLOUDFRONT_URL, getImageService } from "Utils/resizer"
 
 const DEVICE_TYPE = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
@@ -29,7 +29,9 @@ export const useImagePerformanceObserver = () => {
             // Ensure they are uncached
             entry.transferSize === 0 ||
             // Ensure they are Gemini images
-            !entry.name.includes(GEMINI_CLOUDFRONT_URL)
+            !entry.name.includes(GEMINI_CLOUDFRONT_URL) ||
+            // Ensure they have transfer size supported
+            !entry.transferSize
           ) {
             return
           }
@@ -70,6 +72,7 @@ export const useImagePerformanceObserver = () => {
             `device-type:${DEVICE_TYPE}`,
             `pixel-ratio:${pixelRatio(window.devicePixelRatio)}`,
             `root-path:${rootPath}`,
+            `image-service:${getImageService()}`,
           ],
         }
 

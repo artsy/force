@@ -5,9 +5,11 @@ import {
   FeatureFlagService,
 } from "Server/featureFlags/featureFlagService"
 import { FeatureFlags } from "System/useFeatureFlag"
+import { updateSharifyAndContext } from "Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 
 export function featureFlagMiddleware(serviceType: symbol) {
-  let service
+  let service: FeatureFlagService
+
   return (_req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     new Promise<FeatureFlagService>(async (resolve, reject) => {
       if (service) {
@@ -30,15 +32,19 @@ export function featureFlagMiddleware(serviceType: symbol) {
 
         // Get features and variants and move them to sharify
         const flags = service.getFeatures()
-        res.locals.sd.FEATURE_FLAGS = {}
-        if (flags) {
-          for (let flag of flags) {
-            res.locals.sd.FEATURE_FLAGS[flag] = {
+
+        const featureFlags = flags.reduce((acc: FeatureFlags, flag) => {
+          return {
+            ...acc,
+            [flag]: {
               flagEnabled: service.enabled(flag, featureFlagContext),
               variant: service.getVariant(flag, featureFlagContext),
-            }
+            },
           }
-        }
+        }, {})
+
+        updateSharifyAndContext(res, "FEATURE_FLAGS", featureFlags)
+
         next()
       })
       .catch(error => {

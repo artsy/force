@@ -3,12 +3,12 @@ import { Box, BoxProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 
-const img = resized(
-  "https://files.artsy.net/images/fair-iphone-promo-large.jpg",
-  { width: 155, height: 223 }
-)
-
 export const FairsPhonePromo: React.FC<BoxProps> = props => {
+  const img = resized(
+    "https://files.artsy.net/images/fair-iphone-promo-large.jpg",
+    { width: 155, height: 223 }
+  )
+
   return (
     <RouterLink
       to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"

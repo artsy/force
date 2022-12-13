@@ -18,6 +18,7 @@ import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFiel
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
 import createLogger from "Utils/logger"
 import { getENV } from "Utils/getENV"
+import { getImageService } from "Utils/resizer"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -77,6 +78,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
      * See https://bugs.chromium.org/p/chromium/issues/detail?id=571722
      */
     "User-Agent": userAgent ? `${userAgent}; ${USER_AGENT}` : USER_AGENT,
+    "X-IMAGE-SERVICE": getImageService(),
   }
 
   let timeZone

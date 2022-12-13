@@ -18,14 +18,6 @@ import { openAuthModal } from "Utils/openAuthModal"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-const image = resized(
-  "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-  {
-    width: 770,
-    height: 652,
-  }
-)
-
 const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
   loggedOutState,
 }) => {
@@ -33,6 +25,14 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
+
+  const image = resized(
+    "https://files.artsy.net/images/my-coll-get-app-img.jpg",
+    {
+      width: 770,
+      height: 652,
+    }
+  )
 
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
@@ -117,6 +117,14 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
+
+  const image = resized(
+    "https://files.artsy.net/images/my-coll-get-app-img.jpg",
+    {
+      width: 770,
+      height: 652,
+    }
+  )
 
   return (
     <GridColumns gridRowGap={2} alignItems="center">
