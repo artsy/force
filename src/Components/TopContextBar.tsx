@@ -19,7 +19,7 @@ export interface TopContextBarProps {
   src?: string | null
   rightContent?: React.ReactNode
   onClick?(): void
-  useWithoutSeparator?: boolean
+  hideSeparator?: boolean
 }
 
 export const TopContextBar: React.FC<TopContextBarProps> = ({
@@ -30,7 +30,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
   src,
   rightContent,
   onClick,
-  useWithoutSeparator,
+  hideSeparator = false,
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
 
@@ -87,7 +87,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
         {rightContent}
       </Flex>
 
-      {!useWithoutSeparator && (
+      {!hideSeparator && (
         <FullBleed>
           <Separator as="hr" color="black15" />
         </FullBleed>
