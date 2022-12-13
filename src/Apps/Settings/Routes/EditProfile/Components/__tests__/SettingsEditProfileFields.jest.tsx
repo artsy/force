@@ -52,7 +52,7 @@ describe("SettingsEditProfileFields", () => {
     renderWithRelay()
 
     fireEvent.change(screen.getByPlaceholderText("Full name"), {
-      target: { name: "full-name", value: "Collector Name" },
+      target: { name: "name", value: "Collector Name" },
     })
     fireEvent.change(screen.getByPlaceholderText("City name"), {
       target: { name: "location", value: "A" },
@@ -61,14 +61,14 @@ describe("SettingsEditProfileFields", () => {
       target: { name: "profession", value: "Artist and Collector" },
     })
     fireEvent.change(screen.getByPlaceholderText("Other relevant positions"), {
-      target: { name: "other-relevant-positions", value: "Positions" },
+      target: { name: "otherRelevantPositions", value: "Positions" },
     })
     fireEvent.change(
       screen.getByPlaceholderText(
         "Add a brief bio, so galleries know which artists or genres you collect."
       ),
       {
-        target: { name: "about", value: "I collect" },
+        target: { name: "bio", value: "I collect" },
       }
     )
 
@@ -78,7 +78,7 @@ describe("SettingsEditProfileFields", () => {
 
     expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
       name: "Collector Name",
-      location: { city: "A" },
+      location: {},
       profession: "Artist and Collector",
       otherRelevantPositions: "Positions",
       bio: "I collect",
