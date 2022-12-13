@@ -67,7 +67,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
     `,
     children: [
       {
-        path: "collection",
+        path: "my-collection",
         getComponent: () => MyCollectionRoute,
         onClientSideRender: () => {
           MyCollectionRoute.preload()
