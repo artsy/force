@@ -1,9 +1,23 @@
-import { Button, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { Button, Spacer, Tab, Tabs, Text, useToasts } from "@artsy/palette"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { useSystemContext } from "System"
 
 export const ArtQuizResultsTabs: FC = () => {
   const { t } = useTranslation()
+
+  const { user } = useSystemContext()
+
+  const { sendToast } = useToasts()
+
+  const handleClick = () => {
+    // TODO: Trigger email
+
+    sendToast({
+      variant: "success",
+      message: t("artQuizPage.results.emailSuccess", { email: user?.email }),
+    })
+  }
 
   return (
     <>
@@ -19,7 +33,7 @@ export const ArtQuizResultsTabs: FC = () => {
 
       <Spacer y={4} />
 
-      <Button variant="secondaryBlack">
+      <Button variant="secondaryBlack" onClick={handleClick}>
         {t("artQuizPage.results.emailButton")}
       </Button>
 
