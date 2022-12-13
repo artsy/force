@@ -92,7 +92,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         flex={1}
       >
         <AppContainer maxWidth={appContainerMaxWidth}>
-          <HorizontalPadding>{children}</HorizontalPadding>
+          <HorizontalPadding height="100%">{children}</HorizontalPadding>
         </AppContainer>
       </Flex>
 
