@@ -3,8 +3,30 @@ import {
   useFeatureVariant,
   useTrackFeatureVariant,
   shouldTrack,
-} from "../useFeatureFlag"
+  getFeatureVariant,
+} from "System/useFeatureFlag"
 import { useSystemContext } from "System/useSystemContext"
+
+const FEATURE_FLAGS = {
+  "feature-a": {
+    flagEnabled: true,
+    variant: {
+      enabled: true,
+      name: "variant-a",
+      payload: {
+        type: "string",
+        value: "my payload",
+      },
+    },
+  },
+  "feature-b": {
+    flagEnabled: false,
+    variant: {
+      enabled: false,
+      name: "disabled",
+    },
+  },
+}
 
 jest.mock("System/useSystemContext")
 jest.mock("System/Router/useRouter", () => ({
@@ -17,30 +39,11 @@ jest.mock("System/Router/useRouter", () => ({
   }),
 }))
 
+jest.mock("Utils/getENV", () => ({ getENV: () => FEATURE_FLAGS }))
+
 beforeAll(() => {
   ;(useSystemContext as jest.Mock).mockImplementation(() => {
-    return {
-      featureFlags: {
-        "feature-a": {
-          flagEnabled: true,
-          variant: {
-            enabled: true,
-            name: "variant-a",
-            payload: {
-              type: "string",
-              value: "my payload",
-            },
-          },
-        },
-        "feature-b": {
-          flagEnabled: false,
-          variant: {
-            enabled: false,
-            name: "disabled",
-          },
-        },
-      },
-    }
+    return { featureFlags: FEATURE_FLAGS }
   })
 })
 
@@ -74,6 +77,27 @@ describe("useFeatureVariant", () => {
 
   it("returns false when the variant isn't present", () => {
     const variant = useFeatureVariant("feature-x")
+    expect(variant).toBe(null)
+  })
+})
+
+describe("getFeatureVariant", () => {
+  it("returns true when the variant is enabled", () => {
+    const variant = getFeatureVariant("feature-a")
+    expect(variant).toEqual({
+      enabled: true,
+      name: "variant-a",
+      payload: { type: "string", value: "my payload" },
+    })
+  })
+
+  it("returns the disabled response when not enabled", () => {
+    const variant = getFeatureVariant("feature-b")
+    expect(variant).toEqual({ enabled: false, name: "disabled" })
+  })
+
+  it("returns null when the variant is not present", () => {
+    const variant = getFeatureVariant("feature-x")
     expect(variant).toBe(null)
   })
 })

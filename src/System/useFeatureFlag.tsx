@@ -18,6 +18,11 @@ interface VariantTrackingProperties {
   payload?: string
 }
 
+interface DisabledVariant {
+  enabled: false
+  name: "disabled"
+}
+
 export function useFeatureFlag(featureName: string): boolean | null {
   const { featureFlags } = useSystemContext()
   const flagEnabled = featureFlags?.[featureName]?.flagEnabled
@@ -48,7 +53,9 @@ export function useFeatureVariant(featureName: string): Variant | null {
   return variant
 }
 
-export const getFeatureVariant = (featureName: string): Variant | null => {
+export const getFeatureVariant = (
+  featureName: string
+): Variant | DisabledVariant | null => {
   const featureFlags = getENV("FEATURE_FLAGS")
   const variant = featureFlags?.[featureName]?.variant
 
