@@ -188,7 +188,7 @@ export const logout = async () => {
  * Returns a token used to authenticate with Gravity
  */
 export const getTrustToken = async (accessToken: string): Promise<string> => {
-  const response = await fetch(`${getENV("APP_URL")}/api/v1/me/trust_token`, {
+  const response = await fetch(`${getENV("API_URL")}/api/v1/me/trust_token`, {
     method: "POST",
     headers: { "X-Access-Token": accessToken },
   })
