@@ -14,6 +14,7 @@ import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/Valid
 import {
   LocationAutocompleteInput,
   normalizePlace,
+  Place,
 } from "Components/LocationAutocompleteInput"
 import { useFormik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -39,13 +40,29 @@ interface SettingsEditProfileFieldsProps {
   me: SettingsEditProfileFields_me$data
 }
 
+interface LocationDisplay {
+  city?: string | null
+  state?: string | null
+  country?: string | null
+}
+
+export const buildLocationDisplay = (
+  location: LocationDisplay | null
+): string =>
+  [location?.city, location?.state, location?.country].filter(x => x).join(", ")
+
 const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   me,
 }) => {
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
-  const { values, isSubmitting, handleSubmit, setFieldValue } = useFormik<
-    EditProfileFormModel
-  >({
+  const {
+    values,
+    isSubmitting,
+    handleSubmit,
+    setFieldValue,
+    setFieldTouched,
+    handleChange,
+  } = useFormik<EditProfileFormModel>({
     initialValues: {
       name: me.name ?? "",
       displayLocation: { display: me.location?.display ?? null },
@@ -75,6 +92,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     validationSchema: editProfileVerificationSchema,
     validateOnBlur: true,
   })
+  console.log("[LOGD]  values.displayLocation = ", values.displayLocation)
 
   return (
     <>
@@ -89,13 +107,11 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           <Input
             title="Full name"
             placeholder="Full name"
-            name="full-name"
+            name="name"
             required
             maxLength={256}
             value={values.name}
-            onChange={({ target: { value } }) => {
-              setFieldValue("name", value)
-            }}
+            onChange={handleChange}
             data-testid="edit-profile-full-name-input"
           />
 
@@ -105,10 +121,16 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             name="location"
             maxLength={256}
             spellCheck={false}
-            value={values.displayLocation.display ?? undefined}
-            onChange={place => {
-              setFieldValue("location", normalizePlace(place))
+            defaultValue={values.displayLocation.display ?? undefined}
+            onClose={() => setFieldTouched("location")}
+            onSelect={(place?: Place) => {
+              setFieldValue("location", normalizePlace(place, false))
             }}
+            onChange={() => {
+              setFieldValue("location", {})
+              setFieldTouched("location", false)
+            }}
+            onClick={() => setFieldTouched("location", false)}
           />
 
           <Input
@@ -116,9 +138,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             placeholder="Profession or job title"
             name="profession"
             maxLength={256}
-            onChange={({ target: { value } }) => {
-              setFieldValue("profession", value)
-            }}
+            onChange={handleChange}
             value={values.profession}
             data-testid="edit-profile-profession-input"
           />
@@ -126,11 +146,9 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           <Input
             title="Other relevant positions"
             placeholder="Other relevant positions"
-            name="other-relevant-positions"
+            name="otherRelevantPositions"
             maxLength={256}
-            onChange={({ target: { value } }) => {
-              setFieldValue("otherRelevantPositions", value)
-            }}
+            onChange={handleChange}
             value={values.otherRelevantPositions}
             data-testid="edit-profile-other-relevant-positions-input"
           />
@@ -138,12 +156,10 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           <Input
             title="About"
             placeholder="Add a brief bio, so galleries know which artists or genres you collect."
-            name="about"
+            name="bio"
             multiple
             maxLength={150}
-            onChange={({ target: { value } }) => {
-              setFieldValue("bio", value)
-            }}
+            onChange={handleChange}
             value={values.bio}
             data-testid="edit-profile-about-input"
           />
