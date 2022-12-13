@@ -1,9 +1,15 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "net.artsy.app",
-    "sha256_cert_fingerprints":
-    ["72:70:C3:1C:74:A4:86:D8:F7:31:08:E0:2E:72:D6:91:00:4D:57:35:16:8B:9C:DA:B1:65:5D:49:1D:33:2E:88"]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.artsy.app",
+      "sha256_cert_fingerprints": [
+        "72:70:C3:1C:74:A4:86:D8:F7:31:08:E0:2E:72:D6:91:00:4D:57:35:16:8B:9C:DA:B1:65:5D:49:1D:33:2E:88",
+        "03:D2:5C:C6:22:D2:76:BA:D3:A5:A9:19:3C:EF:A6:D1:60:99:14:9B:AD:68:E7:FB:19:52:0D:76:3B:83:DE:87"
+      ]
+    }
   }
-}]
+]
