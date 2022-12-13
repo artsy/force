@@ -10,28 +10,38 @@ import {
   Spinner,
   Text,
 } from "@artsy/palette"
-import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import {
   ArtQuizDislikeButton,
   ArtQuizSaveButton,
 } from "Apps/ArtQuiz/Components/ArtQuizButtons"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { FC, useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useWindowSize } from "Utils/Hooks/useWindowSize"
+import { ArtQuizMain_quiz$data } from "__generated__/ArtQuizMain_quiz.graphql"
 
 const DESKTOP_ROW_HEIGHT = 120
 const DESKTOP_IMAGE_PY = 40
 const MOBILE_ROW_HEIGHT = 80
 const MOBILE_ADDRESS_BAR_HEIGHT = 55
 
-export const ArtQuizMain: FC = () => {
+interface ArtQuizMainProps {
+  quiz: ArtQuizMain_quiz$data
+}
+
+export const ArtQuizMain: FC<ArtQuizMainProps> = props => {
   const { desktop, mobile } = useNavBarHeight()
-  const {
-    artworksTotalCount,
-    currentArtwork,
-    currentIndex,
-  } = useArtQuizContext()
   const { height, width } = useWindowSize()
+
+  console.log("**************", props)
+
+  const totalCount = props.quiz.quizArtworks?.totalCount
+  const currentQuizArtwork = props.quiz!.quizArtworks!.edges!.find(edge => {
+    const quizArtwork = edge!.node!
+    return !quizArtwork.interactedAt
+  })!.node!
+
+  const currentArtwork = currentQuizArtwork!.artwork!
 
   const aspectRatio = currentArtwork.image?.aspectRatio ?? 1
 
@@ -86,7 +96,7 @@ export const ArtQuizMain: FC = () => {
           alignSelf="center"
           justifySelf="center"
         >
-          {`${currentIndex + 1} / ${artworksTotalCount}`}
+          {`${currentQuizArtwork.position + 1} / ${totalCount}`}
         </Text>
         <Clickable
           gridArea={["header", "skip"]}
@@ -117,8 +127,8 @@ export const ArtQuizMain: FC = () => {
               p={[0, 2]}
             >
               <Image
-                alt={currentArtwork.title}
-                src={currentArtwork.image?.url}
+                alt={currentArtwork.title!}
+                src={currentArtwork.image?.url!}
                 preventRightClick={true}
                 height="100%"
                 width="100%"
@@ -141,3 +151,30 @@ export const ArtQuizMain: FC = () => {
     </FullBleed>
   )
 }
+
+export const ArtQuizMainFragmentContainer = createFragmentContainer(
+  ArtQuizMain,
+  {
+    quiz: graphql`
+      fragment ArtQuizMain_quiz on Quiz {
+        quizArtworks(first: 16) {
+          totalCount
+          edges {
+            node {
+              interactedAt
+              position
+              artwork {
+                slug
+                title
+                image {
+                  url(version: "large")
+                  aspectRatio
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)

@@ -1,8 +1,10 @@
 import loadable from "@loadable/component"
+import { RedirectException } from "found"
+import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
 const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
-  resolveComponent: component => component.ArtQuizApp,
+  resolveComponent: component => component.ArtQuizAppFragmentContainer,
 })
 
 const ArtQuizResults = loadable(() => import("./ArtQuizResults"), {
@@ -15,7 +17,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
     path: "/art-quiz",
     displayFullPage: true,
     hideFooter: true,
-    onServerSideRender: ({ req, res }) => {
+    onServerSideRender: ({ res }) => {
       if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
         res.redirect("/")
       }
@@ -28,6 +30,34 @@ export const artQuizRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => ArtQuizApp,
+        query: graphql`
+          query artQuizRoutes_TopLevelQuery {
+            viewer {
+              quizConnection {
+                completedAt
+                ...ArtQuizApp_quiz
+              }
+            }
+          }
+        `,
+        render: ({ Component, props }) => {
+          if (!(Component && props)) {
+            return
+          }
+          const { viewer } = props as any
+
+          if (!viewer?.quizConnection) {
+            return
+          }
+
+          const { completedAt } = viewer.quizConnection
+
+          if (completedAt) {
+            throw new RedirectException("/art-quiz/results")
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         path: "results",
