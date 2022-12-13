@@ -17,7 +17,7 @@
   },
   "artQuizPage": {
     "loadingScreen": {
-      "calculatingResults": "Calculating Results...",
+      "calculatingResults": "Calculating Results…",
       "resultsComplete": "Results Complete"
     },
     "title": "Art Taste Quiz",
