@@ -3,7 +3,6 @@ import { graphql } from "react-relay"
 import { isServer } from "Server/isServer"
 import { useContext } from "react"
 import { SystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
@@ -21,7 +20,6 @@ interface NavBarMobileMenuNotificationsProps {
 export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificationsProps> = ({
   me,
 }) => {
-  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
@@ -30,19 +28,17 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
 
   return (
     <>
-      {enableActivityPanel && (
-        <NavBarMobileMenuItemLink
-          to="/notifications"
-          onClick={() => {
-            trackEvent({
-              action: ActionType.clickedNotificationsBell,
-            })
-          }}
-        >
-          Activity
-          {hasNotifications && <Indicator />}
-        </NavBarMobileMenuItemLink>
-      )}
+      <NavBarMobileMenuItemLink
+        to="/notifications"
+        onClick={() => {
+          trackEvent({
+            action: ActionType.clickedNotificationsBell,
+          })
+        }}
+      >
+        Activity
+        {hasNotifications && <Indicator />}
+      </NavBarMobileMenuItemLink>
 
       <NavBarMobileMenuItemLink
         to="/user/conversations"

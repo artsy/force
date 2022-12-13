@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import * as React from "react"
-import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
+import { NavBarUserMenu } from "./Menus"
 import { SystemContext } from "System"
 import { BellIcon, Dropdown, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "react-relay"
@@ -12,7 +12,6 @@ import {
 import { isServer } from "Server/isServer"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
@@ -23,7 +22,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQuery$data
 >> = ({ me }) => {
   const { trackEvent } = useTracking()
-  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
@@ -34,11 +32,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
       <Dropdown
         zIndex={Z.dropdown}
         dropdown={
-          enableActivityPanel ? (
-            <NavBarNewNotifications unreadCounts={unreadNotificationsCount} />
-          ) : (
-            <NavBarNotificationsQueryRenderer />
-          )
+          <NavBarNewNotifications unreadCounts={unreadNotificationsCount} />
         }
         placement="bottom-end"
         offset={0}

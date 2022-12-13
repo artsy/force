@@ -126,24 +126,8 @@ describe("NavBarMobileMenu", () => {
         expect(hasActivityMenuItem).toBe(false)
       })
 
-      it("should NOT render activity menu option by default", () => {
+      it("should render activity menu option", () => {
         const wrapper = getMobileMenuLinkContainer("NotAdmin")
-        const menuLinks = wrapper.find("a").map(node => node.text())
-        const hasActivityMenuItem = menuLinks.includes("Activity")
-
-        expect(hasActivityMenuItem).toBe(false)
-      })
-
-      it("should render activity menu option when feature flag is enabled", () => {
-        const wrapper = getMobileMenuLinkContainer("NotAdmin", [], {
-          "force-enable-new-activity-panel": {
-            flagEnabled: true,
-            variant: {
-              name: "disabled",
-              enabled: false,
-            },
-          },
-        })
         const menuLinks = wrapper.find("a").map(node => node.text())
         const hasActivityMenuItem = menuLinks.includes("Activity")
 
@@ -168,15 +152,7 @@ describe("NavBarMobileMenu", () => {
     })
 
     it("tracks link clicks", () => {
-      const linkContainer = getMobileMenuLinkContainer("notAdmin", [], {
-        "force-enable-new-activity-panel": {
-          flagEnabled: true,
-          variant: {
-            name: "enabled",
-            enabled: true,
-          },
-        },
-      })
+      const linkContainer = getMobileMenuLinkContainer("notAdmin")
 
       // at(0) - Activity link
       // at(1) - Inbox link

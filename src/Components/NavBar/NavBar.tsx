@@ -8,7 +8,6 @@ import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
-import { NavBarMobileMenuInboxNotificationCountQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { ModalType } from "Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,
@@ -35,7 +34,6 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { Z } from "Apps/Components/constants"
 import { useTranslation } from "react-i18next"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { useJump } from "Utils/Hooks/useJump"
 
@@ -64,7 +62,6 @@ export const NavBar: React.FC = track(
   const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
-  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
@@ -118,11 +115,7 @@ export const NavBar: React.FC = track(
       return null
     }
 
-    if (enableActivityPanel) {
-      return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
-    }
-
-    return <NavBarMobileMenuInboxNotificationCountQueryRenderer />
+    return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
   }
 
   return (
