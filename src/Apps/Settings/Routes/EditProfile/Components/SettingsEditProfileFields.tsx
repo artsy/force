@@ -8,6 +8,7 @@ import {
   Join,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
@@ -40,27 +41,17 @@ interface SettingsEditProfileFieldsProps {
   me: SettingsEditProfileFields_me$data
 }
 
-interface LocationDisplay {
-  city?: string | null
-  state?: string | null
-  country?: string | null
-}
-
-export const buildLocationDisplay = (
-  location: LocationDisplay | null
-): string =>
-  [location?.city, location?.state, location?.country].filter(x => x).join(", ")
-
 const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   me,
 }) => {
+  const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
   const {
     values,
     isSubmitting,
     handleSubmit,
     setFieldValue,
-    setFieldTouched,
     handleChange,
   } = useFormik<EditProfileFormModel>({
     initialValues: {
@@ -85,8 +76,18 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         }
 
         await submitUpdateMyUserProfile(payload)
+
+        sendToast({
+          variant: "success",
+          message: "Information updated successfully",
+        })
       } catch (error) {
         console.error("Failed to update user profile ", error)
+
+        sendToast({
+          variant: "error",
+          message: "There was a problem",
+        })
       }
     },
     validationSchema: editProfileVerificationSchema,
@@ -122,15 +123,12 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             maxLength={256}
             spellCheck={false}
             defaultValue={values.displayLocation.display ?? undefined}
-            onClose={() => setFieldTouched("location")}
             onSelect={(place?: Place) => {
               setFieldValue("location", normalizePlace(place, false))
             }}
             onChange={() => {
               setFieldValue("location", {})
-              setFieldTouched("location", false)
             }}
-            onClick={() => setFieldTouched("location", false)}
           />
 
           <Input
