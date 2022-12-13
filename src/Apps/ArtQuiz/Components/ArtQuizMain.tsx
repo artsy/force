@@ -8,14 +8,39 @@ import {
   HeartIcon,
   Text,
 } from "@artsy/palette"
-import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
+import { useCursor } from "use-cursor"
+
+const TOTAL = 10
 
 interface ArtQuizMainProps {}
 
 export const ArtQuizMain: FC<ArtQuizMainProps> = () => {
-  const { total, index, onNext, onPrevious } = useArtQuizContext()
+  const { router } = useRouter()
+
+  const { handleNext, handlePrev, index } = useCursor({ max: TOTAL })
+
+  const onPrevious = () => {
+    if (index === 0) {
+      router.push("/art-quiz/welcome")
+
+      return
+    }
+
+    handlePrev()
+  }
+
+  const onNext = () => {
+    if (index === TOTAL - 1) {
+      router.push("/art-quiz/results")
+
+      return
+    }
+
+    handleNext()
+  }
 
   return (
     <>
@@ -39,7 +64,7 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = () => {
             alignItems="center"
             justifyContent="center"
           >
-            {index + 1} / {total}
+            {index + 1} / {TOTAL}
           </Text>
 
           <RouterLink
