@@ -36,7 +36,10 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
 
   const tabs = compact([
     { name: "Edit Settings", url: "/settings/edit-settings" },
-    { name: "Collector Profile", url: "/settings/edit-profile" },
+    {
+      name: isCollectorProfileEnabled ? "Edit Profile" : "Collector Profile",
+      url: "/settings/edit-profile",
+    },
     { name: "My Collection", url: "/settings/my-collection" },
     isInsightsEnabled && { name: "Insights", url: "/settings/insights" },
     { name: "Saves & Follows", url: "/settings/saves" },

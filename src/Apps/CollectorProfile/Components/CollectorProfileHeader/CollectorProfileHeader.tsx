@@ -22,12 +22,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
       <Flex>
         <CollectorProfileHeaderAvatarFragmentContainer me={me} />
 
-        <Flex
-          flex={1}
-          flexDirection="column"
-          justifyContent="center"
-          ml={[1, 2]}
-        >
+        <Flex flex={1} flexDirection="column" justifyContent="center">
           <Text variant={["md", "xl"]}>{name}</Text>
           {!!createdAt && (
             <Text variant={["xs", "sm-display"]} color="black60">
@@ -37,10 +32,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Flex>
 
         <Media lessThan="sm">
-          <RouterLink
-            // TODO: CX-3174
-            to=""
-          >
+          <RouterLink to="/settings/edit-settings">
             <SettingsIcon />
           </RouterLink>
         </Media>
@@ -49,8 +41,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
           <Button
             // @ts-ignore
             as={RouterLink}
-            // TODO: CX-3174
-            to=""
+            to="/settings/edit-settings"
             variant="secondaryBlack"
             size="large"
           >

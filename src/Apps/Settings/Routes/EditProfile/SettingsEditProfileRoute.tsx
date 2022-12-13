@@ -8,9 +8,9 @@ import { SettingsEditSettingsTwoFactorFragmentContainer } from "Apps/Settings/Ro
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsLinkedAccounts"
 import { SettingsEditSettingsEmailPreferences } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsDeleteAccount } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsDeleteAccount/SettingsEditSettingsDeleteAccount"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { SettingsEditProfileAboutYouFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
 import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileArtistsYouCollect/SettingsEditProfileArtistsYouCollect"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
@@ -59,6 +59,7 @@ export const SettingsEditProfileRouteFragmentContainer = createFragmentContainer
         ...SettingsEditSettingsPassword_me
         ...SettingsEditSettingsTwoFactor_me
         ...SettingsEditSettingsLinkedAccounts_me
+        ...SettingsEditProfileFields_me
       }
     `,
   }
