@@ -30,9 +30,12 @@ const DEFAULT_IMAGE_SERVICE: ImageService = "gemini"
 
 export const getImageService = (): ImageService => {
   const variant = getFeatureVariant("image-service")
-  const requestedImageService = variant?.payload?.value as ImageService
 
-  return requestedImageService || DEFAULT_IMAGE_SERVICE
+  if (!!variant && "payload" in variant && variant.payload && variant.enabled) {
+    return (variant.payload.value || DEFAULT_IMAGE_SERVICE) as ImageService
+  }
+
+  return DEFAULT_IMAGE_SERVICE
 }
 
 export const crop = (
