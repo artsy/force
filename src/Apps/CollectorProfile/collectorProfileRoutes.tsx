@@ -20,7 +20,7 @@ const MyCollectionRoute = loadable(
     ),
   {
     resolveComponent: component =>
-      component.CollectorProfileMyCollectionRouteFragmentContainer,
+      component.CollectorProfileMyCollectionRouteRefetchContainer,
   }
 )
 
@@ -72,6 +72,14 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           MyCollectionRoute.preload()
         },
+        query: graphql`
+          query collectorProfileRoutes_CollectorProfileMyCollectionRouteQuery {
+            me {
+              ...CollectorProfileMyCollectionRoute_me
+            }
+          }
+        `,
+        cacheConfig: { force: true },
       },
       {
         path: "insights",
