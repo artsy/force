@@ -56,6 +56,17 @@ const MyCollectionArtworkForm = loadable(
   }
 )
 
+const MyCollectionArtwork = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
+    ),
+  {
+    resolveComponent: component =>
+      component.MyCollectionArtworkFragmentContainer,
+  }
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -130,6 +141,23 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
     getComponent: () => MyCollectionArtworkForm,
     onClientSideRender: () => {
       MyCollectionArtworkForm.preload()
+    },
+  },
+  {
+    path: "/collector-profile/my-collection/artwork/:artworkID",
+    getComponent: () => MyCollectionArtwork,
+    onClientSideRender: () => {
+      MyCollectionArtwork.preload()
+    },
+    query: graphql`
+      query collectorProfileRoutes_ArtworkQuery($artworkID: String!) {
+        artwork(id: $artworkID) @principalField {
+          ...MyCollectionArtwork_artwork
+        }
+      }
+    `,
+    cacheConfig: {
+      force: true,
     },
   },
 ]

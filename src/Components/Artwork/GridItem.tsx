@@ -12,6 +12,7 @@ import { MagnifyImage } from "Components/MagnifyImage"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork$data
@@ -201,6 +202,8 @@ const LinkContainer: React.FC<
   onClick,
   isMyCollectionArtwork,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -218,6 +221,8 @@ const LinkContainer: React.FC<
   // but to a custom my collection artwork page.
   const to = !isMyCollectionArtwork
     ? artwork.href
+    : isCollectorProfileEnabled
+    ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
     : `/my-collection/artwork/${artwork.internalID}`
 
   return (
