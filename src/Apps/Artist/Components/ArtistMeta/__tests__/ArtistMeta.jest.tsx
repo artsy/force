@@ -158,6 +158,55 @@ describe("AdminMeta", () => {
     })
   })
 
+  describe("image meta tags", () => {
+    it("skips rendering most of them but does render the twitter one as summary", () => {
+      const artist = {}
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "thumbnail" })).toBeNull()
+      expect(getMetaBy({ property: "og:image" })).toBeNull()
+      expect(
+        getMetaBy({ property: "twitter:card", content: "summary" })
+      ).not.toBeNull()
+    })
+
+    it("skips rendering when there is not large version", () => {
+      const artist = {
+        image: {
+          large: "https://www.example.com/image/large.png",
+          square: "https://www.example.com/image/square.png",
+          versions: ["square"],
+        },
+      }
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "thumbnail" })).toBeNull()
+      expect(getMetaBy({ property: "og:image" })).toBeNull()
+      expect(
+        getMetaBy({ property: "twitter:card", content: "summary" })
+      ).not.toBeNull()
+    })
+
+    it("renders them when thee is a large version", () => {
+      const artist = {
+        image: {
+          large: "https://www.example.com/image/large.png",
+          square: "https://www.example.com/image/square.png",
+          versions: ["large", "square"],
+        },
+      }
+      renderWithRelay({ Artist: () => artist })
+
+      expect(
+        getMetaBy({ name: "thumbnail", content: artist.image.square })
+      ).not.toBeNull()
+      expect(
+        getMetaBy({ property: "og:image", content: artist.image.large })
+      ).not.toBeNull()
+      expect(
+        getMetaBy({ property: "twitter:card", content: "summary_large_image" })
+      ).not.toBeNull()
+    })
+  })
+
   describe("structured data", () => {
     it("renders", () => {
       const artist = {}
