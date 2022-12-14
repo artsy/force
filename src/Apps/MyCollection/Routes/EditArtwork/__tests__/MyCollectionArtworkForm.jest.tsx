@@ -3,7 +3,7 @@ import {
   MyCollectionArtworkForm,
   MyCollectionArtworkFormFragmentContainer,
 } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
-import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
@@ -60,7 +60,7 @@ jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
   uploadMyCollectionPhoto: jest.fn(),
 }))
-const mockUploadPhoto = uploadMyCollectionPhoto as jest.Mock
+const mockUploadPhoto = uploadPhotoToS3 as jest.Mock
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 

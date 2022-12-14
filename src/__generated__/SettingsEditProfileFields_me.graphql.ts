@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9a42c497abc82de34c36b81e723fd77>>
+ * @generated SignedSource<<112c598f175daf525dbef8564ba3cf09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type SettingsEditProfileFields_me$data = {
   readonly name: string | null;
   readonly otherRelevantPositions: string | null;
   readonly profession: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeaderAvatar_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileImage_me">;
   readonly " $fragmentType": "SettingsEditProfileFields_me";
 };
 export type SettingsEditProfileFields_me$key = {
@@ -45,7 +45,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CollectorProfileHeaderAvatar_me"
+      "name": "SettingsEditProfileImage_me"
     },
     {
       "alias": null,
@@ -171,6 +171,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4277c605fb20269124cb724bc1619918";
+(node as any).hash = "196267ba743d85d9a1c88a42430274dc";
 
 export default node;

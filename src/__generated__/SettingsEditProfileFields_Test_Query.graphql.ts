@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f8128bf50a5ff6d397c60311d6f5622>>
+ * @generated SignedSource<<055b4c282b83b1fbc4a32378d02aba88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -262,7 +262,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6bd9f458314809426e5b1b4843d927be",
+    "cacheID": "e98013ac08b28202f2df6d78a56f44a2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -316,7 +316,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  icon {\n    url(version: \"thumbnail\")\n  }\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  emailConfirmed\n  identityVerified\n  canRequestEmailConfirmation\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  icon {\n    url(version: \"thumbnail\")\n  }\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  emailConfirmed\n  identityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
   }
 };
 })();
