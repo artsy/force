@@ -82,4 +82,52 @@ describe("AdminMeta", () => {
       ).not.toBeNull()
     })
   })
+
+  describe("og tags", () => {
+    it("renders them", () => {
+      const artist = { slug: "andy-warhol" }
+      renderWithRelay({ Artist: () => artist })
+
+      expect(
+        getMetaBy({
+          property: "og:url",
+          href: "undefined/artist/andy-warhol",
+        })
+      ).not.toBeNull()
+
+      expect(
+        getMetaBy({ property: "og:type", href: "undefined:artist" })
+      ).not.toBeNull()
+    })
+  })
+
+  describe("optional og tags", () => {
+    it("skips rendering them without the data", () => {
+      const artist = { birthday: null, deathday: null, nationality: null }
+      renderWithRelay({ Artist: () => artist })
+
+      expect(getMetaBy({ property: "og:birthyear" })).toBeNull()
+      expect(getMetaBy({ property: "og:deathyear" })).toBeNull()
+      expect(getMetaBy({ property: "og:nationality" })).toBeNull()
+    })
+
+    it("renders them with the data", () => {
+      const artist = {
+        birthday: "March 9",
+        deathday: "June 7",
+        nationality: "American",
+      }
+      renderWithRelay({ Artist: () => artist })
+
+      expect(
+        getMetaBy({ property: "og:birthyear", content: artist.birthday })
+      ).not.toBeNull()
+      expect(
+        getMetaBy({ property: "og:deathyear", content: artist.deathday })
+      ).not.toBeNull()
+      expect(
+        getMetaBy({ property: "og:nationality", content: artist.nationality })
+      ).not.toBeNull()
+    })
+  })
 })

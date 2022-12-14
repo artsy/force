@@ -69,13 +69,6 @@ export class ArtistMeta extends Component<Props> {
           property="og:type"
           href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
         />
-        {artist.alternate_names && (
-          <Meta
-            name="skos:prefLabel"
-            content={artist.alternate_names.join("; ")}
-          />
-        )}
-
         {artist.nationality && (
           <Meta property="og:nationality" content={artist.nationality} />
         )}
@@ -84,6 +77,12 @@ export class ArtistMeta extends Component<Props> {
         )}
         {artist.deathday && (
           <Meta property="og:deathyear" content={artist.deathday} />
+        )}
+        {artist.alternate_names && (
+          <Meta
+            name="skos:prefLabel"
+            content={artist.alternate_names.join("; ")}
+          />
         )}
         {this.renderImageMetaTags()}
         {this.maybeRenderNoIndex()}
