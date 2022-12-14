@@ -92,6 +92,7 @@ export const AddressModal: React.FC<Props> = ({
             onEditOrCreateAddressError={handleEditOrCreateAddressError}
             onEditOrCreateAddressSuccess={handleEditOrCreateAddressSuccess}
             setShowDialog={setShowDialog}
+            buttonText={"Save"}
           />
         </ModalDialog>
       )}

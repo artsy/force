@@ -68,7 +68,8 @@ interface AddressFormProps {
   onEditOrCreateAddressSuccess: (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => void
-  setShowDialog: (arg: boolean) => void
+  setShowDialog?: (arg: boolean) => void
+  buttonText: string
 }
 
 export const AddressForm: React.FC<AddressFormProps> = ({
@@ -78,6 +79,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   onEditOrCreateAddressError,
   onEditOrCreateAddressSuccess,
   setShowDialog,
+  buttonText,
 }) => {
   const { relayEnvironment } = useSystemContext()
   if (!relayEnvironment) return null
@@ -195,7 +197,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                 Set as default
               </Checkbox>
             )}
-            {!isCreateAddress && (
+            {!isCreateAddress && setShowDialog && (
               <Flex mt={2} flexDirection="column" alignItems="center">
                 <Clickable
                   data-test="deleteButton"
@@ -217,7 +219,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               width="100%"
               mt={2}
             >
-              Save
+              {buttonText}
             </Button>
           </Form>
         )
