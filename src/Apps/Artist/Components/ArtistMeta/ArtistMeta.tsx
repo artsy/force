@@ -4,6 +4,7 @@ import { Component } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
+import { ArtistImageMetaTags } from "./ArtistImageMetaTags"
 import { getENV } from "Utils/getENV"
 import { structuredDataAttributes } from "./helpers"
 
@@ -12,28 +13,6 @@ interface Props {
 }
 
 export class ArtistMeta extends Component<Props> {
-  renderImageMetaTags() {
-    const { artist } = this.props
-
-    const hasImage = artist?.image?.versions?.length
-
-    if (hasImage && artist.image.versions.indexOf("large") !== -1) {
-      return (
-        <>
-          <Meta property="twitter:card" content="summary_large_image" />
-          <Meta property="og:image" content={artist.image.large} />
-          <Meta name="thumbnail" content={artist.image.square} />
-        </>
-      )
-    } else {
-      return (
-        <>
-          <Meta property="twitter:card" content="summary" />
-        </>
-      )
-    }
-  }
-
   render() {
     const { artist } = this.props
     const metaContent = artist?.meta?.description
@@ -66,7 +45,7 @@ export class ArtistMeta extends Component<Props> {
         {alternateNames.length > 0 && (
           <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
         )}
-        {this.renderImageMetaTags()}
+        <ArtistImageMetaTags artist={artist} />
         {showNoIndex && <Meta name="robots" content="noindex, follow" />}
         <SeoDataForArtist data={structuredDataAttributes(artist)} />
       </>
