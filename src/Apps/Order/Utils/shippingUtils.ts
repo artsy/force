@@ -58,8 +58,8 @@ export const defaultShippingAddressIndex = (
         name,
         phoneNumber,
         postalCode,
-        region,
       } = order.requestedFulfillment
+
       defaultAddressID = addressList?.find(
         address =>
           address?.node?.addressLine1 == addressLine1 &&
@@ -68,7 +68,6 @@ export const defaultShippingAddressIndex = (
           address?.node?.country == country &&
           address?.node?.name == name &&
           address?.node?.postalCode == postalCode &&
-          address?.node?.region == region &&
           address?.node?.phoneNumber == phoneNumber
       )?.node?.internalID!
     } else {
