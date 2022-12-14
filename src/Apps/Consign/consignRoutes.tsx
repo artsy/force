@@ -1,9 +1,29 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
+import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 import { getENV } from "Utils/getENV"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
+
+const ConsignmentInquiryApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiry"
+    ),
+  {
+    resolveComponent: component =>
+      component.ConsignmentInquiryFragmentContainer,
+  }
+)
+const ConsignmentInquiryConfirmationApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiryConfirmation"
+    ),
+  {
+    resolveComponent: component => component.ConsignmentInquiryConfirmation,
+  }
+)
 
 const MarketingLandingApp = loadable(
   () =>
@@ -139,6 +159,13 @@ const contactInformationQuery = graphql`
   }
 `
 
+const renderConsignmentInquiry = ({ Component, props }: RouteRenderArgs) => {
+  if (!(Component && props)) {
+    return undefined
+  }
+  return <Component {...props} />
+}
+
 export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell",
@@ -156,6 +183,32 @@ export const consignRoutes: AppRouteConfig[] = [
         getComponent: () => FAQApp,
         onClientSideRender: () => {
           FAQApp.preload()
+        },
+      },
+      {
+        path: "inquiry",
+        hideFooter: true,
+        getComponent: () => ConsignmentInquiryApp,
+        onClientSideRender: () => {
+          ConsignmentInquiryApp.preload()
+        },
+        query: graphql`
+          query consignRoutes_ConsignmentInquiryAppQuery {
+            me {
+              ...ConsignmentInquiry_me
+            }
+          }
+        `,
+        render: renderConsignmentInquiry,
+      },
+      {
+        path: "inquiry/sent",
+        hideFooter: true,
+        hideNav: true,
+        hideNavigationTabs: true,
+        getComponent: () => ConsignmentInquiryConfirmationApp,
+        onClientSideRender: () => {
+          ConsignmentInquiryConfirmationApp.preload()
         },
       },
     ],

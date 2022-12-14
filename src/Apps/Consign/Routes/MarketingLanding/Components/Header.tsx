@@ -11,6 +11,10 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 export const Header: React.FC = () => {
   const { trackEvent } = useTracking()
   const showGetInTouchCTA = useFeatureFlag("get-in-touch-flow-web")
+  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
+  const getInTouchRoute = enableSWAInquiryFlow
+    ? "/sell/inquiry"
+    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
 
@@ -85,7 +89,7 @@ export const Header: React.FC = () => {
                   onClick={trackGetInTouchClick}
                   width="100%"
                   data-testid="get-in-touch-button"
-                  to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+                  to={getInTouchRoute}
                 >
                   Get in Touch
                 </Button>
