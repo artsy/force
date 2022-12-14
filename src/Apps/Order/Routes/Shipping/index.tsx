@@ -9,7 +9,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"
@@ -67,13 +66,10 @@ import {
   NEW_ADDRESS,
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "Apps/Order/Components/SavedAddresses"
-import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { setShipping } from "Apps/Order/Mutations/SetShipping"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
 import { compact } from "lodash"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
-import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
-import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import {
@@ -101,7 +97,6 @@ export interface ShippingProps {
 
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
-  const { relayEnvironment } = useSystemContext()
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -135,9 +130,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const [saveAddress, setSaveAddress] = useState(true)
   const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
-  const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
-    undefined
-  )
 
   useEffect(() => {
     const isAddressRemoved = !addressList.find(
@@ -288,8 +280,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         handleSubmitError(orderOrError.error)
         return
       }
-      // update address when user is entering new address AND save checkbox is selected
-      await updateAddress()
 
       if (isArtsyShipping) {
         setShippingQuotes(getShippingQuotes(orderOrError?.order))
@@ -316,8 +306,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           })
         ).commerceSelectShippingOption?.orderOrError
 
-        await updateAddress()
-
         if (orderOrError?.error) {
           handleSubmitError(orderOrError.error)
           return
@@ -330,65 +318,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: getArtaErrorMessage(),
         })
       }
-    }
-  }
-
-  const updateAddress = async () => {
-    const shouldCreateNewAddress = isCreateNewAddress()
-
-    if (saveAddress) {
-      if (
-        shippingOption === "SHIP" &&
-        shouldCreateNewAddress &&
-        relayEnvironment
-      ) {
-        if (savedAddressID) {
-          updateUserAddress(
-            relayEnvironment,
-            savedAddressID,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
-            () => {},
-            () => {
-              message => {
-                logger.error(message)
-              }
-            }, // onError
-            () => {} // onSuccess
-          )
-        } else {
-          await createUserAddress(
-            relayEnvironment,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
-            data => {
-              setSavedAddressID(
-                data?.createUserAddress?.userAddressOrErrors.internalID
-              )
-            }, // onSuccess
-            () => {
-              message => {
-                logger.error(message)
-              }
-            }, // onError
-            props.me, // me
-            () => {}
-          )
-        }
-      }
-    } else if (savedAddressID) {
-      deleteUserAddress(
-        relayEnvironment!,
-        savedAddressID,
-        () => {},
-        message => {
-          logger.error(message)
-        }
-      )
     }
   }
 

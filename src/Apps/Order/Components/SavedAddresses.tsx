@@ -60,7 +60,7 @@ const defaultAddressIndex = (addressList: Address[]) => {
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const { trackEvent } = useTracking()
   const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
-  const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
+  const [showAddressModal, setShowAddressModal] = useState(false)
   const [address, setAddress] = useState<Address | undefined | null>(null)
   const logger = createLogger("SavedAddresses.tsx")
   const {
@@ -81,6 +81,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // FIXME: Remove this disable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.addressConnection?.totalCount])
+
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -122,15 +123,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     }
   }
 
-  const handleEditAddress = (address: Address, index: number) => {
-    setShowAddressModal(true)
-    setModalDetails({
-      addressModalTitle: "Edit address",
-      addressModalAction: "editUserAddress",
-    })
-    setAddress(address)
-  }
-
   const createOrUpdateAddressSuccess = (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => {
@@ -143,6 +135,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
 
     onShowToast && onShowToast(true, "Saved")
+  }
+
+  const handleEditAddress = (address: Address) => {
+    setShowAddressModal(true)
+    setModalDetails({
+      addressModalTitle: "Edit address",
+      addressModalAction: "editUserAddress",
+    })
+    setAddress(address)
   }
 
   const handleAddNewAddressClick = () => {
@@ -176,7 +177,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               <SavedAddressItem
                 index={index}
                 address={address}
-                handleClickEdit={() => handleEditAddress(address, index)}
+                handleClickEdit={() => handleEditAddress(address)}
               />
             </BorderedRadio>
           )

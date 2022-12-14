@@ -40,8 +40,7 @@ export const createUserAddress = async (
   address: UserAddressAttributes,
   onSuccess: (address: CreateUserAddressMutation$data | null) => void,
   onError: (message: string | null) => void,
-  me: SavedAddresses_me$data | Shipping_me$data,
-  closeModal: () => void
+  me: SavedAddresses_me$data | Shipping_me$data
 ) => {
   commitMutation<CreateUserAddressMutation>(environment, {
     variables: {
@@ -85,7 +84,6 @@ export const createUserAddress = async (
         onError(errors.map(error => error.message).join(", "))
       } else {
         onSuccess(data)
-        closeModal()
       }
     },
     onError: e => {

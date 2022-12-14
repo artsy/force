@@ -13,16 +13,14 @@ type AddressNode = NonNullable<
 
 interface SavedAddressItemProps {
   address: AddressNode
-  handleClickEdit: (number) => void
+  handleClickEdit: () => void
   index: number
 }
 
-export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
-  props
-): React.ReactElement<RadioProps> => {
-  const handleClickEdit = props?.handleClickEdit
-  const index = props?.index
-  const address = props?.address
+export const SavedAddressItem: React.FC<SavedAddressItemProps> = ({
+  handleClickEdit,
+  address,
+}): React.ReactElement<RadioProps> => {
   const addressLine1 = address?.addressLine1
   const addressLine2 = address?.addressLine2
   const addressLine3 = address?.addressLine3
@@ -75,12 +73,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         top={2}
         right={2}
         tabIndex={0}
-        onClick={() => handleClickEdit(index)}
+        onClick={() => handleClickEdit()}
         onKeyPress={event => {
           event.preventDefault()
           event.stopPropagation()
 
-          event.key === "Enter" && handleClickEdit(index)
+          event.key === "Enter" && handleClickEdit()
         }}
         data-test="editAddressInShipping"
       >

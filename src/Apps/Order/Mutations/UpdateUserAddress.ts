@@ -9,7 +9,6 @@ export const updateUserAddress = async (
   environment: Environment,
   userAddressID: string,
   values: UserAddressAttributes,
-  closeModal: () => void,
   onSuccess: (address: UpdateUserAddressMutation$data) => void,
   onError: (message: string) => void
 ) => {
@@ -53,7 +52,6 @@ export const updateUserAddress = async (
         onError(errors.map(error => error.message).join(", "))
       } else {
         onSuccess(data)
-        closeModal()
       }
     },
     onError: e => {
