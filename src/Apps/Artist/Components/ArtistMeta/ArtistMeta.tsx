@@ -1,6 +1,5 @@
 import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "Components/Seo/Person"
-import { Component } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
@@ -12,45 +11,42 @@ interface Props {
   artist: ArtistMeta_artist$data
 }
 
-export class ArtistMeta extends Component<Props> {
-  render() {
-    const { artist } = this.props
-    const metaContent = artist?.meta?.description
-    const alternateNames = artist?.alternate_names || []
-    const showNoIndex = artist?.counts?.artworks === 0 && !artist.blurb
+export const ArtistMeta: React.FC<Props> = ({ artist }) => {
+  const metaContent = artist?.meta?.description
+  const alternateNames = artist?.alternate_names || []
+  const showNoIndex = artist?.counts?.artworks === 0 && !artist.blurb
 
-    return (
-      <>
-        <ArtistMetaCanonicalLink artist={artist} />
-        <Meta name="description" content={metaContent} />
-        <Meta property="og:description" content={metaContent} />
-        <Meta property="twitter:description" content={metaContent} />
-        <Meta
-          property="og:url"
-          href={`${getENV("APP_URL")}/artist/${artist.slug}`}
-        />
-        <Meta
-          property="og:type"
-          href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
-        />
-        {artist.nationality && (
-          <Meta property="og:nationality" content={artist.nationality} />
-        )}
-        {artist.birthday && (
-          <Meta property="og:birthyear" content={artist.birthday} />
-        )}
-        {artist.deathday && (
-          <Meta property="og:deathyear" content={artist.deathday} />
-        )}
-        {alternateNames.length > 0 && (
-          <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
-        )}
-        <ArtistImageMetaTags artist={artist} />
-        {showNoIndex && <Meta name="robots" content="noindex, follow" />}
-        <SeoDataForArtist data={structuredDataAttributes(artist)} />
-      </>
-    )
-  }
+  return (
+    <>
+      <ArtistMetaCanonicalLink artist={artist} />
+      <Meta name="description" content={metaContent} />
+      <Meta property="og:description" content={metaContent} />
+      <Meta property="twitter:description" content={metaContent} />
+      <Meta
+        property="og:url"
+        href={`${getENV("APP_URL")}/artist/${artist.slug}`}
+      />
+      <Meta
+        property="og:type"
+        href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
+      />
+      {artist.nationality && (
+        <Meta property="og:nationality" content={artist.nationality} />
+      )}
+      {artist.birthday && (
+        <Meta property="og:birthyear" content={artist.birthday} />
+      )}
+      {artist.deathday && (
+        <Meta property="og:deathyear" content={artist.deathday} />
+      )}
+      {alternateNames.length > 0 && (
+        <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
+      )}
+      <ArtistImageMetaTags artist={artist} />
+      {showNoIndex && <Meta name="robots" content="noindex, follow" />}
+      <SeoDataForArtist data={structuredDataAttributes(artist)} />
+    </>
+  )
 }
 
 export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
