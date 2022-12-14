@@ -207,6 +207,26 @@ describe("AdminMeta", () => {
     })
   })
 
+  describe("noindex tags", () => {
+    it("skips rendering when there is a blurb", () => {
+      const artist = { blurb: "Very good artist!" }
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("skips rendering when there are artworks", () => {
+      const artist = { counts: { artworks: 1 } }
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "robots" })).toBeNull()
+    })
+
+    it("renders when there are no artworks and no blurb", () => {
+      const artist = { counts: { artworks: 0 }, blurb: null }
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "robots" })).not.toBeNull()
+    })
+  })
+
   describe("structured data", () => {
     it("renders", () => {
       const artist = {}
