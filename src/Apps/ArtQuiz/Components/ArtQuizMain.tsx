@@ -5,9 +5,11 @@ import {
   CloseIcon,
   Flex,
   FullBleed,
+  HeartFillIcon,
   HeartIcon,
   Text,
 } from "@artsy/palette"
+import { ArtQuizButton } from "Apps/ArtQuiz/Components/ArtQuizButton"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
@@ -94,13 +96,19 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = () => {
         </Flex>
 
         <Flex alignItems="stretch" justifyContent="center">
-          <Clickable py={4} px={6} onClick={onNext}>
+          <ArtQuizButton onClick={onNext}>
             <CloseIcon width={40} height={40} />
-          </Clickable>
+          </ArtQuizButton>
 
-          <Clickable py={4} px={6} onClick={onNext}>
-            <HeartIcon width={40} height={40} />
-          </Clickable>
+          <ArtQuizButton onClick={onNext}>
+            {({ mode }) => {
+              if (mode === "Done") {
+                return <HeartFillIcon width={40} height={40} />
+              }
+
+              return <HeartIcon width={40} height={40} />
+            }}
+          </ArtQuizButton>
         </Flex>
       </FullBleed>
     </>
