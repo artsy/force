@@ -1,7 +1,6 @@
 import { Clickable, ClickableProps } from "@artsy/palette"
 import React, { FC, useRef } from "react"
 import { useMode } from "Utils/Hooks/useMode"
-import { wait } from "Utils/wait"
 
 type Mode = "Pending" | "Animating" | "Done"
 
@@ -27,6 +26,7 @@ const KEYFRAME_ANIMATION_OPTIONS: KeyframeAnimationOptions = {
 export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
   children,
   onClick,
+  ...rest
 }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
 
@@ -36,6 +36,9 @@ export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
   const handleClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    // Click executes immediately
+    onClick(event)
+
     if (!nodeRef.current) return
 
     // Prevent animation pile ups
@@ -45,9 +48,6 @@ export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
 
     setMode("Animating")
 
-    // Click executes immediately
-    onClick(event)
-
     // Animation plays on
     animationRef.current = nodeRef.current.animate(
       KEYFRAMES,
@@ -56,15 +56,17 @@ export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
 
     await animationRef.current.finished
 
-    setMode("Done")
-
-    await wait(ANIMATION_DURATION)
-
     setMode("Pending")
   }
 
   return (
-    <Clickable ref={nodeRef as any} py={4} px={6} onClick={handleClick}>
+    <Clickable
+      ref={nodeRef as any}
+      py={4}
+      px={6}
+      onClick={handleClick}
+      {...rest}
+    >
       {typeof children === "function" ? children({ mode }) : children}
     </Clickable>
   )
