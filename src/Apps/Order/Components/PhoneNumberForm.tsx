@@ -1,49 +1,77 @@
-import { Flex, Input } from "@artsy/palette"
-import { FC } from "react"
+import { FC, useState, useEffect, ChangeEvent } from "react"
+import { Flex } from "@artsy/palette"
+import {
+  PhoneNumberInput,
+  validatePhoneNumber,
+} from "Components/PhoneNumberInput"
 
-export type PhoneNumber = string
-
-export type PhoneNumberError = Partial<PhoneNumber>
-export type PhoneNumberTouched = boolean
-export type PhoneNumberChangeHandler = (phoneNumber: string) => void
-
-export const emptyPhoneNumber: string = ""
+const PHONE_NUMBER_ERROR_MESSAGE = "Please enter a valid phone number"
 
 export interface PhoneNumberFormProps {
-  onChange: PhoneNumberChangeHandler
-  value?: string
-  errors: PhoneNumberError
-  touched: PhoneNumberTouched
-  label: string
+  phoneNumber: string
+  setPhoneNumber: (phone: string) => void
+  phoneNumberCountryCode: string
+  setPhoneNumberCountryCode: (code: string) => void
+  onPhoneNumberValidation: (isValid: boolean) => void
 }
 
 export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
-  onChange,
-  touched,
-  errors,
-  label,
-  value,
+  phoneNumber,
+  setPhoneNumber,
+  phoneNumberCountryCode,
+  setPhoneNumberCountryCode,
+  onPhoneNumberValidation,
 }) => {
-  const changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
-    onChange(ev.currentTarget.value)
+  useEffect(() => {
+    handlePhoneNumberValidation(phoneNumber, phoneNumberCountryCode)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>()
+
+  const handlePhoneNumberValidation = async (phone: string, code: string) => {
+    const isValid = await validatePhoneNumber({
+      national: phone,
+      regionCode: code,
+    })
+    onPhoneNumberValidation(isValid)
+
+    if (!isValid) {
+      setPhoneNumberError(PHONE_NUMBER_ERROR_MESSAGE)
+      return
+    }
+    setPhoneNumberError(undefined)
   }
 
-  const getError = () => {
-    return (touched && errors) || ""
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const phone = e.target.value
+    setPhoneNumber(phone)
+    handlePhoneNumberValidation(phone, phoneNumberCountryCode)
+  }
+
+  const handlePhoneNumberCountryCodeChange = (countryCode: string) => {
+    setPhoneNumberCountryCode(countryCode)
+    handlePhoneNumberValidation(phoneNumber, countryCode)
   }
 
   return (
     <Flex flexDirection="column" mb={2}>
-      <Input
-        id="PhoneNumberForm_phoneNumber"
-        title="Phone number"
-        type="tel"
-        description={label}
-        placeholder="Add phone"
-        pattern="[^a-z]+"
-        value={value}
-        onChange={changeEventHandler()}
-        error={getError()}
+      <PhoneNumberInput
+        inputProps={{
+          name: "phoneNumber",
+          onChange: value => handlePhoneNumberChange(value),
+          placeholder: "(000) 000 0000",
+          value: phoneNumber,
+        }}
+        selectProps={{
+          name: "phoneNumberCountryCode",
+          selected: phoneNumberCountryCode,
+          onSelect: value => {
+            handlePhoneNumberCountryCodeChange(value)
+          },
+        }}
+        required
+        error={phoneNumberError}
       />
     </Flex>
   )

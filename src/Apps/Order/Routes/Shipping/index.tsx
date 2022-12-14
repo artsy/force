@@ -17,23 +17,13 @@ import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
-import {
-  PhoneNumber,
-  PhoneNumberChangeHandler,
-  PhoneNumberError,
-  PhoneNumberForm,
-  PhoneNumberTouched,
-} from "Apps/Order/Components/PhoneNumberForm"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import {
-  validateAddress,
-  validatePhoneNumber,
-} from "Apps/Order/Utils/formValidators"
+import { validateAddress } from "Apps/Order/Utils/formValidators"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Address,
@@ -50,6 +40,7 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
+import { PhoneNumberForm } from "Apps/Order/Components/PhoneNumberForm"
 import {
   startingPhoneNumber,
   startingAddress,
@@ -119,13 +110,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
   const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
 
-  const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
-    startingPhoneNumber(props.me, props.order)
+  const [phoneNumber, setPhoneNumber] = useState(
+    startingPhoneNumber(props.order)
   )
-  const [phoneNumberError, setPhoneNumberError] = useState<PhoneNumberError>("")
-  const [phoneNumberTouched, setPhoneNumberTouched] = useState<
-    PhoneNumberTouched
-  >(false)
+  const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState("us")
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
+
   const addressList = extractNodes(props.me?.addressConnection) ?? []
 
   const [saveAddress, setSaveAddress] = useState(true)
@@ -216,29 +206,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       if (isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
         const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber(phoneNumber)
-        if (hasErrors && hasError) {
+
+        if (hasErrors) {
           setAddressErrors(errors!)
           setAddressTouched(touchedAddress)
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
-        } else if (hasErrors) {
-          setAddressErrors(errors!)
-          setAddressTouched(touchedAddress)
-          return
-        } else if (hasError) {
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
           return
         }
-      }
-    } else {
-      const { error, hasError } = validatePhoneNumber(phoneNumber)
-      if (hasError) {
-        setPhoneNumberError(error!)
-        setPhoneNumberTouched(true)
-        return
       }
     }
 
@@ -371,16 +344,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       [key]: true,
     })
 
-    setShippingQuotes(null)
-    setShippingQuoteId(undefined)
-  }
-
-  const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
-    const { error } = validatePhoneNumber(newPhoneNumber)
-
-    setPhoneNumber(newPhoneNumber)
-    setPhoneNumberError(error!)
-    setPhoneNumberTouched(true)
     setShippingQuotes(null)
     setShippingQuoteId(undefined)
   }
@@ -584,13 +547,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 showPhoneNumberInput={false}
               />
               <Spacer y={2} />
-              <PhoneNumberForm
+              {/* TODO */}
+              {/* <PhoneNumberForm
                 value={phoneNumber}
                 errors={phoneNumberError}
                 touched={phoneNumberTouched}
                 onChange={onPhoneNumberChange}
                 label="Required for shipping logistics"
-              />
+              /> */}
               <Checkbox
                 onSelect={selected => setSaveAddress(selected)}
                 selected={saveAddress}
@@ -607,11 +571,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             >
               <PhoneNumberForm
                 data-test="pickupPhoneNumberForm"
-                value={phoneNumber}
-                errors={phoneNumberError}
-                touched={phoneNumberTouched}
-                onChange={onPhoneNumberChange}
-                label="Number to contact you for pickup logistics"
+                phoneNumber={phoneNumber}
+                setPhoneNumber={setPhoneNumber}
+                phoneNumberCountryCode={phoneNumberCountryCode}
+                setPhoneNumberCountryCode={setPhoneNumberCountryCode}
+                onPhoneNumberValidation={(isValid: boolean) =>
+                  setIsPhoneNumberValid(isValid)
+                }
               />
               <Spacer y={4} />
             </Collapse>
@@ -640,6 +606,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Button
                 onClick={onContinueButtonPressed}
                 loading={isCommittingMutation}
+                disabled={shippingOption === "PICKUP" && !isPhoneNumberValid}
                 variant="primaryBlack"
                 width="50%"
               >

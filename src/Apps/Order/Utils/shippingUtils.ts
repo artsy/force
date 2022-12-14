@@ -83,10 +83,7 @@ export const defaultShippingAddressIndex = (
   }
 }
 
-export const startingPhoneNumber = (
-  me: Shipping_me$data,
-  order: Shipping_order$data
-) => {
+export const startingPhoneNumber = (order: Shipping_order$data) => {
   return order.requestedFulfillment &&
     (order.requestedFulfillment.__typename === "CommerceShip" ||
       order.requestedFulfillment.__typename === "CommerceShipArta" ||
