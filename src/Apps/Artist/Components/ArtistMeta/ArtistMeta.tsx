@@ -34,27 +34,11 @@ export class ArtistMeta extends Component<Props> {
     }
   }
 
-  maybeRenderNoIndex() {
-    const { artist } = this.props
-    if (artist?.counts?.artworks === 0 && !artist.blurb) {
-      return (
-        <>
-          <Meta name="robots" content="noindex, follow" />
-        </>
-      )
-    }
-  }
-
-  renderStructuredData() {
-    const { artist } = this.props
-
-    return <SeoDataForArtist data={structuredDataAttributes(artist)} />
-  }
-
   render() {
     const { artist } = this.props
     const metaContent = artist?.meta?.description
     const alternateNames = artist?.alternate_names || []
+    const showNoIndex = artist?.counts?.artworks === 0 && !artist.blurb
 
     return (
       <>
@@ -83,8 +67,8 @@ export class ArtistMeta extends Component<Props> {
           <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
         )}
         {this.renderImageMetaTags()}
-        {this.maybeRenderNoIndex()}
-        {this.renderStructuredData()}
+        {showNoIndex && <Meta name="robots" content="noindex, follow" />}
+        <SeoDataForArtist data={structuredDataAttributes(artist)} />
       </>
     )
   }
