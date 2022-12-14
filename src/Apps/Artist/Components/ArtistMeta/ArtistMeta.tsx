@@ -54,6 +54,7 @@ export class ArtistMeta extends Component<Props> {
   render() {
     const { artist } = this.props
     const metaContent = artist?.meta?.description
+    const alternateNames = artist?.alternate_names || []
 
     return (
       <>
@@ -78,11 +79,8 @@ export class ArtistMeta extends Component<Props> {
         {artist.deathday && (
           <Meta property="og:deathyear" content={artist.deathday} />
         )}
-        {artist.alternate_names && (
-          <Meta
-            name="skos:prefLabel"
-            content={artist.alternate_names.join("; ")}
-          />
+        {alternateNames.length > 0 && (
+          <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
         )}
         {this.renderImageMetaTags()}
         {this.maybeRenderNoIndex()}

@@ -130,4 +130,20 @@ describe("AdminMeta", () => {
       ).not.toBeNull()
     })
   })
+
+  describe("alternate names", () => {
+    it("skips rendering them without the data", () => {
+      const artist = { alternate_names: [] }
+      renderWithRelay({ Artist: () => artist })
+      expect(getMetaBy({ name: "skos:prefLabel" })).toBeNull()
+    })
+
+    it("renders them with the data", () => {
+      const artist = { alternate_names: ["Bonnie", "Betty"] }
+      renderWithRelay({ Artist: () => artist })
+      expect(
+        getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" })
+      ).not.toBeNull()
+    })
+  })
 })
