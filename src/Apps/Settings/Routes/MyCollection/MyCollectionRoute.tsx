@@ -29,7 +29,7 @@ import {
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
-interface MyCollectionRouteProps {
+export interface MyCollectionRouteProps {
   me: MyCollectionRoute_me$data
   relay: RelayRefetchProp
 }
@@ -106,7 +106,10 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   return (
     <>
-      <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
+      <MetaTags
+        title="My Collection | Artsy"
+        pathname="/my-collection" // TODO: fix in CX-3244?
+      />
 
       {total > 0 ? (
         <>
@@ -130,7 +133,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                             as={RouterLink}
                             size={["small", "large"]}
                             variant="primaryBlack"
-                            to="/my-collection/artworks/new"
+                            to="/my-collection/artworks/new" // TODO: fix in CX-3244
                             onClick={() => trackAddCollectedArtwork()}
                           >
                             Upload Artwork

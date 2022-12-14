@@ -73,9 +73,9 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           MyCollectionRoute.preload()
         },
         query: graphql`
-          query collectorProfileRoutes_CollectorProfileMyCollectionRouteQuery {
+          query collectorProfileRoutes_MyCollectionRouteQuery {
             me {
-              ...CollectorProfileMyCollectionRoute_me
+              ...MyCollectionRoute_me
             }
           }
         `,
