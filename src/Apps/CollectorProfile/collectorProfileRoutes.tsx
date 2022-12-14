@@ -87,6 +87,14 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           InsightsRoute.preload()
         },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query collectorProfileRoutes_InsightsRouteQuery {
+            me {
+              ...InsightsRoute_me
+            }
+          }
+        `,
       },
       {
         path: "saves",
