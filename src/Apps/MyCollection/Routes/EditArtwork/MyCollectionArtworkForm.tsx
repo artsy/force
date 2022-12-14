@@ -177,14 +177,26 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       if (isEditing) {
         router.replace({
-          pathname: `/settings/my-collection`, // TODO:
+          pathname: isCollectorProfileEnabled
+            ? "/collector-profile/my-collection"
+            : "/settings/my-collection",
         })
-        router.push({ pathname: `/my-collection/artwork/${artworkId}` })
+        router.push({
+          pathname: isCollectorProfileEnabled
+            ? `/collector-profile/my-collection/artwork/${artworkId}`
+            : `/my-collection/artwork/${artworkId}`,
+        })
       } else {
         router.replace({
-          pathname: `/my-collection/artworks/${artworkId}/edit`,
+          pathname: isCollectorProfileEnabled
+            ? `/collector-profile/my-collection/artworks/${artworkId}/edit`
+            : `/my-collection/artworks/${artworkId}/edit`,
         })
-        router.push({ pathname: "/settings/my-collection" })
+        router.push({
+          pathname: isCollectorProfileEnabled
+            ? "/collector-profile/my-collection"
+            : "/settings/my-collection",
+        })
       }
     } catch (error) {
       logger.error(
