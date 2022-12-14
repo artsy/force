@@ -1,6 +1,7 @@
 import { Button, Flex, Separator, Text, WinningBidIcon } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkRequestPriceEstimateSection_artwork$data } from "__generated__/MyCollectionArtworkRequestPriceEstimateSection_artwork.graphql"
 
@@ -11,6 +12,7 @@ interface MyCollectionArtworkRequestPriceEstimateSectionProps {
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollectionArtworkRequestPriceEstimateSectionProps> = ({
   artwork,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const isP1Artist = artwork.artist?.targetSupply?.isP1
   const isAlreadySubmitted = artwork.submissionId
 
@@ -45,7 +47,11 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
         This artwork is eligible for a free evaluation from an Artsy specialist.
       </Text>
       <RouterLink
-        to={`/my-collection/artwork/${artwork.internalID}/price-estimate`}
+        to={
+          isCollectorProfileEnabled
+            ? `/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate`
+            : `/my-collection/artwork/${artwork.internalID}/price-estimate`
+        }
         textDecoration="none"
         display="block"
       >

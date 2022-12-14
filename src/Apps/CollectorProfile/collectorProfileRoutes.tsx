@@ -78,6 +78,27 @@ const MyCollectionArtworkFormFragmentContainer = loadable(
   }
 )
 
+const PriceEstimateContactInformation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
+    ),
+  {
+    resolveComponent: component =>
+      component.PriceEstimateContactInformationFragmentContainer,
+  }
+)
+
+const PriceEstimateConfirmation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateConfirmation"
+    ),
+  {
+    resolveComponent: component => component.PriceEstimateConfirmation,
+  }
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -180,7 +201,9 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
       MyCollectionArtworkFormFragmentContainer.preload()
     },
     query: graphql`
-      query myCollectionRoutes_MyCollectionArtworkFormQuery($slug: String!) {
+      query collectorProfileRoutes_MyCollectionArtworkFormQuery(
+        $slug: String!
+      ) {
         artwork(id: $slug) {
           ...MyCollectionArtworkForm_artwork
         }
@@ -188,6 +211,37 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
     `,
     cacheConfig: {
       force: true,
+    },
+  },
+  {
+    path: "/collector-profile/my-collection/artwork/:artworkID/price-estimate",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateContactInformation,
+    onClientSideRender: () => {
+      PriceEstimateContactInformation.preload()
+    },
+    query: graphql`
+      query collectorProfileRoutes_priceEstimateContactInformationQuery(
+        $artworkID: String!
+      ) {
+        artwork(id: $artworkID) @principalField {
+          ...PriceEstimateContactInformation_artwork
+        }
+        me {
+          ...PriceEstimateContactInformation_me
+        }
+      }
+    `,
+  },
+  {
+    path:
+      "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateConfirmation,
+    onClientSideRender: () => {
+      PriceEstimateConfirmation.preload()
     },
   },
 ]
