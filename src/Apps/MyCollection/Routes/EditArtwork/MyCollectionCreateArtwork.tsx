@@ -1,4 +1,5 @@
 import { useToasts } from "@artsy/palette"
+import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
@@ -58,20 +59,29 @@ export const MyCollectionCreateArtwork: React.FC = () => {
     }
   }
 
+  const handleBack = () => {
+    router.push({
+      pathname: "/settings/my-collection",
+    })
+  }
+
   return (
     <>
       <MetaTags title="Upload Artwork | Artsy" />
 
-      <Formik<ArtworkModel>
-        validateOnMount
-        onSubmit={handleSubmit}
-        initialValues={getMyCollectionArtworkFormInitialValues()}
-        validationSchema={MyCollectionArtworkDetailsValidationSchema}
+      <MyCollectionArtworkFormContextProvider
+        artworkFormImagesRef={artworkFormImagesRef}
+        onBack={handleBack}
       >
-        <MyCollectionArtworkFormMain
-          artworkFormImagesRef={artworkFormImagesRef}
-        />
-      </Formik>
+        <Formik<ArtworkModel>
+          validateOnMount
+          onSubmit={handleSubmit}
+          initialValues={getMyCollectionArtworkFormInitialValues()}
+          validationSchema={MyCollectionArtworkDetailsValidationSchema}
+        >
+          <MyCollectionArtworkFormMain />
+        </Formik>
+      </MyCollectionArtworkFormContextProvider>
     </>
   )
 }

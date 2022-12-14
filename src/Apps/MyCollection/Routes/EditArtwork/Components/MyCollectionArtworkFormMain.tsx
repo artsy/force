@@ -11,17 +11,15 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ConfirmationModalBack } from "Apps/MyCollection/Routes/EditArtwork/Components/ConfirmationModalBack"
 import { ConfirmationModalDelete } from "Apps/MyCollection/Routes/EditArtwork/Components/ConfirmationModalDelete"
+import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormDetails } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormDetails"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
-import {
-  MyCollectionArtworkFormImages,
-  MyCollectionArtworkFormImagesProps,
-} from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
+import { MyCollectionArtworkFormImages } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { useDeleteArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtwork"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Form, useFormikContext } from "formik"
-import { Ref, useState } from "react"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
@@ -32,15 +30,12 @@ const logger = createLogger("MyCollectionArtworkForm.tsx")
 
 export interface MyCollectionArtworkFormMainProps {
   artwork?: MyCollectionArtworkFormMain_artwork$data
-  artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
-  onBack?: () => void
 }
 
 export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainProps> = ({
   artwork,
-  artworkFormImagesRef,
-  onBack,
 }) => {
+  const { artworkFormImagesRef, onBack } = useMyCollectionArtworkFormContext()
   const {
     deleteCollectedArtwork: trackDeleteCollectedArtwork,
   } = useMyCollectionTracking()
@@ -83,10 +78,6 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
     }
   }
 
-  const goBack = () => {
-    onBack ? onBack() : router.go(-1)
-  }
-
   const {
     handleSubmit,
     isSubmitting,
@@ -99,7 +90,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
     <>
       <MyCollectionArtworkFormHeader
         onBackClick={() => {
-          dirty ? setShowLeaveWithoutSavingModal(true) : goBack()
+          dirty ? setShowLeaveWithoutSavingModal(true) : onBack()
         }}
         NextButton={() => (
           <Button
@@ -126,7 +117,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
             <ConfirmationModalBack
               onClose={() => setShowLeaveWithoutSavingModal(false)}
               isEditing={isEditing}
-              onLeave={goBack}
+              onLeave={onBack}
             />
           )}
           {showDeletionModal && (

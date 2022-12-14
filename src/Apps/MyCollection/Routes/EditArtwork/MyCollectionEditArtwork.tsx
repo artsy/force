@@ -1,4 +1,5 @@
 import { useToasts } from "@artsy/palette"
+import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { MyCollectionArtworkFormMainFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useDeleteArtworkImage } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtworkImage"
@@ -91,23 +92,31 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
     }
   }
 
+  const handleBack = () => {
+    router.push({
+      pathname: `/my-collection/artwork/${artwork?.internalID}`,
+    })
+  }
+
   return (
     <>
       <MetaTags
         title={`Edit ${artwork?.title} - ${artwork?.artistNames} | Artsy`}
       />
 
-      <Formik<ArtworkModel>
-        validateOnMount
-        onSubmit={handleSubmit}
-        initialValues={getMyCollectionArtworkFormInitialValues(artwork)}
-        validationSchema={MyCollectionArtworkDetailsValidationSchema}
+      <MyCollectionArtworkFormContextProvider
+        artworkFormImagesRef={artworkFormImagesRef}
+        onBack={handleBack}
       >
-        <MyCollectionArtworkFormMainFragmentContainer
-          artwork={artwork}
-          artworkFormImagesRef={artworkFormImagesRef}
-        />
-      </Formik>
+        <Formik<ArtworkModel>
+          validateOnMount
+          onSubmit={handleSubmit}
+          initialValues={getMyCollectionArtworkFormInitialValues(artwork)}
+          validationSchema={MyCollectionArtworkDetailsValidationSchema}
+        >
+          <MyCollectionArtworkFormMainFragmentContainer artwork={artwork} />
+        </Formik>
+      </MyCollectionArtworkFormContextProvider>
     </>
   )
 }
