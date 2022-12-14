@@ -5,14 +5,12 @@ import { Breakpoint } from "Utils/Responsive"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
-const mockRouterGo = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: {
       push: mockRouterPush,
       replace: mockRouterReplace,
-      go: mockRouterGo,
     },
   })),
 }))
@@ -66,7 +64,9 @@ describe("MyCollectionCreateArtwork", () => {
         fireEvent.click(screen.getByText("Back"))
         fireEvent.click(screen.getByText("Leave Without Saving"))
 
-        expect(mockRouterGo).toHaveBeenCalledWith(-1)
+        expect(mockRouterPush).toHaveBeenCalledWith({
+          pathname: "/settings/my-collection",
+        })
       })
     })
 
@@ -76,7 +76,9 @@ describe("MyCollectionCreateArtwork", () => {
 
         fireEvent.click(screen.getByText("Back"))
 
-        expect(mockRouterGo).toHaveBeenCalledWith(-1)
+        expect(mockRouterPush).toHaveBeenCalledWith({
+          pathname: "/settings/my-collection",
+        })
       })
     })
   })
