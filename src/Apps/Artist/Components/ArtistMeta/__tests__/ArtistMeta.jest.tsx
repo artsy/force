@@ -38,6 +38,17 @@ const getMetaBy = (selectors): Element | null => {
 }
 
 describe("AdminMeta", () => {
+  describe("canonical link", () => {
+    it("renders", () => {
+      const artist = {}
+      renderWithRelay({ Artist: () => artist })
+      const linkTag = document.querySelector("link[rel='canonical']") // eslint-disable no-node-access
+      expect(linkTag?.getAttribute("href")).toEqual(
+        "/artist/<Artist-mock-id-1>"
+      )
+    })
+  })
+
   describe("without an artist description", () => {
     it("renders meta tags with empty content attributes", () => {
       const artist = { meta: { description: null } }
@@ -144,6 +155,17 @@ describe("AdminMeta", () => {
       expect(
         getMetaBy({ name: "skos:prefLabel", content: "Bonnie; Betty" })
       ).not.toBeNull()
+    })
+  })
+
+  describe("structured data", () => {
+    it("renders", () => {
+      const artist = {}
+      renderWithRelay({ Artist: () => artist })
+      const structuredDataTag = document.querySelector(
+        "script[type='application/ld+json']"
+      ) // eslint-disable no-node-access
+      expect(structuredDataTag).not.toBeNull()
     })
   })
 })
