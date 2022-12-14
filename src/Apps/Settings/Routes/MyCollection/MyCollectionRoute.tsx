@@ -46,6 +46,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   >([])
 
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const { jumpTo } = useJump()
 
@@ -108,7 +109,11 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     <>
       <MetaTags
         title="My Collection | Artsy"
-        pathname="/my-collection" // TODO: fix in CX-3244?
+        pathname={
+          isCollectorProfileEnabled
+            ? "/collector-profile/my-collection"
+            : "/my-collection"
+        }
       />
 
       {total > 0 ? (
@@ -133,7 +138,11 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                             as={RouterLink}
                             size={["small", "large"]}
                             variant="primaryBlack"
-                            to="/my-collection/artworks/new" // TODO: fix in CX-3244
+                            to={
+                              isCollectorProfileEnabled
+                                ? "/collector-profile/my-collection/artworks/new"
+                                : "/my-collection/artworks/new"
+                            }
                             onClick={() => trackAddCollectedArtwork()}
                           >
                             Upload Artwork

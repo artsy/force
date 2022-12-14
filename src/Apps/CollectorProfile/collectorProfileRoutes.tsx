@@ -46,6 +46,16 @@ const SavesAndFollowsRoute = loadable(
   }
 )
 
+const MyCollectionArtworkForm = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
+    ),
+  {
+    resolveComponent: component => component.MyCollectionArtworkForm,
+  }
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -112,5 +122,14 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         `,
       },
     ],
+  },
+  {
+    path: "/collector-profile/my-collection/artworks/new",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => MyCollectionArtworkForm,
+    onClientSideRender: () => {
+      MyCollectionArtworkForm.preload()
+    },
   },
 ]

@@ -23,6 +23,7 @@ import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -55,6 +56,7 @@ export interface MyCollectionArtworkFormProps {
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const {
     deleteCollectedArtwork: trackDeleteCollectedArtwork,
     saveCollectedArtwork: trackSaveCollectedArtwork,
@@ -175,7 +177,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       if (isEditing) {
         router.replace({
-          pathname: `/settings/my-collection`,
+          pathname: `/settings/my-collection`, // TODO:
         })
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
       } else {
@@ -228,7 +230,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const goBack = () => {
     router.push({
       pathname: isEditing
-        ? `/my-collection/artwork/${artwork.internalID}`
+        ? isCollectorProfileEnabled
+          ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+          : `/my-collection/artwork/${artwork.internalID}`
+        : isCollectorProfileEnabled
+        ? "/collector-profile/my-collection"
         : "/settings/my-collection",
     })
   }
