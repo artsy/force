@@ -10676,6 +10676,9 @@ type Me implements Node {
   privacy: String
   profession: String
 
+  # The art quiz of a logged-in user
+  quiz: Quiz!
+
   # This user should receive lot opening notifications
   receiveLotOpeningSoonNotification: Boolean
 
