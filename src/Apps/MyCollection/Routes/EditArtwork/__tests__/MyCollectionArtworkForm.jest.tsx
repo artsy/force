@@ -325,7 +325,6 @@ describe("Edit artwork", () => {
     })
   })
 
-  // TODO: this test is breaking when mocking ff
   describe("Adding images", () => {
     beforeEach(() => {
       //@ts-ignore
