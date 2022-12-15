@@ -15,7 +15,8 @@ import {
   Mode,
   useArtQuizCards,
 } from "Apps/ArtQuiz/Components/ArtQuizCard"
-import { FC } from "react"
+import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
+import { FC, useCallback } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 
@@ -42,15 +43,23 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = () => {
     dispatch({ type: "Previous" })
   }
 
-  const handleNext = (action: "Like" | "Dislike") => () => {
-    if (activeIndex === cards.length - 1) {
-      router.push("/art-quiz/results")
+  const handleNext = useCallback(
+    (action: "Like" | "Dislike") => () => {
+      if (activeIndex === cards.length - 1) {
+        router.push("/art-quiz/results")
 
-      return
-    }
+        return
+      }
 
-    dispatch({ type: action })
-  }
+      dispatch({ type: action })
+    },
+    [activeIndex, cards.length, dispatch, router]
+  )
+
+  useSwipe({
+    onLeft: handleNext("Dislike"),
+    onRight: handleNext("Like"),
+  })
 
   return (
     <>
