@@ -92,23 +92,25 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
         onBackClick={() => {
           dirty ? setShowLeaveWithoutSavingModal(true) : onBack()
         }}
-        NextButton={() => (
-          <Button
-            width={300}
-            data-testid="save-button"
-            type="submit"
-            onClick={() => handleSubmit()}
-            size="large"
-            variant="primaryBlack"
-            loading={
-              isSubmitting ||
-              values.newPhotos.filter(photo => photo.loading).length > 0
-            }
-            disabled={!isValid || !dirty}
-          >
-            {isEditing ? "Save Changes" : "Upload Artwork"}
-          </Button>
-        )}
+        NextButton={
+          <Media greaterThan="xs">
+            <Button
+              width={[100, 300]}
+              data-testid="save-button"
+              type="submit"
+              onClick={() => handleSubmit()}
+              size={["small", "large"]}
+              variant="primaryBlack"
+              loading={
+                isSubmitting ||
+                values.newPhotos.filter(photo => photo.loading).length > 0
+              }
+              disabled={!isValid || !dirty}
+            >
+              {isEditing ? "Save Changes" : "Upload Artwork"}
+            </Button>
+          </Media>
+        }
       />
 
       <AppContainer>

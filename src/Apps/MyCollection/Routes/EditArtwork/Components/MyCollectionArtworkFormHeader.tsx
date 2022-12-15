@@ -9,11 +9,11 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BackLink } from "Components/Links/BackLink"
 import { Sticky } from "Components/Sticky"
+import { ReactNode } from "react"
 import { RouterLink } from "System/Router/RouterLink"
-import { Media } from "Utils/Responsive"
 
 interface MyCollectionArtworkFormHeaderProps {
-  NextButton: React.FC
+  NextButton: ReactNode
   onBackClick: () => void
 }
 export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHeaderProps> = ({
@@ -50,7 +50,7 @@ export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHead
                         Back
                       </BackLink>
 
-                      <Media greaterThan="xs">{NextButton}</Media>
+                      <Flex ml={2}>{NextButton}</Flex>
                     </Flex>
                   </HorizontalPadding>
                 </AppContainer>
