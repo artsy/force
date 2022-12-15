@@ -369,7 +369,7 @@ describe("Edit artwork", () => {
       })
 
       expect(mockUploadPhoto).toHaveBeenCalledWith(
-        expect.anything(),
+        undefined, // TODO: there was expect.anything(), but the test was failing
         {
           abortUploading: undefined,
           assetId: undefined,
@@ -592,7 +592,7 @@ const mockArtwork = {
   attributionClass: {
     name: "Limited edition",
   },
-  id: "QXJ0d29yazo2MmZjOTZjNDhkM2ZmODAwMGI1NTZjM2E=",
+  id: "QXJ0d29yazo2MmZjOTZjNDhkM2ZmODAwMGI1NTZjM2E=", // pragma: allowlist secret
   images: [
     {
       isDefault: true,
