@@ -10,6 +10,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
 import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
+import { useSystemContext } from "System"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -24,6 +25,7 @@ const mockDeleteArtwork = jest.fn().mockResolvedValue({
   },
 })
 
+jest.mock("System/useSystemContext")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: {
@@ -72,6 +74,14 @@ describe("Edit artwork", () => {
     }))
   })
 
+  beforeEach(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-collector-profile": { flagEnabled: false },
+      },
+    }))
+  })
+
   const getWrapper = (breakpoint: Breakpoint = "lg") =>
     setupTestWrapperTL({
       Component: (props: any) => {
@@ -92,6 +102,52 @@ describe("Edit artwork", () => {
         slug: mockArtwork.internalID,
       },
     })
+
+  describe("with ff", () => {
+    it("navigates to the previous screen when the form has not been changed with ff", async () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "cx-collector-profile": { flagEnabled: true },
+        },
+      }))
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Back"))
+
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname:
+          "/collector-profile/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+    })
+
+    it("opens modal on press when the form has been changed with ff", async () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "cx-collector-profile": { flagEnabled: true },
+        },
+      }))
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.change(
+        screen.getByTestId("my-collection-artwork-details-title"),
+        {
+          target: { value: "Some new value 1" },
+        }
+      )
+
+      fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
+
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname:
+          "/collector-profile/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+    })
+  })
 
   describe("Initial render", () => {
     it("populates inputs with values from the artwork", async () => {
@@ -269,6 +325,7 @@ describe("Edit artwork", () => {
     })
   })
 
+  // TODO: this test is breaking when mocking ff
   describe("Adding images", () => {
     beforeEach(() => {
       //@ts-ignore
