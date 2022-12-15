@@ -1,4 +1,5 @@
 import { Button, Spacer, Tab, Tabs, Text, useToasts } from "@artsy/palette"
+import { ArtQuizLikedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizLikedArtworks"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { useSystemContext } from "System"
@@ -40,8 +41,12 @@ export const ArtQuizResultsTabs: FC = () => {
       <Spacer y={6} />
 
       <Tabs fill>
-        <Tab name={t("artQuizPage.results.tabs.worksYouLiked")} />
+        <Tab name={t("artQuizPage.results.tabs.worksYouLiked")}>
+          <ArtQuizLikedArtworksQueryRenderer />
+        </Tab>
+
         <Tab name={t("artQuizPage.results.tabs.recommendedCollections")} />
+
         <Tab name={t("artQuizPage.results.tabs.recommendedArtists")} />
       </Tabs>
     </>
