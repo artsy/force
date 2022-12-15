@@ -131,9 +131,7 @@ describe("MyCollectionArtwork", () => {
             "my-collection-web-phase-6-request-price-estimate": {
               flagEnabled: true,
             },
-            "cx-collector-profile": {
-              flagEnabled: true,
-            },
+            "cx-collector-profile": { flagEnabled: true },
           },
         }))
         const { renderWithRelay } = getWrapper("lg")
