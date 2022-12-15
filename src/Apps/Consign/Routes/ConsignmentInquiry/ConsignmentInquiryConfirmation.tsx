@@ -1,8 +1,9 @@
 import { Button, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
+import { useRouter } from "System/Router/useRouter"
 
 export const ConsignmentInquiryConfirmation: React.FC = () => {
+  const { router } = useRouter()
   return (
     <>
       <ConfirmationScreenComponent
@@ -11,16 +12,17 @@ export const ConsignmentInquiryConfirmation: React.FC = () => {
       />
       <Spacer y={4} />
 
-      <RouterLink to="/sell">
-        <Button
-          width={["100%", "33%"]}
-          data-test-id="back-to-sell-with-artsy-button"
-          size="large"
-          variant="primaryBlack"
-        >
-          Back to Sell With Artsy
-        </Button>
-      </RouterLink>
+      <Button
+        width={["100%", "33%"]}
+        data-test-id="back-to-sell-with-artsy-button"
+        size="large"
+        variant="primaryBlack"
+        onClick={() => {
+          router.go(-2)
+        }}
+      >
+        Back to Sell With Artsy
+      </Button>
       <Spacer y={6} />
     </>
   )

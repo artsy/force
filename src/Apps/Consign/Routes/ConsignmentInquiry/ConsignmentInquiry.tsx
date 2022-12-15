@@ -20,6 +20,9 @@ import {
   validate,
 } from "Apps/Consign/Routes/ConsignmentInquiry/utils/validation"
 import { CreateConsignmentInquiryMutationInput } from "__generated__/createConsignmentInquiryMutation.graphql"
+import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
+import { useState } from "react"
+import { TopContextBar } from "Components/TopContextBar"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
@@ -44,6 +47,7 @@ export interface ConsignmentInquiryProps {
 export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   me,
 }) => {
+  const [showModal, setShowModal] = useState(false)
   const { trackEvent } = useTracking()
   const { router } = useRouter()
   const { sendToast } = useToasts()
@@ -91,12 +95,11 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
         )
         if (consignmentInquiryId) {
           trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
-          router.replace("/sell/inquiry")
+          router.replace({ pathname: "/sell/inquiry" })
           router.push("/sell/inquiry/sent")
         }
       } catch (error) {
-        console.log("Consignment Inquiry Error", error)
-        logger.error("Consignment Inquiry Error", error)
+        logger.error(error)
         sendToast({
           variant: "error",
           message: `Error: ${error}`,
@@ -106,12 +109,16 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
     }
   }
 
+  const handleBack = (isDirty: boolean) => {
+    if (isDirty) {
+      setShowModal(true)
+      return
+    }
+    router.go(-1)
+  }
+
   return (
     <>
-      <Text mt={4} variant="lg-display">
-        Contact a specialist
-      </Text>
-      <Spacer y={4} />
       <Formik<ConsignmentInquiryFormModel>
         validateOnMount
         initialValues={initialValue}
@@ -120,21 +127,43 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
         initialErrors={initialErrors}
         initialTouched={{}}
       >
-        {({ isValid, isSubmitting }) => (
-          <Form>
-            <ConsignmentInquiryForm />
-            <Spacer y={2} />
-            <Button
-              data-testid="consignment-inquiry-send-button"
-              width={["50%", "33%"]}
-              disabled={!isValid || isSubmitting}
-              loading={isSubmitting}
-              type="submit"
+        {({ isValid, isSubmitting, dirty }) => (
+          <>
+            <ConsignmentInquiryFormAbandonEditModal
+              show={showModal}
+              onClose={() => {
+                setShowModal(false)
+              }}
+            />
+            <TopContextBar
+              displayBackArrow
+              hideSeparator
+              onClick={() => {
+                handleBack(dirty)
+              }}
+              redirectTo="/sell"
             >
-              Send
-            </Button>
+              Back
+            </TopContextBar>
+            <Text mt={4} variant="lg-display">
+              Contact a specialist
+            </Text>
             <Spacer y={4} />
-          </Form>
+            <Form>
+              <ConsignmentInquiryForm />
+              <Spacer y={2} />
+              <Button
+                data-testid="consignment-inquiry-send-button"
+                width={["50%", "33%"]}
+                disabled={!isValid || isSubmitting}
+                loading={isSubmitting}
+                type="submit"
+              >
+                Send
+              </Button>
+              <Spacer y={4} />
+            </Form>
+          </>
         )}
       </Formik>
     </>

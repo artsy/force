@@ -25,6 +25,16 @@ const ConsignmentInquiryConfirmationApp = loadable(
   }
 )
 
+const ConsignmentInquiryContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/ConsignmentInquiry/ConsignmentInquiryContainer"
+    ),
+  {
+    resolveComponent: component => component.ConsignmentInquiryContainer,
+  }
+)
+
 const MarketingLandingApp = loadable(
   () =>
     import(
@@ -185,32 +195,6 @@ export const consignRoutes: AppRouteConfig[] = [
           FAQApp.preload()
         },
       },
-      {
-        path: "inquiry",
-        hideFooter: true,
-        getComponent: () => ConsignmentInquiryApp,
-        onClientSideRender: () => {
-          ConsignmentInquiryApp.preload()
-        },
-        query: graphql`
-          query consignRoutes_ConsignmentInquiryAppQuery {
-            me {
-              ...ConsignmentInquiry_me
-            }
-          }
-        `,
-        render: renderConsignmentInquiry,
-      },
-      {
-        path: "inquiry/sent",
-        hideFooter: true,
-        hideNav: true,
-        hideNavigationTabs: true,
-        getComponent: () => ConsignmentInquiryConfirmationApp,
-        onClientSideRender: () => {
-          ConsignmentInquiryConfirmationApp.preload()
-        },
-      },
     ],
   },
 
@@ -232,6 +216,39 @@ export const consignRoutes: AppRouteConfig[] = [
         path: "/",
         render: ({ match }) => {
           throw new RedirectException("/sell", 301)
+        },
+      },
+    ],
+  },
+  {
+    path: "/sell/inquiry",
+    getComponent: () => ConsignmentInquiryContainer,
+    children: [
+      {
+        path: "/",
+        getComponent: () => ConsignmentInquiryApp,
+        hideFooter: true,
+        hideNav: true,
+        onClientSideRender: () => {
+          ConsignmentInquiryApp.preload()
+        },
+        query: graphql`
+          query consignRoutes_ConsignmentInquiryAppQuery {
+            me {
+              ...ConsignmentInquiry_me
+            }
+          }
+        `,
+        render: renderConsignmentInquiry,
+      },
+      {
+        path: "sent",
+        hideFooter: true,
+        hideNav: true,
+        hideNavigationTabs: true,
+        getComponent: () => ConsignmentInquiryConfirmationApp,
+        onClientSideRender: () => {
+          ConsignmentInquiryConfirmationApp.preload()
         },
       },
     ],
