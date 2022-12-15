@@ -1,13 +1,14 @@
-import { Clickable, ClickableProps } from "@artsy/palette"
+import {
+  Clickable,
+  ClickableProps,
+  CloseIcon,
+  HeartFillIcon,
+  HeartIcon,
+} from "@artsy/palette"
 import React, { FC, useRef } from "react"
 import { useMode } from "Utils/Hooks/useMode"
 
 type Mode = "Pending" | "Animating" | "Done"
-
-interface ArtQuizButtonProps extends ClickableProps {
-  children: JSX.Element | ((props: { mode: Mode }) => JSX.Element)
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-}
 
 const ANIMATION_DURATION = 250
 
@@ -23,7 +24,13 @@ const KEYFRAME_ANIMATION_OPTIONS: KeyframeAnimationOptions = {
   iterations: 1,
 }
 
+interface ArtQuizButtonProps extends ClickableProps {
+  variant: "Like" | "Dislike"
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
+
 export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
+  variant,
   children,
   onClick,
   ...rest
@@ -65,9 +72,18 @@ export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
       py={4}
       px={6}
       onClick={handleClick}
+      aria-label={variant}
       {...rest}
     >
-      {typeof children === "function" ? children({ mode }) : children}
+      {variant === "Dislike" && <CloseIcon width={40} height={40} title="" />}
+
+      {variant === "Like" && mode === "Animating" && (
+        <HeartFillIcon width={40} height={40} title="" />
+      )}
+
+      {variant === "Like" && mode !== "Animating" && (
+        <HeartIcon width={40} height={40} title="" />
+      )}
     </Clickable>
   )
 }

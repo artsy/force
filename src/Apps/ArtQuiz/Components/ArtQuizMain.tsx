@@ -2,11 +2,8 @@ import {
   ArrowLeftIcon,
   Box,
   Clickable,
-  CloseIcon,
   Flex,
   FullBleed,
-  HeartFillIcon,
-  HeartIcon,
   Text,
 } from "@artsy/palette"
 import { ArtQuizButton } from "Apps/ArtQuiz/Components/ArtQuizButton"
@@ -127,19 +124,9 @@ export const ArtQuizMain: FC<ArtQuizMainProps> = () => {
         </Flex>
 
         <Flex alignItems="stretch" justifyContent="center">
-          <ArtQuizButton onClick={handleNext("Dislike")} aria-label="Dislike">
-            <CloseIcon width={40} height={40} />
-          </ArtQuizButton>
+          <ArtQuizButton variant="Dislike" onClick={handleNext("Dislike")} />
 
-          <ArtQuizButton onClick={handleNext("Like")} aria-label="Like">
-            {({ mode }) => {
-              if (mode === "Animating") {
-                return <HeartFillIcon width={40} height={40} title="" />
-              }
-
-              return <HeartIcon width={40} height={40} title="" />
-            }}
-          </ArtQuizButton>
+          <ArtQuizButton variant="Like" onClick={handleNext("Like")} />
         </Flex>
       </FullBleed>
     </>
