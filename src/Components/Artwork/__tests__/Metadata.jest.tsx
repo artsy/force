@@ -3,8 +3,10 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
 import Metadata from "Components/Artwork/Metadata"
+import { useSystemContext } from "System"
 
 jest.unmock("react-relay")
+jest.mock("System/useSystemContext")
 
 describe("Metadata", () => {
   const { renderWithRelay } = setupTestWrapperTL<MetadataTestQuery>({
@@ -21,6 +23,14 @@ describe("Metadata", () => {
         }
       }
     `,
+  })
+
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-collector-profile": { flagEnabled: false },
+      },
+    }))
   })
 
   it("navigates to artwork page when clicking on a normal artwork", () => {
@@ -42,6 +52,23 @@ describe("Metadata", () => {
     expect(screen.getByTestId("metadata-artwork-link")).toHaveAttribute(
       "href",
       "/my-collection/artwork/artwork-id"
+    )
+  })
+
+  it("navigates to my collection artwork page when clicking on a my collection artwork when ff enabled", () => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-collector-profile": { flagEnabled: true },
+      },
+    }))
+
+    renderWithRelay(mockResolver, false, { isMyCollectionArtwork: true })
+
+    expect(screen.getByText("artwork title")).toBeInTheDocument()
+
+    expect(screen.getByTestId("metadata-artwork-link")).toHaveAttribute(
+      "href",
+      "/collector-profile/my-collection/artwork/artwork-id"
     )
   })
 })
