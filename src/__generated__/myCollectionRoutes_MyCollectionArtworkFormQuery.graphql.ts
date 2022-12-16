@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62ce69744bf89ddb201a2755d29c050c>>
+ * @generated SignedSource<<59f97414607539db190340b4fc725876>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type myCollectionRoutes_MyCollectionArtworkFormQuery$variables = {
 };
 export type myCollectionRoutes_MyCollectionArtworkFormQuery$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionEditArtwork_artwork">;
   } | null;
 };
 export type myCollectionRoutes_MyCollectionArtworkFormQuery = {
@@ -91,7 +91,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkForm_artwork"
+            "name": "MyCollectionEditArtwork_artwork"
           }
         ],
         "storageKey": null
@@ -370,16 +370,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6cdcc4f360a3a40bf9ac73a6c5e0919",
+    "cacheID": "c8d0416ef268cb911004fdf61154f0f0",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_MyCollectionArtworkFormQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkFormQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
+    "text": "query myCollectionRoutes_MyCollectionArtworkFormQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b71414f83640ffcfed692c626d3ab609";
+(node as any).hash = "9f46c58c3d9281ffcea956c6bc8be91d";
 
 export default node;

@@ -1,4 +1,6 @@
 import { Text } from "@artsy/palette"
+import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
+import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
@@ -12,8 +14,6 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
 import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
-import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 
 export interface MyCollectionArtworkFormImagesProps {
   saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
@@ -28,11 +28,10 @@ export const MyCollectionArtworkFormImages = forwardRef<
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
-  console.log({ values })
   const saveImagesToLocalStorage = async (artworkId: string) => {
     try {
       // Store the artwork's local images in local storage
-      //and remove unnecessary fields
+      // and remove unnecessary fields
       return await storeArtworkLocalImages(
         artworkId,
         localImages.map(({ photoID, ...rest }) => rest)
@@ -49,7 +48,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
         saveImagesToLocalStorage,
       }
     },
-    [localImages]
+    [localImages, saveImagesToLocalStorage]
   )
 
   const uploadPhoto = async (photo: Photo) => {

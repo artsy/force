@@ -1,15 +1,12 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import {
-  MyCollectionArtworkForm,
-  MyCollectionArtworkFormFragmentContainer,
-} from "Apps/MyCollection/Routes/EditArtwork/MyCollectionArtworkForm"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
 import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
-import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
+import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -77,14 +74,14 @@ describe("Edit artwork", () => {
       Component: (props: any) => {
         return (
           <MockBoot breakpoint={breakpoint}>
-            <MyCollectionArtworkFormFragmentContainer {...props} />
+            <MyCollectionEditArtworkFragmentContainer {...props} />
           </MockBoot>
         )
       },
       query: graphql`
-        query MyCollectionArtworkFormTest_Query($slug: String!) {
+        query MyCollectionEditArtworkTest_Query($slug: String!) {
           artwork(id: $slug) {
-            ...MyCollectionArtworkForm_artwork
+            ...MyCollectionEditArtwork_artwork
           }
         }
       `,
@@ -450,61 +447,10 @@ describe("Edit artwork", () => {
   })
 })
 
-describe("Create artwork", () => {
-  const getWrapper = (breakpoint: Breakpoint = "lg") => {
-    render(
-      <MockBoot breakpoint={breakpoint}>
-        <MyCollectionArtworkForm />
-      </MockBoot>
-    )
-  }
-
-  describe("Initial render", () => {
-    it("doesn't populate inputs", async () => {
-      getWrapper()
-
-      expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-      expect(screen.getByTestId("save-button")).toBeDisabled()
-
-      expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-
-      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
-    })
-  })
-
-  describe("Back Link behavior", () => {
-    it("opens modal on press when the form has been changed", async () => {
-      getWrapper()
-
-      fireEvent.change(
-        screen.getByTestId("my-collection-artwork-details-title"),
-        {
-          target: { value: "Some new value" },
-        }
-      )
-
-      fireEvent.click(screen.getByText("Back"))
-      fireEvent.click(screen.getByText("Leave Without Saving"))
-
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
-    })
-
-    it("navigates to the previous screen when the form has not been changed", async () => {
-      getWrapper()
-
-      fireEvent.click(screen.getByText("Back"))
-
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/internal-id",
-      })
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
-      })
-    })
-  })
-})
+type CleanRelayFragment<T> = Omit<
+  T,
+  "$refType" | " $fragmentRefs" | " $fragmentSpreads" | " $fragmentType"
+>
 
 const mockArtwork = {
   artist: {
@@ -556,4 +502,4 @@ const mockArtwork = {
   title: "Untitled",
   width: "11",
   " $fragmentType": "MyCollectionArtworkForm_artwork",
-} as MyCollectionArtworkForm_artwork$data
+} as CleanRelayFragment<MyCollectionEditArtwork_artwork$data>

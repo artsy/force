@@ -13,17 +13,6 @@ const MyCollectionArtwork = loadable(
   }
 )
 
-const MyCollectionArtworkFormFragmentContainer = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
-    ),
-  {
-    resolveComponent: component =>
-      component.MyCollectionArtworkFormFragmentContainer,
-  }
-)
-
 const PriceEstimateContactInformation = loadable(
   () =>
     import(
@@ -45,13 +34,24 @@ const PriceEstimateConfirmation = loadable(
   }
 )
 
-const MyCollectionArtworkForm = loadable(
+const MyCollectionCreateArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionCreateArtwork"
     ),
   {
-    resolveComponent: component => component.MyCollectionArtworkForm,
+    resolveComponent: component => component.MyCollectionCreateArtwork,
+  }
+)
+
+const MyCollectionEditArtwork = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionEditArtwork"
+    ),
+  {
+    resolveComponent: component =>
+      component.MyCollectionEditArtworkFragmentContainer,
   }
 )
 
@@ -110,25 +110,25 @@ export const myCollectionRoutes: AppRouteConfig[] = [
         path: "artworks/new",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => MyCollectionArtworkForm,
+        getComponent: () => MyCollectionCreateArtwork,
         onClientSideRender: () => {
-          MyCollectionArtworkForm.preload()
+          MyCollectionCreateArtwork.preload()
         },
       },
       {
         path: "artworks/:slug/edit",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => MyCollectionArtworkFormFragmentContainer,
+        getComponent: () => MyCollectionEditArtwork,
         onClientSideRender: () => {
-          MyCollectionArtworkFormFragmentContainer.preload()
+          MyCollectionEditArtwork.preload()
         },
         query: graphql`
           query myCollectionRoutes_MyCollectionArtworkFormQuery(
             $slug: String!
           ) {
             artwork(id: $slug) {
-              ...MyCollectionArtworkForm_artwork
+              ...MyCollectionEditArtwork_artwork
             }
           }
         `,

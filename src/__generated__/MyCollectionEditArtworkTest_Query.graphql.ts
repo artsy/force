@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bcd63a7a4d4580af45d9af3f2c1d66bb>>
+ * @generated SignedSource<<0fc494b8661d9367242949f3c6b7061f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkFormTest_Query$variables = {
+export type MyCollectionEditArtworkTest_Query$variables = {
   slug: string;
 };
-export type MyCollectionArtworkFormTest_Query$data = {
+export type MyCollectionEditArtworkTest_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionEditArtwork_artwork">;
   } | null;
 };
-export type MyCollectionArtworkFormTest_Query = {
-  response: MyCollectionArtworkFormTest_Query$data;
-  variables: MyCollectionArtworkFormTest_Query$variables;
+export type MyCollectionEditArtworkTest_Query = {
+  response: MyCollectionEditArtworkTest_Query$data;
+  variables: MyCollectionEditArtworkTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -78,7 +78,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyCollectionArtworkFormTest_Query",
+    "name": "MyCollectionEditArtworkTest_Query",
     "selections": [
       {
         "alias": null,
@@ -91,7 +91,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkForm_artwork"
+            "name": "MyCollectionEditArtwork_artwork"
           }
         ],
         "storageKey": null
@@ -104,7 +104,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MyCollectionArtworkFormTest_Query",
+    "name": "MyCollectionEditArtworkTest_Query",
     "selections": [
       {
         "alias": null,
@@ -370,16 +370,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b998408a86db7082e2fb7d188b6e7342",
+    "cacheID": "8605930c5a8b659422494bbb63ffde39",
     "id": null,
     "metadata": {},
-    "name": "MyCollectionArtworkFormTest_Query",
+    "name": "MyCollectionEditArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkFormTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
+    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1d521dcbc2788e59998436db4ad9cdc0";
+(node as any).hash = "f4cad1801f4d15e9aa177810173ab811";
 
 export default node;
