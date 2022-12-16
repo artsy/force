@@ -41,6 +41,19 @@ describe("HomeContentCards", () => {
     expect(screen.getByText("FallbackCards")).toBeInTheDocument()
   })
 
+  it("switches to fallback cards when segment is never ready", () => {
+    window.appboy = undefined as any
+
+    window.analytics = {
+      ready: () => {},
+    } as any
+
+    render(<HomeContentCards />)
+    expect(screen.getByText("PlaceholderCards")).toBeInTheDocument()
+    jest.advanceTimersByTime(DEFAULT_TIMEOUT_AMOUNT)
+    expect(screen.getByText("FallbackCards")).toBeInTheDocument()
+  })
+
   it("switches to fallback cards when appboy never shows up", () => {
     const artificialSegmentDelay = 10
     window.appboy = undefined as any
