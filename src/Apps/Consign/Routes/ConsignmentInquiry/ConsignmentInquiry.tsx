@@ -117,6 +117,14 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
     router.go(-1)
   }
 
+  const handleCloseModal = () => {
+    // Every time the modal shows up, we need to decrement by -1, else
+    // router needs to pop as many times as the number of times the modal
+    // shows up in order to correctly pop to the sell with artsy screen.
+    router.go(-1)
+    setShowModal(false)
+  }
+
   return (
     <>
       <Formik<ConsignmentInquiryFormModel>
@@ -131,9 +139,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
           <>
             <ConsignmentInquiryFormAbandonEditModal
               show={showModal}
-              onClose={() => {
-                setShowModal(false)
-              }}
+              onClose={handleCloseModal}
             />
             <TopContextBar
               displayBackArrow

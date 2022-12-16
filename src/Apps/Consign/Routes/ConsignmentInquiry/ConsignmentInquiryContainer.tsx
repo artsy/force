@@ -7,12 +7,16 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 
 export const ConsignmentInquiryContainer: React.FC = ({ children }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
 
   const handleLogoClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault
+    if (match.location.pathname == "/sell/inquiry/sent") {
+      router.go(-2)
+      return
+    }
     router.go(-1)
   }
 

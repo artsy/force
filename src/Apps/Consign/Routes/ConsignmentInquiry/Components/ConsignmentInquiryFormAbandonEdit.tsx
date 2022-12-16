@@ -23,7 +23,7 @@ export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
         <Button
           variant="primaryBlack"
           onClick={() => {
-            router.go(-1)
+            router.go(-2)
           }}
           width="100%"
           data-testid="get-in-touch-leave-button"
