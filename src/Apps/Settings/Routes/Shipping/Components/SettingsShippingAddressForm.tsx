@@ -51,6 +51,17 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     phoneNumber: Yup.string()
       .required("Phone Number is required")
       .test({
+        name: "national-number-is-pure",
+        message:
+          "Please remove the country code from your number and select it on the left",
+        test: national => {
+          if (national?.includes("+")) {
+            return false
+          }
+          return true
+        },
+      })
+      .test({
         name: "phone-number-is-valid",
         message: "Please enter a valid phone number",
         test: (national, context) => {
@@ -310,7 +321,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                       name: "attributes.phoneNumber",
                       onBlur: handleBlur,
                       onChange: handleChange,
-                      placeholder: "(000) 000 0000",
+                      placeholder: "000 000 0000",
                       value: values.attributes.phoneNumber,
                     }}
                     selectProps={{
