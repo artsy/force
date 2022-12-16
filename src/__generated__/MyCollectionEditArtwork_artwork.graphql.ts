@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1915b928c0b549840dfdda8868eed7b>>
+ * @generated SignedSource<<af85c7bb890ea73078cb42f1c1d250d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkForm_artwork$data = {
+export type MyCollectionEditArtwork_artwork$data = {
   readonly artist: {
     readonly formattedNationalityAndBirthday: string | null;
     readonly internalID: string;
@@ -58,11 +58,12 @@ export type MyCollectionArtworkForm_artwork$data = {
   readonly slug: string;
   readonly title: string | null;
   readonly width: string | null;
-  readonly " $fragmentType": "MyCollectionArtworkForm_artwork";
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkFormMain_artwork">;
+  readonly " $fragmentType": "MyCollectionEditArtwork_artwork";
 };
-export type MyCollectionArtworkForm_artwork$key = {
-  readonly " $data"?: MyCollectionArtworkForm_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkForm_artwork">;
+export type MyCollectionEditArtwork_artwork$key = {
+  readonly " $data"?: MyCollectionEditArtwork_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionEditArtwork_artwork">;
 };
 
 const node: ReaderFragment = (function(){
@@ -98,7 +99,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MyCollectionArtworkForm_artwork",
+  "name": "MyCollectionEditArtwork_artwork",
   "selections": [
     {
       "alias": null,
@@ -353,13 +354,18 @@ return {
       "name": "title",
       "storageKey": null
     },
-    (v3/*: any*/)
+    (v3/*: any*/),
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkFormMain_artwork"
+    }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "994888b6b6d5a10c58f9a4a95608e1d2";
+(node as any).hash = "b14f0d212037acc5552f2a4e7724c9a1";
 
 export default node;

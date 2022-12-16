@@ -1,73 +1,79 @@
 import {
-  Box,
   Flex,
   Text,
   Spacer,
   ArtsyMarkBlackIcon,
   FullBleed,
   Spinner,
+  Box,
 } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { useState, useEffect } from "react"
+import { useState, useEffect, FC } from "react"
 import { useTranslation } from "react-i18next"
 
-export const waitTime = 2000
+interface ArtQuizResultsLoaderProps {
+  onReady(): void
+}
 
-export const ArtQuizResultsLoader = () => {
-  const { desktop } = useNavBarHeight()
+export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
+  onReady,
+}) => {
   const { t } = useTranslation()
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, waitTime)
-  }, [])
+    const timeouts: ReturnType<typeof setTimeout>[] = []
 
-  const keypath = loading
-    ? "artQuizPage.loadingScreen.calculatingResults"
-    : "artQuizPage.loadingScreen.resultsComplete"
+    // TODO: Add support for cancellation in `wait` util
+    timeouts.push(
+      setTimeout(() => {
+        setLoading(false)
+        timeouts.push(setTimeout(onReady, 1000))
+      }, 2000)
+    )
+
+    return () => {
+      timeouts.forEach(clearTimeout)
+    }
+  }, [onReady])
 
   return (
-    <FullBleed height={`calc(100vh - ${desktop}px)`}>
-      <Box height="100%" padding={0}>
-        <SplitLayout
-          hideLogo
-          left={
-            <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkBlackIcon height="65px" width="65px" fill="white100" />
-            </Flex>
-          }
-          leftProps={{ display: ["none", "block"] }}
-          right={
-            <Flex
-              width="100%"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              p={[2, 4]}
-            >
-              {/* Vertically centers next Box */}
+    <FullBleed height="100%">
+      <SplitLayout
+        hideLogo
+        left={
+          <Flex height="100%" alignItems="center" justifyContent="center">
+            <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
+          </Flex>
+        }
+        leftProps={{ display: ["none", "block"] }}
+        right={
+          <Flex
+            width="100%"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            p={[2, 4]}
+          >
+            <Box position="relative" height={25} width={25}>
+              <Spinner color="brand" />
+            </Box>
 
-              {loading ? (
-                <Spinner position="inherit" display="flex" />
-              ) : (
-                <Flex height="6px" />
-              )}
-              <Spacer y={2} />
-              <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
+            <Spacer y={2} />
 
-              <Spacer y={2} />
+            <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
 
-              <Text variant={["sm", "md"]} color="black60">
-                {t(keypath)}
-              </Text>
-            </Flex>
-          }
-        />
-      </Box>
+            <Spacer y={2} />
+
+            <Text variant={["sm", "md"]} color="black60">
+              {loading
+                ? t("artQuizPage.loadingScreen.calculatingResults")
+                : t("artQuizPage.loadingScreen.resultsComplete")}
+            </Text>
+          </Flex>
+        }
+      />
     </FullBleed>
   )
 }

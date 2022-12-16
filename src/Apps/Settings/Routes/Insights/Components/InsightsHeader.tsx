@@ -1,5 +1,5 @@
 import { OwnerType } from "@artsy/cohesion"
-import { Box, Button, DROP_SHADOW, Flex, FullBleed, Text } from "@artsy/palette"
+import { Box, Button, DROP_SHADOW, Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
@@ -24,14 +24,9 @@ export const InsightsHeader: React.FC = () => {
                 <HorizontalPadding>
                   <Flex
                     backgroundColor="white100"
-                    justifyContent="space-between"
+                    justifyContent="flex-end"
                     py={[1, 2]}
                   >
-                    <Flex flex={1} alignItems="center">
-                      <Text variant="lg-display">
-                        Gain deeper knowledge of your collection.
-                      </Text>
-                    </Flex>
                     <Button
                       // @ts-ignore
                       as={RouterLink}

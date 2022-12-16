@@ -94,25 +94,6 @@ describe("AuctionResultsFilterContext", () => {
         })
       })
 
-      describe("#setFilter for includeUpcoming", () => {
-        it("should set includeUpcoming to true", () => {
-          return new Promise<void>(done => {
-            getWrapper({
-              filters: {
-                includeUpcoming: true,
-              },
-            })
-            act(() => {
-              context.setFilter?.("includeUpcoming", false)
-              setTimeout(() => {
-                expect(context.filters?.includeUpcoming).toEqual(false)
-                done()
-              })
-            })
-          })
-        })
-      })
-
       describe("#setFilter for createdAfterYear", () => {
         it("should set createdBeforeYear if it is not already provided", () => {
           return new Promise<void>(done => {

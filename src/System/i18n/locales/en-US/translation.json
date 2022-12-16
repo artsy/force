@@ -17,11 +17,12 @@
   },
   "artQuizPage": {
     "loadingScreen": {
-      "calculatingResults": "Calculating Results...",
+      "calculatingResults": "Calculating Results…",
       "resultsComplete": "Results Complete"
     },
     "title": "Art Taste Quiz",
     "results": {
+      "emailSuccess": "Results sent to {{email}}",
       "emailButton": "Email My Results",
       "title": "Explore Your Quiz Results",
       "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
