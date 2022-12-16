@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd55286182bb66ca0a922993eebb53d7>>
+ * @generated SignedSource<<0636b0d634a7520bb101e0502abfedf3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetailsAboutTheWorkFromPartner_Test_Query$variables = {
+export type ArtworkDetailsPartnerInfo_Test_Query$variables = {
   slug: string;
 };
-export type ArtworkDetailsAboutTheWorkFromPartner_Test_Query$data = {
+export type ArtworkDetailsPartnerInfo_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromPartner_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsPartnerInfo_artwork">;
   } | null;
 };
-export type ArtworkDetailsAboutTheWorkFromPartner_Test_Query = {
-  response: ArtworkDetailsAboutTheWorkFromPartner_Test_Query$data;
-  variables: ArtworkDetailsAboutTheWorkFromPartner_Test_Query$variables;
+export type ArtworkDetailsPartnerInfo_Test_Query = {
+  response: ArtworkDetailsPartnerInfo_Test_Query$data;
+  variables: ArtworkDetailsPartnerInfo_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -133,7 +133,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkDetailsAboutTheWorkFromPartner_Test_Query",
+    "name": "ArtworkDetailsPartnerInfo_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -146,7 +146,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkDetailsAboutTheWorkFromPartner_artwork"
+            "name": "ArtworkDetailsPartnerInfo_artwork"
           }
         ],
         "storageKey": null
@@ -159,7 +159,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtworkDetailsAboutTheWorkFromPartner_Test_Query",
+    "name": "ArtworkDetailsPartnerInfo_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -357,7 +357,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4f5c0111eeb1140c0c93a51ba915e81",
+    "cacheID": "da5d572c66e6021574ce411ada3624b1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -430,13 +430,13 @@ return {
         "artwork.partner.type": (v10/*: any*/)
       }
     },
-    "name": "ArtworkDetailsAboutTheWorkFromPartner_Test_Query",
+    "name": "ArtworkDetailsPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAboutTheWorkFromPartner_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetailsPartnerInfo_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsPartnerInfo_artwork on Artwork {\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "08d32dd4f465012e5dbe55e7afa8ff22";
+(node as any).hash = "36e03bb9f503eaeb9e4af671da3f7b72";
 
 export default node;

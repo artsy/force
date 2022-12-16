@@ -32,7 +32,7 @@ import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtwo
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
-import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAboutTheWorkFromPartner"
+import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -48,13 +48,11 @@ export interface Props {
 declare const window: any
 
 interface BelowTheFoldArtworkDetailsProps {
-  artwork: ArtworkApp_artwork$data
   artists: ArtworkApp_artwork$data["artists"]
   slug: ArtworkApp_artwork$data["slug"]
 }
 
 const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
-  artwork,
   artists,
   slug,
 }) => (
@@ -72,9 +70,7 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
           return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
         })}
 
-      <ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer
-        artwork={artwork}
-      />
+      <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
     </Join>
   </>
 )
@@ -201,7 +197,6 @@ export const ArtworkApp: React.FC<Props> = props => {
 
           <Media greaterThanOrEqual="sm">
             <BelowTheFoldArtworkDetails
-              artwork={artwork}
               slug={artwork.slug}
               artists={artwork.artists}
             />
@@ -215,7 +210,6 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <Media lessThan="sm">
         <BelowTheFoldArtworkDetails
-          artwork={artwork}
           slug={artwork.slug}
           artists={artwork.artists}
         />
@@ -340,7 +334,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar_artwork
-        ...ArtworkDetailsAboutTheWorkFromPartner_artwork
       }
     `,
     me: graphql`
