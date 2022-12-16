@@ -160,7 +160,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
-                  route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
+                  route={
+                    isCollectorProfileEnabled
+                      ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
+                      : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                  }
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
@@ -184,7 +188,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
+                          route={
+                            isCollectorProfileEnabled
+                              ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
+                              : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                          }
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}

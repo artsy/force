@@ -70,7 +70,7 @@ const MyCollectionArtwork = loadable(
 const MyCollectionEditArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
     ),
   {
     resolveComponent: component =>
@@ -81,7 +81,7 @@ const MyCollectionEditArtwork = loadable(
 const PriceEstimateContactInformation = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
     ),
   {
     resolveComponent: component =>
@@ -92,7 +92,7 @@ const PriceEstimateContactInformation = loadable(
 const PriceEstimateConfirmation = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateConfirmation"
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateConfirmation"
     ),
   {
     resolveComponent: component => component.PriceEstimateConfirmation,

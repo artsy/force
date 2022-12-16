@@ -173,7 +173,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    const defaultBackLink = artworkId
+      ? isCollectorProfileEnabled
+        ? "/collector-profile/my-collection"
+        : "/my-collection"
+      : "/sell"
+
     let backTo = defaultBackLink
     if (stepIndex === 0 && artworkId) {
       return backTo + `/artwork/${artworkId}`

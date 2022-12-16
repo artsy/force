@@ -164,7 +164,9 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
       )
 
       const consignPath = artworkId
-        ? "/my-collection/submission"
+        ? isCollectorProfileEnabled
+          ? "/collector-profile/my-collection/submission"
+          : "/my-collection/submission"
         : "/sell/submission"
 
       const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -193,7 +195,12 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    const defaultBackLink = artworkId
+      ? isCollectorProfileEnabled
+        ? "/collector-profile/my-collection"
+        : "/my-collection"
+      : "/sell"
+
     let backTo = defaultBackLink
     if (stepIndex === 0 && artworkId) {
       return backTo + `/artwork/${artworkId}`

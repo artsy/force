@@ -181,7 +181,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       )
 
       const consignPath = artworkId
-        ? "/my-collection/submission"
+        ? isCollectorProfileEnabled
+          ? "/collector-profile/my-collection/submission"
+          : "/my-collection/submission"
         : "/sell/submission"
 
       const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -190,6 +192,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         let nextStep = steps[nextStepIndex]
         if (nextStep === "Contact" || nextStep === "Contact Information") {
           nextRoute = `${consignPath}/${submissionId}/contact-information`
+        } else if (nextStep === "Artwork" || nextStep === "Artwork Details") {
+          nextRoute = `${consignPath}/${submissionId}/artwork-details/`
         } else if (nextStep === "Photos" || nextStep === "Upload Photos") {
           nextRoute = `${consignPath}/${submissionId}/upload-photos`
         }
@@ -210,7 +214,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   }
 
   const deriveBackLinkTo = () => {
-    const defaultBackLink = artworkId ? `/my-collection` : "/sell"
+    const defaultBackLink = artworkId
+      ? isCollectorProfileEnabled
+        ? "/collector-profile/my-collection"
+        : "/my-collection"
+      : "/sell"
     let backTo = defaultBackLink
     if (stepIndex === 0 && artworkId) {
       return backTo + `/artwork/${artworkId}`
