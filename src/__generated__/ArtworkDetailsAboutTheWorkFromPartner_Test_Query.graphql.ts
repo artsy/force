@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4afdbf9e8673fc952dd1d3d99389a22>>
+ * @generated SignedSource<<cd55286182bb66ca0a922993eebb53d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -94,15 +94,15 @@ v8 = [
 ],
 v9 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v10 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 },
 v11 = {
   "enumValues": null,
@@ -169,19 +169,6 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "HTML"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "additionalInformation",
-            "storageKey": "additionalInformation(format:\"HTML\")"
-          },
           {
             "alias": null,
             "args": null,
@@ -370,7 +357,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ce1ece39a2b91d68d82458ac701c8150",
+    "cacheID": "f4f5c0111eeb1140c0c93a51ba915e81",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -380,8 +367,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.additionalInformation": (v9/*: any*/),
-        "artwork.id": (v10/*: any*/),
+        "artwork.id": (v9/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -394,13 +380,13 @@ return {
           "plural": true,
           "type": "PartnerCategory"
         },
-        "artwork.partner.categories.id": (v10/*: any*/),
-        "artwork.partner.categories.name": (v9/*: any*/),
-        "artwork.partner.categories.slug": (v10/*: any*/),
-        "artwork.partner.href": (v9/*: any*/),
-        "artwork.partner.id": (v10/*: any*/),
-        "artwork.partner.initials": (v9/*: any*/),
-        "artwork.partner.internalID": (v10/*: any*/),
+        "artwork.partner.categories.id": (v9/*: any*/),
+        "artwork.partner.categories.name": (v10/*: any*/),
+        "artwork.partner.categories.slug": (v9/*: any*/),
+        "artwork.partner.href": (v10/*: any*/),
+        "artwork.partner.id": (v9/*: any*/),
+        "artwork.partner.initials": (v10/*: any*/),
+        "artwork.partner.internalID": (v9/*: any*/),
         "artwork.partner.isDefaultProfilePublic": (v11/*: any*/),
         "artwork.partner.locationsConnection": {
           "enumValues": null,
@@ -420,9 +406,9 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "artwork.partner.locationsConnection.edges.node.city": (v9/*: any*/),
-        "artwork.partner.locationsConnection.edges.node.id": (v10/*: any*/),
-        "artwork.partner.name": (v9/*: any*/),
+        "artwork.partner.locationsConnection.edges.node.city": (v10/*: any*/),
+        "artwork.partner.locationsConnection.edges.node.id": (v9/*: any*/),
+        "artwork.partner.name": (v10/*: any*/),
         "artwork.partner.partnerPageEligible": (v11/*: any*/),
         "artwork.partner.profile": {
           "enumValues": null,
@@ -438,15 +424,15 @@ return {
         "artwork.partner.profile.icon.cropped": (v13/*: any*/),
         "artwork.partner.profile.icon.cropped.src": (v14/*: any*/),
         "artwork.partner.profile.icon.cropped.srcSet": (v14/*: any*/),
-        "artwork.partner.profile.id": (v10/*: any*/),
-        "artwork.partner.profile.internalID": (v10/*: any*/),
-        "artwork.partner.slug": (v10/*: any*/),
-        "artwork.partner.type": (v9/*: any*/)
+        "artwork.partner.profile.id": (v9/*: any*/),
+        "artwork.partner.profile.internalID": (v9/*: any*/),
+        "artwork.partner.slug": (v9/*: any*/),
+        "artwork.partner.type": (v10/*: any*/)
       }
     },
     "name": "ArtworkDetailsAboutTheWorkFromPartner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetailsAboutTheWorkFromPartner_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetailsAboutTheWorkFromPartner_Test_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

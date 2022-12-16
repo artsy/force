@@ -1,19 +1,11 @@
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "Utils/Responsive"
-import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
 import { ArtworkDetailsAboutTheWorkFromPartner_artwork$data } from "__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import Events from "Utils/Events"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import {
-  HTML,
-  ReadMore,
-  Spacer,
-  StackableBorderBox,
-  Text,
-} from "@artsy/palette"
+import { StackableBorderBox } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import track from "react-tracking"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
@@ -47,29 +39,10 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
     })
   }
 
-  renderReadMore(breakpoint?: string) {
-    const { additionalInformation } = this.props.artwork
-    const xs = breakpoint === "xs"
-    const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
-
-    if (!additionalInformation) return null
-
-    return (
-      <HTML variant="sm">
-        <ReadMore
-          maxChars={maxChars}
-          content={additionalInformation}
-          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-        />
-      </HTML>
-    )
-  }
-
   render() {
-    const { artwork } = this.props
-    const { additionalInformation, partner } = artwork
+    const { partner } = this.props.artwork
 
-    if (!additionalInformation && !partner) return null
+    if (!partner) return null
 
     const canLink = Boolean(
       partner?.partnerPageEligible && partner?.isDefaultProfilePublic
@@ -95,17 +68,6 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
             }
           />
         )}
-
-        {additionalInformation && (
-          <>
-            {partner && <Spacer y={2} />}
-
-            <Text variant="sm">
-              <Media at="xs">{this.renderReadMore("xs")}</Media>
-              <Media greaterThan="xs">{this.renderReadMore()}</Media>
-            </Text>
-          </>
-        )}
       </StackableBorderBox>
     )
   }
@@ -116,7 +78,6 @@ export const ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer = createFrag
   {
     artwork: graphql`
       fragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {
-        additionalInformation(format: HTML)
         partner {
           ...EntityHeaderPartner_partner
           partnerPageEligible

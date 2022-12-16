@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51cdde4bc13b09e733c2f1cc8aa4470d>>
+ * @generated SignedSource<<726ff866a71fa0753483f8755ddab9a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = {
-  readonly additionalInformation: string | null;
   readonly partner: {
     readonly internalID: string;
     readonly isDefaultProfilePublic: boolean | null;
@@ -42,19 +41,6 @@ return {
   "metadata": null,
   "name": "ArtworkDetailsAboutTheWorkFromPartner_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "additionalInformation",
-      "storageKey": "additionalInformation(format:\"HTML\")"
-    },
     {
       "alias": null,
       "args": null,
@@ -104,6 +90,6 @@ return {
 };
 })();
 
-(node as any).hash = "f165a849b0452676734f114abcc0c8f0";
+(node as any).hash = "45f5e2fa9caaa597f5c5aed74e610373";
 
 export default node;
