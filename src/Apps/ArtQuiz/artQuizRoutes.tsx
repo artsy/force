@@ -1,5 +1,10 @@
 import loadable from "@loadable/component"
+import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
+
+const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
+  resolveComponent: component => component.ArtQuizApp,
+})
 
 const ArtQuizWelcome = loadable(() => import("./Routes/ArtQuizWelcome"), {
   resolveComponent: component => component.ArtQuizWelcome,
@@ -10,7 +15,7 @@ const ArtQuizArtworks = loadable(() => import("./Routes/ArtQuizArtworks"), {
 })
 
 const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
-  resolveComponent: component => component.ArtQuizResults,
+  resolveComponent: component => component.ArtQuizResultsFragmentContainer,
 })
 
 export const artQuizRoutes: AppRouteConfig[] = [
@@ -24,6 +29,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
 
       res.redirect("/art-quiz/welcome")
     },
+    getComponent: () => ArtQuizApp,
     onClientSideRender: () => {
       ArtQuizWelcome.preload()
       ArtQuizArtworks.preload()
@@ -44,6 +50,13 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "results",
         hideFooter: true,
         getComponent: () => ArtQuizResults,
+        query: graphql`
+          query artQuizRoutes_ArtQuizResultsQuery {
+            me {
+              ...ArtQuizResults_me
+            }
+          }
+        `,
       },
     ],
   },
