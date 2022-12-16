@@ -54,12 +54,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
         name: "national-number-is-pure",
         message:
           "Please remove the country code from your number and select it on the left",
-        test: national => {
-          if (national?.includes("+")) {
-            return false
-          }
-          return true
-        },
+        test: national => !national?.includes("+"),
       })
       .test({
         name: "phone-number-is-valid",
