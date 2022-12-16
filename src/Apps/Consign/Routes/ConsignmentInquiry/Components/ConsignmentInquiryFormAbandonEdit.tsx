@@ -2,15 +2,9 @@ import { Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 
 export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
-  show: boolean
   onClose: () => void
-}> = ({ show, onClose }) => {
+}> = ({ onClose }) => {
   const { router } = useRouter()
-
-  if (!show) {
-    return null
-  }
-
   return (
     <ModalDialog onClose={onClose} title="Leave without sending message?">
       <Flex pb={2} flexDirection="column" alignItems={["stretch", "center"]}>

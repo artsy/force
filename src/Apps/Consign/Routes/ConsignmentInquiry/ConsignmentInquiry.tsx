@@ -108,9 +108,30 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
       }
     } catch (error) {
       logger.error(error)
+      if (typeof error === "string") {
+        sendToast({
+          variant: "error",
+          message: `Error: ${error}`,
+          description: "Please contact sell@artsy.net",
+        })
+        return
+      }
+      const mutationErrorMessage = error.message ?? error.error
+      let otherErrorMessage = ""
+      if (Array.isArray(error)) {
+        otherErrorMessage = error.reduce((p, c) => {
+          if (typeof c === "string") {
+            return p + c
+          }
+          return p + c.message || p.error || ""
+        }, "")
+      }
+      const errorMessage = mutationErrorMessage || otherErrorMessage
       sendToast({
         variant: "error",
-        message: `Error: ${error}`,
+        message: `Error${errorMessage ? ":" : ""} ${
+          errorMessage ? errorMessage : ""
+        }`,
         description: "Please contact sell@artsy.net",
       })
     }
@@ -144,10 +165,12 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
       >
         {({ isValid, isSubmitting, dirty }) => (
           <>
-            <ConsignmentInquiryFormAbandonEditModal
-              show={showExitModal}
-              onClose={handleCloseModal}
-            />
+            {showExitModal && (
+              <ConsignmentInquiryFormAbandonEditModal
+                onClose={handleCloseModal}
+              />
+            )}
+
             <TopContextBar
               displayBackArrow
               hideSeparator
