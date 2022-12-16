@@ -95,9 +95,12 @@ describe("ArtworkDetails", () => {
       expect(wrapper.html()).toContain("Signature")
       expect(wrapper.html()).toContain("Condition")
       expect(wrapper.html()).toContain("Certificate of authenticity")
+      expect(wrapper.html()).toContain("Rarity")
+      expect(wrapper.html()).toContain("Size")
+      expect(wrapper.html()).toContain("Material")
       expect(
         wrapper.find("ArtworkDetailsAdditionalInfo").find("dl").length
-      ).toBe(4)
+      ).toBe(7)
     })
   })
 
@@ -105,6 +108,9 @@ describe("ArtworkDetails", () => {
     const emptyData = {
       Artwork: () => ({
         category: null,
+        attributionClass: null,
+        dimensions: null,
+        medium: null,
         series: null,
         publisher: null,
         manufacturer: null,
@@ -158,12 +164,6 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find("img").length).toBe(0)
       // This checks that Avatar div is not rendered.
       expect(wrapper.find("EntityHeader").children.length).toBe(1)
-    })
-
-    it("renders the EntityHeaderPartnerFragmentContainer", () => {
-      const wrapper = getWrapper()
-
-      expect(wrapper.html()).toContain("EntityHeaderPartnerFragmentContainer")
     })
 
     it("does not render partner follow button if artwork is from an auction partner", () => {

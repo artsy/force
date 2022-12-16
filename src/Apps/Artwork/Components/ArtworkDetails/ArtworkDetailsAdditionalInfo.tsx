@@ -64,11 +64,11 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     },
     {
       title: "Size",
-      value: !!dimensionsLabel && dimensionsLabel,
+      value: dimensionsLabel,
     },
     {
       title: "Rarity",
-      value: !!attributionClass?.name && (
+      value: attributionClass?.name && (
         <>
           <Clickable
             onClick={() => {
@@ -167,6 +167,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   const displayItems = listItems.filter(i => i.value != null && i.value !== "")
 
+  console.log({ displayItems })
   if (displayItems.length === 0) {
     return null
   }
