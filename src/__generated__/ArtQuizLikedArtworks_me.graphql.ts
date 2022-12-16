@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90791b712ec54cb62a61211c69ad8128>>
+ * @generated SignedSource<<1be4785323875eeb8c44c94f1e27be35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizLikedArtworks_me$data = {
   readonly quiz: {
-    readonly quizArtworkConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly internalID: string;
-          readonly isSaved: boolean | null;
-          readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-        } | null;
-      } | null> | null;
-    } | null;
+    readonly savedArtworks: ReadonlyArray<{
+      readonly internalID: string;
+      readonly isSaved: boolean | null;
+      readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+    }>;
   };
   readonly " $fragmentType": "ArtQuizLikedArtworks_me";
 };
@@ -45,61 +41,33 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 20
-            }
-          ],
-          "concreteType": "QuizArtworkConnection",
+          "args": null,
+          "concreteType": "Artwork",
           "kind": "LinkedField",
-          "name": "quizArtworkConnection",
-          "plural": false,
+          "name": "savedArtworks",
+          "plural": true,
           "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "GridItem_artwork"
+            },
             {
               "alias": null,
               "args": null,
-              "concreteType": "QuizArtworkEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "GridItem_artwork"
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isSaved",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isSaved",
               "storageKey": null
             }
           ],
-          "storageKey": "quizArtworkConnection(first:20)"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -109,6 +77,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bf4cf7ee03d38f2a250c0a606a42928e";
+(node as any).hash = "288d5f2d6ab69c1f14052d03e58316ce";
 
 export default node;

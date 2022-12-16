@@ -3,7 +3,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtQuizRecommendedArtists_me$data } from "__generated__/ArtQuizRecommendedArtists_me.graphql"
 import { ArtQuizRecommendedArtistsQuery } from "__generated__/ArtQuizRecommendedArtistsQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { compact, uniq } from "lodash"
 import {
   ArtQuizRecommendedArtistFragmentContainer,
@@ -18,10 +17,8 @@ interface ArtQuizRecommendedArtistsProps {
 const ArtQuizRecommendedArtists: FC<ArtQuizRecommendedArtistsProps> = ({
   me,
 }) => {
-  const artworks = extractNodes(me.quiz.quizArtworkConnection)
-  const likedArtworks = artworks.filter(artwork => artwork.isSaved)
   const likedArtists = compact(
-    uniq(likedArtworks.map(artwork => artwork.artist))
+    uniq(me.quiz.savedArtworks.map(artwork => artwork.artist))
   )
 
   return (
@@ -44,15 +41,11 @@ const ArtQuizRecommendedArtistsFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtQuizRecommendedArtists_me on Me {
         quiz {
-          quizArtworkConnection(first: 20) {
-            edges {
-              node {
-                isSaved
-                artist {
-                  ...ArtQuizRecommendedArtist_artist
-                  internalID
-                }
-              }
+          savedArtworks {
+            isSaved
+            artist {
+              ...ArtQuizRecommendedArtist_artist
+              internalID
             }
           }
         }
