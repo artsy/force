@@ -9,6 +9,7 @@ import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
 } from "Components/Artwork/Details"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface MetadataProps
   extends BoxProps,
@@ -70,6 +71,8 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   isMyCollectionArtwork,
   ...rest
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
@@ -78,6 +81,8 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   // but to a custom my collection artwork page.
   const to = !isMyCollectionArtwork
     ? artwork.href
+    : isCollectorProfileEnabled
+    ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
     : `/my-collection/artwork/${artwork.internalID}`
 
   return (

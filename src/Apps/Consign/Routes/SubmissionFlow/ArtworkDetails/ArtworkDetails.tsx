@@ -33,6 +33,7 @@ import { LocationDescriptor } from "found"
 import { trackEvent } from "Server/analytics/helpers"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -45,6 +46,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
   myCollectionArtwork,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
@@ -170,7 +172,13 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         user_email: submission?.userEmail,
       })
 
-      router.replace(artworkId ? "/settings/my-collection" : "/sell")
+      router.replace(
+        artworkId
+          ? isCollectorProfileEnabled
+            ? "/collector-profile/my-collection"
+            : "/settings/my-collection"
+          : "/sell"
+      )
 
       const consignPath = artworkId
         ? "/my-collection/submission"

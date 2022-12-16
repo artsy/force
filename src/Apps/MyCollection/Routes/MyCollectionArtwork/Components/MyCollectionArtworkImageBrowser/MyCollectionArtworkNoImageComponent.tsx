@@ -5,6 +5,7 @@ interface MyCollectionArtworkNoImageComponentProps {
   artworkID?: string
 }
 
+// TODO
 export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNoImageComponentProps> = ({
   artworkID,
 }) => {

@@ -7,9 +7,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 
 export const InsightsLandingPage = () => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const { src, srcSet } = resized(
     "https://files.artsy.net/images/InsightsEmptyStateImage.png",
     {
@@ -33,7 +36,11 @@ export const InsightsLandingPage = () => {
           // @ts-ignore
           as={RouterLink}
           variant="primaryBlack"
-          to="/my-collection/artworks/new"
+          to={
+            isCollectorProfileEnabled
+              ? "/collector-profile/my-collection/artworks/new"
+              : "/my-collection/artworks/new"
+          }
           width={["100%", "auto"]}
         >
           Upload Artwork
