@@ -57,6 +57,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 height={OFFSET}
                 overflow="visible"
                 style={{
+                  breakBefore: "column",
                   whiteSpace: "nowrap",
                   transform: `translateY(-${OFFSET}px)`,
                 }}
@@ -102,7 +103,6 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </RouterLink>
               )
             })}
-            <br />
           </React.Fragment>
         )
       })}

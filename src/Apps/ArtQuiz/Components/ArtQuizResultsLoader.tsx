@@ -10,7 +10,6 @@ import {
 import { SplitLayout } from "Components/SplitLayout"
 import { useState, useEffect, FC } from "react"
 import { useTranslation } from "react-i18next"
-import { wait } from "Utils/wait"
 
 interface ArtQuizResultsLoaderProps {
   onReady(): void
@@ -24,17 +23,19 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const exec = async () => {
-      await wait(2000)
+    const timeouts: ReturnType<typeof setTimeout>[] = []
 
-      setLoading(false)
+    // TODO: Add support for cancellation in `wait` util
+    timeouts.push(
+      setTimeout(() => {
+        setLoading(false)
+        timeouts.push(setTimeout(onReady, 1000))
+      }, 2000)
+    )
 
-      await wait(1000)
-
-      onReady()
+    return () => {
+      timeouts.forEach(clearTimeout)
     }
-
-    exec()
   }, [onReady])
 
   return (

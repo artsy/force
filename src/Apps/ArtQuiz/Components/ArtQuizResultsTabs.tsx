@@ -1,4 +1,6 @@
 import { Button, Spacer, Tab, Tabs, Text, useToasts } from "@artsy/palette"
+import { ArtQuizLikedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizLikedArtworks"
+import { ArtQuizRecommendedArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtists"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { useSystemContext } from "System"
@@ -21,28 +23,42 @@ export const ArtQuizResultsTabs: FC = () => {
 
   return (
     <>
-      <Text mt={6} variant={["lg", "xl"]}>
+      <Spacer y={[4, 6]} />
+
+      <Text variant={["lg-display", "xl"]}>
         {t("artQuizPage.results.title")}
       </Text>
 
-      <Spacer y={1} />
+      <Spacer y={[0, 1]} />
 
-      <Text color="black60" variant={["sm", "md"]}>
+      <Text color="black60" variant={["lg-display", "md"]}>
         {t("artQuizPage.results.subtitle")}
       </Text>
 
-      <Spacer y={4} />
+      <Spacer y={[2, 4]} />
 
-      <Button variant="secondaryBlack" onClick={handleClick}>
+      <Button
+        variant="secondaryBlack"
+        size={["small", "large"]}
+        onClick={handleClick}
+      >
         {t("artQuizPage.results.emailButton")}
       </Button>
 
-      <Spacer y={6} />
+      <Spacer y={[4, 6]} />
 
       <Tabs fill>
-        <Tab name={t("artQuizPage.results.tabs.worksYouLiked")} />
+        <Tab name={t("artQuizPage.results.tabs.worksYouLiked")}>
+          <ArtQuizLikedArtworksQueryRenderer />
+        </Tab>
+
         <Tab name={t("artQuizPage.results.tabs.recommendedCollections")} />
-        <Tab name={t("artQuizPage.results.tabs.recommendedArtists")} />
+
+        <Tab name={t("artQuizPage.results.tabs.recommendedArtists")}>
+          <Spacer y={4} />
+
+          <ArtQuizRecommendedArtistsQueryRenderer />
+        </Tab>
       </Tabs>
     </>
   )
