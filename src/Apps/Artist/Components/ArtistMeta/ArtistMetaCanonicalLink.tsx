@@ -1,10 +1,10 @@
 import * as React from "react"
 import { Link } from "react-head"
-import { data as sd } from "sharify"
+import { getENV } from "Utils/getENV"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistMetaCanonicalLink_artist$data } from "__generated__/ArtistMetaCanonicalLink_artist.graphql"
 import { useRouter } from "System/Router/useRouter"
-import { hasOverviewContent } from "../Routes/Overview/Utils/hasOverviewContent"
+import { hasOverviewContent } from "Apps/Artist/Routes/Overview/Utils/hasOverviewContent"
 import { hasSections } from "Components/ArtistMarketInsights"
 
 export const computeCanonicalPath = (
@@ -47,7 +47,7 @@ export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = (
   const canShowOverview = hasArtistInsights || hasArtistContent
 
   const canonicalUrl = computeCanonicalPath(
-    sd.APP_URL,
+    getENV("APP_URL"),
     artist.slug,
     pathname,
     canShowOverview

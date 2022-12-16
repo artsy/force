@@ -4,7 +4,7 @@ import {
   productAttributes,
   sellerFromPartner,
   structuredDataAttributes,
-} from "../ArtistMeta"
+} from "Apps/Artist/Components/ArtistMeta/helpers"
 
 jest.mock("sharify", () => ({
   data: {
