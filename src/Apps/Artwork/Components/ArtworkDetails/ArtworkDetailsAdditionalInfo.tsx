@@ -73,7 +73,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
                 textDecoration="underline"
                 color="black60"
               >
-                <Text>{category}</Text>
+                <Text variant="xs">{category}</Text>
               </Clickable>
 
               <ArtworkDetailsMediumModalFragmentContainer
@@ -83,7 +83,9 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
               />
             </>
           ) : (
-            <Text color="black60">{category}</Text>
+            <Text variant="xs" color="black60">
+              {category}
+            </Text>
           )}
         </>
       ),
