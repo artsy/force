@@ -222,7 +222,7 @@ export const Details: React.FC<DetailsProps> = ({
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
-              <Text variant="xs" style={{ whiteSpace: "nowrap" }}>
+              <Text variant="xs" flexShrink={0}>
                 Lot {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
