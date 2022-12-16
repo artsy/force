@@ -30,6 +30,18 @@ export const HomeContentCards: React.FC = () => {
   const cardsLengthRef = useRef(cards.length)
 
   useEffect(() => {
+    const overallTimeout = setTimeout(() => {
+      if (cardsLengthRef.current > 0) return
+
+      setRenderFallback(true)
+    }, timeoutAmount)
+
+    return () => {
+      clearTimeout(overallTimeout)
+    }
+  }, [timeoutAmount])
+
+  useEffect(() => {
     if (appboy) return
 
     if (window.appboy) {
@@ -56,7 +68,7 @@ export const HomeContentCards: React.FC = () => {
       setCards(sortedCards as Braze.CaptionedImage[])
     })
 
-    const timeout = setTimeout(() => {
+    const brazeTimeout = setTimeout(() => {
       if (cardsLengthRef.current > 0) return
 
       appboy.removeSubscription(subscriptionId)
@@ -67,14 +79,14 @@ export const HomeContentCards: React.FC = () => {
 
     return () => {
       appboy.removeSubscription(subscriptionId)
-      clearTimeout(timeout)
+      clearTimeout(brazeTimeout)
     }
   }, [appboy, timeoutAmount])
 
   const hasBrazeCards = appboy && cardsLengthRef.current > 0
 
-  if (!hasBrazeCards)
-    return renderFallback ? <FallbackCards /> : <PlaceholderCards />
+  if (renderFallback) return <FallbackCards />
+  if (!hasBrazeCards) return <PlaceholderCards />
 
   return <BrazeCards appboy={appboy} cards={cards} />
 }
