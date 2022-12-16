@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f99ea400ba7f7e21479ac31ddab0b427>>
+ * @generated SignedSource<<3aa156be16284d4cc9ce12188f199b40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -121,6 +121,10 @@ v11 = [
     "name": "details",
     "storageKey": null
   }
+],
+v12 = [
+  (v6/*: any*/),
+  (v7/*: any*/)
 ];
 return {
   "fragment": {
@@ -463,6 +467,48 @@ return {
           },
           {
             "alias": null,
+            "args": null,
+            "concreteType": "dimensions",
+            "kind": "LinkedField",
+            "name": "dimensions",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "in",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cm",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": (v12/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "medium",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -482,10 +528,7 @@ return {
                 "kind": "LinkedField",
                 "name": "author",
                 "plural": false,
-                "selections": [
-                  (v6/*: any*/),
-                  (v7/*: any*/)
-                ],
+                "selections": (v12/*: any*/),
                 "storageKey": null
               },
               (v5/*: any*/),
@@ -574,12 +617,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6617fb17967353f3a496f45e09ee29ff",
+    "cacheID": "25a9bb55306731d2482ef8dacaf649e9",
     "id": null,
     "metadata": {},
     "name": "ArtworkDetailsQuery",
     "operationKind": "query",
-    "text": "query ArtworkDetailsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetailsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

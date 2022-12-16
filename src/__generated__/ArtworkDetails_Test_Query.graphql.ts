@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f85a4de7c6ff0c6cac64dd2e41ca9490>>
+ * @generated SignedSource<<99f153ee1dcc96510e2ebabc887296c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -113,43 +113,47 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
+v11 = [
+  (v5/*: any*/),
+  (v6/*: any*/)
+],
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v13 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v16 = {
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v17 = {
+v18 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -496,6 +500,48 @@ return {
           },
           {
             "alias": null,
+            "args": null,
+            "concreteType": "dimensions",
+            "kind": "LinkedField",
+            "name": "dimensions",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "in",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cm",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": (v11/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "medium",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -515,10 +561,7 @@ return {
                 "kind": "LinkedField",
                 "name": "author",
                 "plural": false,
-                "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/)
-                ],
+                "selections": (v11/*: any*/),
                 "storageKey": null
               },
               (v4/*: any*/),
@@ -607,7 +650,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b15db8171354d63f093e763a12a5f413",
+    "cacheID": "5bcae1ac3583c4035e55778038485e61",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -617,7 +660,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.additionalInformation": (v11/*: any*/),
+        "artwork.additionalInformation": (v12/*: any*/),
         "artwork.articles": {
           "enumValues": null,
           "nullable": true,
@@ -630,44 +673,61 @@ return {
           "plural": false,
           "type": "Author"
         },
-        "artwork.articles.author.id": (v12/*: any*/),
-        "artwork.articles.author.name": (v11/*: any*/),
-        "artwork.articles.href": (v11/*: any*/),
-        "artwork.articles.id": (v12/*: any*/),
-        "artwork.articles.publishedAt": (v11/*: any*/),
-        "artwork.articles.slug": (v11/*: any*/),
-        "artwork.articles.thumbnailImage": (v13/*: any*/),
-        "artwork.articles.thumbnailImage.cropped": (v14/*: any*/),
-        "artwork.articles.thumbnailImage.cropped.src": (v15/*: any*/),
-        "artwork.articles.thumbnailImage.cropped.srcSet": (v15/*: any*/),
-        "artwork.articles.thumbnailTitle": (v11/*: any*/),
-        "artwork.canRequestLotConditionsReport": (v16/*: any*/),
-        "artwork.category": (v11/*: any*/),
-        "artwork.certificateOfAuthenticity": (v17/*: any*/),
-        "artwork.certificateOfAuthenticity.details": (v11/*: any*/),
-        "artwork.certificateOfAuthenticity.label": (v11/*: any*/),
-        "artwork.conditionDescription": (v17/*: any*/),
-        "artwork.conditionDescription.details": (v11/*: any*/),
-        "artwork.conditionDescription.label": (v11/*: any*/),
-        "artwork.description": (v11/*: any*/),
-        "artwork.exhibition_history": (v11/*: any*/),
-        "artwork.framed": (v17/*: any*/),
-        "artwork.framed.details": (v11/*: any*/),
-        "artwork.framed.label": (v11/*: any*/),
-        "artwork.id": (v12/*: any*/),
-        "artwork.image_rights": (v11/*: any*/),
-        "artwork.internalID": (v12/*: any*/),
-        "artwork.literature": (v11/*: any*/),
-        "artwork.manufacturer": (v11/*: any*/),
+        "artwork.articles.author.id": (v13/*: any*/),
+        "artwork.articles.author.name": (v12/*: any*/),
+        "artwork.articles.href": (v12/*: any*/),
+        "artwork.articles.id": (v13/*: any*/),
+        "artwork.articles.publishedAt": (v12/*: any*/),
+        "artwork.articles.slug": (v12/*: any*/),
+        "artwork.articles.thumbnailImage": (v14/*: any*/),
+        "artwork.articles.thumbnailImage.cropped": (v15/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.src": (v16/*: any*/),
+        "artwork.articles.thumbnailImage.cropped.srcSet": (v16/*: any*/),
+        "artwork.articles.thumbnailTitle": (v12/*: any*/),
+        "artwork.attributionClass": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AttributionClass"
+        },
+        "artwork.attributionClass.id": (v13/*: any*/),
+        "artwork.attributionClass.name": (v12/*: any*/),
+        "artwork.canRequestLotConditionsReport": (v17/*: any*/),
+        "artwork.category": (v12/*: any*/),
+        "artwork.certificateOfAuthenticity": (v18/*: any*/),
+        "artwork.certificateOfAuthenticity.details": (v12/*: any*/),
+        "artwork.certificateOfAuthenticity.label": (v12/*: any*/),
+        "artwork.conditionDescription": (v18/*: any*/),
+        "artwork.conditionDescription.details": (v12/*: any*/),
+        "artwork.conditionDescription.label": (v12/*: any*/),
+        "artwork.description": (v12/*: any*/),
+        "artwork.dimensions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "dimensions"
+        },
+        "artwork.dimensions.cm": (v12/*: any*/),
+        "artwork.dimensions.in": (v12/*: any*/),
+        "artwork.exhibition_history": (v12/*: any*/),
+        "artwork.framed": (v18/*: any*/),
+        "artwork.framed.details": (v12/*: any*/),
+        "artwork.framed.label": (v12/*: any*/),
+        "artwork.id": (v13/*: any*/),
+        "artwork.image_rights": (v12/*: any*/),
+        "artwork.internalID": (v13/*: any*/),
+        "artwork.literature": (v12/*: any*/),
+        "artwork.manufacturer": (v12/*: any*/),
+        "artwork.medium": (v12/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "artwork.mediumType.__typename": (v15/*: any*/),
-        "artwork.mediumType.longDescription": (v11/*: any*/),
-        "artwork.mediumType.name": (v11/*: any*/),
+        "artwork.mediumType.__typename": (v16/*: any*/),
+        "artwork.mediumType.longDescription": (v12/*: any*/),
+        "artwork.mediumType.name": (v12/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -680,14 +740,14 @@ return {
           "plural": true,
           "type": "PartnerCategory"
         },
-        "artwork.partner.categories.id": (v12/*: any*/),
-        "artwork.partner.categories.name": (v11/*: any*/),
-        "artwork.partner.categories.slug": (v12/*: any*/),
-        "artwork.partner.href": (v11/*: any*/),
-        "artwork.partner.id": (v12/*: any*/),
-        "artwork.partner.initials": (v11/*: any*/),
-        "artwork.partner.internalID": (v12/*: any*/),
-        "artwork.partner.isDefaultProfilePublic": (v16/*: any*/),
+        "artwork.partner.categories.id": (v13/*: any*/),
+        "artwork.partner.categories.name": (v12/*: any*/),
+        "artwork.partner.categories.slug": (v13/*: any*/),
+        "artwork.partner.href": (v12/*: any*/),
+        "artwork.partner.id": (v13/*: any*/),
+        "artwork.partner.initials": (v12/*: any*/),
+        "artwork.partner.internalID": (v13/*: any*/),
+        "artwork.partner.isDefaultProfilePublic": (v17/*: any*/),
         "artwork.partner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -706,39 +766,39 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "artwork.partner.locationsConnection.edges.node.city": (v11/*: any*/),
-        "artwork.partner.locationsConnection.edges.node.id": (v12/*: any*/),
-        "artwork.partner.name": (v11/*: any*/),
-        "artwork.partner.partnerPageEligible": (v16/*: any*/),
+        "artwork.partner.locationsConnection.edges.node.city": (v12/*: any*/),
+        "artwork.partner.locationsConnection.edges.node.id": (v13/*: any*/),
+        "artwork.partner.name": (v12/*: any*/),
+        "artwork.partner.partnerPageEligible": (v17/*: any*/),
         "artwork.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "artwork.partner.profile.avatar": (v13/*: any*/),
-        "artwork.partner.profile.avatar.cropped": (v14/*: any*/),
-        "artwork.partner.profile.avatar.cropped.src": (v15/*: any*/),
-        "artwork.partner.profile.avatar.cropped.srcSet": (v15/*: any*/),
-        "artwork.partner.profile.icon": (v13/*: any*/),
-        "artwork.partner.profile.icon.cropped": (v14/*: any*/),
-        "artwork.partner.profile.icon.cropped.src": (v15/*: any*/),
-        "artwork.partner.profile.icon.cropped.srcSet": (v15/*: any*/),
-        "artwork.partner.profile.id": (v12/*: any*/),
-        "artwork.partner.profile.internalID": (v12/*: any*/),
-        "artwork.partner.slug": (v12/*: any*/),
-        "artwork.partner.type": (v11/*: any*/),
-        "artwork.provenance": (v11/*: any*/),
-        "artwork.publisher": (v11/*: any*/),
-        "artwork.series": (v11/*: any*/),
-        "artwork.signatureInfo": (v17/*: any*/),
-        "artwork.signatureInfo.details": (v11/*: any*/),
-        "artwork.signatureInfo.label": (v11/*: any*/)
+        "artwork.partner.profile.avatar": (v14/*: any*/),
+        "artwork.partner.profile.avatar.cropped": (v15/*: any*/),
+        "artwork.partner.profile.avatar.cropped.src": (v16/*: any*/),
+        "artwork.partner.profile.avatar.cropped.srcSet": (v16/*: any*/),
+        "artwork.partner.profile.icon": (v14/*: any*/),
+        "artwork.partner.profile.icon.cropped": (v15/*: any*/),
+        "artwork.partner.profile.icon.cropped.src": (v16/*: any*/),
+        "artwork.partner.profile.icon.cropped.srcSet": (v16/*: any*/),
+        "artwork.partner.profile.id": (v13/*: any*/),
+        "artwork.partner.profile.internalID": (v13/*: any*/),
+        "artwork.partner.slug": (v13/*: any*/),
+        "artwork.partner.type": (v12/*: any*/),
+        "artwork.provenance": (v12/*: any*/),
+        "artwork.publisher": (v12/*: any*/),
+        "artwork.series": (v12/*: any*/),
+        "artwork.signatureInfo": (v18/*: any*/),
+        "artwork.signatureInfo.details": (v12/*: any*/),
+        "artwork.signatureInfo.label": (v12/*: any*/)
       }
     },
     "name": "ArtworkDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additionalInformation(format: HTML)\n  partner {\n    ...EntityHeaderPartner_partner\n    partnerPageEligible\n    isDefaultProfilePublic\n    internalID\n    profile {\n      internalID\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n  mediumType {\n    __typename\n  }\n  dimensions {\n    in\n    cm\n  }\n  attributionClass {\n    name\n    id\n  }\n  medium\n  ...ArtworkDetailsMediumModal_artwork\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    publishedAt(format: \"MMM Do, YYYY\")\n    thumbnailImage {\n      cropped(width: 200, height: 150) {\n        src\n        srcSet\n      }\n    }\n    thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetailsMediumModal_artwork on Artwork {\n  mediumType {\n    name\n    longDescription\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
