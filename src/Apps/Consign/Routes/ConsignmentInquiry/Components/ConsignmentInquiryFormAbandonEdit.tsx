@@ -26,7 +26,7 @@ export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
             router.go(-1)
           }}
           width="100%"
-          data-testid="get-in-touch-button"
+          data-testid="get-in-touch-leave-button"
         >
           Leave Without Sending
         </Button>
@@ -37,7 +37,7 @@ export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
           variant="primaryWhite"
           onClick={onClose}
           width="100%"
-          data-testid="get-in-touch-button"
+          data-testid="get-in-touch-continue-button"
           borderColor="black100"
         >
           Continue Editing Message
