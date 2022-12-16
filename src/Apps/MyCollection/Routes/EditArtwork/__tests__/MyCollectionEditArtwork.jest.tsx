@@ -501,5 +501,4 @@ const mockArtwork = {
   slug: "62fc96c48d3ff8000b556c3a",
   title: "Untitled",
   width: "11",
-  " $fragmentType": "MyCollectionArtworkForm_artwork",
 } as CleanRelayFragment<MyCollectionEditArtwork_artwork$data>
