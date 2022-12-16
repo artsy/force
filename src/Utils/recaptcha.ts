@@ -38,6 +38,7 @@ export const recaptcha = (
 }
 
 export type RecaptchaAction =
+  | "consignment_inquiry"
   | "forgot_submit"
   | "home"
   | "inquiry_forgot_impression"
