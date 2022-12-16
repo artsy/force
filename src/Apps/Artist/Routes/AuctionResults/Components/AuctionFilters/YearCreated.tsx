@@ -5,7 +5,7 @@ import createLogger from "Utils/logger"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
-} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+} from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
@@ -32,7 +32,6 @@ export const YearCreated: React.FC = () => {
     createdAfterYear,
     createdBeforeYear,
     allowEmptyCreatedDates,
-    includeUpcoming,
   } = useCurrentlySelectedFiltersForAuctionResults()
 
   const hasChanges =
@@ -109,17 +108,6 @@ export const YearCreated: React.FC = () => {
             }}
           >
             Include unspecified dates
-          </Checkbox>
-
-          <Spacer y={2} />
-
-          <Checkbox
-            selected={includeUpcoming}
-            onSelect={includeUpcoming => {
-              setFilter?.("includeUpcoming", includeUpcoming)
-            }}
-          >
-            Include upcoming auctions
           </Checkbox>
         </ShowMore>
       </Flex>
