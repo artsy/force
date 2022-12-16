@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1be4785323875eeb8c44c94f1e27be35>>
+ * @generated SignedSource<<11ca5f5c6c9357578d8e86cbcd226ea5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,26 +10,24 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtQuizLikedArtworks_me$data = {
+export type ArtQuizResults_me$data = {
   readonly quiz: {
     readonly savedArtworks: ReadonlyArray<{
-      readonly internalID: string;
-      readonly isSaved: boolean | null;
-      readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+      readonly __typename: "Artwork";
     }>;
   };
-  readonly " $fragmentType": "ArtQuizLikedArtworks_me";
+  readonly " $fragmentType": "ArtQuizResults_me";
 };
-export type ArtQuizLikedArtworks_me$key = {
-  readonly " $data"?: ArtQuizLikedArtworks_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtQuizLikedArtworks_me">;
+export type ArtQuizResults_me$key = {
+  readonly " $data"?: ArtQuizResults_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtQuizResults_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtQuizLikedArtworks_me",
+  "name": "ArtQuizResults_me",
   "selections": [
     {
       "alias": null,
@@ -48,22 +46,10 @@ const node: ReaderFragment = {
           "plural": true,
           "selections": [
             {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "GridItem_artwork"
-            },
-            {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isSaved",
+              "name": "__typename",
               "storageKey": null
             }
           ],
@@ -77,6 +63,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "288d5f2d6ab69c1f14052d03e58316ce";
+(node as any).hash = "ffaae4c22a86a835da4c16d2af9d55fb";
 
 export default node;
