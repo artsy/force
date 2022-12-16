@@ -3,6 +3,7 @@ import { Variant } from "unleash-client"
 import { ActionType } from "@artsy/cohesion"
 import { formatOwnerTypes } from "Server/getContextPage"
 import { useRouter } from "./Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -15,6 +16,11 @@ interface VariantTrackingProperties {
   experimentName: string
   variantName: string
   payload?: string
+}
+
+interface DisabledVariant {
+  enabled: false
+  name: "disabled"
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -41,6 +47,24 @@ export function useFeatureVariant(featureName: string): Variant | null {
       "[Force] Error: cannot find variant on featureFlags: ",
       featureFlags
     )
+    return null
+  }
+
+  return variant
+}
+
+export const getFeatureVariant = (
+  featureName: string
+): Variant | DisabledVariant | null => {
+  const featureFlags = getENV("FEATURE_FLAGS")
+  const variant = featureFlags?.[featureName]?.variant
+
+  if (!variant) {
+    console.error(
+      "[Force] Error: cannot find variant on featureFlags: ",
+      featureFlags
+    )
+
     return null
   }
 

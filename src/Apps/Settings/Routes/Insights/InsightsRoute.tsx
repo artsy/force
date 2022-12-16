@@ -11,7 +11,7 @@ import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsLandingPage } from "./Components/InsightsLandingPage"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
-interface InsightsRouteProps {
+export interface InsightsRouteProps {
   me: InsightsRoute_me$data
 }
 
@@ -34,7 +34,10 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
 
   return (
     <>
-      <MetaTags title="My Collection Insights | Artsy" pathname="/insights" />
+      <MetaTags
+        title="My Collection Insights | Artsy"
+        pathname="/insights" // TODO: fix in CX-3244?
+      />
 
       {!!isInsightsEnabled && (
         <>

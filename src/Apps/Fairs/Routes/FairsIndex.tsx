@@ -65,6 +65,11 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
     ),
   ]
 
+  const mobileHeaderBg = cropped(
+    "https://files.artsy.net/images/fairs-header-img.jpg",
+    { width: 767, height: 431 }
+  )
+
   return (
     <>
       <FairsMeta />
@@ -388,8 +393,3 @@ export const FairsIndexFragmentContainer = createFragmentContainer(FairsIndex, {
     }
   `,
 })
-
-const mobileHeaderBg = cropped(
-  "https://files.artsy.net/images/fairs-header-img.jpg",
-  { width: 767, height: 431 }
-)

@@ -27,9 +27,6 @@ describe("InsightsHeader", () => {
   it("renders the Upload artwork CTA and the textual content", () => {
     renderComponent()
 
-    expect(
-      screen.getByText("Gain deeper knowledge of your collection.")
-    ).toBeInTheDocument()
     expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
   })
 })

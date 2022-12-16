@@ -222,7 +222,7 @@ export const Details: React.FC<DetailsProps> = ({
         <Flex flexDirection="row">
           <Join separator={<Spacer x={1} />}>
             {!hideLotLabel && (
-              <Text variant="xs">
+              <Text variant="xs" flexShrink={0}>
                 Lot {rest.artwork?.sale_artwork?.lotLabel}
               </Text>
             )}
@@ -334,7 +334,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   }
 
   return (
-    <Text variant="xs" color={labelColor}>
+    <Text variant="xs" color={labelColor} overflowEllipsis>
       {lotCloseCopy}
     </Text>
   )

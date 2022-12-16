@@ -1,4 +1,4 @@
-import { ModalDialog, Image } from "@artsy/palette"
+import { ModalDialog, Image, Box } from "@artsy/palette"
 import {
   AuthDialogMode,
   useAuthDialogContext,
@@ -64,17 +64,19 @@ const IMAGE = {
     "https://files.artsy.net/images/2x_Evergreen-Artist-Page-Sign-Up-Modal.jpg",
 }
 
-const IMG = resized(IMAGE.src, { width: 450 })
-
 const AuthDialogLeftPanel: FC = () => {
+  const img = resized(IMAGE.src, { width: 450 })
+
   return (
-    <Image
-      {...IMG}
-      width="100%"
-      height="100%"
-      lazyLoad
-      alt=""
-      style={{ objectFit: "cover" }}
-    />
+    <Box display={["none", "block"]} width="100%">
+      <Image
+        {...img}
+        width="100%"
+        height="100%"
+        lazyLoad
+        alt=""
+        style={{ objectFit: "cover" }}
+      />
+    </Box>
   )
 }

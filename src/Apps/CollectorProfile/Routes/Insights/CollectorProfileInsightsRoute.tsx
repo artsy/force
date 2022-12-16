@@ -1,14 +1,3 @@
-import { Text } from "@artsy/palette"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { InsightsRouteFragmentContainer } from "Apps/Settings/Routes/Insights/InsightsRoute"
 
-const CollectorProfileInsightsRoute: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  if (!isCollectorProfileEnabled) {
-    return null
-  }
-
-  return <Text>Hola!</Text>
-}
-
-export const CollectorProfileInsightsRouteFragmentContainer = CollectorProfileInsightsRoute
+export const CollectorProfileInsightsRouteFragmentContainer = InsightsRouteFragmentContainer

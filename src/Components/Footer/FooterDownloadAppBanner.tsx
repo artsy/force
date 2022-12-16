@@ -2,19 +2,19 @@ import { ContextModule } from "@artsy/cohesion"
 import { Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { DownloadAppBadges } from "../DownloadAppBadges/DownloadAppBadges"
+import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 
-const DESKTOP_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
-  { width: 1220, quality: 50 }
-)
-
-const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
-  { width: 725, quality: 50 }
-)
+const APP_BANNER_SRC =
+  "https://files.artsy.net/images/App_Download_Banner_1200x2440_2x-1656078840527.jpg"
 
 export const FooterDownloadAppBanner = () => {
+  const desktopCoverImage = resized(APP_BANNER_SRC, {
+    width: 1220,
+    quality: 50,
+  })
+
+  const mobileCoverImage = resized(APP_BANNER_SRC, { width: 725, quality: 50 })
+
   return (
     <GridColumns
       gridRowGap={1}
@@ -44,8 +44,8 @@ export const FooterDownloadAppBanner = () => {
       <Column span={8} position="relative" order={[1, 2]}>
         <Media at="xs">
           <Image
-            src={MOBILE_COVER_IMAGE.src}
-            srcSet={MOBILE_COVER_IMAGE.srcSet}
+            src={mobileCoverImage.src}
+            srcSet={mobileCoverImage.srcSet}
             height={320}
             width="100%"
             lazyLoad
@@ -56,8 +56,8 @@ export const FooterDownloadAppBanner = () => {
 
         <Media greaterThan="xs">
           <Image
-            src={DESKTOP_COVER_IMAGE.src}
-            srcSet={DESKTOP_COVER_IMAGE.srcSet}
+            src={desktopCoverImage.src}
+            srcSet={desktopCoverImage.srcSet}
             height={320}
             width="100%"
             lazyLoad

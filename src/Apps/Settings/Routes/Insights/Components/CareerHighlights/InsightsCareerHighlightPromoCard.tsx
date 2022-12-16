@@ -15,25 +15,25 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
-const { src: dSrc, srcSet: dSrcSet } = resized(
-  "https://files.artsy.net/images/CareerHighlightPromoImage.png",
-  {
-    height: 712,
-    width: 428,
-  }
-)
-
-const { src: mSrc, srcSet: mSrcSet } = resized(
-  "https://files.artsy.net/images/CareerHighlightPromoImageMobile.png",
-  {
-    height: 405,
-    width: 165,
-  }
-)
-
 export const InsightsCareerHighlightPromoCard: React.FC<{
   onClick?(): void
 }> = ({ onClick }) => {
+  const { src: dSrc, srcSet: dSrcSet } = resized(
+    "https://files.artsy.net/images/CareerHighlightPromoImage.png",
+    {
+      height: 712,
+      width: 428,
+    }
+  )
+
+  const { src: mSrc, srcSet: mSrcSet } = resized(
+    "https://files.artsy.net/images/CareerHighlightPromoImageMobile.png",
+    {
+      height: 405,
+      width: 165,
+    }
+  )
+
   return (
     <CardWrapper onClick={onClick} width={[205, 313]} height={[135, 178]}>
       <Flex

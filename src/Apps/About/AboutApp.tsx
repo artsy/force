@@ -30,7 +30,7 @@ export const AboutApp: React.FC = () => {
         pathname="/about"
       />
       <FullBleedHeader
-        src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png"
+        src="https://files.artsy.net/images/00_CVP_About_Hero (1).png"
         caption="Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969."
       >
@@ -190,7 +190,7 @@ const SECTION_DATA: SectionProps[] = [
   },
   {
     title: "Buy art with ease",
-    description: "Buy art simply and safely, from purchase to delivery. ",
+    description: "Buy art simply and safely, from purchase to delivery.",
     caption: "Andy Warhol, Flowers F&S ll.64, 1970.",
     href: "/collect",
     imageUrl: "https://files.artsy.net/images/02_CVP_About_Buy.png",
@@ -220,7 +220,7 @@ const SECTION_DATA: SectionProps[] = [
   {
     title: "Sell from your collection",
     description:
-      "Sell art from your collection to the right buyer with the help of our experts. ",
+      "Sell art from your collection to the right buyer with the help of our experts.",
     caption: "Ezra Johnson, Small Interior, 2022.",
     href: "/sell",
     imageUrl: "https://files.artsy.net/images/06_CVP_About_Sell.png",
@@ -236,9 +236,9 @@ const SECTION_DATA: SectionProps[] = [
   {
     title: "Follow your favorite artists",
     description:
-      "Follow artists for updates on their latest works and career milestones. ",
+      "Follow artists for updates on their latest works and career milestones.",
     caption: "Amy Beager, Pixie Dust, 2022.",
     href: "/artists",
-    imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow%20(2).png",
+    imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow (2).png",
   },
 ]

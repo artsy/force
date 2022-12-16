@@ -9,15 +9,15 @@ import {
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 
-const { src, srcSet } = resized(
-  "https://files.artsy.net/images/InsightsEmptyStateImage.png",
-  {
-    height: 800,
-    width: 1360,
-  }
-)
-
 export const InsightsLandingPage = () => {
+  const { src, srcSet } = resized(
+    "https://files.artsy.net/images/InsightsEmptyStateImage.png",
+    {
+      height: 800,
+      width: 1360,
+    }
+  )
+
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
       <Column span={6} order={[2, 1]}>

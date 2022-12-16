@@ -3,15 +3,15 @@ import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { DownloadAppBadgesDark } from "./DownloadAppBadgesDark"
 
-const image = resized(
-  "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-  {
-    width: 770,
-    height: 652,
-  }
-)
-
 const DesktopLayout: React.FC = () => {
+  const image = resized(
+    "https://files.artsy.net/images/my-coll-get-app-img.jpg",
+    {
+      width: 770,
+      height: 652,
+    }
+  )
+
   return (
     <GridColumns mb={12} gridRowGap={4} alignItems="center">
       <Column span={6}>
@@ -42,6 +42,14 @@ const DesktopLayout: React.FC = () => {
 }
 
 const MobileLayout: React.FC = () => {
+  const image = resized(
+    "https://files.artsy.net/images/my-coll-get-app-img.jpg",
+    {
+      width: 770,
+      height: 652,
+    }
+  )
+
   return (
     <GridColumns gridRowGap={2} alignItems="center">
       <Column span={6}>

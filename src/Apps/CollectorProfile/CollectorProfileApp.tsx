@@ -6,7 +6,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 
 const TABS = [
-  { name: "My Collection", url: "/collector-profile/collection" },
+  { name: "My Collection", url: "/collector-profile/my-collection" },
   { name: "Insights", url: "/collector-profile/insights" },
   { name: "Saves & Follows", url: "/collector-profile/saves" },
 ]
