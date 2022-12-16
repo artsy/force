@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<112c598f175daf525dbef8564ba3cf09>>
+ * @generated SignedSource<<a63a96ec8b40b53f5dfeee28a200c4e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,6 @@ export type SettingsEditProfileFields_me$data = {
   readonly canRequestEmailConfirmation: boolean;
   readonly email: string | null;
   readonly emailConfirmed: boolean;
-  readonly icon: {
-    readonly url: string | null;
-  } | null;
   readonly identityVerified: boolean | null;
   readonly location: {
     readonly city: string | null;
@@ -73,30 +70,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "bio",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "icon",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "thumbnail"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"thumbnail\")"
-        }
-      ],
       "storageKey": null
     },
     {
@@ -171,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "196267ba743d85d9a1c88a42430274dc";
+(node as any).hash = "39e79fd9391a1eebd605d9874d3fe86f";
 
 export default node;

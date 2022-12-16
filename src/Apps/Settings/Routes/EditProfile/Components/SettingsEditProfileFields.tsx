@@ -11,7 +11,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import { SettingsEditProfileImageFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
+import {
+  SettingsEditProfileImageFragmentContainer,
+  SettingsEditProfileImageRef,
+} from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
 import {
   LocationAutocompleteInput,
   normalizePlace,
@@ -22,6 +25,7 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { Formik } from "formik"
+import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
@@ -49,6 +53,7 @@ interface SettingsEditProfileFieldsProps {
 const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   me,
 }) => {
+  const imageContainerRef = useRef<SettingsEditProfileImageRef | null>(null)
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { relayEnvironment } = useSystemContext()
@@ -94,10 +99,14 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         bio: values.bio,
       }
 
-      await Promise.all([
-        submitUpdateMyUserProfile(payload),
-        values.photo && updateUserProfileImage(values.photo),
-      ])
+      await submitUpdateMyUserProfile(payload)
+      if (values.photo) {
+        await updateUserProfileImage(values.photo)
+
+        if (imageContainerRef.current) {
+          await imageContainerRef.current.storeImageLocally()
+        }
+      }
 
       sendToast({
         variant: "success",
@@ -130,7 +139,10 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         }) => (
           <form onSubmit={handleSubmit}>
             <Join separator={<Spacer y={4} />}>
-              <SettingsEditProfileImageFragmentContainer me={me} />
+              <SettingsEditProfileImageFragmentContainer
+                ref={imageContainerRef}
+                me={me}
+              />
 
               <Input
                 title="Full name"
@@ -245,9 +257,6 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
         profession
         otherRelevantPositions
         bio
-        icon {
-          url(version: "thumbnail")
-        }
         location {
           display
           city
