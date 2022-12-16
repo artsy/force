@@ -10,7 +10,13 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
 import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
@@ -28,57 +34,61 @@ export const MyCollectionArtworkFormImages = forwardRef<
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
-  const saveImagesToLocalStorage = async (artworkId: string) => {
-    try {
-      // Store the artwork's local images in local storage
-      // and remove unnecessary fields
-      return await storeArtworkLocalImages(
-        artworkId,
-        localImages.map(({ photoID, ...rest }) => rest)
-      )
-    } catch (error) {
-      console.error("Error saving images to localforage storage", error)
-    }
-  }
-
   useImperativeHandle(
     formImagesRef,
     () => {
+      const saveImagesToLocalStorage = async (artworkId: string) => {
+        try {
+          // Store the artwork's local images in local storage
+          // and remove unnecessary fields
+
+          return await storeArtworkLocalImages(
+            artworkId,
+            localImages.map(({ photoID, ...rest }) => rest)
+          )
+        } catch (error) {
+          console.error("Error saving images to localforage storage", error)
+        }
+      }
+
       return {
         saveImagesToLocalStorage,
       }
     },
-    [localImages, saveImagesToLocalStorage]
+    [localImages]
   )
 
-  const uploadPhoto = async (photo: Photo) => {
-    photo.loading = true
+  const uploadPhoto = useCallback(
+    () => async (photo: Photo) => {
+      photo.loading = true
 
-    try {
-      const photoURL = await uploadPhotoToS3(
-        relayEnvironment!,
-        photo,
-        progress => {
-          photo.progress = progress
-          setFieldValue("newPhotos", values.newPhotos)
+      try {
+        const photoURL = await uploadPhotoToS3(
+          relayEnvironment!,
+          photo,
+          progress => {
+            photo.progress = progress
+            setFieldValue("newPhotos", values.newPhotos)
+          }
+        )
+
+        if (!photoURL) {
+          throw Error(`Photo could not be added: ${photo.name}`)
         }
-      )
 
-      if (!photoURL) {
-        throw Error(`Photo could not be added: ${photo.name}`)
+        photo.url = photoURL
+
+        setFieldValue("newPhotos", values.newPhotos, true)
+      } catch (error) {
+        photo.errorMessage = `Photo could not be added: ${photo.name}`
+        setFieldValue("newPhotos", values.newPhotos)
+        return
+      } finally {
+        photo.loading = false
       }
-
-      photo.url = photoURL
-
-      setFieldValue("newPhotos", values.newPhotos, true)
-    } catch (error) {
-      photo.errorMessage = `Photo could not be added: ${photo.name}`
-      setFieldValue("newPhotos", values.newPhotos)
-      return
-    } finally {
-      photo.loading = false
-    }
-  }
+    },
+    [relayEnvironment, setFieldValue, values.newPhotos]
+  )
 
   const getImagesToUpload = (photos: Photo[]) => {
     return photos.filter(c => !(c.geminiToken || c.url) && !c.loading)
@@ -92,7 +102,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
 
       setFieldValue("newPhotos", [...values.newPhotos])
     }
-  }, [values.newPhotos])
+  }, [setFieldValue, uploadPhoto, values.newPhotos])
 
   const handleDrop = (acceptedFiles: File[]) => {
     const newPhotos = acceptedFiles.map(file => normalizePhoto(file))
