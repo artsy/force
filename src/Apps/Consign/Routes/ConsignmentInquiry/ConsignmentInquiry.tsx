@@ -4,7 +4,6 @@ import { COUNTRY_CODES } from "Utils/countries"
 import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
@@ -14,12 +13,12 @@ import {
 } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryForm"
 import { SentConsignmentInquiry } from "@artsy/cohesion/dist/Schema/Events/Consignments"
 import { ConsignmentInquiry_me$data } from "__generated__/ConsignmentInquiry_me.graphql"
-import { createConsignmentInquiry } from "Apps/Consign/Routes/ConsignmentInquiry/utils/createConsignmentInquiry"
+import { useCreateConsignmentInquiry } from "Apps/Consign/Routes/ConsignmentInquiry/utils/useCreateConsignmentInquiry"
 import {
   consignmentInquiryValidationSchema,
   validate,
 } from "Apps/Consign/Routes/ConsignmentInquiry/utils/validation"
-import { CreateConsignmentInquiryMutationInput } from "__generated__/createConsignmentInquiryMutation.graphql"
+import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateConsignmentInquiryMutation.graphql"
 import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
 import { useState } from "react"
 import { TopContextBar } from "Components/TopContextBar"
@@ -47,11 +46,13 @@ export interface ConsignmentInquiryProps {
 export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   me,
 }) => {
-  const [showModal, setShowModal] = useState(false)
+  const [showExitModal, setShowExitModal] = useState(false)
   const { trackEvent } = useTracking()
   const { router } = useRouter()
   const { sendToast } = useToasts()
-  const { relayEnvironment } = useSystemContext()
+  const {
+    submitMutation: createConsignmentInquiry,
+  } = useCreateConsignmentInquiry()
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
     initialValue,
@@ -87,31 +88,37 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
       userId: me?.internalID,
     }
 
-    if (relayEnvironment) {
-      try {
-        const consignmentInquiryId = await createConsignmentInquiry(
-          relayEnvironment,
-          input
-        )
-        if (consignmentInquiryId) {
-          trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
-          router.replace({ pathname: "/sell/inquiry" })
-          router.push("/sell/inquiry/sent")
-        }
-      } catch (error) {
-        logger.error(error)
-        sendToast({
-          variant: "error",
-          message: `Error: ${error}`,
-          description: "Please contact sell@artsy.net",
-        })
+    try {
+      const response = await createConsignmentInquiry({
+        variables: { input },
+        rejectIf: res => {
+          return res?.createConsignmentInquiry?.consignmentInquiryOrError
+            ?.mutationError
+        },
+      })
+
+      const consignmentInquiryId =
+        response.createConsignmentInquiry?.consignmentInquiryOrError
+          ?.consignmentInquiry?.internalID
+
+      if (consignmentInquiryId) {
+        trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
+        router.replace({ pathname: "/sell/inquiry" })
+        router.push("/sell/inquiry/sent")
       }
+    } catch (error) {
+      logger.error(error)
+      sendToast({
+        variant: "error",
+        message: `Error: ${error}`,
+        description: "Please contact sell@artsy.net",
+      })
     }
   }
 
   const handleBack = (isDirty: boolean) => {
     if (isDirty) {
-      setShowModal(true)
+      setShowExitModal(true)
       return
     }
     router.go(-1)
@@ -122,7 +129,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
     // router needs to pop as many times as the number of times the modal
     // shows up in order to correctly pop to the sell with artsy screen.
     router.go(-1)
-    setShowModal(false)
+    setShowExitModal(false)
   }
 
   return (
@@ -138,7 +145,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
         {({ isValid, isSubmitting, dirty }) => (
           <>
             <ConsignmentInquiryFormAbandonEditModal
-              show={showModal}
+              show={showExitModal}
               onClose={handleCloseModal}
             />
             <TopContextBar
@@ -157,7 +164,13 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
             <Spacer y={4} />
             <Form>
               <ConsignmentInquiryForm />
-              <Spacer y={2} />
+              <Spacer y={4} />
+              <Text color="black60" mb="1">
+                By continuing, you agree to{" "}
+                <a href="https://www.artsy.net/privacy" target="_blank">
+                  Privacy Policy
+                </a>
+              </Text>
               <Button
                 data-testid="consignment-inquiry-send-button"
                 width={["50%", "33%"]}

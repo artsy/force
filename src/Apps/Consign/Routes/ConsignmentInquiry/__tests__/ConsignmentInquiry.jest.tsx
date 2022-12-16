@@ -1,10 +1,10 @@
 import { ConsignmentInquiryFragmentContainer } from "Apps/Consign/Routes/ConsignmentInquiry/ConsignmentInquiry"
-import { createConsignmentInquiry } from "Apps/Consign/Routes/ConsignmentInquiry/utils/createConsignmentInquiry"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { useMutation } from "Utils/Hooks/useMutation"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -35,11 +35,8 @@ jest.mock("sharify", () => ({
 const mockTracking = useTracking as jest.Mock
 const mockTrackEvent = jest.fn()
 
-jest.mock("../utils/createConsignmentInquiry", () => ({
-  ...jest.requireActual("../utils/createConsignmentInquiry"),
-  createConsignmentInquiry: jest.fn(),
-}))
-const createConsignmentInquiryMock = createConsignmentInquiry as jest.Mock
+jest.mock("Utils/Hooks/useMutation")
+const submitMutation = jest.fn()
 
 const getWrapper = () =>
   setupTestWrapperTL({
@@ -72,6 +69,16 @@ const getInput = (name: string) =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
 describe("ConsignmentInquiry", () => {
+  beforeEach(() => {
+    ;(useMutation as jest.Mock).mockImplementation(() => {
+      return { submitMutation }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it("renders correctly", async () => {
     getWrapper().renderWithRelay({
       Me: () => mockMe,
@@ -97,7 +104,15 @@ describe("ConsignmentInquiry", () => {
 
     simulateTyping("message", "This is my message to you")
 
-    createConsignmentInquiryMock.mockResolvedValueOnce(1)
+    submitMutation.mockResolvedValueOnce({
+      createConsignmentInquiry: {
+        consignmentInquiryOrError: {
+          consignmentInquiry: {
+            internalID: 9,
+          },
+        },
+      },
+    })
 
     fireEvent.click(getSubmitButton())
 
@@ -105,17 +120,23 @@ describe("ConsignmentInquiry", () => {
       expect(window.grecaptcha.execute).toBeCalledWith("recaptcha-api-key", {
         action: "consignment_inquiry",
       })
-      expect(createConsignmentInquiryMock).toHaveBeenCalled()
-      expect(createConsignmentInquiryMock.mock.calls[0][1]).toEqual({
-        name: mockMe.name,
-        email: mockMe.email,
-        phoneNumber: mockMe.phone,
-        message: "This is my message to you",
-        userId: mockMe.internalID,
-      })
+      expect(submitMutation).toHaveBeenCalled()
+      expect(submitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              name: mockMe.name,
+              email: mockMe.email,
+              phoneNumber: mockMe.phone,
+              message: "This is my message to you",
+              userId: mockMe.internalID,
+            },
+          },
+        })
+      )
       expect(mockRouterPush).toHaveBeenCalledWith("/sell/inquiry/sent")
       expect(mockTrackEvent).toBeCalledWith(
-        expect.objectContaining({ consignment_inquiry_id: 1 })
+        expect.objectContaining({ consignment_inquiry_id: 9 })
       )
     })
   })

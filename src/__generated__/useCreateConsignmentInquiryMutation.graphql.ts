@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef28876dc4b575581d4c9052397f1297>>
+ * @generated SignedSource<<188c9c9ef2c678cf5ba626b60368f9e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type CreateConsignmentInquiryMutationInput = {
   phoneNumber?: string | null;
   userId?: string | null;
 };
-export type createConsignmentInquiryMutation$variables = {
+export type useCreateConsignmentInquiryMutation$variables = {
   input: CreateConsignmentInquiryMutationInput;
 };
-export type createConsignmentInquiryMutation$data = {
+export type useCreateConsignmentInquiryMutation$data = {
   readonly createConsignmentInquiry: {
     readonly consignmentInquiryOrError: {
       readonly consignmentInquiry?: {
@@ -34,9 +34,9 @@ export type createConsignmentInquiryMutation$data = {
     } | null;
   } | null;
 };
-export type createConsignmentInquiryMutation = {
-  response: createConsignmentInquiryMutation$data;
-  variables: createConsignmentInquiryMutation$variables;
+export type useCreateConsignmentInquiryMutation = {
+  response: useCreateConsignmentInquiryMutation$data;
+  variables: useCreateConsignmentInquiryMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -123,7 +123,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "createConsignmentInquiryMutation",
+    "name": "useCreateConsignmentInquiryMutation",
     "selections": [
       {
         "alias": null,
@@ -157,7 +157,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "createConsignmentInquiryMutation",
+    "name": "useCreateConsignmentInquiryMutation",
     "selections": [
       {
         "alias": null,
@@ -193,16 +193,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1d19406deffb7e992e9f331074549f22",
+    "cacheID": "a6b6882e5266d9b8ec9595a2ec808a8e",
     "id": null,
     "metadata": {},
-    "name": "createConsignmentInquiryMutation",
+    "name": "useCreateConsignmentInquiryMutation",
     "operationKind": "mutation",
-    "text": "mutation createConsignmentInquiryMutation(\n  $input: CreateConsignmentInquiryMutationInput!\n) {\n  createConsignmentInquiry(input: $input) {\n    consignmentInquiryOrError {\n      __typename\n      ... on ConsignmentInquiryMutationSuccess {\n        consignmentInquiry {\n          internalID\n        }\n      }\n      ... on ConsignmentInquiryMutationFailure {\n        mutationError {\n          error\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateConsignmentInquiryMutation(\n  $input: CreateConsignmentInquiryMutationInput!\n) {\n  createConsignmentInquiry(input: $input) {\n    consignmentInquiryOrError {\n      __typename\n      ... on ConsignmentInquiryMutationSuccess {\n        consignmentInquiry {\n          internalID\n        }\n      }\n      ... on ConsignmentInquiryMutationFailure {\n        mutationError {\n          error\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6d8dcec2fcaff62a1c45864ea133154a";
+(node as any).hash = "bf554465e7221982bbf427483c39596c";
 
 export default node;

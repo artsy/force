@@ -15,7 +15,7 @@ export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
     <ModalDialog onClose={onClose} title="Leave without sending message?">
       <Flex pb={2} flexDirection="column" alignItems={["stretch", "center"]}>
         <Text>
-          Your message to the Sell with Artsy specialists will not been sent.
+          Your message to the Sell with Artsy specialists will not be sent.
         </Text>
 
         <Spacer y={2} />
@@ -43,7 +43,6 @@ export const ConsignmentInquiryFormAbandonEditModal: React.FC<{
           Continue Editing Message
         </Button>
       </Flex>
-      <Spacer y={4} />
     </ModalDialog>
   )
 }
