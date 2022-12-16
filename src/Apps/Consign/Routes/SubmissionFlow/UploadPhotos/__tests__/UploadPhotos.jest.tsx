@@ -24,7 +24,7 @@ jest.mock("System/Router/useRouter", () => {
 
 jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
-  uploadPhoto: jest.fn(),
+  uploadSubmissionPhoto: jest.fn(),
 }))
 
 const mockAddAsset = jest.fn()
