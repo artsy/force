@@ -79,6 +79,7 @@ const SettingsEditProfileImage = forwardRef<
 
     const newImage = event.target.files[0]
 
+    // Convert file to base64 and save it to state to store it in local storage
     convertFileToBase64(newImage)
     setFieldValue("photo", newImage)
   }

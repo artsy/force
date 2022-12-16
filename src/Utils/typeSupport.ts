@@ -39,12 +39,7 @@ export type Writable<T> = { -readonly [P in keyof T]: T[P] }
 /**
  * Returns a type with the properties of T that are not in U
  */
-export type Only<T, U> = {
-  [P in keyof T]: T[P]
-} &
-  {
-    [P in keyof U]?: never
-  }
+export type Only<T, U> = { [P in keyof T]: T[P] } & { [P in keyof U]?: never }
 
 /**
  * Returns either the first or the second type
