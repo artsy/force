@@ -1,4 +1,4 @@
-import { HTML, ReadMore, Spacer, Text } from "@artsy/palette"
+import { HTML, ReadMore, Spacer, StackableBorderBox } from "@artsy/palette"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
@@ -37,13 +37,11 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
     return (
-      <HTML variant="sm">
-        <ReadMore
-          maxChars={maxChars}
-          content={description!}
-          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-        />
-      </HTML>
+      <ReadMore
+        maxChars={maxChars}
+        content={description!}
+        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+      />
     )
   }
 
@@ -55,13 +53,11 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     if (!additionalInformation) return null
 
     return (
-      <HTML variant="sm">
-        <ReadMore
-          maxChars={maxChars}
-          content={additionalInformation}
-          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-        />
-      </HTML>
+      <ReadMore
+        maxChars={maxChars}
+        content={additionalInformation}
+        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+      />
     )
   }
 
@@ -73,28 +69,28 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     }
 
     return (
-      <>
-        {description && (
-          <>
-            <Media at="xs">{this.renderDescriptionReadMore("xs")}</Media>
-            <Media greaterThan="xs">{this.renderDescriptionReadMore()}</Media>
-            <Spacer y={2} />
-          </>
-        )}
+      <StackableBorderBox>
+        <HTML variant="sm">
+          {description && (
+            <>
+              <Media at="xs">{this.renderDescriptionReadMore("xs")}</Media>
+              <Media greaterThan="xs">{this.renderDescriptionReadMore()}</Media>
+              <Spacer y={2} />
+            </>
+          )}
 
-        {additionalInformation && (
-          <>
-            <Text variant="sm">
+          {additionalInformation && (
+            <>
               <Media at="xs">
                 {this.renderAdditionalInformationReadMore("xs")}
               </Media>
               <Media greaterThan="xs">
                 {this.renderAdditionalInformationReadMore()}
               </Media>
-            </Text>
-          </>
-        )}
-      </>
+            </>
+          )}
+        </HTML>
+      </StackableBorderBox>
     )
   }
 }
