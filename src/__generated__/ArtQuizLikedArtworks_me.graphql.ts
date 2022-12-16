@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1be4785323875eeb8c44c94f1e27be35>>
+ * @generated SignedSource<<6d2b18b18d5bb19488bb66e16145e291>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ export type ArtQuizLikedArtworks_me$data = {
   readonly quiz: {
     readonly savedArtworks: ReadonlyArray<{
       readonly internalID: string;
-      readonly isSaved: boolean | null;
       readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
     }>;
   };
@@ -58,13 +57,6 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "internalID",
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isSaved",
-              "storageKey": null
             }
           ],
           "storageKey": null
@@ -77,6 +69,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "288d5f2d6ab69c1f14052d03e58316ce";
+(node as any).hash = "91fecd08f9838398d4f2be43ed331135";
 
 export default node;

@@ -37,7 +37,6 @@ const ArtQuizLikedArtworksFragmentContainer = createFragmentContainer(
           savedArtworks {
             ...GridItem_artwork
             internalID
-            isSaved
           }
         }
       }
