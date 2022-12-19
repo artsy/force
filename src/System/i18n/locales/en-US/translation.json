@@ -24,17 +24,22 @@
     "results": {
       "emailSuccess": "Results sent to {{email}}",
       "emailButton": "Email My Results",
+      "empty": {
+        "title": "Explore Trending Collections and Artists",
+        "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
+      },
       "title": "Explore Your Quiz Results",
       "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
       "tabs": {
         "worksYouLiked": "Works You Liked",
         "recommendedCollections": "Recommended Collections",
+        "recommendedArtworks": "Recommended Artworks",
         "recommendedArtists": "Recommended Artists"
       }
     },
     "welcomeScreen": {
       "subtitle1": "See more of what you love.",
-      "subtitle2": "Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "subtitle2": "Rate artworks and get recommendations tailored to your art taste.",
       "getStartedButton": "Start the Quiz",
       "skipButton": "Skip"
     }

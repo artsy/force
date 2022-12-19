@@ -3,7 +3,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtQuizLikedArtworks_me$data } from "__generated__/ArtQuizLikedArtworks_me.graphql"
 import { ArtQuizLikedArtworksQuery } from "__generated__/ArtQuizLikedArtworksQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Spacer } from "@artsy/palette"
@@ -14,12 +13,9 @@ interface ArtQuizLikedArtworksProps {
 }
 
 const ArtQuizLikedArtworks: FC<ArtQuizLikedArtworksProps> = ({ me }) => {
-  const artworks = extractNodes(me.quiz.quizArtworkConnection)
-  const likedArtworks = artworks.filter(artwork => artwork.isSaved)
-
   return (
     <Masonry columnCount={[2, 3, 4]}>
-      {likedArtworks.map(artwork => {
+      {me.quiz.savedArtworks.map(artwork => {
         return (
           <Fragment key={artwork.internalID}>
             <ArtworkGridItemFragmentContainer artwork={artwork} />
@@ -38,14 +34,9 @@ const ArtQuizLikedArtworksFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtQuizLikedArtworks_me on Me {
         quiz {
-          quizArtworkConnection(first: 20) {
-            edges {
-              node {
-                ...GridItem_artwork
-                internalID
-                isSaved
-              }
-            }
+          savedArtworks {
+            ...GridItem_artwork
+            internalID
           }
         }
       }

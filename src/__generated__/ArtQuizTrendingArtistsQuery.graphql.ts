@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b4bf3f5a97d6582244faf8970076032>>
+ * @generated SignedSource<<1e91047bf38769d0d8e9977fc3479e4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtQuizRecommendedArtistsQuery$variables = {};
-export type ArtQuizRecommendedArtistsQuery$data = {
-  readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtQuizRecommendedArtists_me">;
+export type ArtQuizTrendingArtistsQuery$variables = {};
+export type ArtQuizTrendingArtistsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtQuizTrendingArtists_viewer">;
   } | null;
 };
-export type ArtQuizRecommendedArtistsQuery = {
-  response: ArtQuizRecommendedArtistsQuery$data;
-  variables: ArtQuizRecommendedArtistsQuery$variables;
+export type ArtQuizTrendingArtistsQuery = {
+  response: ArtQuizTrendingArtistsQuery$data;
+  variables: ArtQuizTrendingArtistsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -82,20 +82,20 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtQuizRecommendedArtistsQuery",
+    "name": "ArtQuizTrendingArtistsQuery",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Me",
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtQuizRecommendedArtists_me"
+            "name": "ArtQuizTrendingArtists_viewer"
           }
         ],
         "storageKey": null
@@ -108,45 +108,44 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtQuizRecommendedArtistsQuery",
+    "name": "ArtQuizTrendingArtistsQuery",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Me",
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "Quiz",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 16
+              }
+            ],
+            "concreteType": "ArtistConnection",
             "kind": "LinkedField",
-            "name": "quiz",
+            "name": "curatedTrendingArtists",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Artwork",
+                "concreteType": "ArtistEdge",
                 "kind": "LinkedField",
-                "name": "savedArtworks",
+                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "isSaved",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "Artist",
                     "kind": "LinkedField",
-                    "name": "artist",
+                    "name": "node",
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
@@ -576,32 +575,29 @@ return {
                       (v3/*: any*/)
                     ],
                     "storageKey": null
-                  },
-                  (v3/*: any*/)
+                  }
                 ],
                 "storageKey": null
-              },
-              (v3/*: any*/)
+              }
             ],
-            "storageKey": null
-          },
-          (v3/*: any*/)
+            "storageKey": "curatedTrendingArtists(first:16)"
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d021fdfd394f72385295809a4991cc5e",
+    "cacheID": "acd9f4d9aa1860115f7142fdf13afc76",
     "id": null,
     "metadata": {},
-    "name": "ArtQuizRecommendedArtistsQuery",
+    "name": "ArtQuizTrendingArtistsQuery",
     "operationKind": "query",
-    "text": "query ArtQuizRecommendedArtistsQuery {\n  me {\n    ...ArtQuizRecommendedArtists_me\n    id\n  }\n}\n\nfragment ArtQuizRecommendedArtist_artist on Artist {\n  internalID\n  name\n  href\n  formattedNationalityAndBirthday\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    text\n  }\n  artworksConnection(first: 25, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...ShelfArtwork_artwork\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtQuizRecommendedArtists_me on Me {\n  quiz {\n    savedArtworks {\n      isSaved\n      artist {\n        ...ArtQuizRecommendedArtist_artist\n        internalID\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": "query ArtQuizTrendingArtistsQuery {\n  viewer {\n    ...ArtQuizTrendingArtists_viewer\n  }\n}\n\nfragment ArtQuizRecommendedArtist_artist on Artist {\n  internalID\n  name\n  href\n  formattedNationalityAndBirthday\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    text\n  }\n  artworksConnection(first: 25, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...ShelfArtwork_artwork\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment ArtQuizTrendingArtists_viewer on Viewer {\n  curatedTrendingArtists(first: 16) {\n    edges {\n      node {\n        ...ArtQuizRecommendedArtist_artist\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "35dca045e1b09a7d34f6e7ef24c2bb77";
+(node as any).hash = "2e1088338b6d185676a38ed3597cefc0";
 
 export default node;

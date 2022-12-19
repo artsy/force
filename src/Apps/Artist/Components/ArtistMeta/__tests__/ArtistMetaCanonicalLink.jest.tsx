@@ -4,7 +4,7 @@ import { ArtistMetaCanonicalLink_artist$data } from "__generated__/ArtistMetaCan
 import {
   ArtistMetaCanonicalLink,
   computeCanonicalPath,
-} from "../ArtistMetaCanonicalLink"
+} from "Apps/Artist/Components/ArtistMeta/ArtistMetaCanonicalLink"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({

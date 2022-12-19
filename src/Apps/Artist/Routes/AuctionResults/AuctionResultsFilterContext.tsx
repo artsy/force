@@ -17,7 +17,6 @@ export interface AuctionResultsFilters {
   createdAfterYear?: number | null
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
-  includeUpcoming?: boolean
   metric?: Metric
 }
 
@@ -45,7 +44,6 @@ export const initialAuctionResultsFilterState = ({
   createdAfterYear: typeof startDate === "number" ? startDate : MIN_START_DATE,
   createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
   allowEmptyCreatedDates: true,
-  includeUpcoming: true,
   metric,
 })
 
@@ -293,7 +291,6 @@ const AuctionResultsFilterReducer = (
         "createdBeforeYear",
         "allowEmptyCreatedDates",
         "metric",
-        "includeUpcoming",
       ]
 
       primitiveFilterTypes.forEach(filter => {
