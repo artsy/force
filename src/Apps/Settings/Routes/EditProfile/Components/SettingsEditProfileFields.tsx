@@ -3,6 +3,7 @@ import {
   Button,
   CheckCircleFillIcon,
   CheckCircleIcon,
+  Clickable,
   Flex,
   Input,
   Join,
@@ -12,12 +13,14 @@ import {
 } from "@artsy/palette"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
+import { useHandleIDVerification } from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   LocationAutocompleteInput,
   normalizePlace,
   Place,
 } from "Components/LocationAutocompleteInput"
 import { useFormik } from "formik"
+import { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
@@ -47,6 +50,20 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 }) => {
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  const {
+    showVerificationBanner: showVerificationBannerForID,
+    handleVerification: handleIDVerification,
+  } = useHandleIDVerification()
+
+  useEffect(() => {
+    if (!!showVerificationBannerForID) {
+      sendToast({
+        variant: "success",
+        message: `ID verification link sent to ${me?.email ?? ""}.`,
+      })
+    }
+  }, [me.email, sendToast, showVerificationBannerForID])
 
   const {
     values,
@@ -94,7 +111,6 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     validationSchema: editProfileVerificationSchema,
     validateOnBlur: true,
   })
-  console.log("[LOGD]  values.displayLocation = ", values.displayLocation)
 
   return (
     <>
@@ -170,7 +186,12 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         <Box>
           <Flex alignItems="center">
             <CheckCircleIcon fill="black60" mr={0.5} />
-            <Text variant="sm-display">Verify Your ID</Text>
+            <Clickable
+              onClick={handleIDVerification}
+              textDecoration="underline"
+            >
+              <Text variant="sm-display">Verify Your ID</Text>
+            </Clickable>
           </Flex>
           <Text variant="sm" mt={1} color="black60">
             For details, see{" "}
