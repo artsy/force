@@ -84,4 +84,35 @@ describe("SettingsEditProfileFields", () => {
       bio: "I collect",
     })
   })
+
+  describe("ID verification", () => {
+    it("renders the component with correct links", async () => {
+      renderWithRelay()
+
+      const faqLink = screen.getByText("FAQs")
+      expect(faqLink).toHaveAttribute(
+        "href",
+        expect.stringContaining(
+          "https://www.artsy.net/identity-verification-faq"
+        )
+      )
+      const mailLink = screen.getByText("verification@artsy.net")
+      expect(mailLink).toHaveAttribute(
+        "href",
+        expect.stringContaining("mailto:verification@artsy.net")
+      )
+    })
+  })
+
+  describe("Email verification", () => {
+    it("renders the component", () => {
+      renderWithRelay()
+
+      expect(
+        screen.getByText(
+          "Secure your account and receive updates about your transactions on Artsy."
+        )
+      ).toBeInTheDocument()
+    })
+  })
 })

@@ -19,6 +19,7 @@ import {
 } from "Components/LocationAutocompleteInput"
 import { useFormik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Router/RouterLink"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
@@ -165,19 +166,31 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
         <Spacer y={[4, 6]} />
 
+        {/* ID Verification */}
         <Box>
           <Flex alignItems="center">
             <CheckCircleIcon fill="black60" mr={0.5} />
             <Text variant="sm-display">Verify Your ID</Text>
           </Flex>
-
           <Text variant="sm" mt={1} color="black60">
-            For details, see FAQs or contact verification@artsy.net
+            For details, see{" "}
+            <a
+              href="https://www.artsy.net/identity-verification-faq"
+              target="_blank"
+            >
+              FAQs
+            </a>{" "}
+            or contact{" "}
+            <RouterLink to={"mailto:verification@artsy.net"}>
+              verification@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Box>
 
         <Spacer y={[4, 6]} />
 
+        {/* Email Verification */}
         <Box>
           <Flex alignItems="center">
             <CheckCircleFillIcon fill="green100" mr={0.5} />
@@ -185,7 +198,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           </Flex>
 
           <Text variant="sm" mt={1} color="black60">
-            For details, see FAQs or contact verification@artsy.net
+            Secure your account and receive updates about your transactions on
+            Artsy.
           </Text>
         </Box>
 
