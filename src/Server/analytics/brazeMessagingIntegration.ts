@@ -31,20 +31,13 @@ export const isMatchingRoute = (pathname): boolean => {
  * Subscribe valid paths to Braze In-App Messages
  */
 export const subscribeToInAppMessagesByPath = () => {
-  const { analytics, appboy, location } = window as typeof window & {
-    appboy: any
-  }
+  const { analytics, braze, location } = window
 
-  if (!analytics || !appboy || !location) return
+  if (!analytics || !braze || !location) return
 
-  appboy.subscribeToNewInAppMessages(inAppMessages => {
-    if (inAppMessages.length < 1 || !isMatchingRoute(location.pathname)) {
-      return inAppMessages
-    }
+  braze.subscribeToInAppMessage(inAppMessage => {
+    if (!isMatchingRoute(location.pathname)) return
 
-    appboy.display.showInAppMessage(inAppMessages[0])
-    {
-      return inAppMessages.slice(1)
-    }
+    braze.showInAppMessage(inAppMessage)
   })
 }
