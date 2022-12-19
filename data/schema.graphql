@@ -16869,6 +16869,7 @@ type User implements Node {
 
   # A globally unique ID.
   id: ID!
+  initials(length: Int = 3): String
   inquiredArtworksConnection(
     after: String
     before: String
