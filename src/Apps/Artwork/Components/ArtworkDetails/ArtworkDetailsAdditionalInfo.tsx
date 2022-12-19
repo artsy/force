@@ -167,7 +167,6 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   const displayItems = listItems.filter(i => i.value != null && i.value !== "")
 
-  console.log({ displayItems })
   if (displayItems.length === 0) {
     return null
   }

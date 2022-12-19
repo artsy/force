@@ -22,22 +22,20 @@ export const PartnerInfo: React.FC<PartnerInfoProps> = ({ artwork }) => {
   )
 
   return (
-    <StackableBorderBox flexDirection="column" data-test="aboutTheWorkPartner">
-      {partner && (
-        <EntityHeaderPartnerFragmentContainer
-          partner={partner}
-          displayLink={canLink}
-          FollowButton={
-            partner.profile ? (
-              <FollowProfileButtonQueryRenderer
-                id={partner.profile.internalID}
-                contextModule={ContextModule.aboutTheWork}
-                size="small"
-              />
-            ) : undefined
-          }
-        />
-      )}
+    <StackableBorderBox flexDirection="column">
+      <EntityHeaderPartnerFragmentContainer
+        partner={partner}
+        displayLink={canLink}
+        FollowButton={
+          partner.profile ? (
+            <FollowProfileButtonQueryRenderer
+              id={partner.profile.internalID}
+              contextModule={ContextModule.aboutTheWork}
+              size="small"
+            />
+          ) : undefined
+        }
+      />
     </StackableBorderBox>
   )
 }

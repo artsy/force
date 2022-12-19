@@ -50,12 +50,10 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     const xs = breakpoint === "xs"
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
-    if (!additionalInformation) return null
-
     return (
       <ReadMore
         maxChars={maxChars}
-        content={additionalInformation}
+        content={additionalInformation!}
         onReadMoreClicked={this.trackReadMoreClick.bind(this)}
       />
     )
