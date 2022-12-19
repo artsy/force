@@ -1,7 +1,5 @@
 import { mount } from "enzyme"
-import { ThankYouWhenFromMyCollection } from "../ThankYouWhenFromMyCollection"
-
-jest.mock("System/useSystemContext")
+import { ThankYouWhenFromMyCollection } from "Apps/Consign/Routes/SubmissionFlow/ThankYou/ThankYouWhenFromMyCollection" // pragma: allowlist secret
 
 describe("ThankYou page when artwork is submitted from My Collection", () => {
   const wrapper = mount(<ThankYouWhenFromMyCollection />)

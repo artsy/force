@@ -14,6 +14,7 @@ import { EmptyMyCollectionPageProps } from "Apps/Settings/Routes/MyCollection/Co
 import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { openAuthModal } from "Utils/openAuthModal"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
@@ -21,6 +22,8 @@ import { Media } from "Utils/Responsive"
 const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
   loggedOutState,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const { mediator } = useSystemContext()
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
@@ -64,7 +67,11 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
             // @ts-ignore
             as={RouterLink}
             variant="primaryBlack"
-            to="/my-collection/artworks/new"
+            to={
+              isCollectorProfileEnabled
+                ? "/collector-profile/my-collection/artworks/new"
+                : "/my-collection/artworks/new"
+            }
             onClick={() => trackAddCollectedArtwork()}
           >
             Upload Artwork
@@ -113,6 +120,8 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
 const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
   loggedOutState,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const { mediator } = useSystemContext()
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
@@ -172,7 +181,11 @@ const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
             // @ts-ignore
             as={RouterLink}
             variant="primaryBlack"
-            to="/my-collection/artworks/new"
+            to={
+              isCollectorProfileEnabled
+                ? "/collector-profile/my-collection/artworks/new"
+                : "/my-collection/artworks/new"
+            }
             onClick={() => trackAddCollectedArtwork()}
             width="100%"
           >

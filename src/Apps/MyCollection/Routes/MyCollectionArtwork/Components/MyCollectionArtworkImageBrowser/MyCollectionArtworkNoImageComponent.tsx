@@ -1,5 +1,6 @@
 import { AddCircleIcon, Button, Flex } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkNoImageComponentProps {
   artworkID?: string
@@ -8,6 +9,8 @@ interface MyCollectionArtworkNoImageComponentProps {
 export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNoImageComponentProps> = ({
   artworkID,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   return (
     <Flex
       position="absolute"
@@ -22,7 +25,11 @@ export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNo
         data-testid="uploadPhotosButton"
         // @ts-ignore
         as={RouterLink}
-        to={`/my-collection/artworks/${artworkID}/edit?step=photos`}
+        to={
+          isCollectorProfileEnabled
+            ? `/collector-profile/my-collection/artworks/${artworkID}/edit?step=photos`
+            : `/my-collection/artworks/${artworkID}/edit?step=photos`
+        }
         variant="secondaryNeutral"
         size="large"
         Icon={AddCircleIcon}

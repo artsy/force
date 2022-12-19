@@ -123,6 +123,30 @@ describe("MyCollectionArtwork", () => {
         )
       })
 
+      it("the section is rendered with cx-collector-profile ff enables", () => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
+            "my-collection-web-phase-5": { flagEnabled: true },
+            "my-collection-web-phase-6-request-price-estimate": {
+              flagEnabled: true,
+            },
+            "cx-collector-profile": { flagEnabled: true },
+          },
+        }))
+        const { renderWithRelay } = getWrapper("lg")
+        renderWithRelay(mockResolversWithInsightsWithoutSubmission)
+
+        expect(
+          screen
+            .getAllByRole("link")
+            .find(c => c.textContent?.includes("Request a Price Estimate"))
+        ).toHaveAttribute(
+          "href",
+          `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
+        )
+      })
+
       describe("when artist was already submitted", () => {
         it("the section is not rendered", () => {
           const { renderWithRelay } = getWrapper("lg")

@@ -70,6 +70,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "reorder-swa-artwork-submission-flow"
   )
 
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const firstSubmissionStep = enableFlowReorder
     ? "contact-information"
     : "artwork-details"
@@ -80,7 +82,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       as={RouterLink}
       variant="secondaryNeutral"
       size="small"
-      to={`/my-collection/artworks/${artwork.internalID}/edit`}
+      to={
+        isCollectorProfileEnabled
+          ? `/collector-profile/my-collection/artworks/${artwork.internalID}/edit`
+          : `/my-collection/artworks/${artwork.internalID}/edit`
+      }
       onClick={() =>
         trackEditCollectedArtwork(artwork.internalID, artwork.slug)
       }
@@ -154,7 +160,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
-                  route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
+                  route={
+                    isCollectorProfileEnabled
+                      ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
+                      : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                  }
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
@@ -178,7 +188,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={`/my-collection/submission/${firstSubmissionStep}/${id}`}
+                          route={
+                            isCollectorProfileEnabled
+                              ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
+                              : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                          }
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}

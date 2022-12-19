@@ -13,6 +13,7 @@ import { buyerGuaranteeRoutes } from "Apps/BuyerGuarantee/buyerGuaranteeRoutes"
 import { collectRoutes } from "Apps/Collect/collectRoutes"
 import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRoutes"
 import { consignFromMyCollectionRoutes } from "Apps/Consign/consignFromMyCollectionRoutes"
+import { consignFromCollectorProfileMyCollectionRoutes } from "Apps/Consign/consignFromCollectorProfileMyCollectionRoutes"
 import { consignRoutes } from "Apps/Consign/consignRoutes"
 import { conversationRoutes } from "Apps/Conversation/conversationRoutes"
 import { debugRoutes } from "Apps/Debug/debugRoutes"
@@ -75,6 +76,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: collectorProfileRoutes },
     { routes: consignRoutes },
     { routes: consignFromMyCollectionRoutes },
+    { routes: consignFromCollectorProfileMyCollectionRoutes },
     { routes: contactRoutes },
     { routes: conversationRoutes },
     { routes: exampleRoutes },

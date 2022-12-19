@@ -46,6 +46,59 @@ const SavesAndFollowsRoute = loadable(
   }
 )
 
+const MyCollectionCreateArtwork = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionCreateArtwork"
+    ),
+  {
+    resolveComponent: component => component.MyCollectionCreateArtwork,
+  }
+)
+
+const MyCollectionArtwork = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/MyCollectionArtwork/MyCollectionArtwork"
+    ),
+  {
+    resolveComponent: component =>
+      component.MyCollectionArtworkFragmentContainer,
+  }
+)
+
+const MyCollectionEditArtwork = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
+    ),
+  {
+    resolveComponent: component =>
+      component.MyCollectionEditArtworkFragmentContainer,
+  }
+)
+
+const PriceEstimateContactInformation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateContactInformation"
+    ),
+  {
+    resolveComponent: component =>
+      component.PriceEstimateContactInformationFragmentContainer,
+  }
+)
+
+const PriceEstimateConfirmation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/PriceEstimate/PriceEstimateConfirmation"
+    ),
+  {
+    resolveComponent: component => component.PriceEstimateConfirmation,
+  }
+)
+
 // Redirect home if the user is not logged in
 const handleServerSideRender = () => {
   // TODO: Redirect to the logged out experience once released
@@ -112,5 +165,83 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         `,
       },
     ],
+  },
+  {
+    path: "/collector-profile/my-collection/artworks/new",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => MyCollectionCreateArtwork,
+    onClientSideRender: () => {
+      MyCollectionCreateArtwork.preload()
+    },
+  },
+  {
+    path: "/collector-profile/my-collection/artwork/:artworkID",
+    getComponent: () => MyCollectionArtwork,
+    onClientSideRender: () => {
+      MyCollectionArtwork.preload()
+    },
+    query: graphql`
+      query collectorProfileRoutes_ArtworkQuery($artworkID: String!) {
+        artwork(id: $artworkID) @principalField {
+          ...MyCollectionArtwork_artwork
+        }
+      }
+    `,
+    cacheConfig: {
+      force: true,
+    },
+  },
+  {
+    path: "/collector-profile/my-collection/artworks/:slug/edit",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => MyCollectionEditArtwork,
+    onClientSideRender: () => {
+      MyCollectionEditArtwork.preload()
+    },
+    query: graphql`
+      query collectorProfileRoutes_MyCollectionArtworkFormQuery(
+        $slug: String!
+      ) {
+        artwork(id: $slug) {
+          ...MyCollectionEditArtwork_artwork
+        }
+      }
+    `,
+    cacheConfig: {
+      force: true,
+    },
+  },
+  {
+    path: "/collector-profile/my-collection/artwork/:artworkID/price-estimate",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateContactInformation,
+    onClientSideRender: () => {
+      PriceEstimateContactInformation.preload()
+    },
+    query: graphql`
+      query collectorProfileRoutes_priceEstimateContactInformationQuery(
+        $artworkID: String!
+      ) {
+        artwork(id: $artworkID) @principalField {
+          ...PriceEstimateContactInformation_artwork
+        }
+        me {
+          ...PriceEstimateContactInformation_me
+        }
+      }
+    `,
+  },
+  {
+    path:
+      "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
+    hideNav: true,
+    hideFooter: true,
+    getComponent: () => PriceEstimateConfirmation,
+    onClientSideRender: () => {
+      PriceEstimateConfirmation.preload()
+    },
   },
 ]

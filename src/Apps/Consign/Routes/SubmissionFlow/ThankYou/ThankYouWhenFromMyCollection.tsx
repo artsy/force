@@ -1,6 +1,9 @@
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const ThankYouWhenFromMyCollection: React.FC = () => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   return (
     <ConfirmationScreenComponent
       title="Your artwork has been submitted"
@@ -8,7 +11,11 @@ export const ThankYouWhenFromMyCollection: React.FC = () => {
     accepted or not. In the meantime, you can track the progress of your
     submission in My Collection."
       buttonText="Back to My Collection"
-      routerLink="/settings/my-collection"
+      routerLink={
+        isCollectorProfileEnabled
+          ? "/collector-profile/my-collection"
+          : "/settings/my-collection"
+      }
     />
   )
 }

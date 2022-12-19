@@ -23,6 +23,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   const isMedianSalePriceEnabled = useFeatureFlag(
     "my-collection-web-phase-7-median-sale-price"
   )
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   if (!isInsightsEnabled) {
     return null
@@ -36,7 +37,9 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
     <>
       <MetaTags
         title="My Collection Insights | Artsy"
-        pathname="/insights" // TODO: fix in CX-3244?
+        pathname={
+          isCollectorProfileEnabled ? "collector-profile/insights" : "/insights"
+        }
       />
 
       {!!isInsightsEnabled && (

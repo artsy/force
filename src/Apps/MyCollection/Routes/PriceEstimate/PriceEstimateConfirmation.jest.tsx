@@ -1,8 +1,6 @@
 import { mount } from "enzyme"
 import { PriceEstimateConfirmation } from "./PriceEstimateConfirmation"
 
-jest.mock("System/useSystemContext")
-
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {

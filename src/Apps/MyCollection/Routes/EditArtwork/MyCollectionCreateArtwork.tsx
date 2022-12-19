@@ -23,6 +23,8 @@ const logger = createLogger("MyCollectionCreateArtwork.tsx")
 type Step = "artist-select" | "artwork-select" | "details"
 
 export const MyCollectionCreateArtwork: React.FC = () => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
   )
@@ -101,9 +103,15 @@ export const MyCollectionCreateArtwork: React.FC = () => {
       }
 
       router.replace({
-        pathname: `/my-collection/artworks/${artworkId}/edit`,
+        pathname: isCollectorProfileEnabled
+          ? `/collector-profile/my-collection/artworks/${artworkId}/edit`
+          : `/my-collection/artworks/${artworkId}/edit`,
       })
-      router.push({ pathname: "/settings/my-collection" })
+      router.push({
+        pathname: isCollectorProfileEnabled
+          ? "/collector-profile/my-collection/"
+          : "/settings/my-collection",
+      })
     } catch (error) {
       logger.error(`Artwork not created`, error)
 

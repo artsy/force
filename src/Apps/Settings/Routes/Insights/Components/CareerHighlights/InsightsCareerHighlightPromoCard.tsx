@@ -18,6 +18,8 @@ import { Media } from "Utils/Responsive"
 export const InsightsCareerHighlightPromoCard: React.FC<{
   onClick?(): void
 }> = ({ onClick }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const { src: dSrc, srcSet: dSrcSet } = resized(
     "https://files.artsy.net/images/CareerHighlightPromoImage.png",
     {
@@ -53,7 +55,11 @@ export const InsightsCareerHighlightPromoCard: React.FC<{
           as={RouterLink}
           variant="primaryBlack"
           size="small"
-          to="/my-collection/artworks/new"
+          to={
+            isCollectorProfileEnabled
+              ? "/collector-profile/my-collection/artworks/new"
+              : "/my-collection/artworks/new"
+          }
           px={[1, 2]}
         >
           Upload Artwork
