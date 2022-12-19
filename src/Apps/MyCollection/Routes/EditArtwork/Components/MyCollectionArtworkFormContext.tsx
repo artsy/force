@@ -4,6 +4,8 @@ import { createContext, Ref, useContext } from "react"
 interface MyCollectionArtworkFormContextProps {
   artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
   onBack: () => void
+  onNext?: () => void
+  onSkip?: () => void
 }
 
 export const MyCollectionArtworkFormContext = createContext<
@@ -11,6 +13,8 @@ export const MyCollectionArtworkFormContext = createContext<
 >({
   artworkFormImagesRef: undefined,
   onBack: () => {},
+  onNext: () => {},
+  onSkip: () => {},
 })
 
 export const MyCollectionArtworkFormContextProvider: React.FC<MyCollectionArtworkFormContextProps> = ({
