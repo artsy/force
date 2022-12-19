@@ -32,6 +32,7 @@ import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtwo
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
+import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -68,6 +69,8 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 
           return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
         })}
+
+      <ArtworkDetailsPartnerInfoQueryRenderer slug={slug} />
     </Join>
   </>
 )

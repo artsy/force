@@ -133,7 +133,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         )
 
         const consignPath = artworkId
-          ? "/my-collection/submission"
+          ? isCollectorProfileEnabled
+            ? "/collector-profile/my-collection/submission"
+            : "/my-collection/submission"
           : "/sell/submission"
 
         const nextStepIndex = isLastStep ? null : stepIndex + 1

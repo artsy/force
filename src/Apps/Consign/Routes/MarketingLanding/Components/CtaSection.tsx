@@ -19,7 +19,7 @@ export const CtaSection: React.FC = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
-      destination_path: "/sell/submission/artwork-details",
+      destination_path: "/sell/submission",
     })
   }
 

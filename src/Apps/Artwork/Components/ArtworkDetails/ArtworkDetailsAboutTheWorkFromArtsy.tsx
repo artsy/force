@@ -1,4 +1,4 @@
-import { HTML, ReadMore, Spacer } from "@artsy/palette"
+import { HTML, ReadMore, Spacer, StackableBorderBox } from "@artsy/palette"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
@@ -31,33 +31,64 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     // noop
   }
 
-  renderReadMore(breakpoint?: string) {
+  renderDescriptionReadMore(breakpoint?: string) {
     const { description } = this.props.artwork
     const xs = breakpoint === "xs"
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
     return (
-      <HTML variant="sm">
-        <ReadMore
-          maxChars={maxChars}
-          content={description!}
-          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-        />
-      </HTML>
+      <ReadMore
+        maxChars={maxChars}
+        content={description!}
+        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+      />
+    )
+  }
+
+  renderAdditionalInformationReadMore(breakpoint?: string) {
+    const { additionalInformation } = this.props.artwork
+    const xs = breakpoint === "xs"
+    const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
+
+    return (
+      <ReadMore
+        maxChars={maxChars}
+        content={additionalInformation!}
+        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+      />
     )
   }
 
   render() {
-    if (!this.props.artwork.description) {
+    const { description, additionalInformation } = this.props.artwork
+
+    if (!description && !additionalInformation) {
       return null
     }
 
     return (
-      <>
-        <Media at="xs">{this.renderReadMore("xs")}</Media>
-        <Media greaterThan="xs">{this.renderReadMore()}</Media>
-        <Spacer y={2} />
-      </>
+      <StackableBorderBox>
+        <HTML variant="sm">
+          {description && (
+            <>
+              <Media at="xs">{this.renderDescriptionReadMore("xs")}</Media>
+              <Media greaterThan="xs">{this.renderDescriptionReadMore()}</Media>
+              <Spacer y={2} />
+            </>
+          )}
+
+          {additionalInformation && (
+            <>
+              <Media at="xs">
+                {this.renderAdditionalInformationReadMore("xs")}
+              </Media>
+              <Media greaterThan="xs">
+                {this.renderAdditionalInformationReadMore()}
+              </Media>
+            </>
+          )}
+        </HTML>
+      </StackableBorderBox>
     )
   }
 }
@@ -68,6 +99,7 @@ export const ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer = createFragme
     artwork: graphql`
       fragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {
         description(format: HTML)
+        additionalInformation(format: HTML)
       }
     `,
   }

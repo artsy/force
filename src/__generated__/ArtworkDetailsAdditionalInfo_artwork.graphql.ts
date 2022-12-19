@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f329a8f8d6983db442a3bd100911bb89>>
+ * @generated SignedSource<<2e0f1f271a9e52c8beae42a9686a7cb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAdditionalInfo_artwork$data = {
+  readonly attributionClass: {
+    readonly name: string | null;
+  } | null;
   readonly canRequestLotConditionsReport: boolean | null;
   readonly category: string | null;
   readonly certificateOfAuthenticity: {
@@ -21,6 +24,10 @@ export type ArtworkDetailsAdditionalInfo_artwork$data = {
     readonly details: string | null;
     readonly label: string | null;
   } | null;
+  readonly dimensions: {
+    readonly cm: string | null;
+    readonly in: string | null;
+  } | null;
   readonly framed: {
     readonly details: string | null;
     readonly label: string | null;
@@ -28,6 +35,7 @@ export type ArtworkDetailsAdditionalInfo_artwork$data = {
   readonly image_rights: string | null;
   readonly internalID: string;
   readonly manufacturer: string | null;
+  readonly medium: string | null;
   readonly mediumType: {
     readonly __typename: "ArtworkMedium";
   } | null;
@@ -176,6 +184,56 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "dimensions",
+      "kind": "LinkedField",
+      "name": "dimensions",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "in",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "cm",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "medium",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkDetailsMediumModal_artwork"
@@ -186,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "161cae3ba06592435e444531a87c7248";
+(node as any).hash = "e8bb17f0c9153949744fb48ac6d97128";
 
 export default node;

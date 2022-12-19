@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
-      destination_path: "/sell/submission/artwork-details",
+      destination_path: "/sell/submission",
     })
   }
 
@@ -102,7 +102,7 @@ export const Header: React.FC = () => {
                 // @ts-ignore
                 as={RouterLink}
                 variant="primaryWhite"
-                to="/sell/submission/artwork-details"
+                to="/sell/submission"
                 onClick={trackSubmitClick}
                 mb={[4, 0]}
                 data-testid="submit-artwork-button"

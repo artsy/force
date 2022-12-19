@@ -1,4 +1,6 @@
 import { useToasts } from "@artsy/palette"
+import { MyCollectionArtworkFormArtistStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
+import { MyCollectionArtworkFormArtworkStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtworkStep"
 import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
@@ -7,7 +9,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
@@ -18,8 +20,14 @@ import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValid
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
+type Step = "artist-select" | "artwork-select" | "details"
+
 export const MyCollectionCreateArtwork: React.FC = () => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
+  const enableNewMyCUploadFlow = useFeatureFlag(
+    "cx-my-collection-uploading-flow-steps"
+  )
 
   const { router } = useRouter()
   const { sendToast } = useToasts()
@@ -31,6 +39,51 @@ export const MyCollectionCreateArtwork: React.FC = () => {
   const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
     null
   )
+
+  const initialStep = enableNewMyCUploadFlow ? "artist-select" : "details"
+
+  const [currentStep, setCurrentStep] = useState<Step>(initialStep)
+
+  const getCurrentStep = () => {
+    if (!enableNewMyCUploadFlow) {
+      return <MyCollectionArtworkFormMain />
+    }
+
+    switch (currentStep) {
+      case "artist-select":
+        return <MyCollectionArtworkFormArtistStep />
+      case "artwork-select":
+        return <MyCollectionArtworkFormArtworkStep />
+      default:
+        return <MyCollectionArtworkFormMain />
+    }
+  }
+
+  const handleBack = () => {
+    if (currentStep === "artist-select" || !enableNewMyCUploadFlow) {
+      router.push({ pathname: "/settings/my-collection" })
+    } else if (currentStep === "artwork-select") {
+      setCurrentStep("artist-select")
+    } else if (currentStep === "details") {
+      setCurrentStep("artist-select")
+    }
+  }
+
+  const handleNextStep = () => {
+    if (currentStep === "artist-select") {
+      setCurrentStep("artwork-select")
+    } else if (currentStep === "artwork-select") {
+      setCurrentStep("details")
+    }
+  }
+
+  const handleSkip = () => {
+    if (currentStep === "artist-select") {
+      setCurrentStep("details")
+    } else if (currentStep === "artwork-select") {
+      setCurrentStep("details")
+    }
+  }
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Create the new artwork
@@ -70,14 +123,6 @@ export const MyCollectionCreateArtwork: React.FC = () => {
     }
   }
 
-  const handleBack = () => {
-    router.push({
-      pathname: isCollectorProfileEnabled
-        ? "/collector-profile/my-collection/"
-        : "/settings/my-collection",
-    })
-  }
-
   return (
     <>
       <MetaTags title="Upload Artwork | Artsy" />
@@ -85,6 +130,8 @@ export const MyCollectionCreateArtwork: React.FC = () => {
       <MyCollectionArtworkFormContextProvider
         artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
+        onNext={handleNextStep}
+        onSkip={handleSkip}
       >
         <Formik<ArtworkModel>
           validateOnMount
@@ -92,7 +139,7 @@ export const MyCollectionCreateArtwork: React.FC = () => {
           initialValues={getMyCollectionArtworkFormInitialValues()}
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
         >
-          <MyCollectionArtworkFormMain />
+          {getCurrentStep()}
         </Formik>
       </MyCollectionArtworkFormContextProvider>
     </>
