@@ -3742,6 +3742,7 @@ type CommerceBuyOrder implements CommerceOrder {
   buyer: CommerceOrderPartyUnion!
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -4467,6 +4468,7 @@ type CommerceOfferOrder implements CommerceOrder {
   buyerAction: CommerceBuyerOfferActionEnum
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -4698,6 +4700,7 @@ interface CommerceOrder {
   buyer: CommerceOrderPartyUnion!
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -5002,6 +5005,9 @@ enum CommerceOrderSourceEnum {
 
   # The order was originated on a conversation
   inquiry
+
+  # The order was originated from a private sale
+  private_sale
 }
 
 type CommerceOrderStateChangedEvent implements CommerceEventInterface {
@@ -5263,6 +5269,7 @@ input CommerceSetShippingInput {
   fulfillmentType: CommerceOrderFulfillmentTypeEnum!
   id: ID!
   phoneNumber: String
+  phoneNumberCountryCode: String
   shipping: CommerceShippingAttributes
 }
 

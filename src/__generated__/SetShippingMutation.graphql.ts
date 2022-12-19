@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5c20b1a37d342ee7314571553ccad40>>
+ * @generated SignedSource<<463001559e0c29401c6c3a4c4bcd3d02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type CommerceSetShippingInput = {
   fulfillmentType: CommerceOrderFulfillmentTypeEnum;
   id: string;
   phoneNumber?: string | null;
+  phoneNumberCountryCode?: string | null;
   shipping?: CommerceShippingAttributes | null;
 };
 export type CommerceShippingAttributes = {
