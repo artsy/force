@@ -55,7 +55,7 @@ export const CtaBannerContent = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
-      destination_path: "/sell/submission/artwork-details",
+      destination_path: "/sell/submission",
     })
   }
 
@@ -100,7 +100,7 @@ export const CtaBannerContent = () => {
                 // @ts-ignore
                 as={RouterLink}
                 onClick={trackSubmitClick}
-                to="/sell/submission/artwork-details"
+                to="/sell/submission"
               >
                 Submit an Artwork
               </Button>
