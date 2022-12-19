@@ -2,20 +2,17 @@ import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAboutTheWorkFromPartner"
-import { ArtworkDetailsAboutTheWorkFromPartner_Test_Query } from "__generated__/ArtworkDetailsAboutTheWorkFromPartner_Test_Query.graphql"
+import { ArtworkDetailsPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 
 jest.unmock("react-relay")
 
-const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkDetailsAboutTheWorkFromPartner_Test_Query
->({
-  Component: ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer,
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtworkDetailsPartnerInfoFragmentContainer,
   query: graphql`
-    query ArtworkDetailsAboutTheWorkFromPartner_Test_Query($slug: String!)
+    query ArtworkDetailsPartnerInfo_Test_Query($slug: String!)
       @relay_test_operation {
       artwork(id: $slug) {
-        ...ArtworkDetailsAboutTheWorkFromPartner_artwork
+        ...ArtworkDetailsPartnerInfo_artwork
       }
     }
   `,
@@ -72,8 +69,4 @@ describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
     expect(screen.queryByText("Galerie Edge Case")).toBeInTheDocument()
     expect(screen.queryByRole("link")).not.toBeInTheDocument()
   })
-})
-
-it.skip("opens auth modal with expected args when following an artist", () => {
-  // TODO
 })

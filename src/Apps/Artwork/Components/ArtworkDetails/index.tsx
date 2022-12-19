@@ -14,7 +14,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromPartner"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 import { ArtworkDetails_artwork$data } from "__generated__/ArtworkDetails_artwork.graphql"
@@ -58,9 +57,6 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
         <Tabs onChange={this.trackTabChange.bind(this)}>
           <Tab name="About the work" data={{ trackingLabel: "about_the_work" }}>
             <ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer
-              artwork={artwork}
-            />
-            <ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer
               artwork={artwork}
             />
 
@@ -117,7 +113,6 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkDetails_artwork on Artwork {
         ...ArtworkDetailsAboutTheWorkFromArtsy_artwork
-        ...ArtworkDetailsAboutTheWorkFromPartner_artwork
         ...ArtworkDetailsAdditionalInfo_artwork
         ...ArtworkDetailsArticles_artwork
         articles(size: 10) {

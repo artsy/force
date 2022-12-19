@@ -18,6 +18,8 @@ import { useAnalyticsContext } from "System/Analytics"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkDefinitionList } from "Apps/Artwork/Components/ArtworkDefinitionList"
 import { useTracking } from "react-tracking"
+import { useArtworkDimensions } from "Apps/Artwork/useArtworkDimensions"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 export interface ArtworkDetailsAdditionalInfoProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork$data
@@ -38,9 +40,15 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
     signatureInfo,
     conditionDescription,
     certificateOfAuthenticity,
+    dimensions,
+    attributionClass,
+    medium,
   } = artwork
 
-  const [open, setOpen] = useState(false)
+  const [openMediumModal, setOpenMediumModal] = useState(false)
+  const [openRarityModal, setOpenRarityModal] = useState(false)
+
+  const { dimensionsLabel } = useArtworkDimensions(dimensions)
 
   const { trackEvent } = useTracking()
   const {
@@ -51,6 +59,46 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
 
   const listItems = [
     {
+      title: "Materials",
+      value: medium,
+    },
+    {
+      title: "Size",
+      value: dimensionsLabel,
+    },
+    {
+      title: "Rarity",
+      value: attributionClass?.name && (
+        <>
+          <Clickable
+            onClick={() => {
+              setOpenRarityModal(true)
+
+              trackEvent({
+                action_type: "Click",
+                context_module: ContextModule.aboutTheWork,
+                type: DeprecatedAnalyticsSchema.Type.Link,
+                subject: "Rarity type info",
+                context_page_owner_type: contextPageOwnerType,
+                context_page_owner_id: contextPageOwnerId,
+                context_page_owner_slug: contextPageOwnerSlug,
+              })
+            }}
+            textDecoration="underline"
+            color="black60"
+          >
+            <Text variant="xs">{attributionClass?.name}</Text>
+          </Clickable>
+
+          <ArtworkSidebarClassificationsModalQueryRenderer
+            onClose={() => setOpenRarityModal(false)}
+            show={openRarityModal}
+            showDisclaimer={false}
+          />
+        </>
+      ),
+    },
+    {
       title: "Medium",
       value: category && (
         <>
@@ -58,7 +106,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
             <>
               <Clickable
                 onClick={() => {
-                  setOpen(true)
+                  setOpenMediumModal(true)
 
                   trackEvent({
                     action_type: "Click",
@@ -73,17 +121,19 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
                 textDecoration="underline"
                 color="black60"
               >
-                <Text>{category}</Text>
+                <Text variant="xs">{category}</Text>
               </Clickable>
 
               <ArtworkDetailsMediumModalFragmentContainer
                 artwork={artwork}
-                show={open}
-                onClose={() => setOpen(false)}
+                show={openMediumModal}
+                onClose={() => setOpenMediumModal(false)}
               />
             </>
           ) : (
-            <Text color="black60">{category}</Text>
+            <Text variant="xs" color="black60">
+              {category}
+            </Text>
           )}
         </>
       ),
@@ -172,6 +222,14 @@ export const ArtworkDetailsAdditionalInfoFragmentContainer = createFragmentConta
         mediumType {
           __typename
         }
+        dimensions {
+          in
+          cm
+        }
+        attributionClass {
+          name
+        }
+        medium
         ...ArtworkDetailsMediumModal_artwork
       }
     `,

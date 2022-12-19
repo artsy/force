@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfcd480c2b95cf125dc00b817d09831f>>
+ * @generated SignedSource<<132661ec7328dda24bb818f177fe0dde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type ArtworkDetails_artwork$data = {
   readonly exhibition_history: string | null;
   readonly literature: string | null;
   readonly provenance: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork" | "ArtworkDetailsAboutTheWorkFromPartner_artwork" | "ArtworkDetailsAdditionalInfo_artwork" | "ArtworkDetailsArticles_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork" | "ArtworkDetailsAdditionalInfo_artwork" | "ArtworkDetailsArticles_artwork">;
   readonly " $fragmentType": "ArtworkDetails_artwork";
 };
 export type ArtworkDetails_artwork$key = {
@@ -43,11 +43,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkDetailsAboutTheWorkFromArtsy_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkDetailsAboutTheWorkFromPartner_artwork"
     },
     {
       "args": null,
@@ -110,6 +105,6 @@ return {
 };
 })();
 
-(node as any).hash = "ea24475efa27d1d663735de4d3c074f2";
+(node as any).hash = "6be4d52aec696238dc923f77568c0f83";
 
 export default node;
