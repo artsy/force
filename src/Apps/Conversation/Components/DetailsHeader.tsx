@@ -8,9 +8,11 @@ import {
   Box,
   InfoCircleIcon,
   Clickable,
+  themeProps,
 } from "@artsy/palette"
 
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 export interface DetailsProps {
   showDetails: boolean
@@ -21,15 +23,23 @@ interface DetailsHeaderProps extends DetailsProps {}
 
 export const DetailsHeader: FC<DetailsHeaderProps> = props => {
   const { showDetails, setShowDetails } = props
+  const isMobile =
+    __internal__useMatchMedia(themeProps.mediaQueries.xs) ||
+    __internal__useMatchMedia(themeProps.mediaQueries.sm)
+
+  if (isMobile) {
+    return null
+  }
+
   return (
     <StackableBorderBox
       p={0}
       flexDirection="column"
       width={showDetails ? "376px" : "0"}
       maxWidth={showDetails ? "auto" : "0"}
-      display={["none", "none", "flex", "flex", "flex"]}
       {...props}
       borderTop="none !important"
+      borderBottom="none !important"
     >
       <Flex
         flexDirection="row"
@@ -54,8 +64,16 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
 
 export const DetailIcon: React.FC<DetailsProps> = props => {
   const { showDetails, setShowDetails } = props
+  const isXL = __internal__useMatchMedia(themeProps.mediaQueries.xl)
+
+  // When opened, DetailsSidebar is positioned on top of the messages (on XL
+  // layouts only). In those cases, DetailsHeader is redundant with DetailIcon
+  if (showDetails && isXL) {
+    return null
+  }
+
   return (
-    <Box display={["initial", "initial", showDetails ? "none" : "inline"]}>
+    <Box>
       <Flex flexDirection="row" alignItems="center" pr={1}>
         <InfoCircleIcon />
         <Clickable cursor="pointer" textDecoration="underline">
