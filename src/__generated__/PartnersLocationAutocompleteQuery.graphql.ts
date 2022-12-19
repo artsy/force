@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4530bb248f902dcb9ced782b7ac8047c>>
+ * @generated SignedSource<<636c778a6475a9b1673e5b253e486e58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,13 @@ export type PartnersLocationAutocompleteQuery = {
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "fullName",
+    "storageKey": null
+  },
   {
     "alias": "text",
     "args": null,
@@ -136,12 +143,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "924941acb7d72372c05d1b35144be54b",
+    "cacheID": "eeef8ce891628f4c737159ee38ba1b1e",
     "id": null,
     "metadata": {},
     "name": "PartnersLocationAutocompleteQuery",
     "operationKind": "query",
-    "text": "query PartnersLocationAutocompleteQuery {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
+    "text": "query PartnersLocationAutocompleteQuery {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
   }
 };
 })();

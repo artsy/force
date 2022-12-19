@@ -1,4 +1,4 @@
-import { AutocompleteInput } from "@artsy/palette"
+import { AutocompleteInput, Box, Text } from "@artsy/palette"
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
@@ -81,6 +81,19 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
       onSelect={handleSelect}
       onClear={handleClear}
       defaultValue={defaultValue}
+      renderOption={option => {
+        return (
+          <Box {...("fullName" in option ? { px: 2, py: 1 } : { p: 2 })}>
+            <Text variant="sm-display">{option.text}</Text>
+
+            {"fullName" in option && (
+              <Text variant="xs" color="black60">
+                {option.fullName.split(", ").slice(1).join(", ")}
+              </Text>
+            )}
+          </Box>
+        )
+      }}
     />
   )
 }
@@ -101,6 +114,7 @@ export const PartnersLocationAutocompleteFragmentContainer = createFragmentConta
     viewer: graphql`
       fragment PartnersLocationAutocomplete_viewer on Viewer {
         featuredCities: cities(featured: true) {
+          fullName
           text: name
           value: slug
           coordinates {
@@ -109,6 +123,7 @@ export const PartnersLocationAutocompleteFragmentContainer = createFragmentConta
           }
         }
         allCities: cities {
+          fullName
           text: name
           value: slug
           coordinates {
