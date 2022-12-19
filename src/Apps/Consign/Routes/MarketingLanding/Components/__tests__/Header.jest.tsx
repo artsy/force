@@ -56,7 +56,7 @@ describe("Header", () => {
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Submit an Artwork",
-        destination_path: "/sell/submission/artwork-details",
+        destination_path: "/sell/submission",
         user_id: "user-id",
       })
     })
