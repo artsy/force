@@ -39,9 +39,19 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
+  onChange?: (value: string) => void
   onSelect: ({ artistId }) => void
+  placeholder?: string
   required?: boolean
-}> = ({ onError, onSelect, required }) => {
+  title?: string
+}> = ({
+  onError,
+  onChange,
+  onSelect,
+  placeholder = "Enter full name",
+  required,
+  title = "Artist",
+}) => {
   const [suggestions, setSuggestions] = useState<
     Array<ArtistAutocompleteOption>
   >([])
@@ -71,6 +81,8 @@ export const ArtistAutoComplete: React.FC<{
 
     if (relayEnvironment) {
       try {
+        onChange?.(value)
+
         setIsLoading(true)
         const suggestions = await fetchSuggestions(value, relayEnvironment)
         setIsError(false)
@@ -153,8 +165,8 @@ export const ArtistAutoComplete: React.FC<{
   return (
     <AutocompleteInput
       maxLength={256}
-      title="Artist"
-      placeholder="Enter full name"
+      title={title}
+      placeholder={placeholder}
       data-test-id="autocomplete-input"
       spellCheck={false}
       loading={isLoading}

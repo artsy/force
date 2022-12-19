@@ -1,5 +1,5 @@
 import { useToasts } from "@artsy/palette"
-import { MyCollectionArtworkFormArtistStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
+import { MyCollectionArtworkFormArtistStepFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
 import { MyCollectionArtworkFormArtworkStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtworkStep"
 import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
@@ -10,10 +10,12 @@ import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyColle
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
 import { useRef, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
+import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
@@ -22,7 +24,13 @@ const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
 type Step = "artist-select" | "artwork-select" | "details"
 
-export const MyCollectionCreateArtwork: React.FC = () => {
+interface MyCollectionCreateArtworkProps {
+  me: MyCollectionCreateArtwork_me$data
+}
+
+export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps> = ({
+  me,
+}) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const enableNewMyCUploadFlow = useFeatureFlag(
@@ -51,7 +59,7 @@ export const MyCollectionCreateArtwork: React.FC = () => {
 
     switch (currentStep) {
       case "artist-select":
-        return <MyCollectionArtworkFormArtistStep />
+        return <MyCollectionArtworkFormArtistStepFragmentContainer me={me} />
       case "artwork-select":
         return <MyCollectionArtworkFormArtworkStep />
       default:
@@ -145,3 +153,14 @@ export const MyCollectionCreateArtwork: React.FC = () => {
     </>
   )
 }
+
+export const MyCollectionCreateArtworkFragmentContainer = createFragmentContainer(
+  MyCollectionCreateArtwork,
+  {
+    me: graphql`
+      fragment MyCollectionCreateArtwork_me on Me {
+        ...MyCollectionArtworkFormArtistStep_me
+      }
+    `,
+  }
+)

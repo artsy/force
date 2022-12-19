@@ -40,7 +40,8 @@ const MyCollectionCreateArtwork = loadable(
       /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionCreateArtwork"
     ),
   {
-    resolveComponent: component => component.MyCollectionCreateArtwork,
+    resolveComponent: component =>
+      component.MyCollectionCreateArtworkFragmentContainer,
   }
 )
 
@@ -113,6 +114,16 @@ export const myCollectionRoutes: AppRouteConfig[] = [
         getComponent: () => MyCollectionCreateArtwork,
         onClientSideRender: () => {
           MyCollectionCreateArtwork.preload()
+        },
+        query: graphql`
+          query myCollectionRoutes_MyCollectionArtworkUploadQuery {
+            me {
+              ...MyCollectionCreateArtwork_me
+            }
+          }
+        `,
+        cacheConfig: {
+          force: true,
         },
       },
       {
