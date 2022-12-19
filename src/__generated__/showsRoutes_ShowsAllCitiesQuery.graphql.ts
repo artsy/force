@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51d200f8b335dcfcab3a7f8c99d99c38>>
+ * @generated SignedSource<<0ca37498e5f4d12dd7225c9cbe76edc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,6 +74,13 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "fullName",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
               },
@@ -93,12 +100,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "ad359a22befc4c14ff67b0cca6e2c3df",
+    "cacheID": "4e5a24ea83d5ba74a1cc669331557472",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsAllCitiesQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsAllCitiesQuery {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    name\n    slug\n  }\n}\n"
+    "text": "query showsRoutes_ShowsAllCitiesQuery {\n  viewer {\n    ...ShowsAllCities_viewer\n  }\n}\n\nfragment ShowsAllCities_viewer on Viewer {\n  cities {\n    fullName\n    name\n    slug\n  }\n}\n"
   }
 };
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29b6bf9703f2756e2ea7924549768b2b>>
+ * @generated SignedSource<<05ac89c9280b75c9116a6fb41368fd1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type PartnersLocationAutocomplete_viewer$data = {
       readonly lat: number | null;
       readonly lng: number | null;
     } | null;
+    readonly fullName: string;
     readonly text: string;
     readonly value: string;
   }>;
@@ -24,6 +25,7 @@ export type PartnersLocationAutocomplete_viewer$data = {
       readonly lat: number | null;
       readonly lng: number | null;
     } | null;
+    readonly fullName: string;
     readonly text: string;
     readonly value: string;
   }>;
@@ -36,6 +38,13 @@ export type PartnersLocationAutocomplete_viewer$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "fullName",
+    "storageKey": null
+  },
   {
     "alias": "text",
     "args": null,
@@ -114,6 +123,6 @@ return {
 };
 })();
 
-(node as any).hash = "41d52d035e41c3b3153e08652a283937";
+(node as any).hash = "776615c6d6f326015b1e7fb8fa406b8a";
 
 export default node;
