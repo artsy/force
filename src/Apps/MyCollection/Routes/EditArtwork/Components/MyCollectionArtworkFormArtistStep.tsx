@@ -1,4 +1,13 @@
-import { Avatar, Button, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import {
+  Avatar,
+  Button,
+  Clickable,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
@@ -25,11 +34,18 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   )
 
   const [query, setQuery] = useState("")
-  const trimmedQuery = query.trimStart()
+  const trimmedQuery = query?.trimStart()
 
   const onSelect = ({ artistId, artistName }) => {
     setFieldValue("artistId", artistId)
-    setFieldValue("artistName", artistName)
+    setFieldValue("artistName", artistName || "")
+
+    if (!artistId) {
+      setQuery("")
+
+      return
+    }
+
     onNext?.()
   }
 
@@ -37,9 +53,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     console.log("error")
   }
 
-  const onSkipPress = trimmedQuery => {
+  const handleSkip = () => {
     setFieldValue("artistId", undefined)
     setFieldValue("artistName", trimmedQuery)
+
     onSkip?.()
   }
 
@@ -51,7 +68,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           <Button
             width={[100, 300]}
             data-testid="artist-select-skip-button"
-            onClick={() => onSkip?.()}
+            onClick={handleSkip}
             size={["small", "large"]}
             variant="secondaryNeutral"
           >
@@ -70,21 +87,18 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
         onError={onError}
         onChange={value => {
           setQuery(value)
-          console.log(value)
+          setFieldValue("artistName", value || "")
         }}
         onSelect={onSelect}
         placeholder="Search for artists on Artsy"
-        title={""}
+        title=""
       />
 
       <Spacer y={2} />
 
       <Flex flexDirection="row">
         <Text variant="xs">Can't find the artist? &nbsp;</Text>
-        <Clickable
-          onClick={() => onSkipPress?.(trimmedQuery)}
-          textDecoration="underline"
-        >
+        <Clickable onClick={handleSkip} textDecoration="underline">
           <Text variant="xs" color="black100">
             Add their name.
           </Text>
@@ -95,47 +109,57 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Text variant="xs">Artists in My Collection</Text>
 
-      <Spacer y={3} />
+      <Spacer y={1} />
 
-      {collectedArtists.map((artist, index) => {
-        return (
-          <Flex
-            key={artist.internalID}
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            mt={1}
-          >
-            <Clickable
-              onClick={() =>
-                onSelect({
-                  artistId: artist.internalID,
-                  artistName: artist.displayLabel,
-                })
-              }
-            >
-              <Avatar
-                size="xs"
-                src="https://picsum.photos/45/45"
-                srcSet="https://picsum.photos/45/45 1x, https://picsum.photos/90/90 2x"
-                lazyLoad
-                initials="TK"
-              />
-              <Text variant="xs">{artist.displayLabel}</Text>
-            </Clickable>
-          </Flex>
-        )
-      })}
+      <GridColumns width="100%">
+        {collectedArtists.map((artist, index) => {
+          return (
+            <Column span={[6, 4]} key={index}>
+              <Clickable
+                onClick={() =>
+                  onSelect({
+                    artistId: artist.internalID,
+                    artistName: artist.displayLabel,
+                  })
+                }
+                data-test-id={`artist-${artist.internalID}`}
+              >
+                <Flex
+                  key={artist.internalID}
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  mt={1}
+                >
+                  <Flex>
+                    <Avatar
+                      size="xs"
+                      mr={1}
+                      initials={artist.initials || undefined}
+                      lazyLoad
+                      {...artist.image?.cropped}
+                    />
+                    <Flex
+                      flexDirection="column"
+                      mr={1}
+                      flex={1}
+                      overflow="hidden"
+                    >
+                      <Text variant="sm-display" lineClamp={2}>
+                        {artist.name ?? "Unknown"}
+                      </Text>
 
-      <Button
-        width={300}
-        onClick={() => onNext?.()}
-        size="large"
-        variant="secondaryNeutral"
-        mt={4}
-      >
-        Next
-      </Button>
+                      <Text variant="xs" color="black60" overflowEllipsis>
+                        {artist.formattedNationalityAndBirthday}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Clickable>
+            </Column>
+          )
+        })}
+      </GridColumns>
     </AppContainer>
   )
 }
@@ -152,10 +176,16 @@ export const MyCollectionArtworkFormArtistStepFragmentContainer = createFragment
                 __typename
                 displayLabel
                 formattedNationalityAndBirthday
-                imageUrl
+                image {
+                  cropped(width: 45, height: 45) {
+                    src
+                    srcSet
+                  }
+                }
                 initials
                 internalID
                 isPersonalArtist
+                name
                 slug
               }
             }

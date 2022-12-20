@@ -40,7 +40,7 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
   onChange?: (value: string) => void
-  onSelect: ({ artistId }) => void
+  onSelect: ({ artistId, artistName }) => void
   placeholder?: string
   required?: boolean
   title?: string
@@ -130,14 +130,14 @@ export const ArtistAutoComplete: React.FC<{
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-    onSelect({ artistId: "" })
+    onSelect({ artistId: "", artistName: "" })
     setArtistNotFoundMessage("")
   }
 
   const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
-    onSelect({ artistId: value })
+    onSelect({ artistId: value, artistName: text })
   }
 
   const handleClose = () => {

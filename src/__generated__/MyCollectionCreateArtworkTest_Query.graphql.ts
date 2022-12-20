@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47482cc09d0debc61254e5819b3162ff>>
+ * @generated SignedSource<<1ac8bd327c1fe197aba3e60dc9ef5ea7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type myCollectionRoutes_MyCollectionArtworkUploadQuery$variables = {};
-export type myCollectionRoutes_MyCollectionArtworkUploadQuery$data = {
+export type MyCollectionCreateArtworkTest_Query$variables = {};
+export type MyCollectionCreateArtworkTest_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionCreateArtwork_me">;
   } | null;
 };
-export type myCollectionRoutes_MyCollectionArtworkUploadQuery = {
-  response: myCollectionRoutes_MyCollectionArtworkUploadQuery$data;
-  variables: myCollectionRoutes_MyCollectionArtworkUploadQuery$variables;
+export type MyCollectionCreateArtworkTest_Query = {
+  response: MyCollectionCreateArtworkTest_Query$data;
+  variables: MyCollectionCreateArtworkTest_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -34,7 +34,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "myCollectionRoutes_MyCollectionArtworkUploadQuery",
+    "name": "MyCollectionCreateArtworkTest_Query",
     "selections": [
       {
         "alias": null,
@@ -60,7 +60,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "myCollectionRoutes_MyCollectionArtworkUploadQuery",
+    "name": "MyCollectionCreateArtworkTest_Query",
     "selections": [
       {
         "alias": null,
@@ -231,16 +231,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b9cdc9bb6382fdeb08573e74ce39f8a1",
+    "cacheID": "2bd58d5e201c9f264b0cb30ec9711532",
     "id": null,
     "metadata": {},
-    "name": "myCollectionRoutes_MyCollectionArtworkUploadQuery",
+    "name": "MyCollectionCreateArtworkTest_Query",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          __typename\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          __typename\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3ab2ccc42a9b680f41213626e9f2ff04";
+(node as any).hash = "03663151010d3a45e720d5b9dbc87105";
 
 export default node;
