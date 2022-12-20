@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a7321e08b5b458e64b35a7f2b8f816e>>
+ * @generated SignedSource<<7d022bc12fecb54938ff08b1bfc1149a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type useDislikeArtworkMutation$data = {
   readonly dislikeArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly is_disliked: boolean;
+      readonly isDisliked: boolean;
       readonly slug: string;
     } | null;
   } | null;
@@ -30,7 +30,7 @@ export type useDislikeArtworkMutation$rawResponse = {
   readonly dislikeArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly is_disliked: boolean;
+      readonly isDisliked: boolean;
       readonly slug: string;
     } | null;
   } | null;
@@ -87,7 +87,7 @@ v1 = [
             "storageKey": null
           },
           {
-            "alias": "is_disliked",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isDisliked",
@@ -118,16 +118,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "67670b7ac2a11df271bfc6fe2b6812ce",
+    "cacheID": "4cd7486843452d6b29b94202fdaaf63a",
     "id": null,
     "metadata": {},
     "name": "useDislikeArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_disliked: isDisliked\n    }\n  }\n}\n"
+    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isDisliked\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "34445e3cbac6a740b0cafa058b5524d6";
+(node as any).hash = "7af88c38407460086c50f0e2a57daabb";
 
 export default node;
