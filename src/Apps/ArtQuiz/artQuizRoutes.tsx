@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
@@ -11,7 +12,7 @@ const ArtQuizWelcome = loadable(() => import("./Routes/ArtQuizWelcome"), {
 })
 
 const ArtQuizArtworks = loadable(() => import("./Routes/ArtQuizArtworks"), {
-  resolveComponent: component => component.ArtQuizArtworks,
+  resolveComponent: component => component.ArtQuizArtworksFragmentContainer,
 })
 
 const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
@@ -21,12 +22,11 @@ const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
 export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
+    hideFooter: true,
     onServerSideRender: ({ res }) => {
       if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
         res.redirect("/")
-        return
       }
-
       res.redirect("/art-quiz/welcome")
     },
     getComponent: () => ArtQuizApp,
@@ -38,18 +38,54 @@ export const artQuizRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "welcome",
-        hideFooter: true,
         getComponent: () => ArtQuizWelcome,
+        hideFooter: true,
+        query: graphql`
+          query artQuizRoutes_WelcomeQuery {
+            me {
+              quiz {
+                completedAt
+              }
+            }
+          }
+        `,
+        render: ({ Component, props }) => {
+          if (!(Component && props)) {
+            return
+          }
+          const { me } = props as any
+
+          if (!me?.quiz) {
+            return
+          }
+          const { completedAt } = me.quiz
+
+          if (completedAt) {
+            throw new RedirectException("/art-quiz/results")
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         path: "artworks",
-        hideFooter: true,
         getComponent: () => ArtQuizArtworks,
+        hideFooter: true,
+        onClientSideRender: () => {
+          ArtQuizArtworks.preload()
+        },
+        query: graphql`
+          query artQuizRoutes_ArtworksQuery {
+            me {
+              ...ArtQuizArtworks_me
+            }
+          }
+        `,
       },
       {
         path: "results",
-        hideFooter: true,
         getComponent: () => ArtQuizResults,
+        hideFooter: true,
         query: graphql`
           query artQuizRoutes_ArtQuizResultsQuery {
             me {
