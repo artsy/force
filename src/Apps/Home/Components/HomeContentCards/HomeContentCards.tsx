@@ -25,7 +25,7 @@ export const HomeContentCards: React.FC = () => {
   const timeoutAmount = brazeTimeoutAmount ?? DEFAULT_TIMEOUT_AMOUNT
 
   const [renderFallback, setRenderFallback] = useState(false)
-  const [appboy, setAppboy] = useState<typeof Braze | null>(null)
+  const [braze, setBraze] = useState<typeof Braze | undefined>(undefined)
   const [cards, setCards] = useState<Braze.CaptionedImage[]>([])
   const cardsLengthRef = useRef(cards.length)
 
@@ -42,27 +42,27 @@ export const HomeContentCards: React.FC = () => {
   }, [timeoutAmount])
 
   useEffect(() => {
-    if (appboy) return
+    if (braze) return
 
-    if (window.appboy) {
-      setAppboy(window.appboy)
+    if (window.braze) {
+      setBraze(window.braze)
     } else if (window.analytics) {
       window.analytics.ready(() => {
-        !window.appboy && setRenderFallback(true)
-        setAppboy(window.appboy)
+        !window.braze && setRenderFallback(true)
+        setBraze(window.braze)
       })
     } else {
       setRenderFallback(true)
     }
-  }, [appboy])
+  }, [braze])
 
   useEffect(() => {
-    if (!appboy) return
+    if (!braze) return
 
-    const subscriptionId = appboy.subscribeToContentCardsUpdates(() => {
+    const subscriptionId = braze.subscribeToContentCardsUpdates(() => {
       if (cardsLengthRef.current > 0) return
 
-      const response = appboy.getCachedContentCards()
+      const response = braze.getCachedContentCards()
       const sortedCards = response.cards.sort(sortCards)
       cardsLengthRef.current = sortedCards.length
       setCards(sortedCards as Braze.CaptionedImage[])
@@ -71,24 +71,24 @@ export const HomeContentCards: React.FC = () => {
     const brazeTimeout = setTimeout(() => {
       if (cardsLengthRef.current > 0) return
 
-      appboy.removeSubscription(subscriptionId)
+      braze.removeSubscription(subscriptionId)
       setRenderFallback(true)
     }, timeoutAmount)
 
-    appboy.requestContentCardsRefresh()
+    braze.requestContentCardsRefresh()
 
     return () => {
-      appboy.removeSubscription(subscriptionId)
+      braze.removeSubscription(subscriptionId)
       clearTimeout(brazeTimeout)
     }
-  }, [appboy, timeoutAmount])
+  }, [braze, timeoutAmount])
 
-  const hasBrazeCards = appboy && cardsLengthRef.current > 0
+  const hasBrazeCards = braze && cardsLengthRef.current > 0
 
   if (renderFallback) return <FallbackCards />
   if (!hasBrazeCards) return <PlaceholderCards />
 
-  return <BrazeCards appboy={appboy} cards={cards} />
+  return <BrazeCards braze={braze} cards={cards} />
 }
 
 export const SafeHomeContentCards = () => {

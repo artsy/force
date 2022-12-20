@@ -38,7 +38,7 @@ declare global {
     __RELAY_BOOTSTRAP__: string
     _sift: any
     analytics: any
-    appboy: typeof Braze
+    braze?: typeof Braze
     desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
     grecaptcha: any
     OnetrustActiveGroups: string

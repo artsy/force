@@ -8,6 +8,7 @@ export function setSegmentDestinationPref(
     AdWords: "C0004",
     "Amazon S3": "C0001",
     Appboy: "C0001",
+    "Braze Web Mode (Actions)": "C0001",
     "Facebook Pixel": "C0004",
     "Google Analytics": "C0002",
     Indicative: "C0002",

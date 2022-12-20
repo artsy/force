@@ -4,21 +4,21 @@ import Braze from "@braze/web-sdk"
 import { HomeContentCard } from "./HomeContentCard"
 
 interface BrazeCardsProps {
-  appboy: typeof Braze
+  braze: typeof Braze
   cards: Braze.CaptionedImage[]
 }
 
-export const BrazeCards: React.FC<BrazeCardsProps> = ({ appboy, cards }) => {
+export const BrazeCards: React.FC<BrazeCardsProps> = ({ braze, cards }) => {
   const handleChange = index => {
     const card = cards[index]
-    appboy.logCardImpressions([card])
+    braze.logCardImpressions([card])
   }
 
   return (
     <HeroCarousel onChange={handleChange}>
       {cards.map((card, index) => {
         const handleClick = () => {
-          appboy.logCardClick(card)
+          braze.logCardClick(card)
         }
 
         return (

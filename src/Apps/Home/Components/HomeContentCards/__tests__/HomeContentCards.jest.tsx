@@ -22,7 +22,7 @@ describe("HomeContentCards", () => {
   beforeEach(() => {
     window.analytics = { ready: callback => callback() } as any
 
-    window.appboy = {
+    window.braze = {
       removeSubscription: jest.fn(),
       requestContentCardsRefresh: jest.fn(),
       subscribeToContentCardsUpdates: jest.fn(),
@@ -42,7 +42,7 @@ describe("HomeContentCards", () => {
   })
 
   it("switches to fallback cards when segment is never ready", () => {
-    window.appboy = undefined as any
+    window.braze = undefined
 
     window.analytics = {
       ready: () => {},
@@ -54,9 +54,9 @@ describe("HomeContentCards", () => {
     expect(screen.getByText("FallbackCards")).toBeInTheDocument()
   })
 
-  it("switches to fallback cards when appboy never shows up", () => {
+  it("switches to fallback cards when braze never shows up", () => {
     const artificialSegmentDelay = 10
-    window.appboy = undefined as any
+    window.braze = undefined
 
     window.analytics = {
       ready: callback => {
@@ -74,8 +74,8 @@ describe("HomeContentCards", () => {
 
   it("renders braze cards when they are returned", () => {
     const mockUpdater = callback => callback()
-    window.appboy.subscribeToContentCardsUpdates = mockUpdater
-    window.appboy.getCachedContentCards = () => ({ cards: [{}] } as any)
+    window.braze!.subscribeToContentCardsUpdates = mockUpdater
+    window.braze!.getCachedContentCards = () => ({ cards: [{}] } as any)
 
     render(<HomeContentCards />)
 
