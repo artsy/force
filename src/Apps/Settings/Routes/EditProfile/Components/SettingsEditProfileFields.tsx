@@ -24,7 +24,7 @@ import {
   normalizePhoto,
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
-import { Formik } from "formik"
+import { Form, Formik } from "formik"
 import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
@@ -124,20 +124,14 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
   return (
     <>
-      <Formik
+      <Formik<EditProfileFormModel>
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={editProfileVerificationSchema}
         validateOnBlur
       >
-        {({
-          values,
-          isSubmitting,
-          handleSubmit,
-          setFieldValue,
-          handleChange,
-        }) => (
-          <form onSubmit={handleSubmit}>
+        {({ values, isSubmitting, isValid, setFieldValue, handleChange }) => (
+          <Form>
             <Join separator={<Spacer y={4} />}>
               <SettingsEditProfileImageFragmentContainer
                 ref={imageContainerRef}
@@ -237,10 +231,11 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               size="large"
               variant="primaryBlack"
               loading={isSubmitting}
+              disabled={!isValid}
             >
               Save
             </Button>
-          </form>
+          </Form>
         )}
       </Formik>
     </>
