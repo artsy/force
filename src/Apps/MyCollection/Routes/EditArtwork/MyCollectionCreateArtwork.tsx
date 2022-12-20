@@ -1,5 +1,5 @@
 import { useToasts } from "@artsy/palette"
-import { MyCollectionArtworkFormArtistStepFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
+import { MyCollectionArtworkFormArtistStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
 import { MyCollectionArtworkFormArtworkStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtworkStep"
 import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
@@ -59,7 +59,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
 
     switch (currentStep) {
       case "artist-select":
-        return <MyCollectionArtworkFormArtistStepFragmentContainer me={me} />
+        return <MyCollectionArtworkFormArtistStep me={me} />
       case "artwork-select":
         return <MyCollectionArtworkFormArtworkStep />
       default:

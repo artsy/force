@@ -14,18 +14,20 @@ import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtw
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useFormikContext } from "formik"
 import { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkFormArtistStep_me$data } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
+import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { ArtistAutoComplete } from "/Users/ole/artsy/force/src/Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 
 interface MyCollectionArtworkFormArtistStepProps {
-  me: MyCollectionArtworkFormArtistStep_me$data
+  me: MyCollectionArtworkFormArtistStep_me$key
 }
 
 export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkFormArtistStepProps> = ({
-  me,
+  me: meProp,
 }) => {
+  const me = useFragment(MyCollectionArtworkFormArtistStepFragment, meProp)
+
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const { setFieldValue } = useFormikContext<ArtworkModel>()
 
@@ -131,34 +133,29 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   )
 }
 
-export const MyCollectionArtworkFormArtistStepFragmentContainer = createFragmentContainer(
-  MyCollectionArtworkFormArtistStep,
-  {
-    me: graphql`
-      fragment MyCollectionArtworkFormArtistStep_me on Me {
-        myCollectionInfo {
-          collectedArtistsConnection(first: 100) {
-            edges {
-              node {
-                ...ArtistGridItem_artist
-                displayLabel
-                formattedNationalityAndBirthday
-                image {
-                  cropped(width: 45, height: 45) {
-                    src
-                    srcSet
-                  }
-                }
-                initials
-                internalID
-                isPersonalArtist
-                name
-                slug
+const MyCollectionArtworkFormArtistStepFragment = graphql`
+  fragment MyCollectionArtworkFormArtistStep_me on Me {
+    myCollectionInfo {
+      collectedArtistsConnection(first: 100) {
+        edges {
+          node {
+            ...ArtistGridItem_artist
+            displayLabel
+            formattedNationalityAndBirthday
+            image {
+              cropped(width: 45, height: 45) {
+                src
+                srcSet
               }
             }
+            initials
+            internalID
+            isPersonalArtist
+            name
+            slug
           }
         }
       }
-    `,
+    }
   }
-)
+`
