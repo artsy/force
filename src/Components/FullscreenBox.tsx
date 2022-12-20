@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { scale } from "proportional-scale"
 
-export interface FullyResponsiveBoxProps extends BoxProps {
+export interface FullscreenBoxProps extends BoxProps {
   aspectWidth: number
   aspectHeight: number
 }
@@ -14,7 +14,7 @@ export interface FullyResponsiveBoxProps extends BoxProps {
  * - We can't use an image with `object-fit: contain` because that doesn't give us a correctly sized placeholder box.
  * - We can't create a grey placeholder box using native CSS `aspect-ratio` because it is uncenterable using flexbox.
  */
-export const FullyResponsiveBox: FC<FullyResponsiveBoxProps> = ({
+export const FullscreenBox: FC<FullscreenBoxProps> = ({
   aspectWidth,
   aspectHeight,
   children,

@@ -1,17 +1,14 @@
 import { Box } from "@artsy/palette"
 import { States } from "storybook-states"
-import {
-  FullyResponsiveBox,
-  FullyResponsiveBoxProps,
-} from "Components/FullyResponsiveBox"
+import { FullscreenBox, FullscreenBoxProps } from "Components/FullscreenBox"
 
 export default {
-  title: "Components/FullyResponsiveBox",
+  title: "Components/FullscreenBox",
 }
 
 export const Default = () => {
   return (
-    <States<FullyResponsiveBoxProps>
+    <States<FullscreenBoxProps>
       states={[
         { aspectWidth: 4, aspectHeight: 3 },
         { aspectWidth: 3, aspectHeight: 4 },
@@ -26,7 +23,7 @@ export const Default = () => {
             border="1px dotted"
             borderColor="black60"
           >
-            <FullyResponsiveBox
+            <FullscreenBox
               bg="black10"
               aspectWidth={aspectWidth}
               aspectHeight={aspectHeight}
