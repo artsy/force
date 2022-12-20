@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f166c22b3a7106f4891eaca5f2c33850>>
+ * @generated SignedSource<<d6ebbd51d1674134b260cbc2c1abf6c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type ShippingTestQuery$variables = {};
 export type ShippingTestQuery$data = {
   readonly me: {
@@ -1409,6 +1409,7 @@ return {
             "APPROVED",
             "CANCELED",
             "FULFILLED",
+            "IN_REVIEW",
             "PENDING",
             "PROCESSING_APPROVAL",
             "REFUNDED",
