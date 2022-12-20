@@ -115,7 +115,7 @@ describe("MyCollectionCreateArtwork", () => {
 
           fireEvent.click(screen.getByText("Back"))
 
-          expect(screen.getByText("Select Artist")).toBeInTheDocument()
+          expect(screen.getByText("Select an Artist")).toBeInTheDocument()
         })
       })
 
@@ -159,7 +159,9 @@ describe("MyCollectionCreateArtwork", () => {
 
           fireEvent.click(screen.getByText("Back"))
 
-          expect(screen.getByText("Select Artist")).toBeInTheDocument()
+          fireEvent.click(screen.getByText("Leave Without Saving"))
+
+          expect(screen.getByText("Select an Artist")).toBeInTheDocument()
         })
       })
 
@@ -175,12 +177,77 @@ describe("MyCollectionCreateArtwork", () => {
         // Navigate to the detail step
         fireEvent.click(screen.getByTestId("artist-select-skip-button"))
 
-        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-        expect(screen.getByTestId("save-button")).toBeDisabled()
-
         expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
 
         expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
+      })
+    })
+
+    describe("when skipping the artist select step", () => {
+      it("populates artwork name input with search query", async () => {
+        getWrapper({
+          featureFlags: {
+            "cx-my-collection-uploading-flow-steps": {
+              flagEnabled: true,
+            },
+          },
+        })
+
+        fireEvent.change(
+          screen.getByPlaceholderText("Search for artists on Artsy"),
+          {
+            target: { value: "Someone" },
+          }
+        )
+
+        // Navigate to the detail step
+        fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+
+        expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+        expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
+          "Someone"
+        )
+      })
+    })
+
+    describe("when selecting an artist", () => {
+      describe("when skipping the artwork select step", () => {
+        it("populates artist and artwork title in the form", async () => {
+          getWrapper({
+            featureFlags: {
+              "cx-my-collection-uploading-flow-steps": {
+                flagEnabled: true,
+              },
+            },
+          })
+
+          // Navigate to the select artwork step
+          fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
+
+          // TODO: Implement test for search query
+          // fireEvent.change(
+          //   screen.getByPlaceholderText("Search for artists on Artsy"),
+          //   {
+          //     target: { value: "An Artwork" },
+          //   }
+          // )
+
+          // Navigate to the detail step
+          fireEvent.click(screen.getByTestId("artwork-select-skip-button"))
+
+          expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+          expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+          expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
+            "Banksy"
+          )
+
+          // TODO: Implement test for search query
+          // expect(screen.getByPlaceholderText("Title")).toHaveValue("An Artwork")
+        })
       })
     })
   })

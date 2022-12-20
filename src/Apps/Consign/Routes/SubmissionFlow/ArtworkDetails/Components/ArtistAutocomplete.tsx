@@ -50,7 +50,7 @@ export const ArtistAutoComplete: React.FC<{
   onSelect,
   placeholder = "Enter full name",
   required,
-  title = "Artist",
+  title,
 }) => {
   const [suggestions, setSuggestions] = useState<
     Array<ArtistAutocompleteOption>
@@ -73,7 +73,7 @@ export const ArtistAutoComplete: React.FC<{
 
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-  }, [isError])
+  }, [isError, setFieldValue])
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])

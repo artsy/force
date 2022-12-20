@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Clickable,
   Column,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { ArtistGridItemFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistGridItem"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
@@ -91,7 +91,6 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
         }}
         onSelect={onSelect}
         placeholder="Search for artists on Artsy"
-        title=""
       />
 
       <Spacer y={2} />
@@ -112,53 +111,21 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
       <Spacer y={1} />
 
       <GridColumns width="100%">
-        {collectedArtists.map((artist, index) => {
-          return (
-            <Column span={[6, 4]} key={index}>
-              <Clickable
-                onClick={() =>
-                  onSelect({
-                    artistId: artist.internalID,
-                    artistName: artist.displayLabel,
-                  })
-                }
-                data-test-id={`artist-${artist.internalID}`}
-              >
-                <Flex
-                  key={artist.internalID}
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  mt={1}
-                >
-                  <Flex>
-                    <Avatar
-                      size="xs"
-                      mr={1}
-                      initials={artist.initials || undefined}
-                      lazyLoad
-                      {...artist.image?.cropped}
-                    />
-                    <Flex
-                      flexDirection="column"
-                      mr={1}
-                      flex={1}
-                      overflow="hidden"
-                    >
-                      <Text variant="sm-display" lineClamp={2}>
-                        {artist.name ?? "Unknown"}
-                      </Text>
-
-                      <Text variant="xs" color="black60" overflowEllipsis>
-                        {artist.formattedNationalityAndBirthday}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Clickable>
-            </Column>
-          )
-        })}
+        {collectedArtists.map((artist, index) => (
+          <Column span={[6, 4]} key={index}>
+            <Clickable
+              onClick={() =>
+                onSelect({
+                  artistId: artist.internalID,
+                  artistName: artist.displayLabel,
+                })
+              }
+              data-testid={`artist-${artist.internalID}`}
+            >
+              <ArtistGridItemFragmentContainer artist={artist} />
+            </Clickable>
+          </Column>
+        ))}
       </GridColumns>
     </AppContainer>
   )
@@ -173,7 +140,7 @@ export const MyCollectionArtworkFormArtistStepFragmentContainer = createFragment
           collectedArtistsConnection(first: 100) {
             edges {
               node {
-                __typename
+                ...ArtistGridItem_artist
                 displayLabel
                 formattedNationalityAndBirthday
                 image {

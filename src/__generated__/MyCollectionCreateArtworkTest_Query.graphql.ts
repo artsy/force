@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ac8bd327c1fe197aba3e60dc9ef5ea7>>
+ * @generated SignedSource<<37d22d6a3407c1ffcf536ac0f9e7044e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -108,13 +108,6 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -231,12 +224,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2bd58d5e201c9f264b0cb30ec9711532",
+    "cacheID": "b559f04cd961a84035f6b4b1f038d602",
     "id": null,
     "metadata": {},
     "name": "MyCollectionCreateArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          __typename\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment ArtistGridItem_artist on Artist {\n  displayLabel\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  initials\n  internalID\n  isPersonalArtist\n  name\n  slug\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          ...ArtistGridItem_artist\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();

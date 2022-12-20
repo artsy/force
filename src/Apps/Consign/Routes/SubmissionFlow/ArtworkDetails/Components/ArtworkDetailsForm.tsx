@@ -13,6 +13,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
 import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
@@ -27,7 +28,6 @@ import { useState } from "react"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
-import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export enum SubmissionType {
@@ -223,6 +223,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           <ArtistAutoComplete
             onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
             onError={() => handleAutosuggestError(true)}
+            title="Artist"
           />
         </Column>
         <Column span={6} mt={[4, 0]}>
