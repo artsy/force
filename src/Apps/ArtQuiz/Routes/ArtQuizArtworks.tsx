@@ -9,7 +9,10 @@ import {
   FullBleed,
   Text,
 } from "@artsy/palette"
-import { ArtQuizButton } from "Apps/ArtQuiz/Components/ArtQuizButton"
+import {
+  ArtQuizButton,
+  ArtQuizButtonRef,
+} from "Apps/ArtQuiz/Components/ArtQuizButton"
 import {
   ArtQuizCard,
   Mode,
@@ -18,7 +21,7 @@ import {
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
-import { FC, useCallback } from "react"
+import { FC, useCallback, useRef } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
@@ -98,9 +101,20 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     ]
   )
 
+  const dislikeRef = useRef<ArtQuizButtonRef | null>(null)
+  const likeRef = useRef<ArtQuizButtonRef | null>(null)
+
   useSwipe({
-    onLeft: handleNext("Dislike"),
-    onRight: handleNext("Like"),
+    onLeft: () => {
+      if (!dislikeRef.current) return
+      handleNext("Dislike")()
+      dislikeRef.current.triggerAnimation()
+    },
+    onRight: () => {
+      if (!likeRef.current) return
+      handleNext("Like")()
+      likeRef.current.triggerAnimation()
+    },
   })
 
   return (
@@ -181,9 +195,17 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         </Flex>
 
         <Flex alignItems="stretch" justifyContent="center">
-          <ArtQuizButton variant="Dislike" onClick={handleNext("Dislike")} />
+          <ArtQuizButton
+            ref={dislikeRef}
+            variant="Dislike"
+            onClick={handleNext("Dislike")}
+          />
 
-          <ArtQuizButton variant="Like" onClick={handleNext("Like")} />
+          <ArtQuizButton
+            ref={likeRef}
+            variant="Like"
+            onClick={handleNext("Like")}
+          />
         </Flex>
       </FullBleed>
     </>
