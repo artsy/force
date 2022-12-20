@@ -91,7 +91,22 @@ const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
             <>{props.children}</>
           )}
         </Box>
-        <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
+        <Media lessThan="xl">
+          <DetailIcon
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+          />
+        </Media>
+        {/* When opened, DetailsSidebar is positioned on top of the messages (on XL
+        layouts only). In those cases, DetailsHeader is redundant with DetailIcon */}
+        <Media at="xl">
+          {!showDetails && (
+            <DetailIcon
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+            />
+          )}
+        </Media>
       </Flex>
       <Separator />
     </Flex>
