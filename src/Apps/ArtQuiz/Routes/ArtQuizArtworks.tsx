@@ -3,7 +3,6 @@ import { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphq
 import { AuthContextModule } from "@artsy/cohesion"
 import {
   ArrowLeftIcon,
-  Box,
   Clickable,
   Image,
   Flex,
@@ -22,6 +21,7 @@ import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC, useCallback } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { FullscreenBox } from "Components/FullscreenBox"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -29,19 +29,21 @@ interface ArtQuizArtworksProps {
 
 export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { router } = useRouter()
-  const resume = me.quiz!.quizArtworkConnection!.edges!.findIndex(edge => {
+
+  const edges = me.quiz.quizArtworkConnection!.edges!
+  const startingIndex = edges.findIndex(edge => {
     return edge?.interactedAt === null
   })
 
   const { cards, activeIndex, dispatch } = useArtQuizCards({
-    cards: me.quiz!.quizArtworkConnection!.edges!.map(edge => ({
+    cards: edges.map(edge => ({
       ...edge!.node,
       interactedAt: edge!.interactedAt,
     })),
-    startingIndex: resume || 0,
+    startingIndex,
   })
-  const currentArtwork = me.quiz!.quizArtworkConnection!.edges![activeIndex]!
-    .node!
+
+  const currentArtwork = edges[activeIndex]!.node!
 
   const { handleSave } = useSaveArtwork({
     artwork: currentArtwork,
@@ -148,21 +150,32 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         >
           {cards.map((card, i) => {
             const mode = i === activeIndex ? Mode.Active : card.mode
+            const image = card.image?.resized
+
+            if (!image) return null
 
             return (
-              <>
-                <ArtQuizCard key={card.slug} mode={mode} position="absolute">
-                  <Box
+              <ArtQuizCard
+                key={card.slug}
+                mode={mode}
+                position="absolute"
+                width="100%"
+                height="100%"
+              >
+                <FullscreenBox
+                  aspectWidth={image.width ?? 1}
+                  aspectHeight={image.height ?? 1}
+                  bg="black10"
+                >
+                  <Image
+                    width="100%"
                     height="100%"
-                    bg="black10"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Image width="100%" height="100%" src={card.image!.url!} />
-                  </Box>
-                </ArtQuizCard>
-              </>
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    lazyLoad
+                  />
+                </FullscreenBox>
+              </ArtQuizCard>
             )
           })}
         </Flex>
@@ -180,7 +193,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
   ArtQuizArtworks,
   {
-    quiz: graphql`
+    me: graphql`
       fragment ArtQuizArtworks_me on Me {
         quiz {
           quizArtworkConnection(first: 16) {
@@ -191,10 +204,12 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
                 id
                 internalID
                 image {
-                  url(version: "large")
-                  aspectRatio
-                  width
-                  height
+                  resized(width: 900, height: 900) {
+                    src
+                    srcSet
+                    width
+                    height
+                  }
                 }
                 isDisliked
                 isSaved

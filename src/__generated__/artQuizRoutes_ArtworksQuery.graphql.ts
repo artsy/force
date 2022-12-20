@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5127626242e3e91d1da9510bc4dff3a>>
+ * @generated SignedSource<<e2933cbababdc741d5dbf76f45e06eb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -143,34 +143,50 @@ return {
                                 "args": [
                                   {
                                     "kind": "Literal",
-                                    "name": "version",
-                                    "value": "large"
+                                    "name": "height",
+                                    "value": 900
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "width",
+                                    "value": 900
                                   }
                                 ],
-                                "kind": "ScalarField",
-                                "name": "url",
-                                "storageKey": "url(version:\"large\")"
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "aspectRatio",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
+                                "concreteType": "ResizedImageUrl",
+                                "kind": "LinkedField",
+                                "name": "resized",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "src",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "srcSet",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "width",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "height",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": "resized(height:900,width:900)"
                               }
                             ],
                             "storageKey": null
@@ -223,12 +239,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "220018483979e5b7d5f21de28019923b",
+    "cacheID": "19355ee70b7ddce89e04e4fc793d93ae",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            url(version: \"large\")\n            aspectRatio\n            width\n            height\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
