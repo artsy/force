@@ -11,7 +11,7 @@ export const useDislikeArtwork = () => {
           artwork {
             id
             slug
-            is_disliked
+            isDisliked
           }
         }
       }
