@@ -39,7 +39,6 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
       maxWidth={showDetails ? "auto" : "0"}
       {...props}
       borderTop="none !important"
-      borderBottom="none !important"
     >
       <Flex
         flexDirection="row"
