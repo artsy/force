@@ -19,6 +19,7 @@ import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCre
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
+import { MyCollectionArtworkFormArtworkStepFragmentContainer } from "./Components/MyCollectionArtworkFormArtworkStep"
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
@@ -60,7 +61,11 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       case "artist-select":
         return <MyCollectionArtworkFormArtistStep me={me} />
       case "artwork-select":
-        return <MyCollectionArtworkFormArtworkStep />
+        return (
+          <MyCollectionArtworkFormArtworkStepFragmentContainer
+          // TODO: Add proper arguments here
+          />
+        )
       default:
         return <MyCollectionArtworkFormMain />
     }
