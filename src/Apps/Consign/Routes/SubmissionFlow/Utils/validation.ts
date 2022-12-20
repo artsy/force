@@ -80,7 +80,19 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 export const contactInformationValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),
   email: email.trim(),
-  phoneNumber: yup.string().required("Phone Number is required"),
+  phoneNumber: yup
+    .string()
+    .required("Phone Number is required")
+    .test({
+      name: "phone-number-is-valid",
+      message: "Please enter a valid phone number",
+      test: national => {
+        return /^\d+$/.test(national || "")
+      },
+    }),
+  phoneNumberCountryCode: yup
+    .string()
+    .required("Phone Number Country Code is required"),
 })
 
 export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
