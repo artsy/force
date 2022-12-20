@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
 import { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
-import { ArticleZoomGalleryResponsiveBox } from "./ArticleZoomGalleryResponsiveBox"
+import { FullscreenBox } from "Components/FullscreenBox"
 
 interface ArticleZoomGalleryFigureProps {
   figure: ArticleZoomGalleryFigure_figure$data
@@ -78,8 +78,9 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   if (active) {
     return (
-      <ArticleZoomGalleryResponsiveBox
+      <FullscreenBox
         position="relative"
+        bg="black10"
         aspectWidth={figure.image?.width || 1}
         aspectHeight={figure.image?.height || 1}
       >
@@ -102,7 +103,7 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
             loading="lazy"
           />
         </picture>
-      </ArticleZoomGalleryResponsiveBox>
+      </FullscreenBox>
     )
   }
 
