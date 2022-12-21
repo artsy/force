@@ -40,6 +40,8 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
     internalID,
     isInAuction,
     isInquireable,
+    isAcquireable,
+    isOfferable,
     partner,
     sale,
     slug,
@@ -48,6 +50,9 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
   const isCBNEnabled = useFeatureFlag("conversational-buy-now")
+  const artworkEcommerceAvailable = isAcquireable || isOfferable
+  const shouldRenderContactGalleryCTA =
+    isCBNEnabled && !isInquireable && !isInAuction && artworkEcommerceAvailable
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
@@ -82,7 +87,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {isCBNEnabled && !isInquireable && !isInAuction && (
+        {shouldRenderContactGalleryCTA && (
           <Button size="small" variant="secondaryBlack" onClick={handleInquiry}>
             {t("artworkPage.sidebar.partner.contactGalleryCta")}
           </Button>
@@ -129,6 +134,8 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         slug
         isInquireable
         isInAuction
+        isAcquireable
+        isOfferable
         partner {
           name
           href
