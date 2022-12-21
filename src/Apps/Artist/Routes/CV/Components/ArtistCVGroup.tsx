@@ -21,6 +21,7 @@ interface ArtistCVGroupProps {
 
 const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
   const { t } = useTranslation()
+
   const [isLoading, setIsLoading] = useState(false)
   const hasMore = artist.showsConnection?.pageInfo.hasNextPage
 
@@ -44,6 +45,7 @@ const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
         <Column span={12}>
           <Text variant="lg-display">{title}</Text>
         </Column>
+
         <Column span={8} start={4}>
           <Text variant="sm-display">
             {t("artistPage.cv.emptyState", { groupName: title.toLowerCase() })}
@@ -132,7 +134,7 @@ export const ArtistCVGroupRefetchContainer = createPaginationContainer(
           cursor: { type: "String" }
           sort: { type: "ShowSorts", defaultValue: START_AT_DESC }
           atAFair: { type: "Boolean", defaultValue: false }
-          soloShow: { type: "Boolean", defaultValue: false }
+          soloShow: { type: "Boolean" }
           isReference: { type: "Boolean", defaultValue: true }
           visibleToPublic: { type: "Boolean", defaultValue: false }
         ) {
