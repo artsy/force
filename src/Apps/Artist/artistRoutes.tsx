@@ -200,7 +200,6 @@ export const artistRoutes: AppRouteConfig[] = [
 
       {
         path: "consign",
-        displayFullPage: true,
         hideNavigationTabs: true,
         getComponent: () => ConsignRoute,
         onClientSideRender: () => {

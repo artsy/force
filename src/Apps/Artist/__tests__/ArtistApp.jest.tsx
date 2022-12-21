@@ -204,9 +204,6 @@ describe("ArtistApp", () => {
 
   describe("for `displayFullPage` routes", () => {
     it("renders correct components", () => {
-      mockfindCurrentRoute.mockImplementation(() => ({
-        displayFullPage: true,
-      }))
       const wrapper = getWrapper(
         {},
         { match: { params: { artworkId: undefined } } }

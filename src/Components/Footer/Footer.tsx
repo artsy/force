@@ -27,14 +27,20 @@ import WeChatIcon from "@artsy/icons/WeChatIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
+import { useSystemContext } from "System"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
+  const { isEigen } = useSystemContext()
+
+  if (isEigen) {
+    return null
+  }
+
   return (
     <Box
       id="download-app-banner"
-      mt={6}
       borderTop="1px solid"
       borderColor="black10"
       {...props}
