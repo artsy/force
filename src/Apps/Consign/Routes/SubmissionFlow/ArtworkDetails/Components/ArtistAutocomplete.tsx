@@ -39,9 +39,19 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
-  onSelect: ({ artistId }) => void
+  onChange?: (value: string) => void
+  onSelect: ({ artistId, artistName }) => void
+  placeholder?: string
   required?: boolean
-}> = ({ onError, onSelect, required }) => {
+  title?: string
+}> = ({
+  onError,
+  onChange,
+  onSelect,
+  placeholder = "Enter full name",
+  required,
+  title,
+}) => {
   const [suggestions, setSuggestions] = useState<
     Array<ArtistAutocompleteOption>
   >([])
@@ -63,7 +73,7 @@ export const ArtistAutoComplete: React.FC<{
 
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-  }, [isError])
+  }, [isError, setFieldValue])
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
@@ -71,6 +81,8 @@ export const ArtistAutoComplete: React.FC<{
 
     if (relayEnvironment) {
       try {
+        onChange?.(value)
+
         setIsLoading(true)
         const suggestions = await fetchSuggestions(value, relayEnvironment)
         setIsError(false)
@@ -118,14 +130,14 @@ export const ArtistAutoComplete: React.FC<{
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-    onSelect({ artistId: "" })
+    onSelect({ artistId: "", artistName: "" })
     setArtistNotFoundMessage("")
   }
 
   const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
-    onSelect({ artistId: value })
+    onSelect({ artistId: value, artistName: text })
   }
 
   const handleClose = () => {
@@ -153,8 +165,8 @@ export const ArtistAutoComplete: React.FC<{
   return (
     <AutocompleteInput
       maxLength={256}
-      title="Artist"
-      placeholder="Enter full name"
+      title={title}
+      placeholder={placeholder}
       data-test-id="autocomplete-input"
       spellCheck={false}
       loading={isLoading}

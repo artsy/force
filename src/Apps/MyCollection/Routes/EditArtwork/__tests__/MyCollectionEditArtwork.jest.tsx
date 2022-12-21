@@ -1,11 +1,12 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
+import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
+import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
 const mockRouterPush = jest.fn()
@@ -446,11 +447,6 @@ describe("Edit artwork", () => {
     })
   })
 })
-
-type CleanRelayFragment<T> = Omit<
-  T,
-  "$refType" | " $fragmentRefs" | " $fragmentSpreads" | " $fragmentType"
->
 
 const mockArtwork = {
   artist: {
