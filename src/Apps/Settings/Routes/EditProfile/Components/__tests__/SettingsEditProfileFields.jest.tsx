@@ -3,8 +3,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -21,6 +23,12 @@ const { renderWithRelay } = setupTestWrapperTL({
 describe("SettingsEditProfileFields", () => {
   const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
   const mockSubmitUpdateMyUserProfile = jest.fn()
+  const mockUseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+  })
 
   beforeEach(() => {
     mockUseUpdateMyUserProfile.mockImplementation(() => ({
@@ -72,16 +80,25 @@ describe("SettingsEditProfileFields", () => {
       }
     )
 
+    fireEvent.click(screen.getByText("Save"))
+
     await waitFor(() => {
-      screen.getByText("Save").click()
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
+        name: "Collector Name",
+        location: {},
+        profession: "Artist and Collector",
+        otherRelevantPositions: "Positions",
+        bio: "I collect",
+      })
     })
 
-    expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
-      name: "Collector Name",
-      location: {},
-      profession: "Artist and Collector",
-      otherRelevantPositions: "Positions",
-      bio: "I collect",
+    await waitFor(() => {
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "editedUserProfile",
+        context_screen: "collectorProfile",
+        context_screen_owner_type: "editProfile",
+        platform: "web",
+      })
     })
   })
 

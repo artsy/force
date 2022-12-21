@@ -113,13 +113,18 @@ const reducer = <T,>(state: State<T>, action: Action) => {
 }
 
 interface UseArtQuizCards<T> {
+  //** An array of card objects */
   cards: T[]
+  startingIndex?: number
 }
 
-export const useArtQuizCards = <T,>({ cards = [] }: UseArtQuizCards<T>) => {
+export const useArtQuizCards = <T extends object>({
+  cards = [],
+  startingIndex,
+}: UseArtQuizCards<T>) => {
   const [state, dispatch] = useReducer(reducer, {
     cards: cards.map(card => ({ ...card, mode: Mode.Pending })),
-    index: 0,
+    index: startingIndex || 0,
   })
 
   return {

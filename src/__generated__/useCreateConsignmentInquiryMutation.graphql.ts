@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<188c9c9ef2c678cf5ba626b60368f9e6>>
+ * @generated SignedSource<<32e2efc3e05177857fbfc562ec52d395>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,7 +85,7 @@ v3 = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "GravityMutationError",
+      "concreteType": "ConsignmentInquiryMutationError",
       "kind": "LinkedField",
       "name": "mutationError",
       "plural": false,

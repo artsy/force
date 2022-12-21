@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06451ad0719f99aaa934724ea8ac8f48>>
+ * @generated SignedSource<<b282936559a7b36ade2b12ed9e6e5cdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,13 @@ export type PartnersLocationAutocomplete_Test_Query = {
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "fullName",
+    "storageKey": null
+  },
   {
     "alias": "text",
     "args": null,
@@ -160,7 +167,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a9e0fc7220fdb48cc8459a1fa95c9201",
+    "cacheID": "8238d4f7c6342a9c4d44330498b7958d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -174,19 +181,21 @@ return {
         "viewer.allCities.coordinates": (v2/*: any*/),
         "viewer.allCities.coordinates.lat": (v3/*: any*/),
         "viewer.allCities.coordinates.lng": (v3/*: any*/),
+        "viewer.allCities.fullName": (v4/*: any*/),
         "viewer.allCities.text": (v4/*: any*/),
         "viewer.allCities.value": (v4/*: any*/),
         "viewer.featuredCities": (v1/*: any*/),
         "viewer.featuredCities.coordinates": (v2/*: any*/),
         "viewer.featuredCities.coordinates.lat": (v3/*: any*/),
         "viewer.featuredCities.coordinates.lng": (v3/*: any*/),
+        "viewer.featuredCities.fullName": (v4/*: any*/),
         "viewer.featuredCities.text": (v4/*: any*/),
         "viewer.featuredCities.value": (v4/*: any*/)
       }
     },
     "name": "PartnersLocationAutocomplete_Test_Query",
     "operationKind": "query",
-    "text": "query PartnersLocationAutocomplete_Test_Query {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
+    "text": "query PartnersLocationAutocomplete_Test_Query {\n  viewer {\n    ...PartnersLocationAutocomplete_viewer\n  }\n}\n\nfragment PartnersLocationAutocomplete_viewer on Viewer {\n  featuredCities: cities(featured: true) {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n  allCities: cities {\n    fullName\n    text: name\n    value: slug\n    coordinates {\n      lat\n      lng\n    }\n  }\n}\n"
   }
 };
 })();

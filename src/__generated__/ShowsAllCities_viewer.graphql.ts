@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9755de0d203fc1473c5d28b8743c893e>>
+ * @generated SignedSource<<4202b5d23f59ad8db3b099b3eb8ddbc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsAllCities_viewer$data = {
   readonly cities: ReadonlyArray<{
+    readonly fullName: string;
     readonly name: string;
     readonly slug: string;
   }>;
@@ -40,6 +41,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "fullName",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "name",
           "storageKey": null
         },
@@ -58,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e0495c5d6a1a793f6146df5dcf3e2c25";
+(node as any).hash = "a4f03b7aa8086fb933929f0259acf90b";
 
 export default node;

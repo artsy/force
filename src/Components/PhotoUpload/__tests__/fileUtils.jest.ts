@@ -1,9 +1,9 @@
 import { Environment } from "relay-runtime"
-import { createGeminiAssetWithS3Credentials } from "../Mutations/createGeminiAssetWithS3Credentials"
-import { getConvectionGeminiKey } from "../Mutations/getConvectionGeminiKey"
-import { getGeminiCredentialsForEnvironment } from "../Mutations/getGeminiCredentialsForEnvironment"
-import { Photo, uploadPhoto } from "../Utils/fileUtils"
-import { uploadFileToS3 } from "../Utils/uploadFileToS3"
+import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
+import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
+import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
+import { Photo, uploadSubmissionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
 
 jest.mock("../Mutations/getConvectionGeminiKey", () => ({
   ...jest.requireActual("../Mutations/getConvectionGeminiKey"),
@@ -57,7 +57,12 @@ describe("fileUtils", () => {
 
   describe("uploadPhoto", () => {
     it("use convectionKey to get gemini credentials", async () => {
-      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+      await uploadSubmissionPhoto(
+        submission.id,
+        relayEnvironment,
+        photo,
+        updateProgress
+      )
 
       expect(getConvectionGeminiKey).toHaveBeenCalled()
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
@@ -76,7 +81,12 @@ describe("fileUtils", () => {
         assetCredentials
       )
 
-      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+      await uploadSubmissionPhoto(
+        submission.id,
+        relayEnvironment,
+        photo,
+        updateProgress
+      )
 
       expect(getGeminiCredentialsForEnvironment).toHaveBeenCalled()
       expect(uploadFileToS3).toHaveBeenCalled()
@@ -89,7 +99,12 @@ describe("fileUtils", () => {
     })
 
     it("creates gemini asset with correct credentials", async () => {
-      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+      await uploadSubmissionPhoto(
+        submission.id,
+        relayEnvironment,
+        photo,
+        updateProgress
+      )
 
       expect(createGeminiAssetWithS3Credentials).toHaveBeenCalled()
       expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(
@@ -109,7 +124,12 @@ describe("fileUtils", () => {
     it("prevents uploading if the image was removed", async () => {
       photo.removed = true
 
-      await uploadPhoto(submission.id, relayEnvironment, photo, updateProgress)
+      await uploadSubmissionPhoto(
+        submission.id,
+        relayEnvironment,
+        photo,
+        updateProgress
+      )
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
     })
@@ -126,7 +146,7 @@ describe("fileUtils", () => {
     it("return undefined when s3 upload fails", async () => {
       ;(uploadFileToS3 as jest.Mock).mockRejectedValueOnce("rejected")
 
-      const uploadPhotoResult = await uploadPhoto(
+      const uploadPhotoResult = await uploadSubmissionPhoto(
         submission.id,
         relayEnvironment,
         photo,

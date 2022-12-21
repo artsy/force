@@ -5,7 +5,13 @@ import {
   HeartFillIcon,
   HeartIcon,
 } from "@artsy/palette"
-import React, { FC, useRef } from "react"
+import React, {
+  forwardRef,
+  Ref,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from "react"
 import { useMode } from "Utils/Hooks/useMode"
 
 type Mode = "Pending" | "Animating" | "Done"
@@ -29,61 +35,75 @@ interface ArtQuizButtonProps extends ClickableProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-export const ArtQuizButton: FC<ArtQuizButtonProps> = ({
-  variant,
-  children,
-  onClick,
-  ...rest
-}) => {
-  const [mode, setMode] = useMode<Mode>("Pending")
+export type ArtQuizButtonRef = { triggerAnimation(): void }
 
-  const nodeRef = useRef<HTMLButtonElement | null>(null)
-  const animationRef = useRef<Animation | null>(null)
-
-  const handleClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+export const ArtQuizButton = forwardRef(
+  (
+    { variant, children, onClick, ...rest }: ArtQuizButtonProps,
+    forwardedRef: Ref<ArtQuizButtonRef>
   ) => {
-    // Click executes immediately
-    onClick(event)
+    const [mode, setMode] = useMode<Mode>("Pending")
 
-    if (!nodeRef.current) return
+    const nodeRef = useRef<HTMLButtonElement | null>(null)
+    const animationRef = useRef<Animation | null>(null)
 
-    // Prevent animation pile ups
-    if (animationRef.current) {
-      animationRef.current.cancel()
-    }
+    const triggerAnimation = useCallback(async () => {
+      if (!nodeRef.current) return
 
-    setMode("Animating")
+      // Prevent animation pile ups
+      if (animationRef.current) {
+        animationRef.current.cancel()
+      }
 
-    // Animation plays on
-    animationRef.current = nodeRef.current.animate(
-      KEYFRAMES,
-      KEYFRAME_ANIMATION_OPTIONS
+      setMode("Animating")
+
+      // Animation plays on
+      animationRef.current = nodeRef.current.animate(
+        KEYFRAMES,
+        KEYFRAME_ANIMATION_OPTIONS
+      )
+
+      await animationRef.current.finished
+
+      setMode("Pending")
+    }, [setMode])
+
+    useImperativeHandle(
+      forwardedRef,
+      () => {
+        return { triggerAnimation }
+      },
+      [triggerAnimation]
     )
 
-    await animationRef.current.finished
+    const handleClick = (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      // Click executes immediately
+      onClick(event)
 
-    setMode("Pending")
+      triggerAnimation()
+    }
+
+    return (
+      <Clickable
+        ref={nodeRef as any}
+        py={4}
+        px={6}
+        onClick={handleClick}
+        aria-label={variant}
+        {...rest}
+      >
+        {variant === "Dislike" && <CloseIcon width={40} height={40} title="" />}
+
+        {variant === "Like" && mode === "Animating" && (
+          <HeartFillIcon width={40} height={40} title="" />
+        )}
+
+        {variant === "Like" && mode !== "Animating" && (
+          <HeartIcon width={40} height={40} title="" />
+        )}
+      </Clickable>
+    )
   }
-
-  return (
-    <Clickable
-      ref={nodeRef as any}
-      py={4}
-      px={6}
-      onClick={handleClick}
-      aria-label={variant}
-      {...rest}
-    >
-      {variant === "Dislike" && <CloseIcon width={40} height={40} title="" />}
-
-      {variant === "Like" && mode === "Animating" && (
-        <HeartFillIcon width={40} height={40} title="" />
-      )}
-
-      {variant === "Like" && mode !== "Animating" && (
-        <HeartIcon width={40} height={40} title="" />
-      )}
-    </Clickable>
-  )
-}
+)

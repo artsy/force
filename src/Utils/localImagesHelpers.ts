@@ -1,3 +1,4 @@
+import { LOCAL_PROFILE_IMAGE_KEY } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/utils/constants"
 import {
   IMAGES_LOCAL_STORE_KEY,
   IMAGES_LOCAL_STORE_LAST_UPDATED_AT,
@@ -26,6 +27,17 @@ const addMinutes = (date: Date, minutes: number) => {
   return new Date(date.getTime() + minutes * 60000)
 }
 
+const prepareImage = (image: LocalImage, expirationDate: string) => {
+  const imageToStore: StoredImage = {
+    expirationDate,
+    data: image.data,
+    height: image.height,
+    width: image.width,
+  }
+
+  return imageToStore
+}
+
 export const storeArtworkLocalImages = async (
   artworkID: string,
   images: LocalImage[]
@@ -37,13 +49,7 @@ export const storeArtworkLocalImages = async (
 
   const imagesToStore: StoredImage[] = []
   for (const image of images) {
-    const imageToStore: StoredImage = {
-      expirationDate: expirationDate.toString(),
-      data: image.data,
-      height: image.height,
-      width: image.width,
-    }
-    imagesToStore.push(imageToStore)
+    imagesToStore.push(prepareImage(image, expirationDate.toString()))
   }
 
   const localArtworksImages = await getAllLocalImagesByArtwork()
@@ -65,6 +71,20 @@ export const storeArtworkLocalImages = async (
   return localforage.setItem(IMAGES_LOCAL_STORE_KEY, artworkImages)
 }
 
+export const storeLocalProfileImage = async (image: LocalImage) => {
+  const expirationDate = addMinutes(
+    new Date(),
+    GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES
+  )
+
+  const imageToStore = prepareImage(image, expirationDate.toString())
+
+  // Store the new image
+  const userImage = JSON.stringify(imageToStore || {})
+
+  return localforage.setItem(LOCAL_PROFILE_IMAGE_KEY, userImage)
+}
+
 //
 export const setLocalImagesStoreLastUpdatedAt = (
   IMAGES_LOCAL_STORE_LAST_UPDATED_AT: string
@@ -75,7 +95,7 @@ export const setLocalImagesStoreLastUpdatedAt = (
   )
 }
 
-// Cleam store after gemini processing time is over
+// Clean store after gemini processing time is over
 export const cleanImagesLocalStore = () => {
   return localforage
     .getItem(IMAGES_LOCAL_STORE_LAST_UPDATED_AT)
@@ -152,4 +172,26 @@ export const getArtworkLocalImages = async (
   )
 
   return artworkImages?.images || []
+}
+
+export const getProfileLocalImage = async (): Promise<
+  LocalImage | undefined
+> => {
+  return localforage
+    .getItem(LOCAL_PROFILE_IMAGE_KEY)
+    .then((userImageJSONString: string) => {
+      if (userImageJSONString) {
+        const parsedImage = JSON.parse(userImageJSONString)
+        const expirationDate = new Date(parsedImage.expirationDate)
+        if (expirationDate > new Date()) {
+          return parsedImage
+        } else {
+          // remove expired profile image
+          localforage.removeItem(LOCAL_PROFILE_IMAGE_KEY)
+        }
+      }
+    })
+    .catch(error => {
+      console.error("failed to get profile local image", error)
+    })
 }

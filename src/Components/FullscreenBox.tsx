@@ -3,17 +3,18 @@ import { FC, useEffect, useState } from "react"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
 import { scale } from "proportional-scale"
 
-interface ArticleZoomGalleryResponsiveBoxProps extends BoxProps {
+export interface FullscreenBoxProps extends BoxProps {
   aspectWidth: number
   aspectHeight: number
 }
 
 /**
- * - We can't create a grey placeholder box using `ResponsiveBox` because it has to be both width and height constrained.
- * - We can't create a grey placeholder box using native CSS `aspect-ratio` because it is uncenterable using flexbox as of March 2022.
- * - Instead: we just manually measure and create a grey placeholder box using JS.
+ * Component allows one to make an aspect ratio box that's is contained inside of the parent and supports a fluid 100% width and height.
+ * - We can't create a grey placeholder box using `ResponsiveBox` because it has to be both width and *height* constrained.
+ * - We can't use an image with `object-fit: contain` because that doesn't give us a correctly sized placeholder box.
+ * - We can't create a grey placeholder box using native CSS `aspect-ratio` because it is uncenterable using flexbox.
  */
-export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBoxProps> = ({
+export const FullscreenBox: FC<FullscreenBoxProps> = ({
   aspectWidth,
   aspectHeight,
   children,
@@ -44,13 +45,7 @@ export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBox
 
   return (
     <Box ref={ref as any} width="100%" height="100%" display="flex">
-      <Box
-        width={scaledWidth}
-        height={scaledHeight}
-        m="auto"
-        bg="black10"
-        {...rest}
-      >
+      <Box width={scaledWidth} height={scaledHeight} m="auto" {...rest}>
         {children}
       </Box>
     </Box>

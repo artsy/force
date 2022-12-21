@@ -1,9 +1,9 @@
-import { ChevronIcon, Text } from "@artsy/palette"
+import { Box, ChevronIcon, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { ShowsAllCities_viewer$data } from "__generated__/ShowsAllCities_viewer.graphql"
-import { ShowsMeta } from "../Components/ShowsMeta"
+import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
 
 interface ShowsAllCitiesProps {
   viewer: ShowsAllCities_viewer$data
@@ -21,6 +21,8 @@ export const ShowsAllCities: React.FC<ShowsAllCitiesProps> = ({
       </Text>
 
       {cities.map(city => {
+        const [name, ...region] = city.fullName.split(", ")
+
         return (
           <RouterLink
             key={city.slug}
@@ -32,7 +34,15 @@ export const ShowsAllCities: React.FC<ShowsAllCitiesProps> = ({
             borderColor="black10"
             py={2}
           >
-            <Text variant="sm-display">{city.name}</Text>
+            <Box>
+              <Text variant="sm-display">{name}</Text>
+
+              {region.length > 0 && (
+                <Text variant="xs" color="black60">
+                  {region.join(", ")}
+                </Text>
+              )}
+            </Box>
 
             <ChevronIcon direction="right" color="black60" />
           </RouterLink>
@@ -48,6 +58,7 @@ export const ShowsAllCitiesFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment ShowsAllCities_viewer on Viewer {
         cities {
+          fullName
           name
           slug
         }

@@ -18,9 +18,9 @@ import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRange
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { Media } from "Utils/Responsive"
-import { ArtworkModel } from "../Utils/artworkModel"
-import { categoryOptions } from "../Utils/categoryOptions"
-import { rarityOptions } from "../Utils/rarityOptions"
+import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
+import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
 import { ProvenanceModal } from "./ProvenanceModal"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
@@ -68,6 +68,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onError={() => handleAutosuggestError(true)}
             onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
             required
+            title="Artist"
           />
         </Column>
         <Column span={6} mt={[4, 0]}>

@@ -1,6 +1,9 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { UploadPhotosFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
-import { MBSize, uploadPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import {
+  MBSize,
+  uploadSubmissionPhoto,
+} from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fetchQuery, graphql } from "react-relay"
 import { SystemContextProvider } from "System"
@@ -21,7 +24,7 @@ jest.mock("System/Router/useRouter", () => {
 
 jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
-  uploadPhoto: jest.fn(),
+  uploadSubmissionPhoto: jest.fn(),
 }))
 
 const mockAddAsset = jest.fn()
@@ -37,7 +40,7 @@ jest.mock("../../Mutations", () => ({
   }),
 }))
 
-const mockUploadPhoto = uploadPhoto as jest.Mock
+const mockUploadPhoto = uploadSubmissionPhoto as jest.Mock
 
 jest.mock("react-relay", () => ({
   ...jest.requireActual("react-relay"),

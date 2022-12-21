@@ -86,7 +86,7 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
   return errorMessage
 }
 
-export const uploadPhoto = async (
+export const uploadSubmissionPhoto = async (
   submissionId,
   relayEnvironment: Environment,
   photo: Photo,
@@ -135,7 +135,7 @@ export const uploadPhoto = async (
   }
 }
 
-export const uploadMyCollectionPhoto = async (
+export const uploadPhotoToS3 = async (
   relayEnvironment: Environment,
   photo: Photo,
   updateProgress: (progress: number) => void,

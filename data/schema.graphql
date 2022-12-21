@@ -3542,7 +3542,19 @@ type CollectorProfileArtists {
 }
 
 type CollectorProfileType {
+  artsyUserSince(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  bio: String
   collectorLevel: Int
+
+  # List of artists the Collector is interested in.
+  collectorProfileArtists: [CollectorProfileArtists]
   companyName: String
   companyWebsite: String
   confirmedBuyerAt(
@@ -3554,14 +3566,28 @@ type CollectorProfileType {
     timezone: String
   ): String
   email: String
+  emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
+  icon: Image
 
   # A globally unique ID.
   id: ID!
+  identityVerified: Boolean
+    @deprecated(
+      reason: "identityVerified is going to be removed, use isIdentityVerified instead"
+    )
   institutionalAffiliations: String
   intents: [String]
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  isActiveBidder: Boolean
+  isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
+  isIdentityVerified: Boolean
+  location: MyLocation
   loyaltyApplicantAt(
     format: String
 
@@ -3571,7 +3597,14 @@ type CollectorProfileType {
     timezone: String
   ): String
   name: String
+
+  # Collector's position with relevant institutions
+  otherRelevantPositions: String
+
+  # User ID of the collector profile's owner
+  ownerID: ID!
   privacy: String
+  profession: String
   professionalBuyerAppliedAt(
     format: String
 
@@ -3742,6 +3775,7 @@ type CommerceBuyOrder implements CommerceOrder {
   buyer: CommerceOrderPartyUnion!
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -3915,6 +3949,9 @@ type CommerceBuyOrder implements CommerceOrder {
 enum CommerceCancelReasonTypeEnum {
   # cancelation reason is: admin_canceled
   ADMIN_CANCELED
+
+  # cancelation reason is: admin_failed_review
+  ADMIN_FAILED_REVIEW
 
   # cancelation reason is: buyer_lapsed
   BUYER_LAPSED
@@ -4467,6 +4504,7 @@ type CommerceOfferOrder implements CommerceOrder {
   buyerAction: CommerceBuyerOfferActionEnum
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -4698,6 +4736,7 @@ interface CommerceOrder {
   buyer: CommerceOrderPartyUnion!
   buyerDetails: OrderParty
   buyerPhoneNumber: String
+  buyerPhoneNumberCountryCode: String
   buyerTotal(
     decimal: String = "."
 
@@ -5002,6 +5041,9 @@ enum CommerceOrderSourceEnum {
 
   # The order was originated on a conversation
   inquiry
+
+  # The order was originated from a private sale
+  private_sale
 }
 
 type CommerceOrderStateChangedEvent implements CommerceEventInterface {
@@ -5030,6 +5072,9 @@ enum CommerceOrderStateEnum {
 
   # order is fulfilled by seller
   FULFILLED
+
+  # order is undergoing review by Artsy admins
+  IN_REVIEW
 
   # order is still pending submission by buyer
   PENDING
@@ -5263,6 +5308,7 @@ input CommerceSetShippingInput {
   fulfillmentType: CommerceOrderFulfillmentTypeEnum!
   id: ID!
   phoneNumber: String
+  phoneNumberCountryCode: String
   shipping: CommerceShippingAttributes
 }
 
@@ -5611,8 +5657,15 @@ type ConsignmentInquiry {
   userId: String
 }
 
+type ConsignmentInquiryMutationError {
+  error: String
+  message: String!
+  statusCode: Int
+  type: String
+}
+
 type ConsignmentInquiryMutationFailure {
-  mutationError: GravityMutationError
+  mutationError: ConsignmentInquiryMutationError
 }
 
 type ConsignmentInquiryMutationSuccess {
@@ -9818,11 +9871,17 @@ type InquirerCollectorProfile {
   ): String
   email: String
   emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
   icon: Image
 
   # A globally unique ID.
   id: ID!
   identityVerified: Boolean
+    @deprecated(
+      reason: "identityVerified is going to be removed, use isIdentityVerified instead"
+    )
   institutionalAffiliations: String
   intents: [String]
 
@@ -9830,6 +9889,8 @@ type InquirerCollectorProfile {
   internalID: ID!
   isActiveBidder: Boolean
   isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
+  isIdentityVerified: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -16278,8 +16339,20 @@ input UpdateCollectorProfileInput {
 }
 
 type UpdateCollectorProfilePayload {
+  artsyUserSince(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  bio: String
   clientMutationId: String
   collectorLevel: Int
+
+  # List of artists the Collector is interested in.
+  collectorProfileArtists: [CollectorProfileArtists]
   companyName: String
   companyWebsite: String
   confirmedBuyerAt(
@@ -16291,14 +16364,28 @@ type UpdateCollectorProfilePayload {
     timezone: String
   ): String
   email: String
+  emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
+  icon: Image
 
   # A globally unique ID.
   id: ID!
+  identityVerified: Boolean
+    @deprecated(
+      reason: "identityVerified is going to be removed, use isIdentityVerified instead"
+    )
   institutionalAffiliations: String
   intents: [String]
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  isActiveBidder: Boolean
+  isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
+  isIdentityVerified: Boolean
+  location: MyLocation
   loyaltyApplicantAt(
     format: String
 
@@ -16308,7 +16395,14 @@ type UpdateCollectorProfilePayload {
     timezone: String
   ): String
   name: String
+
+  # Collector's position with relevant institutions
+  otherRelevantPositions: String
+
+  # User ID of the collector profile's owner
+  ownerID: ID!
   privacy: String
+  profession: String
   professionalBuyerAppliedAt(
     format: String
 
@@ -16862,6 +16956,7 @@ type User implements Node {
 
   # A globally unique ID.
   id: ID!
+  initials(length: Int = 3): String
   inquiredArtworksConnection(
     after: String
     before: String

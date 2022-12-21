@@ -5,7 +5,7 @@ import {
   getErrorMessage,
   normalizePhoto,
   Photo,
-  uploadPhoto,
+  uploadSubmissionPhoto,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
 import * as React from "react"
@@ -42,7 +42,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     photo.loading = true
 
     if (relayEnvironment) {
-      const geminiToken = await uploadPhoto(
+      const geminiToken = await uploadSubmissionPhoto(
         submissionId,
         relayEnvironment,
         photo,

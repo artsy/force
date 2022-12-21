@@ -26,10 +26,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.86.0":
-  version "4.86.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.86.0.tgz#90796f235c32400da83c19d15ccd0ad18dc3d908"
-  integrity sha512-2vdfhRGD96Fq1RKisu6I90HqIGTdPSDODn/y74RVCKjAfyPEAJZ53s48HOVMR6pwbD5pMLh3Uc1y4aK5HyDGyg==
+"@artsy/cohesion@4.87.0":
+  version "4.87.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.87.0.tgz#3e175dee9029e4a34dc5f86e202e90594c303860"
+  integrity sha512-2rSoC1637AxTvOF7B9np2GKM67PRMn5Q3EOiGLGRMroc2OPNweTsjox73qbmguAvslGwzbjGRDMBzQ6zmqO5NA==
   dependencies:
     core-js "3"
 
@@ -63,15 +63,15 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.5.0.tgz#a87ca1caca1f56d1c6d5b720581b9b6e3af1611b"
   integrity sha512-pqdQj4sbrgELlEKk+vR8vpmjgmSxk96PW7M+pWUT/UpHKD43YKCVTfe72z2WOqQru3ohobFvsnybQg/UbeSVtA==
 
-"@artsy/icons@3.1.6":
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.1.6.tgz#0eef67c597930d98c0fe2674bf1e27a02b1b5081"
-  integrity sha512-C89ipGzSxQwNp1vZf86/eAHUeus1mo4i1a/8g7D9Ldz37pAKhWZv+zc4Vy6pNvGwHSDfBEkODTrduCU/spXV5g==
+"@artsy/icons@3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.1.7.tgz#aa4b3d2b39261165cc31fe47a9dd21459109c5b7"
+  integrity sha512-INsnSw0HqGWFl0CySBvxCOW1BsztshNJUvnwaY7kK5KS4Rav/uKIgO+xfhalkvfKVQRAoFUkcazyXsWbFo5eTg==
 
-"@artsy/img@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/img/-/img-1.0.0.tgz#537162b159085758663e757bdaabba01b1b0d73f"
-  integrity sha512-rtc/vn5rSt3Roo/hVbZBicE/OgNFqc36CMDeqvA/Y4s52Q8omCUw9lTHogiMHziOGubZq9HckDjsUE79mlvnJQ==
+"@artsy/img@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@artsy/img/-/img-1.0.3.tgz#9c4eb0928b400df1261193f5be35bc6ac3fca37c"
+  integrity sha512-lI52XSFcCutuiIIWaj9jmbTwu8lGWpRbV/FwtE7OtYo7sKumfo1cea+kslnmkLoUtSku5jTzyag6dQO8MNDolg==
   dependencies:
     md5 "^2.3.0"
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6db8ebe3d45f2dc6c4f518d45298ec4b>>
+ * @generated SignedSource<<7abfbeb36aafb5b6501d140474913f60>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -445,6 +445,7 @@ return {
             "APPROVED",
             "CANCELED",
             "FULFILLED",
+            "IN_REVIEW",
             "PENDING",
             "PROCESSING_APPROVAL",
             "REFUNDED",

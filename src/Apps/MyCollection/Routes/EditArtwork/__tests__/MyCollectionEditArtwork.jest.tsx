@@ -1,11 +1,12 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { MyCollectionEditArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionEditArtwork"
-import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { uploadPhotoToS3 } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
+import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 
 const mockRouterPush = jest.fn()
@@ -53,9 +54,9 @@ jest.mock("../Mutations/useDeleteArtworkImage", () => ({
 }))
 jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
   ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
-  uploadMyCollectionPhoto: jest.fn(),
+  uploadPhotoToS3: jest.fn(),
 }))
-const mockUploadPhoto = uploadMyCollectionPhoto as jest.Mock
+const mockUploadPhoto = uploadPhotoToS3 as jest.Mock
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
@@ -446,11 +447,6 @@ describe("Edit artwork", () => {
     })
   })
 })
-
-type CleanRelayFragment<T> = Omit<
-  T,
-  "$refType" | " $fragmentRefs" | " $fragmentSpreads" | " $fragmentType"
->
 
 const mockArtwork = {
   artist: {
