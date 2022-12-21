@@ -3,7 +3,6 @@ import { ModalType } from "Components/Authentication/Types"
 import { compact } from "lodash"
 import * as React from "react"
 import { useSystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
@@ -11,7 +10,6 @@ import { Separator } from "@artsy/palette"
 
 export const NavBarMobileMenuLoggedIn: React.FC = () => {
   const { mediator } = useSystemContext()
-  const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
 
   const menu = {
     title: "Account",
@@ -40,7 +38,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
         text: "My Collection",
         href: "/settings/my-collection",
       },
-      isInsightsEnabled && {
+      {
         text: "Insights",
         href: "/settings/insights",
       },

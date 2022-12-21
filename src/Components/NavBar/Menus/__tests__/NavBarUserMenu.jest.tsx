@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import { mediator } from "Server/mediator"
-import { SystemContextProvider, useSystemContext } from "System"
-import { NavBarUserMenu } from "../NavBarUserMenu"
+import { SystemContextProvider } from "System"
+import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
 
 jest.mock("react-tracking", () => ({
   useTracking: () => ({
@@ -20,14 +20,6 @@ describe("NavBarUserMenu", () => {
       </SystemContextProvider>
     )
   }
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-7-insights": { flagEnabled: true },
-      },
-    }))
-  })
 
   it("renders correct menu items", () => {
     const wrapper = getWrapper()
