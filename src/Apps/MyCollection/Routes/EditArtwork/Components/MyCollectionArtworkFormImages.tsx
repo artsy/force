@@ -7,7 +7,7 @@ import {
   getErrorMessage,
   normalizePhoto,
   Photo,
-  uploadMyCollectionPhoto,
+  uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
@@ -55,7 +55,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
     photo.loading = true
 
     try {
-      const photoURL = await uploadMyCollectionPhoto(
+      const photoURL = await uploadPhotoToS3(
         relayEnvironment!,
         photo,
         progress => {

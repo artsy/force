@@ -4,7 +4,7 @@ import {
   AuctionResultsFilterContextProvider,
   initialAuctionResultsFilterState,
   useAuctionResultsFilterContext,
-} from "../AuctionResultsFilterContext"
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 
 describe("AuctionResultsFilterContext", () => {
   let context: ReturnType<typeof useAuctionResultsFilterContext>

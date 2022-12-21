@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9a42c497abc82de34c36b81e723fd77>>
+ * @generated SignedSource<<a63a96ec8b40b53f5dfeee28a200c4e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,6 @@ export type SettingsEditProfileFields_me$data = {
   readonly canRequestEmailConfirmation: boolean;
   readonly email: string | null;
   readonly emailConfirmed: boolean;
-  readonly icon: {
-    readonly url: string | null;
-  } | null;
   readonly identityVerified: boolean | null;
   readonly location: {
     readonly city: string | null;
@@ -28,7 +25,7 @@ export type SettingsEditProfileFields_me$data = {
   readonly name: string | null;
   readonly otherRelevantPositions: string | null;
   readonly profession: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeaderAvatar_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileImage_me">;
   readonly " $fragmentType": "SettingsEditProfileFields_me";
 };
 export type SettingsEditProfileFields_me$key = {
@@ -45,7 +42,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CollectorProfileHeaderAvatar_me"
+      "name": "SettingsEditProfileImage_me"
     },
     {
       "alias": null,
@@ -73,30 +70,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "bio",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "icon",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "thumbnail"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"thumbnail\")"
-        }
-      ],
       "storageKey": null
     },
     {
@@ -171,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4277c605fb20269124cb724bc1619918";
+(node as any).hash = "39e79fd9391a1eebd605d9874d3fe86f";
 
 export default node;

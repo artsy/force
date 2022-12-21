@@ -72,16 +72,16 @@ describe("SettingsEditProfileFields", () => {
       }
     )
 
-    await waitFor(() => {
-      screen.getByText("Save").click()
-    })
+    fireEvent.click(screen.getByText("Save"))
 
-    expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
-      name: "Collector Name",
-      location: {},
-      profession: "Artist and Collector",
-      otherRelevantPositions: "Positions",
-      bio: "I collect",
+    await waitFor(() => {
+      expect(mockSubmitUpdateMyUserProfile).toHaveBeenCalledWith({
+        name: "Collector Name",
+        location: {},
+        profession: "Artist and Collector",
+        otherRelevantPositions: "Positions",
+        bio: "I collect",
+      })
     })
   })
 })
