@@ -13,7 +13,10 @@ import {
 } from "@artsy/palette"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import { useHandleIDVerification } from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
+import {
+  useHandleEmailVerification,
+  useHandleIDVerification,
+} from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   LocationAutocompleteInput,
   normalizePlace,
@@ -56,6 +59,11 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     handleVerification: handleIDVerification,
   } = useHandleIDVerification()
 
+  const {
+    showVerificationBanner: showVerificationBannerForEmail,
+    handleVerification: handleEmailVerification,
+  } = useHandleEmailVerification()
+
   useEffect(() => {
     if (!!showVerificationBannerForID) {
       sendToast({
@@ -63,7 +71,22 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         message: `ID verification link sent to ${me?.email ?? ""}.`,
       })
     }
-  }, [me.email, sendToast, showVerificationBannerForID])
+    if (!!showVerificationBannerForEmail) {
+      sendToast({
+        variant: "success",
+        message: `Email sent to ${me?.email ?? ""}`,
+      })
+    }
+  }, [
+    me.email,
+    sendToast,
+    showVerificationBannerForID,
+    showVerificationBannerForEmail,
+  ])
+
+  const emailConfirmed = me?.emailConfirmed
+  const identityVerified = me?.identityVerified
+  const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
 
   const {
     values,
@@ -184,15 +207,24 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
         {/* ID Verification */}
         <Box>
-          <Flex alignItems="center">
-            <CheckCircleIcon fill="black60" mr={0.5} />
-            <Clickable
-              onClick={handleIDVerification}
-              textDecoration="underline"
-            >
-              <Text variant="sm-display">Verify Your ID</Text>
-            </Clickable>
-          </Flex>
+          {identityVerified ? (
+            <Box>
+              <Flex alignItems="center">
+                <CheckCircleFillIcon fill="green100" mr={0.5} />
+                <Text variant="sm-display">ID Verified</Text>
+              </Flex>
+            </Box>
+          ) : (
+            <Flex alignItems="center">
+              <CheckCircleIcon fill="black60" mr={0.5} />
+              <Clickable
+                onClick={handleIDVerification}
+                textDecoration="underline"
+              >
+                <Text variant="sm-display">Verify Your ID</Text>
+              </Clickable>
+            </Flex>
+          )}
           <Text variant="sm" mt={1} color="black60">
             For details, see{" "}
             <a
@@ -212,17 +244,41 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
         <Spacer y={[4, 6]} />
 
         {/* Email Verification */}
-        <Box>
-          <Flex alignItems="center">
-            <CheckCircleFillIcon fill="green100" mr={0.5} />
-            <Text variant="sm-display">Email Address Verified</Text>
-          </Flex>
+        {emailConfirmed ? (
+          <Box>
+            <Flex alignItems="center">
+              <CheckCircleFillIcon fill="green100" mr={0.5} />
+              <Text variant="sm-display">Email Address Verified</Text>
+            </Flex>
 
-          <Text variant="sm" mt={1} color="black60">
-            Secure your account and receive updates about your transactions on
-            Artsy.
-          </Text>
-        </Box>
+            <Text variant="sm" mt={1} color="black60">
+              Secure your account and receive updates about your transactions on
+              Artsy.
+            </Text>
+          </Box>
+        ) : (
+          <Box>
+            <Flex alignItems="center">
+              <CheckCircleIcon fill="black60" mr={0.5} />
+              {canRequestEmailConfirmation ? (
+                <Clickable
+                  onClick={handleEmailVerification}
+                  textDecoration="underline"
+                >
+                  <Text variant="sm-display">Verify Your Email</Text>
+                </Clickable>
+              ) : (
+                <Text style={{ textDecorationLine: "none" }} color="black60">
+                  Verify Your Email
+                </Text>
+              )}
+            </Flex>
+            <Text variant="sm" mt={1} color="black60">
+              Secure your account and receive updates about your transactions on
+              Artsy.
+            </Text>
+          </Box>
+        )}
 
         <Button
           mt={6}
