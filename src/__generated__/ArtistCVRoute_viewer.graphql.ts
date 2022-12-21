@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3088f8d8d8e3e9a3207e38201b2ce920>>
+ * @generated SignedSource<<51fdff715c3338dd98ad166952329751>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,32 +35,17 @@ var v0 = [
     "name": "id",
     "variableName": "artistID"
   }
-];
+],
+v1 = {
+  "kind": "Literal",
+  "name": "atAFair",
+  "value": false
+};
 return {
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
       "name": "artistID"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "fairBoothsAtAFair"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "groupShowsAtAFair"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "soloShowsAtAFair"
-    },
-    {
-      "defaultValue": true,
-      "kind": "LocalArgument",
-      "name": "soloShowsSoloShow"
     }
   ],
   "kind": "Fragment",
@@ -77,15 +62,11 @@ return {
       "selections": [
         {
           "args": [
+            (v1/*: any*/),
             {
-              "kind": "Variable",
-              "name": "atAFair",
-              "variableName": "soloShowsAtAFair"
-            },
-            {
-              "kind": "Variable",
+              "kind": "Literal",
               "name": "soloShow",
-              "variableName": "soloShowsSoloShow"
+              "value": true
             }
           ],
           "kind": "FragmentSpread",
@@ -111,10 +92,11 @@ return {
       "selections": [
         {
           "args": [
+            (v1/*: any*/),
             {
-              "kind": "Variable",
-              "name": "atAFair",
-              "variableName": "groupShowsAtAFair"
+              "kind": "Literal",
+              "name": "soloShow",
+              "value": false
             }
           ],
           "kind": "FragmentSpread",
@@ -134,9 +116,9 @@ return {
         {
           "args": [
             {
-              "kind": "Variable",
+              "kind": "Literal",
               "name": "atAFair",
-              "variableName": "fairBoothsAtAFair"
+              "value": true
             }
           ],
           "kind": "FragmentSpread",
@@ -151,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "9779a6baedba0adc1ed197819481ce40";
+(node as any).hash = "238e15474108e4de0c916a2b6fe2dddf";
 
 export default node;
