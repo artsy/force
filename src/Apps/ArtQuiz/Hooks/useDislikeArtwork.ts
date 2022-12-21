@@ -1,16 +1,13 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useDeleteArtworkMutation } from "__generated__/useDeleteArtworkMutation.graphql"
+import { useDislikeArtworkMutation } from "__generated__/useDislikeArtworkMutation.graphql"
 
 export const useDislikeArtwork = () => {
-  return useMutation<useDeleteArtworkMutation>({
+  return useMutation<useDislikeArtworkMutation>({
     mutation: graphql`
-      mutation useDislikeArtworkMutation($input: DislikeArtworkInput!)
-        @raw_response_type {
+      mutation useDislikeArtworkMutation($input: DislikeArtworkInput!) {
         dislikeArtwork(input: $input) {
           artwork {
-            id
-            slug
             isDisliked
           }
         }
