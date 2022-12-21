@@ -65,6 +65,7 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
               <ArtistAutoComplete
                 onSelect={() => {}}
                 onError={() => mockErrorHandler(true)}
+                title="Artist"
                 placeholder="Enter full name"
               />
             </Form>

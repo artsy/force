@@ -3,7 +3,7 @@ import { MyCollectionCreateArtworkFragmentContainer } from "Apps/MyCollection/Ro
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { CleanRelayFragment } from "Utils/relayHelper"
+import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 
 const mockRouterPush = jest.fn()
