@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7898f201c72b16f1e874124b3d9ce753>>
+ * @generated SignedSource<<47fa3ac07d6f2b54ce17930edf80dea8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,12 @@ export type ArtQuizArtworks_me$data = {
         readonly node: {
           readonly id: string;
           readonly image: {
-            readonly aspectRatio: number;
-            readonly height: number | null;
-            readonly url: string | null;
-            readonly width: number | null;
+            readonly resized: {
+              readonly height: number | null;
+              readonly src: string;
+              readonly srcSet: string;
+              readonly width: number | null;
+            } | null;
           } | null;
           readonly internalID: string;
           readonly isDisliked: boolean;
@@ -125,34 +127,50 @@ const node: ReaderFragment = {
                           "args": [
                             {
                               "kind": "Literal",
-                              "name": "version",
-                              "value": "large"
+                              "name": "height",
+                              "value": 900
+                            },
+                            {
+                              "kind": "Literal",
+                              "name": "width",
+                              "value": 900
                             }
                           ],
-                          "kind": "ScalarField",
-                          "name": "url",
-                          "storageKey": "url(version:\"large\")"
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "aspectRatio",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
+                          "concreteType": "ResizedImageUrl",
+                          "kind": "LinkedField",
+                          "name": "resized",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "src",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "srcSet",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "width",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "height",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": "resized(height:900,width:900)"
                         }
                       ],
                       "storageKey": null
@@ -202,6 +220,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a362125091ef0a3722fcb8dcb5c3d178";
+(node as any).hash = "e5b04eff2e8a1ccc0e14b754c8f098df";
 
 export default node;
