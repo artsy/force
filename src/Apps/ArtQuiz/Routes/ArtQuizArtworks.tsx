@@ -204,7 +204,11 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
                 id
                 internalID
                 image {
-                  resized(width: 900, height: 900) {
+                  resized(
+                    width: 900
+                    height: 900
+                    version: ["normalized", "larger", "large"]
+                  ) {
                     src
                     srcSet
                     width

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2933cbababdc741d5dbf76f45e06eb5>>
+ * @generated SignedSource<<96b6b1d611f0d1d59573179b29c0eb52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -148,6 +148,15 @@ return {
                                   },
                                   {
                                     "kind": "Literal",
+                                    "name": "version",
+                                    "value": [
+                                      "normalized",
+                                      "larger",
+                                      "large"
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Literal",
                                     "name": "width",
                                     "value": 900
                                   }
@@ -186,7 +195,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "storageKey": "resized(height:900,width:900)"
+                                "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
                               }
                             ],
                             "storageKey": null
@@ -239,12 +248,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "19355ee70b7ddce89e04e4fc793d93ae",
+    "cacheID": "7c5093956400a5f4c79c75a8ad7be385",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
