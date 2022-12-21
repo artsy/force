@@ -5,7 +5,6 @@ import { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQue
 import { InsightsOverviewFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsOverview"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
 
 describe("InsightsOverview", () => {
   const { renderWithRelay } = setupTestWrapperTL<InsightsOverviewTestQuery>({
