@@ -15,6 +15,7 @@ import {
   SettingsEditProfileImageFragmentContainer,
   SettingsEditProfileImageRef,
 } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/SettingsEditProfileImage"
+import { useEditProfileTracking } from "Apps/Settings/Routes/EditProfile/Hooks/useEditProfileTracking"
 import {
   LocationAutocompleteInput,
   normalizePlace,
@@ -57,6 +58,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { relayEnvironment } = useSystemContext()
+  const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
 
   const initialValues: EditProfileFormModel = {
     name: me.name ?? "",
@@ -107,6 +109,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
           await imageContainerRef.current.storeImageLocally()
         }
       }
+
+      trackEditProfile()
 
       sendToast({
         variant: "success",
