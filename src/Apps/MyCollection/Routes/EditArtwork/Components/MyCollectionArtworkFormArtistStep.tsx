@@ -8,6 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
+import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { ArtistGridItemFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistGridItem"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
@@ -17,7 +18,6 @@ import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
-import { ArtistAutoComplete } from "/Users/ole/artsy/force/src/Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 
 interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
