@@ -3567,6 +3567,9 @@ type CollectorProfileType {
   ): String
   email: String
   emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
   icon: Image
 
   # A globally unique ID.
@@ -3579,6 +3582,7 @@ type CollectorProfileType {
   internalID: ID!
   isActiveBidder: Boolean
   isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -9856,6 +9860,9 @@ type InquirerCollectorProfile {
   ): String
   email: String
   emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
   icon: Image
 
   # A globally unique ID.
@@ -9868,6 +9875,7 @@ type InquirerCollectorProfile {
   internalID: ID!
   isActiveBidder: Boolean
   isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -16342,6 +16350,9 @@ type UpdateCollectorProfilePayload {
   ): String
   email: String
   emailConfirmed: Boolean
+    @deprecated(
+      reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
+    )
   icon: Image
 
   # A globally unique ID.
@@ -16354,6 +16365,7 @@ type UpdateCollectorProfilePayload {
   internalID: ID!
   isActiveBidder: Boolean
   isActiveInquirer: Boolean
+  isEmailConfirmed: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
