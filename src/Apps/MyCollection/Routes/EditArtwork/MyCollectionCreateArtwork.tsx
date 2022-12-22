@@ -32,7 +32,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   me,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
   )
@@ -69,7 +68,11 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
 
   const handleBack = () => {
     if (currentStep === "artist-select" || !enableNewMyCUploadFlow) {
-      router.push({ pathname: "/settings/my-collection" })
+      router.push({
+        pathname: isCollectorProfileEnabled
+          ? "/collector-profile/my-collection"
+          : "/settings/my-collection",
+      })
     } else if (currentStep === "artwork-select") {
       setCurrentStep("artist-select")
     } else if (currentStep === "details") {
