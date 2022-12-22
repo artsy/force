@@ -14,13 +14,14 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+import { ArtistAvatar } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistAvatar"
+import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
+import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
 import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { Media } from "Utils/Responsive"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
-import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
-import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
 import { ProvenanceModal } from "./ProvenanceModal"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
@@ -50,6 +51,8 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
     setFieldValue("artistId", "")
   }
 
+  const showArtistInput = !values.artist
+
   return (
     <>
       <ArtworkSidebarClassificationsModalQueryRenderer
@@ -64,12 +67,16 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          <ArtistAutoComplete
-            onError={() => handleAutosuggestError(true)}
-            onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
-            required
-            title="Artist"
-          />
+          {showArtistInput ? (
+            <ArtistAutoComplete
+              onError={() => handleAutosuggestError(true)}
+              onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
+              required
+              title="Artist"
+            />
+          ) : (
+            <ArtistAvatar {...values.artist} />
+          )}
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Input

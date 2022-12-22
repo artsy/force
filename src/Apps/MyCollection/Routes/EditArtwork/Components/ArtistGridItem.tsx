@@ -1,4 +1,5 @@
-import { Avatar, Flex, Text } from "@artsy/palette"
+import { Flex } from "@artsy/palette"
+import { ArtistAvatar } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistAvatar"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistGridItem_artist$data } from "__generated__/ArtistGridItem_artist.graphql"
 
@@ -15,24 +16,7 @@ const ArtistGridItem: React.FC<ArtistGridItemProps> = ({ artist }) => {
       alignItems="center"
       mt={1}
     >
-      <Flex>
-        <Avatar
-          size="xs"
-          mr={1}
-          initials={artist.initials || undefined}
-          lazyLoad
-          {...artist.image?.cropped}
-        />
-        <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
-          <Text variant="sm-display" lineClamp={2}>
-            {artist.name ?? "Unknown"}
-          </Text>
-
-          <Text variant="xs" color="black60" overflowEllipsis>
-            {artist.formattedNationalityAndBirthday}
-          </Text>
-        </Flex>
-      </Flex>
+      <ArtistAvatar {...artist} />
     </Flex>
   )
 }

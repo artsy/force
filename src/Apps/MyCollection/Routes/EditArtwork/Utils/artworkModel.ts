@@ -1,6 +1,8 @@
+import { ArtistAvatarProps } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistAvatar"
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface ArtworkModel {
+  artist?: ArtistAvatarProps
   artistName: string
   artistId: string
   category: string
