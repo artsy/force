@@ -41,23 +41,16 @@ export const ArtistCVRouteFragmentContainer = createFragmentContainer(
   ArtistCVRoute,
   {
     viewer: graphql`
-      fragment ArtistCVRoute_viewer on Viewer
-        @argumentDefinitions(
-          soloShowsAtAFair: { type: "Boolean", defaultValue: false }
-          soloShowsSoloShow: { type: "Boolean", defaultValue: true }
-          groupShowsAtAFair: { type: "Boolean", defaultValue: false }
-          fairBoothsAtAFair: { type: "Boolean", defaultValue: true }
-        ) {
+      fragment ArtistCVRoute_viewer on Viewer {
         soloShows: artist(id: $artistID) {
-          ...ArtistCVGroup_artist
-            @arguments(atAFair: $soloShowsAtAFair, soloShow: $soloShowsSoloShow)
+          ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: true)
           name
         }
         groupShows: artist(id: $artistID) {
-          ...ArtistCVGroup_artist @arguments(atAFair: $groupShowsAtAFair)
+          ...ArtistCVGroup_artist @arguments(atAFair: false, soloShow: false)
         }
         fairBooths: artist(id: $artistID) {
-          ...ArtistCVGroup_artist @arguments(atAFair: $fairBoothsAtAFair)
+          ...ArtistCVGroup_artist @arguments(atAFair: true)
         }
       }
     `,

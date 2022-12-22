@@ -76,7 +76,7 @@ const InfoField: FC<InfoFieldProps> = ({ type, value }) => {
 
   return (
     <>
-      <Flex flexDirection="row" alignItems="center" pr={0.5} pb={0.5}>
+      <Flex flexDirection="row" alignItems="center" mr={[1, 2]} pb={0.5}>
         <Media style={{ display: "flex" }} lessThan="sm">
           <Icon
             fill="black60"
@@ -93,7 +93,7 @@ const InfoField: FC<InfoFieldProps> = ({ type, value }) => {
           />
         </Media>
 
-        <Text variant={["xs", "sm-display"]} color="black60" px={0.5}>
+        <Text variant={["xs", "sm-display"]} color="black60" pl={0.5}>
           {value}
         </Text>
       </Flex>

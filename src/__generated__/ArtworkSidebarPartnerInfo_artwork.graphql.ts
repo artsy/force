@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8d31df13997b8660dcd7b0159910b47>>
+ * @generated SignedSource<<2e500e4ec1b0d5434fa35ff5a1f7775f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
+  readonly isAcquireable: boolean | null;
   readonly isInAuction: boolean | null;
   readonly isInquireable: boolean | null;
+  readonly isOfferable: boolean | null;
   readonly partner: {
     readonly cities: ReadonlyArray<string | null> | null;
     readonly href: string | null;
@@ -83,6 +85,20 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isAcquireable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
@@ -119,6 +135,6 @@ return {
 };
 })();
 
-(node as any).hash = "0922245b320fff3b6ddc0ace7f5b2f75";
+(node as any).hash = "694d0c5e63586da8b18d91d42093cec2";
 
 export default node;

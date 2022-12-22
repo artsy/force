@@ -1,5 +1,4 @@
 import {
-  Button,
   Clickable,
   Column,
   Flex,
@@ -64,20 +63,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
   return (
     <AppContainer>
-      <MyCollectionArtworkFormHeader
-        onBackClick={() => onBack()}
-        NextButton={
-          <Button
-            width={[100, 300]}
-            data-testid="artist-select-skip-button"
-            onClick={handleSkip}
-            size={["small", "large"]}
-            variant="secondaryNeutral"
-          >
-            Skip
-          </Button>
-        }
-      />
+      <MyCollectionArtworkFormHeader onBackClick={() => onBack()} />
 
       <Spacer y={4} />
 
@@ -99,7 +85,11 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Flex flexDirection="row">
         <Text variant="xs">Can't find the artist? &nbsp;</Text>
-        <Clickable onClick={handleSkip} textDecoration="underline">
+        <Clickable
+          onClick={handleSkip}
+          textDecoration="underline"
+          data-testid="artist-select-skip-button"
+        >
           <Text variant="xs" color="black100">
             Add their name.
           </Text>
@@ -108,27 +98,31 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Spacer y={4} />
 
-      <Text variant="xs">Artists in My Collection</Text>
+      {collectedArtists.length > 0 && (
+        <>
+          <Text variant="xs">Artists in My Collection</Text>
 
-      <Spacer y={1} />
+          <Spacer y={1} />
 
-      <GridColumns width="100%">
-        {collectedArtists.map((artist, index) => (
-          <Column span={[6, 4]} key={index}>
-            <Clickable
-              onClick={() =>
-                onSelect({
-                  artistId: artist.internalID,
-                  artistName: artist.displayLabel,
-                })
-              }
-              data-testid={`artist-${artist.internalID}`}
-            >
-              <ArtistGridItemFragmentContainer artist={artist} />
-            </Clickable>
-          </Column>
-        ))}
-      </GridColumns>
+          <GridColumns width="100%">
+            {collectedArtists.map((artist, index) => (
+              <Column span={[6, 4]} key={index}>
+                <Clickable
+                  onClick={() =>
+                    onSelect({
+                      artistId: artist.internalID,
+                      artistName: artist.displayLabel,
+                    })
+                  }
+                  data-testid={`artist-${artist.internalID}`}
+                >
+                  <ArtistGridItemFragmentContainer artist={artist} />
+                </Clickable>
+              </Column>
+            ))}
+          </GridColumns>
+        </>
+      )}
     </AppContainer>
   )
 }

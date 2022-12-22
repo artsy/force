@@ -1,7 +1,6 @@
-import * as yup from "yup"
 import { email } from "Components/Authentication/Validators"
 import { FormikErrors, yupToFormErrors } from "formik"
-import { validatePhoneNumber } from "Components/PhoneNumberInput"
+import * as yup from "yup"
 
 export const artworkDetailsValidationSchema = yup.object().shape({
   artistId: yup
@@ -81,19 +80,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 export const contactInformationValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),
   email: email.trim(),
-  phoneNumber: yup
-    .string()
-    .required("Phone Number is required")
-    .test({
-      name: "phone-number-is-valid",
-      message: "Please enter a valid phone number",
-      test: (national, context) => {
-        return validatePhoneNumber({
-          national: `${national}`,
-          regionCode: `${context.parent.phoneNumberCountryCode}`,
-        })
-      },
-    }),
+  phoneNumber: yup.string().required("Phone Number is required"),
   phoneNumberCountryCode: yup
     .string()
     .required("Phone Number Country Code is required"),
