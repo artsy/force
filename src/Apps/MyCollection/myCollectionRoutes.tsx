@@ -76,8 +76,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
   },
   {
     path: "/my-collection/artwork/:artworkID/price-estimate",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => PriceEstimateContactInformation,
     onClientSideRender: () => {
       PriceEstimateContactInformation.preload()
@@ -97,8 +96,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
   },
   {
     path: "/my-collection/artwork/:artworkID/price-estimate/success",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => PriceEstimateConfirmation,
     onClientSideRender: () => {
       PriceEstimateConfirmation.preload()
@@ -109,8 +107,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "artworks/new",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => MyCollectionCreateArtwork,
         onClientSideRender: () => {
           MyCollectionCreateArtwork.preload()
@@ -128,8 +125,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: "artworks/:slug/edit",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => MyCollectionEditArtwork,
         onClientSideRender: () => {
           MyCollectionEditArtwork.preload()

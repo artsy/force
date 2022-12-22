@@ -169,8 +169,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collector-profile/my-collection/artworks/new",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => MyCollectionCreateArtwork,
     onClientSideRender: () => {
       MyCollectionCreateArtwork.preload()
@@ -202,8 +201,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collector-profile/my-collection/artworks/:slug/edit",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => MyCollectionEditArtwork,
     onClientSideRender: () => {
       MyCollectionEditArtwork.preload()
@@ -223,8 +221,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collector-profile/my-collection/artwork/:artworkID/price-estimate",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => PriceEstimateContactInformation,
     onClientSideRender: () => {
       PriceEstimateContactInformation.preload()
@@ -245,8 +242,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
   {
     path:
       "/collector-profile/my-collection/artwork/:artworkID/price-estimate/success",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => PriceEstimateConfirmation,
     onClientSideRender: () => {
       PriceEstimateConfirmation.preload()

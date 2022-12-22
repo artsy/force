@@ -10,9 +10,7 @@ import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnviro
 import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
-import { LayoutBlank } from "Apps/Components/Layouts/LayoutBlank"
-import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
-import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { Layout } from "Apps/Components/Layouts"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -55,7 +53,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   return (
     <>
-      <LayoutLogoOnly>{children}</LayoutLogoOnly>
+      <Layout variant={routeConfig?.layout}>{children}</Layout>
 
       {onboardingComponent}
     </>

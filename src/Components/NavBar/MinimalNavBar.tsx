@@ -9,6 +9,9 @@ interface MinimalNavBarProps {
   isBlank?: boolean
 }
 
+/**
+ * @deprecated Use `layout: "LogoOnly"` instead
+ */
 export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
   const { isEigen } = useSystemContext()
   return (

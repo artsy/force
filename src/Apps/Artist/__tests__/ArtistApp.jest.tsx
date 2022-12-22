@@ -202,18 +202,6 @@ describe("ArtistApp", () => {
     })
   })
 
-  describe("for `displayFullPage` routes", () => {
-    it("renders correct components", () => {
-      const wrapper = getWrapper(
-        {},
-        { match: { params: { artworkId: undefined } } }
-      )
-      expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
-      expect(wrapper.find("ArtistHeaderFragmentContainer").length).toBe(0)
-      expect(wrapper.find("RouteTabs").length).toBe(0)
-    })
-  })
-
   describe("for `hideNavigationTabs` routes", () => {
     it("renders correct components", () => {
       mockfindCurrentRoute.mockImplementation(() => ({

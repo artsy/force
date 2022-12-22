@@ -134,7 +134,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: "faq",
-        hideFooter: true,
+        layout: "NavOnly",
         getComponent: () => FAQApp,
         onClientSideRender: () => {
           FAQApp.preload()
@@ -185,8 +185,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "artwork-details/:artworkId",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
           ArtworkDetailsFragmentContainer.preload()
@@ -204,8 +203,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/artwork-details/:artworkId",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
           ArtworkDetailsFragmentContainer.preload()
@@ -235,8 +233,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/upload-photos/:artworkId",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => UploadPhotosFragmentContainer,
         onClientSideRender: () => {
           UploadPhotosFragmentContainer.preload()
@@ -266,8 +263,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/contact-information/:artworkId?",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ContactInformation,
         onClientSideRender: () => {
           ContactInformation.preload()
@@ -296,8 +292,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: "/contact-information/:artworkId?",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ContactInformation,
         onClientSideRender: () => {
           ContactInformation.preload()
@@ -314,8 +309,7 @@ export const consignFromCollectorProfileMyCollectionRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/thank-you/:artworkId?",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ThankYouWhenFromMyCollection,
         onClientSideRender: () => {
           ThankYouWhenFromMyCollection.preload()

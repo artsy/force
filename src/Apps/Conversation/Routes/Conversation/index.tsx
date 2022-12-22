@@ -1,13 +1,6 @@
 import { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import {
-  Box,
-  Flex,
-  FullBleed,
-  Title,
-  ThemeProviderV3,
-  breakpoints,
-} from "@artsy/palette"
+import { Box, Flex, Title, breakpoints } from "@artsy/palette"
 import { Match } from "found"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -62,32 +55,29 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const [showDetails, setShowDetails] = useState(false)
   return (
     <>
-      <ThemeProviderV3>
-        <FullBleed>
-          <Title>Inbox | Artsy</Title>
-          <ConstrainedHeightContainer>
-            <ConversationContainer>
-              <ConversationListWrapper>
-                <ConversationList
-                  me={me as any}
-                  selectedConversationID={me?.conversation?.internalID ?? ""}
-                />
-              </ConversationListWrapper>
-              <Conversation
-                conversation={me.conversation!}
-                showDetails={showDetails}
-                setShowDetails={setShowDetails}
-                refetch={props.relay.refetch}
-              />
-              <DetailsSidebarFragmentContainer
-                conversation={me.conversation!}
-                showDetails={showDetails}
-                setShowDetails={setShowDetails}
-              />
-            </ConversationContainer>
-          </ConstrainedHeightContainer>
-        </FullBleed>
-      </ThemeProviderV3>
+      <Title>Inbox | Artsy</Title>
+
+      <ConstrainedHeightContainer>
+        <ConversationContainer>
+          <ConversationListWrapper>
+            <ConversationList
+              me={me as any}
+              selectedConversationID={me?.conversation?.internalID ?? ""}
+            />
+          </ConversationListWrapper>
+          <Conversation
+            conversation={me.conversation!}
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+            refetch={props.relay.refetch}
+          />
+          <DetailsSidebarFragmentContainer
+            conversation={me.conversation!}
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+          />
+        </ConversationContainer>
+      </ConstrainedHeightContainer>
     </>
   )
 }
