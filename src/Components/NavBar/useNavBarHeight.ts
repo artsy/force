@@ -6,10 +6,15 @@ import {
 } from "./constants"
 
 export const useNavBarHeight = () => {
-  const { isLoggedIn } = useSystemContext()
+  const { isLoggedIn, isEigen } = useSystemContext()
 
-  const mobile = isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT
-  const desktop = DESKTOP_NAV_BAR_HEIGHT
+  let mobile = isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT
+  let desktop = DESKTOP_NAV_BAR_HEIGHT
+
+  if (isEigen) {
+    mobile = 0
+    desktop = 0
+  }
 
   return { height: [mobile, desktop], mobile, desktop }
 }

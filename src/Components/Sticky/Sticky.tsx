@@ -4,7 +4,6 @@ import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { useSticky } from "./StickyProvider"
-import { useSystemContext } from "System"
 
 /**
  * Wrap a component to have it stick below the main nav.
@@ -33,15 +32,10 @@ export const Sticky: React.FC<
     withoutHeaderOffset?: boolean
     children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
   }
-> = ({
-  children,
-  bottomBoundary,
-  withoutHeaderOffset: _withoutHeaderOffset,
-}) => {
+> = ({ children, bottomBoundary, withoutHeaderOffset }) => {
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()
 
   const { desktop, mobile } = useNavBarHeight()
-  const { isEigen } = useSystemContext()
 
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
 
@@ -49,7 +43,6 @@ export const Sticky: React.FC<
 
   const containerRef = useRef<HTMLDivElement | null>(null)
 
-  const withoutHeaderOffset = _withoutHeaderOffset ?? isEigen
   const headerOffset = withoutHeaderOffset ? 0 : isMobile ? mobile : desktop
 
   useEffect(() => {
