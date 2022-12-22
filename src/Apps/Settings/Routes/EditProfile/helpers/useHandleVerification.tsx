@@ -1,4 +1,4 @@
-// import { captureException } from "@sentry/react-native"
+import { captureException } from "@sentry/browser"
 import { verifyEmail } from "./verifyEmail"
 import { verifyID } from "./verifyID"
 import { useCallback, useState } from "react"
@@ -36,7 +36,7 @@ const useHandleVerification = (type: verificationType) => {
         setShowVerificationBanner(true)
       }
     } catch (error) {
-      //  captureException(error)
+      captureException(error)
       setShowVerificationBanner(false)
     } finally {
       // Allow the user some time to read the message
