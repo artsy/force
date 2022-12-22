@@ -108,27 +108,31 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Spacer y={4} />
 
-      <Text variant="xs">Artists in My Collection</Text>
+      {collectedArtists.length > 0 && (
+        <>
+          <Text variant="xs">Artists in My Collection</Text>
 
-      <Spacer y={1} />
+          <Spacer y={1} />
 
-      <GridColumns width="100%">
-        {collectedArtists.map((artist, index) => (
-          <Column span={[6, 4]} key={index}>
-            <Clickable
-              onClick={() =>
-                onSelect({
-                  artistId: artist.internalID,
-                  artistName: artist.displayLabel,
-                })
-              }
-              data-testid={`artist-${artist.internalID}`}
-            >
-              <ArtistGridItemFragmentContainer artist={artist} />
-            </Clickable>
-          </Column>
-        ))}
-      </GridColumns>
+          <GridColumns width="100%">
+            {collectedArtists.map((artist, index) => (
+              <Column span={[6, 4]} key={index}>
+                <Clickable
+                  onClick={() =>
+                    onSelect({
+                      artistId: artist.internalID,
+                      artistName: artist.displayLabel,
+                    })
+                  }
+                  data-testid={`artist-${artist.internalID}`}
+                >
+                  <ArtistGridItemFragmentContainer artist={artist} />
+                </Clickable>
+              </Column>
+            ))}
+          </GridColumns>
+        </>
+      )}
     </AppContainer>
   )
 }
