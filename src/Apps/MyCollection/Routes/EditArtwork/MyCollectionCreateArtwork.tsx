@@ -8,18 +8,17 @@ import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/U
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
-import { Formik } from "formik"
-import { useRef, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
+import { Formik } from "formik"
+import { useRef, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
-import { MyCollectionArtworkFormArtworkStepFragmentContainer } from "./Components/MyCollectionArtworkFormArtworkStep"
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
@@ -61,11 +60,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       case "artist-select":
         return <MyCollectionArtworkFormArtistStep me={me} />
       case "artwork-select":
-        return (
-          <MyCollectionArtworkFormArtworkStepFragmentContainer
-          // TODO: Add proper arguments here
-          />
-        )
+        return <MyCollectionArtworkFormArtworkStep />
       default:
         return <MyCollectionArtworkFormMain />
     }

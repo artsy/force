@@ -9,33 +9,14 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
-import ArtworkGrid from "Components/ArtworkGrid"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { MyCollectionArtworkFormArtworkStepQuery$data } from "__generated__/MyCollectionArtworkFormArtworkStepQuery.graphql"
 import { useCallback, useState } from "react"
-import { createRefetchContainer, graphql } from "react-relay"
 
-interface MyCollectionArtworkFormArtworkStepProps {
-  artworks: MyCollectionArtworkFormArtworkStepQuery$data
-}
+interface MyCollectionArtworkFormArtworkStepProps {}
 
-const artistID = "banksy"
-
-export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFormArtworkStepProps> = ({
-  artworks,
-}) => {
+export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFormArtworkStepProps> = () => {
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const [query, setQuery] = useState("")
-
-  // useEffect(() => {
-  //   console.log("relayEnvironment => ", relayEnvironment)
-
-  //   fetchArtistArtworks(artistID, relayEnvironment!).then(artworks => {
-  //     if (artworks?.artworksConnection) {
-  //       setArtworks(artworks)
-  //     }
-  //   })
-  // }, [relayEnvironment])
 
   const handleChange = useCallback(event => {
     setQuery(event.target.value)
@@ -81,12 +62,12 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
 
       <Spacer y={4} />
 
-      <ArtworkGrid
+      {/* <ArtworkGrid
         artworks={artworks.artworksConnection}
         columnCount={[2, 3]}
         itemMargin={40}
         emptyStateComponent={<SearchResultsNoResults />}
-      />
+      /> */}
     </AppContainer>
   )
 }
@@ -141,32 +122,3 @@ const SearchResultsNoResults = () => {
     </Box>
   )
 }
-
-export const MyCollectionArtworkFormArtworkStepFragmentContainer = createRefetchContainer(
-  MyCollectionArtworkFormArtworkStep,
-  {
-    artworks: graphql`
-      fragment MyCollectionArtworkFormArtworkStep_FilterArtworksConnection on FilterArtworksConnection
-        @argumentDefinitions(
-          page: { type: "Int", defaultValue: 1 }
-          artistID: { type: "String" }
-        ) {
-        counts {
-          total
-        }
-        ...ArtworkGrid_artworks
-        # }
-      }
-    `,
-  },
-  graphql`
-    query MyCollectionArtworkFormArtworkStepQuery(
-      $page: Int
-      $artistID: String!
-    ) {
-      # filterArtworksConnection @arguments(page: $page, artistID: $artistID) {
-      ...MyCollectionArtworkFormArtworkStep_FilterArtworksConnection
-      # }
-    }
-  `
-)
