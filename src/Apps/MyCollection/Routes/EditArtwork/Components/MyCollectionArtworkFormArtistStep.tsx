@@ -85,7 +85,11 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Flex flexDirection="row">
         <Text variant="xs">Can't find the artist? &nbsp;</Text>
-        <Clickable onClick={handleSkip} textDecoration="underline">
+        <Clickable
+          onClick={handleSkip}
+          textDecoration="underline"
+          data-testid="artist-select-skip-button"
+        >
           <Text variant="xs" color="black100">
             Add their name.
           </Text>

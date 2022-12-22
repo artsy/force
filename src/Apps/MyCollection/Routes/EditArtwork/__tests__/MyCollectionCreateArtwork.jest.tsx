@@ -74,25 +74,6 @@ describe("MyCollectionCreateArtwork", () => {
           })
         })
       })
-
-      describe("skip button", () => {
-        it("navigates to the Detail step", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
-
-          await flushPromiseQueue()
-
-          // Navigate to the select artwork step
-          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
-
-          expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-        })
-      })
     })
 
     describe("Select Artwork step", () => {
