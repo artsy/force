@@ -1,5 +1,4 @@
 import {
-  Button,
   Clickable,
   Column,
   Flex,
@@ -64,20 +63,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
   return (
     <AppContainer>
-      <MyCollectionArtworkFormHeader
-        onBackClick={() => onBack()}
-        NextButton={
-          <Button
-            width={[100, 300]}
-            data-testid="artist-select-skip-button"
-            onClick={handleSkip}
-            size={["small", "large"]}
-            variant="secondaryNeutral"
-          >
-            Skip
-          </Button>
-        }
-      />
+      <MyCollectionArtworkFormHeader onBackClick={() => onBack()} />
 
       <Spacer y={4} />
 

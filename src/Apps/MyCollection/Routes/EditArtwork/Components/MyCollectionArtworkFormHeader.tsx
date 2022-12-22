@@ -14,7 +14,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkFormHeaderProps {
-  NextButton: ReactNode
+  NextButton?: ReactNode
   onBackClick: () => void
 }
 export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHeaderProps> = ({
