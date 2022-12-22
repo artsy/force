@@ -87,7 +87,8 @@ export const contactInformationValidationSchema = yup.object().shape({
       name: "phone-number-is-valid",
       message: "Please enter a valid phone number",
       test: national => {
-        return /^\d+$/.test(national || "")
+        // This is a regular expression that will accept a string with only digits, parentheses, plus signs, hyphens, and spaces:
+        return /^[\d()+-\s]+$/im.test(national || "")
       },
     }),
   phoneNumberCountryCode: yup
