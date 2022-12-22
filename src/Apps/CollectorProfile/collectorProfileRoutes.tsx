@@ -52,7 +52,8 @@ const MyCollectionCreateArtwork = loadable(
       /* webpackChunkName: "collectorProfileBundle" */ "../../Apps/MyCollection/Routes/EditArtwork/MyCollectionCreateArtwork"
     ),
   {
-    resolveComponent: component => component.MyCollectionCreateArtwork,
+    resolveComponent: component =>
+      component.MyCollectionCreateArtworkFragmentContainer,
   }
 )
 
@@ -174,6 +175,13 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       MyCollectionCreateArtwork.preload()
     },
+    query: graphql`
+      query collectorProfileRoutes_MyCollectionArtworkUploadQuery {
+        me {
+          ...MyCollectionCreateArtwork_me
+        }
+      }
+    `,
   },
   {
     path: "/collector-profile/my-collection/artwork/:artworkID",
