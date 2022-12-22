@@ -17,6 +17,7 @@ import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { useSystemContext } from "System"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "./NavBarMobileMenuNotifications"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
@@ -29,6 +30,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   onNavButtonClick,
   onClose,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { isLoggedIn } = useSystemContext()
   const { downloadAppUrl } = useDeviceDetection()
   const { trackEvent } = useTracking()
@@ -74,7 +76,9 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
           </NavBarMobileMenuItemButton>
 
           <NavBarMobileMenuTransition isOpen={isOpen} py={2}>
-            {isLoggedIn && <NavBarMobileMenuNotificationsQueryRenderer />}
+            {isLoggedIn && !isCollectorProfileEnabled && (
+              <NavBarMobileMenuNotificationsQueryRenderer />
+            )}
 
             <NavBarMobileMenuItemLink
               to="/collect"

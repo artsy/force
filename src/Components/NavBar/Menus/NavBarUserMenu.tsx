@@ -21,6 +21,8 @@ import { userIsAdmin } from "Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 
 export const NavBarUserMenu: React.FC = () => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   const { trackEvent } = useTracking()
   const { mediator, user } = useContext(SystemContext)
 
@@ -44,8 +46,6 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
-
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   return (
     <Text variant="sm" py={1} width={230}>

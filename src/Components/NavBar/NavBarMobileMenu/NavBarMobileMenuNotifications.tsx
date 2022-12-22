@@ -12,6 +12,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import styled from "styled-components"
 import { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
 import { NavBarMobileMenuNotifications_me$data } from "__generated__/NavBarMobileMenuNotifications_me.graphql"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface NavBarMobileMenuNotificationsProps {
   me?: NavBarMobileMenuNotifications_me$data | null
@@ -20,6 +21,7 @@ interface NavBarMobileMenuNotificationsProps {
 export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificationsProps> = ({
   me,
 }) => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
@@ -28,29 +30,41 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
 
   return (
     <>
-      <NavBarMobileMenuItemLink
-        to="/notifications"
-        onClick={() => {
-          trackEvent({
-            action: ActionType.clickedNotificationsBell,
-          })
-        }}
-      >
-        Activity
-        {hasNotifications && <Indicator />}
-      </NavBarMobileMenuItemLink>
-
-      <NavBarMobileMenuItemLink
-        to="/user/conversations"
-        justifyContent="space-between"
-      >
-        Inbox
-        {hasConversations && (
-          <Box color="brand">{unreadConversationCount} new</Box>
-        )}
-      </NavBarMobileMenuItemLink>
-
-      <Separator my={1} />
+      {isCollectorProfileEnabled ? (
+        <NavBarMobileMenuItemLink
+          to="/user/conversations"
+          justifyContent="space-between"
+        >
+          Inbox
+          {hasConversations && (
+            <Box color="brand">{unreadConversationCount} new</Box>
+          )}
+        </NavBarMobileMenuItemLink>
+      ) : (
+        <>
+          <NavBarMobileMenuItemLink
+            to="/notifications"
+            onClick={() => {
+              trackEvent({
+                action: ActionType.clickedNotificationsBell,
+              })
+            }}
+          >
+            Activity
+            {hasNotifications && <Indicator />}
+          </NavBarMobileMenuItemLink>
+          <NavBarMobileMenuItemLink
+            to="/user/conversations"
+            justifyContent="space-between"
+          >
+            Inbox
+            {hasConversations && (
+              <Box color="brand">{unreadConversationCount} new</Box>
+            )}
+          </NavBarMobileMenuItemLink>
+          <Separator my={1} />
+        </>
+      )}
     </>
   )
 }
