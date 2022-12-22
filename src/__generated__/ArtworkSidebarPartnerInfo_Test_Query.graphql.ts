@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac7408c5773bfb36db5c5966f846e042>>
+ * @generated SignedSource<<4e9a415a0e3a87b44d283be1192e2f77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -140,6 +140,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isAcquireable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isOfferable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partner",
@@ -179,7 +193,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "202201ab4405375737fca7b1c6b5604b",
+    "cacheID": "dc8b9842dc6f0ec41c98c3a204ef6796",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -191,8 +205,10 @@ return {
         },
         "artwork.id": (v4/*: any*/),
         "artwork.internalID": (v4/*: any*/),
+        "artwork.isAcquireable": (v5/*: any*/),
         "artwork.isInAuction": (v5/*: any*/),
         "artwork.isInquireable": (v5/*: any*/),
+        "artwork.isOfferable": (v5/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -222,7 +238,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  isAcquireable\n  isOfferable\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

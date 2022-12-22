@@ -29,11 +29,13 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebarPartnerInfo", () => {
-  beforeAll(() => {
+  const mockUseSystemContext = useSystemContext as jest.Mock
+
+  beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+    mockUseSystemContext.mockImplementation(() => ({
       featureFlags: { "conversational-buy-now": { flagEnabled: true } },
     }))
   })
@@ -159,11 +161,39 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
+    it("inquirable and acquirable artwork doesn't display button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isAcquireable: true,
+          isInquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
     it("inquirable artwork doesn't display button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isInquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("doesn't display button if feature flag is disabled", () => {
+      mockUseSystemContext.mockImplementation(() => ({
+        featureFlags: { "conversational-buy-now": { flagEnabled: false } },
+      }))
+
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+          isAcquireable: true,
         }),
       })
 
