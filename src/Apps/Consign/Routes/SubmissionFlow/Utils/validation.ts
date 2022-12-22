@@ -80,17 +80,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 export const contactInformationValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),
   email: email.trim(),
-  phoneNumber: yup
-    .string()
-    .required("Phone Number is required")
-    .test({
-      name: "phone-number-is-valid",
-      message: "Please enter a valid phone number",
-      test: national => {
-        // This is a regular expression that will accept a string with only digits, parentheses, plus signs, hyphens, and spaces:
-        return /^[\d()+-\s]+$/im.test(national || "")
-      },
-    }),
+  phoneNumber: yup.string().required("Phone Number is required"),
   phoneNumberCountryCode: yup
     .string()
     .required("Phone Number Country Code is required"),
