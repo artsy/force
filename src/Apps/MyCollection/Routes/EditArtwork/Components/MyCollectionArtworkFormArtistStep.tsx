@@ -98,9 +98,9 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
       <Spacer y={2} />
 
       <Flex flexDirection="row">
-        <Text variant="xs">Can't find the artist? &nbsp;</Text>
+        <Text variant="sm-display">Can't find the artist? &nbsp;</Text>
         <Clickable onClick={handleSkip} textDecoration="underline">
-          <Text variant="xs" color="black100">
+          <Text variant="sm-display" color="black100">
             Add their name.
           </Text>
         </Clickable>
@@ -110,10 +110,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       {collectedArtists.length > 0 && (
         <>
-          <Text variant="xs">Artists in My Collection</Text>
-
+          <Text variant="sm-display">Artists in My Collection</Text>
           <Spacer y={1} />
-
           <GridColumns width="100%">
             {collectedArtists.map((artist, index) => (
               <Column span={[6, 4]} key={index}>
@@ -131,6 +129,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
               </Column>
             ))}
           </GridColumns>
+          slack
         </>
       )}
     </AppContainer>
