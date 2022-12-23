@@ -89,7 +89,7 @@ export const orderRoutes: AppRouteConfig[] = [
   {
     // TODO: Still need order2?
     path: "/order(2|s)/:orderID",
-    hideFooter: true,
+    layout: "ContainerOnly",
     Component: OrderApp,
     onClientSideRender: () => {
       OrderApp.preload()
@@ -155,7 +155,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "respond",
         Component: RespondRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_RespondQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -171,7 +171,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "offer",
         Component: OfferRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_OfferQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -187,7 +187,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "shipping",
         Component: ShippingRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_ShippingQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -206,7 +206,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "payment",
         Component: PaymentRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_PaymentQuery($orderID: ID!) {
             me {
@@ -225,7 +225,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "payment/new",
         Component: NewPaymentRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_NewPaymentQuery($orderID: ID!) {
             me {
@@ -244,7 +244,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "review/counter",
         Component: CounterRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_CounterQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -260,7 +260,7 @@ export const orderRoutes: AppRouteConfig[] = [
         path: "review",
         Component: ReviewRoute,
         shouldWarnBeforeLeaving: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_ReviewQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -275,7 +275,7 @@ export const orderRoutes: AppRouteConfig[] = [
       {
         path: "review/accept",
         Component: AcceptRoute,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_AcceptQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -290,7 +290,7 @@ export const orderRoutes: AppRouteConfig[] = [
       {
         path: "review/decline",
         Component: DeclineRoute,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_RejectQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -302,7 +302,7 @@ export const orderRoutes: AppRouteConfig[] = [
       {
         path: "status",
         Component: StatusRoute,
-        hideFooter: true,
+        layout: "ContainerOnly",
         query: graphql`
           query orderRoutes_StatusQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {

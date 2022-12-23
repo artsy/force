@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "../Route"
+import { AppRouteConfig } from "System/Router/Route"
 
 export const findCurrentRoute = (match): AppRouteConfig => {
   if (!match) {

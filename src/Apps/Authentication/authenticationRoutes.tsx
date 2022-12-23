@@ -46,8 +46,7 @@ const runAuthMiddleware = flow(checkForRedirect, setReferer)
 export const authenticationRoutes: AppRouteConfig[] = [
   {
     path: "/forgot",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => ForgotPasswordRoute,
     onServerSideRender: ({ req, res }) => {
       res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
@@ -61,8 +60,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
   },
   {
     path: "/login",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => LoginRoute,
     onServerSideRender: props => {
       // We need this check so we allow someone to log into the API even if they
@@ -87,8 +85,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
   },
   {
     path: "/reset_password",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => ResetPasswordRoute,
     onServerSideRender: ({ req, res }) => {
       // To avoid exposing the token to 3rd parties, we first put it in the session
@@ -124,8 +121,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
   },
   {
     path: "/signup",
-    hideNav: true,
-    hideFooter: true,
+    layout: "ContainerOnly",
     getComponent: () => SignupRoute,
     onServerSideRender: props => {
       // We need this check so we allow someone to log into the API even if they

@@ -189,7 +189,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: "faq",
-        hideFooter: true,
+        layout: "NavOnly",
         getComponent: () => FAQApp,
         onClientSideRender: () => {
           FAQApp.preload()
@@ -227,8 +227,7 @@ export const consignRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => ConsignmentInquiryApp,
-        hideFooter: true,
-        hideNav: true,
+        layout: "ContainerOnly",
         onClientSideRender: () => {
           ConsignmentInquiryApp.preload()
         },
@@ -243,9 +242,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: "sent",
-        hideFooter: true,
-        hideNav: true,
-        hideNavigationTabs: true,
+        layout: "ContainerOnly",
         getComponent: () => ConsignmentInquiryConfirmationApp,
         onClientSideRender: () => {
           ConsignmentInquiryConfirmationApp.preload()
@@ -269,8 +266,7 @@ export const consignRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "artwork-details",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ArtworkDetails,
         onClientSideRender: () => {
           ArtworkDetails.preload()
@@ -278,8 +274,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: "contact-information",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ContactInformation,
         onClientSideRender: () => {
           ContactInformation.preload()
@@ -290,8 +285,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/artwork-details",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ArtworkDetailsFragmentContainer,
         onClientSideRender: () => {
           ArtworkDetailsFragmentContainer.preload()
@@ -317,8 +311,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/upload-photos",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => UploadPhotosFragmentContainer,
         onClientSideRender: () => {
           UploadPhotosFragmentContainer.preload()
@@ -344,8 +337,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/contact-information",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ContactInformation,
         onClientSideRender: () => {
           ContactInformation.preload()
@@ -356,8 +348,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/thank-you",
-        hideNav: true,
-        hideFooter: true,
+        layout: "ContainerOnly",
         getComponent: () => ThankYou,
         onClientSideRender: () => {
           ThankYou.preload()

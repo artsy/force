@@ -1,21 +1,22 @@
 import { Box, BoxProps, useTheme } from "@artsy/palette"
 import { ThemeV3 } from "@artsy/palette/dist/themes"
-import * as React from "react"
+import { FC, ElementType, HTMLAttributes } from "react"
 
-interface AppContainerProps extends BoxProps {}
+interface AppContainerProps extends BoxProps, HTMLAttributes<HTMLElement> {
+  as?: ElementType | keyof JSX.IntrinsicElements
+}
 
 /**
  * Handles the max-width of the application. That's it!
  */
-export const AppContainer: React.FC<AppContainerProps> = ({
+export const AppContainer: FC<AppContainerProps> = ({
   children,
-  maxWidth: defaultMaxWidth,
+  maxWidth,
   ...rest
 }) => {
   const { theme: { breakpoints = { lg: null } } = {} } = useTheme<ThemeV3>()
 
-  const maxWidth = breakpoints.lg
-  const appShellMaxWidth = defaultMaxWidth ?? maxWidth
+  const appShellMaxWidth = maxWidth ?? breakpoints.lg
 
   return (
     <Box width="100%" mx="auto" maxWidth={appShellMaxWidth} {...rest}>

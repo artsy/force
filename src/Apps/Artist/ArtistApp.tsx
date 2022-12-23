@@ -30,11 +30,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
   useScrollToOpenArtistAuthModal()
 
-  // A stand-alone page under the /artist route path
-  if (route.displayFullPage) {
-    return <PageWrapper artist={artist}>{children}</PageWrapper>
-  }
-
+  // FIXME: Instead of polluting the global route config, utilize two different parent apps
   // Sub-page with a back button
   if (route.hideNavigationTabs) {
     return (

@@ -2,10 +2,8 @@ import * as React from "react"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
 import { ErrorPage } from "Components/ErrorPage"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ArtsyLogoBlackIcon, Button, ThemeProviderV3 } from "@artsy/palette"
-import { RouterLink } from "./RouterLink"
+import { Button, ThemeProviderV3 } from "@artsy/palette"
+import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 
 const logger = createLogger()
 
@@ -79,50 +77,44 @@ export class ErrorBoundary extends React.Component<Props, State> {
     if (isError) {
       return (
         <ThemeProviderV3>
-          <AppContainer my={4}>
-            <HorizontalPadding>
-              <RouterLink to="/" display="block" mb={4}>
-                <ArtsyLogoBlackIcon />
-              </RouterLink>
-
-              {(() => {
-                switch (true) {
-                  case asyncChunkLoadError: {
-                    return (
-                      <ErrorPage
-                        code={500}
-                        message="Please check your network connection and try again."
+          <LayoutLogoOnly>
+            {(() => {
+              switch (true) {
+                case asyncChunkLoadError: {
+                  return (
+                    <ErrorPage
+                      code={500}
+                      message="Please check your network connection and try again."
+                    >
+                      <Button
+                        mt={2}
+                        size="small"
+                        variant="secondaryBlack"
+                        onClick={() => window.location.reload()}
                       >
-                        <Button
-                          mt={2}
-                          size="small"
-                          variant="secondaryBlack"
-                          onClick={() => window.location.reload()}
-                        >
-                          Reload
-                        </Button>
-                      </ErrorPage>
-                    )
-                  }
-
-                  case genericError: {
-                    return (
-                      <ErrorPage code={500} message={message} detail={detail}>
-                        <Button
-                          mt={2}
-                          size="small"
-                          variant="secondaryBlack"
-                          onClick={() => window.location.reload()}
-                        >
-                          Reload
-                        </Button>
-                      </ErrorPage>
-                    )
-                  }
+                        Reload
+                      </Button>
+                    </ErrorPage>
+                  )
                 }
-              })()}
-            </HorizontalPadding>
-          </AppContainer>
+
+                case genericError: {
+                  return (
+                    <ErrorPage code={500} message={message} detail={detail}>
+                      <Button
+                        mt={2}
+                        size="small"
+                        variant="secondaryBlack"
+                        onClick={() => window.location.reload()}
+                      >
+                        Reload
+                      </Button>
+                    </ErrorPage>
+                  )
+                }
+              }
+            })()}
+          </LayoutLogoOnly>
         </ThemeProviderV3>
       )
     }

@@ -37,7 +37,6 @@ export const myCollectionInsightsCollectorProfileRoutes: AppRouteConfig[] = [
     cacheConfig: {
       force: true,
     },
-    // hideNav: true, // TODO: Hide/Unhide depending on the conversation with the #design team
-    // hideFooter: true, // TODO: Hide/Unhide depending on the conversation with the #design team
+    // layout: "ContainerOnly", // TODO: Change layout depending on the conversation with the #design team
   },
 ]

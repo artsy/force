@@ -66,11 +66,6 @@ export const NavBar: React.FC = track(
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { mediator, user, isEigen } = useSystemContext()
 
-  // FIXME: Doesn't follow rules of hooks
-  if (isEigen) {
-    return null
-  }
-
   const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
@@ -129,6 +124,10 @@ export const NavBar: React.FC = track(
     }
 
     return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+  }
+
+  if (isEigen) {
+    return null
   }
 
   return (

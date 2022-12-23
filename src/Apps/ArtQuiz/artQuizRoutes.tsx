@@ -22,7 +22,6 @@ const ArtQuizResults = loadable(() => import("./Routes/ArtQuizResults"), {
 export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
-    hideFooter: true,
     onServerSideRender: ({ res }) => {
       if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
         res.redirect("/")
@@ -39,7 +38,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
       {
         path: "welcome",
         getComponent: () => ArtQuizWelcome,
-        hideFooter: true,
+        layout: "NavOnly",
         query: graphql`
           query artQuizRoutes_WelcomeQuery {
             me {
@@ -70,7 +69,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
       {
         path: "artworks",
         getComponent: () => ArtQuizArtworks,
-        hideFooter: true,
+        layout: "NavOnly",
         onClientSideRender: () => {
           ArtQuizArtworks.preload()
         },
@@ -85,7 +84,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
       {
         path: "results",
         getComponent: () => ArtQuizResults,
-        hideFooter: true,
+        layout: "NavOnly",
         query: graphql`
           query artQuizRoutes_ArtQuizResultsQuery {
             me {
