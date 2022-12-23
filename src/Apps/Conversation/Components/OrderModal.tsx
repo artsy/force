@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 export const StyledIframe = styled("iframe")`
   height: 60vh;
+  width: 100%;
   border: none;
 `
 
