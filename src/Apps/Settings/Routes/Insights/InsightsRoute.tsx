@@ -16,7 +16,6 @@ export interface InsightsRouteProps {
 }
 
 const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
-  const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
   const isCareerHighlightEnabled = useFeatureFlag(
     "my-collection-web-phase-7-career-highlights"
   )
@@ -24,10 +23,6 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
     "my-collection-web-phase-7-median-sale-price"
   )
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  if (!isInsightsEnabled) {
-    return null
-  }
 
   if (!me.myCollectionInfo?.artworksCount) {
     return <InsightsLandingPage />
@@ -42,40 +37,38 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
         }
       />
 
-      {!!isInsightsEnabled && (
-        <>
-          <Media greaterThan="xs">
-            <InsightsHeader />
-          </Media>
+      <>
+        <Media greaterThan="xs">
+          <InsightsHeader />
+        </Media>
 
-          <Join separator={<Spacer y={[4, 6]} />}>
-            <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+        <Join separator={<Spacer y={[4, 6]} />}>
+          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
 
-            {!!isCareerHighlightEnabled && (
-              <>
-                <Media greaterThanOrEqual="sm">
-                  <InsightsCareerHighlightRailFragmentContainer
-                    me={me}
-                    showProgress={true}
-                  />
-                </Media>
-                <Media lessThan="sm">
-                  <InsightsCareerHighlightRailFragmentContainer
-                    me={me}
-                    showProgress={false}
-                  />
-                </Media>
-              </>
-            )}
+          {!!isCareerHighlightEnabled && (
+            <>
+              <Media greaterThanOrEqual="sm">
+                <InsightsCareerHighlightRailFragmentContainer
+                  me={me}
+                  showProgress={true}
+                />
+              </Media>
+              <Media lessThan="sm">
+                <InsightsCareerHighlightRailFragmentContainer
+                  me={me}
+                  showProgress={false}
+                />
+              </Media>
+            </>
+          )}
 
-            <InsightsAuctionResultsFragmentContainer me={me} />
+          <InsightsAuctionResultsFragmentContainer me={me} />
 
-            {!!isMedianSalePriceEnabled && (
-              <InsightsMedianSalePriceFragmentContainer me={me} />
-            )}
-          </Join>
-        </>
-      )}
+          {!!isMedianSalePriceEnabled && (
+            <InsightsMedianSalePriceFragmentContainer me={me} />
+          )}
+        </Join>
+      </>
     </>
   )
 }

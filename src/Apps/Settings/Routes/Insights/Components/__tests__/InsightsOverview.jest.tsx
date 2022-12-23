@@ -1,12 +1,10 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { InsightsOverviewTestQuery } from "__generated__/InsightsOverviewTestQuery.graphql"
 import { InsightsOverviewFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsOverview"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
 
 describe("InsightsOverview", () => {
   const { renderWithRelay } = setupTestWrapperTL<InsightsOverviewTestQuery>({
@@ -29,14 +27,6 @@ describe("InsightsOverview", () => {
         }
       }
     `,
-  })
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-7-insights": { flagEnabled: true },
-      },
-    }))
   })
 
   it("renders My Collection info properly", () => {

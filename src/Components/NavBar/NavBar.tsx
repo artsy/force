@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react"
 import * as React from "react"
-import { Button, Flex, themeProps, Text, Dropdown, Box } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  themeProps,
+  Text,
+  Dropdown,
+  Box,
+  BellIcon,
+  SoloIcon,
+} from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { NavBarSubMenu } from "./Menus"
@@ -36,6 +45,8 @@ import { Z } from "Apps/Components/constants"
 import { useTranslation } from "react-i18next"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { useJump } from "Utils/Hooks/useJump"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Router/useRouter"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -52,6 +63,7 @@ export const NavBar: React.FC = track(
     dispatch: data => Events.postEvent(data),
   }
 )(() => {
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { mediator, user, isEigen } = useSystemContext()
 
   // FIXME: Doesn't follow rules of hooks
@@ -62,6 +74,7 @@ export const NavBar: React.FC = track(
   const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
+  const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
@@ -259,8 +272,31 @@ export const NavBar: React.FC = track(
 
               {/* Mobile. Triggers at the `xs` breakpoint. */}
               <Flex display={["flex", "none"]}>
+                {isLoggedIn && isCollectorProfileEnabled && (
+                  <>
+                    <NavBarItemButton
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      onClick={() => router.push("/settings/alerts")}
+                    >
+                      <BellIcon aria-hidden="true" />
+                      {renderNotificationsIndicator()}
+                    </NavBarItemButton>
+
+                    <NavBarItemButton
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      onClick={() =>
+                        router.push("/collector-profile/my-collection")
+                      }
+                    >
+                      <SoloIcon aria-hidden="true" />
+                    </NavBarItemButton>
+                  </>
+                )}
                 <NavBarItemButton
-                  ml={1}
                   mr={-1}
                   width={40}
                   height={40}
@@ -285,8 +321,7 @@ export const NavBar: React.FC = track(
                   }}
                 >
                   <NavBarMobileMenuIcon open={showMobileMenu} />
-
-                  {renderNotificationsIndicator()}
+                  {!isCollectorProfileEnabled && renderNotificationsIndicator()}
                 </NavBarItemButton>
               </Flex>
             </Flex>

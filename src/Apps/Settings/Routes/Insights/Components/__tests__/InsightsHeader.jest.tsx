@@ -16,14 +16,6 @@ describe("InsightsHeader", () => {
       </MockBoot>
     )
 
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-7-insights": { flagEnabled: true },
-      },
-    }))
-  })
-
   it("renders the Upload artwork CTA and the textual content", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: {
