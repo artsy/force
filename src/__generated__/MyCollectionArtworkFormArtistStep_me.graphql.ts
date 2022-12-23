@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13516986be9d81ab041674933fa91ebf>>
+ * @generated SignedSource<<131b07602ea23c92faa15ce1d0705d0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
           readonly isPersonalArtist: boolean | null;
           readonly name: string | null;
           readonly slug: string;
-          readonly " $fragmentSpreads": FragmentRefs<"ArtistGridItem_artist">;
+          readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
         } | null;
       } | null> | null;
     } | null;
@@ -87,7 +87,7 @@ const node: ReaderFragment = {
                     {
                       "args": null,
                       "kind": "FragmentSpread",
-                      "name": "ArtistGridItem_artist"
+                      "name": "EntityHeaderArtist_artist"
                     },
                     {
                       "alias": null,
@@ -202,6 +202,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "98411062be41f72fe650204a54cdf24e";
+(node as any).hash = "ab858f8d4b43cac889fbf7ae0fe1c993";
 
 export default node;

@@ -2,6 +2,7 @@ import {
   Box,
   Clickable,
   Column,
+  EntityHeader,
   Flex,
   GridColumns,
   Input,
@@ -14,7 +15,6 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
-import { ArtistAvatar } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistAvatar"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
@@ -66,7 +66,12 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       <GridColumns>
         {values.artist ? (
           <Column span={12} mb={[0, 2]}>
-            <ArtistAvatar artist={values.artist!} />
+            <EntityHeader
+              name={values.artist.name || ""}
+              meta={values.artist.formattedNationalityAndBirthday || ""}
+              initials={values.artist.initials || ""}
+              image={values.artist.image?.cropped!}
+            />
           </Column>
         ) : (
           <Column span={6}>

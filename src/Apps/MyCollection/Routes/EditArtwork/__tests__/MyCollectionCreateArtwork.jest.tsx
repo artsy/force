@@ -166,28 +166,6 @@ describe("MyCollectionCreateArtwork", () => {
         })
       })
 
-      describe("when no artist has been selected", () => {
-        it("shows the artist input", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
-
-          // Navigate to the detail step
-          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
-
-          expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-          expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-
-          expect(
-            screen.queryByPlaceholderText("Enter full name")
-          ).toBeInTheDocument()
-        })
-      })
-
       describe("when an artist has been selected", () => {
         it("shows the artist avatar", async () => {
           getWrapper({
@@ -198,8 +176,9 @@ describe("MyCollectionCreateArtwork", () => {
             },
           })
 
-          // Navigate to the detail step
-          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+          // Navigate to the detail step and select an artist
+          fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
+          fireEvent.click(screen.getByTestId("artwork-select-skip-button"))
 
           expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
           expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
@@ -207,11 +186,31 @@ describe("MyCollectionCreateArtwork", () => {
           expect(
             screen.queryByPlaceholderText("Enter full name")
           ).not.toBeInTheDocument()
-          expect(screen.getByText("Willem de Kooning")).toBeInTheDocument()
-          expect(
-            screen.getByText("Dutch-American, 1904–1997")
-          ).toBeInTheDocument()
+          expect(screen.getByText("Banksy")).toBeInTheDocument()
+          expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
         })
+      })
+    })
+
+    describe("when no artist has been selected", () => {
+      it("shows the artist input", async () => {
+        getWrapper({
+          featureFlags: {
+            "cx-my-collection-uploading-flow-steps": {
+              flagEnabled: true,
+            },
+          },
+        })
+
+        // Navigate to the detail step without selecting an artist
+        fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+
+        expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+        expect(
+          screen.queryByPlaceholderText("Enter full name")
+        ).toBeInTheDocument()
       })
     })
 
@@ -272,9 +271,8 @@ describe("MyCollectionCreateArtwork", () => {
           expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
           expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
 
-          expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
-            "Banksy"
-          )
+          expect(screen.getByText("Banksy")).toBeInTheDocument()
+          expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
 
           // TODO: Implement test for search query
           // expect(screen.getByPlaceholderText("Title")).toHaveValue("An Artwork")
