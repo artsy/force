@@ -69,9 +69,9 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-        },
-        "cx-collector-profile": {
-          flagEnabled: false,
+          "cx-collector-profile": {
+            flagEnabled: false,
+          },
         },
       }))
 
@@ -92,9 +92,9 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-        },
-        "cx-collector-profile": {
-          flagEnabled: true,
+          "cx-collector-profile": {
+            flagEnabled: true,
+          },
         },
       }))
 
