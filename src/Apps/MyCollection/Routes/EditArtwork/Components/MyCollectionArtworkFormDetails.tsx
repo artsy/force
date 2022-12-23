@@ -73,7 +73,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             />
           </Column>
         ) : (
-          <Column span={6}>
+          <Column span={6} mt={[2, 0]}>
             <ArtistAutoComplete
               onError={() => handleAutosuggestError(true)}
               onSelect={artist => setFieldValue("artistId", artist?.internalID)}
@@ -134,7 +134,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       </GridColumns>
 
       <GridColumns mt={[4, 2]}>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5}>
               Rarity
@@ -157,7 +157,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onSelect={selected => setFieldValue("attributionClass", selected)}
           />
         </Column>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
           {isLimitedEdition && (
             <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
               <NumericInput
@@ -190,7 +190,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         </Column>
       </GridColumns>
       <GridColumns mt={[30, 2]}>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
           <Flex height="100%">
             <Box width="50%" mr={2} height="100%">
               <Text variant="xs" mb={0.5} mr={0.5}>
@@ -257,7 +257,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         </Column>
       </GridColumns>
       <GridColumns mt={[30, 2]}>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
           <Flex height="100%">
             <Box mr={2} width="100%" height="100%">
               <Text variant="xs" mb={0.5} mr={0.5}>
@@ -294,7 +294,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         </Column>
       </GridColumns>
       <GridColumns mt={[4, 2]}>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5}>
               Provenance
