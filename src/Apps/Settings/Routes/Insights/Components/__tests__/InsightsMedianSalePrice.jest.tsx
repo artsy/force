@@ -69,6 +69,9 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
+          "cx-collector-profile": {
+            flagEnabled: false,
+          },
         },
       }))
 
@@ -80,6 +83,29 @@ describe("InsightsMedianSalePrice", () => {
 
       expect(mockPush).toHaveBeenCalledWith(
         "/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
+      )
+    })
+
+    it("navigates to the median auction price screen when the median-sale-price-graph and collecto-profile feature flags are enabled", () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "my-collection-web-phase-7-median-sale-price-graph": {
+            flagEnabled: true,
+          },
+          "cx-collector-profile": {
+            flagEnabled: true,
+          },
+        },
+      }))
+
+      renderWithRelay(mockResolver, false)
+
+      const artistRow = screen.getByText("Takashi Murakami")
+
+      fireEvent.click(artistRow)
+
+      expect(mockPush).toHaveBeenCalledWith(
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
   })

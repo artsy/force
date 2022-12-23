@@ -104,12 +104,16 @@ const ArtistRowWrapper: React.FC<{
   const enableMedianSalePriceGraphScreen = useFeatureFlag(
     "my-collection-web-phase-7-median-sale-price-graph"
   )
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
   if (enableMedianSalePriceGraphScreen) {
     return (
       <ClickableArtistRow
         onClick={() =>
           router.push(
-            `/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`
+            isCollectorProfileEnabled
+              ? `/collector-profile/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`
+              : `/my-collection/median-sale-price-at-auction/${artistID}?medium=${medium}`
           )
         }
       >
