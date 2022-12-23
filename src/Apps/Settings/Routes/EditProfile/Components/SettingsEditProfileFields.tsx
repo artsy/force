@@ -3,6 +3,7 @@ import {
   Button,
   CheckCircleFillIcon,
   CheckCircleIcon,
+  Clickable,
   Flex,
   Input,
   Join,
@@ -11,6 +12,10 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
+import {
+  useHandleEmailVerification,
+  useHandleIDVerification,
+} from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   SettingsEditProfileImageFragmentContainer,
   SettingsEditProfileImageRef,
@@ -26,12 +31,13 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface EditableLocationProps extends EditableLocation {
   display: string | null
@@ -59,6 +65,40 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
+
+  const {
+    showVerificationBanner: showVerificationBannerForID,
+    handleVerification: handleIDVerification,
+  } = useHandleIDVerification()
+
+  const {
+    showVerificationBanner: showVerificationBannerForEmail,
+    handleVerification: handleEmailVerification,
+  } = useHandleEmailVerification()
+
+  useEffect(() => {
+    if (!!showVerificationBannerForID) {
+      sendToast({
+        variant: "success",
+        message: `ID verification link sent to ${me?.email ?? ""}.`,
+      })
+    }
+    if (!!showVerificationBannerForEmail) {
+      sendToast({
+        variant: "success",
+        message: `Email sent to ${me?.email ?? ""}`,
+      })
+    }
+  }, [
+    me.email,
+    sendToast,
+    showVerificationBannerForID,
+    showVerificationBannerForEmail,
+  ])
+
+  const emailConfirmed = me?.emailConfirmed
+  const identityVerified = me?.identityVerified
+  const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
 
   const initialValues: EditProfileFormModel = {
     name: me.name ?? "",
@@ -202,29 +242,83 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
             <Spacer y={[4, 6]} />
 
+            {/* ID Verification */}
             <Box>
-              <Flex alignItems="center">
-                <CheckCircleIcon fill="black60" mr={0.5} />
-                <Text variant="sm-display">Verify Your ID</Text>
-              </Flex>
-
+              {identityVerified ? (
+                <Box>
+                  <Flex alignItems="center">
+                    <CheckCircleFillIcon fill="green100" mr={0.5} />
+                    <Text variant="sm-display">ID Verified</Text>
+                  </Flex>
+                </Box>
+              ) : (
+                <Flex alignItems="center">
+                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  <Clickable
+                    onClick={handleIDVerification}
+                    textDecoration="underline"
+                  >
+                    <Text variant="sm-display">Verify Your ID</Text>
+                  </Clickable>
+                </Flex>
+              )}
               <Text variant="sm" mt={1} color="black60">
-                For details, see FAQs or contact verification@artsy.net
+                For details, see{" "}
+                <a
+                  href="https://www.artsy.net/identity-verification-faq"
+                  target="_blank"
+                >
+                  FAQs
+                </a>{" "}
+                or contact{" "}
+                <RouterLink to={"mailto:verification@artsy.net"}>
+                  verification@artsy.net
+                </RouterLink>
+                .
               </Text>
             </Box>
 
             <Spacer y={[4, 6]} />
 
-            <Box>
-              <Flex alignItems="center">
-                <CheckCircleFillIcon fill="green100" mr={0.5} />
-                <Text variant="sm-display">Email Address Verified</Text>
-              </Flex>
+            {/* Email Verification */}
+            {emailConfirmed ? (
+              <Box>
+                <Flex alignItems="center">
+                  <CheckCircleFillIcon fill="green100" mr={0.5} />
+                  <Text variant="sm-display">Email Address Verified</Text>
+                </Flex>
 
-              <Text variant="sm" mt={1} color="black60">
-                For details, see FAQs or contact verification@artsy.net
-              </Text>
-            </Box>
+                <Text variant="sm" mt={1} color="black60">
+                  Secure your account and receive updates about your
+                  transactions on Artsy.
+                </Text>
+              </Box>
+            ) : (
+              <Box>
+                <Flex alignItems="center">
+                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  {canRequestEmailConfirmation ? (
+                    <Clickable
+                      onClick={handleEmailVerification}
+                      textDecoration="underline"
+                    >
+                      <Text variant="sm-display">Verify Your Email</Text>
+                    </Clickable>
+                  ) : (
+                    <Text
+                      style={{ textDecorationLine: "none" }}
+                      color="black60"
+                    >
+                      Verify Your Email
+                    </Text>
+                  )}
+                </Flex>
+                <Text variant="sm" mt={1} color="black60">
+                  Secure your account and receive updates about your
+                  transactions on Artsy.
+                </Text>
+              </Box>
+            )}
 
             <Button
               mt={6}

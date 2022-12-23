@@ -3,12 +3,12 @@ import { flushPromiseQueue } from "DevTools"
 import { mount, ReactWrapper } from "enzyme"
 import { Form, Formik } from "formik"
 import { SystemContextProvider } from "System"
-import { ArtistAutoComplete } from "../Components/ArtistAutocomplete"
+import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import {
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
   SubmissionType,
-} from "../Components/ArtworkDetailsForm"
+} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
@@ -42,7 +42,7 @@ jest.mock("react-relay", () => ({
 }))
 
 import { fetchQuery } from "react-relay"
-import { artworkDetailsValidationSchema } from "../../Utils/validation"
+import { artworkDetailsValidationSchema } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 
 const mockErrorHandler = jest.fn()
 let mockFetchQuery = (fetchQuery as jest.Mock).mockImplementation(() => ({
