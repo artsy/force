@@ -284,18 +284,16 @@ const Conversation: React.FC<ConversationProps> = props => {
           createsOfferOrder={createsOfferOrder}
         />
       )}
-      {isActionable && (
-        <OrderModal
-          path={url!}
-          orderID={orderID}
-          title={modalTitle!}
-          show={showOrderModal}
-          closeModal={() => {
-            refreshData()
-            setShowOrderModal(false)
-          }}
-        />
-      )}
+      <OrderModal
+        path={url!}
+        orderID={orderID}
+        title={modalTitle!}
+        show={showOrderModal}
+        closeModal={() => {
+          refreshData()
+          setShowOrderModal(false)
+        }}
+      />
     </Flex>
   )
 }
