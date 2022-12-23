@@ -84,7 +84,6 @@ export const artQuizRoutes: AppRouteConfig[] = [
       {
         path: "results",
         getComponent: () => ArtQuizResults,
-        layout: "NavOnly",
         query: graphql`
           query artQuizRoutes_ArtQuizResultsQuery {
             me {
