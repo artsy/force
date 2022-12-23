@@ -11,7 +11,7 @@ import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
-import { MetaTags } from "Components/MetaTags"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 
 interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
@@ -21,9 +21,7 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
   const { t } = useTranslation()
 
   return (
-    <>
-      <MetaTags title="Art Taste Quiz | Artsy" />
-
+    <ArtQuizFullScreen>
       <FullBleed height="100%">
         <SplitLayout
           hideLogo
@@ -80,6 +78,6 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
           }
         />
       </FullBleed>
-    </>
+    </ArtQuizFullScreen>
   )
 }

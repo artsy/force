@@ -7,6 +7,7 @@ import {
   Spinner,
   Box,
 } from "@artsy/palette"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
 import { useState, useEffect, FC } from "react"
 import { useTranslation } from "react-i18next"
@@ -39,41 +40,43 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
   }, [onReady])
 
   return (
-    <FullBleed height="100%">
-      <SplitLayout
-        hideLogo
-        left={
-          <Flex height="100%" alignItems="center" justifyContent="center">
-            <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
-          </Flex>
-        }
-        leftProps={{ display: ["none", "block"] }}
-        right={
-          <Flex
-            width="100%"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            p={[2, 4]}
-          >
-            <Box position="relative" height={25} width={25}>
-              <Spinner color="brand" />
-            </Box>
+    <ArtQuizFullScreen>
+      <FullBleed height="100%">
+        <SplitLayout
+          hideLogo
+          left={
+            <Flex height="100%" alignItems="center" justifyContent="center">
+              <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
+            </Flex>
+          }
+          leftProps={{ display: ["none", "block"] }}
+          right={
+            <Flex
+              width="100%"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              p={[2, 4]}
+            >
+              <Box position="relative" height={25} width={25}>
+                <Spinner color="brand" />
+              </Box>
 
-            <Spacer y={2} />
+              <Spacer y={2} />
 
-            <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
+              <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
 
-            <Spacer y={2} />
+              <Spacer y={2} />
 
-            <Text variant={["sm", "md"]} color="black60">
-              {loading
-                ? t("artQuizPage.loadingScreen.calculatingResults")
-                : t("artQuizPage.loadingScreen.resultsComplete")}
-            </Text>
-          </Flex>
-        }
-      />
-    </FullBleed>
+              <Text variant={["sm", "md"]} color="black60">
+                {loading
+                  ? t("artQuizPage.loadingScreen.calculatingResults")
+                  : t("artQuizPage.loadingScreen.resultsComplete")}
+              </Text>
+            </Flex>
+          }
+        />
+      </FullBleed>
+    </ArtQuizFullScreen>
   )
 }

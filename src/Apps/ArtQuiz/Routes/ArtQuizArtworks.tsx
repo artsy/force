@@ -25,6 +25,7 @@ import { FC, useCallback, useRef } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
+import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -118,7 +119,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   })
 
   return (
-    <>
+    <ArtQuizFullScreen>
       <FullBleed height="100%" display="flex" flexDirection="column">
         <Flex alignItems="stretch">
           <Clickable
@@ -208,7 +209,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
           />
         </Flex>
       </FullBleed>
-    </>
+    </ArtQuizFullScreen>
   )
 }
 
