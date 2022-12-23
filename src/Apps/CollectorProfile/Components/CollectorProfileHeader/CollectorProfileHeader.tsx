@@ -16,15 +16,18 @@ interface CollectorProfileHeaderProps {
 const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
   me,
 }) => {
+  const [isLoading, setLoading] = useState(true)
   const [localImage, setLocalImage] = useState<LocalImage>()
   const { name, createdAt, bio } = me
 
   useEffect(() => {
-    getProfileLocalImage().then(image => {
-      if (image) {
-        setLocalImage(image)
-      }
-    })
+    getProfileLocalImage()
+      .then(image => {
+        if (image) {
+          setLocalImage(image)
+        }
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   return (
@@ -32,7 +35,9 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
       <Spacer y={[2, 4]} />
 
       <Flex>
-        {localImage ? (
+        {isLoading ? (
+          <LocalImagePreview isLoading={isLoading} />
+        ) : localImage ? (
           <LocalImagePreview imageUrl={localImage.data} />
         ) : (
           <CollectorProfileHeaderAvatarFragmentContainer me={me} />
