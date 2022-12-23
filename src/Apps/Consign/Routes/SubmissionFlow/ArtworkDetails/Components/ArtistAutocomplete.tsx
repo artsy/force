@@ -94,7 +94,7 @@ export const ArtistAutoComplete: React.FC<{
             options.map((option: any) => ({
               text: option.displayLabel!,
               value: option.internalID!,
-              option: option,
+              option,
             }))
           )
         } else {

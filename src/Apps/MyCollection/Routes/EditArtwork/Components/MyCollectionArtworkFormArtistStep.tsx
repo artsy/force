@@ -123,7 +123,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
                     onSelect({
                       artistId: artist.internalID,
                       artistName: artist.displayLabel,
-                      artist: artist,
+                      artist,
                     })
                   }
                   data-testid={`artist-${artist.internalID}`}

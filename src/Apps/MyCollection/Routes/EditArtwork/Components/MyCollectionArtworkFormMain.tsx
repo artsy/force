@@ -89,7 +89,9 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
   } = useFormikContext<ArtworkModel>()
 
   const handleBack = () => {
+    // Reset form values to initial values
     setValues(getMyCollectionArtworkFormInitialValues(), false)
+
     onBack()
   }
 

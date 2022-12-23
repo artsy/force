@@ -153,7 +153,8 @@ describe("MyCollectionCreateArtwork", () => {
           })
 
           // Navigate to the detail step
-          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+          fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
+          fireEvent.click(screen.getByTestId("artwork-select-skip-button"))
 
           expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
 
@@ -165,22 +166,52 @@ describe("MyCollectionCreateArtwork", () => {
         })
       })
 
-      it("doesn't populate inputs", async () => {
-        getWrapper({
-          featureFlags: {
-            "cx-my-collection-uploading-flow-steps": {
-              flagEnabled: true,
+      describe("when no artist has been selected", () => {
+        it("shows the artist input", async () => {
+          getWrapper({
+            featureFlags: {
+              "cx-my-collection-uploading-flow-steps": {
+                flagEnabled: true,
+              },
             },
-          },
+          })
+
+          // Navigate to the detail step
+          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+
+          expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+          expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+          expect(
+            screen.queryByPlaceholderText("Enter full name")
+          ).toBeInTheDocument()
         })
+      })
 
-        // Navigate to the detail step
-        fireEvent.click(screen.getByTestId("artist-select-skip-button"))
+      describe("when an artist has been selected", () => {
+        it("shows the artist avatar", async () => {
+          getWrapper({
+            featureFlags: {
+              "cx-my-collection-uploading-flow-steps": {
+                flagEnabled: true,
+              },
+            },
+          })
 
-        expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+          // Navigate to the detail step
+          fireEvent.click(screen.getByTestId("artist-select-skip-button"))
 
-        expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
+          expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+          expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+          expect(
+            screen.queryByPlaceholderText("Enter full name")
+          ).not.toBeInTheDocument()
+          expect(screen.getByText("Willem de Kooning")).toBeInTheDocument()
+          expect(
+            screen.getByText("Dutch-American, 1904–1997")
+          ).toBeInTheDocument()
+        })
       })
     })
 

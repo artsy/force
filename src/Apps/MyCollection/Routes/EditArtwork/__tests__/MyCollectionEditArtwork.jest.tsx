@@ -100,9 +100,12 @@ describe("Edit artwork", () => {
 
       expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
-      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
-        "Willem de Kooning"
-      )
+      expect(
+        screen.queryByPlaceholderText("Enter full name")
+      ).not.toBeInTheDocument()
+      expect(screen.getByText("Willem de Kooning")).toBeInTheDocument()
+      expect(screen.getByText("Dutch-American, 1904–1997")).toBeInTheDocument()
+
       expect(screen.getByPlaceholderText("YYYY")).toHaveValue("1975")
       expect(screen.getByPlaceholderText("Title")).toHaveValue("Untitled")
       expect(

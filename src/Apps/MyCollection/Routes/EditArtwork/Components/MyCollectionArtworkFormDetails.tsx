@@ -51,8 +51,6 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
     setFieldValue("artistId", "")
   }
 
-  const showArtist = values.artist
-
   return (
     <>
       <ArtworkSidebarClassificationsModalQueryRenderer
@@ -66,7 +64,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       />
 
       <GridColumns>
-        {showArtist ? (
+        {values.artist ? (
           <Column span={12} mb={[0, 2]}>
             <ArtistAvatar artist={values.artist!} />
           </Column>
