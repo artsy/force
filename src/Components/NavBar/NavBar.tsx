@@ -46,7 +46,7 @@ import { useTranslation } from "react-i18next"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { useJump } from "Utils/Hooks/useJump"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useRouter } from "found"
+import { useRouter } from "System/Router/useRouter"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -321,6 +321,7 @@ export const NavBar: React.FC = track(
                   }}
                 >
                   <NavBarMobileMenuIcon open={showMobileMenu} />
+                  {!isCollectorProfileEnabled && renderNotificationsIndicator()}
                 </NavBarItemButton>
               </Flex>
             </Flex>
