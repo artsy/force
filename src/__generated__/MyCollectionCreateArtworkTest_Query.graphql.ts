@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37d22d6a3407c1ffcf536ac0f9e7044e>>
+ * @generated SignedSource<<9d71fa993bb0817f623d351659007eea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,45 @@ export type MyCollectionCreateArtworkTest_Query = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "height",
+        "value": 45
+      },
+      {
+        "kind": "Literal",
+        "name": "width",
+        "value": 45
+      }
+    ],
+    "concreteType": "CroppedImageUrl",
+    "kind": "LinkedField",
+    "name": "cropped",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "src",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "srcSet",
+        "storageKey": null
+      }
+    ],
+    "storageKey": "cropped(height:45,width:45)"
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -112,74 +150,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "displayLabel",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "formattedNationalityAndBirthday",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "image",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 45
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 45
-                                  }
-                                ],
-                                "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "src",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "srcSet",
-                                    "storageKey": null
-                                  }
-                                ],
-                                "storageKey": "cropped(height:45,width:45)"
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "initials",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "internalID",
                             "storageKey": null
                           },
@@ -187,7 +157,14 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "isPersonalArtist",
+                            "name": "href",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
                             "storageKey": null
                           },
                           {
@@ -201,10 +178,76 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "slug",
+                            "name": "initials",
                             "storageKey": null
                           },
-                          (v0/*: any*/)
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "formattedNationalityAndBirthday",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtistCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "artworks",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "forSaleArtworks",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": "avatar",
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": (v0/*: any*/),
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "displayLabel",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": (v0/*: any*/),
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isPersonalArtist",
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -217,19 +260,19 @@ return {
             ],
             "storageKey": null
           },
-          (v0/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "b559f04cd961a84035f6b4b1f038d602",
+    "cacheID": "9b90ac82d5f0dbef3041b54649db0797",
     "id": null,
     "metadata": {},
     "name": "MyCollectionCreateArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment ArtistGridItem_artist on Artist {\n  displayLabel\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  initials\n  internalID\n  isPersonalArtist\n  name\n  slug\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          ...ArtistGridItem_artist\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query MyCollectionCreateArtworkTest_Query {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();

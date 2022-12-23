@@ -100,9 +100,12 @@ describe("Edit artwork", () => {
 
       expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
-      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
-        "Willem de Kooning"
-      )
+      expect(
+        screen.queryByPlaceholderText("Enter full name")
+      ).not.toBeInTheDocument()
+      expect(screen.getByText("Willem de Kooning")).toBeInTheDocument()
+      expect(screen.getByText("Dutch-American, 1904–1997")).toBeInTheDocument()
+
       expect(screen.getByPlaceholderText("YYYY")).toHaveValue("1975")
       expect(screen.getByPlaceholderText("Title")).toHaveValue("Untitled")
       expect(
@@ -451,10 +454,19 @@ describe("Edit artwork", () => {
 const mockArtwork = {
   artist: {
     internalID: "4d8b929e4eb68a1b2c0002f2",
+    initials: "WK",
     name: "Willem de Kooning",
     formattedNationalityAndBirthday: "Dutch-American, 1904–1997",
     targetSupply: {
       isP1: true,
+    },
+    image: {
+      cropped: {
+        src: "https://example.com/image.jpg",
+        srcSet: "https://example.com/image.jpg 1x",
+        height: 12,
+        width: 12,
+      },
     },
   },
   consignmentSubmission: null,

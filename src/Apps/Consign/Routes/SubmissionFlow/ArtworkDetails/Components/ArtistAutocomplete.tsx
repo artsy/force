@@ -20,7 +20,7 @@ import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
 const DEBOUNCE_DELAY = 300
 
-type SubmissionImage =
+type AutocompleteArtist =
   | NonNullable<
       NonNullable<
         NonNullable<
@@ -29,18 +29,18 @@ type SubmissionImage =
           >["edges"]
         >[number]
       >["node"]
-    >["image"]
+    >
   | null
   | undefined
 
 interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
-  image: SubmissionImage
+  option: AutocompleteArtist
 }
 
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
   onChange?: (value: string) => void
-  onSelect: ({ artistId, artistName }) => void
+  onSelect: (artist: AutocompleteArtist | null) => void
   placeholder?: string
   required?: boolean
   title?: string
@@ -94,7 +94,7 @@ export const ArtistAutoComplete: React.FC<{
             options.map((option: any) => ({
               text: option.displayLabel!,
               value: option.internalID!,
-              image: option?.image,
+              option,
             }))
           )
         } else {
@@ -130,37 +130,42 @@ export const ArtistAutoComplete: React.FC<{
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-    onSelect({ artistId: "", artistName: "" })
+    onSelect(null)
     setArtistNotFoundMessage("")
   }
 
-  const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
+  const handleSelect = ({ text, value, option }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
-    onSelect({ artistId: value, artistName: text })
+
+    onSelect(option)
   }
 
   const handleClose = () => {
     setFieldTouched("artistName")
   }
 
-  const renderOption = (option: ArtistAutocompleteOption) => (
-    <Flex alignItems="center" p={1} width="100%">
-      {option.image ? (
-        <Image
-          src={option?.image?.cropped?.src}
-          srcSet={option?.image?.cropped?.srcSet}
-          width={option?.image?.cropped?.width}
-          height={option?.image?.cropped?.height}
-        />
-      ) : (
-        <Box width={44} height={44} backgroundColor="black10" />
-      )}
-      <Text ml={1} variant="sm-display">
-        {option.text}
-      </Text>
-    </Flex>
-  )
+  const renderOption = (option: ArtistAutocompleteOption) => {
+    const image = option.option?.image
+
+    return (
+      <Flex alignItems="center" p={1} width="100%">
+        {option.option?.image ? (
+          <Image
+            src={image?.cropped?.src}
+            srcSet={image?.cropped?.srcSet}
+            width={image?.cropped?.width}
+            height={image?.cropped?.height}
+          />
+        ) : (
+          <Box width={44} height={44} backgroundColor="black10" />
+        )}
+        <Text ml={1} variant="sm-display">
+          {option.text}
+        </Text>
+      </Flex>
+    )
+  }
 
   return (
     <AutocompleteInput
@@ -205,6 +210,9 @@ const fetchSuggestions = async (
             node {
               displayLabel
               ... on Artist {
+                formattedNationalityAndBirthday
+                name
+                initials
                 internalID
                 image {
                   cropped(width: 44, height: 44) {

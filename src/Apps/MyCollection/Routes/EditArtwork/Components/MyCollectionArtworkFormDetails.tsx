@@ -2,6 +2,7 @@ import {
   Box,
   Clickable,
   Column,
+  EntityHeader,
   Flex,
   GridColumns,
   Input,
@@ -14,13 +15,12 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
-import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
-import { useFormikContext } from "formik"
-import { useState } from "react"
-import { Media } from "Utils/Responsive"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
+import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
+import { useFormikContext } from "formik"
+import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
@@ -63,15 +63,27 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       />
 
       <GridColumns>
-        <Column span={6}>
-          <ArtistAutoComplete
-            onError={() => handleAutosuggestError(true)}
-            onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
-            required
-            title="Artist"
-          />
-        </Column>
-        <Column span={6} mt={[4, 0]}>
+        {values.artist ? (
+          <Column span={12} mb={[0, 2]}>
+            <EntityHeader
+              name={values.artist.name || ""}
+              meta={values.artist.formattedNationalityAndBirthday || ""}
+              initials={values.artist.initials || ""}
+              image={values.artist.image?.cropped!}
+            />
+          </Column>
+        ) : (
+          <Column span={6}>
+            <ArtistAutoComplete
+              onError={() => handleAutosuggestError(true)}
+              onSelect={artist => setFieldValue("artistId", artist?.internalID)}
+              required
+              title="Artist"
+            />
+          </Column>
+        )}
+
+        <Column span={6} mt={[2, 0]}>
           <Input
             title="Title"
             placeholder="Title"
@@ -84,63 +96,31 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             data-testid="my-collection-artwork-details-title"
           />
         </Column>
-      </GridColumns>
-      <Media at="xs">
-        <GridColumns mt={4}>
-          <Column span={6}>
-            <Select
-              title="Medium"
-              required
-              name="category"
-              options={categoryOptions}
-              selected={values.category}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              onSelect={selected => setFieldValue("category", selected)}
-            />
-          </Column>
-          <Column span={6} mt={4}>
-            <Input
-              title="Year"
-              maxLength={256}
-              placeholder="YYYY"
-              name="date"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.date}
-            />
-          </Column>
-        </GridColumns>
-      </Media>
-      <Media greaterThan="xs">
-        <GridColumns mt={2}>
-          <Column span={6}>
-            <Input
-              title="Year"
-              maxLength={256}
-              placeholder="YYYY"
-              name="date"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.date}
-            />
-          </Column>
-          <Column span={6} mt={0}>
-            <Select
-              title="Medium"
-              required
-              name="category"
-              options={categoryOptions}
-              selected={values.category}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              onSelect={selected => setFieldValue("category", selected)}
-            />
-          </Column>
-        </GridColumns>
-      </Media>
-      <GridColumns mt={[4, 2]}>
-        <Column span={6}>
+        <Column span={6} mt={[2, 0]}>
+          <Select
+            title="Medium"
+            required
+            name="category"
+            options={categoryOptions}
+            selected={values.category}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onSelect={selected => setFieldValue("category", selected)}
+          />
+        </Column>
+        <Column span={6} mt={[2, 0]}>
+          <Input
+            title="Year"
+            maxLength={256}
+            placeholder="YYYY"
+            name="date"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.date}
+          />
+        </Column>
+
+        <Column span={6} mt={[2, 0]}>
           <Input
             title="Materials"
             placeholder="Oil on Canvas, Mixed Media, Lithograph…"
@@ -152,6 +132,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           />
         </Column>
       </GridColumns>
+
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">

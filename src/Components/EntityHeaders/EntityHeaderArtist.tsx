@@ -1,15 +1,16 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Avatar, BoxProps, Text, Flex } from "@artsy/palette"
+import { Avatar, BoxProps, Flex, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderArtist_artist$data } from "__generated__/EntityHeaderArtist_artist.graphql"
-import { FollowArtistButtonQueryRenderer } from "../FollowButton/FollowArtistButton"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 
 export interface EntityHeaderArtistProps extends BoxProps {
   artist: EntityHeaderArtist_artist$data
   displayAvatar?: boolean
   displayCounts?: boolean
+  displayFollowButton?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
   onClick?(): void
@@ -20,6 +21,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   artist,
   displayAvatar = true,
   displayCounts = false,
+  displayFollowButton = true,
   displayLink = true,
   FollowButton,
   onClick,
@@ -70,14 +72,15 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
         </Flex>
       </Flex>
 
-      {FollowButton || (
-        <FollowArtistButtonQueryRenderer
-          id={artist.internalID}
-          contextModule={ContextModule.artistHeader}
-          size="small"
-          onFollow={onFollow}
-        />
-      )}
+      {displayFollowButton &&
+        (FollowButton || (
+          <FollowArtistButtonQueryRenderer
+            id={artist.internalID}
+            contextModule={ContextModule.artistHeader}
+            size="small"
+            onFollow={onFollow}
+          />
+        ))}
     </Flex>
   )
 }

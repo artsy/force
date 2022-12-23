@@ -8,10 +8,10 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
-import { ArtistGridItemFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistGridItem"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -37,11 +37,12 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
-  const onSelect = ({ artistId, artistName }) => {
-    setFieldValue("artistId", artistId)
-    setFieldValue("artistName", artistName || "")
+  const onSelect = artist => {
+    setFieldValue("artistId", artist.internalID)
+    setFieldValue("artistName", artist.name || "")
+    setFieldValue("artist", artist)
 
-    if (!artistId) {
+    if (!artist.internalID) {
       setQuery("")
 
       return
@@ -103,18 +104,18 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           <Text variant="sm-display">Artists in My Collection</Text>
           <Spacer y={1} />
           <GridColumns width="100%">
-            {collectedArtists.map((artist, index) => (
-              <Column span={[6, 4]} key={index}>
+            {collectedArtists.map(artist => (
+              <Column span={[6, 4]} key={artist.internalID} mt={1}>
                 <Clickable
-                  onClick={() =>
-                    onSelect({
-                      artistId: artist.internalID,
-                      artistName: artist.displayLabel,
-                    })
-                  }
+                  onClick={() => onSelect(artist)}
                   data-testid={`artist-${artist.internalID}`}
                 >
-                  <ArtistGridItemFragmentContainer artist={artist} />
+                  <EntityHeaderArtistFragmentContainer
+                    artist={artist}
+                    displayCounts={false}
+                    displayLink={false}
+                    displayFollowButton={false}
+                  />
                 </Clickable>
               </Column>
             ))}
@@ -132,7 +133,7 @@ const MyCollectionArtworkFormArtistStepFragment = graphql`
       collectedArtistsConnection(first: 100) {
         edges {
           node {
-            ...ArtistGridItem_artist
+            ...EntityHeaderArtist_artist
             displayLabel
             formattedNationalityAndBirthday
             image {

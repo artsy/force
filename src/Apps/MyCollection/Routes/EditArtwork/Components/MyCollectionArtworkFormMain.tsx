@@ -16,6 +16,7 @@ import { MyCollectionArtworkFormDetails } from "Apps/MyCollection/Routes/EditArt
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { MyCollectionArtworkFormImages } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { useDeleteArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtwork"
+import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Form, useFormikContext } from "formik"
@@ -84,13 +85,21 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
     isValid,
     values,
     dirty,
+    setValues,
   } = useFormikContext<ArtworkModel>()
+
+  const handleBack = () => {
+    // Reset form values to initial values
+    setValues(getMyCollectionArtworkFormInitialValues(), false)
+
+    onBack()
+  }
 
   return (
     <>
       <MyCollectionArtworkFormHeader
         onBackClick={() => {
-          dirty ? setShowLeaveWithoutSavingModal(true) : onBack()
+          dirty ? setShowLeaveWithoutSavingModal(true) : handleBack()
         }}
         NextButton={
           <Media greaterThan="xs">
@@ -119,7 +128,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
             <ConfirmationModalBack
               onClose={() => setShowLeaveWithoutSavingModal(false)}
               isEditing={isEditing}
-              onLeave={onBack}
+              onLeave={handleBack}
             />
           )}
           {showDeletionModal && (

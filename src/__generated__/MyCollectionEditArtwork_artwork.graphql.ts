@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af85c7bb890ea73078cb42f1c1d250d7>>
+ * @generated SignedSource<<fba260388a8fbb594c4c65b195910712>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,15 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionEditArtwork_artwork$data = {
   readonly artist: {
     readonly formattedNationalityAndBirthday: string | null;
+    readonly image: {
+      readonly cropped: {
+        readonly height: number;
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+      } | null;
+    } | null;
+    readonly initials: string | null;
     readonly internalID: string;
     readonly name: string | null;
     readonly targetSupply: {
@@ -110,6 +119,13 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "initials",
+          "storageKey": null
+        },
         (v1/*: any*/),
         {
           "alias": null,
@@ -132,6 +148,55 @@ return {
               "kind": "ScalarField",
               "name": "isP1",
               "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 44
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 44
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                },
+                (v3/*: any*/)
+              ],
+              "storageKey": "cropped(height:44,width:44)"
             }
           ],
           "storageKey": null
@@ -366,6 +431,6 @@ return {
 };
 })();
 
-(node as any).hash = "b14f0d212037acc5552f2a4e7724c9a1";
+(node as any).hash = "e2f8cf7f6b424c415a82f63130ecb056";
 
 export default node;
