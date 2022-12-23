@@ -66,18 +66,21 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       />
 
       <GridColumns>
-        <Column span={6}>
-          {showArtist ? (
+        {showArtist ? (
+          <Column span={12} mb={[0, 2]}>
             <ArtistAvatar artist={values.artist!} />
-          ) : (
+          </Column>
+        ) : (
+          <Column span={6}>
             <ArtistAutoComplete
               onError={() => handleAutosuggestError(true)}
-              onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
+              onSelect={artist => setFieldValue("artistId", artist?.internalID)}
               required
               title="Artist"
             />
-          )}
-        </Column>
+          </Column>
+        )}
+
         <Column span={6} mt={[4, 0]}>
           <Input
             title="Title"

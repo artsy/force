@@ -15,7 +15,7 @@ export const ArtistAvatar: React.FC<ArtistAvatarProps> = ({
         mr={1}
         initials={initials || undefined}
         lazyLoad
-        {...image}
+        {...image?.cropped}
       />
       <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
         <Text variant="sm-display" lineClamp={2}>

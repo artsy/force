@@ -38,12 +38,12 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
-  const onSelect = ({ artistId, artistName, artist }) => {
-    setFieldValue("artistId", artistId)
-    setFieldValue("artistName", artistName || "")
+  const onSelect = artist => {
+    setFieldValue("artistId", artist.internalID)
+    setFieldValue("artistName", artist.name || "")
     setFieldValue("artist", artist)
 
-    if (!artistId) {
+    if (!artist.internalID) {
       setQuery("")
 
       return

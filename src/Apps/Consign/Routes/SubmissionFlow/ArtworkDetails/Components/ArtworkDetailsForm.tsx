@@ -221,7 +221,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns>
         <Column span={6}>
           <ArtistAutoComplete
-            onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
+            onSelect={artist => setFieldValue("artistId", artist?.internalID)}
             onError={() => handleAutosuggestError(true)}
             title="Artist"
           />

@@ -10,6 +10,7 @@ export const getMyCollectionArtworkFormInitialValues = (
 ): ArtworkModel => ({
   artistId: artwork?.artist?.internalID ?? "",
   artistName: artwork?.artist?.name ?? "",
+  artist: artwork?.artist || undefined,
   category: artwork?.category ?? "",
   date: artwork?.date ?? "",
   title: artwork?.title ?? "",

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fc494b8661d9367242949f3c6b7061f>>
+ * @generated SignedSource<<83683269359b2c36d5ebced41041678d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,21 +56,21 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "height",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "width",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -123,6 +123,13 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "initials",
+                "storageKey": null
+              },
               (v3/*: any*/),
               {
                 "alias": null,
@@ -149,7 +156,56 @@ return {
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 44
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 44
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      },
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": "cropped(height:44,width:44)"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -270,7 +326,7 @@ return {
             "name": "editionNumber",
             "storageKey": null
           },
-          (v5/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -280,11 +336,11 @@ return {
             "plural": false,
             "selections": [
               (v3/*: any*/),
-              (v4/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -308,8 +364,8 @@ return {
                 "name": "imageURL",
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -363,19 +419,19 @@ return {
             "name": "title",
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8605930c5a8b659422494bbb63ffde39",
+    "cacheID": "6fe101e932154ee7b1a81a96905aa2c8",
     "id": null,
     "metadata": {},
     "name": "MyCollectionEditArtworkTest_Query",
     "operationKind": "query",
-    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
+    "text": "query MyCollectionEditArtworkTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionEditArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormMain_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment MyCollectionEditArtwork_artwork on Artwork {\n  artist {\n    internalID\n    initials\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    image {\n      cropped(width: 44, height: 44) {\n        height\n        src\n        srcSet\n        width\n      }\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n  ...MyCollectionArtworkFormMain_artwork\n}\n"
   }
 };
 })();

@@ -451,10 +451,19 @@ describe("Edit artwork", () => {
 const mockArtwork = {
   artist: {
     internalID: "4d8b929e4eb68a1b2c0002f2",
+    initials: "WK",
     name: "Willem de Kooning",
     formattedNationalityAndBirthday: "Dutch-American, 1904–1997",
     targetSupply: {
       isP1: true,
+    },
+    image: {
+      cropped: {
+        src: "https://example.com/image.jpg",
+        srcSet: "https://example.com/image.jpg 1x",
+        height: 12,
+        width: 12,
+      },
     },
   },
   consignmentSubmission: null,

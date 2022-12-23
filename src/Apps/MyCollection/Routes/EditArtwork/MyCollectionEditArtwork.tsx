@@ -140,10 +140,19 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
       fragment MyCollectionEditArtwork_artwork on Artwork {
         artist {
           internalID
+          initials
           name
           formattedNationalityAndBirthday
           targetSupply {
             isP1
+          }
+          image {
+            cropped(width: 44, height: 44) {
+              height
+              src
+              srcSet
+              width
+            }
           }
         }
         consignmentSubmission {
