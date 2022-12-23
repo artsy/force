@@ -16,7 +16,7 @@ const ArtistGridItem: React.FC<ArtistGridItemProps> = ({ artist }) => {
       alignItems="center"
       mt={1}
     >
-      <ArtistAvatar {...artist} />
+      <ArtistAvatar artist={artist} />
     </Flex>
   )
 }

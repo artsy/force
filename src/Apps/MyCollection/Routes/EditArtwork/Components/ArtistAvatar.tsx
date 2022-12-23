@@ -1,22 +1,12 @@
 import { Avatar, Flex, Text } from "@artsy/palette"
+import { Artist } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 
 export interface ArtistAvatarProps {
-  formattedNationalityAndBirthday?: string | null
-  initials?: string | null
-  image?: {
-    cropped: {
-      src: string
-      srcSet: string
-    } | null
-  } | null
-  name?: string | null
+  artist: Artist
 }
 
 export const ArtistAvatar: React.FC<ArtistAvatarProps> = ({
-  formattedNationalityAndBirthday,
-  initials,
-  image,
-  name,
+  artist: { formattedNationalityAndBirthday, initials, image, name },
 }) => {
   return (
     <Flex>

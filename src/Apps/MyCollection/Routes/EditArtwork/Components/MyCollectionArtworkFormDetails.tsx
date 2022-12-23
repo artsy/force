@@ -51,7 +51,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
     setFieldValue("artistId", "")
   }
 
-  const showArtistInput = !values.artist
+  const showArtist = values.artist
 
   return (
     <>
@@ -67,15 +67,15 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          {showArtistInput ? (
+          {showArtist ? (
+            <ArtistAvatar artist={values.artist!} />
+          ) : (
             <ArtistAutoComplete
               onError={() => handleAutosuggestError(true)}
               onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
               required
               title="Artist"
             />
-          ) : (
-            <ArtistAvatar {...values.artist} />
           )}
         </Column>
         <Column span={6} mt={[4, 0]}>

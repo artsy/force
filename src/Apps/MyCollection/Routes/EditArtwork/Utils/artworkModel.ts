@@ -1,8 +1,7 @@
-import { ArtistAvatarProps } from "Apps/MyCollection/Routes/EditArtwork/Components/ArtistAvatar"
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface ArtworkModel {
-  artist?: ArtistAvatarProps
+  artist?: Artist
   artistName: string
   artistId: string
   category: string
@@ -31,4 +30,16 @@ export interface MyCollectionPhoto {
   imageURL?: string | null
   internalID?: string | null
   removed?: boolean
+}
+
+export interface Artist {
+  formattedNationalityAndBirthday?: string | null
+  initials?: string | null
+  image?: {
+    cropped: {
+      src: string
+      srcSet: string
+    } | null
+  } | null
+  name?: string | null
 }

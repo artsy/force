@@ -6,6 +6,7 @@ import {
   Image,
   Text,
 } from "@artsy/palette"
+import { Artist } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useFormikContext } from "formik"
 import { debounce } from "lodash"
 import { useEffect, useMemo, useState } from "react"
@@ -40,7 +41,15 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
   onChange?: (value: string) => void
-  onSelect: ({ artistId, artistName }) => void
+  onSelect: ({
+    artistId,
+    artistName,
+    artist,
+  }: {
+    artistId: string
+    artistName: string
+    artist?: Artist
+  }) => void
   placeholder?: string
   required?: boolean
   title?: string
@@ -130,14 +139,18 @@ export const ArtistAutoComplete: React.FC<{
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
-    onSelect({ artistId: "", artistName: "" })
+    onSelect({ artistId: "", artistName: "", artist: undefined })
     setArtistNotFoundMessage("")
   }
 
   const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
-    onSelect({ artistId: value, artistName: text })
+
+    const selectedArtist = suggestions.find(s => s.value === value)
+
+    debugger
+    onSelect({ artistId: value, artistName: text, artist: selectedArtist })
   }
 
   const handleClose = () => {
@@ -206,6 +219,8 @@ const fetchSuggestions = async (
               displayLabel
               ... on Artist {
                 internalID
+                formattedNationalityAndBirthday
+                name
                 image {
                   cropped(width: 44, height: 44) {
                     height
