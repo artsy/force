@@ -27,6 +27,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
           setLocalImage(image)
         }
       })
+      .catch(error => console.error("Error getting local profile image", error))
       .finally(() => setLoading(false))
   }, [])
 

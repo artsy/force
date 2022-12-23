@@ -71,6 +71,7 @@ const SettingsEditProfileImage = forwardRef<
           setLocalImage(image)
         }
       })
+      .catch(error => console.error("Error getting local profile image", error))
       .finally(() => setIsLoading(false))
   }, [])
 
