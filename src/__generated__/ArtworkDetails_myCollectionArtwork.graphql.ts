@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47138a2303e0a01424bc3de999b1f80f>>
+ * @generated SignedSource<<582555be7c0e1a736a63e0f08deda1f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,9 @@ export type ArtworkDetails_myCollectionArtwork$data = {
     readonly state: string | null;
   } | null;
   readonly medium: string | null;
+  readonly mediumType: {
+    readonly name: string | null;
+  } | null;
   readonly metric: string | null;
   readonly provenance: string | null;
   readonly title: string | null;
@@ -56,7 +59,10 @@ v1 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-};
+},
+v2 = [
+  (v1/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -140,13 +146,21 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": (v2/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "AttributionClass",
       "kind": "LinkedField",
       "name": "attributionClass",
       "plural": false,
-      "selections": [
-        (v1/*: any*/)
-      ],
+      "selections": (v2/*: any*/),
       "storageKey": null
     },
     {
@@ -204,6 +218,6 @@ return {
 };
 })();
 
-(node as any).hash = "2d2f0d7fa843cfc7614df4071613e8b7";
+(node as any).hash = "af886e120dbdc155b8f9e65bd9a14578";
 
 export default node;

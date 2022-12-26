@@ -106,6 +106,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       submissionData = {
         externalId: submission?.externalId,
         artistID: artworkDetailsForm.artistId,
+        category: artworkDetailsForm.category ?? null,
         year: artworkDetailsForm.year,
         title: artworkDetailsForm.title,
         medium: artworkDetailsForm.materials,
@@ -315,6 +316,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
           internalID
           name
         }
+        category
         locationCity
         locationCountry
         locationState
@@ -351,6 +353,9 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         date
         title
         medium
+        mediumType {
+          name
+        }
         attributionClass {
           name
         }
