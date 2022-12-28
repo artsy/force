@@ -1,16 +1,21 @@
 import {
-  Box,
   Button,
   Clickable,
   EntityHeader,
+  omit,
   Spacer,
+  Spinner,
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
+import { MyCollectionArworkSearch } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArworkSearch"
+import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { useCallback, useState } from "react"
+import { useFormikContext } from "formik"
+import { pickBy } from "lodash"
+import { Suspense, useCallback, useState } from "react"
 
 interface MyCollectionArtworkFormArtworkStepProps {}
 
@@ -21,6 +26,21 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
   const handleChange = useCallback(event => {
     setQuery(event.target.value)
   }, [])
+
+  const { values, setFieldValue } = useFormikContext<ArtworkModel>()
+
+  const handleArtworkClick = artwork => {
+    const filteredFormValues = omit(
+      pickBy(artwork, value => value !== null),
+      ["images"]
+    )
+
+    Object.entries(filteredFormValues).forEach(([key, value]) => {
+      setFieldValue(key, value)
+    })
+
+    onNext?.()
+  }
 
   return (
     <AppContainer>
@@ -41,7 +61,16 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
 
       <Spacer y={4} />
 
-      <Heeader />
+      <Text variant={["md", "lg-display"]}>Select an Artwork</Text>
+
+      <Spacer y={2} />
+
+      <EntityHeader
+        name={values.artist?.name || ""}
+        meta={values.artist?.formattedNationalityAndBirthday || ""}
+        initials={values.artist?.initials || ""}
+        image={values.artist?.image?.cropped!}
+      />
 
       <Spacer y={4} />
 
@@ -55,70 +84,20 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
 
       <Text variant={["xs", "sm-display"]}>
         Or skip ahead to{" "}
-        <Clickable onClick={() => onNext?.()} textDecoration="underline">
+        <Clickable onClick={() => onSkip?.()} textDecoration="underline">
           <Text>add artwork details.</Text>
         </Clickable>
       </Text>
 
       <Spacer y={4} />
 
-      {/* <ArtworkGrid
-        artworks={artworks.artworksConnection}
-        columnCount={[2, 3]}
-        itemMargin={40}
-        emptyStateComponent={<SearchResultsNoResults />}
-      /> */}
+      <Suspense fallback={() => <Spinner />}>
+        <MyCollectionArworkSearch
+          artistId={values.artistId}
+          query={query}
+          onClick={handleArtworkClick}
+        />
+      </Suspense>
     </AppContainer>
-  )
-}
-
-const Heeader = () => {
-  return (
-    <>
-      <Text variant={["md", "lg-display"]}>Select an Artwork</Text>
-
-      <Spacer y={2} />
-
-      <EntityHeader
-        initials="FD"
-        name="Francesca DiMattio"
-        image={{
-          src: "https://picsum.photos/30/30",
-          srcSet:
-            "https://picsum.photos/30/30 1x, https://picsum.photos/60/60 2x",
-          lazyLoad: true,
-        }}
-        href="http://www.artsy.net/artist/francesca-dimattio"
-        meta="American, b. 1979"
-      />
-    </>
-  )
-}
-
-const SearchResultsNoResults = () => {
-  const { onNext } = useMyCollectionArtworkFormContext()
-
-  return (
-    <Box>
-      <Text variant={["xs", "sm-display"]} flexWrap="wrap">
-        We couldn’t find a work named “
-        <Text display="inline-block" color="blue100">
-          Artttttttttt
-        </Text>
-        “
-      </Text>
-
-      <Spacer y={4} />
-
-      <Button
-        width={300}
-        onClick={() => onNext?.()}
-        size="large"
-        variant="secondaryNeutral"
-        mt={4}
-      >
-        Go to Add Artwork Details
-      </Button>
-    </Box>
   )
 }
