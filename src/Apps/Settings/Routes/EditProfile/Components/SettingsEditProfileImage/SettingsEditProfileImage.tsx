@@ -71,6 +71,7 @@ const SettingsEditProfileImage = forwardRef<
           setLocalImage(image)
         }
       })
+      .catch(error => console.error("Error getting local profile image", error))
       .finally(() => setIsLoading(false))
   }, [])
 
@@ -108,7 +109,7 @@ const SettingsEditProfileImage = forwardRef<
       return (
         <LocalImagePreview
           onLoad={handleImageLoad}
-          // the order here is important, localImageUrl should take precedence
+          // the order here is important, localImageBase64 (local preview) should take precedence
           imageUrl={localImageBase64 || localImage?.data!}
         />
       )

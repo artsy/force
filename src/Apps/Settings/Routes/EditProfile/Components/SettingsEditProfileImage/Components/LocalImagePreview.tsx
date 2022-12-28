@@ -4,7 +4,7 @@ import { Either } from "Utils/typeSupport"
 
 interface LocalImagePreviewLoadedProps {
   imageUrl: string
-  onLoad: (image: React.SyntheticEvent<HTMLImageElement, Event>) => void
+  onLoad?: (image: React.SyntheticEvent<HTMLImageElement, Event>) => void
 }
 
 type LocalImagePreviewProps = Either<
