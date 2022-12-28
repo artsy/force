@@ -9,6 +9,7 @@ import {
   Join,
   Spacer,
   Text,
+  TextArea,
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
@@ -228,13 +229,14 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                 data-testid="edit-profile-other-relevant-positions-input"
               />
 
-              <Input
+              <TextArea
                 title="About"
                 placeholder="Add a brief bio, so galleries know which artists or genres you collect."
                 name="bio"
-                multiple
                 maxLength={150}
-                onChange={handleChange}
+                onChange={({ value }) => {
+                  setFieldValue("bio", value)
+                }}
                 value={values.bio}
                 data-testid="edit-profile-about-input"
               />
