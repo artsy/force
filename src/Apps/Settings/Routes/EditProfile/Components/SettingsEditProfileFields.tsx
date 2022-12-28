@@ -97,7 +97,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     showVerificationBannerForEmail,
   ])
 
-  const emailConfirmed = me?.emailConfirmed
+  const isEmailConfirmed = me?.isEmailConfirmed
   const isIdentityVerified = me?.isIdentityVerified
   const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
 
@@ -283,7 +283,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             <Spacer y={[4, 6]} />
 
             {/* Email Verification */}
-            {emailConfirmed ? (
+            {isEmailConfirmed ? (
               <Box>
                 <Flex alignItems="center">
                   <CheckCircleFillIcon fill="green100" mr={0.5} />
@@ -359,7 +359,7 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
           country
         }
         email
-        emailConfirmed
+        isEmailConfirmed
         isIdentityVerified
         canRequestEmailConfirmation
       }
