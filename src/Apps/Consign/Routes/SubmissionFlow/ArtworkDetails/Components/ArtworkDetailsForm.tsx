@@ -30,7 +30,7 @@ import {
 } from "Components/LocationAutocompleteInput"
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
-import { useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
@@ -218,7 +218,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       values.location.countryCode?.toUpperCase()
     )
 
-  const categories = useRef(acceptableCategoriesForSubmission()).current
+  const categories = useMemo(acceptableCategoriesForSubmission, [])
 
   return (
     <>
