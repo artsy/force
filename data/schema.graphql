@@ -11672,6 +11672,9 @@ type MyCollectionConnection {
     after: String
     before: String
     first: Int
+
+    # Include artists that have been created by the user.
+    includePersonalArtists: Boolean = false
     last: Int
     page: Int
     size: Int
@@ -11764,6 +11767,9 @@ type MyCollectionInfo {
     after: String
     before: String
     first: Int
+
+    # Include artists that have been created by the user.
+    includePersonalArtists: Boolean = false
     last: Int
     page: Int
     size: Int
