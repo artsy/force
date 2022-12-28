@@ -32,6 +32,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
     Array<LocalImage & { photoID: string }>
   >([])
   const { relayEnvironment } = useSystemContext()
+
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
   useImperativeHandle(
