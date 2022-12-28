@@ -205,7 +205,7 @@ describe("AuctionRegistrationRoute", () => {
         },
       }),
       Me: () => ({
-        identityVerified: false,
+        isIdentityVerified: false,
         hasQualifiedCreditCards: false,
       }),
     })

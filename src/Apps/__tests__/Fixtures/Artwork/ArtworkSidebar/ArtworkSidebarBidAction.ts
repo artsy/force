@@ -93,20 +93,20 @@ export const SaleRequiringIDV: Partial<
 
 export const NotIDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
-  identityVerified: false,
+  isIdentityVerified: false,
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }
 
 export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
-  identityVerified: false,
+  isIdentityVerified: false,
   pendingIdentityVerification: { internalID: "idv-id", id: "idv-id" },
 }
 
 export const IDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
-  identityVerified: true,
+  isIdentityVerified: true,
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }

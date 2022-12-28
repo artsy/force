@@ -2,7 +2,7 @@ import { Formik } from "formik"
 import { flushPromiseQueue } from "DevTools"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRouter } from "System/Router/useRouter"
-import { AuctionConfirmRegistrationRouteFragmentContainer } from "../AuctionConfirmRegistrationRoute"
+import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionConfirmRegistrationRoute"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { redirectToSaleHome } from "Apps/Auction/Routes/AuctionRegistrationRoute"
@@ -146,7 +146,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
         },
       }),
       Me: () => ({
-        identityVerified: false,
+        isIdentityVerified: false,
         hasQualifiedCreditCards: true,
       }),
     })

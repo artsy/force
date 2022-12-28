@@ -190,7 +190,7 @@ export const AuctionConfirmRegistrationRouteFragmentContainer = createFragmentCo
     me: graphql`
       fragment AuctionConfirmRegistrationRoute_me on Me {
         internalID
-        identityVerified
+        isIdentityVerified
         hasQualifiedCreditCards
 
         phoneNumber {
@@ -221,7 +221,7 @@ const computeProps = ({ me, sale }: AuctionConfirmRegistrationRouteProps) => {
   const needsIdentityVerification =
     sale?.requireIdentityVerification &&
     !sale?.bidder?.qualifiedForBidding &&
-    !me?.identityVerified
+    !me?.isIdentityVerified
 
   const validationSchema = !!me.phoneNumber?.originalNumber
     ? confirmRegistrationValidationSchemas.withoutPhoneValidation

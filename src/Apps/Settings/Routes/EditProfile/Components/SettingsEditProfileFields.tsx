@@ -98,7 +98,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   ])
 
   const emailConfirmed = me?.emailConfirmed
-  const identityVerified = me?.identityVerified
+  const isIdentityVerified = me?.isIdentityVerified
   const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
 
   const initialValues: EditProfileFormModel = {
@@ -246,7 +246,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
             {/* ID Verification */}
             <Box>
-              {identityVerified ? (
+              {isIdentityVerified ? (
                 <Box>
                   <Flex alignItems="center">
                     <CheckCircleFillIcon fill="green100" mr={0.5} />
@@ -360,7 +360,7 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
         }
         email
         emailConfirmed
-        identityVerified
+        isIdentityVerified
         canRequestEmailConfirmation
       }
     `,

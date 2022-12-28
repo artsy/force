@@ -115,7 +115,7 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
     me: graphql`
       fragment AuctionRegistrationRoute_me on Me {
         internalID
-        identityVerified
+        isIdentityVerified
         hasQualifiedCreditCards
       }
     `,
@@ -140,7 +140,7 @@ const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
   const needsIdentityVerification =
     sale?.requireIdentityVerification &&
     !sale?.bidder?.qualifiedForBidding &&
-    !me?.identityVerified
+    !me?.isIdentityVerified
 
   return {
     needsIdentityVerification,

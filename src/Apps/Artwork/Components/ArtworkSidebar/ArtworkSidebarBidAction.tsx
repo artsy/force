@@ -396,7 +396,7 @@ export const ArtworkSidebarBidActionFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment ArtworkSidebarBidAction_me on Me {
-        identityVerified
+        isIdentityVerified
         pendingIdentityVerification {
           internalID
         }
