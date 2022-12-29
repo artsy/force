@@ -1,6 +1,5 @@
 import {
   Button,
-  Clickable,
   EntityHeader,
   omit,
   Spacer,
@@ -30,6 +29,8 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
   const handleArtworkClick = artwork => {
+    // Initialize main form values with artwork data
+
     const filteredFormValues = omit(
       pickBy(artwork, value => value !== null),
       ["images"]
@@ -38,6 +39,15 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     Object.entries(filteredFormValues).forEach(([key, value]) => {
       setFieldValue(key, value)
     })
+
+    // Initialize photos with artwork images
+
+    const photos = artwork.images?.map(image => ({
+      name: "Automatically added",
+      url: image?.imageURL?.replace(":version", "large"),
+    }))
+
+    setFieldValue("newPhotos", photos)
 
     onNext?.()
   }
@@ -82,16 +92,7 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
 
       <Spacer y={2} />
 
-      <Text variant={["xs", "sm-display"]}>
-        Or skip ahead to{" "}
-        <Clickable onClick={() => onSkip?.()} textDecoration="underline">
-          <Text>add artwork details.</Text>
-        </Clickable>
-      </Text>
-
-      <Spacer y={4} />
-
-      <Suspense fallback={() => <Spinner />}>
+      <Suspense fallback={<Spinner />}>
         <MyCollectionArworkSearch
           artistId={values.artistId}
           query={query}
