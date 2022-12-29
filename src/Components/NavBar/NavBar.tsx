@@ -279,7 +279,7 @@ export const NavBar: React.FC = track(
                       justifyContent="center"
                       onClick={() => router.push("/settings/alerts")}
                     >
-                      <BellIcon aria-hidden="true" />
+                      <BellIcon aria-hidden="true" height={22} width={22} />
                       {renderNotificationsIndicator()}
                     </NavBarItemButton>
 
@@ -291,7 +291,7 @@ export const NavBar: React.FC = track(
                         router.push("/collector-profile/my-collection")
                       }
                     >
-                      <SoloIcon aria-hidden="true" />
+                      <SoloIcon aria-hidden="true" height={22} width={22} />
                     </NavBarItemButton>
                   </>
                 )}
