@@ -39,6 +39,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                 height
                 images {
                   height
+                  internalID
                   isDefault
                   imageURL
                   width
@@ -67,7 +68,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
   }
 
   return (
-    <>
+    <Box mb={4}>
       <Text variant={["xs", "sm-display"]}>
         Or skip ahead to{" "}
         <Clickable onClick={onSkip} textDecoration="underline">
@@ -88,6 +89,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                 showSaveButton={false}
                 showHoverDetails={false}
                 onClick={() => onClick(artwork)}
+                disableRouterLinking
                 data-testid={`artwork-${artwork.internalID}`}
               />
 
@@ -96,7 +98,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
           )
         })}
       </Masonry>
-    </>
+    </Box>
   )
 }
 

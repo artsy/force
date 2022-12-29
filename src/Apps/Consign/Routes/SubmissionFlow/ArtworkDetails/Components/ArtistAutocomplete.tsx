@@ -77,7 +77,8 @@ export const ArtistAutoComplete: React.FC<{
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (!value.trim()) return
+
+    if (!value?.trim()) return
 
     if (relayEnvironment) {
       try {
@@ -177,7 +178,7 @@ export const ArtistAutoComplete: React.FC<{
       loading={isLoading}
       defaultValue={values.artistName}
       error={
-        (values.artistName.trim() && touched.artistName && errors.artistId) ||
+        (values.artistName?.trim() && touched.artistName && errors.artistId) ||
         artistNotFoundMessage
       }
       onChange={handleChange}

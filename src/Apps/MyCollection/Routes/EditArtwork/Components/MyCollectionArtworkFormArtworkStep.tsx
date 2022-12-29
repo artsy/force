@@ -52,6 +52,8 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     const photos = artwork.images?.map(image => ({
       name: "Automatically added",
       url: image?.imageURL?.replace(":version", "large"),
+      id: image?.internalID,
+      size: image?.width,
     }))
 
     setFieldValue("newPhotos", photos)
