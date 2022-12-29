@@ -277,7 +277,7 @@ export const NavBar: React.FC = track(
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
-                      onClick={() => router.push("/settings/alerts")}
+                      onClick={() => router.push("/notifications")}
                     >
                       <BellIcon aria-hidden="true" height={22} width={22} />
                       {renderNotificationsIndicator()}
