@@ -47,7 +47,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
             }
           }}
         >
-          <MagnifyingGlassIcon />
+          <MagnifyingGlassIcon height={22} width={22} />
         </SearchButton>
       }
       {...props}
