@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6849fc120fe7438dcdc6f739a219dd93>>
+ * @generated SignedSource<<10cd93d75733d8ef259a3c85513b15aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type redirects_submission$data = {
     readonly size: string | null;
   } | null> | null;
   readonly attributionClass: ConsignmentAttributionClass | null;
+  readonly category: string | null;
   readonly depth: string | null;
   readonly dimensionsMetric: string | null;
   readonly editionNumber: string | null;
@@ -85,6 +86,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
       "storageKey": null
     },
     {
