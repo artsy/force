@@ -1,8 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { act, fireEvent, screen } from "@testing-library/react"
 import { MyCollectionCreateArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionCreateArtwork"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
+import { MockPayloadGenerator } from "relay-test-utils"
 import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 
@@ -37,7 +38,7 @@ describe("MyCollectionCreateArtwork", () => {
       },
     } = props
 
-    setupTestWrapperTL({
+    const { env } = setupTestWrapperTL({
       Component: (props: any) => {
         return (
           <MockBoot breakpoint={breakpoint} context={{ featureFlags }}>
@@ -53,6 +54,8 @@ describe("MyCollectionCreateArtwork", () => {
         }
       `,
     }).renderWithRelay({ Me: () => mockMe })
+
+    return env
   }
 
   describe("when the new upload flow is enabled", () => {
@@ -92,7 +95,7 @@ describe("MyCollectionCreateArtwork", () => {
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
 
-          expect(screen.getByText("Select Artwork")).toBeInTheDocument()
+          expect(screen.getByText("Select an Artwork")).toBeInTheDocument()
 
           fireEvent.click(screen.getByText("Back"))
 
@@ -113,7 +116,7 @@ describe("MyCollectionCreateArtwork", () => {
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
 
-          expect(screen.getByText("Select Artwork")).toBeInTheDocument()
+          expect(screen.getByText("Select an Artwork")).toBeInTheDocument()
 
           fireEvent.click(screen.getByTestId("artwork-select-skip-button"))
 
@@ -238,13 +241,9 @@ describe("MyCollectionCreateArtwork", () => {
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
 
-          // TODO: Implement test for search query
-          // fireEvent.change(
-          //   screen.getByPlaceholderText("Search for artists on Artsy"),
-          //   {
-          //     target: { value: "An Artwork" },
-          //   }
-          // )
+          fireEvent.change(screen.getByPlaceholderText("Search for artworks"), {
+            target: { value: "An Artwork" },
+          })
 
           // Navigate to the detail step
           fireEvent.click(screen.getByTestId("artwork-select-skip-button"))
@@ -255,8 +254,65 @@ describe("MyCollectionCreateArtwork", () => {
           expect(screen.getByText("Banksy")).toBeInTheDocument()
           expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
 
-          // TODO: Implement test for search query
+          expect(
+            screen.getByTestId("my-collection-artwork-details-title")
+          ).toHaveValue("An Artwork")
+        })
+      })
+
+      describe("when selecting an artwork", () => {
+        it("populates the form with the artwork details", async () => {
+          const env = getWrapper({
+            featureFlags: {
+              "cx-my-collection-uploading-flow-steps": {
+                flagEnabled: true,
+              },
+            },
+          })
+
+          // Navigate to the select artwork step
+          fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
+
+          act(() => {
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                Artist: () => mockArtist,
+              })
+            })
+          })
+
+          await flushPromiseQueue()
+
+          // Navigate to the detail step
+          fireEvent.click(
+            screen.getByTestId("artwork-630df944aeae3e000ea202f3")
+          )
+
+          // TODO: Check form values
+          expect(screen.getByText("Select an Artwork")).toBeInTheDocument()
+
+          // await flushPromiseQueue()
+          // expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+          // expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+
+          // expect(screen.getByText("Banksy")).toBeInTheDocument()
+          // expect(screen.getByText("British, b. 1974")).toBeInTheDocument()
+
           // expect(screen.getByPlaceholderText("Title")).toHaveValue("An Artwork")
+          // expect(screen.getByPlaceholderText("YYYY")).toHaveValue("An Artwork")
+          // expect(
+          //   screen.getByPlaceholderText(
+          //     "Oil on Canvas, Mixed Media, Lithograph…"
+          //   )
+          // ).toHaveValue("An Artwork")
+          // expect(screen.getByPlaceholderText("Edition Number")).toHaveValue(
+          //   "An Artwork"
+          // )
+          // expect(
+          //   screen.getByTestId("my-collection-artwork-details-height")
+          // ).toHaveValue("An Artwork")
+
+          // TODO: Check photos
         })
       })
     })
@@ -462,3 +518,161 @@ const mockMe = {
     },
   },
 } as CleanRelayFragment<MyCollectionCreateArtwork_me$data>
+
+const mockArtist = {
+  filterArtworksConnection: {
+    edges: [
+      {
+        node: {
+          medium: "Oil on canvas",
+          date: "2022",
+          depth: null,
+          editionSize: null,
+          editionNumber: null,
+          height: null,
+          images: [
+            {
+              height: 2385,
+              isDefault: true,
+              imageURL:
+                "https://d32dm0rphc51dk.cloudfront.net/DTh4yTCxyXI1XYcc7Sq7zg/:version.jpg",
+              width: 3157,
+            },
+          ],
+          id: "QXJ0d29yazo2MzBkZjk0NGFlYWUzZTAwMGVhMjAyZjM=",
+          internalID: "630df944aeae3e000ea202f3",
+          isEdition: false,
+          category: "Painting",
+          metric: null,
+          title: "Landscape Study no.3 (Tiepolo)",
+          width: null,
+          imageTitle:
+            "Megan Mary Baker, ‘Landscape Study no.3 (Tiepolo)’, 2022",
+          image: {
+            placeholder: "75.5464048146975%",
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/DTh4yTCxyXI1XYcc7Sq7zg/larger.jpg",
+            aspectRatio: 1.32,
+          },
+          artistNames: "Megan Mary Baker",
+          href: "/artwork/megan-mary-baker-landscape-study-no-dot-3-tiepolo",
+          sale_message: "Sold",
+          cultural_maker: null,
+          artist: {
+            targetSupply: {
+              isP1: false,
+            },
+            id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
+          },
+          marketPriceInsights: null,
+          artists: [
+            {
+              id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
+              href: "/artist/megan-mary-baker",
+              name: "Megan Mary Baker",
+            },
+          ],
+          collecting_institution: null,
+          partner: {
+            name: "Gillian Jason Gallery",
+            href: "/partner/gillian-jason-gallery",
+            id: "UGFydG5lcjo1YmZkNDA1N2Q0MGJkNjM1NDYwNmI0NzI=",
+          },
+          sale: null,
+          sale_artwork: null,
+          slug: "megan-mary-baker-landscape-study-no-dot-3-tiepolo",
+          is_saved: false,
+          attributionClass: {
+            name: "Unique",
+            id: "QXR0cmlidXRpb25DbGFzczp1bmlxdWU=",
+          },
+          mediumType: {
+            filterGene: {
+              name: "Painting",
+              id: "R2VuZTo0ZDkwZDE4ZWRjZGQ1ZjQ0YTUwMDAwMTA=",
+            },
+          },
+          is_biddable: false,
+        },
+      },
+      {
+        node: {
+          medium: "Oil on canvas",
+          date: "2022",
+          depth: null,
+          editionSize: null,
+          editionNumber: null,
+          height: null,
+          images: [
+            {
+              height: 2399,
+              isDefault: true,
+              imageURL:
+                "https://d32dm0rphc51dk.cloudfront.net/rnlenDwA_AgRuMIvn0MG0Q/:version.jpg",
+              width: 2802,
+            },
+          ],
+          id: "QXJ0d29yazo2MzBkZjg4NWMwZGQyNTAwMGM5YjhjOGY=",
+          internalID: "630df885c0dd25000c9b8c8f",
+          isEdition: false,
+          category: "Painting",
+          metric: null,
+          title: "What a Thing to Be Still When Everything Else is Moving",
+          width: null,
+          imageTitle:
+            "Megan Mary Baker, ‘What a Thing to Be Still When Everything Else is Moving’, 2022",
+          image: {
+            placeholder: "85.61741613133475%",
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/rnlenDwA_AgRuMIvn0MG0Q/larger.jpg",
+            aspectRatio: 1.17,
+          },
+          artistNames: "Megan Mary Baker",
+          href:
+            "/artwork/megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
+          sale_message: "£9,750–£10,250",
+          cultural_maker: null,
+          artist: {
+            targetSupply: {
+              isP1: false,
+            },
+            id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
+          },
+          marketPriceInsights: null,
+          artists: [
+            {
+              id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
+              href: "/artist/megan-mary-baker",
+              name: "Megan Mary Baker",
+            },
+          ],
+          collecting_institution: null,
+          partner: {
+            name: "Gillian Jason Gallery",
+            href: "/partner/gillian-jason-gallery",
+            id: "UGFydG5lcjo1YmZkNDA1N2Q0MGJkNjM1NDYwNmI0NzI=",
+          },
+          sale: null,
+          sale_artwork: null,
+          slug:
+            "megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
+          is_saved: false,
+          attributionClass: {
+            name: "Unique",
+            id: "QXR0cmlidXRpb25DbGFzczp1bmlxdWU=",
+          },
+          mediumType: {
+            filterGene: {
+              name: "Painting",
+              id: "R2VuZTo0ZDkwZDE4ZWRjZGQ1ZjQ0YTUwMDAwMTA=",
+            },
+          },
+          is_biddable: false,
+        },
+      },
+    ],
+    id:
+      "ZmlsdGVyQXJ0d29ya3NDb25uZWN0aW9uOnsiYWdncmVnYXRpb25zIjpbInRvdGFsIl0sImFydGlzdF9pZCI6IjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNSIsInBhZ2UiOjEsInNpemUiOjMwfQ==",
+  },
+  id: "QXJ0aXN0OjVkYjllN2U3Nzg3YWRkMDAxMjM0YjAyNQ==",
+}

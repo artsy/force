@@ -1,9 +1,6 @@
 import { Box, Button, Clickable, Spacer, Text } from "@artsy/palette"
-import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
-import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
-import { useFormikContext } from "formik"
 import { Fragment } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -12,26 +9,17 @@ import { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkS
 interface MyCollectionArworkSearchProps {
   artistId: string
   onClick: (artwork: any) => void
+  onSkip: () => void
   query?: string | null
 }
 
 export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> = ({
   artistId,
   onClick,
+  onSkip,
   query,
 }) => {
-  const { onSkip } = useMyCollectionArtworkFormContext()
-  const { setFieldValue } = useFormikContext<ArtworkModel>()
-
-  const trimmedQuery = query?.trimStart()
-
-  const handleSkip = () => {
-    setFieldValue("title", trimmedQuery)
-
-    onSkip?.()
-  }
-
-  const input = trimmedQuery ? { keyword: trimmedQuery } : null
+  const input = query ? { keyword: query } : null
 
   const data = useLazyLoadQuery<MyCollectionArworkSearchQuery>(
     graphql`
@@ -75,14 +63,14 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
   const artworks = extractNodes(data.artist?.filterArtworksConnection)
 
   if (artworks.length === 0) {
-    return <NoResults handleSkip={handleSkip} query={trimmedQuery} />
+    return <NoResults onSkip={onSkip} query={query} />
   }
 
   return (
     <>
       <Text variant={["xs", "sm-display"]}>
         Or skip ahead to{" "}
-        <Clickable onClick={handleSkip} textDecoration="underline">
+        <Clickable onClick={onSkip} textDecoration="underline">
           <Text>add artwork details.</Text>
         </Clickable>
       </Text>
@@ -98,8 +86,8 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                 hideSaleInfo
                 showSaveButton={false}
                 showHoverDetails={false}
-                disableRouterLinking
                 onClick={() => onClick(artwork)}
+                data-testid={`artwork-${artwork.internalID}`}
               />
 
               <Spacer y={4} />
@@ -112,9 +100,9 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
 }
 
 const NoResults: React.FC<{
-  handleSkip: () => void
+  onSkip: () => void
   query?: string | null
-}> = ({ handleSkip, query }) => {
+}> = ({ onSkip, query }) => {
   return (
     <Box my={4}>
       <Text variant={["xs", "sm-display"]} flexWrap="wrap">
@@ -127,7 +115,7 @@ const NoResults: React.FC<{
 
       <Spacer y={4} />
 
-      <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
+      <Button width={300} variant="secondaryNeutral" onClick={onSkip}>
         Go to Add Artwork Details
       </Button>
     </Box>

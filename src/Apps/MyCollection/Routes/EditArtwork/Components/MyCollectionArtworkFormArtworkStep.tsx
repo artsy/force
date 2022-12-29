@@ -21,14 +21,21 @@ interface MyCollectionArtworkFormArtworkStepProps {}
 export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFormArtworkStepProps> = () => {
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const [query, setQuery] = useState("")
+  const trimmedQuery = query?.trimStart()
 
   const handleChange = useCallback(event => {
     setQuery(event.target.value)
   }, [])
 
+  const handleSkip = () => {
+    setFieldValue("title", trimmedQuery)
+
+    onSkip?.()
+  }
+
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
-  const handleArtworkClick = artwork => {
+  const initializezFormValues = artwork => {
     // Initialize main form values with artwork data
 
     const filteredFormValues = omit(
@@ -48,6 +55,10 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     }))
 
     setFieldValue("newPhotos", photos)
+  }
+
+  const handleArtworkClick = artwork => {
+    initializezFormValues(artwork)
 
     onNext?.()
   }
@@ -60,7 +71,7 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
           <Button
             width={[100, 300]}
             data-testid="artwork-select-skip-button"
-            onClick={() => onSkip?.()}
+            onClick={handleSkip}
             size={["small", "large"]}
             variant="secondaryNeutral"
           >
@@ -95,8 +106,9 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
       <Suspense fallback={<Spinner />}>
         <MyCollectionArworkSearch
           artistId={values.artistId}
-          query={query}
+          query={trimmedQuery}
           onClick={handleArtworkClick}
+          onSkip={handleSkip}
         />
       </Suspense>
     </AppContainer>
