@@ -120,7 +120,6 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
               </Column>
             ))}
           </GridColumns>
-          slack
         </>
       )}
     </AppContainer>

@@ -204,6 +204,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onChange={handleChange}
                 value={values.height}
                 role="textbox"
+                data-testid="my-collection-artwork-details-height"
               />
             </Box>
             <Box width="50%" height="100%">
