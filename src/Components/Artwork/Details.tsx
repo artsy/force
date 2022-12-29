@@ -140,7 +140,7 @@ const HighDemandInfo = () => {
     <Flex flexDirection="row" alignItems="center">
       <HighDemandIcon width={16} height={16} />
       <Text variant="xs" color="blue100" ml={0.3}>
-        High Demand
+        &nbsp;High Demand
       </Text>
     </Flex>
   )
