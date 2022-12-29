@@ -30,22 +30,26 @@ export const InsightsHeader: React.FC = () => {
                     justifyContent="flex-end"
                     py={[1, 2]}
                   >
-                    <Button
-                      // @ts-ignore
-                      as={RouterLink}
-                      size={["small", "large"]}
-                      variant="primaryBlack"
-                      to={
-                        isCollectorProfileEnabled
-                          ? "/collector-profile/my-collection/artworks/new"
-                          : "/my-collection/artworks/new"
-                      }
-                      onClick={() =>
-                        trackAddCollectedArtwork(OwnerType.myCollectionInsights)
-                      }
-                    >
-                      Upload Artwork
-                    </Button>
+                    {stuck && (
+                      <Button
+                        // @ts-ignore
+                        as={RouterLink}
+                        size={["small", "large"]}
+                        variant="primaryBlack"
+                        to={
+                          isCollectorProfileEnabled
+                            ? "/collector-profile/my-collection/artworks/new"
+                            : "/my-collection/artworks/new"
+                        }
+                        onClick={() =>
+                          trackAddCollectedArtwork(
+                            OwnerType.myCollectionInsights
+                          )
+                        }
+                      >
+                        Upload Artwork
+                      </Button>
+                    )}
                   </Flex>
                 </HorizontalPadding>
               </AppContainer>
