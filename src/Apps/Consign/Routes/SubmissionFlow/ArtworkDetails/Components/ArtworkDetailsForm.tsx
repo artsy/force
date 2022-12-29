@@ -6,6 +6,7 @@ import {
   GridColumns,
   Input,
   LabeledInput,
+  Option,
   Radio,
   RadioGroup,
   Select,
@@ -13,6 +14,11 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import {
+  acceptableCategoriesForSubmission,
+  AcceptableCategoryValue,
+  formatCategoryValueForSubmission,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
 import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
@@ -24,7 +30,7 @@ import {
 } from "Components/LocationAutocompleteInput"
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
@@ -57,6 +63,7 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: props.values.artist?.internalID ?? "",
         artistName: props.values.artist?.name ?? "",
+        category: props.values.category ?? null,
         year: props.values.year ?? "",
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
@@ -82,6 +89,9 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: props.values.artist?.internalID ?? "",
         artistName: props.values.artist?.name ?? "",
+        category: props.values.mediumType?.name
+          ? formatCategoryValueForSubmission(props.values.mediumType.name)
+          : null,
         year: props.values.date ?? "",
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
@@ -105,6 +115,7 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: "",
         artistName: "",
+        category: null,
         year: "",
         title: "",
         materials: "",
@@ -134,6 +145,7 @@ rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
 export interface ArtworkDetailsFormModel {
   artistName: string
   artistId: string
+  category: AcceptableCategoryValue | null
   year: string
   title: string
   materials: string
@@ -206,6 +218,8 @@ export const ArtworkDetailsForm: React.FC = () => {
       values.location.countryCode?.toUpperCase()
     )
 
+  const categories = useMemo(acceptableCategoriesForSubmission, [])
+
   return (
     <>
       <ArtworkSidebarClassificationsModalQueryRenderer
@@ -251,6 +265,19 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[4, 0]}>
+          <Select
+            title="Medium"
+            name="category"
+            options={categories as Option[]}
+            selected={values.category ?? undefined}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onSelect={selected => setFieldValue("category", selected)}
+          />
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[4, 2]}>
+        <Column span={6}>
           <Input
             title="Materials"
             placeholder="Add materials"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f327826a66c54aecec84ab9347f399d>>
+ * @generated SignedSource<<f27bd98f117cd5a9effb0af101a31697>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -191,6 +191,18 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
             "name": "attributionClass",
@@ -257,7 +269,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c5ae4cca0c14ce449a93133fc2f08d4b",
+    "cacheID": "b363bc632eb389e171ae30e06299571d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -303,6 +315,13 @@ return {
         "myCollectionArtwork.location.postalCode": (v6/*: any*/),
         "myCollectionArtwork.location.state": (v6/*: any*/),
         "myCollectionArtwork.medium": (v6/*: any*/),
+        "myCollectionArtwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "myCollectionArtwork.mediumType.name": (v6/*: any*/),
         "myCollectionArtwork.metric": (v6/*: any*/),
         "myCollectionArtwork.provenance": (v6/*: any*/),
         "myCollectionArtwork.title": (v6/*: any*/),
@@ -311,7 +330,7 @@ return {
     },
     "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();

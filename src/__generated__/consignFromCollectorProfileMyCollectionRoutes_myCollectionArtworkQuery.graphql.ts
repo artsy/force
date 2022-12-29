@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f583bb62da7f4407c8b7b9d7d74ef3a>>
+ * @generated SignedSource<<34fa441b6a855df069adb18f9058d258>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -179,6 +179,18 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
             "name": "attributionClass",
@@ -245,12 +257,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0323e1095ff1cdcce513504acd76024e",
+    "cacheID": "c7033bbc4ef47bbc7572eb8e8bad7820",
     "id": null,
     "metadata": {},
     "name": "consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery",
     "operationKind": "query",
-    "text": "query consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  mediumType {\n    name\n  }\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
