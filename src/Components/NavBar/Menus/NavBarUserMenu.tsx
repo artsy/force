@@ -61,20 +61,20 @@ export const NavBarUserMenu: React.FC = () => {
             CMS
           </NavBarMenuItemLink>
 
+          <NavBarMenuItemLink
+            aria-label="View your purchases"
+            to="/settings/purchases"
+            onClick={trackClick}
+          >
+            Order History
+          </NavBarMenuItemLink>
+
           <Separator as="hr" my={1} />
         </>
       )}
 
       {isCollectorProfileEnabled ? (
         <>
-          <NavBarMenuItemLink
-            aria-label="View your purchases"
-            to="/settings/purchases"
-            onClick={trackClick}
-          >
-            <ReceiptIcon mr={1} aria-hidden="true" /> Order History
-          </NavBarMenuItemLink>
-
           <NavBarMenuItemLink
             aria-label="View your Collection"
             to="/collector-profile/my-collection"
