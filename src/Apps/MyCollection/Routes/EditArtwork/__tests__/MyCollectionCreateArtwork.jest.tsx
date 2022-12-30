@@ -35,6 +35,9 @@ describe("MyCollectionCreateArtwork", () => {
       breakpoint = "lg",
       featureFlags = {
         "cx-my-collection-uploading-flow-steps": { flagEnabled: false },
+        "cx-my-collection-personal-artists-for-web": {
+          flagEnabled: true,
+        },
       },
     } = props
 
