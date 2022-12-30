@@ -73,6 +73,10 @@ const formValuesToMutationInput = (
   return {
     artworkId: artwork?.internalID,
     artistIds: [values.artistId],
+    artists:
+      !values.artistId && values.artistName
+        ? [{ displayName: values.artistName }]
+        : undefined,
     category: values.category,
     date: values.date,
     title: values.title,

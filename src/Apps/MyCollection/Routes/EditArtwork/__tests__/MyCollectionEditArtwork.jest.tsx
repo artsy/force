@@ -5,9 +5,13 @@ import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { createMockEnvironment } from "relay-test-utils"
+import { useSystemContext } from "System/useSystemContext"
 import { Breakpoint } from "Utils/Responsive"
 import { CleanRelayFragment } from "Utils/typeSupport"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
+
+jest.mock("System/useSystemContext")
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -59,6 +63,17 @@ jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
 const mockUploadPhoto = uploadPhotoToS3 as jest.Mock
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+
+beforeAll(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+    featureFlags: {
+      "cx-my-collection-personal-artists-for-web": {
+        flagEnabled: true,
+      },
+    },
+    relayEnvironment: createMockEnvironment(),
+  }))
+})
 
 describe("Edit artwork", () => {
   const mockuseTracking = useTracking as jest.Mock
