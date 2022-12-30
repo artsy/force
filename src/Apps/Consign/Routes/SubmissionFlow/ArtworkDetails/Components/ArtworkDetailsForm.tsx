@@ -19,7 +19,6 @@ import {
   AcceptableCategoryValue,
   formatCategoryValueForSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
-import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
 import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
@@ -211,12 +210,6 @@ export const ArtworkDetailsForm: React.FC = () => {
   const handleLocationSelect = (place?: Place) => {
     setFieldValue("location", normalizePlace(place, true))
   }
-
-  const showPostalCode =
-    values.location.countryCode &&
-    Object.keys(postalCodeValidators).includes(
-      values.location.countryCode?.toUpperCase()
-    )
 
   const categories = useMemo(acceptableCategoriesForSubmission, [])
 
@@ -448,22 +441,6 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
       </GridColumns>
-      {showPostalCode && (
-        <GridColumns mt={[4, 2]}>
-          <Column start={7} span={6}>
-            <Input
-              title="Zip/postal code"
-              placeholder="Zip/Postal code where artwork is located"
-              name="postalCode"
-              maxLength={256}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.postalCode}
-              error={touched.postalCode && errors.postalCode}
-            />
-          </Column>
-        </GridColumns>
-      )}
     </>
   )
 }

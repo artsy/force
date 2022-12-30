@@ -48,25 +48,6 @@ export const artworkDetailsValidationSchema = yup.object().shape({
       coordinates: yup.array(yup.number()),
     })
     .required(),
-  postalCode: yup.string().when("location", {
-    is: location =>
-      location.countryCode &&
-      Object.keys(postalCodeValidators).includes(
-        location.countryCode.toUpperCase()
-      ),
-    then: yup.string().test("isPostalCodeValid", (postalCode, context) => {
-      const validor =
-        postalCodeValidators[context.parent.location.countryCode.toUpperCase()]
-
-      const isNotEmpty = !!postalCode?.length
-      const isMatchRegex = !!postalCode?.trim().match(validor.match)
-
-      return (
-        (isNotEmpty && isMatchRegex) ||
-        context.createError({ message: validor.errorMessage })
-      )
-    }),
-  }),
 })
 
 export const uploadPhotosValidationSchema = yup.object().shape({
