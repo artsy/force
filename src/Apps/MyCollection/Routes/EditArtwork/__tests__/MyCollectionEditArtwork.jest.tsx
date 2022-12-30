@@ -165,49 +165,6 @@ describe("Edit artwork", () => {
     })
   })
 
-  describe("when the user enters an artist name", () => {
-    it("creates a new personal artist for the user", async () => {
-      getWrapper().renderWithRelay({ Artwork: () => mockArtwork })
-
-      fireEvent.change(screen.getByPlaceholderText("Enter full name"), {
-        target: { value: "Test-Artist-Name" },
-      })
-
-      fireEvent.click(screen.getByTestId("save-button"))
-
-      await flushPromiseQueue()
-
-      expect(mockSubmitArtwork).toHaveBeenCalledWith(
-        expect.objectContaining({
-          rejectIf: expect.any(Function),
-          variables: {
-            input: {
-              artistIds: [""],
-              artists: [{ displayName: "Test-Artist-Name" }],
-              artworkId: "62fc96c48d3ff8000b556c3a",
-              artworkLocation: "Berlin",
-              attributionClass: "LIMITED_EDITION",
-              category: "Drawing, Collage or other Work on Paper",
-              date: "1975",
-              depth: "2",
-              editionNumber: "1",
-              editionSize: "2",
-              externalImageUrls: [],
-              height: "8.75",
-              medium: "Charcoal on paper",
-              metric: "in",
-              pricePaidCents: 400000,
-              pricePaidCurrency: "EUR",
-              provenance: "Fooo",
-              title: "Untitled",
-              width: "11",
-            },
-          },
-        })
-      )
-    })
-  })
-
   describe("Back Link behavior", () => {
     it("opens modal on press when the form has been changed", async () => {
       getWrapper().renderWithRelay({
