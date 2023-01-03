@@ -42,7 +42,7 @@ describe("NavBarSubMenu", () => {
       "/collection/top-auction-lots"
     )
 
-    expect(linkMenuItems.at(2).text()).toContain("Iconic Prints")
+    expect(linkMenuItems.at(2).text()).toContain("Top Prints & Editions")
     expect(linkMenuItems.at(2).prop("href")).toEqual(
       "/collection/iconic-prints"
     )
