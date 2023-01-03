@@ -16,7 +16,7 @@ export const AuthDialogSocial: FC = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP")
 
   const {
-    state: { options },
+    state: { options, analytics },
   } = useAuthDialogContext()
 
   // These params are handled by the routes in the Passport app,
@@ -26,7 +26,7 @@ export const AuthDialogSocial: FC = () => {
     {
       afterSignUpAction: options.afterAuthAction,
       "redirect-to": sanitizeRedirect(options.redirectTo),
-      "signup-intent": options.intent,
+      "signup-intent": analytics.intent,
       "signup-referer": null, // TODO: Add referer
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
