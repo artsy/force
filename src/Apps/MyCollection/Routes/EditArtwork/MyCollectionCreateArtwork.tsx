@@ -86,8 +86,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     }
   }
 
-  const handleNextStep = () => {
-    if (currentStep === "artist-select") {
+  const handleNextStep = options => {
+    if (options?.skipNext) {
+      setCurrentStep("details")
+    } else if (currentStep === "artist-select") {
       setCurrentStep("artwork-select")
     } else if (currentStep === "artwork-select") {
       setCurrentStep("details")

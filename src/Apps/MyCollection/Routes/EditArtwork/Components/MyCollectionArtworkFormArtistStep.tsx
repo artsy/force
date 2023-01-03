@@ -48,7 +48,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
       return
     }
 
-    onNext?.()
+    // Skip the artwork step if the artist has no public artworks on Artsy or is a personal artist
+    const skipNext = artist.isPersonalArtist || artist.counts.artworks === 0
+
+    onNext?.({ skipNext })
   }
 
   const onError = () => {
@@ -136,6 +139,9 @@ const MyCollectionArtworkFormArtistStepFragment = graphql`
         edges {
           node {
             ...EntityHeaderArtist_artist
+            counts {
+              artworks
+            }
             displayLabel
             formattedNationalityAndBirthday
             image {
