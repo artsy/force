@@ -152,7 +152,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       context_page_owner_type: OwnerType.ordersShipping,
       context_module: ContextModule.ordersShipping,
     })
-
+    setAddress(null)
     setShowAddressModal(true)
     setModalDetails({
       addressModalTitle: "Add address",

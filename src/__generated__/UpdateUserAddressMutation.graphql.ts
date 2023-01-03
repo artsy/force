@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca4ce223ef8b6f9b215fcc7af6332188>>
+ * @generated SignedSource<<ccf314ec41548b2e617e94817ef53b17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,7 @@ export type UpdateUserAddressMutation$data = {
       readonly isDefault?: boolean;
       readonly name?: string | null;
       readonly phoneNumber?: string | null;
+      readonly phoneNumberCountryCode?: string | null;
       readonly postalCode?: string | null;
       readonly region?: string | null;
     };
@@ -120,6 +121,13 @@ v2 = {
       "args": null,
       "kind": "ScalarField",
       "name": "phoneNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "phoneNumberCountryCode",
       "storageKey": null
     },
     {
@@ -261,16 +269,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2948f4a87297f060d1e28b1bf12be160",
+    "cacheID": "a2bbccc0b94ab32b328ce676a83b6ef1",
     "id": null,
     "metadata": {},
     "name": "UpdateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        name\n        addressLine1\n        addressLine2\n        isDefault\n        phoneNumber\n        city\n        region\n        postalCode\n        country\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation UpdateUserAddressMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        name\n        addressLine1\n        addressLine2\n        isDefault\n        phoneNumber\n        phoneNumberCountryCode\n        city\n        region\n        postalCode\n        country\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c0b17f3129542653a592f68b76865ace";
+(node as any).hash = "86a47a7c209fc6089293af8fa02a55e4";
 
 export default node;

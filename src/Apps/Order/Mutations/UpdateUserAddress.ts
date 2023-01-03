@@ -31,6 +31,7 @@ export const updateUserAddress = async (
               addressLine2
               isDefault
               phoneNumber
+              phoneNumberCountryCode
               city
               region
               postalCode

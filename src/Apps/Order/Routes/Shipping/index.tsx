@@ -187,24 +187,28 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     selectShipping()
   }
 
-  // TODO
-  const selectShipping = async (addedOrEditedAddress?: any) => {
-    const addedAddress =
-      addedOrEditedAddress?.createUserAddress?.userAddressOrErrors
-    const editedAddress =
-      addedOrEditedAddress?.updateUserAddress?.userAddressOrErrors
-
+  const selectShipping = async (
+    addedOrEditedAddress?: UpdateUserAddressMutation$data["updateUserAddress"]
+  ) => {
     try {
       // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = isCreateNewAddress()
-        ? addedAddress
-        : convertShippingAddressForExchange(
-            editedAddress
-              ? editedAddress
-              : addressList.find(
-                  address => address.internalID == selectedAddressID
-                )!
-          )
+      const shipToAddress = convertShippingAddressForExchange(
+        addedOrEditedAddress?.userAddressOrErrors
+          ? addedOrEditedAddress?.userAddressOrErrors
+          : addressList.find(
+              address => address.internalID == selectedAddressID
+            )!
+      )
+
+      const shipToPhoneNumber = addedOrEditedAddress?.userAddressOrErrors
+        .phoneNumber
+        ? addedOrEditedAddress?.userAddressOrErrors.phoneNumber
+        : phoneNumber
+
+      const shipToPhoneNumberCountryCode = addedOrEditedAddress
+        ?.userAddressOrErrors.phoneNumberCountryCode
+        ? addedOrEditedAddress?.userAddressOrErrors.phoneNumberCountryCode
+        : phoneNumberCountryCode
 
       const shipToPhoneNumber =
         isCreateNewAddress() || shippingOption === "PICKUP"
@@ -223,8 +227,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             id: props.order.internalID,
             fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
-            phoneNumber,
-            phoneNumberCountryCode,
+            phoneNumber: shipToPhoneNumber,
+            phoneNumberCountryCode: shipToPhoneNumberCountryCode,
           },
         })
       ).commerceSetShipping?.orderOrError
@@ -325,6 +329,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       type: "button",
     })
 
+    setPhoneNumber(null)
+    setPhoneNumberCountryCode("us")
+
     if (shippingOption !== newShippingOption) {
       setShippingOption(newShippingOption)
       setShippingQuotes(null)
@@ -368,14 +375,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const handleAddressEdit = (
     editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => {
+    if (editedAddress?.userAddressOrErrors?.internalID) {
+      selectShipping(editedAddress)
+    }
+
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
-
-      if (checkIfArtsyShipping()) {
-        selectShipping(editedAddress)
-      }
     }
   }
 
@@ -509,7 +516,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   {createAddressError}
                 </Banner>
               )}
-              <AddressForm
+              {/* TODO */}
+              {/* <AddressForm
                 me={
                   {
                     ...props.me.addressConnection,
@@ -523,10 +531,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 }}
                 onEditOrCreateAddressSuccess={addedAddress => {
                   setCreateAddressError(null)
-                  selectShipping(addedAddress)
+                  selectShipping(addedAddress?.updateUserAddress?.userAddressOrErrors)
                 }}
                 buttonText={"Save and Continue"}
-              />
+              /> */}
             </Collapse>
 
             <Collapse

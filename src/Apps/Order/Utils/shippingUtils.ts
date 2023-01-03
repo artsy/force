@@ -119,7 +119,14 @@ export const convertShippingAddressForExchange = (
   return Object.assign(
     {},
     emptyAddress,
-    omit(address, ["id", "isDefault", "internalID", "addressLine3", "errors"])
+    omit(address, [
+      "id",
+      "isDefault",
+      "internalID",
+      "addressLine3",
+      "errors",
+      "phoneNumberCountryCode",
+    ])
   )
 }
 
