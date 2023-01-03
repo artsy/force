@@ -108,10 +108,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     defaultShippingAddressIndex(props.me, props.order)
   )
 
-  const [phoneNumber, setPhoneNumber] = useState(
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(
     startingPhoneNumber(props.order)
   )
-  const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState("us")
+  const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState<
+    string | null
+  >("us")
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
 
   const addressList = extractNodes(props.me?.addressConnection) ?? []
@@ -221,7 +223,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             id: props.order.internalID,
             fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
-            phoneNumber: shipToPhoneNumber,
+            phoneNumber,
+            phoneNumberCountryCode,
           },
         })
       ).commerceSetShipping?.orderOrError
@@ -380,6 +383,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     createdAddress: CreateUserAddressMutation$data["createUserAddress"]
   ) => {
     if (createdAddress?.userAddressOrErrors?.internalID) {
+      setPhoneNumber(createdAddress?.userAddressOrErrors?.phoneNumber || null)
+      setPhoneNumberCountryCode(
+        createdAddress?.userAddressOrErrors?.phoneNumberCountryCode || null
+      )
       selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
     }
   }

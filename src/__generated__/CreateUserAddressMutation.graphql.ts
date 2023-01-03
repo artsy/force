@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf21c38688a16da931edd6c0cd4d3503>>
+ * @generated SignedSource<<36a892db918657402a3ae87d51b2a646>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,7 @@ export type CreateUserAddressMutation$data = {
       readonly isDefault?: boolean;
       readonly name?: string | null;
       readonly phoneNumber?: string | null;
+      readonly phoneNumberCountryCode?: string | null;
       readonly postalCode?: string | null;
       readonly region?: string | null;
     };
@@ -140,6 +141,13 @@ v2 = {
       "args": null,
       "kind": "ScalarField",
       "name": "phoneNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "phoneNumberCountryCode",
       "storageKey": null
     },
     {
@@ -260,16 +268,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0d9b217798cc13e1c197e32452f62677",
+    "cacheID": "0ce936d208d5b5720e986c889495e2c5",
     "id": null,
     "metadata": {},
     "name": "CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "28b6758809d33bd8ca1ebefa73b51d49";
+(node as any).hash = "da035e6cc9188e2000ab25d6ac15f7a7";
 
 export default node;

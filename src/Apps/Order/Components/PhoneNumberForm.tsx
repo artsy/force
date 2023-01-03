@@ -8,10 +8,10 @@ import {
 const PHONE_NUMBER_ERROR_MESSAGE = "Please enter a valid phone number"
 
 export interface PhoneNumberFormProps {
-  phoneNumber: string
-  setPhoneNumber: (phone: string) => void
-  phoneNumberCountryCode: string
-  setPhoneNumberCountryCode: (code: string) => void
+  phoneNumber: string | null
+  setPhoneNumber: (phone: string | null) => void
+  phoneNumberCountryCode: string | null
+  setPhoneNumberCountryCode: (code: string | null) => void
   onPhoneNumberValidation: (isValid: boolean) => void
 }
 
@@ -29,7 +29,12 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
 
   const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>()
 
-  const handlePhoneNumberValidation = async (phone: string, code: string) => {
+  const handlePhoneNumberValidation = async (
+    phone: string | null,
+    code: string | null
+  ) => {
+    if (phone === null || code === null) return
+
     const isValid = await validatePhoneNumber({
       national: phone,
       regionCode: code,
@@ -61,11 +66,11 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
           name: "phoneNumber",
           onChange: value => handlePhoneNumberChange(value),
           placeholder: "(000) 000 0000",
-          value: phoneNumber,
+          value: phoneNumber || "",
         }}
         selectProps={{
           name: "phoneNumberCountryCode",
-          selected: phoneNumberCountryCode,
+          selected: phoneNumberCountryCode || undefined,
           onSelect: value => {
             handlePhoneNumberCountryCodeChange(value)
           },

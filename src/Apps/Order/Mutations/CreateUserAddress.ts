@@ -63,6 +63,7 @@ export const createUserAddress = async (
               isDefault
               name
               phoneNumber
+              phoneNumberCountryCode
               postalCode
               region
             }
