@@ -22,6 +22,7 @@ import { AuthDialogSignUpQuery } from "__generated__/AuthDialogSignUpQuery.graph
 import { AuthDialogSignUp_requestLocation$data } from "__generated__/AuthDialogSignUp_requestLocation.graphql"
 import { AuthTermsCheckboxes } from "Components/AuthDialog/Components/AuthTermsCheckboxes"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
 interface AuthDialogSignUpProps {
   requestLocation?: AuthDialogSignUp_requestLocation$data | null
@@ -56,7 +57,7 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
           console.error(err)
 
           setFieldValue("mode", "Error")
-          setStatus({ error: err.message })
+          setStatus({ error: formatErrorMessage(err) })
         }
       }}
     >
@@ -234,6 +235,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   password: Yup.string()
     .required("Password required")
     .min(8, "Your password must be at least 8 characters.")
+    .max(128, "Your password must be less than 128 characters.")
     .matches(/\d{1}/, "Your password must have at least 1 digit.")
     .matches(/[a-z]{1}/, "Your password must have at least 1 lowercase letter.")
     .matches(

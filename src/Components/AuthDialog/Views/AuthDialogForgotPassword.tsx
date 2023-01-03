@@ -12,6 +12,7 @@ import {
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { Form, Formik } from "formik"
 import { forgotPassword } from "Utils/auth"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
 export const AuthDialogForgotPassword: FC = () => {
   const { dispatch } = useAuthDialogContext()
@@ -32,7 +33,7 @@ export const AuthDialogForgotPassword: FC = () => {
           console.error(err)
 
           setFieldValue("mode", "Error")
-          setStatus({ error: err.message })
+          setStatus({ error: formatErrorMessage(err) })
         }
       }}
     >
