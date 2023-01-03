@@ -1,4 +1,4 @@
-import { AuthIntent, Intent } from "@artsy/cohesion"
+import { AuthIntent, ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Checkbox,
@@ -15,6 +15,7 @@ import {
 import { useAuthDialog } from "Components/AuthDialog"
 import { FC, useState } from "react"
 import { Title } from "react-head"
+import { merge } from "lodash"
 
 export const DebugAuth: FC = () => {
   const { showAuthDialog } = useAuthDialog()
@@ -24,6 +25,9 @@ export const DebugAuth: FC = () => {
   >({
     mode: "Login",
     options: {},
+    analytics: {
+      contextModule: ContextModule.header,
+    },
   })
 
   return (
@@ -84,16 +88,15 @@ export const DebugAuth: FC = () => {
 
         <Select
           title="Intent"
-          value={state.options.intent}
+          value={state.analytics.intent}
           options={AUTH_INTENTS.map(intent => ({
             value: intent,
             text: intent,
           }))}
           onSelect={(intent: AuthIntent) => {
-            setState(prevState => ({
-              ...prevState,
-              options: { ...prevState.options, intent },
-            }))
+            setState(prevState =>
+              merge({}, prevState, { analytics: { intent } })
+            )
           }}
         />
 

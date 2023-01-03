@@ -12,14 +12,14 @@ export const COMMERCIAL_AUTH_INTENTS = [
 
 export const useElligibleForOnboarding = () => {
   const {
-    state: { mode, options },
+    state: { mode, analytics },
   } = useAuthDialogContext()
 
   const isElligibleForOnboarding =
     // Only trigger onboarding for sign ups...
     mode === "SignUp" &&
     // ...without a commercial intent
-    !(options.intent && COMMERCIAL_AUTH_INTENTS.includes(options.intent))
+    !(analytics.intent && COMMERCIAL_AUTH_INTENTS.includes(analytics.intent))
 
   return { isElligibleForOnboarding }
 }
