@@ -1,7 +1,7 @@
 import { Box, Button, Clickable, Spacer, Text } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import { graphql, useLazyLoadQuery } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArworkSearchQuery } from "__generated__/MyCollectionArworkSearchQuery.graphql"
@@ -62,6 +62,13 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
   )
 
   const artworks = extractNodes(data.artist?.filterArtworksConnection)
+
+  // Skip this step if the artist has no public artworks on Artsy
+  useEffect(() => {
+    if (artworks.length === 0) {
+      onSkip()
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (artworks.length === 0) {
     return <NoResults onSkip={onSkip} query={query} />
