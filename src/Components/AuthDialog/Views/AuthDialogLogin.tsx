@@ -16,6 +16,7 @@ import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSoc
 import { Form, Formik } from "formik"
 import { login } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
+import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 
 export const AuthDialogLogin: FC = () => {
   const { dispatch } = useAuthDialogContext()
@@ -48,24 +49,29 @@ export const AuthDialogLogin: FC = () => {
         } catch (err) {
           console.error(err)
 
-          if (err.message === "missing on-demand authentication code") {
-            setFieldValue("mode", "OnDemand")
-            return
-          }
+          switch (err.message) {
+            case "missing on-demand authentication code": {
+              setFieldValue("mode", "OnDemand")
+              return
+            }
 
-          if (err.message === "missing two-factor authentication code") {
-            setFieldValue("mode", "TwoFactor")
-            return
-          }
+            case "missing two-factor authentication code": {
+              setFieldValue("mode", "TwoFactor")
+              return
+            }
 
-          if (err.message === "invalid two-factor authentication code") {
-            setFieldValue("mode", "TwoFactor")
-            setStatus({ error: err.message })
-            return
-          }
+            case "invalid two-factor authentication code": {
+              setFieldValue("mode", "TwoFactor")
+              setStatus({ error: formatErrorMessage(err) })
+              return
+            }
 
-          setFieldValue("mode", "Error")
-          setStatus({ error: err.message })
+            default: {
+              setFieldValue("mode", "Error")
+              setStatus({ error: formatErrorMessage(err) })
+              return
+            }
+          }
         }
       }}
     >
