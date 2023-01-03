@@ -211,6 +211,9 @@ const fetchSuggestions = async (
             node {
               displayLabel
               ... on Artist {
+                counts {
+                  artworks
+                }
                 formattedNationalityAndBirthday
                 name
                 initials

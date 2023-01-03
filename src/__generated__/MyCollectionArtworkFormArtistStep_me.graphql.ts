@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<131b07602ea23c92faa15ce1d0705d0d>>
+ * @generated SignedSource<<9dfffc39c994aa9d0341c8037923efef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
     readonly collectedArtistsConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly counts: {
+            readonly artworks: any | null;
+          } | null;
           readonly displayLabel: string | null;
           readonly formattedNationalityAndBirthday: string | null;
           readonly image: {
@@ -88,6 +91,24 @@ const node: ReaderFragment = {
                       "args": null,
                       "kind": "FragmentSpread",
                       "name": "EntityHeaderArtist_artist"
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "ArtistCounts",
+                      "kind": "LinkedField",
+                      "name": "counts",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "artworks",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     },
                     {
                       "alias": null,
@@ -202,6 +223,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ab858f8d4b43cac889fbf7ae0fe1c993";
+(node as any).hash = "06aa5b579f1a9d63cc354ec38ba7f94e";
 
 export default node;

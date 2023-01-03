@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d151c9f92cf530391c0affad6003a86f>>
+ * @generated SignedSource<<c58f703c0207d94f2c70b7338fbc0068>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -267,12 +267,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3af18ae5e9aa46ee0fe7e2dfa153098d",
+    "cacheID": "1bacd8b1fcaba0dd77c48e90d54c9946",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_MyCollectionArtworkUploadQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query myCollectionRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();
