@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd7a123f35ecb179df7363869718f31c>>
+ * @generated SignedSource<<446bf3716aa0071f4a2eceb7272e3646>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,24 +9,24 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type DislikeArtworkInput = {
-  artworkID: string;
+export type SaveArtworkInput = {
+  artworkID?: string | null;
   clientMutationId?: string | null;
-  remove: boolean;
+  remove?: boolean | null;
 };
-export type useDislikeArtworkMutation$variables = {
-  input: DislikeArtworkInput;
+export type useSaveArtworkMutation$variables = {
+  input: SaveArtworkInput;
 };
-export type useDislikeArtworkMutation$data = {
-  readonly dislikeArtwork: {
+export type useSaveArtworkMutation$data = {
+  readonly saveArtwork: {
     readonly artwork: {
-      readonly isDisliked: boolean;
+      readonly isSaved: boolean | null;
     } | null;
   } | null;
 };
-export type useDislikeArtworkMutation = {
-  response: useDislikeArtworkMutation$data;
-  variables: useDislikeArtworkMutation$variables;
+export type useSaveArtworkMutation = {
+  response: useSaveArtworkMutation$data;
+  variables: useSaveArtworkMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -48,7 +48,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isDisliked",
+  "name": "isSaved",
   "storageKey": null
 };
 return {
@@ -56,14 +56,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDislikeArtworkMutation",
+    "name": "useSaveArtworkMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DislikeArtworkPayload",
+        "concreteType": "SaveArtworkPayload",
         "kind": "LinkedField",
-        "name": "dislikeArtwork",
+        "name": "saveArtwork",
         "plural": false,
         "selections": [
           {
@@ -89,14 +89,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDislikeArtworkMutation",
+    "name": "useSaveArtworkMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DislikeArtworkPayload",
+        "concreteType": "SaveArtworkPayload",
         "kind": "LinkedField",
-        "name": "dislikeArtwork",
+        "name": "saveArtwork",
         "plural": false,
         "selections": [
           {
@@ -124,16 +124,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8eee1223c96bbb7eede14f840396f967",
+    "cacheID": "483c306986cf44f0dccca9d445b159df",
     "id": null,
     "metadata": {},
-    "name": "useDislikeArtworkMutation",
+    "name": "useSaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      isDisliked\n      id\n    }\n  }\n}\n"
+    "text": "mutation useSaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      isSaved\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "26ad319c4083e5f2caa141cb66ee6d03";
+(node as any).hash = "71de0776dc3fda3028bd63f94d5970f0";
 
 export default node;

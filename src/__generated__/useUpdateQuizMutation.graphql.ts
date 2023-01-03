@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd7a123f35ecb179df7363869718f31c>>
+ * @generated SignedSource<<95badcf92a86c440116f2bb178181aa2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,24 +9,25 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type DislikeArtworkInput = {
-  artworkID: string;
+export type updateQuizMutationInput = {
+  artworkId: string;
+  clearInteraction?: boolean | null;
   clientMutationId?: string | null;
-  remove: boolean;
+  userId: string;
 };
-export type useDislikeArtworkMutation$variables = {
-  input: DislikeArtworkInput;
+export type useUpdateQuizMutation$variables = {
+  input: updateQuizMutationInput;
 };
-export type useDislikeArtworkMutation$data = {
-  readonly dislikeArtwork: {
-    readonly artwork: {
-      readonly isDisliked: boolean;
+export type useUpdateQuizMutation$data = {
+  readonly updateQuiz: {
+    readonly quiz: {
+      readonly completedAt: string | null;
     } | null;
   } | null;
 };
-export type useDislikeArtworkMutation = {
-  response: useDislikeArtworkMutation$data;
-  variables: useDislikeArtworkMutation$variables;
+export type useUpdateQuizMutation = {
+  response: useUpdateQuizMutation$data;
+  variables: useUpdateQuizMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -48,7 +49,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isDisliked",
+  "name": "completedAt",
   "storageKey": null
 };
 return {
@@ -56,22 +57,22 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDislikeArtworkMutation",
+    "name": "useUpdateQuizMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DislikeArtworkPayload",
+        "concreteType": "updateQuizMutationPayload",
         "kind": "LinkedField",
-        "name": "dislikeArtwork",
+        "name": "updateQuiz",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artwork",
+            "concreteType": "Quiz",
             "kind": "LinkedField",
-            "name": "artwork",
+            "name": "quiz",
             "plural": false,
             "selections": [
               (v2/*: any*/)
@@ -89,22 +90,22 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDislikeArtworkMutation",
+    "name": "useUpdateQuizMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DislikeArtworkPayload",
+        "concreteType": "updateQuizMutationPayload",
         "kind": "LinkedField",
-        "name": "dislikeArtwork",
+        "name": "updateQuiz",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Artwork",
+            "concreteType": "Quiz",
             "kind": "LinkedField",
-            "name": "artwork",
+            "name": "quiz",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -124,16 +125,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8eee1223c96bbb7eede14f840396f967",
+    "cacheID": "2f96b77a7ff92a55654ad4103f8710cd",
     "id": null,
     "metadata": {},
-    "name": "useDislikeArtworkMutation",
+    "name": "useUpdateQuizMutation",
     "operationKind": "mutation",
-    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      isDisliked\n      id\n    }\n  }\n}\n"
+    "text": "mutation useUpdateQuizMutation(\n  $input: updateQuizMutationInput!\n) {\n  updateQuiz(input: $input) {\n    quiz {\n      completedAt\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "26ad319c4083e5f2caa141cb66ee6d03";
+(node as any).hash = "abfee44a773cd61f332a6e37f327102b";
 
 export default node;

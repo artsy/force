@@ -1,6 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
-import { AuthContextModule } from "@artsy/cohesion"
 import {
   ArrowLeftIcon,
   Clickable,
@@ -20,12 +19,13 @@ import {
 } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC, useCallback, useRef } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
+import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
+import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -48,47 +48,102 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   })
 
   const currentArtwork = edges[activeIndex]!.node!
+  const previousArtwork = activeIndex > 0 ? edges[activeIndex - 1]!.node! : null
 
-  const { handleSave } = useSaveArtwork({
-    artwork: currentArtwork,
-    contextModule: "artQuiz" as AuthContextModule,
-    isSaved: !!currentArtwork.isSaved,
-  })
+  const { submitMutation: submitDislike } = useDislikeArtwork()
+  const { submitMutation: submitSave } = useSaveArtwork()
+  const { submitMutation: submitUpdate } = useUpdateQuiz()
 
-  const { submitMutation } = useDislikeArtwork()
-
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (activeIndex === 0) {
       router.push("/art-quiz/welcome")
-
       return
     }
 
-    dispatch({ type: "Previous" })
-  }
+    if (previousArtwork) {
+      const { isSaved, isDisliked } = previousArtwork
 
-  const handleNext = useCallback(
-    (action: "Like" | "Dislike") => () => {
-      if (activeIndex === cards.length - 1) {
-        router.push("/art-quiz/results")
-
-        return
-      }
-
-      if (action === "Like") {
-        handleSave()
-      }
-
-      if (action === "Dislike") {
-        submitMutation({
+      if (isSaved) {
+        submitSave({
           variables: {
             input: {
-              artworkId: currentArtwork.internalID,
+              artworkID: previousArtwork.internalID,
+              remove: true,
             },
           },
         })
       }
 
+      if (isDisliked) {
+        submitDislike({
+          variables: {
+            input: {
+              artworkID: previousArtwork.internalID,
+              remove: true,
+            },
+          },
+        })
+      }
+
+      submitUpdate({
+        variables: {
+          input: {
+            artworkId: previousArtwork.internalID,
+            userId: me.id,
+            clearInteraction: true,
+          },
+        },
+      })
+    }
+
+    dispatch({ type: "Previous" })
+  }, [
+    activeIndex,
+    dispatch,
+    me.id,
+    previousArtwork,
+    router,
+    submitDislike,
+    submitSave,
+    submitUpdate,
+  ])
+
+  const handleNext = useCallback(
+    (action: "Like" | "Dislike") => () => {
+      if (activeIndex === cards.length - 1) {
+        router.push("/art-quiz/results")
+        return
+      }
+
+      if (action === "Like") {
+        submitSave({
+          variables: {
+            input: {
+              artworkID: currentArtwork.internalID,
+            },
+          },
+        })
+      }
+
+      if (action === "Dislike") {
+        submitDislike({
+          variables: {
+            input: {
+              artworkID: currentArtwork.internalID,
+              remove: false,
+            },
+          },
+        })
+      }
+
+      submitUpdate({
+        variables: {
+          input: {
+            artworkId: currentArtwork.internalID,
+            userId: me.id,
+          },
+        },
+      })
       dispatch({ type: action })
     },
     [
@@ -96,9 +151,11 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       cards.length,
       currentArtwork.internalID,
       dispatch,
-      handleSave,
+      me.id,
       router,
-      submitMutation,
+      submitSave,
+      submitDislike,
+      submitUpdate,
     ]
   )
 
@@ -218,6 +275,7 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment ArtQuizArtworks_me on Me {
+        id
         quiz {
           quizArtworkConnection(first: 16) {
             edges {
