@@ -39,6 +39,7 @@ export type ShippingTestQuery$rawResponse = {
           readonly isDefault: boolean;
           readonly name: string | null;
           readonly phoneNumber: string | null;
+          readonly phoneNumberCountryCode: string | null;
           readonly postalCode: string | null;
           readonly region: string | null;
         } | null;
@@ -58,6 +59,8 @@ export type ShippingTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
+    readonly buyerPhoneNumber: string | null;
+    readonly buyerPhoneNumberCountryCode: string | null;
     readonly buyerTotal: string | null;
     readonly code: string;
     readonly currencyCode: string;
@@ -196,6 +199,8 @@ export type ShippingTestQuery$rawResponse = {
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
+    readonly buyerPhoneNumber: string | null;
+    readonly buyerPhoneNumberCountryCode: string | null;
     readonly buyerTotal: string | null;
     readonly code: string;
     readonly currencyCode: string;
@@ -664,6 +669,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "buyerPhoneNumber",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "buyerPhoneNumberCountryCode",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "requestedFulfillment",
@@ -1112,7 +1131,14 @@ return {
                       (v3/*: any*/),
                       (v10/*: any*/),
                       (v8/*: any*/),
-                      (v1/*: any*/)
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumberCountryCode",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   },
@@ -1183,7 +1209,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4dd9c14af7f53405d1f06151eeadb37c",
+    "cacheID": "607616ebdc6e593e7d51f9e45f1032ff",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1223,6 +1249,7 @@ return {
         "me.addressConnection.edges.node.isDefault": (v27/*: any*/),
         "me.addressConnection.edges.node.name": (v25/*: any*/),
         "me.addressConnection.edges.node.phoneNumber": (v25/*: any*/),
+        "me.addressConnection.edges.node.phoneNumberCountryCode": (v25/*: any*/),
         "me.addressConnection.edges.node.postalCode": (v25/*: any*/),
         "me.addressConnection.edges.node.region": (v25/*: any*/),
         "me.addressConnection.pageInfo": {
@@ -1247,6 +1274,8 @@ return {
         },
         "order.__isCommerceOrder": (v24/*: any*/),
         "order.__typename": (v24/*: any*/),
+        "order.buyerPhoneNumber": (v25/*: any*/),
+        "order.buyerPhoneNumberCountryCode": (v25/*: any*/),
         "order.buyerTotal": (v25/*: any*/),
         "order.code": (v24/*: any*/),
         "order.currencyCode": (v24/*: any*/),
@@ -1425,7 +1454,7 @@ return {
     },
     "name": "ShippingTestQuery",
     "operationKind": "query",
-    "text": "query ShippingTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Shipping_order\n    id\n  }\n  me {\n    ...Shipping_me\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    isSelected\n    price(precision: 2)\n    priceCents\n    typeName\n  }\n}\n\nfragment Shipping_me on Me {\n  name\n  email\n  id\n  ...SavedAddresses_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  requestedFulfillment {\n    __typename\n    ... on CommercePickup {\n      phoneNumber\n    }\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          processWithArtsyShippingDomestic\n          artsyShippingInternational\n          pickup_available: pickupAvailable\n          onlyShipsDomestically\n          euShippingOrigin\n          shippingCountry\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            ...ShippingQuotes_shippingQuotes\n            node {\n              id\n              isSelected\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query ShippingTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Shipping_order\n    id\n  }\n  me {\n    ...Shipping_me\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    isSelected\n    price(precision: 2)\n    priceCents\n    typeName\n  }\n}\n\nfragment Shipping_me on Me {\n  name\n  email\n  id\n  ...SavedAddresses_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  buyerPhoneNumber\n  buyerPhoneNumberCountryCode\n  requestedFulfillment {\n    __typename\n    ... on CommercePickup {\n      phoneNumber\n    }\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          processWithArtsyShippingDomestic\n          artsyShippingInternational\n          pickup_available: pickupAvailable\n          onlyShipsDomestically\n          euShippingOrigin\n          shippingCountry\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            ...ShippingQuotes_shippingQuotes\n            node {\n              id\n              isSelected\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

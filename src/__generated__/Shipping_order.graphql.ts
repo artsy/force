@@ -13,6 +13,8 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
+  readonly buyerPhoneNumber: string | null;
+  readonly buyerPhoneNumberCountryCode: string | null;
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
@@ -161,6 +163,20 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "buyerPhoneNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "buyerPhoneNumberCountryCode",
       "storageKey": null
     },
     {
@@ -362,6 +378,6 @@ return {
 };
 })();
 
-(node as any).hash = "5c1b57a0e809e02a3874e25d4bc51b0a";
+(node as any).hash = "7f5384ddc9e3e904768ade8b34f1cdd9";
 
 export default node;

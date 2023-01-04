@@ -38,6 +38,7 @@ import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { PhoneNumberForm } from "Apps/Order/Components/PhoneNumberForm"
 import {
   startingPhoneNumber,
+  startingPhoneNumberCountryCode,
   startingAddress,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
@@ -109,11 +110,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
 
   const [phoneNumber, setPhoneNumber] = useState<string | null>(
-    startingPhoneNumber(props.order)
+    startingPhoneNumber(props.me, props.order)
   )
   const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState<
     string | null
-  >("us")
+  >(startingPhoneNumberCountryCode(props.me, props.order) || "us")
+
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
 
   const addressList = extractNodes(props.me?.addressConnection) ?? []
@@ -187,8 +189,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     selectShipping()
   }
 
+  // TODO
   const selectShipping = async (
-    addedOrEditedAddress?: UpdateUserAddressMutation$data["updateUserAddress"]
+    addedOrEditedAddress?: any
+    // addedOrEditedAddress?: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => {
     try {
       // if not creating a new address, use the saved address selection for shipping
@@ -200,10 +204,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             )!
       )
 
-      const shipToPhoneNumber = addedOrEditedAddress?.userAddressOrErrors
-        .phoneNumber
-        ? addedOrEditedAddress?.userAddressOrErrors.phoneNumber
-        : phoneNumber
+      // TODO
+      // const shipToPhoneNumber = addedOrEditedAddress?.userAddressOrErrors
+      //   .phoneNumber
+      //   ? addedOrEditedAddress?.userAddressOrErrors.phoneNumber
+      //   : phoneNumber
 
       const shipToPhoneNumberCountryCode = addedOrEditedAddress
         ?.userAddressOrErrors.phoneNumberCountryCode
@@ -330,7 +335,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     })
 
     setPhoneNumber(null)
-    setPhoneNumberCountryCode("us")
+    // TODO
+    // setPhoneNumberCountryCode("us")
 
     if (shippingOption !== newShippingOption) {
       setShippingOption(newShippingOption)
@@ -517,7 +523,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 </Banner>
               )}
               {/* TODO */}
-              {/* <AddressForm
+              <AddressForm
                 me={
                   {
                     ...props.me.addressConnection,
@@ -530,11 +536,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   setCreateAddressError(error)
                 }}
                 onEditOrCreateAddressSuccess={addedAddress => {
+                  console.log({ XXXXX_addedAddress: addedAddress })
                   setCreateAddressError(null)
-                  selectShipping(addedAddress?.updateUserAddress?.userAddressOrErrors)
+                  selectShipping(addedAddress?.createUserAddress)
                 }}
                 buttonText={"Save and Continue"}
-              /> */}
+              />
             </Collapse>
 
             <Collapse
@@ -628,6 +635,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
         internalID
         mode
         state
+        buyerPhoneNumber
+        buyerPhoneNumberCountryCode
         requestedFulfillment {
           __typename
           ... on CommercePickup {
@@ -712,6 +721,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
               isDefault
               name
               phoneNumber
+              phoneNumberCountryCode
               postalCode
               region
             }

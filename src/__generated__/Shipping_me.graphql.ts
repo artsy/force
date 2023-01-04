@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a36125efceb040b027da09caf9ef219>>
+ * @generated SignedSource<<e63cc5bfe648cdd76dd6370560bc5ff1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type Shipping_me$data = {
         readonly isDefault: boolean;
         readonly name: string | null;
         readonly phoneNumber: string | null;
+        readonly phoneNumberCountryCode: string | null;
         readonly postalCode: string | null;
         readonly region: string | null;
       } | null;
@@ -203,6 +204,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "phoneNumberCountryCode",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "postalCode",
                   "storageKey": null
                 },
@@ -228,6 +236,6 @@ return {
 };
 })();
 
-(node as any).hash = "96b6c7e43b19453cb277783ef53e311c";
+(node as any).hash = "2ef28c5798d89ea9711f40df3250d806";
 
 export default node;

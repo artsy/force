@@ -11,6 +11,7 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { extractNodes } from "Utils/extractNodes"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -83,29 +84,85 @@ export const defaultShippingAddressIndex = (
   }
 }
 
-export const startingPhoneNumber = (order: Shipping_order$data) => {
-  return order.requestedFulfillment &&
+export const startingPhoneNumber = (
+  me: Shipping_me$data,
+  order: Shipping_order$data
+) => {
+  if (
+    order?.requestedFulfillment &&
     (order.requestedFulfillment.__typename === "CommerceShip" ||
       order.requestedFulfillment.__typename === "CommerceShipArta" ||
-      order.requestedFulfillment.__typename === "CommercePickup")
-    ? order.requestedFulfillment.phoneNumber!
-    : ""
+      order.requestedFulfillment.__typename === "CommercePickup") &&
+    order?.requestedFulfillment?.phoneNumber
+  ) {
+    return order?.requestedFulfillment?.phoneNumber!
+  }
+
+  if (order.buyerPhoneNumber) {
+    return order.buyerPhoneNumber
+  }
+
+  const savedAddresses = extractNodes(me?.addressConnection)
+
+  if (savedAddresses.length) {
+    const address = savedAddresses.find(a => a.isDefault) || savedAddresses[0]
+    return address.phoneNumber
+  }
+
+  return ""
+}
+
+export const startingPhoneNumberCountryCode = (
+  me: Shipping_me$data,
+  order: Shipping_order$data
+) => {
+  if (order.buyerPhoneNumberCountryCode) {
+    return order.buyerPhoneNumberCountryCode
+  }
+
+  const savedAddresses = extractNodes(me?.addressConnection)
+
+  if (savedAddresses.length) {
+    const address = savedAddresses.find(a => a.isDefault)
+    return address?.phoneNumberCountryCode || address?.country.toLowerCase()
+  }
+
+  return ""
 }
 
 export const startingAddress = (
   me: Shipping_me$data,
   order: Shipping_order$data
 ) => {
-  const initialAddress = {
-    ...emptyAddress,
-    country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
+  if (order.requestedFulfillment) {
+    return {
+      ...emptyAddress,
+      country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
 
-    // We need to pull out _only_ the values specified by the Address type,
-    // since our state will be used for Relay variables later on. The
-    // easiest way to do this is with the emptyAddress.
-    ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
+      // We need to pull out _only_ the values specified by the Address type,
+      // since our state will be used for Relay variables later on. The
+      // easiest way to do this is with the emptyAddress.
+      ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
+    }
   }
-  return initialAddress
+
+  const savedAddresses = extractNodes(me?.addressConnection)
+
+  if (savedAddresses.length) {
+    const address = savedAddresses.find(a => a.isDefault) || savedAddresses[0]
+
+    return {
+      ...emptyAddress,
+      country: address?.country || "",
+
+      // We need to pull out _only_ the values specified by the Address type,
+      // since our state will be used for Relay variables later on. The
+      // easiest way to do this is with the emptyAddress.
+      ...pick(address, Object.keys(emptyAddress)),
+    }
+  }
+
+  return emptyAddress
 }
 
 export type MutationAddressResponse = NonNullable<
