@@ -14,7 +14,6 @@ import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Route
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
-import { sortBy } from "lodash"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -32,9 +31,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const { setFieldValue, setValues } = useFormikContext<ArtworkModel>()
 
-  const collectedArtists = sortBy(
-    extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
-    ["displayLabel"]
+  const collectedArtists = extractNodes(
+    me?.myCollectionInfo?.collectedArtistsConnection
   )
 
   const [query, setQuery] = useState("")

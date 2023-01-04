@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9dfffc39c994aa9d0341c8037923efef>>
+ * @generated SignedSource<<52291d040c8e8728f27c6b2b4a2a6c1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,6 +64,11 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "first",
               "value": 100
+            },
+            {
+              "kind": "Literal",
+              "name": "includePersonalArtists",
+              "value": true
             }
           ],
           "concreteType": "ArtistConnection",
@@ -213,7 +218,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "collectedArtistsConnection(first:100)"
+          "storageKey": "collectedArtistsConnection(first:100,includePersonalArtists:true)"
         }
       ],
       "storageKey": null
@@ -223,6 +228,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "06aa5b579f1a9d63cc354ec38ba7f94e";
+(node as any).hash = "c1d52d4bc31e54f6b855003ca978f7ff";
 
 export default node;
