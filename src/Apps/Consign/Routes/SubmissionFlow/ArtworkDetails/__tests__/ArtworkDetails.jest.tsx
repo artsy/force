@@ -204,7 +204,10 @@ describe("ArtworkDetails", () => {
 
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute("href", "/sell")
+      ).toHaveAttribute(
+        "href",
+        "/sell/submission/<ConsignmentSubmission-mock-id-1>/contact-information"
+      )
     })
 
     it("renders learn more link with correct href", () => {
