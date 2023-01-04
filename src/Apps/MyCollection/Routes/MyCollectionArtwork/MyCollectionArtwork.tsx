@@ -66,15 +66,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
-  const enableFlowReorder = useFeatureFlag(
-    "reorder-swa-artwork-submission-flow"
-  )
-
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  const firstSubmissionStep = enableFlowReorder
-    ? "contact-information"
-    : "artwork-details"
 
   const EditArtworkButton = () => (
     <Button
@@ -162,8 +154,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <MyCollectionArtworkSWASectionDesktopLayout
                   route={
                     isCollectorProfileEnabled
-                      ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
-                      : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                      ? `/collector-profile/my-collection/submission/contact-information/${id}`
+                      : `/my-collection/submission/contact-information/${id}`
                   }
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
@@ -190,8 +182,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionMobileLayout
                           route={
                             isCollectorProfileEnabled
-                              ? `/collector-profile/my-collection/submission/${firstSubmissionStep}/${id}`
-                              : `/my-collection/submission/${firstSubmissionStep}/${id}`
+                              ? `/collector-profile/my-collection/submission/contact-information/${id}`
+                              : `/my-collection/submission/contact-information/${id}`
                           }
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}

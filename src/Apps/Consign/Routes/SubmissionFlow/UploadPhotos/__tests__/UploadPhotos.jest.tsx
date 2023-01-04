@@ -153,7 +153,7 @@ describe("UploadPhotos", () => {
       "href",
       `/sell/submission/${submission.externalId}/artwork-details`
     )
-    expect(screen.getByText("Save and Continue")).toBeInTheDocument()
+    expect(screen.getByText("Submit Artwork")).toBeInTheDocument()
   })
 
   it.each([
@@ -308,14 +308,10 @@ describe("UploadPhotos", () => {
       expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
     })
 
-    fireEvent.click(screen.getByText("Save and Continue"))
+    fireEvent.click(screen.getByText("Submit Artwork"))
 
     await waitFor(() => {
       expect(mockAddAsset).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith(
-        `/sell/submission/${submission.externalId}/contact-information`
-      )
     })
   })
 
