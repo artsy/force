@@ -89,7 +89,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                 showSaveButton={false}
                 showHoverDetails={false}
                 onClick={() => onClick(artwork)}
-                disableRouterLinking
+                to={null}
                 data-testid={`artwork-${artwork.internalID}`}
               />
 

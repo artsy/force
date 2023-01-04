@@ -1,15 +1,15 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps } from "@artsy/palette"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
-import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 import {
   DetailsFragmentContainer,
   DetailsPlaceholder,
 } from "Components/Artwork/Details"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 
 export interface MetadataProps
   extends BoxProps,
@@ -24,6 +24,7 @@ export interface MetadataProps
   showHoverDetails?: boolean
   showSaveButton?: boolean
   isMyCollectionArtwork?: boolean
+  to?: string | null
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -69,6 +70,7 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   disableRouterLinking,
   mt,
   isMyCollectionArtwork,
+  to: toProp,
   ...rest
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
@@ -79,11 +81,14 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
 
   // My collection artwork is a special case. We don't want to link to the standard artwork page,
   // but to a custom my collection artwork page.
-  const to = !isMyCollectionArtwork
-    ? artwork.href
-    : isCollectorProfileEnabled
-    ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-    : `/my-collection/artwork/${artwork.internalID}`
+  const to =
+    toProp !== undefined
+      ? toProp
+      : !isMyCollectionArtwork
+      ? artwork.href
+      : isCollectorProfileEnabled
+      ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+      : `/my-collection/artwork/${artwork.internalID}`
 
   return (
     <RouterLink
