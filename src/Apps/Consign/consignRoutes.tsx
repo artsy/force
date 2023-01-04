@@ -254,22 +254,15 @@ export const consignRoutes: AppRouteConfig[] = [
     path: "/sell/submission",
     getComponent: () => SubmissionLayout,
     onServerSideRender: ({ res }) => {
-      if (
-        res.locals.sd.FEATURE_FLAGS["reorder-swa-artwork-submission-flow"]
-          .flagEnabled
-      ) {
-        res.redirect("/sell/submission/contact-information")
-      } else {
-        res.redirect("/sell/submission/artwork-details")
-      }
+      res.redirect("/sell/submission/contact-information")
     },
     children: [
       {
         path: "artwork-details",
         layout: "ContainerOnly",
         getComponent: () => ArtworkDetails,
-        onClientSideRender: () => {
-          ArtworkDetails.preload()
+        onServerSideRender: ({ res }) => {
+          res.redirect("/sell/submission")
         },
       },
       {
