@@ -8,7 +8,8 @@ import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_m
 const TABS = [
   { name: "My Collection", url: "/collector-profile/my-collection" },
   { name: "Insights", url: "/collector-profile/insights" },
-  { name: "Saves & Follows", url: "/collector-profile/saves" },
+  { name: "Saves", url: "/collector-profile/saves" },
+  { name: "Follows", url: "/collector-profile/follows" },
 ]
 
 interface CollectorProfileAppProps {
