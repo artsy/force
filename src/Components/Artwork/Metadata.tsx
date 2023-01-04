@@ -67,20 +67,16 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   artwork,
   disableRouterLinking,
   mt,
-  to: toProp,
+  to,
   ...rest
 }) => {
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
 
-  // My collection artwork is a special case. We don't want to link to the standard artwork page,
-  // but to a custom my collection artwork page.
-  const to = toProp !== undefined ? toProp : artwork.href
-
   return (
     <RouterLink
-      to={to}
+      to={to !== undefined ? to : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"

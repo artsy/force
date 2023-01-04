@@ -195,7 +195,7 @@ const LinkContainer: React.FC<
   Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
     onClick: () => void
   }
-> = ({ artwork, children, disableRouterLinking, onClick, to: toProp }) => {
+> = ({ artwork, children, disableRouterLinking, onClick, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -209,11 +209,9 @@ const LinkContainer: React.FC<
     )
   }
 
-  const to = toProp !== undefined ? toProp : artwork.href
-
   return (
     <Link
-      to={to}
+      to={to !== undefined ? to : artwork.href}
       onClick={onClick}
       aria-label={`${artwork.title} by ${artwork.artistNames}`}
       position={imageURL ? "absolute" : "relative"}
