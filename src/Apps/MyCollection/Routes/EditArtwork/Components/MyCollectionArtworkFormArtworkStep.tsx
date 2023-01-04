@@ -10,6 +10,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { MyCollectionArworkSearch } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArworkSearch"
+import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useFormikContext } from "formik"
@@ -33,7 +34,7 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     onSkip?.()
   }
 
-  const { values, setFieldValue } = useFormikContext<ArtworkModel>()
+  const { values, setFieldValue, setValues } = useFormikContext<ArtworkModel>()
 
   const initializezFormValues = artwork => {
     // Initialize main form values with artwork data
@@ -65,10 +66,17 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     onNext?.()
   }
 
+  const handleBack = () => {
+    // Reset form values to initial values
+    setValues(getMyCollectionArtworkFormInitialValues(), false)
+
+    onBack()
+  }
+
   return (
     <AppContainer>
       <MyCollectionArtworkFormHeader
-        onBackClick={() => onBack()}
+        onBackClick={handleBack}
         NextButton={
           <Button
             width={[100, 300]}
