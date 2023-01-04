@@ -95,9 +95,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     getShippingQuotes(props.order)
   )
 
-  // TODO
-  const [address, setAddress] = useState<Address>(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  // TODO // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  const [address, setAddress] = useState<any>(
     startingAddress(props.me, props.order)
   )
 
@@ -522,7 +521,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   {createAddressError}
                 </Banner>
               )}
-              {/* TODO */}
               <AddressForm
                 me={
                   {
@@ -536,7 +534,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   setCreateAddressError(error)
                 }}
                 onEditOrCreateAddressSuccess={addedAddress => {
-                  console.log({ XXXXX_addedAddress: addedAddress })
                   setCreateAddressError(null)
                   selectShipping(addedAddress?.createUserAddress)
                 }}
@@ -581,7 +578,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Spacer y={4} />
             </Collapse>
 
-            {!showAddressForm && (
+            {shippingQuotes?.length && shippingQuotes.length > 0 && (
               <Media greaterThan="xs">
                 <Button
                   onClick={handleContinueButtonPressed}

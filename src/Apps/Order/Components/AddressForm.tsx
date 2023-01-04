@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Formik, FormikHelpers, Form } from "formik"
 import * as Yup from "yup"
 import { Button, Clickable, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
@@ -81,6 +82,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   setShowDialog,
   buttonText,
 }) => {
+  const [showwButton, setShowwButton] = useState(true)
   const { relayEnvironment } = useSystemContext()
   if (!relayEnvironment) return null
 
@@ -110,6 +112,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
         const handleSuccess = savedAddress => {
           actions.setSubmitting(false)
+          setShowwButton(false)
           // update default address only if isDefault changed or new
           // address marked ad default
           if (values?.isDefault && values?.isDefault !== address?.isDefault) {
@@ -209,18 +212,22 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                 </Clickable>
               </Flex>
             )}
-            <Button
-              data-test="saveButton"
-              onClick={submitForm}
-              type="submit"
-              variant="primaryBlack"
-              loading={isSubmitting}
-              disabled={!isValid}
-              width="100%"
-              mt={2}
-            >
-              {buttonText}
-            </Button>
+            {showwButton ? (
+              <Button
+                data-test="saveButton"
+                onClick={submitForm}
+                type="submit"
+                variant="primaryBlack"
+                loading={isSubmitting}
+                disabled={!isValid}
+                width="100%"
+                mt={2}
+              >
+                {buttonText}
+              </Button>
+            ) : (
+              <Spacer y={2} />
+            )}
           </Form>
         )
       }}
