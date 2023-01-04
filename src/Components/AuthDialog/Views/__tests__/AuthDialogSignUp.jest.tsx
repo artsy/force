@@ -42,7 +42,7 @@ describe("AuthDialogSignUp", () => {
     const name = screen.getByPlaceholderText("Enter your full name")
     const email = screen.getByPlaceholderText("Enter your email address")
     const password = screen.getByPlaceholderText("Enter your password")
-    const terms = screen.getByTestId("agreeToTerms")
+
     const submit = screen.getByText("Sign up")
 
     // eslint-disable-next-line testing-library/no-node-access
@@ -53,7 +53,6 @@ describe("AuthDialogSignUp", () => {
     fireEvent.change(name, { target: { value: "Test User" } })
     fireEvent.change(email, { target: { value: "example@example.com" } })
     fireEvent.change(password, { target: { value: "Secret000" } }) // pragma: allowlist secret
-    fireEvent.click(terms)
 
     expect(button).toBeEnabled()
 
