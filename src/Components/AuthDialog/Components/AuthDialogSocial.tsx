@@ -27,7 +27,7 @@ export const AuthDialogSocial: FC = () => {
       afterSignUpAction: options.afterAuthAction,
       "redirect-to": sanitizeRedirect(options.redirectTo),
       "signup-intent": analytics.intent,
-      "signup-referer": null, // TODO: Add referer
+      "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,
       agreed_to_receive_emails: true,
     },
