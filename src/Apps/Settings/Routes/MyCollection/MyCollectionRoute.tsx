@@ -169,9 +169,14 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                         artwork.internalID
                       )}
                       hideSaleInfo
-                      showSaveButton={false}
+                      showHighDemandIcon
                       showHoverDetails={false}
-                      isMyCollectionArtwork
+                      showSaveButton={false}
+                      to={
+                        isCollectorProfileEnabled
+                          ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+                          : `/my-collection/artwork/${artwork.internalID}`
+                      }
                     />
 
                     <Spacer y={4} />

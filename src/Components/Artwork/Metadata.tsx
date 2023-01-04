@@ -8,7 +8,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
 
 export interface MetadataProps
@@ -21,9 +20,9 @@ export interface MetadataProps
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
+  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
-  isMyCollectionArtwork?: boolean
   to?: string | null
 }
 
@@ -36,9 +35,9 @@ export const Metadata: React.FC<MetadataProps> = ({
   hideSaleInfo,
   isHovered,
   mt = 1,
+  showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton,
-  isMyCollectionArtwork = false,
   ...rest
 }) => {
   return (
@@ -46,7 +45,6 @@ export const Metadata: React.FC<MetadataProps> = ({
       artwork={artwork}
       mt={mt}
       disableRouterLinking={disableRouterLinking}
-      isMyCollectionArtwork={isMyCollectionArtwork}
       {...rest}
     >
       <DetailsFragmentContainer
@@ -56,7 +54,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
-        showHighDemandIcon={isMyCollectionArtwork}
+        showHighDemandIcon={showHighDemandIcon}
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
@@ -69,26 +67,16 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   artwork,
   disableRouterLinking,
   mt,
-  isMyCollectionArtwork,
   to: toProp,
   ...rest
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
 
   // My collection artwork is a special case. We don't want to link to the standard artwork page,
   // but to a custom my collection artwork page.
-  const to =
-    toProp !== undefined
-      ? toProp
-      : !isMyCollectionArtwork
-      ? artwork.href
-      : isCollectorProfileEnabled
-      ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-      : `/my-collection/artwork/${artwork.internalID}`
+  const to = toProp !== undefined ? toProp : artwork.href
 
   return (
     <RouterLink
