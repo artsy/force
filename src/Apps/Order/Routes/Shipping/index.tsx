@@ -25,7 +25,6 @@ import {
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Address } from "Components/AddressForm"
 import { AddressForm } from "Apps/Order/Components/AddressForm"
 import { Router } from "found"
 import { FC, useState, useEffect } from "react"
@@ -578,7 +577,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Spacer y={4} />
             </Collapse>
 
-            {shippingQuotes?.length && shippingQuotes.length > 0 && (
+            {((shippingQuotes?.length && shippingQuotes.length > 0) ||
+              shippingOption === "PICKUP") && (
               <Media greaterThan="xs">
                 <Button
                   onClick={handleContinueButtonPressed}
