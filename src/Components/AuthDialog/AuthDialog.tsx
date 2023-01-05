@@ -59,12 +59,13 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
       onClose={onClose}
       title={title}
       hasLogo
+      m={[1, 2]}
       {...(options.image
         ? {
-            width: 900,
+            width: ["100%", 900],
             leftPanel: <AuthDialogLeftPanel />,
           }
-        : { width: 450 })}
+        : { width: ["100%", 450] })}
     >
       <AuthDialogView />
     </ModalDialog>
