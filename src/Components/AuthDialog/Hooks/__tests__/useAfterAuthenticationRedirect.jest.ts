@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks"
+import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirect } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirect"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
 
@@ -18,6 +19,14 @@ jest.mock("Utils/getENV", () => ({
 jest.mock("Components/AuthDialog/Hooks/useElligibleForOnboarding", () => ({
   useElligibleForOnboarding: jest.fn().mockImplementation(() => ({
     isElligibleForOnboarding: true,
+  })),
+}))
+
+jest.mock("Components/AuthDialog/AuthDialogContext", () => ({
+  useAuthDialogContext: jest.fn().mockImplementation(() => ({
+    state: {
+      options: {},
+    },
   })),
 }))
 
@@ -88,5 +97,53 @@ describe("useAfterAuthenticationRedirect", () => {
     result.current.runRedirect()
 
     expect(locationAssignMock).toBeCalledWith("https://www.artsy.net/some/path")
+  })
+
+  it("should redirect to a valid redirectTo internal path", () => {
+    ;(useAuthDialogContext as jest.Mock).mockImplementation(() => ({
+      state: {
+        options: {
+          redirectTo: "/foo/bar",
+        },
+      },
+    }))
+
+    const { result } = renderHook(() => useAfterAuthenticationRedirect())
+
+    result.current.runRedirect(null)
+
+    expect(locationAssignMock).toBeCalledWith("https://www.artsy.net/foo/bar")
+  })
+
+  it("should redirect to a valid redirectTo api path", () => {
+    ;(useAuthDialogContext as jest.Mock).mockImplementation(() => ({
+      state: {
+        options: {
+          redirectTo: "https://api.artsy.net/foo/bar",
+        },
+      },
+    }))
+
+    const { result } = renderHook(() => useAfterAuthenticationRedirect())
+
+    result.current.runRedirect(null)
+
+    expect(locationAssignMock).toBeCalledWith("https://api.artsy.net/foo/bar")
+  })
+
+  it("should redirect to the default path if the redirectTo is not a valid artsy.net url", () => {
+    ;(useAuthDialogContext as jest.Mock).mockImplementation(() => ({
+      state: {
+        options: {
+          redirectTo: "https://www.google.com",
+        },
+      },
+    }))
+
+    const { result } = renderHook(() => useAfterAuthenticationRedirect())
+
+    result.current.runRedirect(null)
+
+    expect(locationAssignMock).toBeCalledWith("/")
   })
 })
