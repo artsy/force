@@ -75,15 +75,16 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
   }
 
   render() {
-    const initialValues = {
-      accepted_terms_of_service: false,
-      agreed_to_receive_emails: false,
-      ...this.props.values,
-    }
-
     const countryCode = this.props.requestLocation?.countryCode || ""
-    const collapseCheckboxes =
+    const isAutomaticallySubscribed = !!(
       countryCode && !gdprCountries.includes(countryCode)
+    )
+
+    const initialValues = {
+      ...this.props.values,
+      agreed_to_receive_emails: isAutomaticallySubscribed,
+      accepted_terms_of_service: true,
+    }
 
     return (
       <Formik
@@ -100,10 +101,8 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
           isSubmitting,
           setFieldValue,
           setStatus,
-          setTouched,
           status,
           touched,
-          validateForm,
           values,
         }: FormikProps<InputValues>) => {
           const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,9 +114,6 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
           const emailErrorMessage = touched.email ? errors.email : ""
           const passwordErrorMessage = touched.password ? errors.password : ""
           const nameErrorMessage = touched.name ? errors.name : ""
-          const termsErrorMessage = touched.accepted_terms_of_service
-            ? errors.accepted_terms_of_service
-            : ""
 
           return (
             <Box
@@ -177,62 +173,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   <Banner variant="error">{status.error}</Banner>
                 )}
 
-                {collapseCheckboxes ? (
-                  <AuthenticationCheckbox
-                    error={!!termsErrorMessage}
-                    selected={values.accepted_terms_of_service}
-                    onSelect={selected => {
-                      setFieldValue("agreed_to_receive_emails", selected)
-                      setFieldValue("accepted_terms_of_service", selected)
-                    }}
-                    data-test="agreeToTerms"
-                  >
-                    {"I agree to the "}
-                    <a href="https://www.artsy.net/terms" target="_blank">
-                      Terms of Use
-                    </a>
-                    {", "}
-                    <a href="https://www.artsy.net/privacy" target="_blank">
-                      Privacy Policy
-                    </a>
-                    {", and "}
-                    <a
-                      href="https://www.artsy.net/conditions-of-sale"
-                      target="_blank"
-                    >
-                      Conditions of Sale
-                    </a>
-                    {" and to receiving emails from Artsy."}
-                  </AuthenticationCheckbox>
-                ) : (
-                  <AuthenticationCheckbox
-                    error={!!termsErrorMessage}
-                    selected={values.accepted_terms_of_service}
-                    onSelect={selected => {
-                      setFieldValue("accepted_terms_of_service", selected)
-                    }}
-                    data-test="agreeToTerms"
-                  >
-                    {"By checking this box, you consent to our "}
-                    <a href="https://www.artsy.net/terms" target="_blank">
-                      Terms of Use
-                    </a>
-                    {", "}
-                    <a href="https://www.artsy.net/privacy" target="_blank">
-                      Privacy Policy
-                    </a>
-                    {", and "}
-                    <a
-                      href="https://www.artsy.net/conditions-of-sale"
-                      target="_blank"
-                    >
-                      Conditions of Sale
-                    </a>
-                    {"."}
-                  </AuthenticationCheckbox>
-                )}
-
-                {!collapseCheckboxes && (
+                {!isAutomaticallySubscribed && (
                   <AuthenticationCheckbox
                     selected={values.agreed_to_receive_emails}
                     onSelect={selected => {
@@ -260,32 +201,18 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   }
                   onAppleLogin={async e => {
                     e.preventDefault()
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onAppleLogin?.(e)
-                    }
+                    this.props.onAppleLogin?.(e)
                   }}
                   onFacebookLogin={async e => {
                     e.preventDefault()
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onFacebookLogin?.(e)
-                    }
+                    this.props.onFacebookLogin?.(e)
                   }}
                   onGoogleLogin={async e => {
                     e.preventDefault()
-                    if (!values.accepted_terms_of_service) {
-                      setTouched({ accepted_terms_of_service: true })
-                      await validateForm()
-                    } else {
-                      this.props.onGoogleLogin?.(e)
-                    }
+                    this.props.onGoogleLogin?.(e)
                   }}
                   showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
+                  isAutomaticallySubscribed={isAutomaticallySubscribed}
                 />
               </Join>
             </Box>
