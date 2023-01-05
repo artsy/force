@@ -7,6 +7,7 @@ import { useAnalyticsContext, useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const moveDownAnimation = keyframes`
   from {
@@ -45,6 +46,10 @@ export const CtaBannerContent = () => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
+  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
+  const getInTouchRoute = enableSWAInquiryFlow
+    ? "/sell/inquiry"
+    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
 
   const trackSubmitClick = () => {
     trackEvent({
@@ -90,7 +95,7 @@ export const CtaBannerContent = () => {
                 // @ts-ignore
                 as={RouterLink}
                 onClick={trackGetInTouchClick}
-                to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+                to={getInTouchRoute}
                 variant="primaryWhite"
                 mr={[2, 1, 2]}
               >

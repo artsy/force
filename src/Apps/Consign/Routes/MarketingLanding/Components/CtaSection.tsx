@@ -11,6 +11,10 @@ export const CtaSection: React.FC = () => {
   const showGetInTouchCTA = useFeatureFlag("get-in-touch-flow-web")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
+  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
+  const getInTouchRoute = enableSWAInquiryFlow
+    ? "/sell/inquiry"
+    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
 
   const trackSubmitClick = () => {
     trackEvent({
@@ -56,7 +60,7 @@ export const CtaSection: React.FC = () => {
             mt={2}
             width={"100%"}
             data-testid="get-in-touch-button"
-            to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+            to={getInTouchRoute}
           >
             Get in Touch
           </Button>
