@@ -28,7 +28,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
         $input: FilterArtworksInput
       ) {
         artist(id: $artistID) {
-          filterArtworksConnection(first: 30, input: $input) {
+          filterArtworksConnection(first: 40, input: $input) {
             edges {
               node {
                 medium
@@ -110,7 +110,11 @@ const NoResults: React.FC<{
     <Box my={4}>
       <Text variant={["xs", "sm-display"]} flexWrap="wrap">
         We couldn’t find a work named “
-        <Text display="inline-block" color="blue100">
+        <Text
+          variant={["xs", "sm-display"]}
+          display="inline-block"
+          color="blue100"
+        >
           {query}
         </Text>
         “
