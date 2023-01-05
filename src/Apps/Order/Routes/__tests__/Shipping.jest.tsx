@@ -1075,6 +1075,37 @@ describe("Shipping", () => {
       ).toEqual("")
     })
 
+    it("commits correct phone number for pickup orders", async () => {
+      const mockPhoneNumber = "12345678"
+      await page.selectPickupOption()
+      fillInPhoneNumber(page.root, { isPickup: true, value: mockPhoneNumber })
+
+      await flushPromiseQueue()
+      await page.clickSubmit()
+
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              fulfillmentType: "PICKUP",
+              id: "1234",
+              phoneNumber: mockPhoneNumber,
+              shipping: {
+                addressLine1: "401 Broadway",
+                addressLine2: "Floor 25",
+                city: "New York",
+                country: "US",
+                phoneNumber: "422-424-4242",
+                postalCode: "10013",
+                region: "NY",
+                name: "Test Name",
+              },
+            },
+          },
+        })
+      )
+    })
+
     it("lists the addresses and renders the add address option", async () => {
       expect(
         page
