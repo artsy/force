@@ -9,7 +9,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -103,6 +103,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       setCurrentStep("details")
     }
   }
+
+  useEffect(() => {
+    window?.scrollTo?.({ top: 0 })
+  }, [currentStep])
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Create the new artwork
