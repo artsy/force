@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<951863a9a5c983b20b0c3970694126dd>>
+ * @generated SignedSource<<c2141d51ed665ca355eff8794b3a7ccf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,11 @@ var v0 = [
   }
 ],
 v1 = [
+  {
+    "kind": "Literal",
+    "name": "entities",
+    "value": "ARTIST"
+  },
   {
     "kind": "Literal",
     "name": "first",
@@ -298,16 +303,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "69b08bb25ec95a6cd95aca474ec1cda8",
+    "cacheID": "77c07db478b4b7430c395ef815637e5b",
     "id": null,
     "metadata": {},
     "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "43684156aac729f753995fb8b711cc3e";
+(node as any).hash = "cf75a02bd75c9fd68b5a131be1781547";
 
 export default node;

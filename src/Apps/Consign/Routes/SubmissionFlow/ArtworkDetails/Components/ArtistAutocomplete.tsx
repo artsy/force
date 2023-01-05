@@ -203,7 +203,7 @@ const fetchSuggestions = async (
       query ArtistAutocomplete_SearchConnection_Query($searchQuery: String!) {
         searchConnection(
           query: $searchQuery
-          # entities: ARTIST
+          entities: ARTIST
           mode: AUTOSUGGEST
           first: 6
         ) {
