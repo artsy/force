@@ -148,7 +148,10 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
 
             {!onlyPhotos && <MyCollectionArtworkFormDetails />}
             <Spacer y={4} />
-            <MyCollectionArtworkFormImages ref={artworkFormImagesRef} />
+            <MyCollectionArtworkFormImages
+              ref={artworkFormImagesRef}
+              isEditing={isEditing}
+            />
             <Spacer y={6} />
             {isEditing && !onlyPhotos && (
               <>

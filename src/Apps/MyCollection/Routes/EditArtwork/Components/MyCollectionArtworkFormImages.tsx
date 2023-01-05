@@ -19,8 +19,9 @@ export interface MyCollectionArtworkFormImagesProps {
   saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
 }
 export const MyCollectionArtworkFormImages = forwardRef<
-  MyCollectionArtworkFormImagesProps
->((_, formImagesRef) => {
+  MyCollectionArtworkFormImagesProps,
+  { isEditing?: boolean }
+>(({ isEditing = false }, formImagesRef) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
   const [localImages, setlocalImages] = useState<
     Array<LocalImage & { photoID: string }>
@@ -48,6 +49,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
         saveImagesToLocalStorage,
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [localImages, saveImagesToLocalStorage]
   )
 
@@ -92,6 +94,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
 
       setFieldValue("newPhotos", [...values.newPhotos])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.newPhotos])
 
   const handleDrop = (acceptedFiles: File[]) => {
@@ -125,6 +128,20 @@ export const MyCollectionArtworkFormImages = forwardRef<
     const imageAlreadyAdded = localImages.find(
       localImage => localImage.photoID === photoID
     )
+
+    // Handle images added through the select artwork step
+    if (!isEditing && currentSrc.includes("cloudfront.net")) {
+      setlocalImages(
+        localImages.concat({
+          data: currentSrc,
+          width,
+          height,
+          photoID,
+        })
+      )
+    }
+
+    // Handle images added locally
     if (currentSrc.startsWith("data:image") && !imageAlreadyAdded) {
       // Save the image dimensions as well as local path to the localImages array
       setlocalImages(
