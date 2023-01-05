@@ -79,7 +79,12 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
           ? "/collector-profile/my-collection"
           : "/settings/my-collection",
       })
-    } else if (currentStep === "artwork-select") {
+      return
+    }
+
+    scrollToTop()
+
+    if (currentStep === "artwork-select") {
       setCurrentStep("artist-select")
     } else if (currentStep === "details") {
       setCurrentStep("artist-select")
@@ -87,6 +92,8 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   }
 
   const handleNextStep = options => {
+    scrollToTop()
+
     if (options?.skipNext) {
       setCurrentStep("details")
     } else if (currentStep === "artist-select") {
@@ -97,6 +104,8 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   }
 
   const handleSkip = () => {
+    scrollToTop()
+
     if (currentStep === "artist-select") {
       setCurrentStep("details")
     } else if (currentStep === "artwork-select") {
@@ -140,6 +149,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
         description: "Please contact support@artsymail.com",
       })
     }
+  }
+
+  const scrollToTop = () => {
+    window?.scrollTo?.({ top: 0 })
   }
 
   return (
