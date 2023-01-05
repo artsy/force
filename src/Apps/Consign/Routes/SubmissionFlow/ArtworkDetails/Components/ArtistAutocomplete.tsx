@@ -205,7 +205,7 @@ const fetchSuggestions = async (
           query: $searchQuery
           entities: ARTIST
           mode: AUTOSUGGEST
-          first: 3
+          first: 6
         ) {
           edges {
             node {
