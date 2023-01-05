@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react"
+import Metadata from "Components/Artwork/Metadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
-import Metadata from "Components/Artwork/Metadata"
 import { useSystemContext } from "System"
+import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
@@ -34,7 +34,7 @@ describe("Metadata", () => {
   })
 
   it("navigates to artwork page when clicking on a normal artwork", () => {
-    renderWithRelay(mockResolver, false, { isMyCollectionArtwork: false })
+    renderWithRelay(mockResolver, false)
 
     expect(screen.getByText("artwork title")).toBeInTheDocument()
 
@@ -45,7 +45,9 @@ describe("Metadata", () => {
   })
 
   it("navigates to my collection artwork page when clicking on a my collection artwork", () => {
-    renderWithRelay(mockResolver, false, { isMyCollectionArtwork: true })
+    renderWithRelay(mockResolver, false, {
+      to: "/my-collection/artwork/artwork-id",
+    })
 
     expect(screen.getByText("artwork title")).toBeInTheDocument()
 
@@ -62,7 +64,9 @@ describe("Metadata", () => {
       },
     }))
 
-    renderWithRelay(mockResolver, false, { isMyCollectionArtwork: true })
+    renderWithRelay(mockResolver, false, {
+      to: "/collector-profile/my-collection/artwork/artwork-id",
+    })
 
     expect(screen.getByText("artwork title")).toBeInTheDocument()
 

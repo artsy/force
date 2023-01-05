@@ -1,5 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
+import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
@@ -8,23 +9,22 @@ import { StoredImage } from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
-import { MagnifyImage } from "Components/MagnifyImage"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork$data
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
-  isMyCollectionArtwork?: boolean
   lazyLoad?: boolean
   localHeroImage?: StoredImage | null
   onClick?: () => void
+  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  to?: string | null
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -32,12 +32,13 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   contextModule,
   disableRouterLinking,
   hideSaleInfo,
-  isMyCollectionArtwork = false,
   lazyLoad = true,
   localHeroImage,
   onClick,
+  showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton = true,
+  to,
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
@@ -78,7 +79,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           artwork={artwork}
           disableRouterLinking={disableRouterLinking}
           onClick={handleClick}
-          isMyCollectionArtwork={isMyCollectionArtwork}
+          to={to}
         >
           <ArtworkGridItemImage
             artwork={artwork}
@@ -96,9 +97,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         contextModule={contextModule ?? ContextModule.artworkGrid}
         showSaveButton={showSaveButton}
         hideSaleInfo={hideSaleInfo}
+        onClick={handleClick}
+        showHighDemandIcon={showHighDemandIcon}
         showHoverDetails={showHoverDetails}
         disableRouterLinking={disableRouterLinking}
-        isMyCollectionArtwork={isMyCollectionArtwork}
+        to={to}
       />
     </div>
   )
@@ -189,21 +192,10 @@ const DisabledLink = styled(Box)`
 `
 
 const LinkContainer: React.FC<
-  Pick<
-    ArtworkGridItemProps,
-    "artwork" | "disableRouterLinking" | "isMyCollectionArtwork"
-  > & {
+  Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
     onClick: () => void
   }
-> = ({
-  artwork,
-  children,
-  disableRouterLinking,
-  onClick,
-  isMyCollectionArtwork,
-}) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
+> = ({ artwork, children, disableRouterLinking, onClick, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -217,17 +209,9 @@ const LinkContainer: React.FC<
     )
   }
 
-  // My collection artwork is a special case. We don't want to link to the standard artwork page,
-  // but to a custom my collection artwork page.
-  const to = !isMyCollectionArtwork
-    ? artwork.href
-    : isCollectorProfileEnabled
-    ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-    : `/my-collection/artwork/${artwork.internalID}`
-
   return (
     <Link
-      to={to}
+      to={to !== undefined ? to : artwork.href}
       onClick={onClick}
       aria-label={`${artwork.title} by ${artwork.artistNames}`}
       position={imageURL ? "absolute" : "relative"}
