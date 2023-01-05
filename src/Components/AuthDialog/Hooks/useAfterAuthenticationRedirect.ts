@@ -3,7 +3,6 @@ import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligi
 import { getENV } from "Utils/getENV"
 
 const DEFAULT_AFTER_AUTH_REDIRECT_PATH = "/"
-
 const GRAVITY_AUTHENTICATION_ENDPOINT = `${getENV("API_URL")}/users/sign_in`
 
 /**
@@ -35,6 +34,17 @@ export const useAfterAuthenticationRedirect = () => {
       window.location.assign(gravityUrl.toString())
 
       return
+    }
+
+    // Validate that it's a safe URL to redirect to.
+    if (
+      !(
+        redirectUrl.origin === getENV("APP_URL") ||
+        redirectUrl.origin === getENV("API_URL") ||
+        redirectUrl.hostname === "localhost"
+      )
+    ) {
+      return window.location.assign(DEFAULT_AFTER_AUTH_REDIRECT_PATH)
     }
 
     // Otherwise; just redirect to the URL.

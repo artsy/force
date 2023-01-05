@@ -2,6 +2,7 @@ import * as Yup from "yup"
 import {
   Box,
   Button,
+  Checkbox,
   Clickable,
   Input,
   Join,
@@ -20,9 +21,9 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getENV } from "Utils/getENV"
 import { AuthDialogSignUpQuery } from "__generated__/AuthDialogSignUpQuery.graphql"
 import { AuthDialogSignUp_requestLocation$data } from "__generated__/AuthDialogSignUp_requestLocation.graphql"
-import { AuthTermsCheckboxes } from "Components/AuthDialog/Components/AuthTermsCheckboxes"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { isTouch } from "Utils/device"
 
 interface AuthDialogSignUpProps {
   requestLocation?: AuthDialogSignUp_requestLocation$data | null
@@ -35,13 +36,18 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
 
   const { runAfterAuthentication } = useAfterAuthentication()
 
-  const countryCode = requestLocation?.countryCode ?? ""
-  const isAutomaticallySubscribed = !GDPR_COUNTRY_CODES.includes(countryCode)
+  const countryCode = requestLocation?.countryCode
+  const isAutomaticallySubscribed = !!(
+    countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
+  )
 
   return (
     <Formik
       validateOnBlur={false}
-      initialValues={INITIAL_VALUES}
+      initialValues={{
+        ...INITIAL_VALUES,
+        agreed_to_receive_emails: isAutomaticallySubscribed,
+      }}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={async ({ mode, ...values }, { setFieldValue, setStatus }) => {
         setStatus({ error: null })
@@ -67,6 +73,7 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
         handleBlur,
         handleChange,
         isValid,
+        setFieldValue,
         status,
         touched,
         values,
@@ -118,9 +125,20 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
                 </Text>
               </Box>
 
-              <AuthTermsCheckboxes
-                isAutomaticallySubscribed={isAutomaticallySubscribed}
-              />
+              {!isAutomaticallySubscribed && (
+                <Checkbox
+                  selected={values.agreed_to_receive_emails}
+                  onSelect={selected => {
+                    setFieldValue("agreed_to_receive_emails", selected)
+                  }}
+                >
+                  <Text variant="xs">
+                    Dive deeper into the art market with Artsy emails. Subscribe
+                    to hear about our products, services, editorials, and other
+                    promotional content. Unsubscribe at any time.
+                  </Text>
+                </Checkbox>
+              )}
 
               {status?.error && (
                 <Message variant="error">{status.error}</Message>
@@ -151,6 +169,22 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
                 >
                   Log in.
                 </Clickable>
+              </Text>
+
+              <Text variant="xs" color="black60" textAlign="center">
+                By {isTouch ? "tapping" : "clicking"} Sign Up or Continue with
+                Apple, Google, or Facebook, you agree to Artsy’s{" "}
+                <a href="/terms" target="_blank">
+                  Terms of Use
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" target="_blank">
+                  Privacy Policy
+                </a>
+                {isAutomaticallySubscribed && (
+                  <> and to receiving emails from Artsy</>
+                )}
+                .
               </Text>
 
               <Text variant="xs" color="black60" textAlign="center">
@@ -222,7 +256,7 @@ export const INITIAL_VALUES = {
   name: "",
   email: "",
   password: "",
-  accepted_terms_of_service: false,
+  accepted_terms_of_service: true,
   agreed_to_receive_emails: false,
   mode: "Pending",
 }
