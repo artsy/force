@@ -79,10 +79,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
           ? "/collector-profile/my-collection"
           : "/settings/my-collection",
       })
-      return
-    }
-
-    if (currentStep === "artwork-select") {
+    } else if (currentStep === "artwork-select") {
       setCurrentStep("artist-select")
     } else if (currentStep === "details") {
       setCurrentStep("artist-select")
