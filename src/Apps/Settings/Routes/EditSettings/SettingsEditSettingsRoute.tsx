@@ -8,28 +8,12 @@ import { SettingsEditSettingsDeleteAccount } from "./Components/SettingsEditSett
 import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "./Components/SettingsEditSettingsLinkedAccounts"
 import { SettingsEditSettingsEmailPreferences } from "./Components/SettingsEditSettingsEmailPreferences/SettingsEditSettingsEmailPreferences"
 import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
-import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SettingsEditRouteProps {
   me: SettingsEditSettingsRoute_me$data
 }
 
 const SettingsEditRoute: React.FC<SettingsEditRouteProps> = ({ me }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  if (isCollectorProfileEnabled) {
-    return (
-      <GridColumns>
-        <Column span={8}>
-          <Join separator={<Separator my={6} />}>
-            <SettingsEditProfileFieldsFragmentContainer me={me} />
-          </Join>
-        </Column>
-      </GridColumns>
-    )
-  }
-
   return (
     <GridColumns>
       <Column span={8}>
@@ -56,7 +40,6 @@ export const SettingsEditRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsEditSettingsRoute_me on Me {
-        ...SettingsEditProfileFields_me
         ...SettingsEditSettingsInformation_me
         ...SettingsEditSettingsPassword_me
         ...SettingsEditSettingsTwoFactor_me
