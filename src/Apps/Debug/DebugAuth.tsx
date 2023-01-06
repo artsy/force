@@ -64,7 +64,7 @@ export const DebugAuth: FC = () => {
 
         <Input
           title="Title"
-          value={state.options.title}
+          value={`${state.options.title}`}
           placeholder="Copy to display as title"
           onChange={({ target: { value: title } }) => {
             setState(prevState => ({

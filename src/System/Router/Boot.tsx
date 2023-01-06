@@ -31,6 +31,7 @@ import "System/i18n/i18n"
 import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
+import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 
 export interface BootProps {
   children: React.ReactNode
@@ -89,9 +90,11 @@ export const Boot = track(undefined, {
                     <ToastsProvider>
                       <StickyProvider>
                         <AuthIntentProvider>
-                          <FocusVisible />
-                          <SiftContainer />
-                          {children}
+                          <AuthDialogProvider>
+                            <FocusVisible />
+                            <SiftContainer />
+                            {children}
+                          </AuthDialogProvider>
                         </AuthIntentProvider>
                       </StickyProvider>
                     </ToastsProvider>

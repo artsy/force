@@ -11,6 +11,7 @@ import {
   SoloIcon,
   Clickable,
   CloseIcon,
+  Spacer,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
@@ -19,13 +20,12 @@ import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
-import { ModalType } from "Components/Authentication/Types"
+
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-import { openAuthModal } from "Utils/openAuthModal"
-import { ContextModule, Intent } from "@artsy/cohesion"
+
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { track } from "react-tracking"
 import Events from "Utils/Events"
@@ -49,6 +49,7 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { useJump } from "Utils/Hooks/useJump"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useRouter } from "System/Router/useRouter"
+import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -66,7 +67,7 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const { mediator, user, isEigen } = useSystemContext()
+  const { user, isEigen } = useSystemContext()
 
   const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
@@ -260,42 +261,11 @@ export const NavBar: React.FC = track(
                 {isLoggedIn ? (
                   <NavBarLoggedInActionsQueryRenderer />
                 ) : (
-                  <Flex alignItems="center">
-                    <Button
-                      mx={1}
-                      variant="secondaryBlack"
-                      size="small"
-                      onClick={() => {
-                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                        openAuthModal(mediator, {
-                          mode: ModalType.login,
-                          intent: Intent.login,
-                          contextModule: ContextModule.header,
-                          copy:
-                            "Log in to collect art by the world’s leading artists",
-                        })
-                      }}
-                    >
-                      {t`navbar.login`}
-                    </Button>
+                  <>
+                    <Spacer x={1} />
 
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                        openAuthModal(mediator, {
-                          mode: ModalType.signup,
-                          intent: Intent.signup,
-                          contextModule: ContextModule.header,
-                          copy:
-                            "Sign up to collect art by the world’s leading artists",
-                          redirectTo: window.location.href,
-                        })
-                      }}
-                    >
-                      {t`navbar.signup`}
-                    </Button>
-                  </Flex>
+                    <NavBarLoggedOutActions />
+                  </>
                 )}
               </Flex>
 
