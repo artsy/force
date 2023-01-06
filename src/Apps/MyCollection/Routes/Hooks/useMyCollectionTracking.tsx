@@ -1,11 +1,15 @@
 import {
-  DeleteCollectedArtwork,
   ActionType,
+  AddCollectedArtwork,
   ContextModule,
+  DeleteCollectedArtwork,
+  EditCollectedArtwork,
+  MyColectionAddNewArtistName,
+  MyCollectionAddArtworkDetails,
+  MyCollectionSelectArtistFromSearch,
+  MyCollectionSelectArtworkFromGrid,
   OwnerType,
   SaveCollectedArtwork,
-  EditCollectedArtwork,
-  AddCollectedArtwork,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
@@ -59,6 +63,50 @@ export const useMyCollectionTracking = () => {
         action: ActionType.saveCollectedArtwork,
         context_module: ContextModule.myCollectionHome,
         context_owner_type: OwnerType.myCollection,
+        platform: "web",
+      }
+
+      trackEvent(payload)
+    },
+
+    trackSkipArtistSelection: () => {
+      const payload: MyColectionAddNewArtistName = {
+        action: ActionType.addNewArtistName,
+        context_module: ContextModule.myCollection,
+        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        platform: "web",
+      }
+
+      trackEvent(payload)
+    },
+
+    trackSelectArtist: () => {
+      const payload: MyCollectionSelectArtistFromSearch = {
+        action: ActionType.selectArtistFromSearch,
+        context_mudule: ContextModule.myCollection,
+        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        platform: "web",
+      }
+
+      trackEvent(payload)
+    },
+
+    trackSkipArtworkSelection: () => {
+      const payload: MyCollectionAddArtworkDetails = {
+        action: ActionType.addArtworkDetails,
+        context_module: ContextModule.myCollection,
+        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        platform: "web",
+      }
+
+      trackEvent(payload)
+    },
+
+    trackSelectArtwork: () => {
+      const payload: MyCollectionSelectArtworkFromGrid = {
+        action: ActionType.selectArtworkFromGrid,
+        context_module: ContextModule.myCollection,
+        context_owner_type: OwnerType.myCollectionUploadingFlow,
         platform: "web",
       }
 

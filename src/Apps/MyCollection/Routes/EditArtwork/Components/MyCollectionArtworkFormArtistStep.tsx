@@ -12,6 +12,7 @@ import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/Edit
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
 import { sortBy } from "lodash"
@@ -31,6 +32,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const { setFieldValue, setValues } = useFormikContext<ArtworkModel>()
+  const {
+    trackSelectArtist,
+    trackSkipArtistSelection,
+  } = useMyCollectionTracking()
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -41,6 +46,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const trimmedQuery = query?.trimStart()
 
   const onSelect = artist => {
+    trackSelectArtist()
+
     setFieldValue("artistId", artist.internalID)
     setFieldValue("artistName", artist.name || "")
     setFieldValue("artist", artist)
@@ -62,6 +69,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   }
 
   const handleSkip = () => {
+    trackSkipArtistSelection()
+
     // Reset form values to initial values and set artist name
     setValues(getMyCollectionArtworkFormInitialValues(), false)
     setFieldValue("artistName", trimmedQuery)
