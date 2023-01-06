@@ -73,12 +73,12 @@ export const NavBar: React.FC = track(
   const { t } = useTranslation()
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
+  const [searchFocused, setSearchFocused] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
-  const [searchFocused, setSearchFocused] = useState(false)
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -153,7 +153,7 @@ export const NavBar: React.FC = track(
           >
             {/* Mobile authentication banner */}
             {!isLoggedIn && (
-              <Flex display={["flex", "none"]} pt={1}>
+              <Flex display={["flex", "none"]} py={1}>
                 <Button
                   // @ts-ignore
                   as={RouterLink}
@@ -193,7 +193,7 @@ export const NavBar: React.FC = track(
                   `${searchFocused ? "absolute" : "relative"}`,
                   "relative",
                 ]}
-                width={[`${searchFocused ? "90%" : null}`, "auto"]}
+                width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
                 <SearchBarQueryRenderer width="100%" />
