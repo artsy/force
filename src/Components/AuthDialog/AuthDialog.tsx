@@ -1,7 +1,6 @@
 import { ModalDialog, Image, Box } from "@artsy/palette"
 import {
   AuthDialogMode,
-  AUTH_MODAL_TYPES,
   useAuthDialogContext,
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
@@ -10,9 +9,7 @@ import { AuthDialogSignUpQueryRenderer } from "Components/AuthDialog/Views/AuthD
 import { FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
-import { useTracking } from "react-tracking"
-import { ActionType, AuthImpression } from "@artsy/cohesion"
-import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export interface AuthDialogProps {
   onClose: () => void
@@ -22,37 +19,19 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
   useRecaptcha()
 
   const {
-    state: { mode, options, analytics },
+    state: { mode, options },
   } = useAuthDialogContext()
 
-  const title = options.title || DEFAULT_TITLES[mode]
+  const track = useAuthDialogTracking()
 
-  const { trackEvent } = useTracking()
-  const { isElligibleForOnboarding } = useElligibleForOnboarding()
+  const title =
+    (typeof options.title === "function"
+      ? options.title(mode)
+      : options.title) || DEFAULT_TITLES[mode]
 
   useEffect(() => {
-    if (!analytics.intent || !analytics.trigger) return
-
-    const payload: AuthImpression = {
-      action: ActionType.authImpression,
-      context_module: analytics.contextModule,
-      intent: analytics.intent,
-      modal_copy: title,
-      onboarding: isElligibleForOnboarding,
-      trigger: analytics.trigger,
-      type: AUTH_MODAL_TYPES[mode],
-    }
-
-    trackEvent(payload)
-  }, [
-    analytics.contextModule,
-    analytics.intent,
-    analytics.trigger,
-    isElligibleForOnboarding,
-    mode,
-    title,
-    trackEvent,
-  ])
+    track.impression({ title })
+  }, [title, track])
 
   return (
     <ModalDialog

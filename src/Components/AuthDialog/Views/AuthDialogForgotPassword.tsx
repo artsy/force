@@ -13,9 +13,12 @@ import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { Form, Formik } from "formik"
 import { forgotPassword } from "Utils/auth"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export const AuthDialogForgotPassword: FC = () => {
   const { dispatch } = useAuthDialogContext()
+
+  const track = useAuthDialogTracking()
 
   return (
     <Formik
@@ -28,7 +31,10 @@ export const AuthDialogForgotPassword: FC = () => {
 
         try {
           await forgotPassword({ email })
+
           setFieldValue("mode", "Success")
+
+          track.resetPassword()
         } catch (err) {
           console.error(err)
 

@@ -37,7 +37,7 @@ export type AuthDialogOptions = {
   /** Applies to SignUp or Login, not ForgotPassword */
   redirectTo?: string
   /** Copy displayed in dialog header */
-  title?: string
+  title?: string | ((mode: AuthDialogMode) => string)
 }
 
 type AuthDialogAnalytics = {

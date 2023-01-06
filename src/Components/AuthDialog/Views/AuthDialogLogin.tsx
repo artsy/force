@@ -17,11 +17,14 @@ import { Form, Formik } from "formik"
 import { login } from "Utils/auth"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export const AuthDialogLogin: FC = () => {
   const { dispatch } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
+
+  const track = useAuthDialogTracking()
 
   return (
     <Formik
@@ -46,6 +49,8 @@ export const AuthDialogLogin: FC = () => {
           runAfterAuthentication({ accessToken: user.accessToken })
 
           setFieldValue("mode", "Success")
+
+          track.loggedIn({ service: "email", userId: user.id })
         } catch (err) {
           console.error(err)
 
@@ -174,6 +179,7 @@ export const AuthDialogLogin: FC = () => {
               <Text variant="xs" textAlign="center" color="black60">
                 Don’t have an account?{" "}
                 <Clickable
+                  data-test="signup"
                   textDecoration="underline"
                   onClick={() => {
                     dispatch({ type: "MODE", payload: { mode: "SignUp" } })
