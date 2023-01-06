@@ -2542,6 +2542,9 @@ type ArtworkVersion implements Node {
   # The artists related to this Artwork Version
   artists: [Artist]
 
+  # The Artwork Version attribution class
+  attribution_class: String
+
   # The Image id
   defaultImageID: String
 
@@ -2553,6 +2556,9 @@ type ArtworkVersion implements Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+
+  # The Artwork Version medium
+  medium: String
 
   # Artwork title
   title: String
