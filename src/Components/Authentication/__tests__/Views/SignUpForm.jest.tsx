@@ -2,7 +2,7 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { tests } from "Components/Authentication/Views/SignUpForm"
-import { SignupValues } from "../fixtures"
+import { SignupValues } from "Components/Authentication/__tests__/fixtures"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { flushPromiseQueue } from "DevTools"
 
@@ -64,14 +64,11 @@ describe("SignUpForm", () => {
   describe("with a GDPR country code", () => {
     const countryCode = "GB"
 
-    it("uses the GDPR label and shows the email checkbox", () => {
+    it("shows the email checkbox", () => {
       const wrapper = getWrapper({
         RequestLocation: () => ({ countryCode }),
       })
 
-      expect(wrapper.text()).toContain(
-        "By checking this box, you consent to our"
-      )
       expect(wrapper.text()).toContain(
         "Dive deeper into the art market with Artsy emails."
       )
@@ -81,12 +78,13 @@ describe("SignUpForm", () => {
   describe("with a non-GDPR country code", () => {
     const countryCode = "US"
 
-    it("uses the fallback label and hides the email checkbox", () => {
+    it("hides the email checkbox and includes copy about emails in the agreement", () => {
       const wrapper = getWrapper({
         RequestLocation: () => ({ countryCode }),
       })
 
-      expect(wrapper.text()).toContain("I agree to the")
+      expect(wrapper.text()).toContain("and to receiving emails from Artsy.")
+
       expect(wrapper.text()).not.toContain(
         "Dive deeper into the art market with Artsy emails."
       )
@@ -96,14 +94,11 @@ describe("SignUpForm", () => {
   describe("with a missing country code", () => {
     const countryCode = null
 
-    it("uses the GDPR label and shows the email checkbox", () => {
+    it("shows the email checkbox", () => {
       const wrapper = getWrapper({
         RequestLocation: () => ({ countryCode }),
       })
 
-      expect(wrapper.text()).toContain(
-        "By checking this box, you consent to our"
-      )
       expect(wrapper.text()).toContain(
         "Dive deeper into the art market with Artsy emails."
       )
@@ -169,23 +164,6 @@ describe("SignUpForm", () => {
 
       setTimeout(() => {
         expect(passedProps.onGoogleLogin).toHaveBeenCalled()
-        done()
-      })
-    })
-
-    it("does not call apple callback without accepting terms", done => {
-      passedProps.values.accepted_terms_of_service = false
-      const wrapper = getWrapper()
-
-      const appleLink = wrapper
-        .find("Button")
-        .findWhere(node => node.text().includes("Continue with Apple"))
-        .first()
-
-      appleLink.simulate("click")
-
-      setTimeout(() => {
-        expect(passedProps.onAppleLogin).not.toHaveBeenCalled()
         done()
       })
     })

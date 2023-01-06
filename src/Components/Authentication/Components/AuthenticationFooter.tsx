@@ -12,7 +12,8 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
-import { ModalType } from "../Types"
+import { isTouch } from "Utils/device"
+import { ModalType } from "Components/Authentication/Types"
 
 interface AuthenticationFooterProps extends BoxProps {
   handleTypeChange?: (modalType: ModalType) => void
@@ -21,6 +22,7 @@ interface AuthenticationFooterProps extends BoxProps {
   onFacebookLogin?: (e: any) => void
   onGoogleLogin?: (e: any) => void
   showRecaptchaDisclaimer?: boolean
+  isAutomaticallySubscribed?: boolean
 }
 
 export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
@@ -30,6 +32,7 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
   onFacebookLogin,
   onGoogleLogin,
   showRecaptchaDisclaimer,
+  isAutomaticallySubscribed,
   ...rest
 }) => {
   return (
@@ -155,6 +158,22 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
                     Log in.
                   </Clickable>
                 </Box>
+
+                <Text variant="xs" color="black60" textAlign="center">
+                  By {isTouch ? "tapping" : "clicking"} Sign up or Continue with
+                  Apple, Google, or Facebook, you agree to Artsy’s{" "}
+                  <a href="/terms" target="_blank">
+                    Terms of Use
+                  </a>{" "}
+                  and{" "}
+                  <a href="/privacy" target="_blank">
+                    Privacy Policy
+                  </a>
+                  {isAutomaticallySubscribed && (
+                    <> and to receiving emails from Artsy</>
+                  )}
+                  .
+                </Text>
 
                 {showRecaptchaDisclaimer && (
                   <Box>
