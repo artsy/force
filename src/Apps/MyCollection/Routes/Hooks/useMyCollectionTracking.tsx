@@ -4,6 +4,10 @@ import {
   ContextModule,
   DeleteCollectedArtwork,
   EditCollectedArtwork,
+  MyColectionAddNewArtistName,
+  MyCollectionAddArtworkDetails,
+  MyCollectionSelectArtistFromSearch,
+  MyCollectionSelectArtworkFromGrid,
   OwnerType,
   SaveCollectedArtwork,
 } from "@artsy/cohesion"
@@ -66,10 +70,10 @@ export const useMyCollectionTracking = () => {
     },
 
     trackSkipArtistSelection: () => {
-      const payload: SkipArtistSelection = {
+      const payload: MyColectionAddNewArtistName = {
         action: ActionType.addNewArtistName,
         context_module: ContextModule.myCollection,
-        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        context_screen_owner_type: OwnerType.myCollectionUploadingFlow,
         platform: "web",
       }
 
@@ -77,10 +81,10 @@ export const useMyCollectionTracking = () => {
     },
 
     trackSelectArtist: () => {
-      const payload: SelectArtistFromSearch = {
+      const payload: MyCollectionSelectArtistFromSearch = {
         action: ActionType.selectArtistFromSearch,
-        context_module: ContextModule.myCollection,
-        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        context_mudule: ContextModule.myCollection,
+        context_screen_owner_type: OwnerType.myCollectionUploadingFlow,
         platform: "web",
       }
 
@@ -88,10 +92,10 @@ export const useMyCollectionTracking = () => {
     },
 
     trackSkipArtworkSelection: () => {
-      const payload: SkipArtworkSelection = {
+      const payload: MyCollectionAddArtworkDetails = {
         action: ActionType.addArtworkDetails,
         context_module: ContextModule.myCollection,
-        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        context_screen_owner_type: OwnerType.myCollectionUploadingFlow,
         platform: "web",
       }
 
@@ -99,10 +103,10 @@ export const useMyCollectionTracking = () => {
     },
 
     trackSelectArtwork: () => {
-      const payload: SelectArtworkFromGrid = {
+      const payload: MyCollectionSelectArtworkFromGrid = {
         action: ActionType.selectArtworkFromGrid,
         context_module: ContextModule.myCollection,
-        context_owner_type: OwnerType.myCollectionUploadingFlow,
+        context_screen_owner_type: OwnerType.myCollectionUploadingFlow,
         platform: "web",
       }
 
