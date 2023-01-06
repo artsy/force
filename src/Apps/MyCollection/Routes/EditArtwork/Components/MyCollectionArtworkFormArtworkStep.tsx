@@ -12,6 +12,7 @@ import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtw
 import { MyCollectionArworkSearch } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArworkSearch"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { useFormikContext } from "formik"
 import { pickBy } from "lodash"
@@ -20,6 +21,10 @@ import { Suspense, useCallback, useState } from "react"
 interface MyCollectionArtworkFormArtworkStepProps {}
 
 export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFormArtworkStepProps> = () => {
+  const {
+    trackSelectArtwork,
+    trackSkipArtworkSelection,
+  } = useMyCollectionTracking()
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
@@ -29,6 +34,8 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
   }, [])
 
   const handleSkip = () => {
+    trackSkipArtworkSelection()
+
     setFieldValue("title", trimmedQuery)
 
     onSkip?.()
@@ -61,6 +68,8 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
   }
 
   const handleArtworkClick = artwork => {
+    trackSelectArtwork()
+
     initializezFormValues(artwork)
 
     onNext?.()
