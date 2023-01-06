@@ -9,6 +9,8 @@ import {
   Box,
   BellIcon,
   SoloIcon,
+  Clickable,
+  CloseIcon,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
@@ -76,6 +78,7 @@ export const NavBar: React.FC = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
+  const [searchFocused, setSearchFocused] = useState(false)
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -179,8 +182,35 @@ export const NavBar: React.FC = track(
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
               <NavBarPrimaryLogo mr={1} />
 
-              <Flex flex={1} alignItems="center">
+              <Flex
+                flex={1}
+                alignItems="center"
+                onFocus={() => {
+                  setSearchFocused(true)
+                }}
+                // update only on mobile
+                position={[
+                  `${searchFocused ? "absolute" : "relative"}`,
+                  "relative",
+                ]}
+                width={[`${searchFocused ? "90%" : null}`, "auto"]}
+                zIndex={9}
+              >
                 <SearchBarQueryRenderer width="100%" />
+
+                {searchFocused && (
+                  <Clickable
+                    onClick={() => {
+                      setSearchFocused(false)
+                    }}
+                    // show only on mobile
+                    display={["flex", "none"]}
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <CloseIcon width={22} height={22} />
+                  </Clickable>
+                )}
               </Flex>
 
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
