@@ -262,10 +262,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 )!
           )
 
-      const shipToPhoneNumber = isCreateNewAddress()
-        ? phoneNumber
-        : addressList.find(address => address.internalID == selectedAddressID)
-            ?.phoneNumber
+      const shipToPhoneNumber =
+        isCreateNewAddress() || shippingOption === "PICKUP"
+          ? phoneNumber
+          : addressList.find(address => address.internalID == selectedAddressID)
+              ?.phoneNumber
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
