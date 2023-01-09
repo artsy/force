@@ -38,6 +38,7 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 }
 
 export const ArtistAutoComplete: React.FC<{
+  onArtistNotFound?: (notFound: boolean) => void
   onError: () => void
   onChange?: (value: string) => void
   onSelect: (artist: AutocompleteArtist | null) => void
@@ -45,6 +46,7 @@ export const ArtistAutoComplete: React.FC<{
   required?: boolean
   title?: string
 }> = ({
+  onArtistNotFound,
   onError,
   onChange,
   onSelect,
@@ -69,6 +71,10 @@ export const ArtistAutoComplete: React.FC<{
   const [artistNotFoundMessage, setArtistNotFoundMessage] = useState<string>("")
 
   useEffect(() => {
+    onArtistNotFound?.(artistNotFoundMessage !== "")
+  }, [artistNotFoundMessage, onArtistNotFound])
+
+  useEffect(() => {
     if (!isError) return
 
     setFieldValue("artistId", "")
@@ -82,8 +88,6 @@ export const ArtistAutoComplete: React.FC<{
 
     if (relayEnvironment) {
       try {
-        onChange?.(value)
-
         setIsLoading(true)
         const suggestions = await fetchSuggestions(value, relayEnvironment)
         setIsError(false)
@@ -116,6 +120,8 @@ export const ArtistAutoComplete: React.FC<{
   )
 
   const handleChange = ({ target: { value } }) => {
+    onChange?.(value)
+
     setFieldTouched("artistName", false)
     setFieldValue("artistId", "")
     setFieldValue("artistName", value)
@@ -128,6 +134,7 @@ export const ArtistAutoComplete: React.FC<{
   }
 
   const handleClear = () => {
+    onArtistNotFound?.(false)
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
