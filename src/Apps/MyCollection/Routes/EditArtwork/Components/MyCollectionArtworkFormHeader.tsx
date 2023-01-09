@@ -51,6 +51,7 @@ export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHead
                       flexDirection="row"
                       justifyContent="space-between"
                       py={2}
+                      minHeight={[70, 90]}
                     >
                       <BackLink
                         // @ts-ignore
