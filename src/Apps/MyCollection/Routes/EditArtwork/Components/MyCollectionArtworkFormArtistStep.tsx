@@ -18,6 +18,7 @@ import { useFormikContext } from "formik"
 import { sortBy } from "lodash"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 
@@ -36,6 +37,9 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     trackSelectArtist,
     trackSkipArtistSelection,
   } = useMyCollectionTracking()
+  const enablePersonalArtists = useFeatureFlag(
+    "cx-my-collection-personal-artists-for-web"
+  )
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -98,23 +102,25 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
         placeholder="Search for artists on Artsy"
       />
 
-      <Spacer y={2} />
+      {!!enablePersonalArtists && (
+        <Flex flexDirection="row">
+          <Spacer y={2} />
 
-      <Flex flexDirection="row">
-        <Text variant="sm-display">
-          Can't find the artist?&nbsp;
-          <Clickable
-            onClick={handleSkip}
-            textDecoration="underline"
-            data-testid="artist-select-skip-button"
-          >
-            <Text variant="sm-display" color="black100">
-              Add their name
-            </Text>
-          </Clickable>
-          .
-        </Text>
-      </Flex>
+          <Text variant="sm-display">
+            Can't find the artist?&nbsp;
+            <Clickable
+              onClick={handleSkip}
+              textDecoration="underline"
+              data-testid="artist-select-skip-button"
+            >
+              <Text variant="sm-display" color="black100">
+                Add their name
+              </Text>
+            </Clickable>
+            .
+          </Text>
+        </Flex>
+      )}
 
       <Spacer y={4} />
 
