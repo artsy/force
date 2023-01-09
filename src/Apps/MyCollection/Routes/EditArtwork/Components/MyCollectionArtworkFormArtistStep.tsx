@@ -102,10 +102,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
         placeholder="Search for artists on Artsy"
       />
 
+      <Spacer y={2} />
+
       {!!enablePersonalArtists && (
         <Flex flexDirection="row">
-          <Spacer y={2} />
-
           <Text variant="sm-display">
             Can't find the artist?&nbsp;
             <Clickable
