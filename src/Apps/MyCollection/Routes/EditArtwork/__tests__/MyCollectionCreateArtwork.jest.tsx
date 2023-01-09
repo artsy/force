@@ -186,6 +186,9 @@ describe("MyCollectionCreateArtwork", () => {
             "cx-my-collection-uploading-flow-steps": {
               flagEnabled: true,
             },
+            "cx-my-collection-personal-artists-for-web": {
+              flagEnabled: true,
+            },
           },
         })
 
@@ -206,6 +209,9 @@ describe("MyCollectionCreateArtwork", () => {
         getWrapper({
           featureFlags: {
             "cx-my-collection-uploading-flow-steps": {
+              flagEnabled: true,
+            },
+            "cx-my-collection-personal-artists-for-web": {
               flagEnabled: true,
             },
           },
@@ -236,6 +242,9 @@ describe("MyCollectionCreateArtwork", () => {
           getWrapper({
             featureFlags: {
               "cx-my-collection-uploading-flow-steps": {
+                flagEnabled: true,
+              },
+              "cx-my-collection-personal-artists-for-web": {
                 flagEnabled: true,
               },
             },
