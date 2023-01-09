@@ -88,7 +88,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Spacer y={4} />
 
-      <Text variant={"lg"}>Select an Artist</Text>
+      <Text variant={["md", "lg-display"]}>Select an Artist</Text>
 
       <Spacer y={4} />
 
@@ -106,14 +106,14 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       {!!enablePersonalArtists && (
         <Flex flexDirection="row">
-          <Text variant="sm-display">
+          <Text variant={["xs", "sm-display"]}>
             Can't find the artist?&nbsp;
             <Clickable
               onClick={handleSkip}
               textDecoration="underline"
               data-testid="artist-select-skip-button"
             >
-              <Text variant="sm-display" color="black100">
+              <Text variant={["xs", "sm-display"]} color="black100">
                 Add their name
               </Text>
             </Clickable>
@@ -130,7 +130,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           <Spacer y={1} />
           <GridColumns width="100%">
             {collectedArtists.map(artist => (
-              <Column span={[6, 4]} key={artist.internalID} mt={1}>
+              <Column span={[12, 4]} key={artist.internalID} mt={1}>
                 <Clickable
                   onClick={() => onSelect(artist)}
                   data-testid={`artist-${artist.internalID}`}
@@ -147,6 +147,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           </GridColumns>
         </>
       )}
+
+      <Spacer y={4} />
     </AppContainer>
   )
 }
