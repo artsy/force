@@ -7,22 +7,23 @@ import {
   SkeletonBox,
   Spacer,
 } from "@artsy/palette"
-import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
+import GridItem from "Components/Artwork/GridItem"
+import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
+import { Masonry, MasonryProps } from "Components/Masonry"
 import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
-import { ReactNode } from "react"
 import * as React from "react"
+import { ReactNode } from "react"
 import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
-import GridItem from "Components/Artwork/GridItem"
-import { withArtworkGridContext } from "./ArtworkGridContext"
 import { extractNodes } from "Utils/extractNodes"
-import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
-import { Masonry, MasonryProps } from "Components/Masonry"
-import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
+import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import { withArtworkGridContext } from "./ArtworkGridContext"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type Artwork = ArtworkGrid_artworks$data["edges"][0]["node"]
@@ -292,7 +293,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
 /**
  * Performs a shallow equal of artworks.
  */
-function areSectionedArtworksEqual(current: any, previous: any) {
+export function areSectionedArtworksEqual(current: any, previous: any) {
   if (Array.isArray(current)) {
     return isEqual(current, previous)
   } else {
@@ -308,8 +309,11 @@ function areSectionedArtworksEqual(current: any, previous: any) {
 }
 
 export function createSectionedArtworks(
-  artworksConnection: ArtworkGrid_artworks$data,
-  columnCount: number
+  artworksConnection:
+    | ArtworkGrid_artworks$data
+    | MyCollectionArtworkGrid_artworks$data,
+  columnCount: number,
+  showArtworksWithoutImages: boolean = false
 ): SectionedArtworks {
   const sectionedArtworks: SectionedArtworks = []
   const sectionRatioSums = []
@@ -329,7 +333,7 @@ export function createSectionedArtworks(
     // There are artworks without images and other ‘issues’. Like Force we’re just going to reject those for now.
     // See: https://github.com/artsy/eigen/issues/1667
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    if (artwork.image) {
+    if (showArtworksWithoutImages || artwork.image) {
       // Find section with lowest *inverted* aspect ratio sum, which is the shortest column.
       let lowestRatioSum = Number.MAX_VALUE
       let sectionIndex = null
@@ -348,7 +352,7 @@ export function createSectionedArtworks(
 
         // Keep track of total section aspect ratio
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const aspectRatio = artwork.image.aspectRatio || 1 // Ensure we never divide by null/0
+        const aspectRatio = artwork.image?.aspectRatio || 1 // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sectionRatioSums[sectionIndex] += 1 / aspectRatio
