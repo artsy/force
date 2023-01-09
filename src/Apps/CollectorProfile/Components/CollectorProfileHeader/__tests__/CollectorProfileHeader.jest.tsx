@@ -52,7 +52,7 @@ describe("CollectorProfileHeader", () => {
         screen
           .getAllByRole("link")
           .find(c => c.textContent?.includes("Settings"))
-      ).toHaveAttribute("href", `/settings/edit-settings`)
+      ).toHaveAttribute("href", `/settings/edit-profile`)
     })
 
     it("renders the settings icon in Mobile", () => {
@@ -70,7 +70,7 @@ describe("CollectorProfileHeader", () => {
         screen
           .getAllByRole("link")
           .find(c => c.textContent?.includes("Settings"))
-      ).toHaveAttribute("href", `/settings/edit-settings`)
+      ).toHaveAttribute("href", `/settings/edit-profile`)
     })
   })
 })

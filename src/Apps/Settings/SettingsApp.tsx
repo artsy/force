@@ -20,9 +20,9 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const tabsWhenCollectorProfileEnabled = compact([
-    { name: "Edit Profile", url: "/settings/edit-settings" },
+    { name: "Edit Profile", url: "/settings/edit-profile" },
     { name: "Saved Alerts", url: "/settings/alerts" },
-    { name: "Account", url: "/settings/edit-profile" },
+    { name: "Account", url: "/settings/edit-settings" },
     { name: "Order History", url: "/settings/purchases" },
     { name: "Bids", url: "/settings/auctions" },
     { name: "Payments", url: "/settings/payments" },

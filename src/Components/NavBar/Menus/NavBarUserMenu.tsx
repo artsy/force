@@ -101,7 +101,7 @@ export const NavBarUserMenu: React.FC = () => {
 
           <NavBarMenuItemLink
             aria-label="Edit your settings"
-            to="/settings/edit-settings"
+            to="/settings/edit-profile"
             onClick={trackClick}
           >
             <SettingsIcon mr={1} aria-hidden="true" /> Settings

@@ -93,7 +93,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
         <>
           <NavBarMobileMenuNotificationsQueryRenderer />
           <NavBarMobileMenuItemLink
-            to="/settings/edit-settings"
+            to="/settings/edit-profile"
             color="black60"
             onClick={handleClick}
           >
