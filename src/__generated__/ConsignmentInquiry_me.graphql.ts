@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b547276cf35e887b9eecd7dfbe1e47c3>>
+ * @generated SignedSource<<158335e709504e8cf2da063672c49dcf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,6 @@ export type ConsignmentInquiry_me$data = {
   readonly name: string | null;
   readonly phone: string | null;
   readonly phoneNumber: {
-    readonly international: string | null;
-    readonly isValid: boolean | null;
-    readonly national: string | null;
     readonly regionCode: string | null;
   } | null;
   readonly " $fragmentType": "ConsignmentInquiry_me";
@@ -74,39 +71,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isValid",
-          "storageKey": null
-        },
-        {
-          "alias": "international",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "INTERNATIONAL"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": "display(format:\"INTERNATIONAL\")"
-        },
-        {
-          "alias": "national",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "NATIONAL"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": "display(format:\"NATIONAL\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "regionCode",
           "storageKey": null
         }
@@ -118,6 +82,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "489c6aa9c723d54468f451f4896c21f2";
+(node as any).hash = "501aa3a979056a6f6e9320bc97eda07f";
 
 export default node;
