@@ -2,7 +2,7 @@ import { Box, Button, DROP_SHADOW, Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import MyCollectionArtworkGrid from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
+import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky } from "Components/Sticky"
 import { FC, useCallback, useEffect, useState } from "react"
@@ -140,7 +140,16 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             artworks={myCollectionConnection}
             columnCount={[2, 3, 4, 4]}
             getLocalImageSrcByArtworkID={getLocalImageSrcByArtworkID}
-            isCollectorProfileEnabled={isCollectorProfileEnabled}
+            showHoverDetails={false}
+            showArtworksWithoutImages
+            hideSaleInfo
+            to={artwork =>
+              isCollectorProfileEnabled
+                ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+                : `/my-collection/artwork/${artwork.internalID}`
+            }
+            showHighDemandIcon
+            showSaveButton={false}
             onLoadMore={handleLoadMore}
           />
 
