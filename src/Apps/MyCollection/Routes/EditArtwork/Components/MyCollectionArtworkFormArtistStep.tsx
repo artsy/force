@@ -124,7 +124,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           <Spacer y={1} />
           <GridColumns width="100%">
             {collectedArtists.map(artist => (
-              <Column span={[6, 4]} key={artist.internalID} mt={1}>
+              <Column span={[12, 4]} key={artist.internalID} mt={1}>
                 <Clickable
                   onClick={() => onSelect(artist)}
                   data-testid={`artist-${artist.internalID}`}
@@ -141,6 +141,8 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           </GridColumns>
         </>
       )}
+
+      <Spacer y={4} />
     </AppContainer>
   )
 }
