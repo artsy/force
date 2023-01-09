@@ -113,6 +113,25 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }, [bankAccountSelection, selectedPaymentMethod])
 
   useEffect(() => {
+    const bankAccountsArray =
+      selectedPaymentMethod !== "SEPA_DEBIT"
+        ? extractNodes(me.bankAccounts)
+        : []
+
+    const bankAccountOnOrder = bankAccountsArray.find(
+      bank => bank.internalID === order.bankAccountId
+    )
+
+    if (bankAccountOnOrder?.internalID) {
+      setBankAccountSelection({
+        type: "existing",
+        id: bankAccountOnOrder.internalID,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order])
+
+  useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
