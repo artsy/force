@@ -84,7 +84,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Spacer y={4} />
 
-      <Text variant={"lg"}>Select an Artist</Text>
+      <Text variant={["md", "lg-display"]}>Select an Artist</Text>
 
       <Spacer y={4} />
 
@@ -101,14 +101,14 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
       <Spacer y={2} />
 
       <Flex flexDirection="row">
-        <Text variant="sm-display">
+        <Text variant={["xs", "sm-display"]}>
           Can't find the artist?&nbsp;
           <Clickable
             onClick={handleSkip}
             textDecoration="underline"
             data-testid="artist-select-skip-button"
           >
-            <Text variant="sm-display" color="black100">
+            <Text variant={["xs", "sm-display"]} color="black100">
               Add their name
             </Text>
           </Clickable>

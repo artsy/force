@@ -140,7 +140,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
 
           <>
             {!onlyPhotos && (
-              <Text mb={1} mt={4} variant="lg-display">
+              <Text mb={1} mt={4} variant={["md", "lg-display"]}>
                 {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
               </Text>
             )}
