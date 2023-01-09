@@ -6,6 +6,14 @@ jest.mock("Utils/auth", () => ({
   forgotPassword: jest.fn(),
 }))
 
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn().mockImplementation(key => {
+    return {
+      AP: {},
+    }[key]
+  }),
+}))
+
 describe("AuthDialogForgotPassword", () => {
   it("renders correctly", () => {
     render(<AuthDialogForgotPassword />)

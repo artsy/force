@@ -24,6 +24,7 @@ import { AuthDialogSignUp_requestLocation$data } from "__generated__/AuthDialogS
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { isTouch } from "Utils/device"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 interface AuthDialogSignUpProps {
   requestLocation?: AuthDialogSignUp_requestLocation$data | null
@@ -35,6 +36,8 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
   const { dispatch } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
+
+  const track = useAuthDialogTracking()
 
   const countryCode = requestLocation?.countryCode
   const isAutomaticallySubscribed = !!(
@@ -59,6 +62,8 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
           runAfterAuthentication({ accessToken: user.accessToken })
 
           setFieldValue("mode", "Success")
+
+          track.signedUp({ service: "email", userId: user.id })
         } catch (err) {
           console.error(err)
 
@@ -162,6 +167,7 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
               <Text variant="xs" color="black60" textAlign="center">
                 Already have an account?{" "}
                 <Clickable
+                  data-test="login"
                   textDecoration="underline"
                   onClick={() => {
                     dispatch({ type: "MODE", payload: { mode: "Login" } })
