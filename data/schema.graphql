@@ -2543,7 +2543,7 @@ type ArtworkVersion implements Node {
   artists: [Artist]
 
   # The Artwork Version attribution class
-  attribution_class: String
+  attributionClass: String
 
   # The Image id
   defaultImageID: String
@@ -3594,6 +3594,7 @@ type CollectorProfileType {
   isActiveInquirer: Boolean
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
+  isProfileComplete: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -9899,6 +9900,7 @@ type InquirerCollectorProfile {
   isActiveInquirer: Boolean
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
+  isProfileComplete: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
@@ -16420,6 +16422,7 @@ type UpdateCollectorProfilePayload {
   isActiveInquirer: Boolean
   isEmailConfirmed: Boolean
   isIdentityVerified: Boolean
+  isProfileComplete: Boolean
   location: MyLocation
   loyaltyApplicantAt(
     format: String
