@@ -9,6 +9,8 @@ import {
   Box,
   BellIcon,
   SoloIcon,
+  Clickable,
+  CloseIcon,
 } from "@artsy/palette"
 import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
@@ -71,6 +73,7 @@ export const NavBar: React.FC = track(
   const { t } = useTranslation()
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
+  const [searchFocused, setSearchFocused] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
@@ -150,7 +153,7 @@ export const NavBar: React.FC = track(
           >
             {/* Mobile authentication banner */}
             {!isLoggedIn && (
-              <Flex display={["flex", "none"]} pt={1}>
+              <Flex display={["flex", "none"]} py={1}>
                 <Button
                   // @ts-ignore
                   as={RouterLink}
@@ -179,8 +182,35 @@ export const NavBar: React.FC = track(
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
               <NavBarPrimaryLogo mr={1} />
 
-              <Flex flex={1} alignItems="center">
+              <Flex
+                flex={1}
+                alignItems="center"
+                onFocus={() => {
+                  setSearchFocused(true)
+                }}
+                // update only on mobile
+                position={[
+                  `${searchFocused ? "absolute" : "relative"}`,
+                  "relative",
+                ]}
+                width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
+                zIndex={9}
+              >
                 <SearchBarQueryRenderer width="100%" />
+
+                {searchFocused && (
+                  <Clickable
+                    onClick={() => {
+                      setSearchFocused(false)
+                    }}
+                    // show only on mobile
+                    display={["flex", "none"]}
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <CloseIcon width={22} height={22} />
+                  </Clickable>
+                )}
               </Flex>
 
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
