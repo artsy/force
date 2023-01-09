@@ -7,7 +7,7 @@ import { openAuthModal } from "Utils/openAuthModal"
 /**
  * Exposes specific dialog functions and hides internal context.
  */
-export const useAuthDialog = () => {
+export const __useAuthDialog__ = () => {
   const { showAuthDialog, hideAuthDialog } = useAuthDialogContext()
 
   return { showAuthDialog, hideAuthDialog }
@@ -20,11 +20,12 @@ const FEATURE_FLAG_NAME = "auth-dialog"
  * the new and legacy versions, and choosing which to use based on the
  * feature flag.
  */
-export const useAuthDialogAdapter = () => {
+export const useAuthDialog = () => {
   const isNewAuthDialogEnabled = useFeatureFlag(FEATURE_FLAG_NAME)
 
-  const { showAuthDialog: _showAuthDialog } = useAuthDialog()
+  const { showAuthDialog: _showAuthDialog } = __useAuthDialog__()
 
+  // TODO: Remove legacy auth modal once new auth dialog is enabled
   const showAuthDialog = ({
     current,
     legacy,

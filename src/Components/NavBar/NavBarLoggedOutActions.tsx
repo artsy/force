@@ -2,12 +2,12 @@ import { Button, Flex, Spacer } from "@artsy/palette"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useTranslation } from "react-i18next"
-import { useAuthDialogAdapter } from "Components/AuthDialog"
+import { useAuthDialog } from "Components/AuthDialog"
 
 export const NavBarLoggedOutActions = () => {
   const { t } = useTranslation()
 
-  const { showAuthDialog } = useAuthDialogAdapter()
+  const { showAuthDialog } = useAuthDialog()
 
   return (
     <Flex alignItems="center">
