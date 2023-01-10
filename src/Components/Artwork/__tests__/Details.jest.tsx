@@ -4,20 +4,21 @@ import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { useSystemContext } from "System"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("Utils/openAuthModal")
 jest.mock("System/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
+jest.mock("Components/AuthDialog/useAuthDialog")
 
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(
   "2022-03-18T05:22:32.000Z"
 )
 
 describe("Details", () => {
-  const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
+  const mockUseAuthDialog = useAuthDialog as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
   let props
 
@@ -60,10 +61,10 @@ describe("Details", () => {
         mediator: jest.fn(),
       }
     })
-  })
 
-  afterEach(() => {
-    mockOpenAuthToSatisfyIntent.mockClear()
+    mockUseAuthDialog.mockImplementation(() => ({
+      showAuthDialog: jest.fn(),
+    }))
   })
 
   describe("in artist Notable Works rail", () => {
@@ -424,6 +425,12 @@ describe("Details", () => {
   })
 
   it("should pass correct analytics data to the auth modal when save button is pressed and user is not logged in", async () => {
+    const showAuthDialog = jest.fn()
+
+    mockUseAuthDialog.mockImplementation(() => ({
+      showAuthDialog,
+    }))
+
     props = {
       showSaveButton: true,
       contextModule: ContextModule.artworkGrid,
@@ -432,16 +439,36 @@ describe("Details", () => {
 
     wrapper.find("button[data-test='saveButton']").simulate("click")
 
-    expect(mockOpenAuthToSatisfyIntent.mock.calls[0]).toMatchInlineSnapshot(`
+    expect(showAuthDialog.mock.calls[0]).toMatchInlineSnapshot(`
       Array [
-        [MockFunction],
         Object {
-          "contextModule": "artworkGrid",
-          "entity": Object {
-            "name": "Tulips (P17)",
-            "slug": "gerhard-richter-tulips-p17-14",
+          "current": Object {
+            "analytics": Object {
+              "contextModule": "artworkGrid",
+              "intent": "saveArtwork",
+            },
+            "mode": "SignUp",
+            "options": Object {
+              "afterAuthAction": Object {
+                "action": "save",
+                "kind": "artworks",
+                "objectId": "opaque-internal-id",
+              },
+              "title": [Function],
+            },
           },
-          "intent": "saveArtwork",
+          "legacy": Object {
+            "afterSignUpAction": Object {
+              "action": "save",
+              "kind": "artworks",
+              "objectId": "gerhard-richter-tulips-p17-14",
+            },
+            "contextModule": "artworkGrid",
+            "copy": "Sign up to save artworks",
+            "intent": "saveArtwork",
+            "mode": "signup",
+            "redirectTo": "http://localhost/",
+          },
         },
       ]
     `)

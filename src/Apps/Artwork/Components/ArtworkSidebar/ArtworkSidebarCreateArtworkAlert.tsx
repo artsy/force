@@ -11,7 +11,6 @@ import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/save
 import { OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { AuthModalOptions } from "Utils/openAuthModal"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
 
@@ -76,24 +75,6 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
-  const getAuthModalOptions = (): AuthModalOptions => {
-    return {
-      entity: {
-        name: artwork.title!,
-        slug: artwork.slug,
-      },
-      afterSignUpAction: {
-        action: "createAlert",
-        kind: "artworks",
-        objectId: artwork.internalID,
-      },
-      contextModule: ContextModule.artworkSidebar,
-      intent: Intent.createAlert,
-      redirectTo: location.href,
-      copy: "Sign up to create your alert",
-    }
-  }
-
   return (
     <>
       <Separator />
@@ -101,6 +82,7 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
+        // FIXME: Remove
         my={2}
       >
         <Text variant="xs" mr={2}>
@@ -110,7 +92,20 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
           entity={entity}
           criteria={allowedCriteria}
           aggregations={aggregations}
-          getAuthModalOptions={getAuthModalOptions}
+          authModalOptions={{
+            entity: {
+              name: artwork.title!,
+              slug: artwork.slug,
+            },
+            afterSignUpAction: {
+              action: "createAlert",
+              kind: "artworks",
+              objectId: artwork.internalID,
+            },
+            contextModule: ContextModule.artworkSidebar,
+            intent: Intent.createAlert,
+            copy: "Sign up to create your alert",
+          }}
         />
       </Flex>
     </>

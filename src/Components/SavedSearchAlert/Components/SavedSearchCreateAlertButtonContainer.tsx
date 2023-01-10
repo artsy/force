@@ -3,7 +3,7 @@ import { useToasts } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { AuthModalOptions, openAuthToSatisfyIntent } from "Utils/openAuthModal"
+import { AuthModalOptions } from "Utils/openAuthModal"
 import { SavedSearchAlertModalContainer } from "Components/SavedSearchAlert/SavedSearchAlertModal"
 import {
   SavedSearchAlertMutationResult,
@@ -14,7 +14,8 @@ import { Metric } from "Utils/metrics"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
-import { mediator } from "Server/mediator"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -25,7 +26,7 @@ export interface SavedSearchCreateAlertButtonContainerProps {
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations?: Aggregations
-  getAuthModalOptions: () => AuthModalOptions
+  authModalOptions: AuthModalOptions
 }
 
 interface Props extends SavedSearchCreateAlertButtonContainerProps {
@@ -37,7 +38,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   criteria,
   metric,
   aggregations,
-  getAuthModalOptions,
+  authModalOptions,
   renderButton,
 }) => {
   const tracking = useTracking()
@@ -63,6 +64,8 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
     openModal()
   }
 
+  const { showAuthDialog } = useAuthDialog()
+
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
@@ -73,10 +76,27 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
 
     if (isLoggedIn) {
       handleOpenForm()
-    } else {
-      const options = getAuthModalOptions()
-      openAuthToSatisfyIntent(mediator, options)
+      return
     }
+
+    showAuthDialog({
+      current: {
+        mode: "SignUp",
+        options: {
+          title: authModalOptions.copy,
+          afterAuthAction: authModalOptions.afterSignUpAction,
+        },
+        analytics: {
+          intent: authModalOptions.intent,
+          contextModule: authModalOptions.contextModule,
+        },
+      },
+      legacy: {
+        mode: ModalType.signup,
+        redirectTo: window.location.href,
+        ...authModalOptions,
+      },
+    })
   }
 
   const handleComplete = (result: SavedSearchAlertMutationResult) => {

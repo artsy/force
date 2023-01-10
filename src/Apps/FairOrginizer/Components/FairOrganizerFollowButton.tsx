@@ -3,9 +3,10 @@ import { Button } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import { useSystemContext } from "System"
-import { fairOrganizerFollowMutation } from "../Mutations/FairOrganizerFollowMutation"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
+import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 interface FairOrganizerFollowButtonProps {
   fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data
@@ -14,7 +15,10 @@ interface FairOrganizerFollowButtonProps {
 export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps> = props => {
   const { fairOrganizer } = props
   const { profile } = fairOrganizer
-  const { relayEnvironment, user, mediator } = useSystemContext()
+
+  const { relayEnvironment, user } = useSystemContext()
+
+  const { showAuthDialog } = useAuthDialog()
 
   const handleClick = async (
     event: React.MouseEvent<HTMLElement, MouseEvent>
@@ -26,13 +30,37 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
         return true
       }
 
-      openAuthToSatisfyIntent(mediator!, {
-        contextModule: ContextModule.fairOrganizerHeader,
-        entity: {
-          slug: fairOrganizer.slug,
-          name: fairOrganizer.name!,
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to follow ${fairOrganizer.name}`
+            },
+            afterAuthAction: {
+              kind: "profile",
+              action: "follow",
+              objectId: fairOrganizer.slug,
+            },
+          },
+          analytics: {
+            intent: Intent.followPartner,
+            contextModule: ContextModule.fairOrganizerHeader,
+          },
         },
-        intent: Intent.followPartner,
+        legacy: {
+          afterSignUpAction: {
+            action: "follow",
+            kind: "profile",
+            objectId: fairOrganizer.slug,
+          },
+          contextModule: ContextModule.fairOrganizerHeader,
+          copy: `Sign up to follow ${fairOrganizer.name}`,
+          intent: Intent.followPartner,
+          mode: ModalType.signup,
+          redirectTo: window.location.href,
+        },
       })
     }
 

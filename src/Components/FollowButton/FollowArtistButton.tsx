@@ -12,11 +12,12 @@ import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton
 import { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
   artist: FollowArtistButton_artist$data
@@ -32,7 +33,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   onFollow,
   ...rest
 }) => {
-  const { isLoggedIn, mediator } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
     ownerType: OwnerType.artist,
@@ -91,16 +92,45 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
     },
   })
 
+  const { showAuthDialog } = useAuthDialog()
+
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
 
     if (!isLoggedIn) {
-      openAuthToSatisfyIntent(mediator!, {
-        contextModule,
-        entity: { name: artist.name!, slug: artist.slug },
-        intent: Intent.followArtist,
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to follow ${artist.name}`
+            },
+            afterAuthAction: {
+              action: "follow",
+              kind: "artist",
+              objectId: artist.slug,
+            },
+          },
+          analytics: {
+            intent: Intent.followArtist,
+            contextModule,
+          },
+        },
+        legacy: {
+          afterSignUpAction: {
+            action: "follow",
+            kind: "artist",
+            objectId: artist.slug,
+          },
+          contextModule,
+          copy: `Sign up to follow ${artist.name}`,
+          intent: Intent.followArtist,
+          mode: ModalType.signup,
+          redirectTo: window.location.href,
+        },
       })
 
       return
