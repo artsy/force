@@ -202,22 +202,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             )!
       )
 
-      // TODO
-      // const shipToPhoneNumber = addedOrEditedAddress?.userAddressOrErrors
-      //   .phoneNumber
-      //   ? addedOrEditedAddress?.userAddressOrErrors.phoneNumber
-      //   : phoneNumber
-
       const shipToPhoneNumberCountryCode = addedOrEditedAddress
         ?.userAddressOrErrors.phoneNumberCountryCode
         ? addedOrEditedAddress?.userAddressOrErrors.phoneNumberCountryCode
         : phoneNumberCountryCode
 
-      const shipToPhoneNumber =
-        isCreateNewAddress() || shippingOption === "PICKUP"
-          ? phoneNumber
-          : addressList.find(address => address.internalID == selectedAddressID)
-              ?.phoneNumber
+      const shipToPhoneNumber = addedOrEditedAddress?.userAddressOrErrors
+        .phoneNumber
+        ? addedOrEditedAddress?.userAddressOrErrors.phoneNumber
+        : isCreateNewAddress() || shippingOption === "PICKUP"
+        ? phoneNumber
+        : addressList.find(address => address.internalID == selectedAddressID)
+            ?.phoneNumber
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
