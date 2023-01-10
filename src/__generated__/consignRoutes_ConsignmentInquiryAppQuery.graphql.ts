@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ceb9af6faafb730c58342ad7aac9f8da>>
+ * @generated SignedSource<<9ddc1f79b460a79980524d79d064f3f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -102,39 +102,6 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isValid",
-                "storageKey": null
-              },
-              {
-                "alias": "international",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "INTERNATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"INTERNATIONAL\")"
-              },
-              {
-                "alias": "national",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "NATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "regionCode",
                 "storageKey": null
               }
@@ -154,12 +121,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "fa6bfa40f1d59716ef18081e75bee3ee",
+    "cacheID": "de916b33b30b90a07d6b32368ea123a2",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_ConsignmentInquiryAppQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_ConsignmentInquiryAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
+    "text": "query consignRoutes_ConsignmentInquiryAppQuery {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n"
   }
 };
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<592d42ca311b30305feaa423dd88ae43>>
+ * @generated SignedSource<<c1ca4d084a619cef286f1f8802be693f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -115,39 +115,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isValid",
-                "storageKey": null
-              },
-              {
-                "alias": "international",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "INTERNATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"INTERNATIONAL\")"
-              },
-              {
-                "alias": "national",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "NATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "regionCode",
                 "storageKey": null
               }
@@ -167,7 +134,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f68da61445c67259e7f7df41ff5b5911",
+    "cacheID": "4804651cad3e166f28432e795ba01466",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -188,20 +155,12 @@ return {
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.phoneNumber.international": (v0/*: any*/),
-        "me.phoneNumber.isValid": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.phoneNumber.national": (v0/*: any*/),
         "me.phoneNumber.regionCode": (v0/*: any*/)
       }
     },
     "name": "ConsignmentInquiry_Test_Query",
     "operationKind": "query",
-    "text": "query ConsignmentInquiry_Test_Query {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n"
+    "text": "query ConsignmentInquiry_Test_Query {\n  me {\n    ...ConsignmentInquiry_me\n    id\n  }\n}\n\nfragment ConsignmentInquiry_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n"
   }
 };
 })();

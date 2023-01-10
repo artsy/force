@@ -27,17 +27,22 @@ const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
 const getContactInformationFormInitialValues = (
   me: ConsignmentInquiry_me$data
-): ConsignmentInquiryFormModel => ({
-  name: me?.name || "",
-  email: me?.email || "",
-  phoneNumber:
-    me?.phoneNumber?.national ||
-    me?.phone ||
-    me?.phoneNumber?.international ||
-    "",
-  phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
-  message: "",
-})
+): ConsignmentInquiryFormModel => {
+  const userRegionCode = me?.phoneNumber?.regionCode ?? ""
+  const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
+  let phoneNumber = me?.phone ?? ""
+
+  if (countryCode) {
+    phoneNumber = phoneNumber.replace(`+${countryCode}`, "")
+  }
+  return {
+    name: me?.name || "",
+    email: me?.email || "",
+    phoneNumber,
+    phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
+    message: "",
+  }
+}
 
 export interface ConsignmentInquiryProps {
   me: ConsignmentInquiry_me$data
@@ -222,9 +227,6 @@ export const ConsignmentInquiryFragmentContainer = createFragmentContainer(
         email
         phone
         phoneNumber {
-          isValid
-          international: display(format: INTERNATIONAL)
-          national: display(format: NATIONAL)
           regionCode
         }
       }
