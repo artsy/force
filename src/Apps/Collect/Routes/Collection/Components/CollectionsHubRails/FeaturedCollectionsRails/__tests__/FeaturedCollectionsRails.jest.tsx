@@ -2,10 +2,11 @@ import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import { FeaturedCollectionEntity, FeaturedCollectionsRails } from "../index"
-import { Image, paginateCarousel } from "@artsy/palette"
+import { FeaturedCollectionsRails } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/index"
+import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { FeaturedCollectionRailEntityFragmentContainer } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/FeaturedCollectionsRails/FeaturedCollectionRailEntity"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("react-tracking")
@@ -45,7 +46,7 @@ describe("FeaturedCollectionsRails", () => {
     trackEvent.mockClear()
   })
 
-  it("Renders expected fields", () => {
+  it("renders expected fields", () => {
     const component = getWrapper()
     expect(component.text()).toMatch("Featured Collections")
     expect(component.text()).toMatch("Art Inspired by Cartoons")
@@ -53,8 +54,8 @@ describe("FeaturedCollectionsRails", () => {
     expect(component.text()).toMatch("Street Art: Superheroes and Villains")
   })
 
-  describe("Tracking", () => {
-    it("Tracks rails clicks", () => {
+  describe("tracking", () => {
+    it("tracks rails clicks", () => {
       const component = getWrapper()
       component.find("a").at(2).simulate("click")
 
@@ -73,22 +74,12 @@ describe("FeaturedCollectionsRails", () => {
     })
   })
 
-  it.skip("Renders expected fields for FeaturedCollectionEntity", () => {
-    const component = getWrapper()
-    const firstEntity = component.find(FeaturedCollectionEntity).at(0)
-
-    expect(firstEntity.text()).toContain("Art Inspired by Cartoons")
-    expect(firstEntity.text()).toContain("From $60")
-    const featuredImage = component.find(Image).at(0)
-    expect(featuredImage.getElement().props.src).toContain(
-      "?resize_to=fill&src=http%3A%2F%2Ffiles.artsy.net%2Fimages%2Fcartoons_thumbnail.png&width=325&height=244&quality=75&convert_to=jpg"
-    )
-  })
-
-  it("Does not renders price guidance for FeaturedCollectionEntity when it is null", () => {
+  it("does not render price guidance for FeaturedCollectionEntity when it is null", () => {
     props.collectionGroup.members[0].priceGuidance = null
     const component = getWrapper()
-    const firstEntity = component.find(FeaturedCollectionEntity).at(0)
+    const firstEntity = component
+      .find(FeaturedCollectionRailEntityFragmentContainer)
+      .at(0)
 
     expect(firstEntity.text()).not.toContain("From $")
   })
