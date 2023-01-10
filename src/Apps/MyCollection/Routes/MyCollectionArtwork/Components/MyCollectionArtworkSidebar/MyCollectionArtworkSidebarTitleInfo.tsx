@@ -1,6 +1,5 @@
 import { Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { MyCollectionArtworkSidebarTitleInfo_artwork$data } from "__generated__/MyCollectionArtworkSidebarTitleInfo_artwork.graphql"
 
@@ -16,9 +15,13 @@ const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTi
   return (
     <>
       <Text as="h1" variant="lg-display">
-        <RouterLink textDecoration="none" to={artist!.href}>
-          {artistNames}
-        </RouterLink>
+        {artwork?.artist?.isPersonalArtist ? (
+          artistNames
+        ) : (
+          <RouterLink textDecoration="none" to={artist!.href}>
+            {artistNames}
+          </RouterLink>
+        )}
       </Text>
       <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
         <i>{title?.trim()}</i>
@@ -40,6 +43,7 @@ export const MyCollectionArtworkSidebarTitleInfoFragmentContainer = createFragme
         date
         artist {
           href
+          isPersonalArtist
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbd362b0255c7d5eed7442b621ed9b2e>>
+ * @generated SignedSource<<c5e83c83569c4eada3b2eb5031935141>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarTitleInfo_artwork$data = {
   readonly artist: {
     readonly href: string | null;
+    readonly isPersonalArtist: boolean | null;
   } | null;
   readonly artistNames: string | null;
   readonly date: string | null;
@@ -65,6 +66,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "href",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPersonalArtist",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -74,6 +82,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "24af03d4f484b14c3653cb2ed472a822";
+(node as any).hash = "60b35ced5949495cc1612ba0bab5e992";
 
 export default node;
