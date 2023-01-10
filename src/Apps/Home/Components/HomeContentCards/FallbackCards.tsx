@@ -54,7 +54,7 @@ const fallbackData = [
     label: "Featured Collection",
     linkText: "Browse Works",
     title: "Trove: Editor’s Picks",
-    url: "/collection/trove-editors-picks",
+    url:    "/collection/trove-editors-picks",
   },
   {
     credit:
