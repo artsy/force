@@ -72,7 +72,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
       <Text variant={["xs", "sm-display"]}>
         Or skip ahead to{" "}
         <Clickable onClick={onSkip} textDecoration="underline">
-          <Text>add artwork details</Text>
+          <Text variant={["xs", "sm-display"]}>add artwork details</Text>
         </Clickable>
         .
       </Text>
