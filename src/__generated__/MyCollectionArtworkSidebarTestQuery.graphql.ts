@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc827e65a1ba029ff300da1ba797376b>>
+ * @generated SignedSource<<40c1ae68f47cf2de48f6ab43265eef6b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -130,6 +130,13 @@ return {
                 "name": "href",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isPersonalArtist",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": null
@@ -238,7 +245,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64f14afd74105a367adeccdc9ede1433",
+    "cacheID": "aaf4a1b37902156ba9761adabbd11081",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -256,6 +263,12 @@ return {
         },
         "artwork.artist.href": (v2/*: any*/),
         "artwork.artist.id": (v3/*: any*/),
+        "artwork.artist.isPersonalArtist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.artistNames": (v2/*: any*/),
         "artwork.artworkLocation": (v2/*: any*/),
         "artwork.attributionClass": {
@@ -292,7 +305,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
   }
 };
 })();
