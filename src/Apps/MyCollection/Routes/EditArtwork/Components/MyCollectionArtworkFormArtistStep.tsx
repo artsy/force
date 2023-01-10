@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Clickable,
   Column,
   Flex,
@@ -15,8 +17,8 @@ import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artwork
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
-import { sortBy } from "lodash"
-import { useState } from "react"
+import { debounce, sortBy } from "lodash"
+import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
@@ -46,6 +48,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     ["displayLabel"]
   )
 
+  const [artistNotFound, setArtistNotFound] = useState(false)
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
@@ -82,6 +85,13 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     onSkip?.()
   }
 
+  const handleArtistNotFound = useMemo(() => debounce(setArtistNotFound, 200), [
+    setArtistNotFound,
+  ])
+
+  // Stop the invocation of the debounced function after unmounting
+  useEffect(() => handleArtistNotFound.cancel, [handleArtistNotFound])
+
   return (
     <AppContainer>
       <MyCollectionArtworkFormHeader onBackClick={() => onBack()} />
@@ -98,53 +108,82 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           setQuery(value)
           setFieldValue("artistName", value || "")
         }}
+        onArtistNotFound={handleArtistNotFound}
         onSelect={onSelect}
         placeholder="Search for artists on Artsy"
       />
 
       <Spacer y={2} />
 
-      {!!enablePersonalArtists && (
-        <Flex flexDirection="row">
-          <Text variant={["xs", "sm-display"]}>
-            Can't find the artist?&nbsp;
-            <Clickable
-              onClick={handleSkip}
-              textDecoration="underline"
-              data-testid="artist-select-skip-button"
+      {artistNotFound ? (
+        <Box my={4}>
+          <Text variant={["xs", "sm-display"]} flexWrap="wrap">
+            We didn't find "
+            <Text
+              variant={["xs", "sm-display"]}
+              display="inline-block"
+              color="blue100"
             >
-              <Text variant={["xs", "sm-display"]} color="black100">
-                Add their name
-              </Text>
-            </Clickable>
-            .
+              {query}
+            </Text>
+            “ on Artsy.{" "}
+            {!!enablePersonalArtists &&
+              "You can add their name in the artwork details."}
           </Text>
-        </Flex>
-      )}
 
-      <Spacer y={4} />
+          <Spacer y={4} />
 
-      {collectedArtists.length > 0 && (
+          {!!enablePersonalArtists && (
+            <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
+              Add Artist
+            </Button>
+          )}
+        </Box>
+      ) : (
         <>
-          <Text variant="sm-display">Artists in My Collection</Text>
-          <Spacer y={1} />
-          <GridColumns width="100%">
-            {collectedArtists.map(artist => (
-              <Column span={[12, 4]} key={artist.internalID} mt={1}>
+          {!!enablePersonalArtists && (
+            <Flex flexDirection="row">
+              <Text variant={["xs", "sm-display"]}>
+                Can't find the artist?&nbsp;
                 <Clickable
-                  onClick={() => onSelect(artist)}
-                  data-testid={`artist-${artist.internalID}`}
+                  onClick={handleSkip}
+                  textDecoration="underline"
+                  data-testid="artist-select-skip-button"
                 >
-                  <EntityHeaderArtistFragmentContainer
-                    artist={artist}
-                    displayCounts={false}
-                    displayLink={false}
-                    displayFollowButton={false}
-                  />
+                  <Text variant={["xs", "sm-display"]} color="black100">
+                    Add their name
+                  </Text>
                 </Clickable>
-              </Column>
-            ))}
-          </GridColumns>
+                .
+              </Text>
+            </Flex>
+          )}
+
+          <Spacer y={4} />
+
+          {collectedArtists.length > 0 && (
+            <>
+              <Text variant="sm-display">Artists in My Collection</Text>
+              <Spacer y={1} />
+              <GridColumns width="100%">
+                {collectedArtists.map(artist => (
+                  <Column span={[12, 4]} key={artist.internalID} mt={1}>
+                    <Clickable
+                      onClick={() => onSelect(artist)}
+                      data-testid={`artist-${artist.internalID}`}
+                    >
+                      <EntityHeaderArtistFragmentContainer
+                        artist={artist}
+                        displayCounts={false}
+                        displayLink={false}
+                        displayFollowButton={false}
+                      />
+                    </Clickable>
+                  </Column>
+                ))}
+              </GridColumns>
+            </>
+          )}
         </>
       )}
 
