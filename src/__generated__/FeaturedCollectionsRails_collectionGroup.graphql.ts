@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a96c0163ef734e90e1e9ce5c3bf2cecf>>
+ * @generated SignedSource<<d15121d1ea2d7ed7099a7487ee299c16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,8 @@ import { FragmentRefs } from "relay-runtime";
 export type FeaturedCollectionsRails_collectionGroup$data = {
   readonly groupType: MarketingCollectionGroupTypeEnum;
   readonly members: ReadonlyArray<{
-    readonly description: string | null;
-    readonly id: string;
-    readonly priceGuidance: number | null;
-    readonly slug: string;
-    readonly thumbnail: string | null;
-    readonly title: string;
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"FeaturedCollectionRailEntity_member">;
   }>;
   readonly name: string;
   readonly " $fragmentType": "FeaturedCollectionsRails_collectionGroup";
@@ -58,45 +54,15 @@ const node: ReaderFragment = {
       "plural": true,
       "selections": [
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "FeaturedCollectionRailEntity_member"
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "priceGuidance",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "thumbnail",
+          "name": "internalID",
           "storageKey": null
         }
       ],
@@ -107,6 +73,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b2af7ee18d4fa1d6393ffea8d8050e51";
+(node as any).hash = "bb7051a528d4544ef943871443932edd";
 
 export default node;
