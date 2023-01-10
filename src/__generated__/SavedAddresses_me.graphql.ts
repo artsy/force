@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<747dffb68681579d854d11902eb21740>>
+ * @generated SignedSource<<59c4efddd66901b546a72e21517b0b8d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type SavedAddresses_me$data = {
         readonly isDefault: boolean;
         readonly name: string | null;
         readonly phoneNumber: string | null;
+        readonly phoneNumberCountryCode: string | null;
         readonly postalCode: string | null;
         readonly region: string | null;
       } | null;
@@ -184,6 +185,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "phoneNumberCountryCode",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "postalCode",
                   "storageKey": null
                 },
@@ -262,6 +270,6 @@ return {
 };
 })();
 
-(node as any).hash = "81a45053db6c6122c064c0735e6b84f0";
+(node as any).hash = "b379c10bbe289399ecd0edd863df6b0e";
 
 export default node;

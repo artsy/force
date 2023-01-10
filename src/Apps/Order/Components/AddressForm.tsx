@@ -93,7 +93,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
     return {
       ...address,
-      phoneNumberCountryCode: address?.country?.toLowerCase() || "us",
+      phoneNumberCountryCode:
+        address?.phoneNumberCountryCode ||
+        address?.country.toLowerCase() ||
+        "us",
     }
   }
 

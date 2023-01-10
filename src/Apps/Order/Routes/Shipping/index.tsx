@@ -94,10 +94,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     getShippingQuotes(props.order)
   )
 
-  // TODO // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const [address, setAddress] = useState<any>(
-    startingAddress(props.me, props.order)
-  )
+  // Alican - TODO // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  const [address] = useState<any>(startingAddress(props.me, props.order))
 
   const [createAddressError, setCreateAddressError] = useState<string | null>(
     null
@@ -112,7 +110,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
   const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState<
     string | null
-  >(startingPhoneNumberCountryCode(props.me, props.order) || "us")
+  >(startingPhoneNumberCountryCode(props.me, props.order))
 
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
 
@@ -375,10 +373,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const handleAddressEdit = (
     editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
   ) => {
-    if (editedAddress?.userAddressOrErrors?.internalID) {
-      selectShipping(editedAddress)
-    }
-
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
       setShippingQuotes(null)
@@ -485,6 +479,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </>
             )}
 
+            {/* SAVED address and additional address */}
             <Collapse
               data-test="savedAddressesCollapse"
               open={!!showSavedAddresses}
@@ -506,6 +501,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
             </Collapse>
 
+            {/* NEW Address */}
             <Collapse data-test="addressFormCollapse" open={showAddressForm}>
               {isArtsyShipping &&
                 shippingQuotes &&
@@ -536,6 +532,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
             </Collapse>
 
+            {/* PICK UP */}
             <Collapse
               data-test="phoneNumberCollapse"
               open={shippingOption === "PICKUP"}
@@ -553,6 +550,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Spacer y={4} />
             </Collapse>
 
+            {/* Shipping quotes */}
             <Collapse
               open={
                 isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
@@ -574,7 +572,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             </Collapse>
 
             {((shippingQuotes?.length && shippingQuotes.length > 0) ||
-              shippingOption === "PICKUP") && (
+              shippingOption === "PICKUP" ||
+              showSavedAddresses) && (
               <Media greaterThan="xs">
                 <Button
                   onClick={handleContinueButtonPressed}

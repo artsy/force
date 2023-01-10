@@ -83,6 +83,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }, [me.addressConnection?.totalCount])
 
   const addressList = extractNodes(me?.addressConnection) ?? []
+
   const { relayEnvironment } = useSystemContext()
 
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
@@ -138,12 +139,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleEditAddress = (address: Address) => {
+    setAddress(address)
     setShowAddressModal(true)
     setModalDetails({
       addressModalTitle: "Edit address",
       addressModalAction: "editUserAddress",
     })
-    setAddress(address)
   }
 
   const handleAddNewAddressClick = () => {
@@ -241,6 +242,7 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
               isDefault
               name
               phoneNumber
+              phoneNumberCountryCode
               postalCode
               region
             }

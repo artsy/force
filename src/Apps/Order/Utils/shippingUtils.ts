@@ -115,7 +115,7 @@ export const startingPhoneNumber = (
 export const startingPhoneNumberCountryCode = (
   me: Shipping_me$data,
   order: Shipping_order$data
-) => {
+): string => {
   if (order.buyerPhoneNumberCountryCode) {
     return order.buyerPhoneNumberCountryCode
   }
@@ -124,10 +124,17 @@ export const startingPhoneNumberCountryCode = (
 
   if (savedAddresses.length) {
     const address = savedAddresses.find(a => a.isDefault)
-    return address?.phoneNumberCountryCode || address?.country.toLowerCase()
+
+    if (address?.phoneNumberCountryCode) {
+      return address.phoneNumberCountryCode
+    }
+
+    if (address?.country) {
+      return address.country.toLowerCase()
+    }
   }
 
-  return ""
+  return "us"
 }
 
 export const startingAddress = (
