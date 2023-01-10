@@ -35,14 +35,14 @@ const InsightsRoute = loadable(
   }
 )
 
-const Saves = loadable(
+const SavesAndFollowsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves/CollectorProfileSavesRoute"
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/SavesAndFollows/CollectorProfileSavesAndFollowsRoute"
     ),
   {
     resolveComponent: component =>
-      component.CollectorProfileSavesRouteQueryRenderer,
+      component.CollectorProfileSavesAndFollowsRouteFragmentContainer,
   }
 )
 
@@ -152,15 +152,15 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
       },
       {
         path: "saves",
-        getComponent: () => Saves,
+        getComponent: () => SavesAndFollowsRoute,
         onClientSideRender: () => {
-          Saves.preload()
+          SavesAndFollowsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
         query: graphql`
-          query collectorProfileRoutes_SavesQuery {
+          query collectorProfileRoutes_SavesAndFollowsRouteQuery {
             me {
-              ...CollectorProfileSavesRoute_me
+              ...CollectorProfileSavesAndFollowsRoute_me
             }
           }
         `,
