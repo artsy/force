@@ -7,6 +7,8 @@ import { SettingsSavesArtworksQueryRenderer } from "Apps/Settings/Routes/Saves/C
 import { SettingsSavesArtistsQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesArtists"
 import { SettingsSavesCategoriesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesCategories"
 import { SettingsSavesProfilesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesProfiles"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { CollectorProfileSavesRouteQueryRenderer } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 
 interface CollectorProfileSavesAndFollowsRouteProps {
   me: CollectorProfileSavesAndFollowsRoute_me$data
@@ -15,6 +17,14 @@ interface CollectorProfileSavesAndFollowsRouteProps {
 const CollectorProfileSavesAndFollowsRoute: React.FC<CollectorProfileSavesAndFollowsRouteProps> = ({
   me,
 }) => {
+  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
+    "collector-profile-separating-saves-and-follows"
+  )
+
+  if (isSeparateSavesAndFollowsEnabled) {
+    return <CollectorProfileSavesRouteQueryRenderer />
+  }
+
   return (
     <Join separator={<Separator my={4} />}>
       <SettingsSavesArtworksQueryRenderer />
