@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e3e2d4d1a9a56e146549187f9ac1fd8>>
+ * @generated SignedSource<<bd1bfc2a23b5e809c1363b845f7b4626>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,7 +45,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "marketingCollectionID",
-          "value": "trove-editors-picks"
+          "value": "curators-picks-emerging"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -102,13 +102,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"trove-editors-picks\")"
+      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"curators-picks-emerging\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "d3ba6a95604757356fd7f0426f0c17fb";
+(node as any).hash = "9734f7cd9bcc52fa34e6d59da98bfcb7";
 
 export default node;

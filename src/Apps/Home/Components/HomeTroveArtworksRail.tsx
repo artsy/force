@@ -34,10 +34,10 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
 
   return (
     <Rail
-      title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
+      title="Curators’ Picks: Emerging"
+      subTitle="The best works by rising talents on Artsy, all available now."
       viewAllLabel="View All Works"
-      viewAllHref="/collection/trove-editors-picks"
+      viewAllHref="/collection/curators-picks-emerging"
       viewAllOnClick={() => {
         const trackingEvent: ClickedArtworkGroup = {
           action: ActionType.clickedArtworkGroup,
@@ -85,7 +85,7 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
       fragment HomeTroveArtworksRail_viewer on Viewer {
         artworksConnection(
           first: 12
-          marketingCollectionID: "trove-editors-picks"
+          marketingCollectionID: "curators-picks-emerging"
         ) {
           edges {
             node {
@@ -132,8 +132,8 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
+      title="Curators’ Picks: Emerging"
+      subTitle="The best works by rising talents on Artsy, all available now."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />
