@@ -17,8 +17,8 @@ import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artwork
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
-import { sortBy } from "lodash"
-import { useState } from "react"
+import { debounce, sortBy } from "lodash"
+import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
@@ -85,6 +85,13 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     onSkip?.()
   }
 
+  const handleArtistNotFound = useMemo(() => debounce(setArtistNotFound, 200), [
+    setArtistNotFound,
+  ])
+
+  // Stop the invocation of the debounced function after unmounting
+  useEffect(() => handleArtistNotFound.cancel, [handleArtistNotFound])
+
   return (
     <AppContainer>
       <MyCollectionArtworkFormHeader onBackClick={() => onBack()} />
@@ -101,7 +108,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           setQuery(value)
           setFieldValue("artistName", value || "")
         }}
-        onArtistNotFound={setArtistNotFound}
+        onArtistNotFound={handleArtistNotFound}
         onSelect={onSelect}
         placeholder="Search for artists on Artsy"
       />
