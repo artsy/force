@@ -1,15 +1,10 @@
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
-
-const TABS = [
-  { name: "My Collection", url: "/collector-profile/my-collection" },
-  { name: "Insights", url: "/collector-profile/insights" },
-  { name: "Saves & Follows", url: "/collector-profile/saves" },
-]
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -20,10 +15,26 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
+    "collector-profile-separating-saves-and-follows"
+  )
 
   if (!isCollectorProfileEnabled) {
     return null
   }
+
+  const tabs = compact([
+    { name: "My Collection", url: "/collector-profile/my-collection" },
+    { name: "Insights", url: "/collector-profile/insights" },
+    {
+      name: isSeparateSavesAndFollowsEnabled ? "Saves" : "Saves & Follows",
+      url: "/collector-profile/saves",
+    },
+    isSeparateSavesAndFollowsEnabled && {
+      name: "Follows",
+      url: "/collector-profile/follows",
+    },
+  ])
 
   return (
     <>
@@ -32,7 +43,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
       <CollectorProfileHeaderFragmentContainer me={me} />
 
       <RouteTabs fill my={[2, 4]}>
-        {TABS.map(tab => {
+        {tabs.map(tab => {
           return (
             <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
               {tab.name}
