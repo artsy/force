@@ -13,17 +13,16 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { SystemContextProps, useSystemContext } from "System"
-import { SystemContext } from "System"
+import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
+import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { ModalType } from "Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
 import { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { openAuthModal } from "Utils/openAuthModal"
-import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
+import { SystemContext, SystemContextProps, useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
-import { useAuctionResultsTracking } from "Apps/Artist/Routes/AuctionResults/Components/Hooks/useAuctionResultsTracking"
+import { openAuthModal } from "Utils/openAuthModal"
+import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
