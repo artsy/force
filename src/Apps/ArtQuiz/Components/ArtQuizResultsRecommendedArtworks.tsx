@@ -6,8 +6,10 @@ import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizRes
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Spacer } from "@artsy/palette"
-import { compact, shuffle, uniqBy } from "lodash"
+import { uniqBy } from "lodash"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import { extractNodes } from "Utils/extractNodes"
+import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 
 interface ArtQuizResultsRecommendedArtworksProps {
   me: ArtQuizResultsRecommendedArtworks_me$data
@@ -16,26 +18,23 @@ interface ArtQuizResultsRecommendedArtworksProps {
 const ArtQuizResultsRecommendedArtworks: FC<ArtQuizResultsRecommendedArtworksProps> = ({
   me,
 }) => {
-  const artworks = compact(
-    shuffle(
-      uniqBy(
-        me.quiz.savedArtworks.flatMap(artwork => {
-          if (!artwork.layer) return []
+  const artworks = useStableShuffle({
+    items: uniqBy(
+      me.quiz.savedArtworks.flatMap(artwork => {
+        if (!artwork.layer) return []
 
-          return artwork.related || []
-        }),
-        "internalID"
-      )
-    )
-  )
+        return extractNodes(artwork.layer.artworksConnection)
+      }),
+      "internalID"
+    ),
+  })
 
   return (
     <Masonry columnCount={[2, 3, 4]}>
-      {artworks.map(artwork => {
+      {artworks.shuffled.map(artwork => {
         return (
           <Fragment key={artwork.internalID}>
             <ArtworkGridItemFragmentContainer artwork={artwork} />
-
             <Spacer y={4} />
           </Fragment>
         )
@@ -53,17 +52,14 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
         quiz {
           savedArtworks {
             layer(id: "main") {
-              artworksConnection {
+              artworksConnection(first: $limit) {
                 edges {
                   node {
                     internalID
+                    ...GridItem_artwork
                   }
                 }
               }
-            }
-            related(size: $limit) {
-              ...GridItem_artwork
-              internalID
             }
           }
         }
@@ -94,7 +90,6 @@ export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<ArtQuizResultsRe
       `}
       placeholder={<ArtQuizResultsRecommendedArtworksPlaceholder />}
       render={({ props, error }) => {
-        console.log("***************PROPS*******************", props)
         if (error) {
           console.error(error)
           return null

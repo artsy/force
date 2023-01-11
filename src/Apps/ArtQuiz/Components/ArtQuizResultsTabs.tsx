@@ -2,16 +2,16 @@ import { Button, Spacer, Tab, Tabs, Text, useToasts } from "@artsy/palette"
 import { ArtQuizLikedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizLikedArtworks"
 import { ArtQuizRecommendedArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtists"
 import { ArtQuizResultsRecommendedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizResultsRecommendedArtworks"
-import { FC } from "react"
+import { FC, useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useSystemContext } from "System"
 
 interface ArtQuizResultsTabsProps {
-  savedQuizArtworksTotal: number
+  savedQuizArtworksCount: number
 }
 
 export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
-  savedQuizArtworksTotal,
+  savedQuizArtworksCount,
 }) => {
   const { t } = useTranslation()
 
@@ -28,11 +28,15 @@ export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
     })
   }
 
-  const calculateRecommendationsLimit = () => {
-    if (savedQuizArtworksTotal <= 3) return 8
-    if (savedQuizArtworksTotal > 3) return 4
-    return 100
-  }
+  const calculatePerArtworkRecommendationsLimit = useCallback(() => {
+    if (savedQuizArtworksCount <= 1) return 100
+    if (savedQuizArtworksCount <= 3) return 8
+    return 4
+  }, [savedQuizArtworksCount])
+
+  const limit = useMemo(() => calculatePerArtworkRecommendationsLimit(), [
+    calculatePerArtworkRecommendationsLimit,
+  ])
 
   return (
     <>
@@ -66,9 +70,7 @@ export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtworks")}>
-          <ArtQuizResultsRecommendedArtworksQueryRenderer
-            limit={calculateRecommendationsLimit()}
-          />
+          <ArtQuizResultsRecommendedArtworksQueryRenderer limit={limit} />
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtists")}>

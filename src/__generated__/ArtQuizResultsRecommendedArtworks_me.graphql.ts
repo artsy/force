@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bb8169966a62e6f0d79835eea5808b80>>
+ * @generated SignedSource<<8332f97032bb8bd5c5a0ee92afe375fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,14 +18,11 @@ export type ArtQuizResultsRecommendedArtworks_me$data = {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly internalID: string;
+              readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
             } | null;
           } | null> | null;
         } | null;
       } | null;
-      readonly related: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-      } | null> | null;
     }>;
   };
   readonly " $fragmentType": "ArtQuizResultsRecommendedArtworks_me";
@@ -35,15 +32,7 @@ export type ArtQuizResultsRecommendedArtworks_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizResultsRecommendedArtworks_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -87,7 +76,13 @@ return {
               "selections": [
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Variable",
+                      "name": "first",
+                      "variableName": "limit"
+                    }
+                  ],
                   "concreteType": "ArtworkConnection",
                   "kind": "LinkedField",
                   "name": "artworksConnection",
@@ -109,7 +104,18 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            (v0/*: any*/)
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "internalID",
+                              "storageKey": null
+                            },
+                            {
+                              "args": null,
+                              "kind": "FragmentSpread",
+                              "name": "GridItem_artwork"
+                            }
                           ],
                           "storageKey": null
                         }
@@ -121,29 +127,6 @@ return {
                 }
               ],
               "storageKey": "layer(id:\"main\")"
-            },
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Variable",
-                  "name": "size",
-                  "variableName": "limit"
-                }
-              ],
-              "concreteType": "Artwork",
-              "kind": "LinkedField",
-              "name": "related",
-              "plural": true,
-              "selections": [
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "GridItem_artwork"
-                },
-                (v0/*: any*/)
-              ],
-              "storageKey": null
             }
           ],
           "storageKey": null
@@ -155,8 +138,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "92679aedabc0cbe316acf58870a33784";
+(node as any).hash = "815a9dddd6359196c24dd275a23c5225";
 
 export default node;
