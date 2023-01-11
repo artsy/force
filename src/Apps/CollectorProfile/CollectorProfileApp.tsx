@@ -1,8 +1,10 @@
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
+import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 
@@ -14,13 +16,17 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   me,
   children,
 }) => {
+  const { isLoggedIn } = useSystemContext()
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
     "collector-profile-separating-saves-and-follows"
   )
-
   if (!isCollectorProfileEnabled) {
     return null
+  }
+
+  if (!isLoggedIn) {
+    return <EmptyMyCollectionPage />
   }
 
   const tabs = compact([
