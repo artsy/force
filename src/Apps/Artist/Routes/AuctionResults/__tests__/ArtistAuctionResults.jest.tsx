@@ -14,6 +14,7 @@ jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
 }))
+jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -22,6 +23,7 @@ jest.mock("System/Router/useRouter", () => ({
 }))
 
 import { MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 
 describe("AuctionResults", () => {
@@ -48,6 +50,11 @@ describe("AuctionResults", () => {
         trackEvent,
       }
     })
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-upcoming-auctions-filter": { flagEnabled: true },
+      },
+    }))
 
     mockOpenAuthModal.mockImplementation(() => {
       return
