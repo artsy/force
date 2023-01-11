@@ -1,7 +1,8 @@
 import { useSystemContext } from "System"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { SaveArtwork } from "./SaveArtworkMutation"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 type Artwork = {
   internalID: string
@@ -23,7 +24,9 @@ export const useSaveArtwork = ({
   contextModule,
   onSave,
 }: UseSaveArtwork) => {
-  const { relayEnvironment, isLoggedIn, mediator } = useSystemContext()
+  const { relayEnvironment, isLoggedIn } = useSystemContext()
+
+  const { showAuthDialog } = useAuthDialog()
 
   const handleSave = async () => {
     if (relayEnvironment && isLoggedIn) {
@@ -52,12 +55,36 @@ export const useSaveArtwork = ({
         console.error("Artwork/Save Error saving artwork: ", err)
       }
     } else {
-      openAuthToSatisfyIntent(mediator!, {
-        contextModule,
-        intent: Intent.saveArtwork,
-        entity: {
-          slug: artwork.slug!,
-          name: artwork.title ?? "",
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to save artworks`
+            },
+            afterAuthAction: {
+              action: "save",
+              kind: "artworks",
+              objectId: artwork.internalID,
+            },
+          },
+          analytics: {
+            intent: Intent.saveArtwork,
+            contextModule,
+          },
+        },
+        legacy: {
+          afterSignUpAction: {
+            action: "save",
+            kind: "artworks",
+            objectId: artwork.slug!,
+          },
+          contextModule,
+          copy: `Sign up to save artworks`,
+          intent: Intent.saveArtwork,
+          mode: ModalType.signup,
+          redirectTo: window.location.href,
         },
       })
     }

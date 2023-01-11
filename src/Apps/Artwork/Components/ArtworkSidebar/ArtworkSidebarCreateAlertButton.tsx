@@ -10,7 +10,6 @@ import {
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { AuthModalOptions } from "Utils/openAuthModal"
 import { ArtworkSidebarCreateAlertButton_artwork$data } from "__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
 
 interface ArtworkSidebarCreateAlertButtonProps {
@@ -70,30 +69,25 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
     additionalGeneIDs,
   }
 
-  const getAuthModalOptions = (): AuthModalOptions => {
-    return {
-      entity: {
-        name: artwork.title!,
-        slug: artwork.slug,
-      },
-      afterSignUpAction: {
-        action: "createAlert",
-        kind: "artworks",
-        objectId: artwork.internalID,
-      },
-      contextModule: ContextModule.artworkSidebar,
-      intent: Intent.createAlert,
-      redirectTo: location.href,
-      copy: "Sign up to create your alert",
-    }
-  }
-
   return (
     <SavedSearchCreateAlertButtonContainer
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
-      getAuthModalOptions={getAuthModalOptions}
+      authModalOptions={{
+        entity: {
+          name: artwork.title!,
+          slug: artwork.slug,
+        },
+        afterSignUpAction: {
+          action: "createAlert",
+          kind: "artworks",
+          objectId: artwork.internalID,
+        },
+        contextModule: ContextModule.artworkSidebar,
+        intent: Intent.createAlert,
+        copy: "Sign up to create your alert",
+      }}
       renderButton={({ onClick }) => (
         <Button width="100%" size="large" onClick={onClick}>
           Create Alert

@@ -1,13 +1,15 @@
 import React from "react"
 import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
-import { FilterPill, SavedSearchEntity } from "../types"
-import { useActiveFilterPills } from "../useActiveFilterPills"
+import {
+  FilterPill,
+  SavedSearchEntity,
+} from "Components/SavedSearchAlert/types"
+import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
 import { Flex, Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
-import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
+import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "Utils/metrics"
-import { AuthModalOptions } from "Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 
@@ -26,28 +28,11 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
   const criteria = getSearchCriteriaFromFilters(savedSearchEntity, filters)
   const metric = filters?.metric ?? DEFAULT_METRIC
 
-  const getAuthModalOptions = (): AuthModalOptions => {
-    return {
-      entity: {
-        name: savedSearchEntity.owner.name,
-        slug: savedSearchEntity.owner.slug,
-      },
-      afterSignUpAction: {
-        action: "createAlert",
-        kind: "artist",
-        objectId: savedSearchEntity.owner.slug,
-      },
-      contextModule: ContextModule.artworkGrid,
-      copy: "Sign up to create an alert",
-      intent: Intent.createAlert,
-      redirectTo: location.href,
-    }
-  }
-
   return (
     <Flex
       flexWrap="wrap"
       mx={-PILL_HORIZONTAL_MARGIN_SIZE}
+      // FIXME: Remove
       mb={4}
       data-testid="artworkGridFilterPills"
     >
@@ -60,7 +45,20 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
         criteria={criteria}
         metric={metric}
         aggregations={aggregations}
-        getAuthModalOptions={getAuthModalOptions}
+        authModalOptions={{
+          entity: {
+            name: savedSearchEntity.owner.name,
+            slug: savedSearchEntity.owner.slug,
+          },
+          afterSignUpAction: {
+            action: "createAlert",
+            kind: "artist",
+            objectId: savedSearchEntity.owner.slug,
+          },
+          contextModule: ContextModule.artworkGrid,
+          copy: "Sign up to create an alert",
+          intent: Intent.createAlert,
+        }}
       />
     </Flex>
   )
