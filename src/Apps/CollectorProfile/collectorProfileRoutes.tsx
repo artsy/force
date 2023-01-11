@@ -46,6 +46,17 @@ const SavesAndFollowsRoute = loadable(
   }
 )
 
+const FollowsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Follows/CollectorProfileFollowsRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.CollectorProfileFollowsRouteFragmentContainer,
+  }
+)
+
 const MyCollectionCreateArtwork = loadable(
   () =>
     import(
@@ -161,6 +172,21 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           query collectorProfileRoutes_SavesAndFollowsRouteQuery {
             me {
               ...CollectorProfileSavesAndFollowsRoute_me
+            }
+          }
+        `,
+      },
+      {
+        path: "follows",
+        getComponent: () => FollowsRoute,
+        onClientSideRender: () => {
+          FollowsRoute.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query collectorProfileRoutes_FollowsRouteQuery {
+            me {
+              ...CollectorProfileFollowsRoute_me
             }
           }
         `,
