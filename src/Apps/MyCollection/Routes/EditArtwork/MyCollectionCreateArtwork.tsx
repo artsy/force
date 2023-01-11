@@ -9,7 +9,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -18,7 +18,10 @@ import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
-import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
+import {
+  MyCollectionArtworkDetailsValidationSchema,
+  MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist,
+} from "./Utils/artworkValidation"
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
@@ -34,6 +37,9 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
+  )
+  const enablePersonalArtists = useFeatureFlag(
+    "cx-my-collection-personal-artists-for-web"
   )
 
   const { router } = useRouter()
@@ -80,8 +86,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     }
   }
 
-  const handleNextStep = () => {
-    if (currentStep === "artist-select") {
+  const handleNextStep = options => {
+    if (options?.skipNext) {
+      setCurrentStep("details")
+    } else if (currentStep === "artist-select") {
       setCurrentStep("artwork-select")
     } else if (currentStep === "artwork-select") {
       setCurrentStep("details")
@@ -95,6 +103,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       setCurrentStep("details")
     }
   }
+
+  useEffect(() => {
+    window?.scrollTo?.({ top: 0 })
+  }, [currentStep])
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Create the new artwork
@@ -148,7 +160,11 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
           validateOnMount
           onSubmit={handleSubmit}
           initialValues={getMyCollectionArtworkFormInitialValues()}
-          validationSchema={MyCollectionArtworkDetailsValidationSchema}
+          validationSchema={
+            enablePersonalArtists && enableNewMyCUploadFlow
+              ? MyCollectionArtworkDetailsValidationSchema
+              : MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist
+          }
         >
           {getCurrentStep()}
         </Formik>

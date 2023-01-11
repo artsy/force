@@ -1,4 +1,4 @@
-import { AuthIntent, Intent } from "@artsy/cohesion"
+import { AuthIntent, ContextModule, Intent } from "@artsy/cohesion"
 import {
   Button,
   Checkbox,
@@ -12,18 +12,22 @@ import {
   AuthDialogMode,
   AUTH_DIALOG_MODES,
 } from "Components/AuthDialog/AuthDialogContext"
-import { useAuthDialog } from "Components/AuthDialog"
+import { __useAuthDialog__ } from "Components/AuthDialog"
 import { FC, useState } from "react"
 import { Title } from "react-head"
+import { merge } from "lodash"
 
 export const DebugAuth: FC = () => {
-  const { showAuthDialog } = useAuthDialog()
+  const { showAuthDialog } = __useAuthDialog__()
 
   const [state, setState] = useState<
     Required<Parameters<typeof showAuthDialog>[0]>
   >({
     mode: "Login",
     options: {},
+    analytics: {
+      contextModule: ContextModule.header,
+    },
   })
 
   return (
@@ -60,7 +64,11 @@ export const DebugAuth: FC = () => {
 
         <Input
           title="Title"
-          value={state.options.title}
+          value={
+            typeof state.options.title === "function"
+              ? state.options.title(state.mode)
+              : state.options.title
+          }
           placeholder="Copy to display as title"
           onChange={({ target: { value: title } }) => {
             setState(prevState => ({
@@ -84,16 +92,15 @@ export const DebugAuth: FC = () => {
 
         <Select
           title="Intent"
-          value={state.options.intent}
+          value={state.analytics.intent}
           options={AUTH_INTENTS.map(intent => ({
             value: intent,
             text: intent,
           }))}
           onSelect={(intent: AuthIntent) => {
-            setState(prevState => ({
-              ...prevState,
-              options: { ...prevState.options, intent },
-            }))
+            setState(prevState =>
+              merge({}, prevState, { analytics: { intent } })
+            )
           }}
         />
 

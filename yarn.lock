@@ -26,10 +26,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.87.0":
-  version "4.87.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.87.0.tgz#3e175dee9029e4a34dc5f86e202e90594c303860"
-  integrity sha512-2rSoC1637AxTvOF7B9np2GKM67PRMn5Q3EOiGLGRMroc2OPNweTsjox73qbmguAvslGwzbjGRDMBzQ6zmqO5NA==
+"@artsy/cohesion@4.92.0":
+  version "4.92.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.92.0.tgz#23a8e68ca5b197aa20704f6430b1f1decf7b7d18"
+  integrity sha512-sHQWbtehJjN/176RsBy9A6ywIvn6UwE7qcQjVKBPNF1h6WJmF6lDRuLVL0bfziwkMKUV6vCQ2Tg3gEhgBC/DmA==
   dependencies:
     core-js "3"
 
@@ -10435,9 +10435,9 @@ fast-json-parse@^1.0.3:
   integrity sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==
 
 fast-json-patch@^3.0.0-1:
-  version "3.0.0-1"
-  resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-3.0.0-1.tgz#4c68f2e7acfbab6d29d1719c44be51899c93dabb"
-  integrity sha512-6pdFb07cknxvPzCeLsFHStEy+MysPJPgZQ9LbQ/2O67unQF93SNqfdSqnPPl71YMHX+AD8gbl7iuoGFzHEdDuw==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-3.1.1.tgz#85064ea1b1ebf97a3f7ad01e23f9337e72c66947"
+  integrity sha512-vf6IHUX2SBcA+5/+4883dsIjpBTqmfBjmYiWK1savxQmFk4JfBMLa7ynTYOs1Rolp/T1betJxHiGD3g1Mn8lUQ==
 
 fast-json-stable-stringify@^2.0.0:
   version "2.1.0"

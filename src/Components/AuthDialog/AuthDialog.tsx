@@ -6,9 +6,10 @@ import {
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { AuthDialogSignUpQueryRenderer } from "Components/AuthDialog/Views/AuthDialogSignUp"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
+import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export interface AuthDialogProps {
   onClose: () => void
@@ -21,17 +22,29 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
     state: { mode, options },
   } = useAuthDialogContext()
 
+  const track = useAuthDialogTracking()
+
+  const title =
+    (typeof options.title === "function"
+      ? options.title(mode)
+      : options.title) || DEFAULT_TITLES[mode]
+
+  useEffect(() => {
+    track.impression({ title })
+  }, [title, track])
+
   return (
     <ModalDialog
       onClose={onClose}
-      title={options.title || DEFAULT_TITLES[mode]}
+      title={title}
       hasLogo
+      m={[1, 2]}
       {...(options.image
         ? {
-            width: 900,
+            width: ["100%", 900],
             leftPanel: <AuthDialogLeftPanel />,
           }
-        : { width: 450 })}
+        : { width: ["100%", 450] })}
     >
       <AuthDialogView />
     </ModalDialog>

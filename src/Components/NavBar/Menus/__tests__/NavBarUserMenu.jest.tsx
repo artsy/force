@@ -111,11 +111,10 @@ describe("NavBarUserMenu with collector profile enabled", () => {
 
     expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
       // Label also includes SVG image title
-      ["/settings/purchases", "Pending Order History"],
       ["/collector-profile/my-collection", "Artwork My Collection"],
       ["/collector-profile/insights", "View dashboard Insights"],
       ["/collector-profile/saves", "Save Saves & Follows"],
-      ["/settings/edit-settings", "Settings Settings"],
+      ["/settings/edit-profile", "Settings Settings"],
     ])
 
     expect(wrapper.find("button").last().text()).toContain("Log out")

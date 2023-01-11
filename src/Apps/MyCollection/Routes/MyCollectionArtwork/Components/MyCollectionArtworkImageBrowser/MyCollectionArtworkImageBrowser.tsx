@@ -26,7 +26,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
       .catch(error => {
         console.error("Error getting local images by artwork", error)
       })
-  }, [])
+  }, [artwork.internalID])
 
   if ((images ?? []).length === 0) {
     if (localArtworkImages && localArtworkImages.length) {

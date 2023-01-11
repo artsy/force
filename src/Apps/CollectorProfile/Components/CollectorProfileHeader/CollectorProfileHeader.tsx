@@ -54,7 +54,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Flex>
 
         <Media lessThan="sm">
-          <RouterLink to="/settings/edit-settings">
+          <RouterLink to="/settings/edit-profile">
             <SettingsIcon height={24} width={24} />
           </RouterLink>
         </Media>
@@ -63,7 +63,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
           <Button
             // @ts-ignore
             as={RouterLink}
-            to="/settings/edit-settings"
+            to="/settings/edit-profile"
             variant="secondaryBlack"
             size="large"
           >

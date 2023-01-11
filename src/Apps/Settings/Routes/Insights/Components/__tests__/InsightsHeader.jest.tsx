@@ -7,6 +7,10 @@ jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
 }))
+jest.mock("Components/Sticky", () => ({
+  Sticky: ({ children }) => children({ stuck: true }),
+  StickyProvider: ({ children }) => children,
+}))
 
 describe("InsightsHeader", () => {
   const renderComponent = () =>

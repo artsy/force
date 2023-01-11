@@ -1,15 +1,14 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps } from "@artsy/palette"
+import {
+  DetailsFragmentContainer,
+  DetailsPlaceholder,
+} from "Components/Artwork/Details"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { Metadata_artwork$data } from "__generated__/Metadata_artwork.graphql"
-import {
-  DetailsFragmentContainer,
-  DetailsPlaceholder,
-} from "Components/Artwork/Details"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface MetadataProps
   extends BoxProps,
@@ -21,9 +20,10 @@ export interface MetadataProps
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
+  showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
-  isMyCollectionArtwork?: boolean
+  to?: string | null
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -35,9 +35,9 @@ export const Metadata: React.FC<MetadataProps> = ({
   hideSaleInfo,
   isHovered,
   mt = 1,
+  showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton,
-  isMyCollectionArtwork = false,
   ...rest
 }) => {
   return (
@@ -45,7 +45,6 @@ export const Metadata: React.FC<MetadataProps> = ({
       artwork={artwork}
       mt={mt}
       disableRouterLinking={disableRouterLinking}
-      isMyCollectionArtwork={isMyCollectionArtwork}
       {...rest}
     >
       <DetailsFragmentContainer
@@ -55,7 +54,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
-        showHighDemandIcon={isMyCollectionArtwork}
+        showHighDemandIcon={showHighDemandIcon}
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
@@ -68,26 +67,16 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   artwork,
   disableRouterLinking,
   mt,
-  isMyCollectionArtwork,
+  to,
   ...rest
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
 
-  // My collection artwork is a special case. We don't want to link to the standard artwork page,
-  // but to a custom my collection artwork page.
-  const to = !isMyCollectionArtwork
-    ? artwork.href
-    : isCollectorProfileEnabled
-    ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-    : `/my-collection/artwork/${artwork.internalID}`
-
   return (
     <RouterLink
-      to={to}
+      to={to !== undefined ? to : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"

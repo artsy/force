@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e5da5e23ea3187f09a19b0a11e9e01a>>
+ * @generated SignedSource<<4c50483c09e14a2f20e14a1e5e559123>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type consignFromMyCollectionRoutes_uploadArtworkPhotosQuery$data = {
       readonly size: string | null;
     } | null> | null;
     readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly category: string | null;
     readonly depth: string | null;
     readonly dimensionsMetric: string | null;
     readonly editionNumber: string | null;
@@ -123,136 +124,143 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "locationCity",
+  "name": "category",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "locationCountry",
+  "name": "locationCity",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "locationState",
+  "name": "locationCountry",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "locationPostalCode",
+  "name": "locationState",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "locationCountryCode",
+  "name": "locationPostalCode",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "year",
+  "name": "locationCountryCode",
   "storageKey": null
 },
 v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "year",
   "storageKey": null
 },
 v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "medium",
+  "name": "title",
   "storageKey": null
 },
 v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "attributionClass",
+  "name": "medium",
   "storageKey": null
 },
 v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionNumber",
+  "name": "attributionClass",
   "storageKey": null
 },
 v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionSize",
+  "name": "editionNumber",
   "storageKey": null
 },
 v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "editionSize",
   "storageKey": null
 },
 v20 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "height",
   "storageKey": null
 },
 v21 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "depth",
+  "name": "width",
   "storageKey": null
 },
 v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "dimensionsMetric",
+  "name": "depth",
   "storageKey": null
 },
 v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "provenance",
+  "name": "dimensionsMetric",
   "storageKey": null
 },
 v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "userId",
+  "name": "provenance",
   "storageKey": null
 },
 v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "userEmail",
+  "name": "userId",
   "storageKey": null
 },
 v26 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "userEmail",
   "storageKey": null
 },
 v27 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v28 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -260,7 +268,7 @@ v27 = {
   "name": "assets",
   "plural": true,
   "selections": [
-    (v26/*: any*/),
+    (v27/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -292,7 +300,7 @@ v27 = {
   ],
   "storageKey": null
 },
-v28 = [
+v29 = [
   {
     "kind": "Variable",
     "name": "id",
@@ -356,13 +364,14 @@ return {
           (v23/*: any*/),
           (v24/*: any*/),
           (v25/*: any*/),
-          (v27/*: any*/)
+          (v26/*: any*/),
+          (v28/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": "myCollectionArtwork",
-        "args": (v28/*: any*/),
+        "args": (v29/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -400,9 +409,9 @@ return {
         "plural": false,
         "selections": [
           (v5/*: any*/),
-          (v24/*: any*/),
           (v25/*: any*/),
-          (v27/*: any*/),
+          (v26/*: any*/),
+          (v28/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -413,7 +422,7 @@ return {
             "selections": [
               (v6/*: any*/),
               (v7/*: any*/),
-              (v26/*: any*/)
+              (v27/*: any*/)
             ],
             "storageKey": null
           },
@@ -433,13 +442,14 @@ return {
           (v21/*: any*/),
           (v22/*: any*/),
           (v23/*: any*/),
-          (v26/*: any*/)
+          (v24/*: any*/),
+          (v27/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": "myCollectionArtwork",
-        "args": (v28/*: any*/),
+        "args": (v29/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -470,19 +480,19 @@ return {
             ],
             "storageKey": null
           },
-          (v26/*: any*/)
+          (v27/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8e3881135701fad3bd7a4441d5bf67d6",
+    "cacheID": "75c06b66d024a65ba743ccfcf3957983",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_uploadArtworkPhotosQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignFromMyCollectionRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    category\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    userId\n    userEmail\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n  images {\n    url(version: \"large\")\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  userId\n  userEmail\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

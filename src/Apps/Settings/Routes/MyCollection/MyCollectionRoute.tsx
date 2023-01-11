@@ -45,7 +45,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     StoredArtworkWithImages[]
   >([])
 
-  const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const { jumpTo } = useJump()
@@ -170,10 +169,14 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                         artwork.internalID
                       )}
                       hideSaleInfo
-                      showSaveButton={false}
+                      showHighDemandIcon
                       showHoverDetails={false}
-                      disableRouterLinking={!enableMyCollectionPhase2}
-                      isMyCollectionArtwork
+                      showSaveButton={false}
+                      to={
+                        isCollectorProfileEnabled
+                          ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+                          : `/my-collection/artwork/${artwork.internalID}`
+                      }
                     />
 
                     <Spacer y={4} />

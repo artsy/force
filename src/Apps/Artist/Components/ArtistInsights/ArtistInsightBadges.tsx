@@ -77,7 +77,7 @@ export const ArtistInsightBadgesPlaceholder: FC = () => {
           <SkeletonText variant="sm">Active Secondary Market</SkeletonText>
 
           <SkeletonText variant="sm">
-            Recent auction results in the Artsy Price Database
+            Recent auction results in the Artsy Price Database.
           </SkeletonText>
         </Column>
 

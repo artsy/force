@@ -1,12 +1,13 @@
+import { useCreateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useCreateArtwork"
+import { useUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useUpdateArtwork"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { compact } from "lodash"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
 import {
   ArtworkAttributionClassType,
   MyCollectionCreateArtworkInput,
 } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionUpdateArtworkInput } from "__generated__/useUpdateArtworkMutation.graphql"
-import { useCreateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useCreateArtwork"
-import { useUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useUpdateArtwork"
 
 export type ArtworkInput =
   | MyCollectionCreateArtworkInput
@@ -65,11 +66,17 @@ const formValuesToMutationInput = (
     values.editionSize = ""
   }
 
-  const externalImageUrls = values.newPhotos.flatMap(photo => photo.url || null)
+  const externalImageUrls = compact(
+    values.newPhotos.flatMap(photo => photo.url || null)
+  )
 
   return {
     artworkId: artwork?.internalID,
     artistIds: [values.artistId],
+    artists:
+      !values.artistId && values.artistName
+        ? [{ displayName: values.artistName }]
+        : undefined,
     category: values.category,
     date: values.date,
     title: values.title,

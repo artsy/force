@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d022bc12fecb54938ff08b1bfc1149a>>
+ * @generated SignedSource<<bd7a123f35ecb179df7363869718f31c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,23 +20,11 @@ export type useDislikeArtworkMutation$variables = {
 export type useDislikeArtworkMutation$data = {
   readonly dislikeArtwork: {
     readonly artwork: {
-      readonly id: string;
       readonly isDisliked: boolean;
-      readonly slug: string;
-    } | null;
-  } | null;
-};
-export type useDislikeArtworkMutation$rawResponse = {
-  readonly dislikeArtwork: {
-    readonly artwork: {
-      readonly id: string;
-      readonly isDisliked: boolean;
-      readonly slug: string;
     } | null;
   } | null;
 };
 export type useDislikeArtworkMutation = {
-  rawResponse: useDislikeArtworkMutation$rawResponse;
   response: useDislikeArtworkMutation$data;
   variables: useDislikeArtworkMutation$variables;
 };
@@ -51,62 +39,49 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
-    "concreteType": "DislikeArtworkPayload",
-    "kind": "LinkedField",
-    "name": "dislikeArtwork",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isDisliked",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDisliked",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useDislikeArtworkMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "DislikeArtworkPayload",
+        "kind": "LinkedField",
+        "name": "dislikeArtwork",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "artwork",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -115,19 +90,50 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useDislikeArtworkMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "DislikeArtworkPayload",
+        "kind": "LinkedField",
+        "name": "dislikeArtwork",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "artwork",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "4cd7486843452d6b29b94202fdaaf63a",
+    "cacheID": "8eee1223c96bbb7eede14f840396f967",
     "id": null,
     "metadata": {},
     "name": "useDislikeArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isDisliked\n    }\n  }\n}\n"
+    "text": "mutation useDislikeArtworkMutation(\n  $input: DislikeArtworkInput!\n) {\n  dislikeArtwork(input: $input) {\n    artwork {\n      isDisliked\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7af88c38407460086c50f0e2a57daabb";
+(node as any).hash = "26ad319c4083e5f2caa141cb66ee6d03";
 
 export default node;

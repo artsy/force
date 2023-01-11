@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<131b07602ea23c92faa15ce1d0705d0d>>
+ * @generated SignedSource<<52291d040c8e8728f27c6b2b4a2a6c1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
     readonly collectedArtistsConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
+          readonly counts: {
+            readonly artworks: any | null;
+          } | null;
           readonly displayLabel: string | null;
           readonly formattedNationalityAndBirthday: string | null;
           readonly image: {
@@ -61,6 +64,11 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "first",
               "value": 100
+            },
+            {
+              "kind": "Literal",
+              "name": "includePersonalArtists",
+              "value": true
             }
           ],
           "concreteType": "ArtistConnection",
@@ -88,6 +96,24 @@ const node: ReaderFragment = {
                       "args": null,
                       "kind": "FragmentSpread",
                       "name": "EntityHeaderArtist_artist"
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "ArtistCounts",
+                      "kind": "LinkedField",
+                      "name": "counts",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "artworks",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     },
                     {
                       "alias": null,
@@ -192,7 +218,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "collectedArtistsConnection(first:100)"
+          "storageKey": "collectedArtistsConnection(first:100,includePersonalArtists:true)"
         }
       ],
       "storageKey": null
@@ -202,6 +228,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ab858f8d4b43cac889fbf7ae0fe1c993";
+(node as any).hash = "c1d52d4bc31e54f6b855003ca978f7ff";
 
 export default node;

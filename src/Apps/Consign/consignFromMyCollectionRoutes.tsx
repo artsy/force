@@ -169,14 +169,7 @@ export const consignFromMyCollectionRoutes: AppRouteConfig[] = [
     path: "/my-collection/submission",
     getComponent: () => SubmissionLayout,
     onServerSideRender: ({ res }) => {
-      if (
-        res.locals.sd.FEATURE_FLAGS["reorder-swa-artwork-submission-flow"]
-          .flagEnabled
-      ) {
-        res.redirect("/my-collection/submission/contact-information")
-      } else {
-        res.redirect("/my-collection/submission/artwork-details")
-      }
+      res.redirect("/my-collection/submission/contact-information")
     },
     children: [
       {

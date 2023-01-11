@@ -4,7 +4,7 @@ import { createContext, Ref, useContext } from "react"
 interface MyCollectionArtworkFormContextProps {
   artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
   onBack: () => void
-  onNext?: () => void
+  onNext?: (options?: { skipNext: boolean }) => void
   onSkip?: () => void
 }
 

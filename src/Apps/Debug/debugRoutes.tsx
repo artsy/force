@@ -1,6 +1,5 @@
 import { Text } from "@artsy/palette"
 import loadable from "@loadable/component"
-import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { HttpError } from "found"
 import { AppRouteConfig } from "System/Router/Route"
 import { RouterLink } from "System/Router/RouterLink"
@@ -23,10 +22,6 @@ const DebugAuth = loadable(
 export const debugRoutes: AppRouteConfig[] = [
   {
     path: "/debug",
-    Component: ({ children }) => (
-      // TODO: Move AuthDialogProvider to Boot
-      <AuthDialogProvider>{children}</AuthDialogProvider>
-    ),
     children: [
       {
         path: "baseline",

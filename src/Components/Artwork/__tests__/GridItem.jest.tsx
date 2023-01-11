@@ -24,7 +24,7 @@ describe("GridItem", () => {
   })
 
   it("navigates to the standard artwork page for standard artworks", async () => {
-    renderWithRelay(mockResolvers, false, { isMyCollectionArtwork: false })
+    renderWithRelay(mockResolvers, false)
 
     expect(screen.getByText("artwork-title")).toBeInTheDocument()
 
@@ -35,7 +35,9 @@ describe("GridItem", () => {
   })
 
   it("navigates to my collection artwork page for my collection artworks", async () => {
-    renderWithRelay(mockResolvers, false, { isMyCollectionArtwork: true })
+    renderWithRelay(mockResolvers, false, {
+      to: "/my-collection/artwork/artwork-id",
+    })
 
     expect(screen.getByText("artwork-title")).toBeInTheDocument()
 

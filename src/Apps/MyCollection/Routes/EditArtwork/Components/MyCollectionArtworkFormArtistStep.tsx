@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Clickable,
   Column,
   Flex,
@@ -10,11 +12,15 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
+import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
+import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useFormikContext } from "formik"
-import { useState } from "react"
+import { debounce, sortBy } from "lodash"
+import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 
@@ -28,16 +34,27 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const me = useFragment(MyCollectionArtworkFormArtistStepFragment, meProp)
 
   const { onBack, onNext, onSkip } = useMyCollectionArtworkFormContext()
-  const { setFieldValue } = useFormikContext<ArtworkModel>()
-
-  const collectedArtists = extractNodes(
-    me?.myCollectionInfo?.collectedArtistsConnection
+  const { setFieldValue, setValues } = useFormikContext<ArtworkModel>()
+  const {
+    trackSelectArtist,
+    trackSkipArtistSelection,
+  } = useMyCollectionTracking()
+  const enablePersonalArtists = useFeatureFlag(
+    "cx-my-collection-personal-artists-for-web"
   )
 
+  const collectedArtists = sortBy(
+    extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
+    ["displayLabel"]
+  )
+
+  const [artistNotFound, setArtistNotFound] = useState(false)
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
   const onSelect = artist => {
+    trackSelectArtist()
+
     setFieldValue("artistId", artist.internalID)
     setFieldValue("artistName", artist.name || "")
     setFieldValue("artist", artist)
@@ -48,7 +65,10 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
       return
     }
 
-    onNext?.()
+    // Skip the artwork step if the artist has no public artworks on Artsy or is a personal artist
+    const skipNext = artist.isPersonalArtist || artist.counts.artworks === 0
+
+    onNext?.({ skipNext })
   }
 
   const onError = () => {
@@ -56,11 +76,21 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   }
 
   const handleSkip = () => {
-    setFieldValue("artistId", undefined)
+    trackSkipArtistSelection()
+
+    // Reset form values to initial values and set artist name
+    setValues(getMyCollectionArtworkFormInitialValues(), false)
     setFieldValue("artistName", trimmedQuery)
 
     onSkip?.()
   }
+
+  const handleArtistNotFound = useMemo(() => debounce(setArtistNotFound, 200), [
+    setArtistNotFound,
+  ])
+
+  // Stop the invocation of the debounced function after unmounting
+  useEffect(() => handleArtistNotFound.cancel, [handleArtistNotFound])
 
   return (
     <AppContainer>
@@ -68,7 +98,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 
       <Spacer y={4} />
 
-      <Text variant={"lg"}>Select an Artist</Text>
+      <Text variant={["md", "lg-display"]}>Select an Artist</Text>
 
       <Spacer y={4} />
 
@@ -78,51 +108,86 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
           setQuery(value)
           setFieldValue("artistName", value || "")
         }}
+        onArtistNotFound={handleArtistNotFound}
         onSelect={onSelect}
         placeholder="Search for artists on Artsy"
       />
 
       <Spacer y={2} />
 
-      <Flex flexDirection="row">
-        <Text variant="sm-display">Can't find the artist? &nbsp;</Text>
-        <Clickable
-          onClick={handleSkip}
-          textDecoration="underline"
-          data-testid="artist-select-skip-button"
-        >
-          <Text variant="sm-display" color="black100">
-            Add their name.
+      {artistNotFound ? (
+        <Box my={4}>
+          <Text variant={["xs", "sm-display"]} flexWrap="wrap">
+            We didn't find "
+            <Text
+              variant={["xs", "sm-display"]}
+              display="inline-block"
+              color="blue100"
+            >
+              {query}
+            </Text>
+            “ on Artsy.{" "}
+            {!!enablePersonalArtists &&
+              "You can add their name in the artwork details."}
           </Text>
-        </Clickable>
-      </Flex>
 
-      <Spacer y={4} />
+          <Spacer y={4} />
 
-      {collectedArtists.length > 0 && (
+          {!!enablePersonalArtists && (
+            <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
+              Add Artist
+            </Button>
+          )}
+        </Box>
+      ) : (
         <>
-          <Text variant="sm-display">Artists in My Collection</Text>
-          <Spacer y={1} />
-          <GridColumns width="100%">
-            {collectedArtists.map(artist => (
-              <Column span={[6, 4]} key={artist.internalID} mt={1}>
+          {!!enablePersonalArtists && (
+            <Flex flexDirection="row">
+              <Text variant={["xs", "sm-display"]}>
+                Can't find the artist?&nbsp;
                 <Clickable
-                  onClick={() => onSelect(artist)}
-                  data-testid={`artist-${artist.internalID}`}
+                  onClick={handleSkip}
+                  textDecoration="underline"
+                  data-testid="artist-select-skip-button"
                 >
-                  <EntityHeaderArtistFragmentContainer
-                    artist={artist}
-                    displayCounts={false}
-                    displayLink={false}
-                    displayFollowButton={false}
-                  />
+                  <Text variant={["xs", "sm-display"]} color="black100">
+                    Add their name
+                  </Text>
                 </Clickable>
-              </Column>
-            ))}
-          </GridColumns>
-          slack
+                .
+              </Text>
+            </Flex>
+          )}
+
+          <Spacer y={4} />
+
+          {collectedArtists.length > 0 && (
+            <>
+              <Text variant="sm-display">Artists in My Collection</Text>
+              <Spacer y={1} />
+              <GridColumns width="100%">
+                {collectedArtists.map(artist => (
+                  <Column span={[12, 4]} key={artist.internalID} mt={1}>
+                    <Clickable
+                      onClick={() => onSelect(artist)}
+                      data-testid={`artist-${artist.internalID}`}
+                    >
+                      <EntityHeaderArtistFragmentContainer
+                        artist={artist}
+                        displayCounts={false}
+                        displayLink={false}
+                        displayFollowButton={false}
+                      />
+                    </Clickable>
+                  </Column>
+                ))}
+              </GridColumns>
+            </>
+          )}
         </>
       )}
+
+      <Spacer y={4} />
     </AppContainer>
   )
 }
@@ -130,10 +195,13 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
 const MyCollectionArtworkFormArtistStepFragment = graphql`
   fragment MyCollectionArtworkFormArtistStep_me on Me {
     myCollectionInfo {
-      collectedArtistsConnection(first: 100) {
+      collectedArtistsConnection(first: 100, includePersonalArtists: true) {
         edges {
           node {
             ...EntityHeaderArtist_artist
+            counts {
+              artworks
+            }
             displayLabel
             formattedNationalityAndBirthday
             image {

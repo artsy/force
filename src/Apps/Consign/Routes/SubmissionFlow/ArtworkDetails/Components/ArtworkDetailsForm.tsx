@@ -6,6 +6,7 @@ import {
   GridColumns,
   Input,
   LabeledInput,
+  Option,
   Radio,
   RadioGroup,
   Select,
@@ -13,7 +14,11 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { postalCodeValidators } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import {
+  acceptableCategoriesForSubmission,
+  AcceptableCategoryValue,
+  formatCategoryValueForSubmission,
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
 import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
@@ -24,7 +29,7 @@ import {
 } from "Components/LocationAutocompleteInput"
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission$data } from "__generated__/ArtworkDetails_submission.graphql"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
@@ -57,6 +62,7 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: props.values.artist?.internalID ?? "",
         artistName: props.values.artist?.name ?? "",
+        category: props.values.category ?? null,
         year: props.values.year ?? "",
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
@@ -82,6 +88,9 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: props.values.artist?.internalID ?? "",
         artistName: props.values.artist?.name ?? "",
+        category: props.values.mediumType?.name
+          ? formatCategoryValueForSubmission(props.values.mediumType.name)
+          : null,
         year: props.values.date ?? "",
         title: props.values.title ?? "",
         materials: props.values.medium ?? "",
@@ -105,6 +114,7 @@ export const getArtworkDetailsFormInitialValues = (
       return {
         artistId: "",
         artistName: "",
+        category: null,
         year: "",
         title: "",
         materials: "",
@@ -134,6 +144,7 @@ rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
 export interface ArtworkDetailsFormModel {
   artistName: string
   artistId: string
+  category: AcceptableCategoryValue | null
   year: string
   title: string
   materials: string
@@ -200,11 +211,7 @@ export const ArtworkDetailsForm: React.FC = () => {
     setFieldValue("location", normalizePlace(place, true))
   }
 
-  const showPostalCode =
-    values.location.countryCode &&
-    Object.keys(postalCodeValidators).includes(
-      values.location.countryCode?.toUpperCase()
-    )
+  const categories = useMemo(acceptableCategoriesForSubmission, [])
 
   return (
     <>
@@ -251,6 +258,19 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[4, 0]}>
+          <Select
+            title="Medium"
+            name="category"
+            options={categories as Option[]}
+            selected={values.category ?? undefined}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onSelect={selected => setFieldValue("category", selected)}
+          />
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[4, 2]}>
+        <Column span={6}>
           <Input
             title="Materials"
             placeholder="Add materials"
@@ -421,22 +441,6 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
       </GridColumns>
-      {showPostalCode && (
-        <GridColumns mt={[4, 2]}>
-          <Column start={7} span={6}>
-            <Input
-              title="Zip/postal code"
-              placeholder="Zip/Postal code where artwork is located"
-              name="postalCode"
-              maxLength={256}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.postalCode}
-              error={touched.postalCode && errors.postalCode}
-            />
-          </Column>
-        </GridColumns>
-      )}
     </>
   )
 }

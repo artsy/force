@@ -9,19 +9,6 @@ orbs:
   yarn: artsy/yarn@6.4.0
 
 jobs:
-  run_deepcrawl_automator:
-    docker:
-      - image: cimg/base:2021.12
-    environment:
-      AUTOMATOR_START_ONLY: true
-    steps:
-      - run:
-          name: Download automator script
-          command: curl https://raw.githubusercontent.com/deepcrawl/automator-sdk/master/ci.sh --output automator.sh
-      - run:
-          name: Start automator crawl
-          command: chmod +x automator.sh && ./automator.sh
-
   validate_production_schema:
     docker:
       - image: cimg/node:14.21
@@ -414,12 +401,6 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-
-      # Other
-      - run_deepcrawl_automator:
-          context: deepcrawl-automator
-          requires:
-            - deploy-production
 
       - create_or_update_review_app:
           context: hokusai

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<309c21922be068c20a008597bb2dd66d>>
+ * @generated SignedSource<<3a9a4a7fc418ae46dbe5f881c0a3471e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ArtworkDetails_submission$data = {
     readonly name: string | null;
   } | null;
   readonly attributionClass: ConsignmentAttributionClass | null;
+  readonly category: string | null;
   readonly depth: string | null;
   readonly dimensionsMetric: string | null;
   readonly editionNumber: string | null;
@@ -78,6 +79,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "category",
       "storageKey": null
     },
     {
@@ -211,6 +219,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4b63226c9311e6c2b9a0c00ee41cbe7c";
+(node as any).hash = "a7c6d6ba5da388f5b7a254f7e32f0aa9";
 
 export default node;

@@ -183,7 +183,7 @@ describe("Save and Continue button", () => {
   })
 
   // TODO: Bring back this test when we have a better way to validate the phone number
-  xdescribe("with an invalid phone number", () => {
+  describe.skip("with an invalid phone number", () => {
     beforeAll(() => {
       mockTracking.mockImplementation(() => ({
         trackEvent: mockTrackEvent,
