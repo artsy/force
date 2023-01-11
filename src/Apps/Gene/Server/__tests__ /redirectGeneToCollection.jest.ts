@@ -30,6 +30,6 @@ describe("redirectGeneToCollection", () => {
     }
 
     redirectGeneToCollection({ req, res })
-    expect(spy).toHaveBeenCalledWith(301, "/collection/trove-editors-picks")
+    expect(spy).toHaveBeenCalledWith(301, "/collection/curators-picks-emerging")
   })
 })

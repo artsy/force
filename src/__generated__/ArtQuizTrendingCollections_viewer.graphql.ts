@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5737c7d36009812dfe9b3ed3fffa5492>>
+ * @generated SignedSource<<af2f1ac3298c954605d5c66d608f6e94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,7 +41,7 @@ const node: ReaderFragment = {
             "artists-on-the-rise",
             "finds-under-1000-dollars",
             "top-auction-lots",
-            "trove-editors-picks",
+            "curators-picks-emerging",
             "contemporary-now"
           ]
         }
@@ -64,13 +64,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "marketingCollections(slugs:[\"trending-this-week\",\"iconic-prints\",\"street-art-highlights\",\"artists-on-the-rise\",\"finds-under-1000-dollars\",\"top-auction-lots\",\"trove-editors-picks\",\"contemporary-now\"])"
+      "storageKey": "marketingCollections(slugs:[\"trending-this-week\",\"iconic-prints\",\"street-art-highlights\",\"artists-on-the-rise\",\"finds-under-1000-dollars\",\"top-auction-lots\",\"curators-picks-emerging\",\"contemporary-now\"])"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "beba0ff269c8b4991149f5e5814ef06b";
+(node as any).hash = "89b2f4a912db522c591ca1651b5ec978";
 
 export default node;

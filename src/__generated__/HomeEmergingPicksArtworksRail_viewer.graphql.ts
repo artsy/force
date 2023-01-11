@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e3e2d4d1a9a56e146549187f9ac1fd8>>
+ * @generated SignedSource<<20b3421e3c63d87cc07d73a8f40a1958>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTroveArtworksRail_viewer$data = {
+export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -21,18 +21,18 @@ export type HomeTroveArtworksRail_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "HomeTroveArtworksRail_viewer";
+  readonly " $fragmentType": "HomeEmergingPicksArtworksRail_viewer";
 };
-export type HomeTroveArtworksRail_viewer$key = {
-  readonly " $data"?: HomeTroveArtworksRail_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"HomeTroveArtworksRail_viewer">;
+export type HomeEmergingPicksArtworksRail_viewer$key = {
+  readonly " $data"?: HomeEmergingPicksArtworksRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeEmergingPicksArtworksRail_viewer">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomeTroveArtworksRail_viewer",
+  "name": "HomeEmergingPicksArtworksRail_viewer",
   "selections": [
     {
       "alias": null,
@@ -45,7 +45,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "marketingCollectionID",
-          "value": "trove-editors-picks"
+          "value": "curators-picks-emerging"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -102,13 +102,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"trove-editors-picks\")"
+      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"curators-picks-emerging\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "d3ba6a95604757356fd7f0426f0c17fb";
+(node as any).hash = "22aa4f34b83e83ffbbda0f8d2a4c231d";
 
 export default node;

@@ -47,7 +47,7 @@ export const ArtQuizTrendingCollectionsFragmentContainer = createFragmentContain
             "artists-on-the-rise"
             "finds-under-1000-dollars"
             "top-auction-lots"
-            "trove-editors-picks"
+            "curators-picks-emerging"
             "contemporary-now"
           ]
         ) {

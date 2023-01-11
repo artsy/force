@@ -4,12 +4,9 @@ import { OnboardingMarketingCollectionQueryRenderer } from "Components/Onboardin
 export const OnboardingCuratedArtworks: FC = () => {
   return (
     <OnboardingMarketingCollectionQueryRenderer
-      slug="trove-editors-picks"
+      slug="curators-picks-emerging"
       description={
-        <>
-          The best works on Artsy each week, all available now. Click the heart
-          to save artworks you love.
-        </>
+        <>The best works by rising talents on Artsy, all available now.</>
       }
     />
   )
