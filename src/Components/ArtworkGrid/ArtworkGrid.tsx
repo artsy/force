@@ -7,32 +7,38 @@ import {
   SkeletonBox,
   Spacer,
 } from "@artsy/palette"
-import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
+import GridItem from "Components/Artwork/GridItem"
+import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
+import { Masonry, MasonryProps } from "Components/Masonry"
 import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
-import { ReactNode } from "react"
 import * as React from "react"
+import { ReactNode } from "react"
 import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
-import GridItem from "Components/Artwork/GridItem"
-import { withArtworkGridContext } from "./ArtworkGridContext"
 import { extractNodes } from "Utils/extractNodes"
-import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
-import { Masonry, MasonryProps } from "Components/Masonry"
-import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { StoredImage } from "Utils/localImagesHelpers"
+import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
+import { ExtractNodeType } from "Utils/typeSupport"
+import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
+import { withArtworkGridContext } from "./ArtworkGridContext"
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type Artwork = ArtworkGrid_artworks$data["edges"][0]["node"]
-
+type Artworks =
+  | ArtworkGrid_artworks$data
+  | MyCollectionArtworkGrid_artworks$data
+type Artwork = ExtractNodeType<Artworks>
 type SectionedArtworks = Array<Array<Artwork>>
 
 export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
-  artworks: ArtworkGrid_artworks$data
+  artworks: Artworks
   contextModule?: AuthContextModule
   columnCount?: number | number[]
+  hideSaleInfo?: boolean
+  getLocalImageSrcByArtworkID?: (artworkID: string) => StoredImage | null
   preloadImageCount?: number
   isAuctionArtwork?: boolean
   itemMargin?: number
@@ -40,8 +46,13 @@ export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   onClearFilters?: () => any
   onLoadMore?: () => any
   sectionMargin?: number
+  showArtworksWithoutImages?: boolean
+  showHighDemandIcon?: boolean
+  showHoverDetails?: boolean
+  showSaveButton?: boolean
   user?: User
   emptyStateComponent?: ReactNode | boolean
+  to?: (artwork: Artwork) => string | null
 }
 
 export interface ArtworkGridContainerState {
@@ -97,11 +108,17 @@ export class ArtworkGridContainer extends React.Component<
   //       artworks are added (paginated). Ideally it would just continue
   //       calculations from where it finished last time.
   sectionedArtworksForAllBreakpoints: (
-    artworks: ArtworkGrid_artworks$data,
+    artworks: Artworks,
     columnCount: number[]
   ) => SectionedArtworks[] = memoizeOnce(
     (artworks, columnCount) =>
-      columnCount.map(n => createSectionedArtworks(artworks, n)),
+      columnCount.map(n =>
+        createSectionedArtworks(
+          artworks,
+          n,
+          this.props.showArtworksWithoutImages
+        )
+      ),
     areSectionedArtworksEqual
   )
 
@@ -118,7 +135,16 @@ export class ArtworkGridContainer extends React.Component<
     columnCount: number,
     sectionedArtworks: SectionedArtworks
   ) {
-    const { contextModule, preloadImageCount } = this.props
+    const {
+      contextModule,
+      getLocalImageSrcByArtworkID,
+      hideSaleInfo,
+      preloadImageCount,
+      showHighDemandIcon,
+      showHoverDetails,
+      showSaveButton,
+      to,
+    } = this.props
     const spacerStyle = {
       height: this.props.itemMargin,
     }
@@ -141,6 +167,8 @@ export class ArtworkGridContainer extends React.Component<
           <GridItem
             contextModule={contextModule}
             artwork={artwork}
+            hideSaleInfo={hideSaleInfo}
+            localHeroImage={getLocalImageSrcByArtworkID?.(artwork.internalID)}
             key={artwork.id}
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             lazyLoad={artworkIndex >= preloadImageCount}
@@ -149,6 +177,14 @@ export class ArtworkGridContainer extends React.Component<
                 this.props.onBrickClick(artwork, artworkIndex)
               }
             }}
+            showHighDemandIcon={showHighDemandIcon}
+            showHoverDetails={
+              showHoverDetails === undefined ? true : showSaveButton
+            }
+            showSaveButton={
+              showSaveButton === undefined ? true : showSaveButton
+            }
+            to={to?.(artwork)}
           />
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
@@ -292,12 +328,12 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
 /**
  * Performs a shallow equal of artworks.
  */
-function areSectionedArtworksEqual(current: any, previous: any) {
+export function areSectionedArtworksEqual(current: any, previous: any) {
   if (Array.isArray(current)) {
     return isEqual(current, previous)
   } else {
-    const currentEdges = (current as ArtworkGrid_artworks$data).edges
-    const previousEdges = (previous as ArtworkGrid_artworks$data).edges
+    const currentEdges = (current as Artworks).edges
+    const previousEdges = (previous as Artworks).edges
     return (
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentEdges.length === previousEdges.length &&
@@ -308,8 +344,9 @@ function areSectionedArtworksEqual(current: any, previous: any) {
 }
 
 export function createSectionedArtworks(
-  artworksConnection: ArtworkGrid_artworks$data,
-  columnCount: number
+  artworksConnection: Artworks,
+  columnCount: number,
+  showArtworksWithoutImages: boolean = false
 ): SectionedArtworks {
   const sectionedArtworks: SectionedArtworks = []
   const sectionRatioSums = []
@@ -323,13 +360,13 @@ export function createSectionedArtworks(
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   artworks.forEach(artworkEdge => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const artwork = artworkEdge.node
+    const artwork = artworkEdge?.node
+
+    if (!artwork) return
 
     // There are artworks without images and other ‘issues’. Like Force we’re just going to reject those for now.
     // See: https://github.com/artsy/eigen/issues/1667
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    if (artwork.image) {
+    if (showArtworksWithoutImages || artwork.image) {
       // Find section with lowest *inverted* aspect ratio sum, which is the shortest column.
       let lowestRatioSum = Number.MAX_VALUE
       let sectionIndex = null
@@ -347,8 +384,7 @@ export function createSectionedArtworks(
         section.push(artwork)
 
         // Keep track of total section aspect ratio
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const aspectRatio = artwork.image.aspectRatio || 1 // Ensure we never divide by null/0
+        const aspectRatio = artwork.image?.aspectRatio || 1 // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sectionRatioSums[sectionIndex] += 1 / aspectRatio

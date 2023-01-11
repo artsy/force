@@ -64,7 +64,8 @@ const MyCollectionRoute = loadable(
       /* webpackChunkName: "settingsBundle" */ "./Routes/MyCollection/MyCollectionRoute"
     ),
   {
-    resolveComponent: component => component.MyCollectionRouteRefetchContainer,
+    resolveComponent: component =>
+      component.MyCollectionRoutePaginationContainer,
   }
 )
 

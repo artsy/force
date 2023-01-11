@@ -1,3 +1,3 @@
-import { MyCollectionRouteRefetchContainer } from "Apps/Settings/Routes/MyCollection/MyCollectionRoute"
+import { MyCollectionRoutePaginationContainer } from "Apps/Settings/Routes/MyCollection/MyCollectionRoute"
 
-export const CollectorProfileMyCollectionRouteRefetchContainer = MyCollectionRouteRefetchContainer
+export const CollectorProfileMyCollectionRoutePaginationContainer = MyCollectionRoutePaginationContainer

@@ -20,7 +20,7 @@ const MyCollectionRoute = loadable(
     ),
   {
     resolveComponent: component =>
-      component.CollectorProfileMyCollectionRouteRefetchContainer,
+      component.CollectorProfileMyCollectionRoutePaginationContainer,
   }
 )
 

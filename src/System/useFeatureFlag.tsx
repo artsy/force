@@ -1,9 +1,9 @@
-import { useSystemContext } from "System"
-import { Variant } from "unleash-client"
 import { ActionType } from "@artsy/cohesion"
 import { formatOwnerTypes } from "Server/getContextPage"
-import { useRouter } from "./Router/useRouter"
+import { useSystemContext } from "System"
+import { Variant } from "unleash-client"
 import { getENV } from "Utils/getENV"
+import { useRouter } from "./Router/useRouter"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 

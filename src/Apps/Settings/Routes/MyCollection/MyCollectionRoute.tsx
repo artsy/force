@@ -1,25 +1,18 @@
-import {
-  Box,
-  Button,
-  DROP_SHADOW,
-  Flex,
-  FullBleed,
-  Spacer,
-} from "@artsy/palette"
+import { Box, Button, DROP_SHADOW, Flex, FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
-import { Masonry } from "Components/Masonry"
+import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
-import { PaginationFragmentContainer } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
-import { FC, Fragment, useCallback, useEffect, useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { FC, useCallback, useEffect, useState } from "react"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { extractNodes } from "Utils/extractNodes"
-import { Jump, useJump } from "Utils/Hooks/useJump"
 import {
   cleanImagesLocalStore,
   getAllLocalImagesByArtwork,
@@ -31,23 +24,19 @@ import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
 export interface MyCollectionRouteProps {
   me: MyCollectionRoute_me$data
-  relay: RelayRefetchProp
+  relay: RelayPaginationProp
 }
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
-
-  // TODO: Avoid using boolean state flags for UI modes
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const [localArtworksImages, setLocalArtworksImages] = useState<
     StoredArtworkWithImages[]
   >([])
 
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  const { jumpTo } = useJump()
 
   useEffect(() => {
     getAllLocalImagesByArtwork()
@@ -83,25 +72,17 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     return null
   }
 
-  const artworks = extractNodes(myCollectionConnection)
   const total = myCollectionConnection.totalCount ?? 0
-  const hasNextPage = myCollectionConnection.pageInfo.hasNextPage ?? false
-  const endCursor = myCollectionConnection.pageInfo.endCursor
-  const pageCursors = myCollectionConnection.pageCursors!
 
-  const handleClick = (_: string, page: number) => {
+  const handleLoadMore = () => {
+    if (!relay.hasMore() || relay.isLoading()) return
+
     setLoading(true)
-    jumpTo("MyCollectionArtworks")
 
-    relay.refetch({ page }, null, error => {
-      if (error) console.error(error)
+    relay.loadMore(25, err => {
+      if (err) console.error(err)
       setLoading(false)
     })
-  }
-
-  const handleNext = (page: number) => {
-    if (!endCursor) return
-    handleClick(endCursor, page)
   }
 
   return (
@@ -155,43 +136,30 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </Sticky>
           </Box>
 
-          <Jump id="MyCollectionArtworks">
-            <Masonry
-              columnCount={[2, 3, 4]}
-              style={{ opacity: loading ? 0.5 : 1 }}
-            >
-              {artworks.map(artwork => {
-                return (
-                  <Fragment key={artwork.internalID}>
-                    <ArtworkGridItemFragmentContainer
-                      artwork={artwork}
-                      localHeroImage={getLocalImageSrcByArtworkID(
-                        artwork.internalID
-                      )}
-                      hideSaleInfo
-                      showHighDemandIcon
-                      showHoverDetails={false}
-                      showSaveButton={false}
-                      to={
-                        isCollectorProfileEnabled
-                          ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-                          : `/my-collection/artwork/${artwork.internalID}`
-                      }
-                    />
-
-                    <Spacer y={4} />
-                  </Fragment>
-                )
-              })}
-            </Masonry>
-          </Jump>
-
-          <PaginationFragmentContainer
-            hasNextPage={hasNextPage}
-            pageCursors={pageCursors}
-            onClick={handleClick}
-            onNext={handleNext}
+          <MyCollectionArtworkGrid
+            artworks={myCollectionConnection}
+            columnCount={[2, 3, 4, 4]}
+            getLocalImageSrcByArtworkID={getLocalImageSrcByArtworkID}
+            showHoverDetails={false}
+            showArtworksWithoutImages
+            hideSaleInfo
+            to={artwork =>
+              isCollectorProfileEnabled
+                ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
+                : `/my-collection/artwork/${artwork.internalID}`
+            }
+            showHighDemandIcon
+            showSaveButton={false}
+            onLoadMore={handleLoadMore}
           />
+
+          {relay.hasMore() && (
+            <Box textAlign="center" mt={4}>
+              <Button onClick={handleLoadMore} loading={isLoading}>
+                Show More
+              </Button>
+            </Box>
+          )}
         </>
       ) : (
         <EmptyMyCollectionPage />
@@ -200,43 +168,56 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   )
 }
 
-export const MY_COLLECTION_ROUTE_QUERY = graphql`
-  query MyCollectionRouteQuery($page: Int) {
-    me {
-      ...MyCollectionRoute_me @arguments(page: $page)
-    }
-  }
-`
-
-export const MyCollectionRouteRefetchContainer = createRefetchContainer(
+export const MyCollectionRoutePaginationContainer = createPaginationContainer(
   MyCollectionRoute,
   {
     me: graphql`
       fragment MyCollectionRoute_me on Me
-        @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
-        myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC)
+        @argumentDefinitions(
+          count: { type: "Int", defaultValue: 25 }
+          cursor: { type: "String" }
+        ) {
+        myCollectionConnection(
+          first: $count
+          after: $cursor
+          sort: CREATED_AT_DESC
+        )
           @connection(
             key: "MyCollectionRoute_myCollectionConnection"
             filters: []
           ) {
+          ...MyCollectionArtworkGrid_artworks
           totalCount
-          pageInfo {
-            hasNextPage
-            startCursor
-            endCursor
-          }
-          pageCursors {
-            ...Pagination_pageCursors
-          }
           edges {
             node {
-              internalID
-              ...GridItem_artwork
+              id
             }
           }
         }
       }
     `,
   },
-  MY_COLLECTION_ROUTE_QUERY
+  {
+    direction: "forward",
+    getFragmentVariables(prevVars, totalCount) {
+      return {
+        ...prevVars,
+        count: totalCount,
+      }
+    },
+    getVariables(_props, { count, cursor }, fragmentVariables) {
+      return {
+        ...fragmentVariables,
+        count,
+        cursor,
+      }
+    },
+    query: graphql`
+      query MyCollectionRouteQuery($count: Int!, $cursor: String) {
+        me {
+          ...MyCollectionRoute_me @arguments(count: $count, cursor: $cursor)
+        }
+      }
+    `,
+  }
 )

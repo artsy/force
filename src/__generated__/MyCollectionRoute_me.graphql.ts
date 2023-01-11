@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7227865f54565deec715aabdb18a341c>>
+ * @generated SignedSource<<2a0953e01c5ecd8c555b4fae5dcae8f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,19 +14,11 @@ export type MyCollectionRoute_me$data = {
   readonly myCollectionConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+        readonly id: string;
       } | null;
     } | null> | null;
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly pageInfo: {
-      readonly endCursor: string | null;
-      readonly hasNextPage: boolean;
-      readonly startCursor: string | null;
-    };
     readonly totalCount: number | null;
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkGrid_artworks">;
   } | null;
   readonly " $fragmentType": "MyCollectionRoute_me";
 };
@@ -38,17 +30,22 @@ export type MyCollectionRoute_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 1,
+      "defaultValue": 25,
       "kind": "LocalArgument",
-      "name": "page"
+      "name": "count"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "cursor"
     }
   ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": null,
-        "cursor": null,
+        "count": "count",
+        "cursor": "cursor",
         "direction": "forward",
         "path": [
           "myCollectionConnection"
@@ -67,58 +64,15 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkGrid_artworks"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "startCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
-            }
-          ],
           "storageKey": null
         },
         {
@@ -141,13 +95,8 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "internalID",
+                  "name": "id",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "GridItem_artwork"
                 },
                 {
                   "alias": null,
@@ -168,6 +117,31 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -177,6 +151,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "89bb03afb09fa419ee5f61b9bed90449";
+(node as any).hash = "90bf02c929b1358c41e9cef821762f5d";
 
 export default node;
