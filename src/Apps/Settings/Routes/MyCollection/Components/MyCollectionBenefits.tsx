@@ -1,4 +1,11 @@
-import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  Image,
+  ResponsiveBox,
+  Text,
+} from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
@@ -43,14 +50,14 @@ export const MyCollectionBenefits: React.FC = () => {
       </Column>
 
       <Column span={6}>
-        {infos.map(info => (
-          <>
+        {infos.map((info, index) => (
+          <Box key={info.title + index}>
             <Text variant="xl">{info.title}</Text>
 
             <Text variant="sm" mb={4}>
               {info.subtitle}
             </Text>
-          </>
+          </Box>
         ))}
       </Column>
     </GridColumns>
@@ -59,14 +66,14 @@ export const MyCollectionBenefits: React.FC = () => {
   const MobileLayout = () => (
     <GridColumns gridRowGap={[0, 6]}>
       <Column span={6}>
-        {infos.map(info => (
-          <>
+        {infos.map((info, index) => (
+          <Box key={info.title + index}>
             <Text variant="lg-display">{info.title}</Text>
 
             <Text variant="sm" mt={0.5} mb={4}>
               {info.subtitle}
             </Text>
-          </>
+          </Box>
         ))}
       </Column>
 

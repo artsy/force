@@ -68,8 +68,12 @@ describe("ThankYou page", () => {
       ).toContain("Submit Another Work")
 
       expect(
-        wrapper.find("button[data-test-id='go-to-artsy-homepage']").text()
-      ).toContain("Back to Artsy Homepage")
+        wrapper
+          .find(
+            "button[data-test-id='swa-thank-you-view-in-my-collection-button']"
+          )
+          .text()
+      ).toContain("View Artwork in My Collection")
 
       expect(text).toContain("View My Collection on the Artsy App")
 
@@ -103,8 +107,12 @@ describe("ThankYou page", () => {
       ).toContain("Submit Another Work")
 
       expect(
-        wrapper.find("button[data-test-id='go-to-artsy-homepage']").text()
-      ).toContain("Back to Artsy Homepage")
+        wrapper
+          .find(
+            "button[data-test-id='swa-thank-you-view-in-my-collection-button']"
+          )
+          .text()
+      ).toContain("View Artwork in My Collection")
 
       expect(text).toContain("View My Collection on the Artsy App")
 

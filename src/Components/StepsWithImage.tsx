@@ -41,7 +41,7 @@ export const StepsWithImage: React.FC<Props> = props => {
       <GridColumns gridRowGap={[4, 2]}>
         {data.map((step, index) => {
           return (
-            <Column span={columnSpan as ColumnSpan}>
+            <Column span={columnSpan as ColumnSpan} key={step.src + index}>
               <StepCard
                 src={step.src}
                 srcSet={step.srcSet}
