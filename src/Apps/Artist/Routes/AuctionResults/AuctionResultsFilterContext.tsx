@@ -1,6 +1,6 @@
-import { useContext, useReducer, useState } from "react"
-import * as React from "react"
 import { omit } from "lodash"
+import * as React from "react"
+import { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { DEFAULT_METRIC, getSupportedMetric, Metric } from "Utils/metrics"
 
@@ -10,6 +10,7 @@ const MAX_END_DATE = 10000
 export interface AuctionResultsFilters {
   organizations?: string[]
   categories?: string[]
+  hideUpcoming?: boolean
   sizes?: string[]
   keyword?: string
   pageAndCursor?: { page: number; cursor: string | null }
@@ -37,6 +38,7 @@ export const initialAuctionResultsFilterState = ({
 }): AuctionResultsFilters => ({
   organizations: [],
   categories: [],
+  hideUpcoming: false,
   sizes: [],
   keyword: undefined,
   pageAndCursor: { page: 1, cursor: null },
@@ -285,6 +287,7 @@ const AuctionResultsFilterReducer = (
       // primitive filter types
       const primitiveFilterTypes: Array<keyof AuctionResultsFilters> = [
         "sort",
+        "hideUpcoming",
         "keyword",
         "pageAndCursor",
         "createdAfterYear",

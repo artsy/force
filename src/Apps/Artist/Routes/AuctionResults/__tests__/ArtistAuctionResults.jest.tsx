@@ -1,11 +1,11 @@
-import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { act, fireEvent, screen, within } from "@testing-library/react"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
 import { MockBoot } from "DevTools"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { openAuthModal } from "Utils/openAuthModal"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen, fireEvent, within, act } from "@testing-library/react"
+import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -21,8 +21,8 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 
-import { useRouter } from "System/Router/useRouter"
 import { MockPayloadGenerator } from "relay-test-utils"
+import { useRouter } from "System/Router/useRouter"
 
 describe("AuctionResults", () => {
   // @ts-ignore
@@ -526,6 +526,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDk2Nw==",
             mediumText: "oil on canvas",
             categoryText: "Work on Paper",
+            isUpcoming: true,
           },
         },
         {
@@ -560,6 +561,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDc3Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: true,
           },
         },
         {
@@ -594,6 +596,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDc1Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -628,6 +631,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY4Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -662,6 +666,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY3Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -696,6 +701,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY2Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -730,6 +736,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY1Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -764,6 +771,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY0Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -798,6 +806,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDYzNw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -832,6 +841,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDYyNw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
       ],

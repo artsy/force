@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<121770e2b7ad74ea37767e6264429edf>>
+ * @generated SignedSource<<a93d0937a76704bce9278f7656050b1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ArtistAuctionResults_artist$data = {
     } | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly isUpcoming: boolean | null;
         readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
       } | null;
     } | null> | null;
@@ -101,6 +102,11 @@ const node: ReaderFragment = {
       "defaultValue": "DATE_DESC",
       "kind": "LocalArgument",
       "name": "sort"
+    },
+    {
+      "defaultValue": "ALL",
+      "kind": "LocalArgument",
+      "name": "state"
     }
   ],
   "kind": "Fragment",
@@ -190,6 +196,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "sort",
           "variableName": "sort"
+        },
+        {
+          "kind": "Variable",
+          "name": "state",
+          "variableName": "state"
         }
       ],
       "concreteType": "AuctionResultConnection",
@@ -290,6 +301,13 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ArtistAuctionResultItem_auctionResult"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isUpcoming",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -305,6 +323,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "df6ab7baf8f01679243929bd694898ea";
+(node as any).hash = "f17ac5747cd537fe23e2b54f6a8361ad";
 
 export default node;
