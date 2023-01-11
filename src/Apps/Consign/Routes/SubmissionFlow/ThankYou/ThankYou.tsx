@@ -11,11 +11,20 @@ import {
 } from "Apps/Consign/Routes/MarketingLanding/Components"
 import { useTracking } from "react-tracking"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
-  const { match } = useRouter()
+  const { match, router } = useRouter()
   const { trackEvent } = useTracking()
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
+  const goToMyCollection = () => {
+    const route = isCollectorProfileEnabled
+      ? "/collector-profile/my-collection"
+      : "/settings/my-collection"
+    router.replace(route)
+  }
 
   const trackSubmitAnotherWorkClick = () =>
     trackEvent({
@@ -67,13 +76,14 @@ export const ThankYou: React.FC = () => {
 
       <Flex
         pb={2}
+        width={["100%", "60%"]}
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
         <RouterLink to="/sell/submission">
           <Button
             mr={[0, 150]}
-            width={["100%", "auto"]}
+            width="100%"
             data-test-id="submit-another-work"
             size="large"
             variant="primaryBlack"
@@ -82,18 +92,16 @@ export const ThankYou: React.FC = () => {
             Submit Another Work
           </Button>
         </RouterLink>
-
-        <RouterLink to="/">
-          <Button
-            mt={[4, 0]}
-            width={["100%", "auto"]}
-            data-test-id="go-to-artsy-homepage"
-            size="large"
-            variant="tertiary"
-          >
-            Back to Artsy Homepage
-          </Button>
-        </RouterLink>
+        <Spacer x={[0, 2]} y={[2, 0]} />
+        <Button
+          width="100%"
+          data-test-id="swa-thank-you-view-in-my-collection-button"
+          size="large"
+          variant="secondaryBlack"
+          onClick={goToMyCollection}
+        >
+          View Artwork in My Collection
+        </Button>
       </Flex>
 
       <DownloadApp mb={[2, 6]} />
