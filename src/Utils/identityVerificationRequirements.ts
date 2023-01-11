@@ -3,7 +3,7 @@ interface IdentityVerificationRequireable {
 }
 
 interface IdentityVerifiable {
-  identityVerified: boolean
+  isIdentityVerified: boolean
 }
 
 interface Bidder {
@@ -31,7 +31,7 @@ export const bidderNeedsIdentityVerification = ({
   return (
     !bidder?.qualified_for_bidding &&
     sale.requireIdentityVerification &&
-    !user?.identityVerified
+    !user?.isIdentityVerified
   )
 }
 
@@ -44,7 +44,7 @@ export const bidderNeedsIdentityVerification = ({
 export const bidderQualifications = (
   sale: { requireIdentityVerification: boolean },
   user?: {
-    identityVerified: boolean
+    isIdentityVerified: boolean
     pendingIdentityVerification?: { internalID: string }
   },
   registration?: { qualifiedForBidding: boolean }
@@ -55,7 +55,7 @@ export const bidderQualifications = (
     registrationAttempted && registration.qualifiedForBidding
 
   const userLacksIdentityVerification =
-    sale.requireIdentityVerification && !user?.identityVerified
+    sale.requireIdentityVerification && !user?.isIdentityVerified
   const pendingIdentityVerification = user?.pendingIdentityVerification
 
   const shouldPromptIdVerification =

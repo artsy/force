@@ -115,7 +115,7 @@ describe("RegisterButton", () => {
           },
         }),
         Me: () => ({
-          identityVerified: false,
+          isIdentityVerified: false,
           pendingIdentityVerification: {
             internalID: true,
           },
@@ -138,7 +138,7 @@ describe("RegisterButton", () => {
           },
         }),
         Me: () => ({
-          identityVerified: false,
+          isIdentityVerified: false,
           pendingIdentityVerification: {
             internalID: null,
           },
@@ -186,7 +186,7 @@ describe("RegisterButton", () => {
           requireIdentityVerification: true,
         }),
         Me: () => ({
-          identityVerified: false,
+          isIdentityVerified: false,
         }),
       })
 
@@ -326,7 +326,7 @@ describe("RegisterButton", () => {
       const wrapper = getWrapper({
         Me: () => ({
           internalID: "me-id",
-          identityVerified: false,
+          isIdentityVerified: false,
           pendingIdentityVerification: {
             internalID: "foo",
           },

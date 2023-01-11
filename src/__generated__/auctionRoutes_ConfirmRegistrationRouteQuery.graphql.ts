@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee2278de1bf12b43eefd314bba6d5f0b>>
+ * @generated SignedSource<<a0c048446d82a8231bbf44e8dec3a27c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,7 +117,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "identityVerified",
+            "name": "isIdentityVerified",
             "storageKey": null
           },
           {
@@ -226,12 +226,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "48421e72673d81723c79485421121572",
+    "cacheID": "8033dd2a5d79dcb9ed64c9f658cc8051",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_ConfirmRegistrationRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auctionRoutes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  isIdentityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

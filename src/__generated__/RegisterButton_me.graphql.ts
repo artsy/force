@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6468c71e65c063e141e289d34ba232e3>>
+ * @generated SignedSource<<a4d7edcb40f41f6570d7346366e98604>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_me$data = {
   readonly hasCreditCards: boolean | null;
-  readonly identityVerified: boolean | null;
   readonly internalID: string;
+  readonly isIdentityVerified: boolean | null;
   readonly pendingIdentityVerification: {
     readonly internalID: string;
   } | null;
@@ -43,7 +43,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "identityVerified",
+      "name": "isIdentityVerified",
       "storageKey": null
     },
     {
@@ -71,6 +71,6 @@ return {
 };
 })();
 
-(node as any).hash = "a92c693069d35859e07a2f479f5721cf";
+(node as any).hash = "075560371bba40b08b83de2754097c5d";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db2309f1329956a0152ccd1bf1bb3050>>
+ * @generated SignedSource<<90185bf2eeb25822fa127d3a072dc5db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBidAction_me$data = {
-  readonly identityVerified: boolean | null;
+  readonly isIdentityVerified: boolean | null;
   readonly pendingIdentityVerification: {
     readonly internalID: string;
   } | null;
@@ -32,7 +32,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "identityVerified",
+      "name": "isIdentityVerified",
       "storageKey": null
     },
     {
@@ -58,6 +58,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6511886a70399f8b6e19811fe3f7c8d1";
+(node as any).hash = "4eac5f9eb500735074706d5aa4df2383";
 
 export default node;

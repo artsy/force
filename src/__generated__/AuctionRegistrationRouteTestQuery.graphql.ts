@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e4b45d30dd4a7a51fafdfdae69d4ef0>>
+ * @generated SignedSource<<5f74a682a98118431960dade88dbbdba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,7 +126,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "identityVerified",
+            "name": "isIdentityVerified",
             "storageKey": null
           },
           {
@@ -217,7 +217,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54a047cf1c2ff689d9ccad2768960a31",
+    "cacheID": "f180071a885f55ec693b2981bb12bd88",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -229,8 +229,8 @@ return {
         },
         "me.hasQualifiedCreditCards": (v3/*: any*/),
         "me.id": (v4/*: any*/),
-        "me.identityVerified": (v3/*: any*/),
         "me.internalID": (v4/*: any*/),
+        "me.isIdentityVerified": (v3/*: any*/),
         "sale": {
           "enumValues": null,
           "nullable": true,
@@ -257,7 +257,7 @@ return {
     },
     "name": "AuctionRegistrationRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  isIdentityVerified\n  hasQualifiedCreditCards\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

@@ -8,7 +8,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { openAuthModal } from "Server/openAuthModal"
 import { ModalType } from "Components/Authentication/Types"
-import { useAuctionTracking } from "../Hooks/useAuctionTracking"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
 
@@ -162,7 +162,7 @@ export const computeConditions = ({
   const qualifiedForBidding =
     sale.registrationStatus?.internalID && sale.bidder?.qualifiedForBidding
   const userLacksIdentityVerification =
-    sale.requireIdentityVerification && !me?.identityVerified
+    sale.requireIdentityVerification && !me?.isIdentityVerified
   const verifyIdentity =
     sale.requireIdentityVerification &&
     !qualifiedForBidding &&
@@ -234,7 +234,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment RegisterButton_me on Me {
         internalID
-        identityVerified
+        isIdentityVerified
         hasCreditCards
         pendingIdentityVerification {
           internalID

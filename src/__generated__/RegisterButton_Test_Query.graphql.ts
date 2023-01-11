@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<738eba2900fb82afb28e5c7a92223856>>
+ * @generated SignedSource<<faca201452a929d03bdf80b1b589a758>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -216,7 +216,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "identityVerified",
+            "name": "isIdentityVerified",
             "storageKey": null
           },
           {
@@ -243,12 +243,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0b6589e6c3b3f6eaa78b7c9cf9eb842d",
+    "cacheID": "df374e27131a2f85e4f31fc5a7372f81",
     "id": null,
     "metadata": {},
     "name": "RegisterButton_Test_Query",
     "operationKind": "query",
-    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  isIdentityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

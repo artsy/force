@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d99617f891e57572ce6bdf5536714c40>>
+ * @generated SignedSource<<3b56ee40d3d4b76f24a5c938526be9d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionConfirmRegistrationRoute_me$data = {
   readonly hasQualifiedCreditCards: boolean | null;
-  readonly identityVerified: boolean | null;
   readonly internalID: string;
+  readonly isIdentityVerified: boolean | null;
   readonly phoneNumber: {
     readonly originalNumber: string | null;
   } | null;
@@ -41,7 +41,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "identityVerified",
+      "name": "isIdentityVerified",
       "storageKey": null
     },
     {
@@ -74,6 +74,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7e0abef463814bf2c57aa0ea3a2d17f0";
+(node as any).hash = "f90b50cc94d41e7c22411ce475c2f6e8";
 
 export default node;
