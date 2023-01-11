@@ -108,7 +108,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
 
       if (consignmentInquiryId) {
         trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
-        router.replace({ pathname: "/sell/inquiry" })
+        router.replace({ pathname: "/sell" })
         router.push("/sell/inquiry/sent")
       }
     } catch (error) {
@@ -201,7 +201,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
               </Text>
               <Button
                 data-testid="consignment-inquiry-send-button"
-                width={["50%", "33%"]}
+                width={["100%", "20%"]}
                 disabled={!isValid || isSubmitting}
                 loading={isSubmitting}
                 type="submit"
