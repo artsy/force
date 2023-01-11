@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38e1bf1d99b36f6e2c709f2e66ff4895>>
+ * @generated SignedSource<<e5c24a8c749da8b5c46657ce5124d1e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -126,7 +126,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "identityVerified",
+            "name": "isIdentityVerified",
             "storageKey": null
           },
           {
@@ -235,7 +235,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b832e9269bb802a0cfc9b4c9ef005a6d",
+    "cacheID": "ef8463e4a713d4896b3f9acc05a5ff42",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -247,8 +247,8 @@ return {
         },
         "me.hasQualifiedCreditCards": (v3/*: any*/),
         "me.id": (v4/*: any*/),
-        "me.identityVerified": (v3/*: any*/),
         "me.internalID": (v4/*: any*/),
+        "me.isIdentityVerified": (v3/*: any*/),
         "me.phoneNumber": {
           "enumValues": null,
           "nullable": true,
@@ -282,7 +282,7 @@ return {
     },
     "name": "AuctionConfirmRegistrationRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionConfirmRegistrationRouteTestQuery {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query AuctionConfirmRegistrationRouteTestQuery {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  isIdentityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

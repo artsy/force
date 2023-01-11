@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5d0857b1789dad2ee392d9df7fb9262>>
+ * @generated SignedSource<<7c0f9c2f4d810410c5a4336e9c1d6c0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -225,14 +225,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "emailConfirmed",
+            "name": "isEmailConfirmed",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "identityVerified",
+            "name": "isIdentityVerified",
             "storageKey": null
           },
           {
@@ -249,7 +249,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b8c7ba220d514a5c829d9be49a5ac354",
+    "cacheID": "7c858d9ac80576c0070d9b4dfa321800",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -262,7 +262,6 @@ return {
         "me.bio": (v1/*: any*/),
         "me.canRequestEmailConfirmation": (v2/*: any*/),
         "me.email": (v1/*: any*/),
-        "me.emailConfirmed": (v2/*: any*/),
         "me.icon": {
           "enumValues": null,
           "nullable": true,
@@ -278,7 +277,8 @@ return {
         "me.icon.resized.src": (v3/*: any*/),
         "me.icon.resized.srcSet": (v3/*: any*/),
         "me.id": (v4/*: any*/),
-        "me.identityVerified": {
+        "me.isEmailConfirmed": (v2/*: any*/),
+        "me.isIdentityVerified": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -302,7 +302,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  emailConfirmed\n  identityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
   }
 };
 })();

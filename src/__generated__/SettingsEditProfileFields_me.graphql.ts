@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a63a96ec8b40b53f5dfeee28a200c4e2>>
+ * @generated SignedSource<<c1a48f3fd6308ed90cd52a3a6e5acf5f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type SettingsEditProfileFields_me$data = {
   readonly bio: string | null;
   readonly canRequestEmailConfirmation: boolean;
   readonly email: string | null;
-  readonly emailConfirmed: boolean;
-  readonly identityVerified: boolean | null;
+  readonly isEmailConfirmed: boolean;
+  readonly isIdentityVerified: boolean | null;
   readonly location: {
     readonly city: string | null;
     readonly country: string | null;
@@ -122,14 +122,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "emailConfirmed",
+      "name": "isEmailConfirmed",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "identityVerified",
+      "name": "isIdentityVerified",
       "storageKey": null
     },
     {
@@ -144,6 +144,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "39e79fd9391a1eebd605d9874d3fe86f";
+(node as any).hash = "4fcc4e9709143366625fa50f03b4fad2";
 
 export default node;
