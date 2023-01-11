@@ -25,6 +25,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SystemContext, useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { extractNodes } from "Utils/extractNodes"
 import { Jump, useJump } from "Utils/Hooks/useJump"
@@ -62,7 +63,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   relay,
 }) => {
   const { user, mediator } = useContext(SystemContext)
-
+  const enableUpcomingAuctionsFilter = useFeatureFlag(
+    "cx-upcoming-auctions-filter"
+  )
   const { filters, setFilter } = useAuctionResultsFilterContext()
 
   const selectedFilters = useCurrentlySelectedFiltersForAuctionResults()
@@ -264,44 +267,70 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           {results.length > 0 ? (
             <LoadingArea isLoading={isLoading}>
-              {upcomingAuctionResults.length > 0 && (
-                <Box mb={2}>
-                  <Text mb={2} variant="md">
-                    Upcoming Auctions
-                  </Text>
+              {enableUpcomingAuctionsFilter ? (
+                <>
+                  {upcomingAuctionResults.length > 0 && (
+                    <Box mb={2}>
+                      <Text mb={2} variant="md">
+                        Upcoming Auctions
+                      </Text>
 
-                  <Join separator={<Spacer y={2} />}>
-                    {upcomingAuctionResults.map((result, index) => {
-                      return (
-                        <ArtistAuctionResultItemFragmentContainer
-                          key={index}
-                          auctionResult={result}
-                          filtersAtDefault={filtersAtDefault}
-                        />
-                      )
-                    })}
-                  </Join>
-                </Box>
-              )}
+                      <Join separator={<Spacer y={2} />}>
+                        {upcomingAuctionResults.map((result, index) => {
+                          return (
+                            <ArtistAuctionResultItemFragmentContainer
+                              key={index}
+                              auctionResult={result}
+                              filtersAtDefault={filtersAtDefault}
+                            />
+                          )
+                        })}
+                      </Join>
+                    </Box>
+                  )}
 
-              {pastAuctionResults.length > 0 && (
-                <Box mb={2}>
-                  <Text mb={2} variant="md">
-                    Past Auctions
-                  </Text>
+                  {pastAuctionResults.length > 0 && (
+                    <Box mb={2}>
+                      <Text mb={2} variant="md">
+                        Past Auctions
+                      </Text>
 
-                  <Join separator={<Spacer y={2} />}>
-                    {pastAuctionResults.map((result, index) => {
-                      return (
-                        <ArtistAuctionResultItemFragmentContainer
-                          key={index}
-                          auctionResult={result}
-                          filtersAtDefault={filtersAtDefault}
-                        />
-                      )
-                    })}
-                  </Join>
-                </Box>
+                      <Join separator={<Spacer y={2} />}>
+                        {pastAuctionResults.map((result, index) => {
+                          return (
+                            <ArtistAuctionResultItemFragmentContainer
+                              key={index}
+                              auctionResult={result}
+                              filtersAtDefault={filtersAtDefault}
+                            />
+                          )
+                        })}
+                      </Join>
+                    </Box>
+                  )}
+                </>
+              ) : (
+                <>
+                  {pastAuctionResults.length > 0 && (
+                    <Box mb={2}>
+                      <Text mb={2} variant="md">
+                        Past Auctions
+                      </Text>
+
+                      <Join separator={<Spacer y={2} />}>
+                        {pastAuctionResults.map((result, index) => {
+                          return (
+                            <ArtistAuctionResultItemFragmentContainer
+                              key={index}
+                              auctionResult={result}
+                              filtersAtDefault={filtersAtDefault}
+                            />
+                          )
+                        })}
+                      </Join>
+                    </Box>
+                  )}
+                </>
               )}
             </LoadingArea>
           ) : (
