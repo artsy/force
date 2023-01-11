@@ -13,15 +13,15 @@ import {
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { HomeTroveArtworksRail_viewer$data } from "__generated__/HomeTroveArtworksRail_viewer.graphql"
-import { HomeTroveArtworksRailQuery } from "__generated__/HomeTroveArtworksRailQuery.graphql"
+import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
+import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
 
-interface HomeTroveArtworksRailProps {
-  viewer: HomeTroveArtworksRail_viewer$data
+interface HomeEmergingPicksArtworksRailProps {
+  viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
+export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
@@ -78,11 +78,11 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   )
 }
 
-export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
-  HomeTroveArtworksRail,
+export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentContainer(
+  HomeEmergingPicksArtworksRail,
   {
     viewer: graphql`
-      fragment HomeTroveArtworksRail_viewer on Viewer {
+      fragment HomeEmergingPicksArtworksRail_viewer on Viewer {
         artworksConnection(
           first: 12
           marketingCollectionID: "curators-picks-emerging"
@@ -101,15 +101,15 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC = () => {
   return (
-    <SystemQueryRenderer<HomeTroveArtworksRailQuery>
+    <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}
       lazyLoad
       query={graphql`
-        query HomeTroveArtworksRailQuery {
+        query HomeEmergingPicksArtworksRailQuery {
           viewer {
-            ...HomeTroveArtworksRail_viewer
+            ...HomeEmergingPicksArtworksRail_viewer
           }
         }
       `}
@@ -123,7 +123,11 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        return <HomeTroveArtworksRailFragmentContainer viewer={props.viewer} />
+        return (
+          <HomeEmergingPicksArtworksRailFragmentContainer
+            viewer={props.viewer}
+          />
+        )
       }}
     />
   )

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd1bfc2a23b5e809c1363b845f7b4626>>
+ * @generated SignedSource<<20b3421e3c63d87cc07d73a8f40a1958>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeTroveArtworksRail_viewer$data = {
+export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -21,18 +21,18 @@ export type HomeTroveArtworksRail_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "HomeTroveArtworksRail_viewer";
+  readonly " $fragmentType": "HomeEmergingPicksArtworksRail_viewer";
 };
-export type HomeTroveArtworksRail_viewer$key = {
-  readonly " $data"?: HomeTroveArtworksRail_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"HomeTroveArtworksRail_viewer">;
+export type HomeEmergingPicksArtworksRail_viewer$key = {
+  readonly " $data"?: HomeEmergingPicksArtworksRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeEmergingPicksArtworksRail_viewer">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomeTroveArtworksRail_viewer",
+  "name": "HomeEmergingPicksArtworksRail_viewer",
   "selections": [
     {
       "alias": null,
@@ -109,6 +109,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9734f7cd9bcc52fa34e6d59da98bfcb7";
+(node as any).hash = "22aa4f34b83e83ffbbda0f8d2a4c231d";
 
 export default node;

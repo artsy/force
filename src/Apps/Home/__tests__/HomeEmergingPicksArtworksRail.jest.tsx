@@ -1,22 +1,22 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeTroveArtworksRailFragmentContainer } from "Apps/Home/Components/HomeTroveArtworksRail"
+import { HomeEmergingPicksArtworksRailFragmentContainer } from "Apps/Home/Components/HomeEmergingPicksArtworksRail"
 
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper({
-  Component: HomeTroveArtworksRailFragmentContainer,
+  Component: HomeEmergingPicksArtworksRailFragmentContainer,
   query: graphql`
-    query HomeTroveArtworksRail_Test_Query @relay_test_operation {
+    query HomeEmergingPicksArtworksRail_Test_Query @relay_test_operation {
       viewer {
-        ...HomeTroveArtworksRail_viewer
+        ...HomeEmergingPicksArtworksRail_viewer
       }
     }
   `,
 })
 
-describe("HomeTroveArtworksRail", () => {
+describe("HomeEmergingPicksArtworksRail", () => {
   const trackEvent = jest.fn()
 
   beforeAll(() => {
