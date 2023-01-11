@@ -1,7 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
 import { mount } from "enzyme"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { AddToCalendar, PopoverLinks } from "../AddToCalendar"
+import {
+  AddToCalendar,
+  AddToCalendarLinks,
+} from "Apps/Auction/Components/AuctionDetails/AddToCalendar"
 
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 
@@ -34,14 +37,14 @@ describe("AddToCalendar", () => {
     }
 
     const wrapper = getWrapper()
-    expect(wrapper.find("Popover").length).toBe(1)
+    expect(wrapper.find("Dropdown").length).toBe(1)
     expect(wrapper.find("Button").length).toBe(1)
     expect(wrapper.text()).toContain("Add to Calendar")
   })
 
   it("computs correct links", () => {
     const getWrapper = () => {
-      return mount(<PopoverLinks {...props} />)
+      return mount(<AddToCalendarLinks {...props} />)
     }
     const wrapper = getWrapper()
     expect(wrapper.find("a").length).toBe(3)
@@ -52,7 +55,7 @@ describe("AddToCalendar", () => {
 
   it("tracks events", () => {
     const getWrapper = () => {
-      return mount(<PopoverLinks {...props} />)
+      return mount(<AddToCalendarLinks {...props} />)
     }
     const wrapper = getWrapper()
 
