@@ -3,11 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuizResultsRecommendedArtworks_me.graphql"
 import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Spacer } from "@artsy/palette"
-import { shuffle, uniqBy } from "lodash"
+import { compact, shuffle, uniqBy } from "lodash"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 
 interface ArtQuizResultsRecommendedArtworksProps {
@@ -17,14 +16,16 @@ interface ArtQuizResultsRecommendedArtworksProps {
 const ArtQuizResultsRecommendedArtworks: FC<ArtQuizResultsRecommendedArtworksProps> = ({
   me,
 }) => {
-  const artworks = shuffle(
-    uniqBy(
-      me.quiz.savedArtworks.flatMap(artwork => {
-        if (!artwork.layer) return []
+  const artworks = compact(
+    shuffle(
+      uniqBy(
+        me.quiz.savedArtworks.flatMap(artwork => {
+          if (!artwork.layer) return []
 
-        return extractNodes(artwork.layer.artworksConnection)
-      }),
-      "internalID"
+          return artwork.related || []
+        }),
+        "internalID"
+      )
     )
   )
 
@@ -47,18 +48,22 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
   ArtQuizResultsRecommendedArtworks,
   {
     me: graphql`
-      fragment ArtQuizResultsRecommendedArtworks_me on Me {
+      fragment ArtQuizResultsRecommendedArtworks_me on Me
+        @argumentDefinitions(limit: { type: "Int" }) {
         quiz {
           savedArtworks {
             layer(id: "main") {
               artworksConnection {
                 edges {
                   node {
-                    ...GridItem_artwork
                     internalID
                   }
                 }
               }
+            }
+            related(size: $limit) {
+              ...GridItem_artwork
+              internalID
             }
           }
         }
@@ -71,7 +76,13 @@ const ArtQuizResultsRecommendedArtworksPlaceholder: FC = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={16} />
 }
 
-export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC = () => {
+interface ArtQuizResultsRecommendedArtworksQueryRendererProps {
+  limit: number
+}
+
+export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<ArtQuizResultsRecommendedArtworksQueryRendererProps> = ({
+  limit,
+}) => {
   return (
     <SystemQueryRenderer<ArtQuizResultsRecommendedArtworksQuery>
       query={graphql`
@@ -83,6 +94,7 @@ export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC = () => {
       `}
       placeholder={<ArtQuizResultsRecommendedArtworksPlaceholder />}
       render={({ props, error }) => {
+        console.log("***************PROPS*******************", props)
         if (error) {
           console.error(error)
           return null
@@ -96,6 +108,7 @@ export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC = () => {
           <ArtQuizResultsRecommendedArtworksFragmentContainer me={props.me} />
         )
       }}
+      variables={{ limit }}
     />
   )
 }

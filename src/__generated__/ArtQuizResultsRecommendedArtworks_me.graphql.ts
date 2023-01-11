@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e10004061a956fbb933224f791f4111e>>
+ * @generated SignedSource<<bb8169966a62e6f0d79835eea5808b80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,11 +18,14 @@ export type ArtQuizResultsRecommendedArtworks_me$data = {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly internalID: string;
-              readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
             } | null;
           } | null> | null;
         } | null;
       } | null;
+      readonly related: ReadonlyArray<{
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+      } | null> | null;
     }>;
   };
   readonly " $fragmentType": "ArtQuizResultsRecommendedArtworks_me";
@@ -32,8 +35,22 @@ export type ArtQuizResultsRecommendedArtworks_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizResultsRecommendedArtworks_me">;
 };
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [],
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "limit"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtQuizResultsRecommendedArtworks_me",
@@ -92,18 +109,7 @@ const node: ReaderFragment = {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            {
-                              "args": null,
-                              "kind": "FragmentSpread",
-                              "name": "GridItem_artwork"
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "internalID",
-                              "storageKey": null
-                            }
+                            (v0/*: any*/)
                           ],
                           "storageKey": null
                         }
@@ -115,6 +121,29 @@ const node: ReaderFragment = {
                 }
               ],
               "storageKey": "layer(id:\"main\")"
+            },
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Variable",
+                  "name": "size",
+                  "variableName": "limit"
+                }
+              ],
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "related",
+              "plural": true,
+              "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "GridItem_artwork"
+                },
+                (v0/*: any*/)
+              ],
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -126,7 +155,8 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "63ded2fcdf927ee957dfa012f0461261";
+(node as any).hash = "92679aedabc0cbe316acf58870a33784";
 
 export default node;

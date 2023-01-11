@@ -6,7 +6,13 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { useSystemContext } from "System"
 
-export const ArtQuizResultsTabs: FC = () => {
+interface ArtQuizResultsTabsProps {
+  savedQuizArtworksTotal: number
+}
+
+export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
+  savedQuizArtworksTotal,
+}) => {
   const { t } = useTranslation()
 
   const { user } = useSystemContext()
@@ -20,6 +26,12 @@ export const ArtQuizResultsTabs: FC = () => {
       variant: "success",
       message: t("artQuizPage.results.emailSuccess", { email: user?.email }),
     })
+  }
+
+  const calculateRecommendationsLimit = () => {
+    if (savedQuizArtworksTotal <= 3) return 8
+    if (savedQuizArtworksTotal > 3) return 4
+    return 100
   }
 
   return (
@@ -54,7 +66,9 @@ export const ArtQuizResultsTabs: FC = () => {
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtworks")}>
-          <ArtQuizResultsRecommendedArtworksQueryRenderer />
+          <ArtQuizResultsRecommendedArtworksQueryRenderer
+            limit={calculateRecommendationsLimit()}
+          />
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtists")}>
