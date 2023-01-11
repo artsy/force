@@ -57,3 +57,9 @@ export type CleanRelayFragment<T> = Omit<
 export type RemoveIndex<T> = {
   [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
 };
+
+export type ExtractNodeType<T> = T extends { edges: any }
+  ? NonNullable<
+      NonNullable<NonNullable<NonNullable<T>["edges"]>[number]>["node"]
+    >
+  : never

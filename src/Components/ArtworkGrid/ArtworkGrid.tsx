@@ -22,6 +22,7 @@ import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { StoredImage } from "Utils/localImagesHelpers"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
+import { ExtractNodeType } from "Utils/typeSupport"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { MyCollectionArtworkGrid_artworks$data } from "__generated__/MyCollectionArtworkGrid_artworks.graphql"
 import { withArtworkGridContext } from "./ArtworkGridContext"
@@ -29,10 +30,7 @@ import { withArtworkGridContext } from "./ArtworkGridContext"
 type Artworks =
   | ArtworkGrid_artworks$data
   | MyCollectionArtworkGrid_artworks$data
-
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type Artwork = Artworks["edges"][0]["node"]
-
+type Artwork = ExtractNodeType<Artworks>
 type SectionedArtworks = Array<Array<Artwork>>
 
 export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
@@ -362,12 +360,12 @@ export function createSectionedArtworks(
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   artworks.forEach(artworkEdge => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const artwork = artworkEdge.node
+    const artwork = artworkEdge?.node
+
+    if (!artwork) return
 
     // There are artworks without images and other ‘issues’. Like Force we’re just going to reject those for now.
     // See: https://github.com/artsy/eigen/issues/1667
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     if (showArtworksWithoutImages || artwork.image) {
       // Find section with lowest *inverted* aspect ratio sum, which is the shortest column.
       let lowestRatioSum = Number.MAX_VALUE
@@ -386,7 +384,6 @@ export function createSectionedArtworks(
         section.push(artwork)
 
         // Keep track of total section aspect ratio
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const aspectRatio = artwork.image?.aspectRatio || 1 // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

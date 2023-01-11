@@ -168,7 +168,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   )
 }
 
-export const MyCollectionRouteRefetchContainer = createPaginationContainer(
+export const MyCollectionRoutePaginationContainer = createPaginationContainer(
   MyCollectionRoute,
   {
     me: graphql`
