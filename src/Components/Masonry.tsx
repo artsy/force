@@ -1,10 +1,10 @@
 import { Box } from "@artsy/palette"
 import styled from "styled-components"
 import {
-  GridColumnGapProps,
-  gridColumnGap,
-  style,
   compose,
+  gridColumnGap,
+  GridColumnGapProps,
+  style,
 } from "styled-system"
 
 const columnCount = style({
@@ -16,6 +16,9 @@ export interface MasonryProps extends GridColumnGapProps {
   columnCount?: number[] | number
 }
 
+/**
+ * @deprecated in favor of ArtworkGrid (src/Components/ArtworkGrid/ArtworkGrid.tsx)
+ */
 export const Masonry = styled(Box)<MasonryProps>`
   ${compose(columnCount, gridColumnGap)};
 
