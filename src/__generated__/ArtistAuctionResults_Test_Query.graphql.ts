@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07485f93e5f5d54ce0bbd51930685bc2>>
+ * @generated SignedSource<<212abf5736df0586f1f74924b77352b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,7 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
               } | null;
             } | null;
           } | null;
+          readonly isUpcoming: boolean | null;
           readonly mediumText: string | null;
           readonly organization: string | null;
           readonly performance: {
@@ -232,6 +233,11 @@ return {
                 "kind": "Literal",
                 "name": "sort",
                 "value": "DATE_DESC"
+              },
+              {
+                "kind": "Literal",
+                "name": "state",
+                "value": "ALL"
               }
             ],
             "concreteType": "AuctionResultConnection",
@@ -570,6 +576,13 @@ return {
                         ],
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isUpcoming",
+                        "storageKey": null
+                      },
                       (v6/*: any*/)
                     ],
                     "storageKey": null
@@ -578,7 +591,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "auctionResultsConnection(first:10,sort:\"DATE_DESC\")"
+            "storageKey": "auctionResultsConnection(first:10,sort:\"DATE_DESC\",state:\"ALL\")"
           },
           (v6/*: any*/)
         ],
@@ -587,12 +600,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c15c2dd0fb8a89706730b10cc11c4505",
+    "cacheID": "8179d7f533f30099fb968435cdb5cf71",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_1jJDyA\n}\n\nfragment ArtistAuctionResults_artist_1jJDyA on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_1jJDyA\n}\n\nfragment ArtistAuctionResults_artist_1jJDyA on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, state: ALL) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        isUpcoming\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

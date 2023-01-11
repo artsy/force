@@ -1,11 +1,11 @@
-import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { act, fireEvent, screen, within } from "@testing-library/react"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
 import { MockBoot } from "DevTools"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { openAuthModal } from "Utils/openAuthModal"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen, fireEvent, within, act } from "@testing-library/react"
+import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -14,6 +14,7 @@ jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
 }))
+jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -21,8 +22,9 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 
-import { useRouter } from "System/Router/useRouter"
 import { MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System"
+import { useRouter } from "System/Router/useRouter"
 
 describe("AuctionResults", () => {
   // @ts-ignore
@@ -48,6 +50,11 @@ describe("AuctionResults", () => {
         trackEvent,
       }
     })
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-upcoming-auctions-filter": { flagEnabled: true },
+      },
+    }))
 
     mockOpenAuthModal.mockImplementation(() => {
       return
@@ -109,7 +116,7 @@ describe("AuctionResults", () => {
       })
 
       const checkboxes = screen.getAllByRole("checkbox")
-      fireEvent.click(checkboxes[1])
+      fireEvent.click(checkboxes[2])
       act(() => {
         env.mock.resolveMostRecentOperation(operation => {
           operationVariables = operation.request.variables
@@ -120,7 +127,7 @@ describe("AuctionResults", () => {
       expect(operationVariables.categories).toContain("Work on Paper")
       expect(openAuthModal).toHaveBeenCalledTimes(1)
 
-      fireEvent.click(checkboxes[2])
+      fireEvent.click(checkboxes[3])
       act(() => {
         env.mock.resolveMostRecentOperation(operation => {
           operationVariables = operation.request.variables
@@ -136,6 +143,9 @@ describe("AuctionResults", () => {
   describe("general behavior", () => {
     it("renders proper elements", () => {
       renderWithRelay(mockedResolver)
+
+      expect(screen.getByText("Upcoming Auctions")).toBeInTheDocument()
+      expect(screen.getByText("Past Auctions")).toBeInTheDocument()
 
       const navigation = screen.getByRole("navigation")
       const links = within(navigation).getAllByRole("link")
@@ -176,6 +186,7 @@ describe("AuctionResults", () => {
           match: {
             location: {
               query: {
+                hide_upcoming: true,
                 categories: ["Painting"],
                 sizes: ["SMALL", "LARGE"],
                 organizations: ["Phillips", "Bonhams"],
@@ -202,19 +213,22 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(6)
-        expect(checkedCheckboxes[0]).toHaveTextContent("CheckPainting")
-        expect(checkedCheckboxes[1]).toHaveTextContent(
+        expect(checkedCheckboxes).toHaveLength(7)
+        expect(checkedCheckboxes[0]).toHaveTextContent(
+          "CheckHide upcoming auctions"
+        )
+        expect(checkedCheckboxes[1]).toHaveTextContent("CheckPainting")
+        expect(checkedCheckboxes[2]).toHaveTextContent(
           "CheckSmall (under 40cm)"
         )
-        expect(checkedCheckboxes[2]).toHaveTextContent(
+        expect(checkedCheckboxes[3]).toHaveTextContent(
           "CheckLarge (over 100cm)"
         )
-        expect(checkedCheckboxes[3]).toHaveTextContent(
+        expect(checkedCheckboxes[4]).toHaveTextContent(
           "CheckInclude unspecified dates"
         )
-        expect(checkedCheckboxes[4]).toHaveTextContent("CheckPhillips")
-        expect(checkedCheckboxes[5]).toHaveTextContent("CheckBonhams")
+        expect(checkedCheckboxes[5]).toHaveTextContent("CheckPhillips")
+        expect(checkedCheckboxes[6]).toHaveTextContent("CheckBonhams")
       })
     })
 
@@ -263,13 +277,6 @@ describe("AuctionResults", () => {
             })
 
             const checkboxes = screen.getAllByRole("checkbox")
-            fireEvent.click(checkboxes[1])
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
-
             fireEvent.click(checkboxes[2])
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
@@ -278,6 +285,13 @@ describe("AuctionResults", () => {
             })
 
             fireEvent.click(checkboxes[3])
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            fireEvent.click(checkboxes[4])
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
                 return MockPayloadGenerator.generate(operation, mockedResolver)
@@ -434,6 +448,30 @@ describe("AuctionResults", () => {
             expect(operationVariables.createdBeforeYear).toBe(1960)
           })
         })
+
+        describe("hide upcoming filter", () => {
+          it("triggers relay refetch with state", () => {
+            let operationVariables
+            const { env } = renderWithRelay(mockedResolver, true)
+
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            const checkboxes = screen.getAllByRole("checkbox")
+            fireEvent.click(checkboxes[0])
+            act(() => {
+              env.mock.resolveMostRecentOperation(operation => {
+                operationVariables = operation.request.variables
+                return MockPayloadGenerator.generate(operation, mockedResolver)
+              })
+            })
+
+            expect(operationVariables.state).toBe("PAST")
+          })
+        })
       })
 
       describe("sort", () => {
@@ -526,6 +564,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDk2Nw==",
             mediumText: "oil on canvas",
             categoryText: "Work on Paper",
+            isUpcoming: true,
           },
         },
         {
@@ -560,6 +599,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDc3Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: true,
           },
         },
         {
@@ -594,6 +634,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDc1Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -628,6 +669,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY4Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -662,6 +704,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY3Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -696,6 +739,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY2Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -730,6 +774,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY1Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -764,6 +809,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDY0Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -798,6 +844,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDYzNw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
         {
@@ -832,6 +879,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDYyNw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
+            isUpcoming: false,
           },
         },
       ],
