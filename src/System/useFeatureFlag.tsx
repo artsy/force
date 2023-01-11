@@ -43,10 +43,10 @@ export function useFeatureVariant(featureName: string): Variant | null {
   const variant = featureFlags?.[featureName]?.variant
 
   if (!variant) {
-    // console.error(
-    //   "[Force] Error: cannot find variant on featureFlags: ",
-    //   featureFlags
-    // )
+    console.error(
+      "[Force] Error: cannot find variant on featureFlags: ",
+      featureFlags
+    )
     return null
   }
 
