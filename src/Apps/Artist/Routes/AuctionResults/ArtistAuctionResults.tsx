@@ -316,14 +316,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                 </>
               ) : (
                 <>
-                  {pastAuctionResults.length > 0 && (
+                  {results.length > 0 && (
                     <Box mb={2}>
-                      <Text mb={2} variant="md">
-                        Past Auctions
-                      </Text>
-
                       <Join separator={<Spacer y={2} />}>
-                        {pastAuctionResults.map((result, index) => {
+                        {results.map((result, index) => {
                           return (
                             <ArtistAuctionResultItemFragmentContainer
                               key={index}
