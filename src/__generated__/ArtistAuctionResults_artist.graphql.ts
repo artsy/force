@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a93d0937a76704bce9278f7656050b1a>>
+ * @generated SignedSource<<c3ed1b7fec711ebc60a4b5002f4c8047>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,13 @@ export type ArtistAuctionResults_artist$data = {
   } | null;
   readonly internalID: string;
   readonly name: string | null;
+  readonly pastAuctionResults: {
+    readonly totalCount: number | null;
+  } | null;
   readonly slug: string;
+  readonly upcomingAuctionResults: {
+    readonly totalCount: number | null;
+  } | null;
   readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
 export type ArtistAuctionResults_artist$key = {
@@ -41,7 +47,53 @@ export type ArtistAuctionResults_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Variable",
+  "name": "allowEmptyCreatedDates",
+  "variableName": "allowEmptyCreatedDates"
+},
+v1 = {
+  "kind": "Variable",
+  "name": "categories",
+  "variableName": "categories"
+},
+v2 = {
+  "kind": "Variable",
+  "name": "earliestCreatedYear",
+  "variableName": "createdAfterYear"
+},
+v3 = {
+  "kind": "Variable",
+  "name": "keyword",
+  "variableName": "keyword"
+},
+v4 = {
+  "kind": "Variable",
+  "name": "latestCreatedYear",
+  "variableName": "createdBeforeYear"
+},
+v5 = {
+  "kind": "Variable",
+  "name": "organizations",
+  "variableName": "organizations"
+},
+v6 = {
+  "kind": "Variable",
+  "name": "sizes",
+  "variableName": "sizes"
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v8 = [
+  (v7/*: any*/)
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -142,56 +194,28 @@ const node: ReaderFragment = {
           "name": "after",
           "variableName": "after"
         },
-        {
-          "kind": "Variable",
-          "name": "allowEmptyCreatedDates",
-          "variableName": "allowEmptyCreatedDates"
-        },
+        (v0/*: any*/),
         {
           "kind": "Variable",
           "name": "before",
           "variableName": "before"
         },
-        {
-          "kind": "Variable",
-          "name": "categories",
-          "variableName": "categories"
-        },
-        {
-          "kind": "Variable",
-          "name": "earliestCreatedYear",
-          "variableName": "createdAfterYear"
-        },
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "Variable",
           "name": "first",
           "variableName": "first"
         },
-        {
-          "kind": "Variable",
-          "name": "keyword",
-          "variableName": "keyword"
-        },
+        (v3/*: any*/),
         {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
         },
-        {
-          "kind": "Variable",
-          "name": "latestCreatedYear",
-          "variableName": "createdBeforeYear"
-        },
-        {
-          "kind": "Variable",
-          "name": "organizations",
-          "variableName": "organizations"
-        },
-        {
-          "kind": "Variable",
-          "name": "sizes",
-          "variableName": "sizes"
-        },
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v6/*: any*/),
         {
           "kind": "Variable",
           "name": "sort",
@@ -274,13 +298,7 @@ const node: ReaderFragment = {
           ],
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
+        (v7/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -317,12 +335,59 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": "pastAuctionResults",
+      "args": [
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
+        (v3/*: any*/),
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v6/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "state",
+          "value": "PAST"
+        }
+      ],
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "auctionResultsConnection",
+      "plural": false,
+      "selections": (v8/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": "upcomingAuctionResults",
+      "args": [
+        (v0/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
+        (v3/*: any*/),
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v6/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "state",
+          "value": "UPCOMING"
+        }
+      ],
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "auctionResultsConnection",
+      "plural": false,
+      "selections": (v8/*: any*/),
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f17ac5747cd537fe23e2b54f6a8361ad";
+(node as any).hash = "c800def08a7d26042d0b4e394d4856ac";
 
 export default node;

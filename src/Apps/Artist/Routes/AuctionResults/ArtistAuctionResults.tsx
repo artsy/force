@@ -77,6 +77,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const results = extractNodes(artist.auctionResultsConnection)
   const upcomingAuctionResults = results.filter(result => result.isUpcoming)
   const pastAuctionResults = results.filter(result => !result.isUpcoming)
+  const upcomingAuctionResultsCount =
+    artist.upcomingAuctionResults?.totalCount || 0
+  const pastAuctionResultsCount = artist.pastAuctionResults?.totalCount || 0
 
   const { match } = useRouter()
 
@@ -271,8 +274,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                 <>
                   {upcomingAuctionResults.length > 0 && (
                     <Box mb={2}>
-                      <Text mb={2} variant="md">
-                        Upcoming Auctions
+                      <Text variant="md">Upcoming Auctions</Text>
+                      <Text variant="xs" mb={2} color="black60">
+                        {upcomingAuctionResultsCount} results
                       </Text>
 
                       <Join separator={<Spacer y={2} />}>
@@ -291,8 +295,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
                   {pastAuctionResults.length > 0 && (
                     <Box mb={2}>
-                      <Text mb={2} variant="md">
-                        Past Auctions
+                      <Text variant="md">Past Auctions</Text>
+                      <Text variant="xs" mb={2} color="black60">
+                        {pastAuctionResultsCount} results
                       </Text>
 
                       <Join separator={<Spacer y={2} />}>
@@ -430,6 +435,30 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
               isUpcoming
             }
           }
+        }
+        pastAuctionResults: auctionResultsConnection(
+          state: PAST
+          organizations: $organizations
+          keyword: $keyword
+          categories: $categories
+          sizes: $sizes
+          earliestCreatedYear: $createdAfterYear
+          latestCreatedYear: $createdBeforeYear
+          allowEmptyCreatedDates: $allowEmptyCreatedDates
+        ) {
+          totalCount
+        }
+        upcomingAuctionResults: auctionResultsConnection(
+          state: UPCOMING
+          organizations: $organizations
+          keyword: $keyword
+          categories: $categories
+          sizes: $sizes
+          earliestCreatedYear: $createdAfterYear
+          latestCreatedYear: $createdBeforeYear
+          allowEmptyCreatedDates: $allowEmptyCreatedDates
+        ) {
+          totalCount
         }
       }
     `,
