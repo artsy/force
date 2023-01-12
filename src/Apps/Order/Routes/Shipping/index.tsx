@@ -194,20 +194,24 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             )!
       )
 
-      const shipToPhoneNumber = editedPhoneNumber
-        ? editedPhoneNumber
-        : isCreateNewAddress()
-        ? newAddress?.userAddressOrErrors.phoneNumber
-        : shippingOption === "PICKUP"
-        ? phoneNumber
-        : addressList.find(address => address.internalID == selectedAddressID)
-            ?.phoneNumber
+      const shipToPhoneNumber =
+        shippingOption === "PICKUP"
+          ? phoneNumber
+          : editedPhoneNumber
+          ? editedPhoneNumber
+          : isCreateNewAddress()
+          ? newAddress?.userAddressOrErrors.phoneNumber
+          : addressList.find(address => address.internalID == selectedAddressID)
+              ?.phoneNumber
 
-      const shipToPhoneNumberCountryCode = editedPhoneNumberCountryCode
-        ? editedPhoneNumberCountryCode
-        : isCreateNewAddress()
-        ? newAddress?.userAddressOrErrors.phoneNumberCountryCode
-        : phoneNumberCountryCode
+      const shipToPhoneNumberCountryCode =
+        shippingOption === "PICKUP"
+          ? phoneNumberCountryCode
+          : editedPhoneNumberCountryCode
+          ? editedPhoneNumberCountryCode
+          : isCreateNewAddress()
+          ? newAddress?.userAddressOrErrors.phoneNumberCountryCode
+          : phoneNumberCountryCode
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
