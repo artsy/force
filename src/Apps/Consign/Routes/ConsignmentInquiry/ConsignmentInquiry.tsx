@@ -156,7 +156,6 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   return (
     <>
       <Formik<ConsignmentInquiryFormModel>
-        validateOnMount
         initialValues={initialValue}
         onSubmit={handleSubmit}
         validationSchema={consignmentInquiryValidationSchema}

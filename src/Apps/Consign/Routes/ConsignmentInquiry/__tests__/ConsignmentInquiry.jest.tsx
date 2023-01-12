@@ -93,10 +93,7 @@ describe("ConsignmentInquiry", () => {
     expect(getSubmitButton()).toBeInTheDocument()
   })
 
-  // TODO:- After removing phone validation from Consignment Inquiry Form
-  // Validation are so much slower and the button is captured disabled.
-  // async WaitFor, timeouts etc does not help.
-  it.skip("submitting a valid form", async () => {
+  it("submitting a valid form", async () => {
     mockTracking.mockImplementationOnce(() => ({
       trackEvent: mockTrackEvent,
     }))
@@ -104,8 +101,6 @@ describe("ConsignmentInquiry", () => {
     getWrapper().renderWithRelay({
       Me: () => mockMe,
     })
-
-    simulateTyping("message", "This is my message to you")
 
     submitMutation.mockResolvedValueOnce({
       createConsignmentInquiry: {
@@ -115,6 +110,10 @@ describe("ConsignmentInquiry", () => {
           },
         },
       },
+    })
+
+    await waitFor(() => {
+      simulateTyping("message", "This is my message to you")
     })
 
     fireEvent.click(getSubmitButton())

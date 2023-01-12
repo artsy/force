@@ -74,6 +74,7 @@ export const ConsignmentInquiryForm: React.FC<{}> = ({ ...rest }) => {
         onChange={({ value }) => {
           setFieldValue("message", value)
         }}
+        value={values.message}
         onBlur={handleBlur}
         required
         error={touched.message && errors.message}
