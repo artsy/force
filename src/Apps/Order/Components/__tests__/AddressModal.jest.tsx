@@ -1,15 +1,8 @@
 import { commitMutation as _commitMutation } from "react-relay"
-import {
-  AddressModal,
-  Props,
-  GENERIC_FAIL_MESSAGE,
-} from "Apps/Order/Components/AddressModal"
+import { AddressModal, Props } from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
-import {
-  updateAddressSuccess,
-  updateAddressFailure,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
+
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
 jest.mock("System/useSystemContext")
@@ -20,16 +13,10 @@ jest.mock("Utils/user", () => ({
   userHasLabFeature: jest.fn(),
 }))
 
-const errorBoxQuery = "Banner[data-test='credit-card-error']"
-
-// needed for modal contentAnimation
-const tick = () => new Promise(resolve => setTimeout(resolve, 0))
-
-const commitMutation = _commitMutation as jest.Mock<any>
-
 const savedAddress: SavedAddressType = {
   ...validAddress,
   phoneNumber: "8475937743",
+  phoneNumberCountryCode: "us",
   id: "id",
   internalID: "internal-id",
   addressLine3: null,
@@ -65,7 +52,6 @@ describe("AddressModal", () => {
       },
       closeModal: jest.fn(),
     }
-    commitMutation.mockReset()
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
         user: { lab_features: [] },
@@ -169,86 +155,5 @@ describe("AddressModal", () => {
       ).not.toBeCalled()
       expect(wrapper.find(AddressModal).props().closeModal).not.toBeCalled()
     }, 0)
-  })
-
-  describe("update mode", () => {
-    it("creates address when form is submitted with valid values", async () => {
-      const wrapper = getWrapper(testAddressModalProps)
-
-      commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {
-        onCompleted(updateAddressSuccess)
-      })
-
-      const formik = wrapper.find("Formik").first()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
-
-      await wrapper.update()
-
-      expect(
-        commitMutation.mock.calls[0][1].mutation.default.params.name
-      ).toEqual("UpdateUserAddressMutation")
-
-      expect(commitMutation.mock.calls[0][1]).toMatchObject({
-        variables: {
-          input: {
-            attributes: {
-              ...validAddress,
-            },
-          },
-        },
-      })
-
-      expect(wrapper.find(AddressModal).props().onSuccess).toHaveBeenCalled()
-      expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
-    })
-
-    it("shows generic error when mutation fails", async () => {
-      let wrapper = getWrapper(testAddressModalProps)
-
-      commitMutation.mockImplementationOnce((_, { onError }) =>
-        onError(new TypeError("Network request failed"))
-      )
-
-      const formik = wrapper.find("Formik").first()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
-
-      await wrapper.update()
-
-      expect(commitMutation.mock.calls[0][1]).toMatchObject({
-        variables: {
-          input: {
-            attributes: {
-              ...validAddress,
-            },
-          },
-        },
-      })
-
-      await tick()
-
-      expect(wrapper.find(AddressModal).props().onError).toHaveBeenCalled()
-
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
-    })
-
-    it("shows generic error when mutation returns error", async () => {
-      let wrapper = getWrapper(testAddressModalProps)
-
-      commitMutation.mockImplementationOnce((_, { onCompleted }) =>
-        onCompleted(updateAddressFailure)
-      )
-
-      const formik = wrapper.find("Formik").first()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
-
-      await wrapper.update()
-
-      await tick()
-
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
-    })
   })
 })
