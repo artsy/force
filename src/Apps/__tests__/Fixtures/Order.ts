@@ -284,6 +284,8 @@ export const UntouchedOrder = {
   bankAccountId: null,
   buyerTotalCents: 12000000,
   buyerTotal: "$12,000",
+  buyerPhoneNumber: "2025551234",
+  buyerPhoneNumberCountryCode: "us",
   itemsTotalCents: 1200000,
   code: "abcdefg",
   paymentMethod: "CREDIT_CARD",

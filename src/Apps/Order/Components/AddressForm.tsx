@@ -65,6 +65,7 @@ interface AddressFormProps {
   me: SavedAddresses_me$data
   address?: SavedAddressType
   isCreateAddress: boolean
+  isDomesticOnly?: boolean
   onEditOrCreateAddressError: (arg: string) => void
   onEditOrCreateAddressSuccess: (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
@@ -77,6 +78,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   me,
   address,
   isCreateAddress,
+  isDomesticOnly,
   onEditOrCreateAddressError,
   onEditOrCreateAddressSuccess,
   setShowDialog,
@@ -169,7 +171,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       }) => {
         return (
           <Form>
-            <AddressModalFields />
+            <AddressModalFields isDomesticOnly={isDomesticOnly} />
             <Spacer y={2} />
             <PhoneNumberInput
               inputProps={{

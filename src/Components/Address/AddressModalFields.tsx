@@ -2,9 +2,11 @@ import * as React from "react"
 import { Box, Column, Flex, GridColumns, Input, Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { CountrySelect } from "../CountrySelect"
+import { CountrySelect } from "Components/CountrySelect"
 
-export const AddressModalFields: React.FC = () => {
+export const AddressModalFields: React.FC<{ isDomesticOnly?: boolean }> = ({
+  isDomesticOnly,
+}) => {
   const {
     values,
     touched,
@@ -41,6 +43,7 @@ export const AddressModalFields: React.FC = () => {
                 setFieldValue("country", countryCode)
               }}
               error={touched.country && errors.country ? errors.country : ""}
+              disabled={isDomesticOnly}
             />
           </Box>
         </Column>

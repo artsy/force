@@ -415,6 +415,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const { order, isCommittingMutation } = props
   const artwork = getOrderArtwork()
+  const isDomesticOnly = !!(
+    artwork?.onlyShipsDomestically && !artwork?.euShippingOrigin
+  )
   const shippingSelected =
     !artwork?.pickup_available || shippingOption === "SHIP"
   const showAddressForm =
@@ -522,6 +525,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     } as SavedAddresses_me$data
                   }
                   isCreateAddress={true}
+                  isDomesticOnly={isDomesticOnly}
                   onEditOrCreateAddressError={error => {
                     logger.error(error)
                     setCreateAddressError(error)
