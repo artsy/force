@@ -1,6 +1,7 @@
 import { Flex, Text, RadioProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
+import { countries } from "Utils/countries"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 
 type AddressNode = NonNullable<
@@ -28,6 +29,13 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = ({
   const country = address?.country
   const name = address?.name
   const phoneNumber = address?.phoneNumber
+  const phoneNumberCountryCode = address?.phoneNumberCountryCode
+    ? `+${
+        countries.find(
+          c => c.value === address?.phoneNumberCountryCode?.toLowerCase()
+        )?.countryCode
+      }`
+    : ""
   const postalCode = address?.postalCode
   const region = address?.region
   const formattedAddressLine = [city, region, country, postalCode]
@@ -63,7 +71,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = ({
           {formattedAddressLine}
         </Text>
         <Text textColor="black60" variant="sm">
-          {phoneNumber}
+          {`${phoneNumberCountryCode}${phoneNumber}`}
         </Text>
       </Flex>
       <EditButton

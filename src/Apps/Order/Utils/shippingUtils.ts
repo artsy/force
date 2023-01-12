@@ -11,6 +11,7 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 export type SavedAddressType = NonNullable<
@@ -176,9 +177,16 @@ export type MutationAddressResponse = NonNullable<
   UpdateUserAddressMutation$data["updateUserAddress"]
 >["userAddressOrErrors"]
 
+export type CreateMutationAddressResponse = NonNullable<
+  CreateUserAddressMutation$data["createUserAddress"]
+>["userAddressOrErrors"]
+
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (
-  address: SavedAddressType | MutationAddressResponse
+  address:
+    | SavedAddressType
+    | MutationAddressResponse
+    | CreateMutationAddressResponse
 ): Address => {
   return Object.assign(
     {},

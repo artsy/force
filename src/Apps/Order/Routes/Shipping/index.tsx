@@ -86,36 +86,29 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
   >(getShippingOption(props.order.requestedFulfillment?.__typename))
-
   const [shippingQuoteId, setShippingQuoteId] = useState<string | undefined>(
     getSelectedShippingQuoteId(props.order)
   )
   const [shippingQuotes, setShippingQuotes] = useState<ShippingQuotesType>(
     getShippingQuotes(props.order)
   )
-
-  // Alican - TODO // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const [address] = useState<any>(startingAddress(props.me, props.order))
-
   const [createAddressError, setCreateAddressError] = useState<string | null>(
     null
   )
-
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
     defaultShippingAddressIndex(props.me, props.order)
   )
-
   const [phoneNumber, setPhoneNumber] = useState<string | null>(
     startingPhoneNumber(props.me, props.order)
   )
   const [phoneNumberCountryCode, setPhoneNumberCountryCode] = useState<
     string | null
   >(startingPhoneNumberCountryCode(props.me, props.order))
-
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
+  const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
 
   const addressList = extractNodes(props.me?.addressConnection) ?? []
-  const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
+  const initialAddress = startingAddress(props.me, props.order)
 
   useEffect(() => {
     const isAddressRemoved = !addressList.find(
@@ -146,6 +139,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (checkIfArtsyShipping() && !isCreateNewAddress() && !shippingQuoteId) {
       selectShipping()
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAddressID])
 
@@ -158,7 +152,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     const artsyShippingInternational = !!artwork?.artsyShippingInternational
 
     const shippingCountry = isCreateNewAddress()
-      ? address.country
+      ? initialAddress.country
       : addressList &&
         addressList.find(address => address.internalID == selectedAddressID)
           ?.country
@@ -185,18 +179,35 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     selectShipping()
   }
 
-  const selectShipping = async () => {
+  const selectShipping = async (
+    newAddress?: CreateUserAddressMutation$data["createUserAddress"],
+    editedPhoneNumber?: string,
+    editedPhoneNumberCountryCode?: string
+  ) => {
     try {
       // if not creating a new address, use the saved address selection for shipping
       const shipToAddress = convertShippingAddressForExchange(
-        addressList.find(address => address.internalID == selectedAddressID)!
+        newAddress?.userAddressOrErrors
+          ? newAddress.userAddressOrErrors
+          : addressList.find(
+              address => address.internalID == selectedAddressID
+            )!
       )
 
-      const shipToPhoneNumber =
-        isCreateNewAddress() || shippingOption === "PICKUP"
-          ? phoneNumber
-          : addressList.find(address => address.internalID == selectedAddressID)
-              ?.phoneNumber
+      const shipToPhoneNumber = editedPhoneNumber
+        ? editedPhoneNumber
+        : isCreateNewAddress()
+        ? newAddress?.userAddressOrErrors.phoneNumber
+        : shippingOption === "PICKUP"
+        ? phoneNumber
+        : addressList.find(address => address.internalID == selectedAddressID)
+            ?.phoneNumber
+
+      const shipToPhoneNumberCountryCode = editedPhoneNumberCountryCode
+        ? editedPhoneNumberCountryCode
+        : isCreateNewAddress()
+        ? newAddress?.userAddressOrErrors.phoneNumberCountryCode
+        : phoneNumberCountryCode
 
       setShippingQuotes(null)
       setShippingQuoteId(undefined)
@@ -210,7 +221,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
-            phoneNumberCountryCode,
+            phoneNumberCountryCode: shipToPhoneNumberCountryCode,
           },
         })
       ).commerceSetShipping?.orderOrError
@@ -311,10 +322,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       type: "button",
     })
 
-    setPhoneNumber(null)
-    // alican: TODO
-    // setPhoneNumberCountryCode("us")
-
     if (shippingOption !== newShippingOption) {
       setShippingOption(newShippingOption)
       setShippingQuotes(null)
@@ -360,9 +367,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   ) => {
     // reload shipping quotes if selected address edited
     if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
+      selectSavedAddress(editedAddress?.userAddressOrErrors?.internalID)
     }
+
+    selectShipping(
+      editedAddress,
+      editedAddress?.userAddressOrErrors?.phoneNumber as string,
+      editedAddress?.userAddressOrErrors?.phoneNumberCountryCode as string
+    )
   }
 
   const handleAddressCreate = (
@@ -464,7 +476,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </>
             )}
 
-            {/* SAVED address and additional address */}
+            {/* SAVED ADDRESS and ADD NEW ADDITIONAL ADDRESS */}
             <Collapse
               data-test="savedAddressesCollapse"
               open={!!showSavedAddresses}
@@ -486,7 +498,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
             </Collapse>
 
-            {/* NEW Address */}
+            {/* NEW ADDRESS */}
             <Collapse data-test="addressFormCollapse" open={showAddressForm}>
               {isArtsyShipping &&
                 shippingQuotes &&
@@ -497,27 +509,26 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   {createAddressError}
                 </Banner>
               )}
-              <AddressForm
-                me={
-                  {
-                    ...props.me.addressConnection,
-                    id: props.me.id,
-                  } as SavedAddresses_me$data
-                }
-                isCreateAddress={true}
-                onEditOrCreateAddressError={error => {
-                  logger.error(error)
-                  setCreateAddressError(error)
-                }}
-                onEditOrCreateAddressSuccess={addedAddress => {
-                  setCreateAddressError(null)
-                  setSelectedAddressID(
-                    addedAddress?.createUserAddress?.userAddressOrErrors
-                      .internalID!!
-                  )
-                }}
-                buttonText={"Save and Continue"}
-              />
+              {showAddressForm && (
+                <AddressForm
+                  me={
+                    {
+                      ...props.me.addressConnection,
+                      id: props.me.id,
+                    } as SavedAddresses_me$data
+                  }
+                  isCreateAddress={true}
+                  onEditOrCreateAddressError={error => {
+                    logger.error(error)
+                    setCreateAddressError(error)
+                  }}
+                  onEditOrCreateAddressSuccess={addedAddress => {
+                    setCreateAddressError(null)
+                    selectShipping(addedAddress?.createUserAddress)
+                  }}
+                  buttonText={"Save and Continue"}
+                />
+              )}
             </Collapse>
 
             {/* PICK UP */}
@@ -538,7 +549,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Spacer y={4} />
             </Collapse>
 
-            {/* Shipping quotes */}
+            {/* SHIPPING QUOTES */}
             <Collapse
               open={
                 isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
