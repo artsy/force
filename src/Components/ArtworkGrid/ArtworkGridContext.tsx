@@ -14,7 +14,7 @@ interface ArtworkGridContextProps {
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
-  isAuctionArtwork: false,
+  isAuctionArtwork: true,
   hideLotLabel: false,
 })
 
