@@ -273,7 +273,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
               {enableUpcomingAuctionsFilter ? (
                 <>
                   {upcomingAuctionResults.length > 0 && (
-                    <Box mb={2}>
+                    <Box mb={4}>
                       <Text variant="md">Upcoming Auctions</Text>
                       <Text variant="xs" mb={2} color="black60">
                         {upcomingAuctionResultsCount} results
@@ -294,7 +294,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                   )}
 
                   {pastAuctionResults.length > 0 && (
-                    <Box mb={2}>
+                    <Box mb={4}>
                       <Text variant="md">Past Auctions</Text>
                       <Text variant="xs" mb={2} color="black60">
                         {pastAuctionResultsCount} results
