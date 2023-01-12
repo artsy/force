@@ -276,7 +276,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                     <Box mb={4}>
                       <Text variant="md">Upcoming Auctions</Text>
                       <Text variant="xs" mb={2} color="black60">
-                        {upcomingAuctionResultsCount} results
+                        {upcomingAuctionResultsCount}{" "}
+                        {upcomingAuctionResultsCount === 1
+                          ? "result"
+                          : "results"}
                       </Text>
 
                       <Join separator={<Spacer y={2} />}>
@@ -297,7 +300,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                     <Box mb={4}>
                       <Text variant="md">Past Auctions</Text>
                       <Text variant="xs" mb={2} color="black60">
-                        {pastAuctionResultsCount} results
+                        {pastAuctionResultsCount}{" "}
+                        {pastAuctionResultsCount === 1 ? "result" : "results"}
                       </Text>
 
                       <Join separator={<Spacer y={2} />}>
