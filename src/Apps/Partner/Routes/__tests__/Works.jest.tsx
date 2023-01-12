@@ -235,6 +235,6 @@ describe("PartnerArtworks", () => {
 
     renderWithRelay()
 
-    expect(screen.getByDisplayValue("Recently added")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("Recently Added")).toBeInTheDocument()
   })
 })

@@ -69,20 +69,20 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         {
-          text: "Price (desc.)",
+          text: "Price (Low to High)",
           value: "sold,-has_price,-prices",
         },
         {
-          text: "Price (asc.)",
+          text: "Price (High to Low)",
           value: "sold,-has_price,prices",
         },
         {
-          text: "Recently updated",
+          text: "Recently Updated",
           value: "-partner_updated_at",
         },
-        { text: "Recently added", value: "-published_at" },
-        { text: "Artwork year (desc.)", value: "-year" },
-        { text: "Artwork year (asc.)", value: "year" },
+        { text: "Recently Added", value: "-published_at" },
+        { text: "Artwork Year (Descending)", value: "-year" },
+        { text: "Artwork Year (Ascending)", value: "year" },
       ]}
       counts={counts}
       aggregations={aggregations}

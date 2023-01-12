@@ -222,7 +222,7 @@ export const partnerRoutes: AppRouteConfig[] = [
             ...paramsToCamelCase(filterStateFromUrl),
           }
 
-          // Preselects "Recently added" sort option for artsy-2 partner by default
+          // Preselects "Recently Added" sort option for artsy-2 partner by default
           if (
             filterParams.sort === initialArtworkFilterState.sort &&
             partnerSlugs.includes(partnerId)

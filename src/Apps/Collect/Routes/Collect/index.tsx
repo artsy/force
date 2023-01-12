@@ -133,10 +133,10 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             filters={location.query as any}
             sortOptions={[
               { text: "Default", value: "-decayed_merch" },
-              { text: "Recently updated", value: "-partner_updated_at" },
-              { text: "Recently added", value: "-published_at" },
-              { text: "Artwork year (desc.)", value: "-year" },
-              { text: "Artwork year (asc.)", value: "year" },
+              { text: "Recently Updated", value: "-partner_updated_at" },
+              { text: "Recently Added", value: "-published_at" },
+              { text: "Artwork Year (Descending)", value: "-year" },
+              { text: "Artwork Year (Ascending)", value: "year" },
             ]}
             onChange={filters => {
               const url = buildUrlForCollectApp(filters)
