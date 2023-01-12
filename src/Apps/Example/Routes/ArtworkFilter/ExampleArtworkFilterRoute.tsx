@@ -23,12 +23,12 @@ const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
       }}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
-        { text: "Price (desc.)", value: "-has_price,-prices" },
-        { text: "Price (asc.)", value: "-has_price,prices" },
-        { text: "Recently updated", value: "-partner_updated_at" },
-        { text: "Recently added", value: "-published_at" },
-        { text: "Artwork year (desc.)", value: "-year" },
-        { text: "Artwork year (asc.)", value: "year" },
+        { text: "Price (Low to High)", value: "-has_price,-prices" },
+        { text: "Price (High to Low)", value: "-has_price,prices" },
+        { text: "Recently Updated", value: "-partner_updated_at" },
+        { text: "Recently Added", value: "-published_at" },
+        { text: "Artwork Year (Descending)", value: "-year" },
+        { text: "Artwork Year (Ascending)", value: "year" },
       ]}
       ZeroState={CustomZeroState}
     />

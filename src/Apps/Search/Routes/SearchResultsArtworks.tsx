@@ -36,12 +36,12 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
       counts={sidebar?.counts as Counts}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
-        { value: "-has_price,-prices", text: "Price (desc.)" },
-        { value: "-has_price,prices", text: "Price (asc.)" },
-        { value: "-partner_updated_at", text: "Recently updated" },
-        { value: "-published_at", text: "Recently added" },
-        { value: "-year", text: "Artwork year (desc.)" },
-        { value: "year", text: "Artwork year (asc.)" },
+        { value: "-has_price,-prices", text: "Price (Low to High)" },
+        { value: "-has_price,prices", text: "Price (High to Low)" },
+        { value: "-partner_updated_at", text: "Recently Updated" },
+        { value: "-published_at", text: "Recently Added" },
+        { value: "-year", text: "Artwork Year (Descending)" },
+        { value: "year", text: "Artwork Year (Ascending)" },
       ]}
       Filters={<SearchResultsArtworksFilters />}
       FilterPillsSection={<ActiveFilterPills />}

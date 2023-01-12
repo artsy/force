@@ -28,7 +28,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
   const partnerSlugs = getMerchandisingPartnerSlugs()
   const partnerId = match?.params?.partnerId
 
-  // Preselects "Recently added" sort option for some partners by default
+  // Preselects "Recently Added" sort option for some partners by default
   if (filters.sort === undefined && partnerSlugs.includes(partnerId)) {
     filters.sort = "-published_at"
   }
@@ -38,12 +38,12 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
       filters={filters}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
-        { text: "Price (desc.)", value: "-has_price,-prices" },
-        { text: "Price (asc.)", value: "-has_price,prices" },
-        { text: "Recently updated", value: "-partner_updated_at" },
-        { text: "Recently added", value: "-published_at" },
-        { text: "Artwork year (desc.)", value: "-year" },
-        { text: "Artwork year (asc.)", value: "year" },
+        { text: "Price (Low to High)", value: "-has_price,-prices" },
+        { text: "Price (High to Low)", value: "-has_price,prices" },
+        { text: "Recently Updated", value: "-partner_updated_at" },
+        { text: "Recently Added", value: "-published_at" },
+        { text: "Artwork Year (Descending)", value: "-year" },
+        { text: "Artwork Year (Ascending)", value: "year" },
       ]}
       onChange={updateUrl}
       aggregations={
