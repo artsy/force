@@ -125,7 +125,7 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="xl">Market News</Text>
+        <Text variant="xl">Artsy Editorial</Text>
 
         <Text
           variant="sm-display"

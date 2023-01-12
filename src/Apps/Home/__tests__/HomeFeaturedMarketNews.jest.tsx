@@ -38,7 +38,7 @@ describe("HomeFeaturedMarketNews", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Market News")
+    expect(wrapper.text()).toContain("Artsy Editorial")
     expect(wrapper.text()).toContain("Explore Editorial")
     expect(wrapper.html()).toContain("/article/example-article")
   })
