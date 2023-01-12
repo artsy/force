@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff8df5d96a04d5ffed2aec4ea88db520>>
+ * @generated SignedSource<<a868543a1d9291b38e6fe0a0a2782e7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Grid2ExampleQuery$variables = {
+export type Masonry2ExampleQuery$variables = {
   artistID: string;
 };
-export type Grid2ExampleQuery$data = {
+export type Masonry2ExampleQuery$data = {
   readonly artist: {
     readonly artworks: {
       readonly edges: ReadonlyArray<{
@@ -28,9 +28,9 @@ export type Grid2ExampleQuery$data = {
     } | null;
   } | null;
 };
-export type Grid2ExampleQuery = {
-  response: Grid2ExampleQuery$data;
-  variables: Grid2ExampleQuery$variables;
+export type Masonry2ExampleQuery = {
+  response: Masonry2ExampleQuery$data;
+  variables: Masonry2ExampleQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -122,7 +122,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "Grid2ExampleQuery",
+    "name": "Masonry2ExampleQuery",
     "selections": [
       {
         "alias": null,
@@ -194,7 +194,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "Grid2ExampleQuery",
+    "name": "Masonry2ExampleQuery",
     "selections": [
       {
         "alias": null,
@@ -600,16 +600,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5de24311881d8f7e28d4b0716ac523f8",
+    "cacheID": "a2851816075dd09c8c7a7a9b74035ace",
     "id": null,
     "metadata": {},
-    "name": "Grid2ExampleQuery",
+    "name": "Masonry2ExampleQuery",
     "operationKind": "query",
-    "text": "query Grid2ExampleQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    artworks: artworksConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          image {\n            aspectRatio\n          }\n          ...GridItem_artwork\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image {\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query Masonry2ExampleQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    artworks: artworksConnection(first: 10) {\n      edges {\n        node {\n          internalID\n          image {\n            aspectRatio\n          }\n          ...GridItem_artwork\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image {\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
 
-(node as any).hash = "54699464a19bd6f9e7f32b5d7b59c148";
+(node as any).hash = "578db9b26d7f4870539c79d28b530aca";
 
 export default node;

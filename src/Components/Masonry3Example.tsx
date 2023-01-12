@@ -2,20 +2,20 @@ import { graphql } from "react-relay"
 
 import { Spacer } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
-import { Grid2 } from "Components/Grid2"
+import { Masonry3 } from "Components/Masonry3"
 import { Fragment } from "react"
 import { RootQueryRenderer } from "System/Relay/RootQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { Grid2ExampleQuery } from "__generated__/Grid2ExampleQuery.graphql"
+import { Masonry3ExampleQuery } from "__generated__/Masonry3ExampleQuery.graphql"
 
-export function Grid2Example(props: {
+export function Masonry3Example(props: {
   artistID: string
   columnCount?: number
 }) {
   return (
-    <RootQueryRenderer<Grid2ExampleQuery>
+    <RootQueryRenderer<Masonry3ExampleQuery>
       query={graphql`
-        query Grid2ExampleQuery($artistID: String!) {
+        query Masonry3ExampleQuery($artistID: String!) {
           artist(id: $artistID) {
             artworks: artworksConnection(first: 10) {
               edges {
@@ -42,7 +42,7 @@ export function Grid2Example(props: {
         }
 
         return (
-          <Grid2
+          <Masonry3
             data={artworks}
             renderItem={artwork => {
               return (

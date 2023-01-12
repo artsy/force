@@ -1,7 +1,7 @@
-import { Grid } from "Components/Grid"
+import { Masonry2 } from "Components/Masonry2"
 import { ReactNode } from "react"
 
-export interface Grid2Props<ItemT = any> {
+export interface Masonry3Props<ItemT = any> {
   data: { image: { aspectRatio: number } | null }[]
   renderItem: (item: ItemT, index: number) => ReactNode
   columnCount?: number[]
@@ -10,13 +10,17 @@ export interface Grid2Props<ItemT = any> {
   style?: React.CSSProperties | undefined
 }
 
-export const Grid2: React.FC<Grid2Props> = ({ data, renderItem, ...props }) => {
+export const Masonry3: React.FC<Masonry3Props> = ({
+  data,
+  renderItem,
+  ...props
+}) => {
   const children = data.map(renderItem)
   const aspectRatios = data.map(item => item?.image?.aspectRatio)
 
   return (
-    <Grid aspectRatios={aspectRatios} {...props}>
+    <Masonry2 aspectRatios={aspectRatios} {...props}>
       {children}
-    </Grid>
+    </Masonry2>
   )
 }

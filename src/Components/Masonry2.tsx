@@ -3,7 +3,7 @@ import { range } from "lodash"
 import { ReactNode, useEffect, useRef } from "react"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
 
-export interface GridProps {
+export interface Masonry2Props {
   aspectRatios: (number | undefined | null)[]
   children: ReactNode[]
   columnCount?: number[]
@@ -12,7 +12,7 @@ export interface GridProps {
   style?: React.CSSProperties | undefined
 }
 
-export const Grid: React.FC<GridProps> = ({
+export const Masonry2: React.FC<Masonry2Props> = ({
   columnCount = [2, 3, 4],
   style,
   onLoadMore,
@@ -28,7 +28,7 @@ export const Grid: React.FC<GridProps> = ({
     return (
       <Box ref={containerRef as any} style={style}>
         <Media {...mediaProps} key={i}>
-          <GridForBreakpoint {...props} columnCount={columnCount} />
+          <MasonryForBreakpoint {...props} columnCount={columnCount} />
         </Media>
       </Box>
     )
@@ -37,7 +37,7 @@ export const Grid: React.FC<GridProps> = ({
   return <>{breakpoints}</>
 }
 
-export interface GridForBreakpointProps {
+export interface MasonryForBreakpointProps {
   columnCount: number
   aspectRatios?: (number | undefined | null)[]
   children: ReactNode[]
@@ -45,7 +45,7 @@ export interface GridForBreakpointProps {
   style?: React.CSSProperties | undefined
 }
 
-export const GridForBreakpoint: React.FC<GridForBreakpointProps> = ({
+export const MasonryForBreakpoint: React.FC<MasonryForBreakpointProps> = ({
   aspectRatios = [],
   children,
   columnCount = 4,

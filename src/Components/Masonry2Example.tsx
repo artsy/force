@@ -2,17 +2,20 @@ import { graphql } from "react-relay"
 
 import { Spacer } from "@artsy/palette"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
-import { Grid } from "Components/Grid"
+import { Masonry2 } from "Components/Masonry2"
 import { Fragment } from "react"
 import { RootQueryRenderer } from "System/Relay/RootQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { GridExampleQuery } from "__generated__/GridExampleQuery.graphql"
+import { Masonry2ExampleQuery } from "__generated__/Masonry2ExampleQuery.graphql"
 
-export function GridExample(props: { artistID: string; columnCount?: number }) {
+export function Masonry2Example(props: {
+  artistID: string
+  columnCount?: number
+}) {
   return (
-    <RootQueryRenderer<GridExampleQuery>
+    <RootQueryRenderer<Masonry2ExampleQuery>
       query={graphql`
-        query GridExampleQuery($artistID: String!) {
+        query Masonry2ExampleQuery($artistID: String!) {
           artist(id: $artistID) {
             artworks: artworksConnection(first: 10) {
               edges {
@@ -39,7 +42,7 @@ export function GridExample(props: { artistID: string; columnCount?: number }) {
         }
 
         return (
-          <Grid
+          <Masonry2
             aspectRatios={artworks.map(artwork => artwork.image?.aspectRatio)}
             onLoadMore={handleLoadMore}
           >
@@ -52,7 +55,7 @@ export function GridExample(props: { artistID: string; columnCount?: number }) {
                 </Fragment>
               )
             })}
-          </Grid>
+          </Masonry2>
         )
       }}
     />
