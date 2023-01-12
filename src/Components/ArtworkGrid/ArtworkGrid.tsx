@@ -41,6 +41,7 @@ export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   getLocalImageSrcByArtworkID?: (artworkID: string) => StoredImage | null
   preloadImageCount?: number
   isAuctionArtwork?: boolean
+  isStandardGrid?: boolean
   itemMargin?: number
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
@@ -68,6 +69,7 @@ export class ArtworkGridContainer extends React.Component<
     columnCount: [3],
     sectionMargin: 20,
     isAuctionArtwork: false,
+    isStandardGrid: false,
     itemMargin: 20,
     preloadImageCount: 0,
   }
@@ -270,6 +272,7 @@ export class ArtworkGridContainer extends React.Component<
       artworks,
       className,
       isAuctionArtwork,
+      isStandardGrid,
       onClearFilters,
       emptyStateComponent,
     } = this.props
@@ -277,7 +280,7 @@ export class ArtworkGridContainer extends React.Component<
     const hasArtworks = !isEmpty(artworks?.edges)
     let artworkGrids
 
-    if (isAuctionArtwork) {
+    if (isStandardGrid || isAuctionArtwork) {
       artworkGrids = this.renderArtworkGrid()
     } else {
       artworkGrids = this.renderMasonrySectionsForAllBreakpoints()

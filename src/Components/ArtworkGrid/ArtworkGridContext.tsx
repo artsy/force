@@ -10,11 +10,17 @@ interface ArtworkGridContextProps {
    */
   isAuctionArtwork?: boolean
 
+  /**
+   * Show grid in standard form, not in masonry
+   */
+  isStandardGrid?: boolean
+
   hideLotLabel?: boolean
 }
 
 const ArtworkGridContext = createContext<ArtworkGridContextProps>({
-  isAuctionArtwork: true,
+  isStandardGrid: true,
+  isAuctionArtwork: false,
   hideLotLabel: false,
 })
 
