@@ -91,7 +91,7 @@ jobs:
         default: 2376
       artsy_s3_path_root:
         type: string
-        default: artsy-citadel/docker
+        default: artsy-dockerd
     steps:
       - hokusai/setup
       - artsy-remote-docker/setup-artsy-remote-docker:
