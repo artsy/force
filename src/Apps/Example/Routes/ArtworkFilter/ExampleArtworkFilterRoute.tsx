@@ -23,8 +23,8 @@ const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
       }}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
-        { text: "Price (Low to High)", value: "-has_price,-prices" },
-        { text: "Price (High to Low)", value: "-has_price,prices" },
+        { text: "Price (High to Low)", value: "-has_price,-prices" },
+        { text: "Price (Low to High)", value: "-has_price,prices" },
         { text: "Recently Updated", value: "-partner_updated_at" },
         { text: "Recently Added", value: "-published_at" },
         { text: "Artwork Year (Descending)", value: "-year" },
