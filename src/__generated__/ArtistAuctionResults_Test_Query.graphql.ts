@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<212abf5736df0586f1f74924b77352b8>>
+ * @generated SignedSource<<7fe3d5e9177e72d436fe800bd0b91fed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,7 +95,13 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
     readonly id: string;
     readonly internalID: string;
     readonly name: string | null;
+    readonly pastAuctionResults: {
+      readonly totalCount: number | null;
+    } | null;
     readonly slug: string;
+    readonly upcomingAuctionResults: {
+      readonly totalCount: number | null;
+    } | null;
   } | null;
 };
 export type ArtistAuctionResults_Test_Query = {
@@ -155,16 +161,26 @@ v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "totalCount",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "display",
   "storageKey": null
-};
+},
+v9 = [
+  (v6/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -349,13 +365,7 @@ return {
                 ],
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              },
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -402,7 +412,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
-                          (v6/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -528,7 +538,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
+                          (v8/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -572,7 +582,7 @@ return {
                         "name": "estimate",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/)
+                          (v8/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -583,7 +593,7 @@ return {
                         "name": "isUpcoming",
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -593,19 +603,51 @@ return {
             ],
             "storageKey": "auctionResultsConnection(first:10,sort:\"DATE_DESC\",state:\"ALL\")"
           },
-          (v6/*: any*/)
+          {
+            "alias": "pastAuctionResults",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "state",
+                "value": "PAST"
+              }
+            ],
+            "concreteType": "AuctionResultConnection",
+            "kind": "LinkedField",
+            "name": "auctionResultsConnection",
+            "plural": false,
+            "selections": (v9/*: any*/),
+            "storageKey": "auctionResultsConnection(state:\"PAST\")"
+          },
+          {
+            "alias": "upcomingAuctionResults",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "state",
+                "value": "UPCOMING"
+              }
+            ],
+            "concreteType": "AuctionResultConnection",
+            "kind": "LinkedField",
+            "name": "auctionResultsConnection",
+            "plural": false,
+            "selections": (v9/*: any*/),
+            "storageKey": "auctionResultsConnection(state:\"UPCOMING\")"
+          },
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8179d7f533f30099fb968435cdb5cf71",
+    "cacheID": "3d3a6a20b2cbde2d4157696641fcd67d",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_1jJDyA\n}\n\nfragment ArtistAuctionResults_artist_1jJDyA on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, state: ALL) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        isUpcoming\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_1jJDyA\n}\n\nfragment ArtistAuctionResults_artist_1jJDyA on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, state: ALL) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        isUpcoming\n        id\n      }\n    }\n  }\n  pastAuctionResults: auctionResultsConnection(state: PAST) {\n    totalCount\n  }\n  upcomingAuctionResults: auctionResultsConnection(state: UPCOMING) {\n    totalCount\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

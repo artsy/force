@@ -1,7 +1,8 @@
-import { Button, Join, Popover, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Dropdown, Text } from "@artsy/palette"
 import { AddToCalendar as AddToCalendarEvent } from "@artsy/cohesion"
 import { generateGoogleCalendarUrl, generateIcsCalendarUrl } from "./helpers"
-import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { NavBarMenuItemLink } from "Components/NavBar/Menus/NavBarMenuItem"
 
 export interface AddToCalendarProps {
   title: string
@@ -15,7 +16,11 @@ export interface AddToCalendarProps {
 
 export const AddToCalendar: React.FC<AddToCalendarProps> = props => {
   return (
-    <Popover placement="bottom" popover={<PopoverLinks {...props} />}>
+    <Dropdown
+      dropdown={<AddToCalendarLinks {...props} />}
+      placement="bottom"
+      openDropdownByClick
+    >
       {({ onVisible, anchorRef }) => {
         return (
           <Button
@@ -28,11 +33,11 @@ export const AddToCalendar: React.FC<AddToCalendarProps> = props => {
           </Button>
         )
       }}
-    </Popover>
+    </Dropdown>
   )
 }
 
-export const PopoverLinks: React.FC<AddToCalendarProps> = props => {
+export const AddToCalendarLinks: React.FC<AddToCalendarProps> = props => {
   const googleUrl = generateGoogleCalendarUrl(props)
   const icsUrl = generateIcsCalendarUrl(props)
 
@@ -43,22 +48,22 @@ export const PopoverLinks: React.FC<AddToCalendarProps> = props => {
   }
 
   return (
-    <Text variant="xs" width={300}>
-      <Join separator={<Spacer y={1} />}>
-        <a
-          href={googleUrl}
-          onClick={() => trackClick("google")}
-          target="_blank"
-        >
-          Google
-        </a>
-        <a href={icsUrl} onClick={() => trackClick("iCal")}>
-          iCal
-        </a>
-        <a href={icsUrl} onClick={() => trackClick("outlook")}>
-          Outlook
-        </a>
-      </Join>
-    </Text>
+    <Box minWidth={200}>
+      <NavBarMenuItemLink
+        to={googleUrl}
+        onClick={() => trackClick("google")}
+        target="_blank"
+      >
+        Google
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink to={icsUrl} onClick={() => trackClick("iCal")}>
+        iCal
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink to={icsUrl} onClick={() => trackClick("outlook")}>
+        Outlook
+      </NavBarMenuItemLink>
+    </Box>
   )
 }

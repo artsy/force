@@ -11,7 +11,8 @@ interface ArtQuizResultsProps {
 }
 
 const ArtQuizResults: FC<ArtQuizResultsProps> = ({ me }) => {
-  const hasSavedArtworks = me.quiz.savedArtworks.length > 0
+  const savedQuizArtworksCount = me.quiz.savedArtworks.length
+  const hasSavedArtworks = savedQuizArtworksCount > 0
 
   const [mode, setMode] = useMode<"Empty" | "Loading" | "Ready">(
     hasSavedArtworks ? "Loading" : "Empty"
@@ -29,7 +30,9 @@ const ArtQuizResults: FC<ArtQuizResultsProps> = ({ me }) => {
       return <ArtQuizResultsLoader onReady={handleReady} />
 
     case "Ready":
-      return <ArtQuizResultsTabs />
+      return (
+        <ArtQuizResultsTabs savedQuizArtworksCount={savedQuizArtworksCount} />
+      )
   }
 }
 

@@ -1,22 +1,22 @@
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { HomeTroveArtworksRailFragmentContainer } from "Apps/Home/Components/HomeTroveArtworksRail"
+import { HomeEmergingPicksArtworksRailFragmentContainer } from "Apps/Home/Components/HomeEmergingPicksArtworksRail"
 
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper({
-  Component: HomeTroveArtworksRailFragmentContainer,
+  Component: HomeEmergingPicksArtworksRailFragmentContainer,
   query: graphql`
-    query HomeTroveArtworksRail_Test_Query @relay_test_operation {
+    query HomeEmergingPicksArtworksRail_Test_Query @relay_test_operation {
       viewer {
-        ...HomeTroveArtworksRail_viewer
+        ...HomeEmergingPicksArtworksRail_viewer
       }
     }
   `,
 })
 
-describe("HomeTroveArtworksRail", () => {
+describe("HomeEmergingPicksArtworksRail", () => {
   const trackEvent = jest.fn()
 
   beforeAll(() => {
@@ -82,7 +82,7 @@ describe("HomeTroveArtworksRail", () => {
         context_module: "troveArtworksRail",
         context_page_owner_type: "home",
         destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-        destination_page_owner_slug: "trove-editors-picks",
+        destination_page_owner_slug: "curators-picks-emerging",
         destination_page_owner_type: "collection",
         type: "viewAll",
       })

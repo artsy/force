@@ -2,14 +2,15 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { FairOrganizerFollowButton_Test_Query } from "__generated__/FairOrganizerFollowButton_Test_Query.graphql"
 import { FairOrganizerFollowButtonFragmentContainer } from "Apps/FairOrginizer/Components/FairOrganizerFollowButton"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { useSystemContext } from "System/useSystemContext"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("Utils/openAuthModal")
 jest.mock("System/useSystemContext")
-jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation.ts")
+jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation")
+jest.mock("Components/AuthDialog/useAuthDialog")
 
 describe("FairOrganizerFollowButton", () => {
   const { getWrapper } = setupTestWrapper<FairOrganizerFollowButton_Test_Query>(
@@ -28,13 +29,17 @@ describe("FairOrganizerFollowButton", () => {
   )
 
   const mockUseSystemContext = useSystemContext as jest.Mock
-  const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
   const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
+  const mockUseAuthDialog = useAuthDialog as jest.Mock
 
   beforeAll(() => {
     mockUseSystemContext.mockImplementation(() => ({
       mediator: jest.fn(),
       user: jest.fn(),
+    }))
+
+    mockUseAuthDialog.mockImplementation(() => ({
+      showAuthDialog: jest.fn(),
     }))
   })
 
@@ -59,10 +64,11 @@ describe("FairOrganizerFollowButton", () => {
   })
 
   it("unauthenticated users trigger auth modal on click", () => {
-    mockUseSystemContext.mockImplementation(() => ({
-      mediator: "mediator",
-      user: null,
-    }))
+    mockUseSystemContext.mockImplementation(() => ({ user: null }))
+
+    const showAuthDialog = jest.fn()
+
+    mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
     const wrapper = getWrapper({
       FairOrganizer: () => ({
@@ -73,10 +79,34 @@ describe("FairOrganizerFollowButton", () => {
     })
     wrapper.simulate("click")
 
-    expect(mockOpenAuthToSatisfyIntent).toHaveBeenCalledWith("mediator", {
-      contextModule: "fairOrganizerHeader",
-      entity: { name: "fairOrganizerName", slug: "faiOrganizerSlug" },
-      intent: "followPartner",
+    expect(showAuthDialog).toHaveBeenCalledWith({
+      current: {
+        analytics: {
+          contextModule: "fairOrganizerHeader",
+          intent: "followPartner",
+        },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
+            action: "follow",
+            kind: "profile",
+            objectId: "faiOrganizerSlug",
+          },
+          title: expect.any(Function),
+        },
+      },
+      legacy: {
+        afterSignUpAction: {
+          action: "follow",
+          kind: "profile",
+          objectId: "faiOrganizerSlug",
+        },
+        contextModule: "fairOrganizerHeader",
+        copy: "Sign up to follow fairOrganizerName",
+        intent: "followPartner",
+        mode: "signup",
+        redirectTo: "http://localhost/",
+      },
     })
   })
 

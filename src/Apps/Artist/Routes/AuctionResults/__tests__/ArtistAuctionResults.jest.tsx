@@ -145,7 +145,9 @@ describe("AuctionResults", () => {
       renderWithRelay(mockedResolver)
 
       expect(screen.getByText("Upcoming Auctions")).toBeInTheDocument()
+      expect(screen.getByText("2 results")).toBeInTheDocument()
       expect(screen.getByText("Past Auctions")).toBeInTheDocument()
+      expect(screen.getByText("5 results")).toBeInTheDocument()
 
       const navigation = screen.getByRole("navigation")
       const links = within(navigation).getAllByRole("link")
@@ -509,6 +511,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
     name: "Pablo Picasso",
+    pastAuctionResults: {
+      totalCount: 2,
+    },
+    upcomingAuctionResults: {
+      totalCount: 5,
+    },
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "cursor4" },
       pageCursors: {

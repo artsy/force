@@ -13,15 +13,15 @@ import {
 import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { HomeTroveArtworksRail_viewer$data } from "__generated__/HomeTroveArtworksRail_viewer.graphql"
-import { HomeTroveArtworksRailQuery } from "__generated__/HomeTroveArtworksRailQuery.graphql"
+import { HomeEmergingPicksArtworksRail_viewer$data } from "__generated__/HomeEmergingPicksArtworksRail_viewer.graphql"
+import { HomeEmergingPicksArtworksRailQuery } from "__generated__/HomeEmergingPicksArtworksRailQuery.graphql"
 import { useTracking } from "react-tracking"
 
-interface HomeTroveArtworksRailProps {
-  viewer: HomeTroveArtworksRail_viewer$data
+interface HomeEmergingPicksArtworksRailProps {
+  viewer: HomeEmergingPicksArtworksRail_viewer$data
 }
 
-export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
+export const HomeEmergingPicksArtworksRail: React.FC<HomeEmergingPicksArtworksRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
@@ -34,10 +34,10 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
 
   return (
     <Rail
-      title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
+      title="Curators’ Picks: Emerging"
+      subTitle="The best works by rising talents on Artsy, all available now."
       viewAllLabel="View All Works"
-      viewAllHref="/collection/trove-editors-picks"
+      viewAllHref="/collection/curators-picks-emerging"
       viewAllOnClick={() => {
         const trackingEvent: ClickedArtworkGroup = {
           action: ActionType.clickedArtworkGroup,
@@ -45,7 +45,7 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
           context_page_owner_type: OwnerType.home,
           destination_page_owner_type: OwnerType.collection,
           destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-          destination_page_owner_slug: "trove-editors-picks",
+          destination_page_owner_slug: "curators-picks-emerging",
           type: "viewAll",
         }
         trackEvent(trackingEvent)
@@ -78,14 +78,14 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   )
 }
 
-export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
-  HomeTroveArtworksRail,
+export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentContainer(
+  HomeEmergingPicksArtworksRail,
   {
     viewer: graphql`
-      fragment HomeTroveArtworksRail_viewer on Viewer {
+      fragment HomeEmergingPicksArtworksRail_viewer on Viewer {
         artworksConnection(
           first: 12
-          marketingCollectionID: "trove-editors-picks"
+          marketingCollectionID: "curators-picks-emerging"
         ) {
           edges {
             node {
@@ -101,15 +101,15 @@ export const HomeTroveArtworksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
+export const HomeEmergingPicksArtworksRailQueryRenderer: React.FC = () => {
   return (
-    <SystemQueryRenderer<HomeTroveArtworksRailQuery>
+    <SystemQueryRenderer<HomeEmergingPicksArtworksRailQuery>
       placeholder={PLACEHOLDER}
       lazyLoad
       query={graphql`
-        query HomeTroveArtworksRailQuery {
+        query HomeEmergingPicksArtworksRailQuery {
           viewer {
-            ...HomeTroveArtworksRail_viewer
+            ...HomeEmergingPicksArtworksRail_viewer
           }
         }
       `}
@@ -123,7 +123,11 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
           return PLACEHOLDER
         }
 
-        return <HomeTroveArtworksRailFragmentContainer viewer={props.viewer} />
+        return (
+          <HomeEmergingPicksArtworksRailFragmentContainer
+            viewer={props.viewer}
+          />
+        )
       }}
     />
   )
@@ -132,8 +136,8 @@ export const HomeTroveArtworksRailQueryRenderer: React.FC = () => {
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Trove"
-      subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
+      title="Curators’ Picks: Emerging"
+      subTitle="The best works by rising talents on Artsy, all available now."
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />

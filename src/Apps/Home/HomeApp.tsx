@@ -14,7 +14,7 @@ import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingA
 import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
-import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
+import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
 import { SafeHomeContentCards } from "./Components/HomeContentCards"
 
 interface HomeAppProps {
@@ -51,7 +51,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeWorksForYouTabBar />
 
-        <HomeTroveArtworksRailQueryRenderer />
+        <HomeEmergingPicksArtworksRailQueryRenderer />
 
         <HomeFeaturedMarketNewsQueryRenderer />
 

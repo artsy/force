@@ -1,19 +1,20 @@
 import { RootTestPage } from "DevTools/RootTestPage"
-import { SaveButtonFragmentContainer } from "../index"
+import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/index"
 import { graphql } from "react-relay"
-import { mediator } from "Server/mediator"
 import { mockLocation } from "DevTools/mockLocation"
 import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
-import { SaveArtwork } from "../SaveArtworkMutation"
+import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("../SaveArtworkMutation")
+jest.mock("Components/AuthDialog/useAuthDialog")
 
 class SaveButtonTestPage extends RootTestPage {
   async clickSaveButton() {
@@ -25,7 +26,6 @@ class SaveButtonTestPage extends RootTestPage {
 describe("Save artwork", () => {
   let defaultMutationResults
   let trackEvent
-  let trigger
 
   const artwork = {
     id: "foo",
@@ -62,8 +62,6 @@ describe("Save artwork", () => {
         },
       },
     }
-
-    mediator.on("open:auth", () => {})
     ;(SaveArtwork as jest.Mock).mockImplementation(() =>
       Promise.resolve(defaultMutationResults)
     )
@@ -71,21 +69,15 @@ describe("Save artwork", () => {
     trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 
-    jest.spyOn(mediator, "trigger")
     mockLocation()
-
-    trigger = jest.fn()
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
         isLoggedIn: true,
         relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger,
-        },
       }
+    })
+    ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+      return { showAuthDialog: jest.fn() }
     })
   })
 
@@ -96,8 +88,6 @@ describe("Save artwork", () => {
     const page = new SaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
-
-    expect(trigger).not.toBeCalled()
 
     expect(trackEvent).toBeCalledWith({
       action: "Saved Artwork",
@@ -115,8 +105,6 @@ describe("Save artwork", () => {
 
     await page.clickSaveButton()
 
-    expect(trigger).not.toBeCalled()
-
     expect(trackEvent).toBeCalledWith({
       action: "Removed Artwork",
       entity_id: "abcd1234",
@@ -125,17 +113,14 @@ describe("Save artwork", () => {
   })
 
   it("opens auth modal with expected args when saving an artwork", async () => {
-    const trigger = jest.fn()
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        user: null,
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn().mockReturnValue(true),
-          trigger,
-        },
-      }
+      return { user: null }
+    })
+
+    const showAuthDialog = jest.fn()
+
+    ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+      return { showAuthDialog }
     })
 
     const wrapper = getWrapper({
@@ -145,15 +130,30 @@ describe("Save artwork", () => {
 
     await page.clickSaveButton()
 
-    expect(trigger).toBeCalledWith("open:auth", {
-      mode: "signup",
-      contextModule: "worksForSaleRail",
-      copy: "Sign up to save artworks",
-      intent: "saveArtwork",
-      afterSignUpAction: {
-        action: "save",
-        kind: "artworks",
-        objectId: "andy-warhol-skull",
+    expect(showAuthDialog).toBeCalledWith({
+      current: {
+        analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
+            action: "save",
+            kind: "artworks",
+            objectId: "abcd1234",
+          },
+          title: expect.any(Function),
+        },
+      },
+      legacy: {
+        afterSignUpAction: {
+          action: "save",
+          kind: "artworks",
+          objectId: "andy-warhol-skull",
+        },
+        contextModule: "worksForSaleRail",
+        copy: "Sign up to save artworks",
+        intent: "saveArtwork",
+        mode: "signup",
+        redirectTo: undefined,
       },
     })
   })

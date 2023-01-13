@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e10004061a956fbb933224f791f4111e>>
+ * @generated SignedSource<<8332f97032bb8bd5c5a0ee92afe375fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,13 @@ export type ArtQuizResultsRecommendedArtworks_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "limit"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtQuizResultsRecommendedArtworks_me",
@@ -70,7 +76,13 @@ const node: ReaderFragment = {
               "selections": [
                 {
                   "alias": null,
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Variable",
+                      "name": "first",
+                      "variableName": "limit"
+                    }
+                  ],
                   "concreteType": "ArtworkConnection",
                   "kind": "LinkedField",
                   "name": "artworksConnection",
@@ -93,16 +105,16 @@ const node: ReaderFragment = {
                           "plural": false,
                           "selections": [
                             {
-                              "args": null,
-                              "kind": "FragmentSpread",
-                              "name": "GridItem_artwork"
-                            },
-                            {
                               "alias": null,
                               "args": null,
                               "kind": "ScalarField",
                               "name": "internalID",
                               "storageKey": null
+                            },
+                            {
+                              "args": null,
+                              "kind": "FragmentSpread",
+                              "name": "GridItem_artwork"
                             }
                           ],
                           "storageKey": null
@@ -127,6 +139,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "63ded2fcdf927ee957dfa012f0461261";
+(node as any).hash = "815a9dddd6359196c24dd275a23c5225";
 
 export default node;

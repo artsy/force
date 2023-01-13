@@ -2,18 +2,19 @@ import { useSystemContext } from "System/useSystemContext"
 import "jest-styled-components"
 import { graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
-import * as openAuthModal from "Utils/openAuthModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { FollowProfileButton_Test_Query } from "__generated__/FollowProfileButton_Test_Query.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "Components/FollowButton/useFollowButtonTracking"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
 jest.mock("../useFollowButtonTracking")
+jest.mock("Components/AuthDialog/useAuthDialog")
 
 const onFollow = jest.fn()
 
@@ -48,6 +49,9 @@ describe("FollowProfileButton", () => {
     ;(useFollowButtonTracking as jest.Mock).mockImplementation(() => {
       return { trackFollow }
     })
+    ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+      return { showAuthDialog: jest.fn() }
+    })
   })
 
   afterEach(() => {
@@ -66,27 +70,48 @@ describe("FollowProfileButton", () => {
       expect(screen.getByText("Follow")).toBeInTheDocument()
     })
 
-    // FIXME: SWC_COMPILER_MIGRATION
-    it.skip("opens the auth modal", () => {
-      const openAuthToSatisfyIntent = jest.spyOn(
-        openAuthModal,
-        "openAuthToSatisfyIntent"
-      )
+    it("opens the auth modal", () => {
+      const showAuthDialog = jest.fn()
+
+      ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+        return { showAuthDialog }
+      })
 
       renderWithRelay({
-        Profile: () => ({
-          name: "Salon 94",
-          slug: "salon-94",
-        }),
+        Profile: () => ({ name: "Example", slug: "example" }),
       })
 
       const button = screen.getByRole("button")
       fireEvent.click(button)
 
-      expect(openAuthToSatisfyIntent).toBeCalledWith(undefined, {
-        contextModule: "partnerHeader",
-        entity: { name: "Salon 94", slug: "salon-94" },
-        intent: "followPartner",
+      expect(showAuthDialog).toBeCalledWith({
+        current: {
+          analytics: {
+            contextModule: "partnerHeader",
+            intent: "followPartner",
+          },
+          mode: "SignUp",
+          options: {
+            afterAuthAction: {
+              action: "follow",
+              kind: "profile",
+              objectId: "example",
+            },
+            title: expect.any(Function),
+          },
+        },
+        legacy: {
+          afterSignUpAction: {
+            action: "follow",
+            kind: "profile",
+            objectId: "example",
+          },
+          contextModule: "partnerHeader",
+          copy: "Sign up to follow Example",
+          intent: "followPartner",
+          mode: "signup",
+          redirectTo: "http://localhost/",
+        },
       })
     })
   })

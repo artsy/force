@@ -3,11 +3,23 @@ import { ArtQuizLikedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQu
 import { ArtQuizRecommendedArtistsQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizRecommendedArtists"
 import { ArtQuizResultsRecommendedArtworksQueryRenderer } from "Apps/ArtQuiz/Components/ArtQuizResultsRecommendedArtworks"
 import { TriggerCampaignButton } from "Apps/ArtQuiz/Components/TriggerCampaignButton"
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
-export const ArtQuizResultsTabs: FC = () => {
+interface ArtQuizResultsTabsProps {
+  savedQuizArtworksCount: number
+}
+
+export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
+  savedQuizArtworksCount,
+}) => {
   const { t } = useTranslation()
+
+  const limit = useMemo(() => {
+    if (savedQuizArtworksCount <= 1) return 100
+    if (savedQuizArtworksCount <= 3) return 8
+    return 4
+  }, [savedQuizArtworksCount])
 
   return (
     <>
@@ -30,7 +42,7 @@ export const ArtQuizResultsTabs: FC = () => {
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtworks")}>
-          <ArtQuizResultsRecommendedArtworksQueryRenderer />
+          <ArtQuizResultsRecommendedArtworksQueryRenderer limit={limit} />
         </Tab>
 
         <Tab name={t("artQuizPage.results.tabs.recommendedArtists")}>

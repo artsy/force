@@ -4,7 +4,6 @@ import { useSystemContext } from "System"
 import { FollowButton } from "./Button"
 import { FollowGeneButton_gene$data } from "__generated__/FollowGeneButton_gene.graphql"
 import { ButtonProps } from "@artsy/palette"
-import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import {
   Intent,
   ContextModule,
@@ -15,6 +14,8 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
+import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene$data
@@ -28,7 +29,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
   onFollow,
   ...rest
 }) => {
-  const { isLoggedIn, mediator } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
 
   const { trackFollow } = useFollowButtonTracking({
     ownerType: OwnerType.gene,
@@ -58,16 +59,45 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     },
   })
 
+  const { showAuthDialog } = useAuthDialog()
+
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
 
     if (!isLoggedIn) {
-      openAuthToSatisfyIntent(mediator!, {
-        entity: { name: gene.name!, slug: gene.slug },
-        contextModule,
-        intent: Intent.followGene,
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to follow ${gene.name}`
+            },
+            afterAuthAction: {
+              action: "follow",
+              kind: "gene",
+              objectId: gene.slug,
+            },
+          },
+          analytics: {
+            intent: Intent.followGene,
+            contextModule,
+          },
+        },
+        legacy: {
+          afterSignUpAction: {
+            action: "follow",
+            kind: "gene",
+            objectId: gene.slug,
+          },
+          contextModule,
+          copy: `Sign up to follow ${gene.name}`,
+          intent: Intent.followArtist,
+          mode: ModalType.signup,
+          redirectTo: window.location.href,
+        },
       })
 
       return

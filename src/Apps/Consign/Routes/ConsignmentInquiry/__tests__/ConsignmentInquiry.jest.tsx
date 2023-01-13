@@ -102,8 +102,6 @@ describe("ConsignmentInquiry", () => {
       Me: () => mockMe,
     })
 
-    simulateTyping("message", "This is my message to you")
-
     submitMutation.mockResolvedValueOnce({
       createConsignmentInquiry: {
         consignmentInquiryOrError: {
@@ -112,6 +110,10 @@ describe("ConsignmentInquiry", () => {
           },
         },
       },
+    })
+
+    await waitFor(() => {
+      simulateTyping("message", "This is my message to you")
     })
 
     fireEvent.click(getSubmitButton())
