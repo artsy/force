@@ -68,6 +68,15 @@ const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
   }
 }
 
+const goToPaymentIfPrivateSaleOrder: OrderPredicate = ({ order }) => {
+  if (order.source === "private_sale") {
+    return {
+      path: `/orders/${order.internalID}/payment`,
+      reason: "Private sale orders are created with shipping details",
+    }
+  }
+}
+
 const goToShippingIfOrderIsNotOfferOrder: OrderPredicate = ({ order }) => {
   if (order.mode !== "OFFER") {
     return {
@@ -177,7 +186,11 @@ export const redirects: RedirectRecord<OrderQuery> = {
     },
     {
       path: "shipping",
-      rules: [goToStatusIfOrderIsNotPending, goToOfferIfNoOfferMade],
+      rules: [
+        goToPaymentIfPrivateSaleOrder,
+        goToStatusIfOrderIsNotPending,
+        goToOfferIfNoOfferMade,
+      ],
     },
     {
       path: "payment",
@@ -245,6 +258,7 @@ graphql`
     internalID
     mode
     state
+    source
     lastTransactionFailed
     ... on CommerceOfferOrder {
       myLastOffer {

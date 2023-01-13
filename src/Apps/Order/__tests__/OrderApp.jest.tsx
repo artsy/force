@@ -9,6 +9,7 @@ import { OrderAppFragmentContainer } from "Apps/Order/OrderApp"
 
 import { orderRoutes_OrderQuery$rawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import {
+  PrivateSaleOrderWithShippingDetails,
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
   CreditCardPaymentDetails,
@@ -111,6 +112,17 @@ describe("OrderApp routing redirects", () => {
     )
 
     expect(res.redirect.url).toBe("/orders/2939023/status")
+  })
+
+  it("redirects to the payment route if order is private sale", async () => {
+    const res = await render(
+      "/orders/2939023/shipping",
+      mockResolver({
+        ...PrivateSaleOrderWithShippingDetails,
+      })
+    )
+
+    expect(res.redirect.url).toBe("/orders/2939023/payment")
   })
 
   it("redirects to the artwork page if the order is abandoned", async () => {

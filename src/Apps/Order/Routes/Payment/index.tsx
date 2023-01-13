@@ -33,6 +33,7 @@ import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
+  privateFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -352,7 +353,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     <Box data-test="orderPayment">
       <OrderRouteContainer
         currentStep="Payment"
-        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        steps={
+          order.mode === "OFFER"
+            ? offerFlowSteps
+            : order.source === "private_sale"
+            ? privateFlowSteps
+            : buyNowFlowSteps
+        }
         content={
           balanceCheckEnabled &&
           (isPaymentSetupSuccessful || selectedBankAccountId) &&
@@ -455,6 +462,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        source
         bankAccountId
         availablePaymentMethods
         buyerTotalCents

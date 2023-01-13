@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28d276574da856add45ab740a222d4b2>>
+ * @generated SignedSource<<d9fda3afad7ad48da4eb147d6f06a267>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -65,6 +66,7 @@ export type redirects_order$data = {
   readonly requestedFulfillment: {
     readonly __typename: string;
   } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "redirects_order";
 };
@@ -133,6 +135,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -342,6 +351,6 @@ return {
 };
 })();
 
-(node as any).hash = "db92b1c01ce47c7377afa9f5670a4ce0";
+(node as any).hash = "a616aad2b563f681834bfeaf7460e6ba";
 
 export default node;
