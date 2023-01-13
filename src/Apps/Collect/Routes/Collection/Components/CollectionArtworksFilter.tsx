@@ -69,11 +69,11 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         {
-          text: "Price (Low to High)",
+          text: "Price (High to Low)",
           value: "sold,-has_price,-prices",
         },
         {
-          text: "Price (High to Low)",
+          text: "Price (Low to High)",
           value: "sold,-has_price,prices",
         },
         {

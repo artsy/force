@@ -47,8 +47,8 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
           { text: "Lot Number (desc.)", value: "-sale_position" },
           { text: "Most Bids", value: "-bidder_positions_count" },
           { text: "Least Bids", value: "bidder_positions_count" },
-          { text: "Price (High to Low)", value: "prices" },
-          { text: "Price (Low to High)", value: "-prices" },
+          { text: "Price (Low to High)", value: "prices" },
+          { text: "Price (High to Low)", value: "-prices" },
         ]}
         viewer={viewer}
         Filters={
