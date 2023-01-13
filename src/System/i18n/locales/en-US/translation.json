@@ -22,7 +22,9 @@
     },
     "title": "Art Taste Quiz",
     "results": {
-      "emailButton": "Email My Results",
+      "emailButton": "Email My Results",   
+      "emailSuccess": "Results sent to {{email}}",
+      "emailError": "Something went wrong. Please try again.",
       "empty": {
         "title": "Explore Trending Collections and Artists",
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
@@ -153,11 +155,5 @@
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",
     "resultsCount_other": "{{count}} results for"
-  },
-  "toast": {
-    "emails": {
-      "emailSuccess": "Results sent to {{email}}",
-      "emailError": "Something went wrong. Please try again."
-    }
   }
 }

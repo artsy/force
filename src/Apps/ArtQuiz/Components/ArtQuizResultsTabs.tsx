@@ -21,10 +21,7 @@ export const ArtQuizResultsTabs: FC = () => {
       </Text>
       <Spacer y={[2, 4]} />
 
-      <TriggerCampaignButton
-        text={t("artQuizPage.results.emailButton")}
-        campaignID="ART_QUIZ"
-      />
+      <TriggerCampaignButton />
 
       <Spacer y={[4, 6]} />
       <Tabs fill>
