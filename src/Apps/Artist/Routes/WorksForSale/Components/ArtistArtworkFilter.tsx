@@ -68,7 +68,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       counts={artist.counts as Counts}
       filters={match.location.query}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        { value: "-decayed_merch", text: "Recommended" },
         { value: "-has_price,-prices", text: "Price (High to Low)" },
         { value: "-has_price,prices", text: "Price (Low to High)" },
         { value: "-partner_updated_at", text: "Recently Updated" },

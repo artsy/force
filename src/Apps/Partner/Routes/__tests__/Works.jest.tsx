@@ -209,9 +209,9 @@ describe("PartnerArtworks", () => {
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
   })
 
-  it("`Default` sort option should be selected by default for all partners", () => {
+  it("`Recommended` sort option should be selected by default for all partners", () => {
     renderWithRelay()
-    expect(screen.getByDisplayValue("Default")).toBeInTheDocument()
+    expect(screen.getByDisplayValue("Recommended")).toBeInTheDocument()
   })
 
   it("`Recently Added` sort option should be selected by default for `artsy-2` partner", () => {

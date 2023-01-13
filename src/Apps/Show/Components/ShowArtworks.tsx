@@ -45,7 +45,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
       filters={filters}
       sortOptions={[
         { text: "Gallery Curated", value: "partner_show_position" },
-        { text: "Default", value: "-decayed_merch" },
+        { text: "Recommended", value: "-decayed_merch" },
         { text: "Price (High to Low)", value: "-has_price,-prices" },
         { text: "Price (Low to High)", value: "-has_price,prices" },
         { text: "Recently Updated", value: "-partner_updated_at" },

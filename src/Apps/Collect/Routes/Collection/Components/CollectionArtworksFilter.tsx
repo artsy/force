@@ -67,7 +67,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       key={pathname}
       filters={match.location.query}
       sortOptions={[
-        { text: "Default", value: "-decayed_merch" },
+        { text: "Recommended", value: "-decayed_merch" },
         {
           text: "Price (High to Low)",
           value: "sold,-has_price,-prices",

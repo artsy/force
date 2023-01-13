@@ -35,7 +35,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
       }
       counts={sidebar?.counts as Counts}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        { value: "-decayed_merch", text: "Recommended" },
         { value: "-has_price,-prices", text: "Price (High to Low)" },
         { value: "-has_price,prices", text: "Price (Low to High)" },
         { value: "-partner_updated_at", text: "Recently Updated" },

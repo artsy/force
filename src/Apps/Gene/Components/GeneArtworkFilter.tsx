@@ -30,7 +30,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
       filters={match && match.location.query}
       onChange={updateUrl}
       sortOptions={[
-        { text: "Default", value: "-decayed_merch" },
+        { text: "Recommended", value: "-decayed_merch" },
         { text: "Price (High to Low)", value: "-has_price,-prices" },
         { text: "Price (Low to High)", value: "-has_price,prices" },
         { text: "Recently Updated", value: "-partner_updated_at" },
