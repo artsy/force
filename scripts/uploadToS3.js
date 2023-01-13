@@ -56,12 +56,14 @@ files.forEach(file => {
   })
 
   const start = Date.now()
+
   uploader.on("error", err => {
     console.error(
       chalk.red(`[uploadToS3] Error uploading ${s3Path}.\n`),
       err.stack,
       "\n"
     )
+    process.exit(1)
   })
 
   uploader.on("progress", () => {
