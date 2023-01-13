@@ -274,50 +274,44 @@ describe("Shipping", () => {
       expect(page.find(CountrySelect).props().disabled).toBe(false)
     })
 
-    //TODO fillAddressForm cant find fields
-    // it("commits set shipping mutation with the orderId and saved address", async () => {
-    //   mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-    //   const wrapper = getWrapper({
-    //     CommerceOrder: () => testOrder,
-    //     Me: () => emptyTestMe,
-    //   })
-    //   const page = new ShippingTestPage(wrapper)
+    it("commits set shipping mutation with the orderId and saved address", async () => {
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => testMe,
+      })
+      const page = new ShippingTestPage(wrapper)
 
-    //   fillAddressForm(page.root, validAddress)
+      const savedAddress = testMe.addressConnection?.edges!!.find(
+        edge => edge?.node?.isDefault
+      )?.node
 
-    //   await page.clickSubmit()
+      await page.clickSubmit()
 
-    //   expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-    //   expect(mockCommitMutation).toHaveBeenNthCalledWith(
-    //     1,
-    //     expect.objectContaining({
-    //       variables: {
-    //         input: {
-    //           id: "1234",
-    //           fulfillmentType: "SHIP",
-    //           phoneNumber: validAddress.phoneNumber,
-    //           shipping: {
-    //             ...validAddress,
-    //             phoneNumber: "",
-    //           },
-    //         },
-    //       },
-    //     })
-    //   )
-    //   expect(mockCommitMutation).toHaveBeenNthCalledWith(
-    //     2,
-    //     expect.arrayContaining([
-    //       expect.anything(),
-    //       expect.objectContaining({
-    //         variables: {
-    //           input: {
-    //             attributes: validAddress,
-    //           },
-    //         },
-    //       }),
-    //     ])
-    //   )
-    // })
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              id: "1234",
+              fulfillmentType: "SHIP",
+              phoneNumber: savedAddress?.phoneNumber,
+              phoneNumberCountryCode: "us",
+              shipping: {
+                name: savedAddress?.name,
+                addressLine1: savedAddress?.addressLine1,
+                addressLine2: savedAddress?.addressLine2,
+                city: savedAddress?.city,
+                region: savedAddress?.region,
+                postalCode: savedAddress?.postalCode,
+                phoneNumber: savedAddress?.phoneNumber,
+                country: savedAddress?.country,
+              },
+            },
+          },
+        })
+      )
+    })
 
     // it("commits the mutation with the orderId when save address is not selected", async () => {
     //   mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)

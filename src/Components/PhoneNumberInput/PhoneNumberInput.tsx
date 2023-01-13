@@ -50,6 +50,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         </Box>
 
         <Input
+          data-test="phone-number-input"
           error={!!error}
           maxLength={25}
           width="100%"
