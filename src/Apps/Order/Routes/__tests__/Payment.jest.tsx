@@ -98,11 +98,7 @@ const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ] as CommercePaymentMethodEnum[],
   internalID: "1234",
 }
-const testPrivateSaleOrder: PaymentTestQuery$rawResponse["order"] = {
-  ...PrivateSaleOrderWithShippingDetails,
-  availablePaymentMethods: ["WIRE_TRANSFER"] as CommercePaymentMethodEnum[],
-  internalID: "12345",
-}
+
 const testOrderWithACH: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithBankDebitDetails,
   internalID: "1234",
@@ -322,7 +318,7 @@ describe("Payment", () => {
       page = new PaymentTestPage(wrapper)
     })
 
-    it("shows an active private sale stepper if the order source is private sale", () => {
+    it("shows private sale stepper if the order source is private sale", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
         `"PaymentNavigate rightReviewNavigate right"`
       )
