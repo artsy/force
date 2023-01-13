@@ -12,6 +12,8 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
+import { useRouter } from "System/Router/useRouter"
+import styled from "styled-components"
 
 interface FlatGridItemProps {
   artwork: FlatGridItem_artwork$data
@@ -64,10 +66,12 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
       justifyContent="flex-end"
       width="100%"
       height="100%"
+      maxHeight={600}
     >
       <ResponsiveBox
         aspectWidth={image?.width ?? 1}
         aspectHeight={image?.height ?? 1}
+        // maxHeight={520}
         maxWidth="100%"
         bg="black10"
       >
@@ -84,7 +88,12 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
               preventRightClick={!isTeam}
               width="100%"
               height="100%"
-              style={{ display: "block" }}
+              // maxHeight={600}
+              style={{
+                display: "block",
+                objectFit: "cover",
+                backgroundColor: "transparent",
+              }}
               lazyLoad
             />
           )}
