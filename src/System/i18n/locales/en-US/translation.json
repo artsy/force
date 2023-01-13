@@ -22,8 +22,9 @@
     },
     "title": "Art Taste Quiz",
     "results": {
+      "emailButton": "Email My Results",   
       "emailSuccess": "Results sent to {{email}}",
-      "emailButton": "Email My Results",
+      "emailError": "Something went wrong. Please try again.",
       "empty": {
         "title": "Explore Trending Collections and Artists",
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
