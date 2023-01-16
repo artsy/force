@@ -1,7 +1,10 @@
 import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
-import { StickyFooterWithInquiry, StickyFooter } from "../StickyFooter"
+import {
+  StickyFooterWithInquiry,
+  StickyFooter,
+} from "Apps/Order/Components/StickyFooter"
 import { mediator } from "Server/mediator"
 
 jest.mock("react-tracking")
@@ -22,7 +25,11 @@ describe("Sticky footer", () => {
 
   it("handles FAQ modal", () => {
     const component = mount(
-      <StickyFooterWithInquiry orderType="OFFER" artworkID="whatever" />
+      <StickyFooterWithInquiry
+        orderType="OFFER"
+        artworkID="whatever"
+        orderSource="artwork_page"
+      />
     )
 
     component.find("Clickable[data-test='help-center-link']").simulate("click")
@@ -39,6 +46,7 @@ describe("Sticky footer", () => {
     const component = mount(
       <SystemContextProvider>
         <StickyFooter
+          orderSource="artwork_page"
           orderType="OFFER"
           artworkID="whatever"
           showInquiry={showInquiry}
@@ -56,11 +64,32 @@ describe("Sticky footer", () => {
 
   it("displays the 'Need help?' message", () => {
     const component = mount(
-      <StickyFooterWithInquiry orderType="OFFER" artworkID="whatever" />
+      <StickyFooterWithInquiry
+        orderSource="artwork_page"
+        orderType="OFFER"
+        artworkID="whatever"
+      />
     )
     expect(component.text()).toContain(
       "Need help? Visit our help center or ask a question."
     )
+  })
+
+  describe("for private sale orders", () => {
+    it("renders private sale email link", () => {
+      const component = mount(
+        <StickyFooterWithInquiry
+          orderSource="private_sale"
+          orderType="BUY"
+          artworkID="whatever"
+        />
+      )
+      const privateSalesEmail = component.find(
+        "Clickable[data-test='private-sales-email-link']"
+      )
+
+      expect(privateSalesEmail).toBeTruthy()
+    })
   })
 
   describe("Analytics", () => {
@@ -68,7 +97,11 @@ describe("Sticky footer", () => {
       it("tracks click on 'Read our FAQ'", () => {
         // const { Component, dispatch } = mockTracking(StickyFooterWithInquiry)
         const component = mount(
-          <StickyFooterWithInquiry orderType="OFFER" artworkID="whatever" />
+          <StickyFooterWithInquiry
+            orderSource="artwork_page"
+            orderType="OFFER"
+            artworkID="whatever"
+          />
         )
         component
           .find("Clickable[data-test='help-center-link']")
@@ -84,7 +117,11 @@ describe("Sticky footer", () => {
       it("tracks click on 'ask a question'", () => {
         const component = mount(
           <SystemContextProvider>
-            <StickyFooterWithInquiry orderType="OFFER" artworkID="whatever" />
+            <StickyFooterWithInquiry
+              orderSource="artwork_page"
+              orderType="OFFER"
+              artworkID="whatever"
+            />
           </SystemContextProvider>
         )
         component
@@ -103,7 +140,11 @@ describe("Sticky footer", () => {
     describe("on a buy now page", () => {
       it("tracks click on 'Read our FAQ'", () => {
         const component = mount(
-          <StickyFooterWithInquiry orderType="BUY" artworkID="whatever" />
+          <StickyFooterWithInquiry
+            orderSource="artwork_page"
+            orderType="BUY"
+            artworkID="whatever"
+          />
         )
         component
           .find("Clickable[data-test='help-center-link']")
@@ -119,7 +160,11 @@ describe("Sticky footer", () => {
       it("tracks click on 'ask a question'", () => {
         const component = mount(
           <SystemContextProvider>
-            <StickyFooterWithInquiry orderType="BUY" artworkID="whatever" />
+            <StickyFooterWithInquiry
+              orderSource="artwork_page"
+              orderType="BUY"
+              artworkID="whatever"
+            />
           </SystemContextProvider>
         )
         component

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e49d0cb854fb785d5b21f9f9ae16e0ab>>
+ * @generated SignedSource<<62a646c1c58c9260d83f24947b2643c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order$data = {
   readonly currencyCode: string;
@@ -27,6 +28,7 @@ export type OrderApp_order$data = {
     } | null> | null;
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "OrderApp_order";
 };
 export type OrderApp_order$key = {
@@ -45,6 +47,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -138,6 +147,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "44860aea11d75dca20feda64a964481d";
+(node as any).hash = "2c498a2448d0c260a4ef509cc1b4548d";
 
 export default node;

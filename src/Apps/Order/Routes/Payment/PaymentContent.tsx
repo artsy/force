@@ -151,7 +151,7 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Wire transfer */}
       <Collapse open={selectedPaymentMethod === "WIRE_TRANSFER"}>
-        {getPaymentMethodInfo(selectedPaymentMethod)}
+        {getPaymentMethodInfo(selectedPaymentMethod, order.source)}
         <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
@@ -255,10 +255,26 @@ const getAvailablePaymentMethods = (
 }
 
 const getPaymentMethodInfo = (
-  paymentMethod: CommercePaymentMethodEnum | string
+  paymentMethod: CommercePaymentMethodEnum | string,
+  orderSource?: string
 ) => {
   switch (paymentMethod) {
     case "WIRE_TRANSFER":
+      if (orderSource === "private_sale") {
+        return (
+          <>
+            <Text color="black60" variant="sm">
+              • To pay by wire transfer, complete checkout to view banking
+              details and wire transfer instructions.
+            </Text>
+            <Text color="black60" variant="sm">
+              • Please inform your bank that you will be responsible for all
+              wire transfer fees.
+            </Text>
+          </>
+        )
+      }
+
       return (
         <>
           <Text color="black60" variant="sm">
