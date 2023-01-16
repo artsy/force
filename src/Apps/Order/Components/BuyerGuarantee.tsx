@@ -42,10 +42,10 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
         flexDirection="column"
         style={{ position: "relative", borderTop: "none" }}
       >
-        <Text variant="xs" color="black60">
+        <Text variant="sm" color="black60">
           This purchase is subject to{" "}
           <a
-            href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+            href="https://www.artsy.net/partner/artsy-private-sales"
             target="_blank"
             rel="noopener noreferrer"
           >

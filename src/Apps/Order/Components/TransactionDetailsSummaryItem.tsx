@@ -220,7 +220,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
-      <Text variant="xs" color="black60">
+      <Text variant="sm" color="black60">
         *Additional duties and taxes{" "}
         <a
           href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
