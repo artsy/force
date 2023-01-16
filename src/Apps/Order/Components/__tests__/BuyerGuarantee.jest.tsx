@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useTracking } from "react-tracking"
-import { BuyerGuarantee } from "../BuyerGuarantee"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 
 jest.mock("react-tracking")
 
@@ -56,5 +56,30 @@ describe("BuyerGuarantee", () => {
         expect(trackEvent).not.toHaveBeenCalled()
       })
     })
+  })
+})
+
+describe("with private sale orders", () => {
+  beforeEach(() => {
+    render(
+      <BuyerGuarantee
+        contextModule={ContextModule.ordersShipping}
+        contextPageOwnerType="test-owner"
+        orderSource="private_sale"
+      />
+    )
+  })
+
+  it("renders correct conditions of sale", () => {
+    expect(screen.getByText("This purchase is subject to")).toBeInTheDocument()
+    expect(
+      screen.getByText("Artsy Private Sales LLC Conditions of Sale")
+    ).toBeInTheDocument()
+  })
+
+  it("renders extra conditions of sale", () => {
+    expect(
+      screen.getByText("Additional conditions of sale")
+    ).toBeInTheDocument()
   })
 })

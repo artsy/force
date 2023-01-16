@@ -13,8 +13,8 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
-import { AppContainer } from "../Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { AppContainer } from "Apps/Components/AppContainer"
 import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
 import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
@@ -124,6 +124,7 @@ const OrderApp: FC<OrderAppProps> = props => {
         {!isModal && (
           <StickyFooterWithInquiry
             orderType={order.mode}
+            orderSource={order.source}
             artworkID={artwork?.slug!}
           />
         )}
@@ -137,6 +138,7 @@ export const OrderAppFragmentContainer = createFragmentContainer(OrderApp, {
   order: graphql`
     fragment OrderApp_order on CommerceOrder {
       mode
+      source
       currencyCode
       itemsTotalCents
       lineItems {

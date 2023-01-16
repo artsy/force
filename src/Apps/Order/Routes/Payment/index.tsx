@@ -410,6 +410,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             <BuyerGuarantee
               contextModule={ContextModule.ordersPayment}
               contextPageOwnerType={OwnerType.ordersPayment}
+              orderSource={order.source}
             />
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (

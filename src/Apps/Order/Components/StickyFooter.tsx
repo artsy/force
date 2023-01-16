@@ -9,12 +9,14 @@ import { useTracking } from "react-tracking"
 interface StickyFooterProps extends WithInquiryProps {
   artworkID: string
   orderType: string | null
+  orderSource: string | null
 }
 
 export const StickyFooter: FC<StickyFooterProps> = ({
   showInquiry,
   inquiryComponent,
   orderType,
+  orderSource,
 }) => {
   const { trackEvent } = useTracking()
 
@@ -48,22 +50,38 @@ export const StickyFooter: FC<StickyFooterProps> = ({
       <FooterContainer>
         <Text variant="xs" color="black60">
           Need help?{" "}
-          <Clickable
-            data-test="help-center-link"
-            textDecoration="underline"
-            onClick={onClickReadFAQ}
-          >
-            <Text variant="xs">Visit our help center</Text>
-          </Clickable>{" "}
-          or{" "}
-          <Clickable
-            data-test="ask-question-link"
-            textDecoration="underline"
-            onClick={onClickAskSpecialist}
-          >
-            <Text variant="xs">ask a question</Text>
-          </Clickable>
-          .
+          {orderSource === "private_sale" ? (
+            <>
+              {" "}
+              Email{" "}
+              <Clickable
+                data-test="private-sales-email-link"
+                textDecoration="underline"
+              >
+                <Text variant="xs">privatesales@artsy.net</Text>
+              </Clickable>
+              .
+            </>
+          ) : (
+            <>
+              <Clickable
+                data-test="help-center-link"
+                textDecoration="underline"
+                onClick={onClickReadFAQ}
+              >
+                <Text variant="xs">Visit our help center</Text>
+              </Clickable>{" "}
+              or{" "}
+              <Clickable
+                data-test="ask-question-link"
+                textDecoration="underline"
+                onClick={onClickAskSpecialist}
+              >
+                <Text variant="xs">ask a question</Text>
+              </Clickable>
+              .
+            </>
+          )}
         </Text>
         <Spacer y={2} />
       </FooterContainer>
