@@ -68,7 +68,7 @@ describe("ArtistArtworkFilter", () => {
     const { renderWithRelay } = getWrapper()
 
     renderWithRelay()
-    const option = screen.getByRole("option", { name: "Default" })
+    const option = screen.getByRole("option", { name: "Recommended" })
 
     expect(option).toBeInTheDocument()
     expect(option).toHaveValue("-decayed_merch")
@@ -90,7 +90,7 @@ describe("ArtistArtworkFilter", () => {
     })
 
     renderWithRelay()
-    const option = screen.getByRole("option", { name: "Default" })
+    const option = screen.getByRole("option", { name: "Recommended" })
 
     expect(option).toBeInTheDocument()
     expect(option).toHaveValue("-decayed_merch")

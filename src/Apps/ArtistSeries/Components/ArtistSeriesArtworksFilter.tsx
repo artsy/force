@@ -36,7 +36,7 @@ const ArtistSeriesArtworksFilter: React.FC<
       filters={match && match.location.query}
       aggregations={aggregations}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        { value: "-decayed_merch", text: "Recommended" },
         { value: "-has_price,-prices", text: "Price (High to Low)" },
         { value: "-has_price,prices", text: "Price (Low to High)" },
         { value: "-partner_updated_at", text: "Recently Updated" },

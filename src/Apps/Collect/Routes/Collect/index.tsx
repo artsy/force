@@ -132,7 +132,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             counts={viewer?.artworksConnection?.counts as Counts}
             filters={location.query as any}
             sortOptions={[
-              { text: "Default", value: "-decayed_merch" },
+              { text: "Recommended", value: "-decayed_merch" },
               { text: "Recently Updated", value: "-partner_updated_at" },
               { text: "Recently Added", value: "-published_at" },
               { text: "Artwork Year (Descending)", value: "-year" },
