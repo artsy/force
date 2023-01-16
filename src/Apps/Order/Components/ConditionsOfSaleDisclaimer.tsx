@@ -1,13 +1,40 @@
-import { Text, TextProps } from "@artsy/palette"
+import { Flex, Text, TextProps } from "@artsy/palette"
 import * as React from "react"
 
-export const ConditionsOfSaleDisclaimer: React.FC<Partial<TextProps>> = (
-  props: any
-) => (
-  <Text variant="xs" color="black60" {...props}>
-    By clicking Submit, I agree to Artsy’s{" "}
-    <a href="/conditions-of-sale" target="_blank">
-      Conditions of Sale.
-    </a>
-  </Text>
-)
+interface Props {
+  textProps?: Partial<TextProps>
+  orderSource: string | null
+}
+
+export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
+  textProps,
+  orderSource,
+}) => {
+  if (orderSource === "private_sale") {
+    return (
+      <Flex flexDirection="row">
+        <Text variant="xs" color="black60" {...textProps}>
+          By clicking Complete Purchase, I agree to
+        </Text>
+        <Text variant="xs" color="black100" {...textProps}>
+          <a
+            href="https://www.artsy.net/partner/artsy-private-sales"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            &nbsp;Artsy Private Sales LLC Conditions of Sale
+          </a>
+        </Text>
+      </Flex>
+    )
+  }
+
+  return (
+    <Text variant="xs" color="black60" {...textProps}>
+      By clicking Submit, I agree to Artsy’s{" "}
+      <a href="/conditions-of-sale" target="_blank">
+        Conditions of Sale.
+      </a>
+    </Text>
+  )
+}

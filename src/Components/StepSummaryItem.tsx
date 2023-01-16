@@ -9,10 +9,12 @@ import {
   StackableBorderBox,
   Clickable,
 } from "@artsy/palette"
+import { order } from "styled-system"
 
 export interface StepSummaryItemProps extends FlexProps {
   title?: React.ReactNode
   onChange?: () => void
+  orderSource?: string | null
   locked?: boolean
 }
 
@@ -25,11 +27,15 @@ const LockIconPositioner = styled(Flex)`
 export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
   title,
   onChange,
+  orderSource,
   children,
   locked,
   ...others
 }) => {
   const showHeading = title || (onChange && !locked)
+  const allowChangeShipping =
+    !locked && onChange && orderSource !== "private_sale"
+
   return (
     <StackableBorderBox
       flexDirection="column"
@@ -47,7 +53,7 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
               {title}
             </Text>
           )}
-          {!locked && onChange && (
+          {orderSource !== "private_sale" && (
             <Clickable
               data-test="change-link"
               textDecoration="underline"

@@ -1,5 +1,6 @@
 import { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
 import {
+  PrivateSaleOrderWithShippingDetails,
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
@@ -26,13 +27,14 @@ import {
   submitOrderWithMissingInfo,
   submitOrderWithNoInventoryFailure,
   submitOrderWithVersionMismatchFailure,
-} from "../__fixtures__/MutationResults"
-import { ReviewFragmentContainer } from "../Review"
+} from "Apps/Order/Routes/__fixtures__/MutationResults"
+import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
-import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
-import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
+import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
+import { StepSummaryItem } from "Components/StepSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
@@ -77,6 +79,12 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
+  internalID: "1234",
+  impulseConversationId: null,
+}
+
+const privateSaleTestOrder: ReviewTestQuery$rawResponse["order"] = {
+  ...PrivateSaleOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,
 }
@@ -616,4 +624,34 @@ describe("Review", () => {
       )
     })
   })
+
+  //  TODO:
+  // describe("private sale orders", () => {
+  //   it("does not allow the user go back to /shipping", () => {
+  //     const wrapper = getWrapper({
+  //       CommerceOrder: () => privateSaleTestOrder,
+  //     })
+  //     const page = new ReviewTestPage(wrapper)
+
+  //     expect(page.shippingSummary.text()).toContain("Change")
+  //   })
+
+  //   it("button complete purchase", () => {
+  //     const wrapper = getWrapper({
+  //       CommerceOrder: () => privateSaleTestOrder,
+  //     })
+  //     const page = new ReviewTestPage(wrapper)
+
+  //     expect(page.shippingSummary.text()).toContain("Change")
+  //   })
+  // })
+  //   it("ConditionsOfSaleDisclaimer, () => {
+  //     const wrapper = getWrapper({
+  //       CommerceOrder: () => privateSaleTestOrder,
+  //     })
+  //     const page = new ReviewTestPage(wrapper)
+
+  //     expect(page.shippingSummary.text()).toContain("Change")
+  //   })
+  // })
 })
