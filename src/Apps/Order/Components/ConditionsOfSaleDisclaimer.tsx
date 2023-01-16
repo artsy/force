@@ -1,4 +1,4 @@
-import { Flex, Text, TextProps } from "@artsy/palette"
+import { Text, TextProps } from "@artsy/palette"
 import * as React from "react"
 
 interface Props {
@@ -12,20 +12,17 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
 }) => {
   if (orderSource === "private_sale") {
     return (
-      <Flex flexDirection="row">
-        <Text variant="sm" color="black60" {...textProps}>
-          By clicking Complete Purchase, I agree to
-        </Text>
-        <Text variant="sm" color="black100" {...textProps}>
-          <a
-            href="https://www.artsy.net/partner/artsy-private-sales"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            &nbsp;Artsy Private Sales LLC Conditions of Sale
-          </a>
-        </Text>
-      </Flex>
+      <Text variant="sm" color="black60" {...textProps}>
+        By clicking Complete Purchase, I agree to
+        <a
+          style={{ textDecoration: "underline", color: "#000" }}
+          href="https://www.artsy.net/partner/artsy-private-sales"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          &nbsp;Artsy Private Sales LLC Conditions of Sale
+        </a>
+      </Text>
     )
   }
 
