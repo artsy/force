@@ -53,7 +53,7 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
               {title}
             </Text>
           )}
-          {orderSource !== "private_sale" && (
+          {allowChangeShipping && (
             <Clickable
               data-test="change-link"
               textDecoration="underline"

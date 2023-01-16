@@ -625,33 +625,32 @@ describe("Review", () => {
     })
   })
 
-  //  TODO:
-  // describe("private sale orders", () => {
-  //   it("does not allow the user go back to /shipping", () => {
-  //     const wrapper = getWrapper({
-  //       CommerceOrder: () => privateSaleTestOrder,
-  //     })
-  //     const page = new ReviewTestPage(wrapper)
+  describe("private sale orders", () => {
+    let page
 
-  //     expect(page.shippingSummary.text()).toContain("Change")
-  //   })
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => privateSaleTestOrder,
+      })
+      page = new ReviewTestPage(wrapper)
+    })
 
-  //   it("button complete purchase", () => {
-  //     const wrapper = getWrapper({
-  //       CommerceOrder: () => privateSaleTestOrder,
-  //     })
-  //     const page = new ReviewTestPage(wrapper)
+    it("does not allow the user go back to /shipping", () => {
+      const changeShippingButton = page.find(`[data-test="change-link"]`)
+      expect(changeShippingButton).toMatchObject({})
+    })
 
-  //     expect(page.shippingSummary.text()).toContain("Change")
-  //   })
-  // })
-  //   it("ConditionsOfSaleDisclaimer, () => {
-  //     const wrapper = getWrapper({
-  //       CommerceOrder: () => privateSaleTestOrder,
-  //     })
-  //     const page = new ReviewTestPage(wrapper)
+    it("renders 'Complete Purchase' for submit button", () => {
+      const button = page
+        .find(`[data-test="review-step-submit-button"]`)
+        .first()
+      expect(button.text()).toContain("Complete Purchase")
+    })
 
-  //     expect(page.shippingSummary.text()).toContain("Change")
-  //   })
-  // })
+    it("renders Artsy Private Sales conditions", () => {
+      expect(page.text()).toContain(
+        "Artsy Private Sales LLC Conditions of Sale"
+      )
+    })
+  })
 })

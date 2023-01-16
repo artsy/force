@@ -373,6 +373,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
   const SubmitButton: FC = () => (
     <Button
+      data-test="review-step-submit-button"
       variant="primaryBlack"
       width={["100%", "50%"]}
       loading={isCommittingMutation}
