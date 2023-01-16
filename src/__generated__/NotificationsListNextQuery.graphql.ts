@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ec20181b93d2c8fbc095d7026fd1c1f>>
+ * @generated SignedSource<<1583885dad8e62361b7ddd54967b0c5c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -169,6 +169,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "notificationType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "publishedAtAbsolute",
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
                         "storageKey": null
                       },
                       {
@@ -384,12 +391,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "51a773a69571b7d93478e63469ae4eb0",
+    "cacheID": "7d04c36487b8e7248fdd855ffd39695e",
     "id": null,
     "metadata": {},
     "name": "NotificationsListNextQuery",
     "operationKind": "query",
-    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        notificationType\n        publishedAtAbsolute: publishedAt\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

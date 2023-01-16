@@ -6,19 +6,30 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
+import { extractNodes } from "Utils/extractNodes"
+import {
+  shouldDisplayNotification,
+  hasNewNotifications,
+} from "Components/Notifications/util"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null
+  notificationsConnection?
 }
 
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
+  notificationsConnection,
 }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
-  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
-  const hasNotifications = unreadNotificationsCount > 0
-  const shouldDisplayIndicator = hasConversations || hasNotifications
+  const notification = extractNodes(notificationsConnection).filter(node =>
+    shouldDisplayNotification(node)
+  )[0]
+
+  console.log("[Debug]", "not pub", notification?.publishedAt)
+  const shouldDisplayIndicator =
+    hasConversations || hasNewNotifications(notification?.publishedAt)
 
   if (!shouldDisplayIndicator) {
     return null
@@ -40,7 +51,6 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
     me: graphql`
       fragment NavBarMobileMenuNotificationsIndicator_me on Me {
         unreadConversationCount
-        unreadNotificationsCount
       }
     `,
   }
@@ -54,6 +64,14 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
       environment={relayEnvironment}
       query={graphql`
         query NavBarMobileMenuNotificationsIndicatorQuery {
+          notificationsConnection(first: 1) {
+            edges {
+              node {
+                publishedAt
+              }
+            }
+          }
+
           me {
             ...NavBarMobileMenuNotificationsIndicator_me
           }
@@ -69,6 +87,7 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
           return (
             <NavBarMobileMenuNotificationsIndicatorFragmentContainer
               me={props.me}
+              notificationsConnection={props.notificationsConnection}
             />
           )
         }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b535a7d91199d17e9d6b27d1653821d>>
+ * @generated SignedSource<<a00a4ce3d9fd5fa8730813b96ff15d9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type NotificationsList_viewer$data = {
         } | null;
         readonly internalID: string;
         readonly notificationType: NotificationTypesEnum;
+        readonly publishedAtAbsolute: string;
         readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
       } | null;
     } | null> | null;
@@ -103,6 +104,13 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": "publishedAtAbsolute",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "publishedAt",
+                  "storageKey": null
+                },
+                {
                   "alias": "artworks",
                   "args": null,
                   "concreteType": "ArtworkConnection",
@@ -178,6 +186,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b1fc107a2fde16d8574ed621d4fe3abe";
+(node as any).hash = "bec1cc5bf3dfa01aa42828534d0c7db0";
 
 export default node;

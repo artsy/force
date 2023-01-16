@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27373a86c5908e268a5675f0033a37bc>>
+ * @generated SignedSource<<c33d59e4843dfcb43523b826ccc86480>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,19 +15,82 @@ export type NavBarMobileMenuNotificationsIndicatorQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotificationsIndicator_me">;
   } | null;
+  readonly notificationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly publishedAt: string;
+      } | null;
+    } | null> | null;
+  } | null;
 };
 export type NavBarMobileMenuNotificationsIndicatorQuery = {
   response: NavBarMobileMenuNotificationsIndicatorQuery$data;
   variables: NavBarMobileMenuNotificationsIndicatorQuery$variables;
 };
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "publishedAt",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "NavBarMobileMenuNotificationsIndicatorQuery",
     "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "NotificationConnection",
+        "kind": "LinkedField",
+        "name": "notificationsConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "NotificationEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Notification",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "notificationsConnection(first:1)"
+      },
       {
         "alias": null,
         "args": null,
@@ -56,6 +119,41 @@ const node: ConcreteRequest = {
     "selections": [
       {
         "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "NotificationConnection",
+        "kind": "LinkedField",
+        "name": "notificationsConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "NotificationEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Notification",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "notificationsConnection(first:1)"
+      },
+      {
+        "alias": null,
         "args": null,
         "concreteType": "Me",
         "kind": "LinkedField",
@@ -69,35 +167,23 @@ const node: ConcreteRequest = {
             "name": "unreadConversationCount",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "unreadNotificationsCount",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "fcad35569728dba5274eae66eabbcd8d",
+    "cacheID": "a71d7ab30752dd2f4335bf1c07084f70",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsIndicatorQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n"
   }
 };
+})();
 
-(node as any).hash = "75cfde809b93933d8d91d345599013f7";
+(node as any).hash = "08916e86989dc78a35377135933a9976";
 
 export default node;

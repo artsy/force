@@ -13,9 +13,15 @@ import styled from "styled-components"
 import { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
 import { NavBarMobileMenuNotifications_me$data } from "__generated__/NavBarMobileMenuNotifications_me.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { extractNodes } from "Utils/extractNodes"
+import {
+  shouldDisplayNotification,
+  hasNewNotifications,
+} from "Components/Notifications/util"
 
 interface NavBarMobileMenuNotificationsProps {
   me?: NavBarMobileMenuNotifications_me$data | null
+  notificationsConnection?
 }
 
 export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificationsProps> = ({
@@ -24,9 +30,10 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
-  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
-  const hasNotifications = unreadNotificationsCount > 0
+  const notification = extractNodes(notificationsConnection).filter(node =>
+    shouldDisplayNotification(node)
+  )[0]
 
   return (
     <>
@@ -51,7 +58,7 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
             }}
           >
             Activity
-            {hasNotifications && <Indicator />}
+            {hasNewNotifications(notification?.publishedAt) && <Indicator />}
           </NavBarMobileMenuItemLink>
           <NavBarMobileMenuItemLink
             to="/user/conversations"
@@ -91,6 +98,14 @@ export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<{}> = () => {
       environment={relayEnvironment}
       query={graphql`
         query NavBarMobileMenuNotificationsQuery {
+          notificationsConnection(first: 1) {
+            edges {
+              node {
+                publishedAt
+              }
+            }
+          }
+
           me {
             ...NavBarMobileMenuNotifications_me
           }
@@ -106,7 +121,12 @@ export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<{}> = () => {
           return <NavBarMobileMenuNotifications />
         }
 
-        return <NavBarMobileMenuNotificationsFragmentContainer me={props.me} />
+        return (
+          <NavBarMobileMenuNotificationsFragmentContainer
+            me={props.me}
+            notificationsConnection={props.notificationsConnection}
+          />
+        )
       }}
     />
   )

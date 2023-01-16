@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61b128d4f3c2fd252caaa4870613d135>>
+ * @generated SignedSource<<376f280cc18e31e32743da0d11cfac7b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,14 +21,7 @@ export type NavBarMobileMenuNotificationsIndicator_test_Query = {
   variables: NavBarMobileMenuNotificationsIndicator_test_Query$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -80,13 +73,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "unreadNotificationsCount",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -96,7 +82,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37ccc0b48e759e445c0c355569c560bd",
+    "cacheID": "b0e949a12193b7a199173fbca9721b0c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -112,16 +98,19 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "me.unreadConversationCount": (v0/*: any*/),
-        "me.unreadNotificationsCount": (v0/*: any*/)
+        "me.unreadConversationCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        }
       }
     },
     "name": "NavBarMobileMenuNotificationsIndicator_test_Query",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n"
   }
 };
-})();
 
 (node as any).hash = "26ec2da0ab6233adec36923fad6a1536";
 

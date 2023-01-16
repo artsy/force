@@ -16,12 +16,22 @@ import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
+import { extractNodes } from "Utils/extractNodes"
+import {
+  shouldDisplayNotification,
+  hasNewNotifications,
+} from "Components/Notifications/util"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQuery$data
->> = ({ me }) => {
+>> = ({ me, notificationsConnection }) => {
   const { trackEvent } = useTracking()
+
+  const notification = extractNodes(notificationsConnection).filter(node =>
+    shouldDisplayNotification(node)
+  )[0]
+
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
@@ -60,7 +70,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
           >
             <BellIcon title="Notifications" fill="currentColor" />
 
-            {hasNotifications && (
+            {hasNewNotifications(notification?.publishedAt) && (
               <NavBarNotificationIndicator
                 position="absolute"
                 top="15px"
@@ -123,6 +133,14 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
       environment={relayEnvironment}
       query={graphql`
         query NavBarLoggedInActionsQuery {
+          notificationsConnection(first: 1) {
+            edges {
+              node {
+                publishedAt
+              }
+            }
+          }
+
           me {
             unreadNotificationsCount
             unreadConversationCount

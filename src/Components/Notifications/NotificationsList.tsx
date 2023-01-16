@@ -12,7 +12,7 @@ import {
 } from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import { SystemContext } from "System"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
@@ -40,9 +40,19 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   const [currentPaginationType, setCurrentPaginationType] = useState(
     paginationType
   )
+
   const nodes = extractNodes(viewer.notifications).filter(node =>
     shouldDisplayNotification(node)
   )
+
+  useEffect(() => {
+    if (nodes?.length > 0) {
+      window.localStorage.setItem(
+        "last_seen_notification_published_at",
+        nodes[0].publishedAtAbsolute
+      )
+    }
+  }, [nodes])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -138,6 +148,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
             node {
               internalID
               notificationType
+              publishedAtAbsolute: publishedAt
               artworks: artworksConnection {
                 totalCount
               }

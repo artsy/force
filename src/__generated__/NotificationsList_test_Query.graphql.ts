@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<154625b0ee6d03de3daeb001f2887890>>
+ * @generated SignedSource<<b433c6e1c978e2ff641f9d39cca79e1b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -151,6 +151,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "notificationType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "publishedAtAbsolute",
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
                         "storageKey": null
                       },
                       {
@@ -366,7 +373,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73a09bae02d633b7f50838bd7e73b047",
+    "cacheID": "0f045698459372e8abdff77e693b3eab",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -455,6 +462,7 @@ return {
           "type": "Int"
         },
         "viewer.notifications.edges.node.publishedAt": (v4/*: any*/),
+        "viewer.notifications.edges.node.publishedAtAbsolute": (v4/*: any*/),
         "viewer.notifications.edges.node.targetHref": (v4/*: any*/),
         "viewer.notifications.edges.node.title": (v4/*: any*/),
         "viewer.notifications.pageInfo": {
@@ -469,7 +477,7 @@ return {
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        publishedAtAbsolute: publishedAt\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
