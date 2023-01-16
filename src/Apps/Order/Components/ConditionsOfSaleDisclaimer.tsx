@@ -3,7 +3,7 @@ import * as React from "react"
 
 interface Props {
   textProps?: Partial<TextProps>
-  orderSource: string | null
+  orderSource?: string | null
 }
 
 export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({

@@ -9,7 +9,6 @@ import {
   StackableBorderBox,
   Clickable,
 } from "@artsy/palette"
-import { order } from "styled-system"
 
 export interface StepSummaryItemProps extends FlexProps {
   title?: React.ReactNode
