@@ -2,6 +2,7 @@ import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
+  PrivateSaleOrderWithShippingDetails,
   BuyOrderWithBankDebitDetails,
   OfferOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
@@ -97,6 +98,7 @@ const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ] as CommercePaymentMethodEnum[],
   internalID: "1234",
 }
+
 const testOrderWithACH: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithBankDebitDetails,
   internalID: "1234",
@@ -301,6 +303,24 @@ describe("Payment", () => {
     it("shows an active offer stepper if the order is an Offer Order", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
         `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentNavigate rightReviewNavigate right"`
+      )
+      expect(page.orderStepperCurrentStep).toBe("Payment")
+    })
+  })
+
+  describe("Private sale orders", () => {
+    let page: PaymentTestPage
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => PrivateSaleOrderWithShippingDetails,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("shows private sale stepper if the order source is private sale", () => {
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(
+        `"PaymentNavigate rightReviewNavigate right"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })

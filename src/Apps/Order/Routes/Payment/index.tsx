@@ -33,6 +33,7 @@ import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
+  privateFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -151,6 +152,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isProcessingRedirect ||
     isSavingPayment ||
     (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
+
+  let routeSteps
+  if (order.mode === "OFFER") {
+    routeSteps = offerFlowSteps
+  } else {
+    if (order.source === "private_sale") {
+      routeSteps = privateFlowSteps
+    } else {
+      routeSteps = buyNowFlowSteps
+    }
+  }
 
   // fired when an error is encountered during selecting bank account, polling balance, or setting payment
   const handlePaymentError = (error: Error | StripeError) => {
@@ -352,7 +364,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     <Box data-test="orderPayment">
       <OrderRouteContainer
         currentStep="Payment"
-        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        steps={routeSteps}
         content={
           balanceCheckEnabled &&
           (isPaymentSetupSuccessful || selectedBankAccountId) &&
@@ -455,6 +467,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        source
         bankAccountId
         availablePaymentMethods
         buyerTotalCents

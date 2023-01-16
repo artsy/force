@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd8913ccea36dcfe2a3d25c0f8cdeb9c>>
+ * @generated SignedSource<<afb39046af5a8ccb880feca305b85510>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_order$data = {
@@ -44,6 +45,7 @@ export type Payment_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
@@ -68,6 +70,13 @@ return {
   "metadata": null,
   "name": "Payment_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -251,6 +260,6 @@ return {
 };
 })();
 
-(node as any).hash = "36bd58e36dba50cf9a0c1a266ee9b9e2";
+(node as any).hash = "8fadd3e4b83d745cac42f12278941429";
 
 export default node;

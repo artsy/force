@@ -12,6 +12,7 @@ export const offerFlowSteps = typedArray(
   "Review"
 )
 export const buyNowFlowSteps = typedArray("Shipping", "Payment", "Review")
+export const privateFlowSteps = typedArray("Payment", "Review")
 export const counterofferFlowSteps = typedArray("Respond", "Review")
 
 export function OrderStepper<Steps extends string[]>({

@@ -345,6 +345,14 @@ export const UntouchedBuyOrder = {
   source: "artwork_page",
 } as const
 
+export const UntouchedPrivateSaleOrder = {
+  ...UntouchedOrder,
+  __typename: "CommerceBuyOrder",
+  __isCommerceOrder: "CommerceBuyOrder",
+  mode: "BUY",
+  source: "private_sale",
+} as const
+
 export const UntouchedBuyOrderWithArtsyShippingDomesticFromUS = {
   ...UntouchedBuyOrder,
   __typename: "CommerceBuyOrder",
@@ -944,6 +952,11 @@ export const WireTransferPaymentDetails = {
     __typename: "WireTransfer",
     isManualPayment: true,
   },
+} as const
+
+export const PrivateSaleOrderWithShippingDetails = {
+  ...UntouchedPrivateSaleOrder,
+  ...ShippingDetails,
 } as const
 
 export const BuyOrderWithShippingDetails = {
