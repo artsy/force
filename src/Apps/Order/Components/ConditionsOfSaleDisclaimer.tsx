@@ -13,10 +13,10 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
   if (orderSource === "private_sale") {
     return (
       <Flex flexDirection="row">
-        <Text variant="xs" color="black60" {...textProps}>
+        <Text variant="sm" color="black60" {...textProps}>
           By clicking Complete Purchase, I agree to
         </Text>
-        <Text variant="xs" color="black100" {...textProps}>
+        <Text variant="sm" color="black100" {...textProps}>
           <a
             href="https://www.artsy.net/partner/artsy-private-sales"
             target="_blank"
