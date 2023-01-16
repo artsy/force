@@ -1,6 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
 import { DownloadApp } from "./Components/DownloadApp"
 import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -24,6 +23,11 @@ export const ThankYou: React.FC = () => {
       ? "/collector-profile/my-collection"
       : "/settings/my-collection"
     router.replace(route)
+  }
+
+  const submitAnotherWork = () => {
+    trackSubmitAnotherWorkClick()
+    router.push("/sell/submission/contact-information")
   }
 
   const trackSubmitAnotherWorkClick = () =>
@@ -76,25 +80,22 @@ export const ThankYou: React.FC = () => {
 
       <Flex
         pb={2}
-        width={["100%", "60%"]}
+        width={["100%", "80%", "50%"]}
         flexDirection={["column", "row"]}
-        alignItems={["stretch", "center"]}
+        alignItems={"center"}
       >
-        <RouterLink to="/sell/submission">
-          <Button
-            mr={[0, 150]}
-            width="100%"
-            data-test-id="submit-another-work"
-            size="large"
-            variant="primaryBlack"
-            onClick={trackSubmitAnotherWorkClick}
-          >
-            Submit Another Work
-          </Button>
-        </RouterLink>
+        <Button
+          width={["100%", "50%"]}
+          data-test-id="submit-another-work"
+          size="large"
+          variant="primaryBlack"
+          onClick={submitAnotherWork}
+        >
+          Submit Another Work
+        </Button>
         <Spacer x={[0, 2]} y={[2, 0]} />
         <Button
-          width="100%"
+          width={["100%", "50%"]}
           data-test-id="swa-thank-you-view-in-my-collection-button"
           size="large"
           variant="secondaryBlack"

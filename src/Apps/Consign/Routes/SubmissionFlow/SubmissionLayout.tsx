@@ -1,5 +1,4 @@
 import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { MetaTags } from "Components/MetaTags"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 import { ArtsyLogoBlackIcon, Spacer } from "@artsy/palette"
@@ -19,13 +18,11 @@ export const SubmissionLayout: React.FC = ({ children }) => {
       <Spacer y={4} />
 
       <AppContainer>
-        <HorizontalPadding>
-          <RouterLink to="/sell" display="block">
-            <ArtsyLogoBlackIcon display="block" />
-          </RouterLink>
+        <RouterLink to="/sell" display="block">
+          <ArtsyLogoBlackIcon display="block" />
+        </RouterLink>
 
-          {children}
-        </HorizontalPadding>
+        {children}
       </AppContainer>
 
       <Spacer y={4} />
