@@ -66,6 +66,7 @@ describe("with private sale orders", () => {
         contextModule={ContextModule.ordersShipping}
         contextPageOwnerType="test-owner"
         orderSource="private_sale"
+        renderArtsyPrivateSaleConditions={true}
       />
     )
   })
