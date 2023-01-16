@@ -153,6 +153,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isSavingPayment ||
     (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
 
+  let routeSteps
+  if (order.mode === "OFFER") {
+    routeSteps = offerFlowSteps
+  } else {
+    if (order.source === "private_sale") {
+      routeSteps = privateFlowSteps
+    } else {
+      routeSteps = buyNowFlowSteps
+    }
+  }
+
   // fired when an error is encountered during selecting bank account, polling balance, or setting payment
   const handlePaymentError = (error: Error | StripeError) => {
     const errorContent = {
@@ -353,13 +364,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     <Box data-test="orderPayment">
       <OrderRouteContainer
         currentStep="Payment"
-        steps={
-          order.mode === "OFFER"
-            ? offerFlowSteps
-            : order.source === "private_sale"
-            ? privateFlowSteps
-            : buyNowFlowSteps
-        }
+        steps={routeSteps}
         content={
           balanceCheckEnabled &&
           (isPaymentSetupSuccessful || selectedBankAccountId) &&
