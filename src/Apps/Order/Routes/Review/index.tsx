@@ -450,6 +450,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             <BuyerGuarantee
               contextModule={ContextModule.ordersReview}
               contextPageOwnerType={OwnerType.ordersReview}
+              orderSource={order.source}
+              renderArtsyPrivateSaleConditions={false}
             />
             <Spacer y={[2, 4]} />
             <Media at="xs">
