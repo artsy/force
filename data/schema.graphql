@@ -11953,6 +11953,7 @@ input NotificationPreferenceInput {
 }
 
 enum NotificationTypesEnum {
+  ARTICLE_FEATURED_ARTIST
   ARTWORK_ALERT
   ARTWORK_PUBLISHED
   PARTNER_SHOW_OPENED
