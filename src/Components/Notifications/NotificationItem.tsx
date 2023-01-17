@@ -23,6 +23,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
     if (item.notificationType === "ARTWORK_ALERT") {
       return "Alert"
     }
+    if (item.notificationType === "ARTICLE_FEATURED_ARTIST") {
+      return "Artsy Editorial"
+    }
 
     return null
   }
