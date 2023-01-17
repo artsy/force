@@ -2108,9 +2108,17 @@ type Artwork implements Node & Searchable & Sellable {
 
   # A globally unique ID.
   id: ID!
-  image: Image
+  image(
+    # Show all images, even if they are not ready or processing failed.
+    includeAll: Boolean
+    size: Int
+  ): Image
   imageRights: String
-  images(size: Int): [Image]
+  images(
+    # Show all images, even if they are not ready or processing failed.
+    includeAll: Boolean
+    size: Int
+  ): [Image]
   imageTitle: String
   imageUrl: String
 
