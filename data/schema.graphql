@@ -2676,6 +2676,7 @@ type AuctionResult implements Node {
   internalID: ID!
   isUpcoming: Boolean
   location: String
+  lotNumber: String
   mediumText: String
   organization: String
   performance: AuctionLotPerformance
@@ -2748,6 +2749,7 @@ type AuctionResultsByArtists {
   highEstimateCentsUsd: BigInt
   id: ID!
   location: String
+  lotNumber: String
   lowEstimateCents: BigInt
   lowEstimateCentsUsd: BigInt
   mediumText: String
