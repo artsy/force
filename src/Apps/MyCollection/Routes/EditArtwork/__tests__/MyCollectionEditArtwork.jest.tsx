@@ -466,6 +466,72 @@ describe("Edit artwork", () => {
   })
 })
 
+describe("Delete artwork when collector profile ff is enabled", () => {
+  const getWrapper = (breakpoint: Breakpoint = "lg") =>
+    setupTestWrapperTL({
+      Component: (props: any) => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <MyCollectionEditArtworkFragmentContainer {...props} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query MyCollectionEditArtworkTest_Query($slug: String!) {
+          artwork(id: $slug) {
+            ...MyCollectionEditArtwork_artwork
+          }
+        }
+      `,
+      variables: {
+        slug: mockArtwork.internalID,
+      },
+    })
+
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "cx-my-collection-personal-artists-for-web": {
+          flagEnabled: true,
+        },
+        "cx-collector-profile": {
+          flagEnabled: true,
+        },
+      },
+      relayEnvironment: createMockEnvironment(),
+    }))
+  })
+
+  it("deletes artwork", async () => {
+    getWrapper().renderWithRelay({
+      Artwork: () => mockArtwork,
+    })
+
+    // opens modal
+    fireEvent.click(screen.getByTestId("delete-button"))
+    fireEvent.click(screen.getByTestId("submit-delete-button"))
+
+    await flushPromiseQueue()
+
+    expect(mockDeleteArtwork).toHaveBeenCalledWith(
+      expect.objectContaining({
+        rejectIf: expect.any(Function),
+        variables: {
+          input: {
+            artworkId: "62fc96c48d3ff8000b556c3a",
+          },
+        },
+      })
+    )
+
+    // testing only the router, when cleaning up the ff,
+    // keep the original test and replase the path in it
+    expect(mockRouterPush).toHaveBeenCalledWith({
+      pathname: "/collector-profile/my-collection",
+    })
+  })
+})
+
 const mockArtwork = {
   artist: {
     internalID: "4d8b929e4eb68a1b2c0002f2",
