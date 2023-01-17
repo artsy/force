@@ -3808,6 +3808,7 @@ type CommerceBuyOrder implements CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   conversation: Conversation
   createdAt(
     format: String
@@ -3968,6 +3969,9 @@ enum CommerceCancelReasonTypeEnum {
 
   # cancelation reason is: buyer_rejected
   BUYER_REJECTED
+
+  # cancelation reason is: funds_not_received
+  FUNDS_NOT_RECEIVED
 
   # cancelation reason is: seller_lapsed
   SELLER_LAPSED
@@ -4537,6 +4541,7 @@ type CommerceOfferOrder implements CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   conversation: Conversation
   createdAt(
     format: String
@@ -4769,6 +4774,7 @@ interface CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   createdAt(
     format: String
 
