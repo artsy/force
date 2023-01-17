@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc851d24abcc67626a6158ef0b56e6bd>>
+ * @generated SignedSource<<efdc2f39df29f9996c1e4f8261594b5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem$data = {
   readonly artwork: {
-    readonly artistNames: string | null;
     readonly attribution_class: {
       readonly shortDescription: string | null;
     } | null;
@@ -28,6 +27,12 @@ export type ItemReview_lineItem$data = {
       } | null;
       readonly internalID: string;
     } | null> | null;
+  } | null;
+  readonly artworkVersion: {
+    readonly artistNames: string | null;
+    readonly attributionClass: {
+      readonly shortDescription: string | null;
+    } | null;
     readonly image: {
       readonly resized: {
         readonly url: string;
@@ -45,7 +50,16 @@ export type ItemReview_lineItem$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "shortDescription",
+    "storageKey": null
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
@@ -88,6 +102,54 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        },
+        {
+          "alias": "attribution_class",
+          "args": null,
+          "concreteType": "AttributionClass",
+          "kind": "LinkedField",
+          "name": "attributionClass",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": null
+        },
+        (v1/*: any*/),
+        {
+          "alias": "edition_sets",
+          "args": null,
+          "concreteType": "EditionSet",
+          "kind": "LinkedField",
+          "name": "editionSets",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkVersion",
+      "kind": "LinkedField",
+      "name": "artworkVersion",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "artistNames",
           "storageKey": null
         },
@@ -102,33 +164,17 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "date",
+          "name": "medium",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "medium",
-          "storageKey": null
-        },
-        (v0/*: any*/),
-        {
-          "alias": "attribution_class",
-          "args": null,
           "concreteType": "AttributionClass",
           "kind": "LinkedField",
           "name": "attributionClass",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "shortDescription",
-              "storageKey": null
-            }
-          ],
+          "selections": (v0/*: any*/),
           "storageKey": null
         },
         {
@@ -165,25 +211,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": "edition_sets",
-          "args": null,
-          "concreteType": "EditionSet",
-          "kind": "LinkedField",
-          "name": "editionSets",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            },
-            (v0/*: any*/)
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -201,6 +228,6 @@ return {
 };
 })();
 
-(node as any).hash = "21a2e52e8eb6eaafb635eaa2a27ed561";
+(node as any).hash = "96df8ff25b6eaf3f6643228f8cfe4f71";
 
 export default node;
