@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<154625b0ee6d03de3daeb001f2887890>>
+ * @generated SignedSource<<76abf364005dcab209ff938d4cda78a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -439,6 +439,7 @@ return {
         "viewer.notifications.edges.node.message": (v4/*: any*/),
         "viewer.notifications.edges.node.notificationType": {
           "enumValues": [
+            "ARTICLE_FEATURED_ARTIST",
             "ARTWORK_ALERT",
             "ARTWORK_PUBLISHED",
             "PARTNER_SHOW_OPENED",
