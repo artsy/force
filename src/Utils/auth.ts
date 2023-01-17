@@ -131,6 +131,7 @@ export const signUp = async (args: {
   name: string
   email: string
   password: string
+  agreedToReceiveEmails?: boolean
 }) => {
   const signUpUrl = `${getENV("APP_URL")}${getENV("AP").signupPagePath}`
 
@@ -145,13 +146,14 @@ export const signUp = async (args: {
     method: "POST",
     credentials: "same-origin",
     body: JSON.stringify({
-      name: args.name,
-      email: args.email,
-      password: args.password,
-      session_id: getENV("SESSION_ID"),
       _csrf: Cookies.get("CSRF_TOKEN"),
+      agreed_to_receive_emails: args.agreedToReceiveEmails,
       accepted_terms_of_service: true,
+      email: args.email,
+      name: args.name,
+      password: args.password,
       recaptcha_token: recaptchaToken,
+      session_id: getENV("SESSION_ID"),
     }),
   }).then(async response => {
     if (response.ok) {
