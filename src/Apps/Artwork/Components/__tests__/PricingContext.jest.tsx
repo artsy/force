@@ -13,11 +13,17 @@ import Waypoint from "react-waypoint"
 import {
   PricingContext,
   PricingContextFragmentContainer,
-} from "../PricingContext"
+} from "Apps/Artwork/Components/PricingContext"
 import { flushPromiseQueue } from "DevTools"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalDialog: ({ children }) => children,
+  }
+})
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const mockPricingContext: PricingContextTestQuery$rawResponse["artwork"]["pricingContext"] = {

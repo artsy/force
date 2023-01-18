@@ -1,4 +1,12 @@
-import { Join, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Join,
+  Separator,
+  Skeleton,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { FollowArtistPopover_artist$data } from "__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "System"
@@ -6,6 +14,8 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+// FIXME: Remove usage of unstated
+// eslint-disable-next-line no-restricted-imports
 import { Provider } from "unstated"
 import {
   FollowArtistPopoverRowFragmentContainer,
@@ -35,7 +45,9 @@ const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
 
   return (
     <Provider inject={[new FollowArtistPopoverState({ excludeArtistIds })]}>
-      <Spacer y={1} />
+      <Text variant="lg-display">Other artists you might like</Text>
+
+      <Spacer y={2} />
 
       <Join separator={<Separator my={1} />}>
         {suggestedArtists.map(artist => {
@@ -85,43 +97,49 @@ export const FollowArtistPopoverQueryRenderer = ({
   const { relayEnvironment, user } = useContext(SystemContext)
 
   return (
-    <SystemQueryRenderer<FollowArtistPopoverQuery>
-      environment={relayEnvironment}
-      variables={{ artistID }}
-      placeholder={<FollowArtistPopoverPlaceholder />}
-      query={graphql`
-        query FollowArtistPopoverQuery($artistID: String!) {
-          artist(id: $artistID) {
-            ...FollowArtistPopover_artist
+    <Box width={350}>
+      <SystemQueryRenderer<FollowArtistPopoverQuery>
+        environment={relayEnvironment}
+        variables={{ artistID }}
+        placeholder={<FollowArtistPopoverPlaceholder />}
+        query={graphql`
+          query FollowArtistPopoverQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...FollowArtistPopover_artist
+            }
           }
-        }
-      `}
-      render={({ props }) => {
-        if (props?.artist) {
-          return (
-            <FollowArtistPopoverFragmentContainer
-              artist={props.artist}
-              user={user}
-            />
-          )
-        }
+        `}
+        render={({ props }) => {
+          if (props?.artist) {
+            return (
+              <FollowArtistPopoverFragmentContainer
+                artist={props.artist}
+                user={user}
+              />
+            )
+          }
 
-        return <FollowArtistPopoverPlaceholder />
-      }}
-    />
+          return <FollowArtistPopoverPlaceholder />
+        }}
+      />
+    </Box>
   )
 }
 
 export const FollowArtistPopoverPlaceholder: React.FC = () => {
   return (
-    <>
-      <Spacer y={1} />
+    <Skeleton>
+      <SkeletonText variant="lg-display">
+        Other artists you might like
+      </SkeletonText>
+
+      <Spacer y={2} />
 
       <Join separator={<Separator my={1} />}>
         <FollowArtistPopoverRowPlaceholder />
         <FollowArtistPopoverRowPlaceholder />
         <FollowArtistPopoverRowPlaceholder />
       </Join>
-    </>
+    </Skeleton>
   )
 }
