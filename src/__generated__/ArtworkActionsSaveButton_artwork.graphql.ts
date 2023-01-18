@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fc374ef8ac9f4e811dfbbb304fbe8f2>>
+ * @generated SignedSource<<3e2c0d80722a901e9b0d118334bbdab2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type ArtworkActionsSaveButton_artwork$data = {
     readonly isLiveOpen: boolean | null;
     readonly isRegistrationClosed: boolean | null;
     readonly liveStartAt: string | null;
-    readonly registrationEndsAt: string | null;
     readonly registrationStatus: {
       readonly qualifiedForBidding: boolean | null;
     } | null;
@@ -123,13 +122,6 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "registrationEndsAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "Bidder",
           "kind": "LinkedField",
           "name": "registrationStatus",
@@ -165,6 +157,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c1a70c696ebb89f2e9b17653d134f268";
+(node as any).hash = "9177039c8ed31bc810f7568c56ddc54f";
 
 export default node;
