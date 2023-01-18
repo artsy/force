@@ -11,7 +11,9 @@ import {
   GridColumns,
   Image,
   ResponsiveBox,
+  Spacer,
   Text,
+  TimerIcon,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { SystemContextProps, useSystemContext } from "System"
@@ -30,6 +32,7 @@ export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
   filtersAtDefault: boolean
   showArtistName?: boolean
+  featureflag?: boolean
 }
 
 export const ArtistAuctionResultItem: FC<Props> = props => {
@@ -37,6 +40,34 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
   const { pathname } = useRouter().match.location
 
   const [expanded, setExpanded] = useState(false)
+
+  const {
+    showArtistName,
+    auctionResult: {
+      images,
+      date_text,
+      organization,
+      title,
+      mediumText,
+      saleDate,
+      artist,
+      dimension_text,
+      categoryText,
+      saleTitle,
+      location,
+      lotNumber,
+    },
+    salePrice,
+    estimatedPrice,
+    filtersAtDefault,
+  } = getProps(props)
+
+  const dateOfSale = getDisplaySaleDate(saleDate)
+  const image = images?.larger?.cropped
+  const artistName = artist?.name
+
+  // TODO:
+  const featureflag = true
 
   const toggle = () => {
     const expand = !expanded
@@ -53,6 +84,85 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
     } else {
       trackClickedAuctionResultItem(expand)
     }
+  }
+
+  if (featureflag) {
+    return (
+      <>
+        <Box width="100%">
+          <GridColumns>
+            <Column span={2}>
+              <ResponsiveBox
+                aspectWidth={1}
+                aspectHeight={1}
+                maxWidth={130}
+                bg="black10"
+              >
+                {image && (
+                  <Image
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    width="100%"
+                    height="100%"
+                    alt=""
+                    lazyLoad
+                  />
+                )}
+              </ResponsiveBox>
+            </Column>
+
+            <Column span={4}>
+              {!!showArtistName && (
+                <Text variant="sm-display">{artistName}</Text>
+              )}
+
+              <Text variant="sm-display">
+                <i>{title?.trim()}</i>
+                {date_text &&
+                  date_text.replace(/\s+/g, "").length > 0 &&
+                  ", " + date_text}
+              </Text>
+
+              {mediumText !== "Unknown" && (
+                <Text variant="xs" color="black60">
+                  {mediumText}
+                </Text>
+              )}
+
+              {dimension_text && (
+                <Text variant="xs" color="black60">
+                  {dimension_text}
+                </Text>
+              )}
+            </Column>
+
+            <Column span={3}>
+              <Text variant="sm-display">{dateOfSale}</Text>
+
+              <Text variant="xs" color="black60">
+                {organization}
+                {!!location && ` • ${location}`}
+              </Text>
+
+              <Text variant="xs" color="black60">
+                {saleTitle}
+              </Text>
+
+              <Text variant="xs" color="black60">
+                Lot {lotNumber}
+              </Text>
+            </Column>
+
+            <Column span={3} display="flex" justifyContent="flex-end">
+              <ArtistAuctionResultItemPrice
+                {...props}
+                featureflag={featureflag}
+              />
+            </Column>
+          </GridColumns>
+        </Box>
+      </>
+    )
   }
 
   return (
@@ -99,7 +209,7 @@ const ArtistAuctionResultItemTop: FC<Props> = props => {
           aspectWidth={1}
           aspectHeight={1}
           maxWidth={100}
-          bg="black10"
+          bg="black05"
         >
           {image && (
             <Image
@@ -198,6 +308,10 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         estimate {
           display
         }
+        location
+        lotNumber
+        saleTitle
+        isUpcoming
       }
     `,
   }
@@ -208,8 +322,11 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
     filtersAtDefault,
     salePrice,
     salePriceUSD,
-    auctionResult: { saleDate, currency, performance, boughtIn },
+    auctionResult: { saleDate, currency, performance, boughtIn, isUpcoming },
+    estimatedPrice,
   } = getProps(props)
+
+  const featureFlag = props.featureflag
 
   const { user, mediator } = useContext(SystemContext)
 
@@ -218,6 +335,68 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
     const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
     const awaitingResults = dateOfSale > DateTime.local()
     const showPriceUSD = salePriceUSD && currency !== "USD"
+
+    if (featureFlag) {
+      if (isUpcoming) {
+        return (
+          <Box textAlign="right">
+            <Text variant="sm-display">
+              {estimatedPrice ? (
+                `${estimatedPrice} (est)`
+              ) : (
+                <i>Estimate not available</i>
+              )}
+            </Text>
+          </Box>
+        )
+      }
+      return (
+        <Box textAlign="right">
+          {salePrice && (
+            <Text variant="sm-display">
+              {salePrice}
+              {showPriceUSD ? ` • ${salePriceUSD}` : ""}
+            </Text>
+          )}
+
+          {!salePrice && boughtIn && (
+            <Text variant="sm-display">
+              <i>Bought In</i>
+            </Text>
+          )}
+
+          {!salePrice && awaitingResults && (
+            <Flex
+              flexDirection="row"
+              justifyContent={"flex-end"}
+              alignItems="center"
+            >
+              <TimerIcon fill="black100" width={16} height={16} />
+
+              <Spacer x="4px" />
+
+              <Text variant="sm-display">
+                <i>Awaiting results</i>
+              </Text>
+            </Flex>
+          )}
+
+          {!salePrice && !boughtIn && !awaitingResults && (
+            <Text variant="sm-display">
+              <i>Price not available</i>
+            </Text>
+          )}
+
+          {!!estimatedPrice && (
+            <Text variant="xs" color="black60">
+              {estimatedPrice} (est)
+            </Text>
+          )}
+
+          <AuctionResultPerformance value={performance?.mid!} align="right" />
+        </Box>
+      )
+    }
 
     return (
       <Box textAlign="right" mb={0.5} mr={0.5}>

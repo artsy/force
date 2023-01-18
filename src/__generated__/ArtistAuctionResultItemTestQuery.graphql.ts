@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c65095a319ee2249e7daa56938fff3b4>>
+ * @generated SignedSource<<6aaabe40e3b831f0af2cd83bdcb9dea2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -364,6 +364,34 @@ return {
                         ],
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "location",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "lotNumber",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "saleTitle",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isUpcoming",
+                        "storageKey": null
+                      },
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -381,12 +409,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "622159ac7364f50d790a7e0b974d98f4",
+    "cacheID": "c7e1d52f894708e9f8029d402d4de68d",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResultItemTestQuery",
     "operationKind": "query",
-    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n"
+    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
   }
 };
 })();

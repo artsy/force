@@ -1,4 +1,4 @@
-import { Text, IncreaseIcon, Flex, DecreaseIcon, Spacer } from "@artsy/palette"
+import { Text, Flex } from "@artsy/palette"
 
 export const AuctionResultPerformance = ({
   value,
@@ -11,10 +11,9 @@ export const AuctionResultPerformance = ({
     return null
   }
 
-  const sign = value[0] === "-" ? "down" : "up"
-  const color = sign === "up" ? "green100" : "red100"
-  const text = sign === "up" ? value : value.slice(1)
-  const Arrow = sign === "up" ? IncreaseIcon : DecreaseIcon
+  const sign = value[0] === "-" ? "-" : "+"
+  const color = sign === "+" ? "green100" : "red100"
+  const text = sign === "+" ? value : value.slice(1)
 
   return (
     <Flex
@@ -22,11 +21,8 @@ export const AuctionResultPerformance = ({
       justifyContent={align === "right" ? "flex-end" : undefined}
       alignItems="baseline"
     >
-      <Arrow fill={color} width={10} height={10} />
-
-      <Spacer x="3px" />
-
-      <Text variant="xs" fontWeight="medium" color={color}>
+      <Text variant="sm-display" fontWeight="medium" color={color}>
+        {sign}
         {text} est
       </Text>
     </Flex>

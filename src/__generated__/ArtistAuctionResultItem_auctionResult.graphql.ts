@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1facfb0a8d09bd1bacb963a732594db>>
+ * @generated SignedSource<<fc0f73532cb6d67f3c3e7cc127f73f1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,9 @@ export type ArtistAuctionResultItem_auctionResult$data = {
       } | null;
     } | null;
   } | null;
+  readonly isUpcoming: boolean | null;
+  readonly location: string | null;
+  readonly lotNumber: string | null;
   readonly mediumText: string | null;
   readonly organization: string | null;
   readonly performance: {
@@ -43,6 +46,7 @@ export type ArtistAuctionResultItem_auctionResult$data = {
     readonly display_usd: string | null;
   } | null;
   readonly saleDate: string | null;
+  readonly saleTitle: string | null;
   readonly title: string | null;
   readonly " $fragmentType": "ArtistAuctionResultItem_auctionResult";
 };
@@ -273,6 +277,34 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "location",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lotNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleTitle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUpcoming",
+      "storageKey": null
     }
   ],
   "type": "AuctionResult",
@@ -280,6 +312,6 @@ return {
 };
 })();
 
-(node as any).hash = "ca855de874c5dbd389b7615f1e1f1265";
+(node as any).hash = "86da99bbb294fb206ca563fdb592966a";
 
 export default node;
