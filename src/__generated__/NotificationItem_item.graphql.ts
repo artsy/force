@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e2a3a9e0f3f74f582ca482cee08ac7c>>
+ * @generated SignedSource<<2281006f908d1c1176e0ee93af2d54fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,8 @@ export type NotificationItem_item$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly id: string;
+  readonly internalID: string;
   readonly isUnread: boolean;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
@@ -45,6 +47,13 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 };
@@ -54,7 +63,15 @@ return {
   "metadata": null,
   "name": "NotificationItem_item",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -133,14 +150,8 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
                 (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -203,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "1cd24fdc7ec71bb7334d69135fbfd0ce";
+(node as any).hash = "d329f50b2438b6a5cfd93b5cec50eb7b";
 
 export default node;

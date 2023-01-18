@@ -7,6 +7,11 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import { useSystemContext } from "System"
+import createLogger from "Utils/logger"
+import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+
+const logger = createLogger("NotificationItem")
 
 interface NotificationItemProps {
   item: NotificationItem_item$data
@@ -16,6 +21,7 @@ const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const { trackEvent } = useTracking()
+  const { relayEnvironment } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = item.objectsCount - 4
 
@@ -31,16 +37,39 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   }
   const notificationTypeLabel = getNotificationType()
 
+  const markAsRead = async () => {
+    if (!relayEnvironment) {
+      return
+    }
+
+    try {
+      const response = await markNotificationAsRead(
+        relayEnvironment,
+        item.id,
+        item.internalID
+      )
+      const responseOrError = response.markNotificationAsRead?.responseOrError
+      const errorMessage = responseOrError?.mutationError?.message
+
+      if (errorMessage) {
+        throw new Error(errorMessage)
+      }
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  const handlePress = () => {
+    markAsRead()
+
+    trackEvent({
+      action: ActionType.clickedActivityPanelNotificationItem,
+      notification_type: item.notificationType,
+    })
+  }
+
   return (
-    <NotificationItemLink
-      to={item.targetHref}
-      onClick={() => {
-        trackEvent({
-          action: ActionType.clickedActivityPanelNotificationItem,
-          notification_type: item.notificationType,
-        })
-      }}
-    >
+    <NotificationItemLink to={item.targetHref} onClick={handlePress}>
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {notificationTypeLabel && (
@@ -112,6 +141,8 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
   {
     item: graphql`
       fragment NotificationItem_item on Notification {
+        id
+        internalID
         title
         message
         publishedAt(format: "RELATIVE")
