@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ba3f5ce166a14b57ab1f63965f32501>>
+ * @generated SignedSource<<e38421086f679684a268f8f196843577>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchasesRow_order$data = {
@@ -77,6 +78,7 @@ export type SettingsPurchasesRow_order$data = {
   readonly requestedFulfillment: {
     readonly __typename: string;
   } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "SettingsPurchasesRow_order";
 };
@@ -144,6 +146,13 @@ return {
   "metadata": null,
   "name": "SettingsPurchasesRow_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -452,6 +461,6 @@ return {
 };
 })();
 
-(node as any).hash = "358468f62a7ebc385fbba3df2a4390fb";
+(node as any).hash = "3a4c1cbefcb8dfa253df76b32a82c09f";
 
 export default node;
