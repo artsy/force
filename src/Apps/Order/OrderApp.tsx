@@ -99,7 +99,7 @@ const OrderApp: FC<OrderAppProps> = props => {
   const isModal = !!props.match?.location.query.isModal
   const artwork = extractNodes(order.lineItems!)[0].artwork
   const logoClickRedirectPath =
-    order.source === "private_sale" ? artwork?.href! : artwork?.href!
+    order.source === "private_sale" ? "/" : artwork?.href!
 
   return (
     <Box>
