@@ -17,6 +17,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
   }
 
   const {
+    source,
     paymentMethod,
     displayState,
     state,
@@ -30,6 +31,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
   const isArtaShipped: boolean =
     requestedFulfillment?.__typename === "CommerceShipArta"
   const isWireTransfer = paymentMethod === "WIRE_TRANSFER"
+  const isPrivateSaleOrder = source === "private_sale"
 
   switch (displayState) {
     case "SUBMITTED":
@@ -76,13 +78,17 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
       }
     case "PROCESSING_APPROVAL":
       return {
-        title: `${processingApprovalTitle(isOfferFlow, isWireTransfer)}`,
-        description: isWireTransfer ? null : (
-          <>
-            Thank you for your purchase. {deliverText(order)}More delivery
-            information will be available once your order ships.
-          </>
-        ),
+        title: `${processingApprovalTitle(
+          isOfferFlow,
+          isWireTransfer,
+          isPrivateSaleOrder
+        )}`,
+        description: `${processingApprovalDescription(
+          order,
+          isWireTransfer,
+          isPrivateSaleOrder,
+          paymentMethod
+        )}`,
         alertMessageTitle: isWireTransfer
           ? "Please proceed with the wire transfer to complete your purchase"
           : null,
@@ -101,10 +107,21 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
               2. &nbsp;Please inform your bank that you will be responsible for
               all wire transfer fees.
             </Text>
-            <Text>
-              3. &nbsp;Once you have made the transfer, please email
-              orders@artsy.net with your proof of payment.
-            </Text>
+
+            {isPrivateSaleOrder ? (
+              <Text>
+                3. &nbsp;Once you have made the transfer, email proof of payment
+                to{" "}
+                <RouterLink to="privatesales@artsy.net">
+                  privatesales@artsy.net.
+                </RouterLink>
+              </Text>
+            ) : (
+              <Text>
+                3. &nbsp;Once you have made the transfer, please email
+                orders@artsy.net with your proof of payment.
+              </Text>
+            )}
           </>
         ) : null,
         content: isWireTransfer ? (
@@ -134,7 +151,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             <Text>420 Montgomery Street</Text>
             <Text>San Francisco, CA 9410</Text>
             <Spacer y={2} />
-            <Text fontStyle="italic">
+            <Text color="#1023D7">
               Add order number #{order.code} to the notes section in your wire
               transfer.
             </Text>
@@ -341,17 +358,46 @@ export const approvedTitle = (isOfferFlow): string => {
 
 export const processingApprovalTitle = (
   isOfferFlow,
-  isWireTransfer
+  isWireTransfer,
+  isPrivateSaleOrder
 ): string => {
+  if (isPrivateSaleOrder) {
+    return "Thank you for your purchase with Artsy Private Sales."
+  }
+
   if (isWireTransfer) {
-    return isOfferFlow
-      ? "Thank you, your offer has been accepted"
-      : "Thank you, your order has been accepted"
+    if (isOfferFlow) {
+      return "Thank you, your offer has been accepted"
+    }
+
+    return "Thank you, your order has been accepted"
   }
 
   return isOfferFlow
     ? "Offer accepted. Payment processing."
     : "Your order is confirmed. Payment processing."
+}
+
+export const processingApprovalDescription = (
+  order,
+  isWireTransfer,
+  isPrivateSaleOrder,
+  paymentMethod
+): string | null => {
+  if (isWireTransfer) {
+    return null
+  }
+
+  if (isPrivateSaleOrder) {
+    if (paymentMethod === "US_BANK_ACCOUNT") {
+      return "Find the details of your purchase below. We will email you with next steps shortly."
+    }
+
+    return "Thank you for your purchase. We will email you with next steps shortly."
+  }
+
+  return `Thank you for your purchase. ${deliverText(order)}More delivery
+  information will be available once your order ships.`
 }
 
 export const deliverText = (order): React.ReactNode => {

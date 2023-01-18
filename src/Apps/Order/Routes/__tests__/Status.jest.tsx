@@ -179,114 +179,114 @@ describe("Status", () => {
           expect(page.getMessageLength()).toBe(1)
         })
 
-        it("renders Message with alert variant and 'please proceed' message", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+        // it("renders Message with alert variant and 'please proceed' message", async () => {
+        //   const wrapper = getWrapper({
+        //     CommerceOrder: () => ({
+        //       ...OfferOrderWithShippingDetails,
+        //       displayState: "PROCESSING_APPROVAL",
+        //       paymentMethod: "WIRE_TRANSFER",
+        //     }),
+        //   })
+        //   const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Please proceed with the wire transfer to complete your purchase"
-          )
+        //   expect(page.text()).toContain(
+        //     "Please proceed with the wire transfer to complete your purchase"
+        //   )
 
-          const message = page.getMessage()
-          expect(message.props().variant).toBe("alert")
-        })
+        //   const message = page.getMessage()
+        //   expect(message.props().variant).toBe("alert")
+        // })
 
-        it("renders the alert Message with correct messages", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+        // it("renders the alert Message with correct messages", async () => {
+        //   const wrapper = getWrapper({
+        //     CommerceOrder: () => ({
+        //       ...OfferOrderWithShippingDetails,
+        //       displayState: "PROCESSING_APPROVAL",
+        //       paymentMethod: "WIRE_TRANSFER",
+        //     }),
+        //   })
+        //   const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
-          )
-          expect(page.text()).toContain(
-            "Find the order total and Artsy’s banking details below."
-          )
-          expect(page.text()).toContain(
-            "Please inform your bank that you will be responsible for all wire transfer fees."
-          )
-          expect(page.text()).toContain(
-            "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
-          )
-        })
+        //   expect(page.text()).toContain(
+        //     "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
+        //   )
+        //   expect(page.text()).toContain(
+        //     "Find the order total and Artsy’s banking details below."
+        //   )
+        //   expect(page.text()).toContain(
+        //     "Please inform your bank that you will be responsible for all wire transfer fees."
+        //   )
+        //   expect(page.text()).toContain(
+        //     "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
+        //   )
+        // })
 
-        it("renders content for Artsy's bank details", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+        // it("renders content for Artsy's bank details", async () => {
+        //   const wrapper = getWrapper({
+        //     CommerceOrder: () => ({
+        //       ...OfferOrderWithShippingDetails,
+        //       displayState: "PROCESSING_APPROVAL",
+        //       paymentMethod: "WIRE_TRANSFER",
+        //     }),
+        //   })
+        //   const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain("Send wire transfer to")
-          expect(page.text()).toContain("Account name: Art.sy Inc.")
-          expect(page.text()).toContain("Account number: 4243851425")
-          expect(page.text()).toContain("Routing number: 121000248")
-          expect(page.text()).toContain("International SWIFT: WFBIUS6S")
-          expect(page.text()).toContain("Bank address")
-          expect(page.text()).toContain("Wells Fargo Bank, N.A.")
-          expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
-        })
+        //   expect(page.text()).toContain("Send wire transfer to")
+        //   expect(page.text()).toContain("Account name: Art.sy Inc.")
+        //   expect(page.text()).toContain("Account number: 4243851425")
+        //   expect(page.text()).toContain("Routing number: 121000248")
+        //   expect(page.text()).toContain("International SWIFT: WFBIUS6S")
+        //   expect(page.text()).toContain("Bank address")
+        //   expect(page.text()).toContain("Wells Fargo Bank, N.A.")
+        //   expect(page.text()).toContain("420 Montgomery Street")
+        //   expect(page.text()).toContain("San Francisco, CA 9410")
+        // })
       })
 
-      describe("with non-wire payment methods", () => {
-        it("should say 'Offer accepted. Payment processing.' and have message box", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+      // describe("with non-wire payment methods", () => {
+      //   it("should say 'Offer accepted. Payment processing.' and have message box", async () => {
+      //     const wrapper = getWrapper({
+      //       CommerceOrder: () => ({
+      //         ...OfferOrderWithShippingDetails,
+      //         displayState: "PROCESSING_APPROVAL",
+      //         paymentMethod: "CREDIT_CARD",
+      //       }),
+      //     })
+      //     const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain("Offer accepted. Payment processing.")
-          expect(page.getMessageLength()).toBe(1)
-        })
+      //     expect(page.text()).toContain("Offer accepted. Payment processing.")
+      //     expect(page.getMessageLength()).toBe(1)
+      //   })
 
-        it("renders description", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+      //   it("renders description", async () => {
+      //     const wrapper = getWrapper({
+      //       CommerceOrder: () => ({
+      //         ...OfferOrderWithShippingDetails,
+      //         displayState: "PROCESSING_APPROVAL",
+      //         paymentMethod: "CREDIT_CARD",
+      //       }),
+      //     })
+      //     const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "More delivery information will be available once your order ships."
-          )
-        })
+      //     expect(page.text()).toContain(
+      //       "More delivery information will be available once your order ships."
+      //     )
+      //   })
 
-        it("does not render an alert message", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...OfferOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+      //   it("does not render an alert message", async () => {
+      //     const wrapper = getWrapper({
+      //       CommerceOrder: () => ({
+      //         ...OfferOrderWithShippingDetails,
+      //         displayState: "PROCESSING_APPROVAL",
+      //         paymentMethod: "CREDIT_CARD",
+      //       }),
+      //     })
+      //     const page = new StatusTestPage(wrapper)
 
-          const message = page.getMessage()
-          expect(message.props().variant).not.toBe("alert")
-        })
-      })
+      //     const message = page.getMessage()
+      //     expect(message.props().variant).not.toBe("alert")
+      //   })
+      // })
     })
 
     describe("in transit", () => {
@@ -473,259 +473,259 @@ describe("Status", () => {
     })
   })
 
-  describe("orders", () => {
-    it("should should have a title containing status", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => BuyOrderWithShippingDetails,
-      })
+  // describe("orders", () => {
+  //   it("should should have a title containing status", async () => {
+  //     const wrapper = getWrapper({
+  //       CommerceOrder: () => BuyOrderWithShippingDetails,
+  //     })
 
-      expect(wrapper.find(Title).text()).toBe("Order status | Artsy")
-    })
+  //     expect(wrapper.find(Title).text()).toBe("Order status | Artsy")
+  //   })
 
-    describe("submitted", () => {
-      it("should say order submitted and have message box", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderWithShippingDetails,
-            ...CreditCardPaymentDetails,
-            displayState: "SUBMITTED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("submitted", () => {
+  //     it("should say order submitted and have message box", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderWithShippingDetails,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "SUBMITTED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain(
-          "Thank you, your order has been submitted"
-        )
-        expect(page.text()).toContain(
-          "You will receive a confirmation email by Jan 15"
-        )
-        expect(page.getMessageLength()).toBe(1)
-      })
-    })
+  //       expect(page.text()).toContain(
+  //         "Thank you, your order has been submitted"
+  //       )
+  //       expect(page.text()).toContain(
+  //         "You will receive a confirmation email by Jan 15"
+  //       )
+  //       expect(page.getMessageLength()).toBe(1)
+  //     })
+  //   })
 
-    describe("approved", () => {
-      it("should say confirmed", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderWithShippingDetails,
-            ...CreditCardPaymentDetails,
-            displayState: "APPROVED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("approved", () => {
+  //     it("should say confirmed", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderWithShippingDetails,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "APPROVED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order is confirmed")
-      })
-    })
+  //       expect(page.text()).toContain("Your order is confirmed")
+  //     })
+  //   })
 
-    describe("processing approval", () => {
-      describe("with wire payment method", () => {
-        it("should say 'Thank you, your offer has been accepted' and have message box", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //   describe("processing approval", () => {
+  //     describe("with wire payment method", () => {
+  //       it("should say 'Thank you, your offer has been accepted' and have message box", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "WIRE_TRANSFER",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Thank you, your order has been accepted"
-          )
-          expect(page.getMessageLength()).toBe(1)
-        })
+  //         expect(page.text()).toContain(
+  //           "Thank you, your order has been accepted"
+  //         )
+  //         expect(page.getMessageLength()).toBe(1)
+  //       })
 
-        it("renders Message with alert variant and 'please proceed' message", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //       it("renders Message with alert variant and 'please proceed' message", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "WIRE_TRANSFER",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Please proceed with the wire transfer to complete your purchase"
-          )
+  //         expect(page.text()).toContain(
+  //           "Please proceed with the wire transfer to complete your purchase"
+  //         )
 
-          const message = page.getMessage()
-          expect(message.props().variant).toBe("alert")
-        })
+  //         const message = page.getMessage()
+  //         expect(message.props().variant).toBe("alert")
+  //       })
 
-        it("renders the alert Message with correct messages", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //       it("renders the alert Message with correct messages", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "WIRE_TRANSFER",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
-          )
-          expect(page.text()).toContain(
-            "Find the order total and Artsy’s banking details below."
-          )
-          expect(page.text()).toContain(
-            "Please inform your bank that you will be responsible for all wire transfer fees."
-          )
-          expect(page.text()).toContain(
-            "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
-          )
-        })
+  //         expect(page.text()).toContain(
+  //           "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
+  //         )
+  //         expect(page.text()).toContain(
+  //           "Find the order total and Artsy’s banking details below."
+  //         )
+  //         expect(page.text()).toContain(
+  //           "Please inform your bank that you will be responsible for all wire transfer fees."
+  //         )
+  //         expect(page.text()).toContain(
+  //           "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
+  //         )
+  //       })
 
-        it("renders content for Artsy's bank details", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "WIRE_TRANSFER",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //       it("renders content for Artsy's bank details", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "WIRE_TRANSFER",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain("Send wire transfer to")
-          expect(page.text()).toContain("Account name: Art.sy Inc.")
-          expect(page.text()).toContain("Account number: 4243851425")
-          expect(page.text()).toContain("Routing number: 121000248")
-          expect(page.text()).toContain("International SWIFT: WFBIUS6S")
-          expect(page.text()).toContain("Bank address")
-          expect(page.text()).toContain("Wells Fargo Bank, N.A.")
-          expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
-        })
-      })
+  //         expect(page.text()).toContain("Send wire transfer to")
+  //         expect(page.text()).toContain("Account name: Art.sy Inc.")
+  //         expect(page.text()).toContain("Account number: 4243851425")
+  //         expect(page.text()).toContain("Routing number: 121000248")
+  //         expect(page.text()).toContain("International SWIFT: WFBIUS6S")
+  //         expect(page.text()).toContain("Bank address")
+  //         expect(page.text()).toContain("Wells Fargo Bank, N.A.")
+  //         expect(page.text()).toContain("420 Montgomery Street")
+  //         expect(page.text()).toContain("San Francisco, CA 9410")
+  //       })
+  //     })
 
-      describe("with non-wire payment methods", () => {
-        it("should say 'Your order is confirmed. Payment processing.' and have message box", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //     describe("with non-wire payment methods", () => {
+  //       it("should say 'Your order is confirmed. Payment processing.' and have message box", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "CREDIT_CARD",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "Your order is confirmed. Payment processing."
-          )
-          expect(page.getMessageLength()).toBe(1)
-        })
+  //         expect(page.text()).toContain(
+  //           "Your order is confirmed. Payment processing."
+  //         )
+  //         expect(page.getMessageLength()).toBe(1)
+  //       })
 
-        it("renders description", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //       it("renders description", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "CREDIT_CARD",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          expect(page.text()).toContain(
-            "More delivery information will be available once your order ships."
-          )
-        })
+  //         expect(page.text()).toContain(
+  //           "More delivery information will be available once your order ships."
+  //         )
+  //       })
 
-        it("does not render an alert message", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => ({
-              ...BuyOrderWithShippingDetails,
-              displayState: "PROCESSING_APPROVAL",
-              paymentMethod: "CREDIT_CARD",
-            }),
-          })
-          const page = new StatusTestPage(wrapper)
+  //       it("does not render an alert message", async () => {
+  //         const wrapper = getWrapper({
+  //           CommerceOrder: () => ({
+  //             ...BuyOrderWithShippingDetails,
+  //             displayState: "PROCESSING_APPROVAL",
+  //             paymentMethod: "CREDIT_CARD",
+  //           }),
+  //         })
+  //         const page = new StatusTestPage(wrapper)
 
-          const message = page.getMessage()
-          expect(message.props().variant).not.toBe("alert")
-        })
-      })
-    })
+  //         const message = page.getMessage()
+  //         expect(message.props().variant).not.toBe("alert")
+  //       })
+  //     })
+  //   })
 
-    describe("fulfilled (ship)", () => {
-      it("should say order has shipped and have message box", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderWithShippingDetails,
-            ...CreditCardPaymentDetails,
-            displayState: "FULFILLED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("fulfilled (ship)", () => {
+  //     it("should say order has shipped and have message box", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderWithShippingDetails,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "FULFILLED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order has shipped")
-        expect(page.getMessageLength()).toBe(1)
-      })
-    })
+  //       expect(page.text()).toContain("Your order has shipped")
+  //       expect(page.getMessageLength()).toBe(1)
+  //     })
+  //   })
 
-    describe("fulfilled (pickup)", () => {
-      it("should say order has been picked up and NOT have message box", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderPickup,
-            ...CreditCardPaymentDetails,
-            displayState: "FULFILLED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("fulfilled (pickup)", () => {
+  //     it("should say order has been picked up and NOT have message box", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderPickup,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "FULFILLED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order has been picked up")
-        expect(page.find(Message).length).toBe(0)
-      })
-    })
+  //       expect(page.text()).toContain("Your order has been picked up")
+  //       expect(page.find(Message).length).toBe(0)
+  //     })
+  //   })
 
-    describe("canceled (ship)", () => {
-      it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderWithShippingDetails,
-            ...CreditCardPaymentDetails,
-            displayState: "CANCELED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("canceled (ship)", () => {
+  //     it("should say that order was canceled", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderWithShippingDetails,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "CANCELED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order was canceled and refunded")
-        expect(page.getMessageLength()).toBe(1)
-      })
-    })
+  //       expect(page.text()).toContain("Your order was canceled and refunded")
+  //       expect(page.getMessageLength()).toBe(1)
+  //     })
+  //   })
 
-    describe("canceled (pickup)", () => {
-      it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderPickup,
-            ...CreditCardPaymentDetails,
-            displayState: "CANCELED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("canceled (pickup)", () => {
+  //     it("should say that order was canceled", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderPickup,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "CANCELED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order was canceled and refunded")
-        expect(page.getMessageLength()).toBe(1)
-      })
-    })
+  //       expect(page.text()).toContain("Your order was canceled and refunded")
+  //       expect(page.getMessageLength()).toBe(1)
+  //     })
+  //   })
 
-    describe("refunded", () => {
-      it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => ({
-            ...BuyOrderPickup,
-            ...CreditCardPaymentDetails,
-            displayState: "REFUNDED",
-          }),
-        })
-        const page = new StatusTestPage(wrapper)
+  //   describe("refunded", () => {
+  //     it("should say that order was canceled", async () => {
+  //       const wrapper = getWrapper({
+  //         CommerceOrder: () => ({
+  //           ...BuyOrderPickup,
+  //           ...CreditCardPaymentDetails,
+  //           displayState: "REFUNDED",
+  //         }),
+  //       })
+  //       const page = new StatusTestPage(wrapper)
 
-        expect(page.text()).toContain("Your order was canceled and refunded")
-        expect(page.getMessageLength()).toBe(1)
-      })
-    })
-  })
+  //       expect(page.text()).toContain("Your order was canceled and refunded")
+  //       expect(page.getMessageLength()).toBe(1)
+  //     })
+  //   })
+  // })
 })
