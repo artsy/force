@@ -40,6 +40,11 @@ export const useLocalImageState = () => {
   const [localImages, setLocalImages] = useState<Array<LocalImage>>([])
 
   const addLocalImage = (image: LocalImage) => {
+    // Don't add duplicates
+    if (localImages.find(localImage => localImage.photoID === image.photoID)) {
+      return
+    }
+
     setLocalImages([...localImages, image])
   }
   const removeLocalImage = (photoID: string) => {
