@@ -52,11 +52,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
         <Flex>
           <Text variant={"sm-display"}>Demand Index</Text>
 
-          <Tooltip
-            placement="top-start"
-            size="lg"
-            content={<Text variant="xs">{DemandIndexExplanation}</Text>}
-          >
+          <Tooltip placement="top-start" content={DemandIndexExplanation}>
             <Clickable ml={0.5} style={{ lineHeight: 0 }}>
               <InfoCircleIcon />
             </Clickable>
