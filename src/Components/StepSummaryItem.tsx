@@ -23,17 +23,14 @@ const LockIconPositioner = styled(Flex)`
   right: 0;
 `
 
-export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
+export const StepSummaryItem: React.FC<StepSummaryItemProps> = ({
   title,
   onChange,
-  orderSource,
   children,
   locked,
   ...others
 }) => {
   const showHeading = title || (onChange && !locked)
-  const allowChangeShipping =
-    !locked && onChange && orderSource !== "private_sale"
 
   return (
     <StackableBorderBox
@@ -52,7 +49,7 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
               {title}
             </Text>
           )}
-          {allowChangeShipping && (
+          {!locked && onChange && (
             <Clickable
               data-test="change-link"
               textDecoration="underline"

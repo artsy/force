@@ -15,7 +15,7 @@ import { ShippingAddressFragmentContainer as ShippingAddress } from "./ShippingA
 const showPickupCopy = state => state !== "FULFILLED" && state !== "CANCELED"
 
 const ShippingSummaryItem = ({
-  order: { state, requestedFulfillment, lineItems, paymentMethod, source },
+  order: { state, requestedFulfillment, lineItems, paymentMethod },
   textColor = "black100",
   ...others
 }: {
@@ -36,7 +36,6 @@ const ShippingSummaryItem = ({
       }
       /* Fixes spacing issues with title when no pickup description copy is present */
       mb={showPickupCopy(state) ? undefined : -1}
-      orderSource={source}
       {...others}
     >
       {showPickupCopy(state) && (
@@ -56,7 +55,6 @@ export const ShippingSummaryItemFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment ShippingSummaryItem_order on CommerceOrder {
         state
-        source
         paymentMethod
         requestedFulfillment {
           __typename

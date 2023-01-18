@@ -418,6 +418,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <ShippingSummaryItem
                 order={order}
                 onChange={onChangeShippingAddress}
+                locked={order.source === "private_sale"}
               />
               <ShippingArtaSummaryItemFragmentContainer
                 order={order}
