@@ -13,7 +13,6 @@ import {
 export interface StepSummaryItemProps extends FlexProps {
   title?: React.ReactNode
   onChange?: () => void
-  orderSource?: string | null
   locked?: boolean
 }
 
