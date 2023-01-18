@@ -9,7 +9,6 @@ import {
   InfoCircleIcon,
   Tooltip,
   Spacer,
-  Text,
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
@@ -93,7 +92,7 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
+    <form onSubmit={handleSubmit}>
       <PaymentElement
         onReady={() => setIsStripePaymentElementLoading(false)}
         onChange={event => handlePaymentElementChange(event)}
@@ -106,7 +105,9 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
           },
         }}
       />
+
       <Spacer y={4} />
+
       {/* Display checkbox for saving account only for ACH */}
       {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
         <Flex>
@@ -117,14 +118,11 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
           >
             Save bank account for later use.
           </Checkbox>
-          <Flex>
-            <Tooltip
-              placement="top-start"
-              size="lg"
-              width={400}
-              content={
-                <Text fontSize={13} lineHeight={"18px"}>
-                  Thank you for signing up for direct debits from Artsy. You
+
+          <Tooltip
+            placement="top-start"
+            width={400}
+            content={`Thank you for signing up for direct debits from Artsy. You
                   have authorized Artsy and, if applicable, its affiliated
                   entities to debit the bank account specified above, on behalf
                   of sellers that use the Artsy website, for any amount owed for
@@ -132,24 +130,25 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
                   Artsy’s website and terms. You can change or cancel this
                   authorization at any time by providing Artsy with 30 (thirty)
                   days’ notice. By clicking “Save bank account for later use”,
-                  you authorize Artsy to save the bank account specified above.
-                </Text>
-              }
-            >
-              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                <InfoCircleIcon />
-              </Clickable>
-            </Tooltip>
-          </Flex>
+                  you authorize Artsy to save the bank account specified above.`}
+          >
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoCircleIcon />
+            </Clickable>
+          </Tooltip>
         </Flex>
       )}
 
       {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+
       <Spacer y={4} />
+
       <SaveAndContinueButton
         testId={`saveNew${upperFirst(camelCase(selectedPaymentMethod))}`}
         disabled={!stripe || bankAccountHasInsufficientFunds}
       />
+
+      {/* FIXME: Avoid external margins */}
       <Spacer y={2} />
     </form>
   )
