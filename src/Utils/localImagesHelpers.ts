@@ -11,6 +11,7 @@ export interface LocalImage {
   width: number
   height: number
   expirationDate?: string
+  photoID?: string
 }
 
 export type StoredImage = LocalImage

@@ -5,8 +5,8 @@ interface MyCollectionArtworkFormContextProps {
   onBack: () => void
   onNext?: (options?: { skipNext: boolean }) => void
   onSkip?: () => void
-  addLocalImage: (image: any) => void
-  removeLocalImage: (image: any) => void
+  addLocalImage: (image: LocalImage) => void
+  removeLocalImage: (photoID: string) => void
 }
 
 export const MyCollectionArtworkFormContext = createContext<
@@ -37,15 +37,13 @@ export const useMyCollectionArtworkFormContext = () => {
 }
 
 export const useLocalImageState = () => {
-  const [localImages, setLocalImages] = useState<
-    Array<LocalImage & { photoID: string }>
-  >([])
+  const [localImages, setLocalImages] = useState<Array<LocalImage>>([])
 
-  const addLocalImage = (image: any) => {
+  const addLocalImage = (image: LocalImage) => {
     setLocalImages([...localImages, image])
   }
   const removeLocalImage = (photoID: string) => {
-    setLocalImages(localImages.filter(i => i.photoID !== photoID))
+    setLocalImages(localImages.filter(image => image.photoID !== photoID))
   }
 
   return {
