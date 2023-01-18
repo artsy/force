@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efdc2f39df29f9996c1e4f8261594b5a>>
+ * @generated SignedSource<<487901bf5dc083e4908a10a0423e350d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem$data = {
   readonly artwork: {
-    readonly attribution_class: {
-      readonly shortDescription: string | null;
-    } | null;
     readonly date: string | null;
     readonly dimensions: {
       readonly cm: string | null;
@@ -50,16 +47,7 @@ export type ItemReview_lineItem$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "shortDescription",
-    "storageKey": null
-  }
-],
-v1 = {
+var v0 = {
   "alias": null,
   "args": null,
   "concreteType": "dimensions",
@@ -105,17 +93,7 @@ return {
           "name": "date",
           "storageKey": null
         },
-        {
-          "alias": "attribution_class",
-          "args": null,
-          "concreteType": "AttributionClass",
-          "kind": "LinkedField",
-          "name": "attributionClass",
-          "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": null
-        },
-        (v1/*: any*/),
+        (v0/*: any*/),
         {
           "alias": "edition_sets",
           "args": null,
@@ -131,7 +109,7 @@ return {
               "name": "internalID",
               "storageKey": null
             },
-            (v1/*: any*/)
+            (v0/*: any*/)
           ],
           "storageKey": null
         }
@@ -174,7 +152,15 @@ return {
           "kind": "LinkedField",
           "name": "attributionClass",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "shortDescription",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         },
         {
@@ -228,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "96df8ff25b6eaf3f6643228f8cfe4f71";
+(node as any).hash = "75f9c26984f79c37602c39fb3da9413c";
 
 export default node;

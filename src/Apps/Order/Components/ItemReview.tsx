@@ -25,8 +25,6 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
       dimensions: artworkDimensions,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       edition_sets,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      attribution_class,
     },
     artworkVersion: {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -39,6 +37,8 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
       image: {
         resized: { url },
       },
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      attributionClass: { shortDescription },
     },
     editionSetId,
   },
@@ -72,7 +72,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
           </Text>
         )}
         <Text variant="sm" color="black60">
-          {attribution_class.shortDescription}
+          {shortDescription}
         </Text>
       </Flex>
       <Image maxHeight={375} width={185} src={url} alt={title} />
@@ -85,9 +85,6 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
     fragment ItemReview_lineItem on CommerceLineItem {
       artwork {
         date
-        attribution_class: attributionClass {
-          shortDescription
-        }
         dimensions {
           in
           cm
