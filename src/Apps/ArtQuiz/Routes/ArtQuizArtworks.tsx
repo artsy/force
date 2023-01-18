@@ -7,6 +7,8 @@ import {
   Flex,
   FullBleed,
   Text,
+  Tooltip,
+  useDidMount,
 } from "@artsy/palette"
 import {
   ArtQuizButton,
@@ -175,6 +177,8 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     },
   })
 
+  const isMounted = useDidMount()
+
   return (
     <ArtQuizFullScreen>
       <FullBleed height="100%" display="flex" flexDirection="column">
@@ -252,19 +256,28 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
           })}
         </Flex>
 
-        <Flex alignItems="stretch" justifyContent="center">
-          <ArtQuizButton
-            ref={dislikeRef}
-            variant="Dislike"
-            onClick={handleNext("Dislike")}
-          />
+        <Tooltip
+          content="Like it? Hit the heart. Not for you? Choose X."
+          variant="defaultDark"
+          pointer
+          placement="top"
+          textAlign="center"
+          visible={isMounted && activeIndex === 0}
+        >
+          <Flex alignItems="stretch" justifyContent="center">
+            <ArtQuizButton
+              ref={dislikeRef}
+              variant="Dislike"
+              onClick={handleNext("Dislike")}
+            />
 
-          <ArtQuizButton
-            ref={likeRef}
-            variant="Like"
-            onClick={handleNext("Like")}
-          />
-        </Flex>
+            <ArtQuizButton
+              ref={likeRef}
+              variant="Like"
+              onClick={handleNext("Like")}
+            />
+          </Flex>
+        </Tooltip>
       </FullBleed>
     </ArtQuizFullScreen>
   )
