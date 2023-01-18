@@ -51,7 +51,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
 
   const priceLabel = mode === "OFFER" ? "List price" : "Price"
 
-  const privateSale = source === "private_sale"
+  const isPrivateSale = source === "private_sale"
 
   return (
     <StackableBorderBox flexDirection="row" {...others}>
@@ -68,20 +68,20 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             display="inline"
           >
             {title}
-            {!privateSale && date && `, ${date}`}
+            {!isPrivateSale && date && `, ${date}`}
           </Text>
         </Box>
-        {!privateSale && (
-          <Text variant="sm" overflowEllipsis color="black60">
-            {name}
-          </Text>
+        {!isPrivateSale && (
+          <>
+            <Text variant="sm" overflowEllipsis color="black60">
+              {name}
+            </Text>
+            <Text variant="sm" color="black60">
+              {shippingOrigin}
+            </Text>
+          </>
         )}
-        {!privateSale && (
-          <Text variant="sm" color="black60">
-            {shippingOrigin}
-          </Text>
-        )}
-        {!privateSale && artworkPrice && (
+        {!isPrivateSale && artworkPrice && (
           <Text variant="sm">
             {`${priceLabel} ${appendCurrencySymbol(
               artworkPrice.price,

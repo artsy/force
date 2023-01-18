@@ -44,7 +44,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   },
   orderSource,
 }) => {
-  const privateSale = orderSource === "private_sale"
+  const isPrivateSale = orderSource === "private_sale"
 
   return (
     <BorderBox p={[2, 4]}>
@@ -54,12 +54,12 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
         </Text>
         <Text fontStyle="italic" variant="sm" color="black60">
           {title}
-          {!privateSale && date && `, (${date})`}
+          {!isPrivateSale && date && `, (${date})`}
         </Text>
         <Text variant="sm" color="black60">
           {medium}
         </Text>
-        {!privateSale && (
+        {!isPrivateSale && (
           <Text>
             {editionSetId &&
               edition_sets &&
