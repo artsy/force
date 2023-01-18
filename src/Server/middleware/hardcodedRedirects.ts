@@ -164,19 +164,4 @@ for (let from in PERMANENT_REDIRECTS) {
   })
 }
 
-// Temporarily (302) redirect a specific route or route pattern
-const TEMP_REDIRECTS = {
-  "/art-appraisals": "/sell",
-}
-
-for (let from in TEMP_REDIRECTS) {
-  const path = TEMP_REDIRECTS[from]
-
-  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
-    const queryString = url.parse(req.url).search || ""
-
-    res.redirect(302, path + queryString)
-  })
-}
-
 export const hardcodedRedirectsMiddleware = router
