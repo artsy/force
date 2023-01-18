@@ -6,14 +6,13 @@ import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/Edi
 import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
 import { useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
+import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
@@ -34,6 +33,10 @@ interface MyCollectionCreateArtworkProps {
 export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps> = ({
   me,
 }) => {
+  const [localImages, setLocalImages] = useState<
+    Array<LocalImage & { photoID: string }>
+  >([])
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
@@ -118,11 +121,20 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
 
       // Store images locally
 
-      if (artworkId && artworkFormImagesRef.current) {
-        await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
-        await setLocalImagesStoreLastUpdatedAt(
-          IMAGES_LOCAL_STORE_LAST_UPDATED_AT
+      console.log({
+        localImages,
+        artworkFormImagesRef: artworkFormImagesRef.current,
+      })
+
+      if (artworkId) {
+        storeArtworkLocalImages(
+          artworkId,
+          localImages.map(({ photoID, ...rest }) => rest)
         )
+        // await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
+        // await setLocalImagesStoreLastUpdatedAt(
+        //   IMAGES_LOCAL_STORE_LAST_UPDATED_AT
+        // )
       }
 
       router.replace({
@@ -155,6 +167,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
         onBack={handleBack}
         onNext={handleNextStep}
         onSkip={handleSkip}
+        addLocalImage={image => setLocalImages([...localImages, image])}
+        removeLocalImage={photoID =>
+          setLocalImages(localImages.filter(i => i.photoID !== photoID))
+        }
       >
         <Formik<ArtworkModel>
           validateOnMount

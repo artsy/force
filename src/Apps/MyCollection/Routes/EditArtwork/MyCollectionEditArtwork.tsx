@@ -7,11 +7,15 @@ import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/U
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
+import {
+  LocalImage,
+  setLocalImagesStoreLastUpdatedAt,
+  storeArtworkLocalImages,
+} from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
@@ -28,6 +32,9 @@ export interface MyCollectionEditArtworkProps {
 export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = ({
   artwork,
 }) => {
+  const [localImages, setLocalImages] = useState<
+    Array<LocalImage & { photoID: string }>
+  >([])
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { sendToast } = useToasts()
@@ -81,6 +88,14 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
         })
       )
 
+      // Store images locally
+      if (artworkId) {
+        storeArtworkLocalImages(
+          artworkId,
+          localImages.map(({ photoID, ...rest }) => rest)
+        )
+      }
+
       router.replace({
         pathname: isCollectorProfileEnabled
           ? "/collector-profile/my-collection"
@@ -119,6 +134,10 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       <MyCollectionArtworkFormContextProvider
         artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
+        addLocalImage={image => setLocalImages([...localImages, image])}
+        removeLocalImage={photoID =>
+          setLocalImages(localImages.filter(i => i.photoID !== photoID))
+        }
       >
         <Formik<ArtworkModel>
           validateOnMount

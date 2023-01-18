@@ -6,6 +6,8 @@ interface MyCollectionArtworkFormContextProps {
   onBack: () => void
   onNext?: (options?: { skipNext: boolean }) => void
   onSkip?: () => void
+  addLocalImage: (image: any) => void
+  removeLocalImage: (image: any) => void
 }
 
 export const MyCollectionArtworkFormContext = createContext<
@@ -15,6 +17,8 @@ export const MyCollectionArtworkFormContext = createContext<
   onBack: () => {},
   onNext: () => {},
   onSkip: () => {},
+  addLocalImage: () => {},
+  removeLocalImage: () => {},
 })
 
 export const MyCollectionArtworkFormContextProvider: React.FC<MyCollectionArtworkFormContextProps> = ({
