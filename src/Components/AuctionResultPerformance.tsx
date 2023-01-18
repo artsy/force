@@ -1,11 +1,10 @@
-import { Text, Flex } from "@artsy/palette"
+import { Text } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 
 export const AuctionResultPerformance = ({
   value,
-  align,
 }: {
   value: string | null
-  align: "left" | "right"
 }) => {
   if (value === null) {
     return null
@@ -16,15 +15,19 @@ export const AuctionResultPerformance = ({
   const text = sign === "+" ? value : value.slice(1)
 
   return (
-    <Flex
-      flexDirection="row"
-      justifyContent={align === "right" ? "flex-end" : undefined}
-      alignItems="baseline"
+    <Text
+      variant={["xs", "sm-display"]}
+      fontWeight={["bold", "medium"]}
+      color={color}
     >
-      <Text variant="sm-display" fontWeight="medium" color={color}>
+      <Media lessThan="sm">
+        &nbsp;({sign}
+        {text} est)
+      </Media>
+      <Media greaterThan="xs">
         {sign}
         {text} est
-      </Text>
-    </Flex>
+      </Media>
+    </Text>
   )
 }

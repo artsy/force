@@ -52,14 +52,10 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
       saleDate,
       artist,
       dimension_text,
-      categoryText,
       saleTitle,
       location,
       lotNumber,
     },
-    salePrice,
-    estimatedPrice,
-    filtersAtDefault,
   } = getProps(props)
 
   const dateOfSale = getDisplaySaleDate(saleDate)
@@ -91,7 +87,7 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
       <>
         <Box width="100%">
           <GridColumns>
-            <Column span={2}>
+            <Column span={[4, 2]}>
               <ResponsiveBox
                 aspectWidth={1}
                 aspectHeight={1}
@@ -111,7 +107,38 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
               </ResponsiveBox>
             </Column>
 
-            <Column span={4}>
+            <Column span={[8, 1]} display={["block", "none"]}>
+              <Box>
+                <Text variant="xs">
+                  {[title, date_text].filter(Boolean).join(", ")}
+                </Text>
+
+                {mediumText !== "Unknown" && (
+                  <Text variant="xs" color="black60" lineClamp={1}>
+                    {mediumText}
+                  </Text>
+                )}
+
+                {dimension_text && (
+                  <Text variant="xs" color="black60">
+                    {dimension_text}
+                  </Text>
+                )}
+
+                <Spacer y={1} />
+
+                <Text variant="xs" color="black60">
+                  {dateOfSale} • {organization}
+                </Text>
+
+                <ArtistAuctionResultItemPrice
+                  {...props}
+                  featureflag={featureflag}
+                />
+              </Box>
+            </Column>
+
+            <Column span={4} display={["none", "block"]}>
               {!!showArtistName && (
                 <Text variant="sm-display">{artistName}</Text>
               )}
@@ -136,7 +163,7 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
               )}
             </Column>
 
-            <Column span={3}>
+            <Column span={3} display={["none", "block"]}>
               <Text variant="sm-display">{dateOfSale}</Text>
 
               <Text variant="xs" color="black60">
@@ -153,7 +180,11 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
               </Text>
             </Column>
 
-            <Column span={3} display="flex" justifyContent="flex-end">
+            <Column
+              span={3}
+              display={["none", "flex"]}
+              justifyContent="flex-end"
+            >
               <ArtistAuctionResultItemPrice
                 {...props}
                 featureflag={featureflag}
@@ -339,8 +370,11 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
     if (featureFlag) {
       if (isUpcoming) {
         return (
-          <Box textAlign="right">
-            <Text variant="sm-display">
+          <Box textAlign={["left", "right"]}>
+            <Text
+              fontWeight={["bold", "normal"]}
+              variant={["xs", "sm-display"]}
+            >
               {estimatedPrice ? (
                 `${estimatedPrice} (est)`
               ) : (
@@ -350,17 +384,26 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
           </Box>
         )
       }
+
       return (
-        <Box textAlign="right">
+        <Box
+          textAlign={["left", "right"]}
+          display={["flex", "block"]}
+          flexDirection="row"
+          flexWrap="wrap"
+        >
           {salePrice && (
-            <Text variant="sm-display">
+            <Text
+              fontWeight={["bold", "normal"]}
+              variant={["xs", "sm-display"]}
+            >
               {salePrice}
               {showPriceUSD ? ` • ${salePriceUSD}` : ""}
             </Text>
           )}
 
           {!salePrice && boughtIn && (
-            <Text variant="sm-display">
+            <Text variant={["xs", "sm-display"]}>
               <i>Bought In</i>
             </Text>
           )}
@@ -368,32 +411,32 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
           {!salePrice && awaitingResults && (
             <Flex
               flexDirection="row"
-              justifyContent={"flex-end"}
+              justifyContent="flex-end"
               alignItems="center"
             >
               <TimerIcon fill="black100" width={16} height={16} />
 
               <Spacer x="4px" />
 
-              <Text variant="sm-display">
+              <Text variant={["xs", "sm-display"]}>
                 <i>Awaiting results</i>
               </Text>
             </Flex>
           )}
 
           {!salePrice && !boughtIn && !awaitingResults && (
-            <Text variant="sm-display">
+            <Text variant={["xs", "sm-display"]}>
               <i>Price not available</i>
             </Text>
           )}
 
           {!!estimatedPrice && (
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="black60" display={["none", "block"]}>
               {estimatedPrice} (est)
             </Text>
           )}
 
-          <AuctionResultPerformance value={performance?.mid!} align="right" />
+          <AuctionResultPerformance value={performance?.mid!} />
         </Box>
       )
     }
@@ -417,7 +460,7 @@ const ArtistAuctionResultItemPrice: FC<Props> = props => {
             </Text>
 
             {/* TODO: */}
-            <AuctionResultPerformance value={performance?.mid!} align="right" />
+            <AuctionResultPerformance value={performance?.mid!} />
           </>
         )}
 
