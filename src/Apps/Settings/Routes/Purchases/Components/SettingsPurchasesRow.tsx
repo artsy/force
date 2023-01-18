@@ -232,7 +232,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         <Text variant="xs" color="black60">
           Need Help?{" "}
           {order.source === "private_sale" ? (
-            <RouterLink to="privatesales@artsy.net">
+            <RouterLink to="mailto:privatesales@artsy.net">
               privatesales@artsy.net
             </RouterLink>
           ) : (
