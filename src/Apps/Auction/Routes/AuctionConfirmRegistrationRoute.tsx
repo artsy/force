@@ -101,7 +101,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
 
   const additionalText = !hasPhoneNumber
     ? " and provide a valid phone number"
-    : undefined
+    : ""
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
