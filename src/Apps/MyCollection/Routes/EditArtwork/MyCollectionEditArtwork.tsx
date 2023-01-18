@@ -73,10 +73,14 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
 
       // Store images locally
       if (artworkId) {
-        storeArtworkLocalImages(
-          artworkId,
-          localImages.map(({ photoID, ...rest }) => rest)
-        )
+        try {
+          await storeArtworkLocalImages(
+            artworkId,
+            localImages.map(({ photoID, ...rest }) => rest)
+          )
+        } catch (error) {
+          console.error("Failed to store images locally.", error)
+        }
       }
 
       router.replace({
