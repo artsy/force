@@ -99,6 +99,10 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
     return null
   }
 
+  const additionalText = !hasPhoneNumber
+    ? " and provide a valid phone number"
+    : undefined
+
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
       <Formik<Pick<AuctionFormValues, "agreeToTerms" | "phoneNumber">>
@@ -123,34 +127,30 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
             <Form>
               <Join separator={<Spacer y={2} />}>
                 {needsIdentityVerification ? (
-                  <IdentityVerificationWarning />
+                  <IdentityVerificationWarning
+                    additionalText={additionalText}
+                  />
                 ) : (
+                  <ConditionsOfSaleMessage additionalText={additionalText} />
+                )}
+
+                {!hasPhoneNumber && (
                   <GridColumns>
-                    {!hasPhoneNumber ? (
-                      <>
-                        <Column span={12}>
-                          <ConditionsOfSaleMessage additionalText=" and provide a valid phone number." />
-                          <Spacer y={2} />
-                          <Input
-                            name="phoneNumber"
-                            title="Phone Number"
-                            type="tel"
-                            description="Required for shipping logistics"
-                            placeholder="Add phone number"
-                            autoComplete="tel"
-                            value={values.phoneNumber}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={touched.phoneNumber && errors.phoneNumber}
-                            required
-                          />
-                        </Column>
-                      </>
-                    ) : (
-                      <Column span={12}>
-                        <ConditionsOfSaleMessage additionalText="." />
-                      </Column>
-                    )}
+                    <Column span={12}>
+                      <Input
+                        name="phoneNumber"
+                        title="Phone Number"
+                        type="tel"
+                        description="Required for shipping logistics"
+                        placeholder="Add phone number"
+                        autoComplete="tel"
+                        value={values.phoneNumber}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={touched.phoneNumber && errors.phoneNumber}
+                        required
+                      />
+                    </Column>
                   </GridColumns>
                 )}
 
@@ -179,7 +179,7 @@ const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
     <Text variant="sm-display">
       Welcome back. To complete your registration, please confirm that you agree
       to the Conditions of Sale
-      {additionalText}
+      {additionalText}.
     </Text>
   )
 }
