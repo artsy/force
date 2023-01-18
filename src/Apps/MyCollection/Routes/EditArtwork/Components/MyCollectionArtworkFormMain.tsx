@@ -38,7 +38,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
   artwork,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const { artworkFormImagesRef, onBack } = useMyCollectionArtworkFormContext()
+  const { onBack } = useMyCollectionArtworkFormContext()
   const {
     deleteCollectedArtwork: trackDeleteCollectedArtwork,
   } = useMyCollectionTracking()
@@ -154,10 +154,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
 
             {!onlyPhotos && <MyCollectionArtworkFormDetails />}
             <Spacer y={4} />
-            <MyCollectionArtworkFormImages
-              ref={artworkFormImagesRef}
-              isEditing={isEditing}
-            />
+            <MyCollectionArtworkFormImages isEditing={isEditing} />
             <Spacer y={6} />
             {isEditing && !onlyPhotos && (
               <>

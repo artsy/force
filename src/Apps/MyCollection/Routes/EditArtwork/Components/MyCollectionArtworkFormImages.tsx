@@ -11,17 +11,17 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
-import { forwardRef, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
 
-export interface MyCollectionArtworkFormImagesProps {
-  saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
+interface MyCollectionArtworkFormImagesProps {
+  isEditing?: boolean
 }
-export const MyCollectionArtworkFormImages = forwardRef<
-  MyCollectionArtworkFormImagesProps,
-  { isEditing?: boolean }
->(({ isEditing = false }, formImagesRef) => {
+
+export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImagesProps> = ({
+  isEditing = false,
+}) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
 
   const {
@@ -215,4 +215,4 @@ export const MyCollectionArtworkFormImages = forwardRef<
       ))}
     </>
   )
-})
+}

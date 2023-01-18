@@ -10,17 +10,14 @@ export interface LocalImage {
   data: string
   width: number
   height: number
+  expirationDate?: string
 }
 
-interface Expirable {
-  expirationDate: string
-}
-
-export type StoredImage = LocalImage & Expirable
+export type StoredImage = LocalImage
 
 export type StoredArtworkWithImages = {
   artworkID: string
-  images: StoredImage[]
+  images: LocalImage[]
 }
 
 const addMinutes = (date: Date, minutes: number) => {

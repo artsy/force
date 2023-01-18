@@ -1,9 +1,7 @@
-import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
-import { createContext, Ref, useContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import { LocalImage } from "Utils/localImagesHelpers"
 
 interface MyCollectionArtworkFormContextProps {
-  artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
   onBack: () => void
   onNext?: (options?: { skipNext: boolean }) => void
   onSkip?: () => void
@@ -14,7 +12,6 @@ interface MyCollectionArtworkFormContextProps {
 export const MyCollectionArtworkFormContext = createContext<
   MyCollectionArtworkFormContextProps
 >({
-  artworkFormImagesRef: undefined,
   onBack: () => {},
   onNext: () => {},
   onSkip: () => {},

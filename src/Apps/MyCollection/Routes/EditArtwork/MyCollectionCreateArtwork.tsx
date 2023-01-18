@@ -5,13 +5,12 @@ import {
   MyCollectionArtworkFormContextProvider,
   useLocalImageState,
 } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
-import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -52,10 +51,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   const {
     saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
-
-  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
-    null
-  )
 
   const initialStep = enableNewMyCUploadFlow ? "artist-select" : "details"
 
@@ -154,7 +149,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       <MetaTags title="Upload Artwork | Artsy" />
 
       <MyCollectionArtworkFormContextProvider
-        artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
         onNext={handleNextStep}
         onSkip={handleSkip}
