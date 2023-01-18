@@ -1,5 +1,8 @@
 import { useToasts } from "@artsy/palette"
-import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
+import {
+  MyCollectionArtworkFormContextProvider,
+  useLocalImageState,
+} from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
 import { MyCollectionArtworkFormMainFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useDeleteArtworkImage } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtworkImage"
@@ -7,12 +10,11 @@ import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/U
 import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
-  LocalImage,
   setLocalImagesStoreLastUpdatedAt,
   storeArtworkLocalImages,
 } from "Utils/localImagesHelpers"
@@ -32,9 +34,8 @@ export interface MyCollectionEditArtworkProps {
 export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = ({
   artwork,
 }) => {
-  const [localImages, setLocalImages] = useState<
-    Array<LocalImage & { photoID: string }>
-  >([])
+  const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { sendToast } = useToasts()
@@ -134,10 +135,8 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       <MyCollectionArtworkFormContextProvider
         artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
-        addLocalImage={image => setLocalImages([...localImages, image])}
-        removeLocalImage={photoID =>
-          setLocalImages(localImages.filter(i => i.photoID !== photoID))
-        }
+        addLocalImage={addLocalImage}
+        removeLocalImage={removeLocalImage}
       >
         <Formik<ArtworkModel>
           validateOnMount

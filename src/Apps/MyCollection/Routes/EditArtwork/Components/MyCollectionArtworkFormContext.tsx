@@ -1,5 +1,6 @@
 import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
-import { createContext, Ref, useContext } from "react"
+import { createContext, Ref, useContext, useState } from "react"
+import { LocalImage } from "Utils/localImagesHelpers"
 
 interface MyCollectionArtworkFormContextProps {
   artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
@@ -36,4 +37,23 @@ export const useMyCollectionArtworkFormContext = () => {
   const myCollectionArtworkFormContext =
     useContext(MyCollectionArtworkFormContext) ?? {}
   return myCollectionArtworkFormContext
+}
+
+export const useLocalImageState = () => {
+  const [localImages, setLocalImages] = useState<
+    Array<LocalImage & { photoID: string }>
+  >([])
+
+  const addLocalImage = (image: any) => {
+    setLocalImages([...localImages, image])
+  }
+  const removeLocalImage = (photoID: string) => {
+    setLocalImages(localImages.filter(i => i.photoID !== photoID))
+  }
+
+  return {
+    localImages,
+    addLocalImage,
+    removeLocalImage,
+  }
 }
