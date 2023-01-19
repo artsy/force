@@ -165,14 +165,11 @@ describe("AuctionResults", () => {
     it("renders either price, estimate, awaiting results, bought in, or price not available", () => {
       renderWithRelay(mockedResolver)
 
-      // screen.debug()
-
       expect(screen.getAllByText("$20,000")).toHaveLength(2)
       expect(screen.getAllByText("$40,000 - 60,000 (est)")).toHaveLength(2)
       expect(screen.getAllByText("Estimate not available")).toHaveLength(2)
       expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
       expect(screen.getAllByText("Bought In")).toHaveLength(2)
-      // expect(screen.getAllByText("Realized Price")).toHaveLength(10)
     })
 
     it("renders the estimated auction results", () => {
