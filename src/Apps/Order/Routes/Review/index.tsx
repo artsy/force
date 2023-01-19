@@ -6,6 +6,7 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
 import {
+  privateFlowSteps,
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
@@ -372,28 +373,43 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
   const SubmitButton: FC = () => (
     <Button
+      data-test="review-step-submit-button"
       variant="primaryBlack"
       width={["100%", "50%"]}
       loading={isCommittingMutation}
       disabled={!submittable}
       onClick={() => onSubmit()}
     >
-      Submit
+      {order.source === "private_sale" ? "Complete Purchase" : "Submit"}
     </Button>
   )
+
+  let routeSteps
+  if (order.mode === "OFFER") {
+    routeSteps = offerFlowSteps
+  } else {
+    if (order.source === "private_sale") {
+      routeSteps = privateFlowSteps
+    } else {
+      routeSteps = buyNowFlowSteps
+    }
+  }
 
   return (
     <Box data-test="orderReview">
       <OrderRouteContainer
         currentStep="Review"
-        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        steps={routeSteps}
         content={
           <Join separator={<Spacer y={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
               {isEigen && (
                 <>
                   <SubmitButton />
-                  <ConditionsOfSaleDisclaimer paddingY={2} textAlign="start" />
+                  <ConditionsOfSaleDisclaimer
+                    textProps={{ paddingY: 2, textAlign: "start" }}
+                    orderSource={order.source}
+                  />
                 </>
               )}
               {order.mode === "OFFER" && (
@@ -402,6 +418,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <ShippingSummaryItem
                 order={order}
                 onChange={onChangeShippingAddress}
+                locked={order.source === "private_sale"}
               />
               <ShippingArtaSummaryItemFragmentContainer
                 order={order}
@@ -419,7 +436,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <Spacer y={4} />
               <SubmitButton />
               <Spacer y={2} />
-              <ConditionsOfSaleDisclaimer />
+              <ConditionsOfSaleDisclaimer orderSource={order.source} />
             </Media>
           </Join>
         }
@@ -435,12 +452,14 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             <BuyerGuarantee
               contextModule={ContextModule.ordersReview}
               contextPageOwnerType={OwnerType.ordersReview}
+              orderSource={order.source}
+              renderArtsyPrivateSaleConditions={false}
             />
             <Spacer y={[2, 4]} />
             <Media at="xs">
               <SubmitButton />
               <Spacer y={2} />
-              <ConditionsOfSaleDisclaimer />
+              <ConditionsOfSaleDisclaimer orderSource={order.source} />
             </Media>
           </Flex>
         }

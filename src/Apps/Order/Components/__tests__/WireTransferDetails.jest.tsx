@@ -1,5 +1,5 @@
 import { screen, render } from "@testing-library/react"
-import { WireTransferDetails } from "../WireTransferDetails"
+import { WireTransferDetails } from "Apps/Order/Components/WireTransferDetails"
 
 describe("WireTransferDetails", () => {
   it("renders a title", () => {
@@ -31,6 +31,16 @@ describe("WireTransferDetails", () => {
     expect(
       screen.queryByText(
         "• To pay by wire transfer, complete checkout and a member of the Artsy team will contact you with next steps by email."
+      )
+    ).not.toBeInTheDocument()
+  })
+
+  it("renders correct explanation content for private sale orders", () => {
+    render(<WireTransferDetails orderSource="private_sale" />)
+
+    expect(
+      screen.queryByText(
+        "• To pay by wire transfer, complete checkout to view banking details"
       )
     ).not.toBeInTheDocument()
   })
