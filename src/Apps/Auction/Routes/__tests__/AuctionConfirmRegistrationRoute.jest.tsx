@@ -20,10 +20,6 @@ jest.mock("Apps/Auction/Components/Form/ConditionsOfSaleCheckbox", () => ({
   ConditionsOfSaleCheckbox: () => null,
 }))
 
-jest.mock("Apps/Auction/Components/Form/IdentityVerificationWarning", () => ({
-  IdentityVerificationWarning: () => null,
-}))
-
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   ModalDialog: ({ children }) => children,
@@ -167,41 +163,49 @@ describe("AuctionConfirmRegistrationRoute", () => {
     expect(wrapper.find("IdentityVerificationWarning")).toHaveLength(0)
   })
 
-  it("shows phone number input", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        hasQualifiedCreditCards: true,
-        phoneNumber: {
-          originalNumber: null,
-        },
-      }),
-    })
+  it.each([[true], [false]])(
+    "hides phone number input if phoneNumber is present and requireIdentityVerification is %s",
+    requireIdentityVerification => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          requireIdentityVerification,
+        }),
+        Me: () => ({
+          hasQualifiedCreditCards: true,
+          phoneNumber: {
+            originalNumber: "+1 (123) 456-7890",
+          },
+        }),
+      })
 
-    expect(wrapper.text()).toContain(
-      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale and provide a valid phone number."
-    )
-    expect(wrapper.text()).toContain(
-      "Phone Number*Required for shipping logistics"
-    )
-  })
+      expect(wrapper.text()).not.toContain(
+        "Phone Number*Required for shipping logistics"
+      )
+      expect(wrapper.text()).not.toContain("and provide a valid phone number")
+    }
+  )
 
-  it("hides phone number input", () => {
-    const wrapper = getWrapper({
-      Sale: () => ({
-        requireIdentityVerification: false,
-      }),
-      Me: () => ({
-        hasQualifiedCreditCards: true,
-      }),
-      PhoneNumber: () => ({
-        originalNumber: "+1 (123) 456-7890",
-      }),
-    })
+  it.each([[true], [false]])(
+    "shows phone number input if phoneNumber is not present and requireIdentityVerification is %s",
+    requireIdentityVerification => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          requireIdentityVerification,
+        }),
+        Me: () => ({
+          hasQualifiedCreditCards: true,
+          phoneNumber: {
+            originalNumber: null,
+          },
+        }),
+      })
 
-    expect(wrapper.text()).not.toContain(
-      "Phone Number*Required for shipping logistics"
-    )
-  })
+      expect(wrapper.text()).toContain(
+        "Phone Number*Required for shipping logistics"
+      )
+      expect(wrapper.text()).toContain("and provide a valid phone number")
+    }
+  )
 
   it("renders correct components", () => {
     const wrapper = getWrapper({

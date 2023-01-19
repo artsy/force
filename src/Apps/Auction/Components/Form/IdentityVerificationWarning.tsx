@@ -1,7 +1,9 @@
 import { Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
-export const IdentityVerificationWarning: React.FC = () => {
+export const IdentityVerificationWarning: React.FC<{
+  additionalText?: string
+}> = ({ additionalText }) => {
   return (
     <>
       <Text variant="sm-display">
@@ -22,7 +24,7 @@ export const IdentityVerificationWarning: React.FC = () => {
         <RouterLink color="black100" to="/conditions-of-sale" target="_blank">
           Conditions of Sale
         </RouterLink>
-        .
+        {additionalText}.
       </Text>
     </>
   )
