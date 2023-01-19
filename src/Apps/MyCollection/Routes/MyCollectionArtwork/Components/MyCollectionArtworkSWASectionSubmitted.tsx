@@ -23,11 +23,11 @@ const STATUSES: { [key: string]: { color: string; text: string } } = {
 }
 
 interface Props {
-  submissionStatus: string
+  displayText: string
 }
 
 export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
-  submissionStatus,
+  displayText,
 }) => {
   const [
     isSubmissionStatusModalOpen,
@@ -41,9 +41,9 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   const article =
     "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
 
-  const approvedDisplayText = STATUSES[submissionStatus!.toLowerCase()]?.text
+  const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
 
-  if (Boolean(submissionStatus) && isMyCollectionPhase8Enabled) {
+  if (Boolean(displayText) && isMyCollectionPhase8Enabled) {
     return (
       <>
         <SubmissionStatusModal
@@ -74,9 +74,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
           <Text
             variant="sm"
             flex={1}
-            color={
-              STATUSES[submissionStatus!.toLowerCase()]?.color ?? "black100"
-            }
+            color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
           >
             {toTitleCase(approvedDisplayText)}
           </Text>
@@ -158,8 +156,8 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
         Have a question?
       </Text>
       <Text variant="sm-display">
-        Visit our help center or get in touch with one of our specialists at
-        sell@artsymail.com.
+        Visit our help center or get in touch with one of our specialists at{" "}
+        <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>.
       </Text>
     </ModalDialog>
   )

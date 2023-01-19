@@ -95,7 +95,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
   const id = artwork.internalID
-  const submissionStatus = artwork.consignmentSubmission?.displayText
+  const displayText = artwork.consignmentSubmission?.displayText
 
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
@@ -140,7 +140,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {isMyCollectionPhase6Enabled && !submissionStatus && (
+            {isMyCollectionPhase6Enabled && !displayText && (
               <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                 artwork={artwork}
               />
@@ -148,11 +148,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             {isP1Artist &&
               isMyCollectionPhase5Enabled &&
-              (submissionStatus ? (
+              (displayText ? (
                 <>
                   <Separator my={2} />
                   <MyCollectionArtworkSWASectionSubmitted
-                    submissionStatus={submissionStatus}
+                    displayText={displayText}
                   />
                   <Separator my={2} />
                 </>
@@ -176,10 +176,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             />
             {isMyCollectionPhase5Enabled &&
               isP1Artist &&
-              submissionStatus &&
+              displayText &&
               isMyCollectionPhase8Enabled && (
                 <MyCollectionArtworkSWASectionSubmitted
-                  submissionStatus={submissionStatus}
+                  displayText={displayText}
                 />
               )}
             {hasInsights ? (
@@ -190,10 +190,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   />
                   {isMyCollectionPhase5Enabled && isP1Artist && (
                     <>
-                      {submissionStatus ? (
+                      {displayText ? (
                         !isMyCollectionPhase8Enabled && (
                           <MyCollectionArtworkSWASectionSubmitted
-                            submissionStatus={submissionStatus}
+                            displayText={displayText}
                           />
                         )
                       ) : (
