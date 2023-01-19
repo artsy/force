@@ -25,7 +25,7 @@ interface UseCurrentTimeProps {
 export const useCurrentTime = ({
   interval = 1000,
   syncWithServer = false,
-}: UseCurrentTimeProps = {}) => {
+}: UseCurrentTimeProps = {}): string => {
   const { relayEnvironment } = useSystemContext()
 
   const [currentTime, setCurrentTime] = useState(getCurrentTimeAsIsoString())
