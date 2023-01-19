@@ -104,7 +104,10 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
                     order={order}
                     useLastSubmittedOffer
                     showOfferNote={isSubmittedOffer}
-                    showCongratulationMessage={order.state === "SUBMITTED"}
+                    showCongratulationMessage={
+                      order.state === "SUBMITTED" &&
+                      order.source !== "private_sale"
+                    }
                   />
                 </Flex>
               ) : (

@@ -53,22 +53,12 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           }
     case "APPROVED":
       return {
-        title: approvedTitle(isOfferFlow),
-        description: isPickup ? (
-          <>
-            Thank you for your purchase. A specialist will contact you within 2
-            business days to coordinate pickup.
-          </>
-        ) : (
-          <>
-            Thank you for your purchase. You will be notified when the work has
-            shipped, typically within 5–7 business days.
-          </>
-        ),
+        title: approvedTitle(isOfferFlow, isPrivateSaleOrder),
+        description: approvedDescription(isPickup, isPrivateSaleOrder),
       }
     case "PROCESSING":
       return {
-        title: approvedTitle(isOfferFlow),
+        title: approvedTitle(isOfferFlow, false),
         description: (
           <>
             Thank you for your purchase. {deliverText(order)}More delivery
@@ -83,12 +73,11 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           isWireTransfer,
           isPrivateSaleOrder
         )}`,
-        description: `${processingApprovalDescription(
+        description: processingApprovalDescription(
           order,
           isWireTransfer,
-          isPrivateSaleOrder,
-          paymentMethod
-        )}`,
+          isPrivateSaleOrder
+        ),
         alertMessageTitle: isWireTransfer
           ? "Please proceed with the wire transfer to complete your purchase"
           : null,
@@ -352,8 +341,40 @@ export const shipmentDescription = (
 export const continueToInboxText =
   "Negotiation with the gallery will continue in the Inbox."
 
-export const approvedTitle = (isOfferFlow): string => {
-  return isOfferFlow ? "Offer accepted" : "Your order is confirmed"
+export const approvedTitle = (
+  isOfferFlow: boolean,
+  isPrivateSaleOrder: boolean
+): string => {
+  if (isOfferFlow) {
+    return "Offer accepted"
+  }
+
+  return isPrivateSaleOrder
+    ? "Thank you for working with Artsy Private Sales."
+    : "Your order is confirmed"
+}
+
+export const approvedDescription = (
+  isPickup: boolean,
+  isPrivateSaleOrder: boolean
+) => {
+  if (isPrivateSaleOrder) {
+    return (
+      <Text color="black100">
+        You will receive an email from our team with next steps. If you have any
+        questions about your purchase, email us at{" "}
+        <RouterLink to="privatesales@artsy.net">
+          privatesales@artsy.net.
+        </RouterLink>
+      </Text>
+    )
+  }
+
+  if (isPickup) {
+    return "Thank you for your purchase. A specialist will contact you within 2 business days to coordinate pickup."
+  }
+
+  return "Thank you for your purchase. You will be notified when the work has shipped, typically within 5–7 business days."
 }
 
 export const processingApprovalTitle = (
@@ -381,21 +402,27 @@ export const processingApprovalTitle = (
 export const processingApprovalDescription = (
   order,
   isWireTransfer,
-  isPrivateSaleOrder,
-  paymentMethod
-): string | null => {
+  isPrivateSaleOrder
+): string | JSX.Element | null => {
+  // if wire, return null regardless of isPrivateSaleOrder
   if (isWireTransfer) {
     return null
   }
 
+  // isPrivateSaleOrder and ACH (assumed)
   if (isPrivateSaleOrder) {
-    if (paymentMethod === "US_BANK_ACCOUNT") {
-      return "Find the details of your purchase below. We will email you with next steps shortly."
-    }
-
-    return "Thank you for your purchase. We will email you with next steps shortly."
+    return (
+      <Text color="black100">
+        You will receive an email from our team with next steps. If you have any
+        questions about your purchase, email us at{" "}
+        <RouterLink to="privatesales@artsy.net">
+          privatesales@artsy.net.
+        </RouterLink>
+      </Text>
+    )
   }
 
+  // non-private sale order with ACH (assumed)
   return `Thank you for your purchase. ${deliverText(order)}More delivery
   information will be available once your order ships.`
 }
