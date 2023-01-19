@@ -432,7 +432,10 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               />
             </Flex>
             <Media greaterThan="xs">
-              <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
+              <ItemReview
+                lineItem={order?.lineItems?.edges?.[0]?.node!}
+                orderSource={order.source}
+              />
               <Spacer y={4} />
               <SubmitButton />
               <Spacer y={2} />

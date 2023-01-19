@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f27cd435e55f4ac6aabe23289e7e72d>>
+ * @generated SignedSource<<2bcf3d54120aeeb4cd65960abb0151a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSummaryItem_order$data = {
   readonly currencyCode: string;
@@ -47,6 +48,7 @@ export type ArtworkSummaryItem_order$data = {
   readonly sellerDetails: {
     readonly name?: string | null;
   } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "ArtworkSummaryItem_order";
 };
 export type ArtworkSummaryItem_order$key = {
@@ -107,6 +109,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -263,6 +272,6 @@ return {
 };
 })();
 
-(node as any).hash = "1344acb52e619945e9d689ffe204f265";
+(node as any).hash = "2ffacbf36ba21f6ddf63662b2e040e11";
 
 export default node;

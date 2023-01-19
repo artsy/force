@@ -3,9 +3,11 @@ import * as React from "react"
 import { BorderBox, Flex, Text, Image } from "@artsy/palette"
 import { ItemReview_lineItem$data } from "__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { CommerceOrderSourceEnum } from "__generated__/orderRoutes_OrderQuery.graphql"
 
 interface ItemReviewProps {
   lineItem: ItemReview_lineItem$data
+  orderSource: CommerceOrderSourceEnum
 }
 
 const dimensionsDisplay = dimensions => (
@@ -18,84 +20,93 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   lineItem: {
     artwork: {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      date,
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      dimensions: artworkDimensions,
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      edition_sets,
+    },
+    artworkVersion: {
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       artistNames,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       title,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      date,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       medium,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      dimensions: artworkDimensions,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      attribution_class,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       image: {
         resized: { url },
       },
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      edition_sets,
+      attributionClass: { shortDescription },
     },
     editionSetId,
   },
-}) => (
-  <BorderBox p={[2, 4]}>
-    <Flex flexGrow={1} flexDirection="column">
-      <Text variant="sm" color="black60">
-        {artistNames}
-      </Text>
-      <Text fontStyle="italic" variant="sm" color="black60">
-        {title}
-        {date && `, (${date})`}
-      </Text>
-      {medium && (
+  orderSource,
+}) => {
+  const isPrivateSale = orderSource === "private_sale"
+
+  return (
+    <BorderBox p={[2, 4]}>
+      <Flex flexGrow={1} flexDirection="column">
+        <Text variant="sm" color="black60">
+          {artistNames}
+        </Text>
+        <Text fontStyle="italic" variant="sm" color="black60">
+          {title}
+          {!isPrivateSale && date && `, (${date})`}
+        </Text>
         <Text variant="sm" color="black60">
           {medium}
         </Text>
-      )}
-      {editionSetId &&
-        edition_sets &&
-        dimensionsDisplay(
-          edition_sets.find(e => e.internalID === editionSetId).dimensions
+        {!isPrivateSale && (
+          <Text>
+            {editionSetId &&
+              edition_sets &&
+              dimensionsDisplay(
+                edition_sets.find(e => e.internalID === editionSetId).dimensions
+              )}
+            {!editionSetId &&
+              artworkDimensions &&
+              dimensionsDisplay(artworkDimensions)}
+          </Text>
         )}
-      {!editionSetId &&
-        artworkDimensions &&
-        dimensionsDisplay(artworkDimensions)}
-      {attribution_class && (
         <Text variant="sm" color="black60">
-          {attribution_class.shortDescription}
+          {shortDescription}
         </Text>
-      )}
-    </Flex>
-    <Image maxHeight={375} width={185} src={url} alt={title} />
-  </BorderBox>
-)
+      </Flex>
+      <Image maxHeight={375} width={185} src={url} alt={title} />
+    </BorderBox>
+  )
+}
 
 export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
   lineItem: graphql`
     fragment ItemReview_lineItem on CommerceLineItem {
       artwork {
-        artistNames
-        title
         date
-        medium
         dimensions {
           in
           cm
-        }
-        attribution_class: attributionClass {
-          shortDescription
-        }
-        image {
-          resized(width: 185) {
-            url
-          }
         }
         edition_sets: editionSets {
           internalID
           dimensions {
             in
             cm
+          }
+        }
+      }
+      artworkVersion {
+        artistNames
+        title
+        medium
+        attributionClass {
+          shortDescription
+        }
+        image {
+          resized(width: 185) {
+            url
           }
         }
       }
