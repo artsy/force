@@ -1,7 +1,20 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
+import { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { AppRouteConfig } from "System/Router/Route"
+
+const LOGIN_COPY = "Log in to take the Art Quiz."
+const REDIRECT_URL = `/login?redirectTo=/art-quiz&copy=${LOGIN_COPY}`
+
+const artQuizServerSideRedirect = ({ res }: { res: ArtsyResponse }) => {
+  if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
+    res.redirect("/")
+  }
+  if (!res.locals.sd.CURRENT_USER) {
+    res.redirect(REDIRECT_URL)
+  }
+}
 
 const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
   resolveComponent: component => component.ArtQuizApp,
@@ -23,9 +36,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
     onServerSideRender: ({ res }) => {
-      if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
-        res.redirect("/")
-      }
+      artQuizServerSideRedirect({ res })
       res.redirect("/art-quiz/welcome")
     },
     getComponent: () => ArtQuizApp,
@@ -39,6 +50,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "welcome",
         getComponent: () => ArtQuizWelcome,
         layout: "NavOnly",
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_WelcomeQuery {
             me {
@@ -73,6 +85,7 @@ export const artQuizRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ArtQuizArtworks.preload()
         },
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_ArtworksQuery {
             me {
@@ -85,6 +98,10 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "results",
         getComponent: () => ArtQuizResults,
         layout: "NavOnly",
+        onClientSideRender: () => {
+          ArtQuizResults.preload()
+        },
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_ArtQuizResultsQuery {
             me {
