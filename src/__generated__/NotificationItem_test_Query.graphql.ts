@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0de1f7a7e74797a55b05c2ae9498aea8>>
+ * @generated SignedSource<<d63e2fad8171e167710c29d3fffc90b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,23 +37,30 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -139,6 +146,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -217,14 +226,8 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "internalID",
-                                "storageKey": null
-                              },
-                              (v1/*: any*/),
+                              (v2/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -272,7 +275,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v2/*: any*/)
+                              (v1/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -281,8 +284,7 @@ return {
                       }
                     ],
                     "storageKey": "artworksConnection(first:4)"
-                  },
-                  (v2/*: any*/)
+                  }
                 ],
                 "storageKey": null
               }
@@ -295,7 +297,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bfe1b092fb363ea3d7b24e5250deb8c7",
+    "cacheID": "db4938c2d9f94a779604a630062bafb3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -335,7 +337,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "notificationsConnection.edges.node.artworksConnection.edges.node.id": (v3/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.id": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -348,23 +350,24 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v4/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v3/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v5/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v5/*: any*/),
+        "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v4/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.title": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "String"
         },
-        "notificationsConnection.edges.node.id": (v3/*: any*/),
+        "notificationsConnection.edges.node.id": (v4/*: any*/),
+        "notificationsConnection.edges.node.internalID": (v4/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "notificationsConnection.edges.node.message": (v4/*: any*/),
+        "notificationsConnection.edges.node.message": (v5/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
             "ARTICLE_FEATURED_ARTIST",
@@ -383,14 +386,14 @@ return {
           "plural": false,
           "type": "Int"
         },
-        "notificationsConnection.edges.node.publishedAt": (v4/*: any*/),
-        "notificationsConnection.edges.node.targetHref": (v4/*: any*/),
-        "notificationsConnection.edges.node.title": (v4/*: any*/)
+        "notificationsConnection.edges.node.publishedAt": (v5/*: any*/),
+        "notificationsConnection.edges.node.targetHref": (v5/*: any*/),
+        "notificationsConnection.edges.node.title": (v5/*: any*/)
       }
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
