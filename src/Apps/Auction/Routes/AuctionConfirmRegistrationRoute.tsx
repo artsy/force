@@ -1,13 +1,4 @@
-import {
-  Button,
-  Column,
-  GridColumns,
-  Input,
-  Join,
-  ModalDialog,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Button, Input, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { AuctionConfirmRegistrationRoute_me$data } from "__generated__/AuctionConfirmRegistrationRoute_me.graphql"
@@ -135,23 +126,19 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
                 )}
 
                 {!hasPhoneNumber && (
-                  <GridColumns>
-                    <Column span={12}>
-                      <Input
-                        name="phoneNumber"
-                        title="Phone Number"
-                        type="tel"
-                        description="Required for shipping logistics"
-                        placeholder="Add phone number"
-                        autoComplete="tel"
-                        value={values.phoneNumber}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.phoneNumber && errors.phoneNumber}
-                        required
-                      />
-                    </Column>
-                  </GridColumns>
+                  <Input
+                    name="phoneNumber"
+                    title="Phone Number"
+                    type="tel"
+                    description="Required for shipping logistics"
+                    placeholder="Add phone number"
+                    autoComplete="tel"
+                    value={values.phoneNumber}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.phoneNumber && errors.phoneNumber}
+                    required
+                  />
                 )}
 
                 <ConditionsOfSaleCheckbox />
