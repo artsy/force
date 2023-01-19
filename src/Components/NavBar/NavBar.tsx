@@ -50,6 +50,7 @@ import { useJump } from "Utils/Hooks/useJump"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useRouter } from "System/Router/useRouter"
 import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
+import { ActionType } from "@artsy/cohesion"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -128,6 +129,14 @@ export const NavBar: React.FC = track(
     }
 
     return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+  }
+
+  const handleNotificationsClick = () => {
+    router.push("/notifications")
+
+    trackEvent({
+      action: ActionType.clickedNotificationsBell,
+    })
   }
 
   if (isEigen) {
@@ -277,7 +286,7 @@ export const NavBar: React.FC = track(
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
-                      onClick={() => router.push("/notifications")}
+                      onClick={handleNotificationsClick}
                     >
                       <BellIcon aria-hidden="true" height={22} width={22} />
                       {renderNotificationsIndicator()}
