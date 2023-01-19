@@ -8,6 +8,7 @@ import {
 } from "@artsy/palette"
 import { useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 interface Props {
@@ -22,7 +23,9 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     setIsSubmissionStatusModalOpen,
   ] = useState(false)
 
-  const isMyCollectionPhase8Enabled = true
+  const isMyCollectionPhase8Enabled = useFeatureFlag(
+    "my-collection-web-phase-8-submission-status"
+  )
 
   const article =
     "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"

@@ -66,7 +66,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
-  const isMyCollectionPhase8Enabled = true
+  const isMyCollectionPhase8Enabled = useFeatureFlag(
+    "my-collection-web-phase-8-submission-status"
+  )
 
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
@@ -172,11 +174,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {!!submissionStatus && isMyCollectionPhase8Enabled && (
-              <MyCollectionArtworkSWASectionSubmitted
-                submissionStatus={submissionStatus}
-              />
-            )}
+            {isMyCollectionPhase5Enabled &&
+              isP1Artist &&
+              submissionStatus &&
+              isMyCollectionPhase8Enabled && (
+                <MyCollectionArtworkSWASectionSubmitted
+                  submissionStatus={submissionStatus}
+                />
+              )}
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
@@ -185,23 +190,23 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   />
                   {isMyCollectionPhase5Enabled && isP1Artist && (
                     <>
-                      {!!submissionStatus && !isMyCollectionPhase8Enabled ? (
-                        <MyCollectionArtworkSWASectionSubmitted
-                          submissionStatus={submissionStatus}
-                        />
-                      ) : (
+                      {submissionStatus ? (
                         !isMyCollectionPhase8Enabled && (
-                          <MyCollectionArtworkSWASectionMobileLayout
-                            route={
-                              isCollectorProfileEnabled
-                                ? `/collector-profile/my-collection/submission/contact-information/${id}`
-                                : `/my-collection/submission/contact-information/${id}`
-                            }
-                            learnMore={() => setShowHowItWorksModal(true)}
-                            slug={slug}
-                            artworkId={artwork.internalID}
+                          <MyCollectionArtworkSWASectionSubmitted
+                            submissionStatus={submissionStatus}
                           />
                         )
+                      ) : (
+                        <MyCollectionArtworkSWASectionMobileLayout
+                          route={
+                            isCollectorProfileEnabled
+                              ? `/collector-profile/my-collection/submission/contact-information/${id}`
+                              : `/my-collection/submission/contact-information/${id}`
+                          }
+                          learnMore={() => setShowHowItWorksModal(true)}
+                          slug={slug}
+                          artworkId={artwork.internalID}
+                        />
                       )}
                     </>
                   )}
