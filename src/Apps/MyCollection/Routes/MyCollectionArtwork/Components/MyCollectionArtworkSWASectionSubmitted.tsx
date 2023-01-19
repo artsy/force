@@ -6,10 +6,21 @@ import {
   Text,
   WinningBidIcon,
 } from "@artsy/palette"
+import { toTitleCase } from "@artsy/to-title-case"
+
 import { useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
+
+// TODO:- We are using displayText for Statuses for now. Consider changing the logic when proper statuses are made available on Metaphysics.
+// See https://artsyproduct.atlassian.net/browse/SWA-217
+// same as on Eigen
+const STATUSES: { [key: string]: { color: string; text: string } } = {
+  "submission in progress": { color: "yellow150", text: "In Progress" },
+  "submission evaluated": { color: "orange150", text: "Evaluation Complete" },
+  sold: { color: "black100", text: "Artwork Sold" },
+}
 
 interface Props {
   submissionStatus: string
@@ -30,7 +41,9 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   const article =
     "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
 
-  if (submissionStatus && isMyCollectionPhase8Enabled) {
+  const approvedDisplayText = STATUSES[submissionStatus!.toLowerCase()]?.text
+
+  if (Boolean(submissionStatus) && isMyCollectionPhase8Enabled) {
     return (
       <>
         <SubmissionStatusModal
@@ -58,8 +71,14 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
               </Clickable>
             </Media>
           </Flex>
-          <Text variant="sm" flex={1} color="orange150">
-            {submissionStatus}
+          <Text
+            variant="sm"
+            flex={1}
+            color={
+              STATUSES[submissionStatus!.toLowerCase()]?.color ?? "black100"
+            }
+          >
+            {toTitleCase(approvedDisplayText)}
           </Text>
         </Flex>
         <Media greaterThanOrEqual="sm">
