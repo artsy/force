@@ -422,9 +422,10 @@ export const processingApprovalDescription = (
     )
   }
 
-  // non-private sale order with ACH (assumed)
-  return `Thank you for your purchase. ${deliverText(order)}More delivery
-  information will be available once your order ships.`
+  // non-private sale orders
+  return `Thank you for your purchase. ${deliverText(
+    order
+  )}More delivery information will be available once your order ships.`
 }
 
 export const deliverText = (order): React.ReactNode => {
