@@ -192,7 +192,12 @@ export const ArtworkApp: React.FC<Props> = props => {
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
       <GridColumns>
-        <Column span={8}>
+        <Column
+          span={8}
+          // Fix for issue in Firefox where contents overflow container.
+          // Safe to remove once artwork masonry uses CSS grid.
+          width="100%"
+        >
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
           <Media greaterThanOrEqual="sm">
