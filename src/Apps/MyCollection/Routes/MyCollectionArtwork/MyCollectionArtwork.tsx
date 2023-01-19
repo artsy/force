@@ -66,6 +66,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
+  const isMyCollectionPhase8Enabled = true
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const EditArtworkButton = () => (
@@ -91,7 +93,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
   const id = artwork.internalID
-  const submissionId = artwork.submissionId
+  const submissionStatus = artwork.consignmentSubmission?.displayText
 
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
@@ -136,7 +138,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {isMyCollectionPhase6Enabled && (
+            {isMyCollectionPhase6Enabled && !submissionStatus && (
               <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                 artwork={artwork}
               />
@@ -144,10 +146,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             {isP1Artist &&
               isMyCollectionPhase5Enabled &&
-              (submissionId ? (
+              (submissionStatus ? (
                 <>
                   <Separator my={2} />
-                  <MyCollectionArtworkSWASectionSubmitted />
+                  <MyCollectionArtworkSWASectionSubmitted
+                    submissionStatus={submissionStatus}
+                  />
                   <Separator my={2} />
                 </>
               ) : (
@@ -168,6 +172,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
+            {!!submissionStatus && isMyCollectionPhase8Enabled && (
+              <MyCollectionArtworkSWASectionSubmitted
+                submissionStatus={submissionStatus}
+              />
+            )}
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
@@ -175,22 +184,26 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                     artwork={artwork}
                   />
                   {isMyCollectionPhase5Enabled && isP1Artist && (
-                    <Media lessThan="sm">
-                      {!!submissionId ? (
-                        <MyCollectionArtworkSWASectionSubmitted />
-                      ) : (
-                        <MyCollectionArtworkSWASectionMobileLayout
-                          route={
-                            isCollectorProfileEnabled
-                              ? `/collector-profile/my-collection/submission/contact-information/${id}`
-                              : `/my-collection/submission/contact-information/${id}`
-                          }
-                          learnMore={() => setShowHowItWorksModal(true)}
-                          slug={slug}
-                          artworkId={artwork.internalID}
+                    <>
+                      {!!submissionStatus && !isMyCollectionPhase8Enabled ? (
+                        <MyCollectionArtworkSWASectionSubmitted
+                          submissionStatus={submissionStatus}
                         />
+                      ) : (
+                        !isMyCollectionPhase8Enabled && (
+                          <MyCollectionArtworkSWASectionMobileLayout
+                            route={
+                              isCollectorProfileEnabled
+                                ? `/collector-profile/my-collection/submission/contact-information/${id}`
+                                : `/my-collection/submission/contact-information/${id}`
+                            }
+                            learnMore={() => setShowHowItWorksModal(true)}
+                            slug={slug}
+                            artworkId={artwork.internalID}
+                          />
+                        )
                       )}
-                    </Media>
+                    </>
                   )}
                 </Tab>
 
@@ -270,6 +283,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         submissionId
         internalID
         slug
+        consignmentSubmission {
+          displayText
+        }
         artist {
           slug
           targetSupply {
