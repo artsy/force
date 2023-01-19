@@ -1,10 +1,3 @@
-import {
-  EntityHeader,
-  Flex,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-} from "@artsy/palette"
 import { FollowArtistPopoverRow_artist$data } from "__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "__generated__/FollowArtistPopoverRowMutation.graphql"
 import { SystemContextProps } from "System"
@@ -18,7 +11,9 @@ import {
 // eslint-disable-next-line no-restricted-imports
 import { Subscribe } from "unstated"
 import { FollowArtistPopoverState } from "./state"
-import { FollowButton } from "../FollowButton/Button"
+import { FollowButton } from "Components/FollowButton/Button"
+import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 
 interface Props extends SystemContextProps {
   artist: FollowArtistPopoverRow_artist$data
@@ -116,19 +111,14 @@ class FollowArtistPopoverRow extends Component<Props, State> {
     const { artist: originalArtist } = this.props
     const { swappedArtist } = this.state
     const artist = swappedArtist || originalArtist
-    const imageUrl = artist.image?.cropped?.url
-    const { internalID: artistID } = artist
 
     return (
-      <EntityHeader
-        name={artist.name!}
-        meta={artist.formattedNationalityAndBirthday!}
-        imageUrl={imageUrl}
-        href={`/artist/${artist.slug!}`}
+      <EntityHeaderArtistFragmentContainer
+        artist={artist}
         FollowButton={
           <FollowButton
             isFollowed={this.state.followed}
-            handleFollow={() => this.handleClick(artistID)}
+            handleFollow={() => this.handleClick(artist.internalID)}
             size="small"
           />
         }
@@ -155,29 +145,13 @@ export const FollowArtistPopoverRowFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment FollowArtistPopoverRow_artist on Artist {
-        slug
+        ...EntityHeaderArtist_artist
         internalID
-        name
-        formattedNationalityAndBirthday
-        image {
-          cropped(width: 45, height: 45) {
-            url
-          }
-        }
       }
     `,
   }
 )
 
 export const FollowArtistPopoverRowPlaceholder: React.FC = () => {
-  return (
-    <Skeleton display="flex">
-      <SkeletonBox width={45} height={45} borderRadius="50%" />
-
-      <Flex ml={1} flexDirection="column" justifyContent="center">
-        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
-        <SkeletonText variant="xs">Nationality, b. 9999</SkeletonText>
-      </Flex>
-    </Skeleton>
-  )
+  return <EntityHeaderPlaceholder />
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81d76e0308eb9510c6b384ac387898aa>>
+ * @generated SignedSource<<b31f294c0fc1b5684d1ecf10f7d0f43a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,9 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PaymentMethodSummaryItem_order$data = {
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly last4: string;
@@ -30,6 +29,7 @@ export type PaymentMethodSummaryItem_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "PaymentMethodSummaryItem_order";
 };
 export type PaymentMethodSummaryItem_order$key = {
@@ -47,7 +47,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "paymentMethod",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -136,6 +136,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "4938da2b1934e0f537ef9e699c47eff8";
+(node as any).hash = "58aebfc6e74d23f9c23ea9587452a4cf";
 
 export default node;

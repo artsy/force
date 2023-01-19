@@ -1,17 +1,11 @@
-import { Button, Link, QuestionCircleIcon } from "@artsy/palette"
+import { Button, QuestionCircleIcon } from "@artsy/palette"
 import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "enzyme"
-import { PricingContextModal } from "../PricingContextModal"
+import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
-
-jest.mock("sharify", () => ({
-  data: {
-    APP_URL: "https://www.artsy.net",
-  },
-}))
 
 describe("PricingContextModal", () => {
   it("renders with the modal closed", () => {
@@ -34,10 +28,10 @@ describe("PricingContextModal", () => {
     await flushPromiseQueue()
     component.update()
 
-    expect(component.find(Link).length).toBe(2)
+    expect(component.find("a").length).toBe(2)
 
-    expect(component.find(Link).first().props().href).toEqual(
-      "https://www.artsy.net/article/artsy-editorial-artworks-prices"
+    expect(component.find("a").first().props().href).toEqual(
+      "/article/artsy-editorial-artworks-prices"
     )
   })
 
@@ -49,7 +43,7 @@ describe("PricingContextModal", () => {
     await flushPromiseQueue()
     component.update()
 
-    expect(component.find(Link).at(1).props().href).toEqual(
+    expect(component.find("a").at(1).props().href).toEqual(
       "mailto:support@artsy.net"
     )
   })

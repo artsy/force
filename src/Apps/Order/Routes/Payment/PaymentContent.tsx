@@ -321,22 +321,8 @@ const getPaymentMethodInfo = (
             </Text>
             <Tooltip
               placement="top-start"
-              size="lg"
               width={400}
-              content={
-                <>
-                  <Text variant="xs">SEPA countries</Text>
-                  <Spacer y={2} />
-                  <Text variant="xs">
-                    Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech
-                    Republic, Denmark, Estonia, Finland, France, Germany,
-                    Greece, Hungary, Iceland, Ireland, Italy, Latvia,
-                    Liechtenstein, Lithuania, Luxembourg, Malta, Monaco,
-                    Netherlands, Norway, Poland, Portugal, Romania, Slovakia,
-                    Slovenia, Spain, Sweden, and Switzerland.
-                  </Text>
-                </>
-              }
+              content="SEPA countries: Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, and Switzerland."
             >
               <Clickable ml={0.5} style={{ lineHeight: 0 }}>
                 <InfoCircleIcon />

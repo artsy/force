@@ -14,7 +14,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const isP1Artist = artwork.artist?.targetSupply?.isP1
-  const isAlreadySubmitted = artwork.submissionId
+  const isAlreadySubmitted = artwork.consignmentSubmission?.displayText
 
   if (artwork.hasPriceEstimateRequest) {
     return (
@@ -78,7 +78,9 @@ export const MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer = c
         }
         hasPriceEstimateRequest
         internalID
-        submissionId
+        consignmentSubmission {
+          displayText
+        }
       }
     `,
   }

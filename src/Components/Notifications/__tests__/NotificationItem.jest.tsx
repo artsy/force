@@ -131,6 +131,18 @@ describe("NotificationItem", () => {
       const label = screen.getByLabelText("Notification type: Alert")
       expect(label).toBeInTheDocument()
     })
+
+    it("should render 'Artsy Editorial'", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          notificationType: "ARTICLE_FEATURED_ARTIST",
+        }),
+      })
+
+      const label = screen.getByLabelText("Notification type: Artsy Editorial")
+      expect(label).toBeInTheDocument()
+    })
   })
 })
 

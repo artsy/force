@@ -49,13 +49,7 @@ export const MyCollectionArtworkArtistMarket = ({
 
           <Tooltip
             placement="top-start"
-            size="lg"
-            content={
-              <Text variant="xs">
-                These statistics are based on the last 36 months of auction sale
-                data from top commercial auction houses.
-              </Text>
-            }
+            content="These statistics are based on the last 36 months of auction sale data from top commercial auction houses."
           >
             <Clickable ml={0.5} style={{ lineHeight: 0 }}>
               <InfoCircleIcon />

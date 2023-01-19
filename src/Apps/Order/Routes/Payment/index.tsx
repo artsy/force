@@ -411,6 +411,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               contextModule={ContextModule.ordersPayment}
               contextPageOwnerType={OwnerType.ordersPayment}
               orderSource={order.source}
+              renderArtsyPrivateSaleConditions={true}
             />
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (

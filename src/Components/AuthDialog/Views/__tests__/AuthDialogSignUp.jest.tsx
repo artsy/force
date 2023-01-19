@@ -63,8 +63,7 @@ describe("AuthDialogSignUp", () => {
         name: "Test User",
         email: "example@example.com",
         password: "Secret000", // pragma: allowlist secret
-        accepted_terms_of_service: true,
-        agreed_to_receive_emails: false,
+        agreedToReceiveEmails: false,
       })
     })
   })

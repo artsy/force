@@ -84,7 +84,9 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
   const url = sd.APP_URL + href
 
   return (
-    <Box {...rest}>
+    <Box width={300} {...rest}>
+      <Text variant="lg-display">Share</Text>
+
       <Flex alignItems="center">
         <Input
           ref={inputRef}

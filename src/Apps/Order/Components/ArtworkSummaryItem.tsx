@@ -26,6 +26,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
     mode,
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     sellerDetails: { name },
+    source,
   },
   ...others
 }) => {
@@ -50,6 +51,8 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
 
   const priceLabel = mode === "OFFER" ? "List price" : "Price"
 
+  const isPrivateSale = source === "private_sale"
+
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
@@ -65,24 +68,27 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             display="inline"
           >
             {title}
-          </Text>
-          <Text variant="sm" color="black60" display="inline">
-            {date && `, ${date}`}
+            {!isPrivateSale && date && `, ${date}`}
           </Text>
         </Box>
-        <Text variant="sm" overflowEllipsis color="black60">
-          {name}
-        </Text>
-        <Text variant="sm" color="black60">
-          {shippingOrigin}
-        </Text>
-        <Text variant="sm">
-          {artworkPrice &&
-            `${priceLabel} ${appendCurrencySymbol(
+        {!isPrivateSale && (
+          <>
+            <Text variant="sm" overflowEllipsis color="black60">
+              {name}
+            </Text>
+            <Text variant="sm" color="black60">
+              {shippingOrigin}
+            </Text>
+          </>
+        )}
+        {!isPrivateSale && artworkPrice && (
+          <Text variant="sm">
+            {`${priceLabel} ${appendCurrencySymbol(
               artworkPrice.price,
               currencyCode
             )}`}
-        </Text>
+          </Text>
+        )}
       </Flex>
     </StackableBorderBox>
   )
@@ -100,6 +106,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
         }
         currencyCode
         mode
+        source
         lineItems {
           edges {
             node {
