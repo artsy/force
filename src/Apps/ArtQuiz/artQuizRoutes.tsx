@@ -1,7 +1,25 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
+import { Match, RedirectException } from "found"
 import { graphql } from "react-relay"
+import { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { AppRouteConfig } from "System/Router/Route"
+
+const LOGIN_COPY = "Log in to take the Art Quiz."
+const REDIRECT_URL = `/login?redirectTo=/art-quiz&afterSignUpAction=/art-quiz&copy=${LOGIN_COPY}`
+
+const artQuizServerSideRedirect = ({ res }: { res: ArtsyResponse }) => {
+  if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
+    res.redirect("/")
+  }
+  if (!res.locals.sd.CURRENT_USER) {
+    res.redirect(REDIRECT_URL)
+  }
+}
+const artQuizClientSideRedirect = ({ match }: { match: Match }) => {
+  if (!match.context.user) {
+    match.router.push(REDIRECT_URL)
+  }
+}
 
 const ArtQuizApp = loadable(() => import("./ArtQuizApp"), {
   resolveComponent: component => component.ArtQuizApp,
@@ -23,13 +41,12 @@ export const artQuizRoutes: AppRouteConfig[] = [
   {
     path: "/art-quiz",
     onServerSideRender: ({ res }) => {
-      if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
-        res.redirect("/")
-      }
+      artQuizServerSideRedirect({ res })
       res.redirect("/art-quiz/welcome")
     },
     getComponent: () => ArtQuizApp,
-    onClientSideRender: () => {
+    onClientSideRender: ({ match }) => {
+      artQuizClientSideRedirect({ match })
       ArtQuizWelcome.preload()
       ArtQuizArtworks.preload()
       ArtQuizResults.preload()
@@ -39,6 +56,8 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "welcome",
         getComponent: () => ArtQuizWelcome,
         layout: "NavOnly",
+        onClientSideRender: artQuizClientSideRedirect,
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_WelcomeQuery {
             me {
@@ -70,9 +89,11 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "artworks",
         getComponent: () => ArtQuizArtworks,
         layout: "NavOnly",
-        onClientSideRender: () => {
+        onClientSideRender: ({ match }) => {
+          artQuizClientSideRedirect({ match })
           ArtQuizArtworks.preload()
         },
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_ArtworksQuery {
             me {
@@ -85,6 +106,11 @@ export const artQuizRoutes: AppRouteConfig[] = [
         path: "results",
         getComponent: () => ArtQuizResults,
         layout: "NavOnly",
+        onClientSideRender: ({ match }) => {
+          artQuizClientSideRedirect({ match })
+          ArtQuizResults.preload()
+        },
+        onServerSideRender: artQuizServerSideRedirect,
         query: graphql`
           query artQuizRoutes_ArtQuizResultsQuery {
             me {
