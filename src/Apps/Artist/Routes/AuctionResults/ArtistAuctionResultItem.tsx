@@ -45,7 +45,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
   } = getProps(props)
 
   const dateOfSale = getDisplaySaleDate(saleDate)
-  const image = images?.larger?.cropped
+  const image = images?.thumbnail?.cropped
   const artistName = artist?.name
 
   return (
@@ -84,7 +84,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
           <Box>
             {!!showArtistName && <Text variant="xs">{artistName}</Text>}
 
-            <Text variant="xs">
+            <Text variant="xs" lineClamp={1}>
               {[title, date_text].filter(Boolean).join(", ")}
             </Text>
 
@@ -95,14 +95,14 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
             )}
 
             {dimension_text && (
-              <Text variant="xs" color="black60">
+              <Text variant="xs" color="black60" lineClamp={1}>
                 {dimension_text}
               </Text>
             )}
 
             <Spacer y={1} />
 
-            <Text variant="xs" color="black60">
+            <Text variant="xs" color="black60" lineClamp={1}>
               {dateOfSale} • {organization}
             </Text>
 
@@ -170,8 +170,8 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
           name
         }
         images {
-          larger {
-            cropped(width: 100, height: 100) {
+          thumbnail {
+            cropped(width: 130, height: 130, version: ["square140"]) {
               src
               srcSet
               width

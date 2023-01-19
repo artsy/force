@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6aaabe40e3b831f0af2cd83bdcb9dea2>>
+ * @generated SignedSource<<caacbba65edd331ddb41a29bf3a1607d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -207,7 +207,7 @@ return {
                             "args": null,
                             "concreteType": "Image",
                             "kind": "LinkedField",
-                            "name": "larger",
+                            "name": "thumbnail",
                             "plural": false,
                             "selections": [
                               {
@@ -216,12 +216,19 @@ return {
                                   {
                                     "kind": "Literal",
                                     "name": "height",
-                                    "value": 100
+                                    "value": 130
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "version",
+                                    "value": [
+                                      "square140"
+                                    ]
                                   },
                                   {
                                     "kind": "Literal",
                                     "name": "width",
-                                    "value": 100
+                                    "value": 130
                                   }
                                 ],
                                 "concreteType": "CroppedImageUrl",
@@ -258,7 +265,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "storageKey": "cropped(height:100,width:100)"
+                                "storageKey": "cropped(height:130,version:[\"square140\"],width:130)"
                               }
                             ],
                             "storageKey": null
@@ -409,12 +416,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c7e1d52f894708e9f8029d402d4de68d",
+    "cacheID": "0f449d3bfc96639473392282f980d41c",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResultItemTestQuery",
     "operationKind": "query",
-    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
+    "text": "query ArtistAuctionResultItemTestQuery {\n  artist(id: \"andy-warhol\") {\n    auctionResultsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtistAuctionResultItem_auctionResult\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n"
   }
 };
 })();
