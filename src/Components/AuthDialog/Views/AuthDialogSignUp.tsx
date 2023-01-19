@@ -25,6 +25,7 @@ import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuth
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 
 interface AuthDialogSignUpProps {
   requestLocation?: AuthDialogSignUp_requestLocation$data | null
@@ -250,10 +251,15 @@ export const AuthDialogSignUpQueryRenderer: FC = () => {
           }
         }
       `}
-      placeholder={<AuthDialogSignUp />}
+      placeholder={<AuthDialogSignUpPlaceholder />}
       render={({ error, props }) => {
-        if (error || !props || !props.requestLocation) {
-          return <AuthDialogSignUpFragmentContainer />
+        if (error) {
+          console.error(error)
+          return <AuthDialogSignUp />
+        }
+
+        if (!props?.requestLocation) {
+          return <AuthDialogSignUpPlaceholder />
         }
 
         return (
