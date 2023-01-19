@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef7872a91b7d6e6d3b3008afddf4c18e>>
+ * @generated SignedSource<<f048a7d9dde70bcd7f18eed3ebd74c15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,11 @@ export type MyCollectionArtworkRequestPriceEstimateSection_artwork$data = {
       readonly isP1: boolean | null;
     } | null;
   } | null;
+  readonly consignmentSubmission: {
+    readonly displayText: string | null;
+  } | null;
   readonly hasPriceEstimateRequest: boolean | null;
   readonly internalID: string;
-  readonly submissionId: string | null;
   readonly " $fragmentType": "MyCollectionArtworkRequestPriceEstimateSection_artwork";
 };
 export type MyCollectionArtworkRequestPriceEstimateSection_artwork$key = {
@@ -78,8 +80,19 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "submissionId",
+      "concreteType": "ArtworkConsignmentSubmission",
+      "kind": "LinkedField",
+      "name": "consignmentSubmission",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayText",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -87,6 +100,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b34303e556f88865bab4825f4871b69d";
+(node as any).hash = "aeb28af853d85f4f3602cebabf8c187f";
 
 export default node;
