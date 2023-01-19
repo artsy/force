@@ -1,4 +1,5 @@
 import { Text } from "@artsy/palette"
+import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionPhotoToPhoto } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
@@ -10,48 +11,25 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { useFormikContext } from "formik"
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
+import { useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
 import { useSystemContext } from "System"
-import { LocalImage, storeArtworkLocalImages } from "Utils/localImagesHelpers"
 
-export interface MyCollectionArtworkFormImagesProps {
-  saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
+interface MyCollectionArtworkFormImagesProps {
+  isEditing?: boolean
 }
-export const MyCollectionArtworkFormImages = forwardRef<
-  MyCollectionArtworkFormImagesProps,
-  { isEditing?: boolean }
->(({ isEditing = false }, formImagesRef) => {
+
+export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImagesProps> = ({
+  isEditing = false,
+}) => {
   const [errors, setErrors] = useState<Array<FileRejection>>([])
-  const [localImages, setlocalImages] = useState<
-    Array<LocalImage & { photoID: string }>
-  >([])
+
+  const {
+    addLocalImage,
+    removeLocalImage,
+  } = useMyCollectionArtworkFormContext()
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
-
-  const saveImagesToLocalStorage = async (artworkId: string) => {
-    try {
-      // Store the artwork's local images in local storage
-      // and remove unnecessary fields
-      return await storeArtworkLocalImages(
-        artworkId,
-        localImages.map(({ photoID, ...rest }) => rest)
-      )
-    } catch (error) {
-      console.error("Error saving images to localforage storage", error)
-    }
-  }
-
-  useImperativeHandle(
-    formImagesRef,
-    () => {
-      return {
-        saveImagesToLocalStorage,
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [localImages, saveImagesToLocalStorage]
-  )
 
   const uploadPhoto = async (photo: Photo) => {
     photo.loading = true
@@ -125,33 +103,25 @@ export const MyCollectionArtworkFormImages = forwardRef<
       currentSrc,
     } = image.target as any
 
-    const imageAlreadyAdded = localImages.find(
-      localImage => localImage.photoID === photoID
-    )
-
     // Handle images added through the select artwork step
     if (!isEditing && currentSrc.includes("cloudfront.net")) {
-      setlocalImages(
-        localImages.concat({
-          data: currentSrc,
-          width,
-          height,
-          photoID,
-        })
-      )
+      addLocalImage({
+        data: currentSrc,
+        width,
+        height,
+        photoID,
+      })
     }
 
     // Handle images added locally
-    if (currentSrc.startsWith("data:image") && !imageAlreadyAdded) {
+    if (currentSrc.startsWith("data:image")) {
       // Save the image dimensions as well as local path to the localImages array
-      setlocalImages(
-        localImages.concat({
-          data: currentSrc,
-          width,
-          height,
-          photoID,
-        })
-      )
+      addLocalImage({
+        data: currentSrc,
+        width,
+        height,
+        photoID,
+      })
     }
   }
 
@@ -173,7 +143,7 @@ export const MyCollectionArtworkFormImages = forwardRef<
         values.newPhotos.filter(p => p.id !== photo.id)
       )
       // Remove images that have been removed from state
-      setlocalImages(localImages.filter(p => p.photoID !== photo.id))
+      removeLocalImage(photo.id)
     } else {
       // Mark photo in photos as removed
       const photoToDelete = {
@@ -245,4 +215,4 @@ export const MyCollectionArtworkFormImages = forwardRef<
       ))}
     </>
   )
-})
+}

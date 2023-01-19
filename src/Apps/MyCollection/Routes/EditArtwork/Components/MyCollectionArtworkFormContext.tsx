@@ -1,20 +1,22 @@
-import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
-import { createContext, Ref, useContext } from "react"
+import { createContext, useContext, useState } from "react"
+import { LocalImage } from "Utils/localImagesHelpers"
 
 interface MyCollectionArtworkFormContextProps {
-  artworkFormImagesRef: Ref<MyCollectionArtworkFormImagesProps> | undefined
   onBack: () => void
   onNext?: (options?: { skipNext: boolean }) => void
   onSkip?: () => void
+  addLocalImage: (image: LocalImage) => void
+  removeLocalImage: (photoID: string) => void
 }
 
 export const MyCollectionArtworkFormContext = createContext<
   MyCollectionArtworkFormContextProps
 >({
-  artworkFormImagesRef: undefined,
   onBack: () => {},
   onNext: () => {},
   onSkip: () => {},
+  addLocalImage: () => {},
+  removeLocalImage: () => {},
 })
 
 export const MyCollectionArtworkFormContextProvider: React.FC<MyCollectionArtworkFormContextProps> = ({
@@ -32,4 +34,26 @@ export const useMyCollectionArtworkFormContext = () => {
   const myCollectionArtworkFormContext =
     useContext(MyCollectionArtworkFormContext) ?? {}
   return myCollectionArtworkFormContext
+}
+
+export const useLocalImageState = () => {
+  const [localImages, setLocalImages] = useState<Array<LocalImage>>([])
+
+  const addLocalImage = (image: LocalImage) => {
+    // Don't add duplicates
+    if (localImages.find(localImage => localImage.photoID === image.photoID)) {
+      return
+    }
+
+    setLocalImages([...localImages, image])
+  }
+  const removeLocalImage = (photoID: string) => {
+    setLocalImages(localImages.filter(image => image.photoID !== photoID))
+  }
+
+  return {
+    localImages,
+    addLocalImage,
+    removeLocalImage,
+  }
 }
