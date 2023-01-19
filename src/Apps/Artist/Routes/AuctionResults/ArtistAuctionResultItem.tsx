@@ -225,7 +225,10 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
     if (isUpcoming) {
       return (
         <Box textAlign={["left", "right"]}>
-          <Text fontWeight={["bold", "normal"]} variant={["xs", "sm-display"]}>
+          <Text
+            fontWeight={[estimatedPrice ? "bold" : "normal", "normal"]}
+            variant={["xs", "sm-display"]}
+          >
             {estimatedPrice ? (
               `${estimatedPrice} (est)`
             ) : (
