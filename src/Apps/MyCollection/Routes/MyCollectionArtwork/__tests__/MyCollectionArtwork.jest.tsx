@@ -123,7 +123,7 @@ describe("MyCollectionArtwork", () => {
         const { renderWithRelay } = getWrapper()
         renderWithRelay(mockResolversWithInsights)
         expect(screen.queryByText("Submission Status")).toBeInTheDocument()
-        expect(screen.queryByText("submission-status")).toBeInTheDocument()
+        expect(screen.queryByText("In Progress")).toBeInTheDocument()
       })
     })
   })
@@ -200,7 +200,7 @@ const mockResolversWithInsights = {
     date: "2007",
     artistNames: "Banksy",
     consignmentSubmission: {
-      displayText: "submission-status",
+      displayText: "submission in progress",
     },
     hasMarketPriceInsights: true,
     artist: {
@@ -253,7 +253,7 @@ const mockResolversNotP1 = {
     artistNames: "MAria",
     hasMarketPriceInsights: false,
     consignmentSubmission: {
-      displayText: "submission-status",
+      displayText: "submission in progress",
     },
     artist: {
       targetSupply: {
