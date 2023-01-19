@@ -10,6 +10,7 @@ import {
   Flex,
   GridColumns,
   Image,
+  NoArtworkIcon,
   ResponsiveBox,
   Spacer,
   Text,
@@ -94,7 +95,7 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
                 maxWidth={130}
                 bg="black10"
               >
-                {image && (
+                {image ? (
                   <Image
                     src={image.src}
                     srcSet={image.srcSet}
@@ -103,12 +104,23 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
                     alt=""
                     lazyLoad
                   />
+                ) : (
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    height="100%"
+                  >
+                    <NoArtworkIcon height={24} width={24} fill="black60" />
+                  </Box>
                 )}
               </ResponsiveBox>
             </Column>
 
             <Column span={[8, 1]} display={["block", "none"]}>
               <Box>
+                {!!showArtistName && <Text variant="xs">{artistName}</Text>}
+
                 <Text variant="xs">
                   {[title, date_text].filter(Boolean).join(", ")}
                 </Text>
