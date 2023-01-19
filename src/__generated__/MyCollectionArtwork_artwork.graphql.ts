@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<508c53094dcfe0c635abf8049dcf1866>>
+ * @generated SignedSource<<bc279a14dda119950949af7350a4f5f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,9 @@ export type MyCollectionArtwork_artwork$data = {
   } | null;
   readonly comparables: {
     readonly totalCount: number | null;
+  } | null;
+  readonly consignmentSubmission: {
+    readonly displayText: string | null;
   } | null;
   readonly hasMarketPriceInsights: boolean | null;
   readonly internalID: string;
@@ -129,6 +132,24 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtworkConsignmentSubmission",
+      "kind": "LinkedField",
+      "name": "consignmentSubmission",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayText",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -177,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "f1c251f9a74bede950e5ceab16f9b82f";
+(node as any).hash = "73403796b1dc17d77055621b071a2222";
 
 export default node;

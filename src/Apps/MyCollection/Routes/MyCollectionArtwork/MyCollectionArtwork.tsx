@@ -66,6 +66,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
+  const isMyCollectionPhase8Enabled = useFeatureFlag(
+    "my-collection-web-phase-8-submission-status"
+  )
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const EditArtworkButton = () => (
@@ -91,7 +95,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
   const id = artwork.internalID
-  const submissionId = artwork.submissionId
+  const displayText = artwork.consignmentSubmission?.displayText
 
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
@@ -136,7 +140,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {isMyCollectionPhase6Enabled && (
+            {isMyCollectionPhase6Enabled && !displayText && (
               <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                 artwork={artwork}
               />
@@ -144,10 +148,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             {isP1Artist &&
               isMyCollectionPhase5Enabled &&
-              (submissionId ? (
+              (displayText ? (
                 <>
                   <Separator my={2} />
-                  <MyCollectionArtworkSWASectionSubmitted />
+                  <MyCollectionArtworkSWASectionSubmitted
+                    displayText={displayText}
+                  />
                   <Separator my={2} />
                 </>
               ) : (
@@ -168,6 +174,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
+            {isMyCollectionPhase5Enabled &&
+              isP1Artist &&
+              displayText &&
+              isMyCollectionPhase8Enabled && (
+                <MyCollectionArtworkSWASectionSubmitted
+                  displayText={displayText}
+                />
+              )}
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
@@ -175,9 +189,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                     artwork={artwork}
                   />
                   {isMyCollectionPhase5Enabled && isP1Artist && (
-                    <Media lessThan="sm">
-                      {!!submissionId ? (
-                        <MyCollectionArtworkSWASectionSubmitted />
+                    <>
+                      {displayText ? (
+                        !isMyCollectionPhase8Enabled && (
+                          <MyCollectionArtworkSWASectionSubmitted
+                            displayText={displayText}
+                          />
+                        )
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
                           route={
@@ -190,7 +208,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                           artworkId={artwork.internalID}
                         />
                       )}
-                    </Media>
+                    </>
                   )}
                 </Tab>
 
@@ -270,6 +288,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         submissionId
         internalID
         slug
+        consignmentSubmission {
+          displayText
+        }
         artist {
           slug
           targetSupply {

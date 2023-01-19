@@ -84,6 +84,7 @@
     "@artsy/palette": "28.1.1",
     "@artsy/palette-charts": "27.1.1",
     "@artsy/react-html-parser": "^3.0.2",
+    "@artsy/to-title-case": "^1.1.0",
     "@artsy/xapp": "1.0.6",
     "@babel/runtime": "7.13.10",
     "@loadable/component": "5.15.2",
