@@ -1,17 +1,17 @@
 import { useToasts } from "@artsy/palette"
-import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
-import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
+import {
+  MyCollectionArtworkFormContextProvider,
+  useLocalImageState,
+} from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormMainFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useDeleteArtworkImage } from "Apps/MyCollection/Routes/EditArtwork/Mutations/useDeleteArtworkImage"
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
-import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
+import { storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
@@ -28,27 +28,17 @@ export interface MyCollectionEditArtworkProps {
 export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = ({
   artwork,
 }) => {
+  const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
   const { submitMutation: deleteArtworkImage } = useDeleteArtworkImage()
-  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
-    null
-  )
 
   const handleSubmit = async (values: ArtworkModel) => {
     try {
       const artworkId = await createOrUpdateArtwork(values, artwork)
-
-      // Store images locally
-
-      if (artworkId && artworkFormImagesRef.current) {
-        await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
-        await setLocalImagesStoreLastUpdatedAt(
-          IMAGES_LOCAL_STORE_LAST_UPDATED_AT
-        )
-      }
 
       // Wait until image processing has started
       if (values.newPhotos.length) {
@@ -80,6 +70,18 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
           }
         })
       )
+
+      // Store images locally
+      if (artworkId) {
+        try {
+          await storeArtworkLocalImages(
+            artworkId,
+            localImages.map(({ photoID, ...rest }) => rest)
+          )
+        } catch (error) {
+          console.error("Failed to store images locally.", error)
+        }
+      }
 
       router.replace({
         pathname: isCollectorProfileEnabled
@@ -117,8 +119,9 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       />
 
       <MyCollectionArtworkFormContextProvider
-        artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
+        addLocalImage={addLocalImage}
+        removeLocalImage={removeLocalImage}
       >
         <Formik<ArtworkModel>
           validateOnMount

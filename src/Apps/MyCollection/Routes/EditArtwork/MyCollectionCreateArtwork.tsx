@@ -1,19 +1,20 @@
 import { useToasts } from "@artsy/palette"
 import { MyCollectionArtworkFormArtistStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtistStep"
 import { MyCollectionArtworkFormArtworkStep } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormArtworkStep"
-import { MyCollectionArtworkFormContextProvider } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
-import { MyCollectionArtworkFormImagesProps } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormImages"
+import {
+  MyCollectionArtworkFormContextProvider,
+  useLocalImageState,
+} from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormMain"
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { IMAGES_LOCAL_STORE_LAST_UPDATED_AT } from "Apps/Settings/Routes/MyCollection/constants"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
+import { storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
@@ -34,6 +35,8 @@ interface MyCollectionCreateArtworkProps {
 export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps> = ({
   me,
 }) => {
+  const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
@@ -48,10 +51,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   const {
     saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
-
-  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesProps | null>(
-    null
-  )
 
   const initialStep = enableNewMyCUploadFlow ? "artist-select" : "details"
 
@@ -117,12 +116,15 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       trackSaveCollectedArtwork()
 
       // Store images locally
-
-      if (artworkId && artworkFormImagesRef.current) {
-        await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
-        await setLocalImagesStoreLastUpdatedAt(
-          IMAGES_LOCAL_STORE_LAST_UPDATED_AT
-        )
+      if (artworkId) {
+        try {
+          await storeArtworkLocalImages(
+            artworkId,
+            localImages.map(({ photoID, ...rest }) => rest)
+          )
+        } catch (error) {
+          console.error("Failed to store images locally.", error)
+        }
       }
 
       router.replace({
@@ -151,10 +153,11 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       <MetaTags title="Upload Artwork | Artsy" />
 
       <MyCollectionArtworkFormContextProvider
-        artworkFormImagesRef={artworkFormImagesRef}
         onBack={handleBack}
         onNext={handleNextStep}
         onSkip={handleSkip}
+        addLocalImage={addLocalImage}
+        removeLocalImage={removeLocalImage}
       >
         <Formik<ArtworkModel>
           validateOnMount

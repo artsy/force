@@ -22,7 +22,7 @@ const LockIconPositioner = styled(Flex)`
   right: 0;
 `
 
-export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
+export const StepSummaryItem: React.FC<StepSummaryItemProps> = ({
   title,
   onChange,
   children,
@@ -30,6 +30,7 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
   ...others
 }) => {
   const showHeading = title || (onChange && !locked)
+
   return (
     <StackableBorderBox
       flexDirection="column"

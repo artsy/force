@@ -1,5 +1,6 @@
 import { ReviewTestQuery$rawResponse } from "__generated__/ReviewTestQuery.graphql"
 import {
+  PrivateSaleOrderWithShippingDetails,
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
@@ -26,13 +27,13 @@ import {
   submitOrderWithMissingInfo,
   submitOrderWithNoInventoryFailure,
   submitOrderWithVersionMismatchFailure,
-} from "../__fixtures__/MutationResults"
-import { ReviewFragmentContainer } from "../Review"
+} from "Apps/Order/Routes/__fixtures__/MutationResults"
+import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
-import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
-import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
+import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
@@ -77,6 +78,12 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
+  internalID: "1234",
+  impulseConversationId: null,
+}
+
+const privateSaleTestOrder: ReviewTestQuery$rawResponse["order"] = {
+  ...PrivateSaleOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,
 }
@@ -613,6 +620,35 @@ describe("Review", () => {
 
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Wire transfer"
+      )
+    })
+  })
+
+  describe("private sale orders", () => {
+    let page
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => privateSaleTestOrder,
+      })
+      page = new ReviewTestPage(wrapper)
+    })
+
+    it("does not allow the user go back to /shipping", () => {
+      const changeShippingButton = page.find(`[data-test="change-link"]`)
+      expect(changeShippingButton).toMatchObject({})
+    })
+
+    it("renders 'Complete Purchase' for submit button", () => {
+      const button = page
+        .find(`[data-test="review-step-submit-button"]`)
+        .first()
+      expect(button.text()).toContain("Complete Purchase")
+    })
+
+    it("renders Artsy Private Sales conditions", () => {
+      expect(page.text()).toContain(
+        "Artsy Private Sales LLC Conditions of Sale"
       )
     })
   })

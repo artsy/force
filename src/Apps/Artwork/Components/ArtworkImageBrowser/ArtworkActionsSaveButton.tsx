@@ -4,8 +4,7 @@ import {
   BellIcon,
   HeartFillIcon,
   HeartIcon,
-  Popover as _Popover,
-  Text,
+  Popover,
   THEME,
 } from "@artsy/palette"
 import { useEffect, useCallback, useState } from "react"
@@ -15,8 +14,6 @@ import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActi
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System"
-import { useTranslation } from "react-i18next"
-import styled from "styled-components"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 
 interface ArtworkActionsSaveButtonProps {
@@ -25,7 +22,6 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
-  const { t } = useTranslation()
   const { isLoggedIn } = useSystemContext()
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
@@ -41,7 +37,6 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     isRegistrationClosed,
     registrationStatus,
     liveStartAt,
-    registrationEndsAt,
   } = artwork.sale ?? {}
 
   const isOpenSale = isAuction && !isClosed
@@ -87,22 +82,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
       <Popover
         visible={popoverVisible}
         onClose={handleClose}
-        title={
-          <Text variant="sm-display">
-            {t(
-              registrationEndsAt
-                ? `artworkPage.actions.save.registerToBidWithDeadline`
-                : `artworkPage.actions.save.registerToBidWithoutDeadline`
-            )}
-          </Text>
-        }
-        placement="bottom"
+        placement="top"
         popover={
           <ArtworkAuctionRegistrationPanelFragmentContainer artwork={artwork} />
         }
         maxWidth={[mobileMaxWidth, 410]}
-        width="100%"
-        mx={2}
       >
         {({ anchorRef }) => {
           return (
@@ -154,7 +138,6 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
           isRegistrationClosed
           requireIdentityVerification
           liveStartAt
-          registrationEndsAt
           registrationStatus {
             qualifiedForBidding
           }
@@ -165,7 +148,3 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
     `,
   }
 )
-
-const Popover = styled(_Popover)`
-  z-index: 2;
-`
