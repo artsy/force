@@ -127,10 +127,16 @@ jobs:
     working_directory: /app
     parallelism: 6
     environment:
+      JEST_JUNIT_OUTPUT_DIR: /app/reports/junit/
+      JEST_JUNIT_UNIQUE_OUTPUT_NAME: true
       # TODO: Remove this flag once things have stabilized
-      - EXPERIMENTAL_SWC_COMPILER_ENABLED: false
+      EXPERIMENTAL_SWC_COMPILER_ENABLED: false
     steps:
-      - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+      - run: yarn test --reporters=default --reporters=jest-junit --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
+      - store_artifacts:
+          path: /app/reports/junit/
+      - store_test_results:
+          path: /app/reports/junit/
 
   type-check:
     docker:
