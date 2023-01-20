@@ -66,7 +66,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
   const handlePrevious = useCallback(() => {
     const previousArtwork =
-      activeIndex > 0 ? sortedEdges[activeIndex - 1]!.node! : null
+      activeIndex > 0 ? sortedEdges[activeIndex - 1]?.node : null
 
     if (previousArtwork) {
       const { isSaved, isDisliked } = previousArtwork
@@ -122,9 +122,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const handleNext = useCallback(
     (action: "Like" | "Dislike") => () => {
       const currentArtwork =
-        activeIndex < sortedEdges.length
-          ? sortedEdges[activeIndex]!.node!
-          : null
+        activeIndex < sortedEdges.length ? sortedEdges[activeIndex]?.node : null
 
       if (currentArtwork) {
         if (action === "Like") {
