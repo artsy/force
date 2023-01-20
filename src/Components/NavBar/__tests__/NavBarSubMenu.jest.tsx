@@ -42,14 +42,14 @@ describe("NavBarSubMenu", () => {
       "/collection/top-auction-lots"
     )
 
-    expect(linkMenuItems.at(2).text()).toContain("Top Prints & Editions")
+    expect(linkMenuItems.at(2).text()).toContain("Curators’ Picks: Blue-Chip")
     expect(linkMenuItems.at(2).prop("href")).toEqual(
-      "/collection/iconic-prints"
+      "/collection/curators-picks-blue-chip"
     )
 
-    expect(linkMenuItems.at(3).text()).toContain("The Collectibles Shop")
+    expect(linkMenuItems.at(3).text()).toContain("Best of Prints & Editions")
     expect(linkMenuItems.at(3).prop("href")).toEqual(
-      "/collection/the-collectibles-shop"
+      "/collection/iconic-prints"
     )
 
     expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
