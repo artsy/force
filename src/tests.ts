@@ -4,9 +4,9 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
+import _track, { useTracking as _useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
-import _track, { useTracking as _useTracking } from "react-tracking"
 const track = _track as jest.Mock<typeof _track>
 const useTracking = _useTracking as jest.Mock
 track.mockImplementation(() => x => x as any)
@@ -14,6 +14,7 @@ useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("Utils/logger")
+jest.mock("System/useFeatureFlag")
 
 /**
  * We want each test to have assertions, otherwise it’s too easy to write async
