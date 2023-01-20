@@ -2,6 +2,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   Button,
+  Clickable,
   Column,
   Flex,
   GridColumns,
@@ -223,19 +224,39 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
     const showPriceUSD = salePriceUSD && currency !== "USD"
 
     if (isUpcoming) {
+      if (user) {
+        return (
+          <Box textAlign={["left", "right"]}>
+            <Text
+              fontWeight={[estimatedPrice ? "bold" : "normal", "normal"]}
+              variant={["xs", "sm-display"]}
+            >
+              {estimatedPrice ? (
+                `${estimatedPrice} (est)`
+              ) : (
+                <i>Estimate not available</i>
+              )}
+            </Text>
+          </Box>
+        )
+      }
+
       return (
-        <Box textAlign={["left", "right"]}>
-          <Text
-            fontWeight={[estimatedPrice ? "bold" : "normal", "normal"]}
-            variant={["xs", "sm-display"]}
-          >
-            {estimatedPrice ? (
-              `${estimatedPrice} (est)`
-            ) : (
-              <i>Estimate not available</i>
-            )}
-          </Text>
-        </Box>
+        <Button
+          size="small"
+          variant="primaryGray"
+          onClick={() => {
+            mediator &&
+              openAuthModal(mediator, {
+                mode: ModalType.signup,
+                copy: "Sign up to see full auction records — for free",
+                contextModule: ContextModule.auctionResults,
+                intent: Intent.seeEstimateAuctionRecords,
+              })
+          }}
+        >
+          Sign up to see estimate
+        </Button>
       )
     }
 
@@ -281,11 +302,29 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
           </Text>
         )}
 
-        {!!estimatedPrice && (
-          <Text variant="xs" color="black60" display={["none", "block"]}>
-            {estimatedPrice} (est)
-          </Text>
-        )}
+        {!!estimatedPrice &&
+          (user ? (
+            <Text variant="xs" color="black60" display={["none", "block"]}>
+              {estimatedPrice} (est)
+            </Text>
+          ) : (
+            <Clickable
+              textDecoration="underline"
+              onClick={() => {
+                mediator &&
+                  openAuthModal(mediator, {
+                    mode: ModalType.signup,
+                    copy: "Sign up to see full auction records — for free",
+                    contextModule: ContextModule.auctionResults,
+                    intent: Intent.seeEstimateAuctionRecords,
+                  })
+              }}
+            >
+              <Text variant="xs" color="black60">
+                Sign up to see estimate
+              </Text>
+            </Clickable>
+          ))}
 
         <AuctionResultPerformance value={performance?.mid!} />
       </Box>
@@ -303,11 +342,13 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
             mode: ModalType.signup,
             copy: "Sign up to see full auction records — for free",
             contextModule: ContextModule.auctionResults,
-            intent: Intent.seePriceAuctionRecords,
+            intent: isUpcoming
+              ? Intent.seeEstimateAuctionRecords
+              : Intent.seePriceAuctionRecords,
           })
       }}
     >
-      Sign up to see price
+      Sign up to see {isUpcoming ? "estimate" : "price"}
     </Button>
   )
 }

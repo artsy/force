@@ -162,20 +162,12 @@ describe("AuctionResults", () => {
       expect(screen.getAllByRole("img")).toHaveLength(10)
     })
 
-    it("renders either price, estimate, awaiting results, bought in, or price not available", () => {
+    it("renders either price, awaiting results, bought in, or price not available", () => {
       renderWithRelay(mockedResolver)
 
       expect(screen.getAllByText("$20,000")).toHaveLength(2)
-      expect(screen.getAllByText("$40,000 - 60,000 (est)")).toHaveLength(2)
-      expect(screen.getAllByText("Estimate not available")).toHaveLength(2)
       expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
       expect(screen.getAllByText("Bought In")).toHaveLength(2)
-    })
-
-    it("renders the estimated auction results", () => {
-      renderWithRelay(mockedResolver)
-
-      expect(screen.getAllByText("$40,000 - 60,000 (est)")).toHaveLength(2)
     })
 
     it("renders price in original currency and in USD only if currency is not USD", () => {
@@ -328,7 +320,10 @@ describe("AuctionResults", () => {
               createdAfterYear: 1880,
               createdBeforeYear: 1973,
             })
-            expect(screen.getAllByText("Sign up to see price")).toHaveLength(20)
+            expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(
+              4
+            )
+            expect(screen.getAllByText("Sign up to see price")).toHaveLength(16)
           })
         })
 
