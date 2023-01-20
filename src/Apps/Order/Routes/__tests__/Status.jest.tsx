@@ -516,11 +516,57 @@ describe("Status", () => {
 
         expect(page.text()).toContain("Your order is confirmed")
       })
+
+      it("should render correct title for Private Sale orders", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "APPROVED",
+            source: "private_sale",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Thank you for working with Artsy Private Sales."
+        )
+      })
+
+      it("should render correct description for Private Sale orders", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "APPROVED",
+            source: "private_sale",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "You will receive an email from our team with next steps."
+        )
+      })
+
+      it("should render help email in description for Private Sale orders", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "APPROVED",
+            source: "private_sale",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain("privatesales@artsy.net.")
+      })
     })
 
     describe("processing approval", () => {
       describe("with wire payment method", () => {
-        it("should say 'Thank you, your offer has been accepted' and have message box", async () => {
+        it("should render correct title and have message box", async () => {
           const wrapper = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
@@ -534,6 +580,22 @@ describe("Status", () => {
             "Thank you, your order has been accepted"
           )
           expect(page.getMessageLength()).toBe(1)
+        })
+
+        it("should render correct title for wire private sale orders", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+              source: "private_sale",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain(
+            "Thank you for your purchase with Artsy Private Sales."
+          )
         })
 
         it("renders Message with alert variant and 'please proceed' message", async () => {
@@ -552,6 +614,34 @@ describe("Status", () => {
 
           const message = page.getMessage()
           expect(message.props().variant).toBe("alert")
+        })
+
+        it("should render correct instruction for wire private sale orders", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+              source: "private_sale",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain("email proof of payment")
+        })
+
+        it("should not render any description for wire private sale orders", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+              source: "private_sale",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).not.toContain("Thank you for your purchase.")
         })
 
         it("renders the alert Message with correct messages", async () => {
@@ -617,6 +707,22 @@ describe("Status", () => {
           expect(page.getMessageLength()).toBe(1)
         })
 
+        it("should render correct title for private sale orders", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "CREDIT_CARD",
+              source: "private_sale",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain(
+            "Thank you for your purchase with Artsy Private Sales."
+          )
+        })
+
         it("renders description", async () => {
           const wrapper = getWrapper({
             CommerceOrder: () => ({
@@ -630,6 +736,23 @@ describe("Status", () => {
           expect(page.text()).toContain(
             "More delivery information will be available once your order ships."
           )
+        })
+
+        it("should render correct description for private sale orders", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "CREDIT_CARD",
+              source: "private_sale",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain(
+            "You will receive an email from our team with next steps."
+          )
+          expect(page.text()).toContain("privatesales@artsy.net.")
         })
 
         it("does not render an alert message", async () => {
