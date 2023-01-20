@@ -7036,6 +7036,33 @@ union CreateConsignmentInquiryMutationType =
     ConsignmentInquiryMutationFailure
   | ConsignmentInquiryMutationSuccess
 
+type CreateFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateFeaturedLinkMutationInput {
+  clientMutationId: String
+  description: String!
+  href: String!
+  sourceBucket: String
+  sourceKey: String
+  subtitle: String
+  title: String!
+}
+
+type CreateFeaturedLinkMutationPayload {
+  clientMutationId: String
+  featuredLinkOrError: CreateFeaturedLinkResponseOrError
+}
+
+union CreateFeaturedLinkResponseOrError =
+    CreateFeaturedLinkFailure
+  | CreateFeaturedLinkSuccess
+
+type CreateFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
+}
+
 type CreateFeatureFailure {
   mutationError: GravityMutationError
 }
@@ -7661,6 +7688,28 @@ type DeleteCreditCardPayload {
   clientMutationId: String
   creditCardOrError: CreditCardMutationType
   me: Me
+}
+
+type DeleteFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteFeaturedLinkMutationInput {
+  clientMutationId: String
+  id: String!
+}
+
+type DeleteFeaturedLinkMutationPayload {
+  clientMutationId: String
+  featuredLinkOrError: DeleteFeaturedLinkResponseOrError
+}
+
+union DeleteFeaturedLinkResponseOrError =
+    DeleteFeaturedLinkFailure
+  | DeleteFeaturedLinkSuccess
+
+type DeleteFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
 }
 
 type DeleteFeatureFailure {
@@ -8667,6 +8716,26 @@ type FeaturedLink {
   internalID: ID!
   subtitle(format: Format): String
   title: String
+}
+
+# A connection to a list of items.
+type FeaturedLinkConnection {
+  # A list of edges.
+  edges: [FeaturedLinkEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type FeaturedLinkEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: FeaturedLink
 }
 
 union FeaturedLinkEntity = Artist | Gene | Partner
@@ -11481,6 +11550,11 @@ type Mutation {
     input: CreateFeatureMutationInput!
   ): CreateFeatureMutationPayload
 
+  # Creates a featured link.
+  createFeaturedLink(
+    input: CreateFeaturedLinkMutationInput!
+  ): CreateFeaturedLinkMutationPayload
+
   # Attach an gemini asset to a consignment submission
   createGeminiEntryForAsset(
     input: CreateGeminiEntryForAssetInput!
@@ -11544,6 +11618,11 @@ type Mutation {
   deleteFeature(
     input: DeleteFeatureMutationInput!
   ): DeleteFeatureMutationPayload
+
+  # deletes a featured link.
+  deleteFeaturedLink(
+    input: DeleteFeaturedLinkMutationInput!
+  ): DeleteFeaturedLinkMutationPayload
 
   # Delete User Artsy Account
   deleteMyAccountMutation(input: DeleteAccountInput!): DeleteAccountPayload
@@ -11748,6 +11827,11 @@ type Mutation {
   updateFeature(
     input: UpdateFeatureMutationInput!
   ): UpdateFeatureMutationPayload
+
+  # updates a featured link.
+  updateFeaturedLink(
+    input: UpdateFeaturedLinkMutationInput!
+  ): UpdateFeaturedLinkMutationPayload
 
   # Update a message.
   updateMessage(
@@ -13969,6 +14053,15 @@ type Query {
     # The slug or ID of the Feature
     id: ID
   ): Feature
+  featuredLinksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): FeaturedLinkConnection
   featuresConnection(
     after: String
     before: String
@@ -16744,6 +16837,36 @@ type UpdateConversationMutationPayload {
   conversation: Conversation
 }
 
+type UpdateFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateFeaturedLinkMutationInput {
+  clientMutationId: String
+  description: String
+  href: String
+  id: String!
+  sourceBucket: String
+  sourceKey: String
+  subtitle: String
+  title: String
+}
+
+type UpdateFeaturedLinkMutationPayload {
+  clientMutationId: String
+
+  # On success: featured link updated.
+  featuredLinkOrError: UpdateFeaturedLinkResponseOrError
+}
+
+union UpdateFeaturedLinkResponseOrError =
+    UpdateFeaturedLinkFailure
+  | UpdateFeaturedLinkSuccess
+
+type UpdateFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
+}
+
 type UpdateFeatureFailure {
   mutationError: GravityMutationError
 }
@@ -18130,6 +18253,15 @@ type Viewer {
     # The slug or ID of the Feature
     id: ID
   ): Feature
+  featuredLinksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): FeaturedLinkConnection
   featuresConnection(
     after: String
     before: String
