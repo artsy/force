@@ -34,11 +34,9 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       medium,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      image: {
-        resized: { url },
-      },
+      image,
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      attributionClass: { shortDescription },
+      attributionClass,
     },
     editionSetId,
   },
@@ -72,10 +70,17 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
           </Text>
         )}
         <Text variant="sm" color="black60">
-          {shortDescription}
+          {attributionClass.shortDescription}
         </Text>
       </Flex>
-      <Image maxHeight={375} width={185} src={url} alt={title} />
+      {image && image.resized && (
+        <Image
+          maxHeight={375}
+          width={185}
+          src={image.resized.url}
+          alt={title}
+        />
+      )}
     </BorderBox>
   )
 }
