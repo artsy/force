@@ -11178,7 +11178,7 @@ type Message implements Node {
   body: String
 
   # Masked emails w/ display name of the recipients in copy.
-  cc: [String]
+  cc: [String!]!
   createdAt(
     format: String
 
@@ -11216,7 +11216,7 @@ type Message implements Node {
     )
 
   # Masked emails w/ display name of the recipients.
-  to: [String]
+  to: [String!]!
 }
 
 # A connection to a list of items.
