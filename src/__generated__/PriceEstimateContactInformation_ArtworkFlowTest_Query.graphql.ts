@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67785798e7f94a66d40f9ae495b8d4f1>>
+ * @generated SignedSource<<01afd790953103e2617780263e9b3ad0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -178,39 +178,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isValid",
-                "storageKey": null
-              },
-              {
-                "alias": "international",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "INTERNATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"INTERNATIONAL\")"
-              },
-              {
-                "alias": "national",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "NATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "regionCode",
                 "storageKey": null
               }
@@ -224,7 +191,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2c8f77ad467fe1b0b5b10422a31b945e",
+    "cacheID": "952ab61409a437de9a2e01c7052a87db",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -254,20 +221,12 @@ return {
           "plural": false,
           "type": "PhoneNumberType"
         },
-        "me.phoneNumber.international": (v5/*: any*/),
-        "me.phoneNumber.isValid": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "me.phoneNumber.national": (v5/*: any*/),
         "me.phoneNumber.regionCode": (v5/*: any*/)
       }
     },
     "name": "PriceEstimateContactInformation_ArtworkFlowTest_Query",
     "operationKind": "query",
-    "text": "query PriceEstimateContactInformation_ArtworkFlowTest_Query(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...PriceEstimateContactInformation_artwork\n    id\n  }\n  me {\n    ...PriceEstimateContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment PriceEstimateContactInformation_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment PriceEstimateContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": "query PriceEstimateContactInformation_ArtworkFlowTest_Query(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...PriceEstimateContactInformation_artwork\n    id\n  }\n  me {\n    ...PriceEstimateContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment PriceEstimateContactInformation_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment PriceEstimateContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
   }
 };
 })();

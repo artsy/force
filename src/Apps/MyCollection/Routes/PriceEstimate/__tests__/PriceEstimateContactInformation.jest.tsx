@@ -16,9 +16,6 @@ const mockMe = {
   email: "serge@test.test",
   phone: "+1 415-555-0132",
   phoneNumber: {
-    isValid: true,
-    international: "+1 415-555-0132",
-    national: "(415) 555-0132",
     regionCode: "us",
   },
 }
@@ -143,7 +140,7 @@ describe("Price Estimate Contact Information", () => {
 
       expect(getInput("name")).toHaveValue(mockMe.name)
       expect(getInput("email")).toHaveValue(mockMe.email)
-      expect(getInput("phoneNumber")).toHaveValue(mockMe.phoneNumber.national)
+      expect(getInput("phoneNumber")).toHaveValue(" 415-555-0132")
     })
   })
 
@@ -213,7 +210,7 @@ describe("Price Estimate Contact Information", () => {
               artworkId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
               requesterEmail: "serge@test.test",
               requesterName: "Serge",
-              requesterPhoneNumber: "+1 (415) 555-0132",
+              requesterPhoneNumber: "+1 415-555-0132",
             },
           },
         })
@@ -247,7 +244,7 @@ describe("Price Estimate Contact Information", () => {
               artworkId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
               requesterEmail: "serge@test.test",
               requesterName: "Serge",
-              requesterPhoneNumber: "+1 (415) 555-0132",
+              requesterPhoneNumber: "+1 415-555-0132",
             },
           },
         })

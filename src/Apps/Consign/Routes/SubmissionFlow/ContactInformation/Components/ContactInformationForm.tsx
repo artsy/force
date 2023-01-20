@@ -89,9 +89,6 @@ export const ContactInformationFormFragmentContainer = createFragmentContainer(
         email
         phone
         phoneNumber {
-          isValid
-          international: display(format: INTERNATIONAL)
-          national: display(format: NATIONAL)
           regionCode
         }
       }
