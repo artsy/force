@@ -28,8 +28,8 @@ export function useFeatureFlag(featureName: string): boolean | null {
   const flagEnabled = featureFlags?.[featureName]?.flagEnabled
 
   if (flagEnabled === undefined) {
-    console.error(
-      "[Force] Error: cannot find flagName in featureFlags: ",
+    warnInDevelopment(
+      "[Force] Warning: cannot find flagName in featureFlags: ",
       featureFlags
     )
     return null
@@ -43,10 +43,11 @@ export function useFeatureVariant(featureName: string): Variant | null {
   const variant = featureFlags?.[featureName]?.variant
 
   if (!variant) {
-    console.error(
-      "[Force] Error: cannot find variant on featureFlags: ",
+    warnInDevelopment(
+      "[Force] Warning: cannot find variant on featureFlags: ",
       featureFlags
     )
+
     return null
   }
 
@@ -60,8 +61,8 @@ export const getFeatureVariant = (
   const variant = featureFlags?.[featureName]?.variant
 
   if (!variant) {
-    console.error(
-      "[Force] Error: cannot find variant on featureFlags: ",
+    warnInDevelopment(
+      "[Force] Warning: cannot find variant on featureFlags: ",
       featureFlags
     )
 
@@ -138,5 +139,11 @@ function setExperimentsViewed(experiments: string[]) {
       "[Force] Error: unable to set experimentsViewed on local storage: ",
       error
     )
+  }
+}
+
+const warnInDevelopment = (...args: Parameters<typeof console.warn>) => {
+  if (getENV("NODE_ENV") === "development") {
+    console.warn(...args)
   }
 }
