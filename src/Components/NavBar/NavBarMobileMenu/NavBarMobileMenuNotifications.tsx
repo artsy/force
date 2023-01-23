@@ -12,6 +12,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import styled from "styled-components"
 import { NavBarMobileMenuNotificationsQuery } from "__generated__/NavBarMobileMenuNotificationsQuery.graphql"
 import { NavBarMobileMenuNotifications_me$data } from "__generated__/NavBarMobileMenuNotifications_me.graphql"
+import { NavBarMobileMenuNotifications_viewer$data } from "__generated__/NavBarMobileMenuNotifications_viewer.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -21,19 +22,20 @@ import {
 
 interface NavBarMobileMenuNotificationsProps {
   me?: NavBarMobileMenuNotifications_me$data | null
-  notificationsConnection?
+  viewer?: NavBarMobileMenuNotifications_viewer$data | null
 }
 
 export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificationsProps> = ({
   me,
+  viewer,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
-  const notification = extractNodes(notificationsConnection).filter(node =>
-    shouldDisplayNotification(node)
-  )[0]
+  const notification = extractNodes(
+    viewer?.notificationsConnection
+  ).filter(node => shouldDisplayNotification(node))[0]
 
   return (
     <>
@@ -79,9 +81,19 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
 const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
   NavBarMobileMenuNotifications,
   {
+    viewer: graphql`
+      fragment NavBarMobileMenuNotifications_viewer on Viewer {
+        notificationsConnection(first: 1) {
+          edges {
+            node {
+              publishedAt
+            }
+          }
+        }
+      }
+    `,
     me: graphql`
       fragment NavBarMobileMenuNotifications_me on Me {
-        unreadNotificationsCount
         unreadConversationCount
       }
     `,
@@ -98,12 +110,8 @@ export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<{}> = () => {
       environment={relayEnvironment}
       query={graphql`
         query NavBarMobileMenuNotificationsQuery {
-          notificationsConnection(first: 1) {
-            edges {
-              node {
-                publishedAt
-              }
-            }
+          viewer {
+            ...NavBarMobileMenuNotifications_viewer
           }
 
           me {
@@ -117,14 +125,14 @@ export const NavBarMobileMenuNotificationsQueryRenderer: React.FC<{}> = () => {
           return null
         }
 
-        if (!props || !props.me) {
+        if (!props || !props.me || !props.viewer) {
           return <NavBarMobileMenuNotifications />
         }
 
         return (
           <NavBarMobileMenuNotificationsFragmentContainer
             me={props.me}
-            notificationsConnection={props.notificationsConnection}
+            viewer={props.viewer}
           />
         )
       }}

@@ -5,6 +5,7 @@ import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
+import { NavBarMobileMenuNotificationsIndicator_viewer$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_viewer.graphql"
 import { NavBarNotificationIndicator } from "Components/NavBar/NavBarNotificationIndicator"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -14,20 +15,19 @@ import {
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
   me?: NavBarMobileMenuNotificationsIndicator_me$data | null
-  notificationsConnection?
+  viewer?: NavBarMobileMenuNotificationsIndicator_viewer$data | null
 }
 
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
-  notificationsConnection,
+  viewer,
 }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
-  const notification = extractNodes(notificationsConnection).filter(node =>
-    shouldDisplayNotification(node)
-  )[0]
+  const notification = extractNodes(
+    viewer?.notificationsConnection
+  ).filter(node => shouldDisplayNotification(node))[0]
 
-  console.log("[Debug]", "not pub", notification?.publishedAt)
   const shouldDisplayIndicator =
     hasConversations || hasNewNotifications(notification?.publishedAt)
 
@@ -48,6 +48,17 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
 export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFragmentContainer(
   NavBarMobileMenuNotificationsIndicator,
   {
+    viewer: graphql`
+      fragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {
+        notificationsConnection(first: 1) {
+          edges {
+            node {
+              publishedAt
+            }
+          }
+        }
+      }
+    `,
     me: graphql`
       fragment NavBarMobileMenuNotificationsIndicator_me on Me {
         unreadConversationCount
@@ -64,12 +75,8 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
       environment={relayEnvironment}
       query={graphql`
         query NavBarMobileMenuNotificationsIndicatorQuery {
-          notificationsConnection(first: 1) {
-            edges {
-              node {
-                publishedAt
-              }
-            }
+          viewer {
+            ...NavBarMobileMenuNotificationsIndicator_viewer
           }
 
           me {
@@ -83,11 +90,11 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
           return null
         }
 
-        if (props?.me) {
+        if (props?.me && props?.viewer) {
           return (
             <NavBarMobileMenuNotificationsIndicatorFragmentContainer
               me={props.me}
-              notificationsConnection={props.notificationsConnection}
+              viewer={props.viewer}
             />
           )
         }

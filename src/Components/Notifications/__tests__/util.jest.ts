@@ -1,4 +1,8 @@
-import { shouldDisplayNotification } from "Components/Notifications/util"
+import {
+  shouldDisplayNotification,
+  hasNewNotifications,
+  LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
+} from "Components/Notifications/util"
 
 describe("shouldDisplayNotification", () => {
   it("returns true when notification is not artworks based", () => {
@@ -28,5 +32,35 @@ describe("shouldDisplayNotification", () => {
       artworks: { totalCount: 0 },
     })
     expect(result).toEqual(false)
+  })
+})
+
+describe("hasNewNotifications", () => {
+  it("returns false if parameter was not passed", () => {
+    let result = hasNewNotifications(undefined)
+    expect(result).toEqual(false)
+
+    result = hasNewNotifications(null)
+    expect(result).toEqual(false)
+  })
+
+  it("returns true if there were no notifications seen previously", () => {
+    const result = hasNewNotifications("2023-01-17T16:58:39Z")
+    expect(result).toEqual(true)
+  })
+
+  it("compares the datetime of the last seen notification and the passed one", () => {
+    window.localStorage.setItem(
+      LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
+      "2023-01-17T16:58:39Z"
+    )
+
+    let result = hasNewNotifications("2023-01-15T16:58:39Z")
+    expect(result).toEqual(false)
+
+    result = hasNewNotifications("2023-01-18T16:58:39Z")
+    expect(result).toEqual(true)
+
+    window.localStorage.removeItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY)
   })
 })

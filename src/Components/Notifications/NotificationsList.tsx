@@ -17,7 +17,7 @@ import { SystemContext } from "System"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
-import { shouldDisplayNotification } from "./util"
+import { shouldDisplayNotification, setLastSeenNotificationDate } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 
 interface NotificationsListQueryRendererProps {
@@ -47,10 +47,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
   useEffect(() => {
     if (nodes?.length > 0) {
-      window.localStorage.setItem(
-        "last_seen_notification_published_at",
-        nodes[0].publishedAtAbsolute
-      )
+      setLastSeenNotificationDate(nodes[0].publishedAtAbsolute)
     }
   }, [nodes])
 

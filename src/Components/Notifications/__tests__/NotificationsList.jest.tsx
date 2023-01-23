@@ -3,6 +3,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NotificationsListFragmentContainer } from "Components/Notifications/NotificationsList"
 import { NotificationsList_test_Query } from "__generated__/NotificationsList_test_Query.graphql"
+import { LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY } from "Components/Notifications/util"
 
 jest.unmock("react-relay")
 
@@ -46,6 +47,16 @@ describe("NotificationsList", () => {
     const element = screen.getByLabelText("There is nothing to show")
     expect(element).toBeInTheDocument()
   })
+
+  it("saves the date of a latest notification in localStorage", () => {
+    renderWithRelay({
+      NotificationConnection: () => notifications,
+    })
+
+    expect(
+      window.localStorage.getItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY)
+    ).toEqual("2023-01-17T16:58:39Z")
+  })
 })
 
 const notifications = {
@@ -53,16 +64,19 @@ const notifications = {
     {
       node: {
         title: "Notification One",
+        publishedAtAbsolute: "2023-01-17T16:58:39Z",
       },
     },
     {
       node: {
         title: "Notification Two",
+        publishedAtAbsolute: "2023-01-16T16:58:39Z",
       },
     },
     {
       node: {
         title: "Notification Three",
+        publishedAtAbsolute: "2023-01-15T16:58:39Z",
       },
     },
   ],

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ee04ef415214805647fc50f9f04f5fc>>
+ * @generated SignedSource<<ea7d3a8c5b147a445b1b9a91c598a33c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,12 +15,8 @@ export type NavBarMobileMenuNotificationsQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotifications_me">;
   } | null;
-  readonly notificationsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly publishedAt: string;
-      } | null;
-    } | null> | null;
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotifications_viewer">;
   } | null;
 };
 export type NavBarMobileMenuNotificationsQuery = {
@@ -29,21 +25,7 @@ export type NavBarMobileMenuNotificationsQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "publishedAt",
-  "storageKey": null
-},
-v2 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -59,37 +41,19 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "NotificationConnection",
+        "args": null,
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "notificationsConnection",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "alias": null,
             "args": null,
-            "concreteType": "NotificationEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Notification",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
+            "kind": "FragmentSpread",
+            "name": "NavBarMobileMenuNotifications_viewer"
           }
         ],
-        "storageKey": "notificationsConnection(first:1)"
+        "storageKey": null
       },
       {
         "alias": null,
@@ -119,38 +83,61 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "NotificationConnection",
+        "args": null,
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "notificationsConnection",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "NotificationEdge",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              }
+            ],
+            "concreteType": "NotificationConnection",
             "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "name": "notificationsConnection",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Notification",
+                "concreteType": "NotificationEdge",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "edges",
+                "plural": true,
                 "selections": [
-                  (v1/*: any*/),
-                  (v2/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Notification",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": null
+                      },
+                      (v0/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "notificationsConnection(first:1)"
           }
         ],
-        "storageKey": "notificationsConnection(first:1)"
+        "storageKey": null
       },
       {
         "alias": null,
@@ -164,33 +151,26 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "unreadNotificationsCount",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "unreadConversationCount",
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "0dcf2623684f35631a18da30c3399af6",
+    "cacheID": "4492ee5fc353fb5bad3630d8e8819f20",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsQuery {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadNotificationsCount\n  unreadConversationCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsQuery {\n  viewer {\n    ...NavBarMobileMenuNotifications_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotifications_viewer on Viewer {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "19aed92143e917889345f622033757b6";
+(node as any).hash = "b84cec710912c7a5b5b395bbcfb99464";
 
 export default node;
