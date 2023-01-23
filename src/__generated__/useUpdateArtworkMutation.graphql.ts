@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6410da9830c4bc8b283cb51cff8eae2f>>
+ * @generated SignedSource<<8b104d73b944bed10578a2660b72c61d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ export type MyCollectionUpdateArtworkInput = {
   isEdition?: boolean | null;
   medium?: string | null;
   metric?: string | null;
-  pricePaidCents?: any | null;
+  pricePaidCents?: number | null;
   pricePaidCurrency?: string | null;
   provenance?: string | null;
   submissionId?: string | null;
