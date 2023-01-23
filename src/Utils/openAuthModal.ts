@@ -12,6 +12,9 @@ export interface AuthModalOptions extends ModalOptions {
   intent: AuthIntent
 }
 
+/**
+ * @deprecated Use `useAuthDialog` hook instead
+ */
 export const openAuthModal = (mediator: Mediator, options: ModalOptions) => {
   triggerEvent(mediator, "open:auth", options)
 }
