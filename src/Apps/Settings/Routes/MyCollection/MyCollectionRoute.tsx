@@ -5,7 +5,7 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky } from "Components/Sticky"
-import { FC, useCallback, useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -13,12 +13,7 @@ import {
 } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import {
-  cleanImagesLocalStore,
-  getAllLocalImagesByArtwork,
-  LocalImage,
-  StoredArtworkWithImages,
-} from "Utils/localImagesHelpers"
+import { cleanImagesLocalStore } from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
@@ -32,41 +27,14 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
-  const [localArtworksImages, setLocalArtworksImages] = useState<
-    StoredArtworkWithImages[]
-  >([])
 
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  useEffect(() => {
-    getAllLocalImagesByArtwork()
-      .then(localImagesByArtwork => {
-        setLocalArtworksImages(localImagesByArtwork)
-      })
-      .catch(error => {
-        console.error("Error getting local images by artwork", error)
-        return undefined
-      })
-  }, [])
 
   useEffect(() => {
     cleanImagesLocalStore()
   }, [])
 
   const { myCollectionConnection } = me
-
-  const getLocalImageSrcByArtworkID = useCallback(
-    (artworkID: string): LocalImage | null => {
-      const allArtworkImages = localArtworksImages.find(
-        localArtworkImagesObj => localArtworkImagesObj.artworkID === artworkID
-      )?.images
-      if (allArtworkImages?.length) {
-        return allArtworkImages[0]
-      }
-      return null
-    },
-    [localArtworksImages]
-  )
 
   if (!myCollectionConnection) {
     return null
@@ -139,7 +107,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           <MyCollectionArtworkGrid
             artworks={myCollectionConnection}
             columnCount={[2, 3, 4, 4]}
-            getLocalImageSrcByArtworkID={getLocalImageSrcByArtworkID}
             showHoverDetails={false}
             showArtworksWithoutImages
             hideSaleInfo

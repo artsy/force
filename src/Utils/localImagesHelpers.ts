@@ -2,7 +2,8 @@ import { LOCAL_PROFILE_IMAGE_KEY } from "Apps/Settings/Routes/EditProfile/Compon
 import localforage from "localforage"
 
 // Expiritation time is 5 minutes
-const EXPIRATION_TIME = 50 * 60 * 1000
+// TODO: Decrease number
+const EXPIRATION_TIME = 500 * 60 * 1000
 const IMAGE_KEY_PREFIX = "IMAGES_LOCAL_STORE_KEY"
 
 export interface LocalImage {
@@ -11,6 +12,7 @@ export interface LocalImage {
   height: number
   expires?: string
   photoID?: string
+  aspectRatio?: number
 }
 
 export type StoredArtworkWithImages = {
@@ -144,6 +146,7 @@ const prepareImage = (image: LocalImage, expires: string) => {
     data: image.data,
     height: image.height,
     width: image.width,
+    aspectRatio: image.width / image.height,
   }
 
   return JSON.stringify(imageToStore)

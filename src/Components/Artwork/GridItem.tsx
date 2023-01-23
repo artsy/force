@@ -14,13 +14,14 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 
+export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
+
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork$data
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  localHeroImage?: LocalImage | null
   onClick?: () => void
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
@@ -34,7 +35,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   disableRouterLinking,
   hideSaleInfo,
   lazyLoad = true,
-  localHeroImage,
   onClick,
   showHighDemandIcon = false,
   showHoverDetails,
@@ -42,91 +42,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   to,
   ...rest
 }) => {
-  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
-
-  const handleClick = () => {
-    onClick?.()
-  }
-
-  const handleMouseEnter = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    onMouseEnter()
-    rest.onMouseEnter?.(event)
-  }
-
-  const handleMouseLeave = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    onMouseLeave()
-    rest.onMouseLeave?.(event)
-  }
-
-  return (
-    <div
-      data-id={artwork.internalID}
-      data-test="artworkGridItem"
-      {...rest}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Box
-        position="relative"
-        width="100%"
-        bg="black10"
-        style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
-      >
-        <LinkContainer
-          artwork={artwork}
-          disableRouterLinking={disableRouterLinking}
-          onClick={handleClick}
-          to={to}
-        >
-          <ArtworkGridItemImage
-            artwork={artwork}
-            lazyLoad={lazyLoad}
-            localHeroImage={localHeroImage}
-          />
-        </LinkContainer>
-
-        <Badge artwork={artwork} />
-      </Box>
-
-      <Metadata
-        artwork={artwork}
-        isHovered={isHovered}
-        contextModule={contextModule ?? ContextModule.artworkGrid}
-        showSaveButton={showSaveButton}
-        hideSaleInfo={hideSaleInfo}
-        onClick={handleClick}
-        showHighDemandIcon={showHighDemandIcon}
-        showHoverDetails={showHoverDetails}
-        disableRouterLinking={disableRouterLinking}
-        to={to}
-      />
-    </div>
-  )
-}
-
-const ArtworkGridItemImage: React.FC<Pick<
-  ArtworkGridItemProps,
-  "localHeroImage" | "artwork" | "lazyLoad"
->> = ({ artwork, lazyLoad, localHeroImage }) => {
-  const { user } = useSystemContext()
-  const isTeam = userIsTeam(user)
-
-  const aspectRatio = artwork.image?.aspectRatio ?? 1
-  const width = 445
-  const height = Math.floor(width / aspectRatio)
-  const transform = aspectRatio === 1 ? cropped : resized
-  const imageURL = artwork.image?.url
-  const { src, srcSet } = imageURL
-    ? transform(imageURL, {
-        width,
-        height,
-      })
-    : { src: "", srcSet: "" }
-
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
 
   const fetchLocalImage = async () => {
@@ -148,16 +63,123 @@ const ArtworkGridItemImage: React.FC<Pick<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+
+  const handleClick = () => {
+    onClick?.()
+  }
+
+  const handleMouseEnter = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    onMouseEnter()
+    rest.onMouseEnter?.(event)
+  }
+
+  const handleMouseLeave = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    onMouseLeave()
+    rest.onMouseLeave?.(event)
+  }
+
+  const imagePlaceholder = localImage
+    ? `${Math.floor(100 * (localImage.height / localImage.width))}%`
+    : (artwork?.image?.url && artwork.image?.placeholder) || undefined
+
+  // const imagePlaceholder = localImage
+  //   ? `${Math.floor(100 * (localImage.height / localImage.width))}%`
+  //   : artwork?.image?.url
+  //   ? artwork.image?.placeholder ?? undefined
+  //   : undefined
+
+  return (
+    <div
+      data-id={artwork.internalID}
+      data-test="artworkGridItem"
+      {...rest}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Box
+        position="relative"
+        width="100%"
+        bg="black10"
+        style={{
+          paddingBottom: imagePlaceholder,
+        }}
+      >
+        <LinkContainer
+          artwork={artwork}
+          disableRouterLinking={disableRouterLinking}
+          localImage={localImage}
+          onClick={handleClick}
+          to={to}
+        >
+          <ArtworkGridItemImage
+            artwork={artwork}
+            lazyLoad={lazyLoad}
+            localImage={localImage}
+          />
+        </LinkContainer>
+        <Badge artwork={artwork} />
+      </Box>
+      <Metadata
+        artwork={artwork}
+        isHovered={isHovered}
+        contextModule={contextModule ?? ContextModule.artworkGrid}
+        showSaveButton={showSaveButton}
+        hideSaleInfo={hideSaleInfo}
+        onClick={handleClick}
+        showHighDemandIcon={showHighDemandIcon}
+        showHoverDetails={showHoverDetails}
+        disableRouterLinking={disableRouterLinking}
+        to={to}
+      />
+    </div>
+  )
+}
+
+const ArtworkGridItemImage: React.FC<
+  Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
+    localImage: LocalImage | null
+  }
+> = ({ artwork, lazyLoad, localImage }) => {
+  const { user } = useSystemContext()
+  const isTeam = userIsTeam(user)
+
+  const aspectRatio =
+    localImage?.aspectRatio ??
+    artwork.image?.aspectRatio ??
+    DEFAULT_GRID_ITEM_ASPECT_RATIO
+  const width = 445
+  const height = Math.floor(width / aspectRatio)
+  const transform = aspectRatio === 1 ? cropped : resized
+  const imageURL = artwork.image?.url
+  const { src, srcSet } = imageURL
+    ? transform(imageURL, {
+        width,
+        height,
+      })
+    : { src: "", srcSet: "" }
+
   if (localImage) {
     return (
-      <MagnifyImage
-        src={localImage.data}
-        srcSet={""}
-        height={localImage.height}
-        width={localImage.width}
-        lazyLoad={lazyLoad}
-        preventRightClick={!isTeam}
-      />
+      <ResponsiveBox
+        aspectWidth={localImage.width}
+        aspectHeight={localImage.height}
+        position="relative"
+        maxWidth="100%"
+      >
+        <MagnifyImage
+          src={localImage.data}
+          srcSet={""}
+          width={localImage.width}
+          height={localImage.height}
+          lazyLoad={lazyLoad}
+          preventRightClick={!isTeam}
+        />
+      </ResponsiveBox>
     )
   }
 
@@ -220,9 +242,10 @@ const DisabledLink = styled(Box)`
 
 const LinkContainer: React.FC<
   Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
+    localImage: LocalImage | null
     onClick: () => void
   }
-> = ({ artwork, children, disableRouterLinking, onClick, to }) => {
+> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -241,7 +264,7 @@ const LinkContainer: React.FC<
       to={to !== undefined ? to : artwork.href}
       onClick={onClick}
       aria-label={`${artwork.title} by ${artwork.artistNames}`}
-      position={imageURL ? "absolute" : "relative"}
+      position={imageURL || localImage ? "absolute" : "relative"}
       data-testid="artwork-link"
     >
       {children}
