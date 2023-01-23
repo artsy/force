@@ -45,16 +45,16 @@ const makeContentCard = ({
 
 const fallbackData = [
   {
-    credit: "Illustration by Artsy.",
+    credit:
+      "Yuan Yuan, The Unstable Fibonacci Sequence, 2022. Molly Green, Unfix, 2022. Tidawhitney Lek, Broken Glasses, 2022. Jacopo Pagin, Hide Me! with Transparency, 2022.",
     description:
-      "A weekly curated selection of the best works on Artsy by emerging and sought-after artists. All works available now.",
+      "The best works by rising talents on Artsy, all available now.",
     id: 1,
-    imageUrl:
-      "https://d32dm0rphc51dk.cloudfront.net/Ank3B35DVzxLcI9azZBK2w/untouched-jpg.jpg",
+    imageUrl: "https://files.artsy.net/images/Content+Card-CPE-Jan12.jpg",
     label: "Featured Collection",
     linkText: "Browse Works",
-    title: "Trove: Editor’s Picks",
-    url: "https://www.artsy.net/collection/trove-editors-picks",
+    title: "Curators’ Picks: Emerging",
+    url: "/collection/curators-picks-emerging",
   },
   {
     credit:

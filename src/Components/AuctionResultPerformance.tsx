@@ -1,34 +1,33 @@
-import { Text, IncreaseIcon, Flex, DecreaseIcon, Spacer } from "@artsy/palette"
+import { Text } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
 
 export const AuctionResultPerformance = ({
   value,
-  align,
 }: {
   value: string | null
-  align: "left" | "right"
 }) => {
   if (value === null) {
     return null
   }
 
-  const sign = value[0] === "-" ? "down" : "up"
-  const color = sign === "up" ? "green100" : "red100"
-  const text = sign === "up" ? value : value.slice(1)
-  const Arrow = sign === "up" ? IncreaseIcon : DecreaseIcon
+  const sign = value[0] === "-" ? "-" : "+"
+  const color = sign === "+" ? "green100" : "red100"
+  const text = sign === "+" ? value : value.slice(1)
 
   return (
-    <Flex
-      flexDirection="row"
-      justifyContent={align === "right" ? "flex-end" : undefined}
-      alignItems="baseline"
+    <Text
+      variant={["xs", "sm-display"]}
+      fontWeight={["bold", "medium"]}
+      color={color}
     >
-      <Arrow fill={color} width={10} height={10} />
-
-      <Spacer x="3px" />
-
-      <Text variant="xs" fontWeight="medium" color={color}>
+      <Media lessThan="sm">
+        &nbsp;({sign}
+        {text} est)
+      </Media>
+      <Media greaterThan="xs">
+        {sign}
         {text} est
-      </Text>
-    </Flex>
+      </Media>
+    </Text>
   )
 }

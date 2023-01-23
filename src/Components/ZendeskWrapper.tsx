@@ -24,7 +24,7 @@ export const ZendeskWrapper: FC<ZendeskWrapperProps> = ({
       window.zESettings = {
         webWidget: {
           // keeping the widget below the cookie banner
-          zIndex: 0,
+          zIndex: 1,
         },
       }
       window.zEmbed?.show?.()

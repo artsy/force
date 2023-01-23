@@ -157,11 +157,12 @@ describe("signUp", () => {
       name: "Example Example",
       email: "example@example.com",
       password: "secret",
+      agreedToReceiveEmails: true,
     })
 
     expect(mockFetch).toBeCalledWith("https://www.artsy.net/signup", {
       body:
-        '{"name":"Example Example","email":"example@example.com","password":"secret","session_id":"session_id","accepted_terms_of_service":true}',
+        '{"agreed_to_receive_emails":true,"accepted_terms_of_service":true,"email":"example@example.com","name":"Example Example","password":"secret","session_id":"session_id"}',
       credentials: "same-origin",
       headers: {
         Accept: "application/json",

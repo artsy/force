@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import { DateTime, Duration, Settings } from "luxon"
 import { ExtractProps } from "Utils/ExtractProps"
-import { CountdownTimer } from "../CountdownTimer"
+import { CountdownTimer } from "Components/CountdownTimer"
 
 const DATE = "2018-12-03T13:50:31.641Z"
 const SUMMER_DATE = "2018-08-03T13:50:31.641Z"
@@ -38,7 +38,7 @@ describe("CountdownTimer", () => {
   beforeEach(() => {
     require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(DATE)
     mockGetOffsetBetweenGravityClock.mockReturnValue(Promise.resolve(0))
-    Settings.defaultZoneName = "America/New_York"
+    Settings.defaultZone = "America/New_York"
   })
 
   afterEach(() => {
@@ -51,17 +51,17 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"Time remaining01d 00h 00m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
       )
     })
 
     it("shows timezone as UTC in when in UTC", () => {
-      Settings.defaultZoneName = "UTC"
+      Settings.defaultZone = "UTC"
       const timer = mount(<CountdownTimer {...defaultProps} />)
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"Time remaining01d 00h 00m 00s leftRespond by Dec 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Dec 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
       )
     })
   })
@@ -75,17 +75,17 @@ describe("CountdownTimer", () => {
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"Time remaining01d 00h 00m 00s leftRespond by Aug 4, 9:50am EDTExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Aug 4, 9:50am EDTExpired offers end the negotiation process permanently."`
       )
     })
 
     it("shows timezone as UTC when in UTC", () => {
-      Settings.defaultZoneName = "UTC"
+      Settings.defaultZone = "UTC"
       const timer = mount(<CountdownTimer {...summerProps} />)
 
       const text = timer.text()
       expect(text).toMatchInlineSnapshot(
-        `"Time remaining01d 00h 00m 00s leftRespond by Aug 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
+        `"01d 00h 00m 00s leftRespond by Aug 4, 1:50pm UTCExpired offers end the negotiation process permanently."`
       )
     })
   })
@@ -104,7 +104,7 @@ describe("CountdownTimer", () => {
 
     const text = timer.text()
     expect(text).toMatchInlineSnapshot(
-      `"Time remaining01d 00h 00m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"01d 00h 30m 00s leftRespond by Dec 4, 8:50am ESTExpired offers end the negotiation process permanently."`
     )
   })
 
@@ -118,7 +118,7 @@ describe("CountdownTimer", () => {
         />
       ).text()
     ).toMatchInlineSnapshot(
-      `"Time remaining01d 15h 10m 05s leftRespond by Dec 5, 12:00am ESTExpired offers end the negotiation process permanently."`
+      `"01d 15h 10m 05s leftRespond by Dec 5, 12:00am ESTExpired offers end the negotiation process permanently."`
     )
 
     expect(
@@ -130,7 +130,7 @@ describe("CountdownTimer", () => {
         />
       ).text()
     ).toMatchInlineSnapshot(
-      `"Time remaining00d 15h 10m 05s leftRespond by Dec 4, 12:00am ESTExpired offers end the negotiation process permanently."`
+      `"00d 15h 10m 05s leftRespond by Dec 4, 12:00am ESTExpired offers end the negotiation process permanently."`
     )
 
     expect(
@@ -142,7 +142,7 @@ describe("CountdownTimer", () => {
         />
       ).text()
     ).toMatchInlineSnapshot(
-      `"Time remaining00d 00h 15m 10s leftRespond by Dec 3, 9:05am ESTExpired offers end the negotiation process permanently."`
+      `"00d 00h 15m 10s leftRespond by Dec 3, 9:05am ESTExpired offers end the negotiation process permanently."`
     )
 
     expect(
@@ -152,7 +152,7 @@ describe("CountdownTimer", () => {
         />
       ).text()
     ).toMatchInlineSnapshot(
-      `"Time remaining00d 00h 00m 01s leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"00d 00h 00m 01s leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
     )
 
     expect(
@@ -162,7 +162,7 @@ describe("CountdownTimer", () => {
         />
       ).text()
     ).toMatchInlineSnapshot(
-      `"Time remaining0 days leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
+      `"0 days leftRespond by Dec 3, 8:50am ESTExpired offers end the negotiation process permanently."`
     )
   })
 })

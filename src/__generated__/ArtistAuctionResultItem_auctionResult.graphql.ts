@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1facfb0a8d09bd1bacb963a732594db>>
+ * @generated SignedSource<<a2d56c5465f9a5d19e85381750a76daa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type ArtistAuctionResultItem_auctionResult$data = {
     readonly display: string | null;
   } | null;
   readonly images: {
-    readonly larger: {
+    readonly thumbnail: {
       readonly cropped: {
         readonly height: number;
         readonly src: string;
@@ -32,6 +32,9 @@ export type ArtistAuctionResultItem_auctionResult$data = {
       } | null;
     } | null;
   } | null;
+  readonly isUpcoming: boolean | null;
+  readonly location: string | null;
+  readonly lotNumber: string | null;
   readonly mediumText: string | null;
   readonly organization: string | null;
   readonly performance: {
@@ -43,6 +46,7 @@ export type ArtistAuctionResultItem_auctionResult$data = {
     readonly display_usd: string | null;
   } | null;
   readonly saleDate: string | null;
+  readonly saleTitle: string | null;
   readonly title: string | null;
   readonly " $fragmentType": "ArtistAuctionResultItem_auctionResult";
 };
@@ -117,7 +121,7 @@ return {
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "larger",
+          "name": "thumbnail",
           "plural": false,
           "selections": [
             {
@@ -126,12 +130,19 @@ return {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 100
+                  "value": 130
+                },
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "square140"
+                  ]
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 100
+                  "value": 130
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -168,7 +179,7 @@ return {
                   "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:100,width:100)"
+              "storageKey": "cropped(height:130,version:[\"square140\"],width:130)"
             }
           ],
           "storageKey": null
@@ -273,6 +284,34 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "location",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lotNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleTitle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUpcoming",
+      "storageKey": null
     }
   ],
   "type": "AuctionResult",
@@ -280,6 +319,6 @@ return {
 };
 })();
 
-(node as any).hash = "ca855de874c5dbd389b7615f1e1f1265";
+(node as any).hash = "5def034c0c4d4d8cd1918584a4d3b797";
 
 export default node;

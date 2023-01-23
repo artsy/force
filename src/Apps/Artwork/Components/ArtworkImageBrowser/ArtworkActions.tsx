@@ -62,14 +62,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   const ShareButton = (
     <Popover
       placement="top"
-      title="Share"
-      popover={
-        <ArtworkSharePanelFragmentContainer
-          width={300}
-          pt={1}
-          artwork={artwork}
-        />
-      }
+      popover={<ArtworkSharePanelFragmentContainer artwork={artwork} />}
     >
       {({ anchorRef, onVisible }) => {
         return (

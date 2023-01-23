@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc851d24abcc67626a6158ef0b56e6bd>>
+ * @generated SignedSource<<487901bf5dc083e4908a10a0423e350d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem$data = {
   readonly artwork: {
-    readonly artistNames: string | null;
-    readonly attribution_class: {
-      readonly shortDescription: string | null;
-    } | null;
     readonly date: string | null;
     readonly dimensions: {
       readonly cm: string | null;
@@ -28,6 +24,12 @@ export type ItemReview_lineItem$data = {
       } | null;
       readonly internalID: string;
     } | null> | null;
+  } | null;
+  readonly artworkVersion: {
+    readonly artistNames: string | null;
+    readonly attributionClass: {
+      readonly shortDescription: string | null;
+    } | null;
     readonly image: {
       readonly resized: {
         readonly url: string;
@@ -88,6 +90,44 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        },
+        (v0/*: any*/),
+        {
+          "alias": "edition_sets",
+          "args": null,
+          "concreteType": "EditionSet",
+          "kind": "LinkedField",
+          "name": "editionSets",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkVersion",
+      "kind": "LinkedField",
+      "name": "artworkVersion",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "artistNames",
           "storageKey": null
         },
@@ -102,19 +142,11 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "date",
+          "name": "medium",
           "storageKey": null
         },
         {
           "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "medium",
-          "storageKey": null
-        },
-        (v0/*: any*/),
-        {
-          "alias": "attribution_class",
           "args": null,
           "concreteType": "AttributionClass",
           "kind": "LinkedField",
@@ -165,25 +197,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": "edition_sets",
-          "args": null,
-          "concreteType": "EditionSet",
-          "kind": "LinkedField",
-          "name": "editionSets",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            },
-            (v0/*: any*/)
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -201,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "21a2e52e8eb6eaafb635eaa2a27ed561";
+(node as any).hash = "75f9c26984f79c37602c39fb3da9413c";
 
 export default node;

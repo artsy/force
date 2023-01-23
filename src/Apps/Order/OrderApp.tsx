@@ -98,10 +98,12 @@ const OrderApp: FC<OrderAppProps> = props => {
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const isModal = !!props.match?.location.query.isModal
   const artwork = extractNodes(order.lineItems!)[0].artwork
+  const logoClickRedirectPath =
+    order.source === "private_sale" ? "/" : artwork?.href!
 
   return (
     <Box>
-      <MinimalNavBar to={artwork?.href!} isBlank={isModal}>
+      <MinimalNavBar to={logoClickRedirectPath} isBlank={isModal}>
         <Title>Checkout | Artsy</Title>
         <Meta
           name="viewport"

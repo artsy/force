@@ -162,24 +162,50 @@ describe("AuctionResults", () => {
       expect(screen.getAllByRole("img")).toHaveLength(10)
     })
 
-    it("renders either realized price, bought in, or price not available", () => {
-      renderWithRelay(mockedResolver)
-
-      expect(screen.getAllByText("Price not available")).toHaveLength(15)
-      expect(screen.getByText("Bought in")).toBeInTheDocument()
-      expect(screen.getAllByText("Realized Price")).toHaveLength(10)
-    })
-
-    it("renders price in original currency and in USD only if currency is not USD", () => {
-      renderWithRelay({
-        Artist: () => ({
-          ...AuctionResultsFixture.artist,
-        }),
+    describe("For Logged in users", () => {
+      beforeEach(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "cx-upcoming-auctions-filter": { flagEnabled: true },
+          },
+          user: { name: "Logged In", email: "loggedin@example.com" },
+        }))
       })
 
-      expect(screen.getAllByText("$20,000")).toHaveLength(2)
-      expect(screen.getAllByText("€12,000")).toHaveLength(2)
-      expect(screen.getByText("$15,000")).toBeInTheDocument()
+      it("renders either price, awaiting results, bought in, or price not available", () => {
+        renderWithRelay(mockedResolver)
+
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+        expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
+        expect(screen.getAllByText("Bought In")).toHaveLength(2)
+      })
+
+      it("renders price in original currency and in USD only if currency is not USD", () => {
+        renderWithRelay({
+          Artist: () => ({
+            ...AuctionResultsFixture.artist,
+          }),
+        })
+
+        expect(screen.getAllByText("€12,000 • $15,000")).toHaveLength(2)
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+      })
+    })
+
+    describe("For Logged Out users", () => {
+      beforeEach(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "cx-upcoming-auctions-filter": { flagEnabled: true },
+          },
+          user: null,
+        }))
+      })
+      it('Shows "Sign Up to see estimate/price" in place of price for unauthenticated users', () => {
+        renderWithRelay(mockedResolver)
+        expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(4)
+        expect(screen.getAllByText("Sign up to see price")).toHaveLength(16)
+      })
     })
 
     describe("sets filters from URL query", () => {
@@ -321,7 +347,6 @@ describe("AuctionResults", () => {
               createdAfterYear: 1880,
               createdBeforeYear: 1973,
             })
-            expect(screen.getAllByText("Sign up to see price")).toHaveLength(10)
           })
         })
 
@@ -547,7 +572,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "27.2 x 21.1 cm",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/xACxJ_uIHApai3JP9odtZg/thumbnail.jpg",
@@ -573,6 +598,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Work on Paper",
             isUpcoming: true,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -582,7 +610,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "82.2 x 100.4 cm",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/lmY_wowdeGi__ZtKVHV8Dw/thumbnail.jpg",
@@ -607,7 +635,10 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             id: "QXVjdGlvblJlc3VsdDoyNDc3Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
-            isUpcoming: true,
+            isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -617,7 +648,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "51.2 x 34.2 cm",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/AI6P5qi0Xq7Efs9d6HMt4A/thumbnail.jpg",
@@ -643,6 +674,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -652,7 +686,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "23.5 cm.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/B3EtIMtH8XnDmt1KBD6VhQ/thumbnail.jpg",
@@ -678,6 +712,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -687,7 +724,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "15 3/8 in.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/rLyB6jNe0lQ8fF6EEQ61wg/thumbnail.jpg",
@@ -713,6 +750,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -722,7 +762,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "10 in.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/46t-8KytTjCwYPw17E7U6w/thumbnail.jpg",
@@ -741,13 +781,16 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
               display_usd: "$NaN",
               cents_usd: 0,
             },
-            boughtIn: false,
+            boughtIn: true,
             performance: { mid: "-50.21%" },
             estimate: { display: "$2,500 - 3,500" },
             id: "QXVjdGlvblJlc3VsdDoyNDY2Nw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -757,7 +800,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "9 1/8 in.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/eivcrcx7PVnvmKZzOQosXA/thumbnail.jpg",
@@ -783,6 +826,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -792,7 +838,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "13 in.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/-ZlQnxE8T8MsVRGjSSwaXw/thumbnail.jpg",
@@ -818,6 +864,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             mediumText: "oil on canvas",
             categoryText: "Painting",
             isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
         {
@@ -827,12 +876,50 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
             dimension_text: "37.6 cm.",
             organization: "Christie's",
             images: {
-              larger: {
+              thumbnail: {
                 cropped: {
                   src:
                     "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
                   srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/3nGESp60mCg0xygJ4bvjcA/thumbnail.jpg",
+                  width: 100,
+                  height: 100,
+                },
+              },
+            },
+            date_text: "1881-1973",
+            saleDate: "2025-02-05T19:00:00Z",
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
+            boughtIn: false,
+            performance: { mid: "-9%" },
+            estimate: { display: "$7,000 - 10,000" },
+            id: "QXVjdGlvblJlc3VsdDoyNDYzNw==",
+            mediumText: "oil on canvas",
+            categoryText: "Painting",
+            isUpcoming: false,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
+          },
+        },
+        {
+          node: {
+            artist: null,
+            title: "Visage de femme (A.R. 192)",
+            dimension_text: "13 3/8 in.",
+            organization: "Christie's",
+            images: {
+              thumbnail: {
+                cropped: {
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
                   width: 100,
                   height: 100,
                 },
@@ -847,47 +934,15 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
               cents_usd: 0,
             },
             boughtIn: false,
-            performance: { mid: "-9%" },
-            estimate: { display: "$7,000 - 10,000" },
-            id: "QXVjdGlvblJlc3VsdDoyNDYzNw==",
-            mediumText: "oil on canvas",
-            categoryText: "Painting",
-            isUpcoming: false,
-          },
-        },
-        {
-          node: {
-            artist: null,
-            title: "Visage de femme (A.R. 192)",
-            dimension_text: "13 3/8 in.",
-            organization: "Christie's",
-            images: {
-              larger: {
-                cropped: {
-                  src:
-                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
-                  srcSet:
-                    "https://d32dm0rphc51dk.cloudfront.net/Db93v-hdsJjCV6XHFUfn2g/thumbnail.jpg",
-                  width: 100,
-                  height: 100,
-                },
-              },
-            },
-            date_text: "1881-1973",
-            saleDate: "2020-02-05T19:00:00Z",
-            currency: "USD",
-            price_realized: {
-              display: "$NaN",
-              display_usd: "$NaN",
-              cents_usd: 0,
-            },
-            boughtIn: true,
             performance: { mid: "3%" },
-            estimate: { display: "$7,000 - 10,000" },
+            estimate: { display: null },
             id: "QXVjdGlvblJlc3VsdDoyNDYyNw==",
             mediumText: "oil on canvas",
             categoryText: "Painting",
-            isUpcoming: false,
+            isUpcoming: true,
+            lotNumber: "1",
+            saleTitle: "Post-War and Contemporary Art Day Sale",
+            location: "London",
           },
         },
       ],

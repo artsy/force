@@ -151,7 +151,6 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 
   return (
     <Popover
-      title="Other artists you might like"
       placement="bottom"
       popover={
         artist ? (

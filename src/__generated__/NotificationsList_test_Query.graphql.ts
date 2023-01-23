@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b433c6e1c978e2ff641f9d39cca79e1b>>
+ * @generated SignedSource<<29d38976155e1461fc3f0ffb986e9e88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,14 +40,14 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "title",
   "storageKey": null
 },
 v4 = {
@@ -179,6 +179,7 @@ return {
                         "storageKey": null
                       },
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -251,7 +252,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v1/*: any*/),
-                                  (v2/*: any*/),
+                                  (v3/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -299,7 +300,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v3/*: any*/)
+                                  (v2/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -309,7 +310,6 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:4)"
                       },
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -373,7 +373,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0f045698459372e8abdff77e693b3eab",
+    "cacheID": "d0195bd024bf31f91d33cd9d27d18c36",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -446,6 +446,7 @@ return {
         "viewer.notifications.edges.node.message": (v4/*: any*/),
         "viewer.notifications.edges.node.notificationType": {
           "enumValues": [
+            "ARTICLE_FEATURED_ARTIST",
             "ARTWORK_ALERT",
             "ARTWORK_PUBLISHED",
             "PARTNER_SHOW_OPENED",
@@ -477,7 +478,7 @@ return {
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        publishedAtAbsolute: publishedAt\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        notificationType\n        publishedAtAbsolute: publishedAt\n        artworks: artworksConnection {\n          totalCount\n        }\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

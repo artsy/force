@@ -32,16 +32,16 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
+        text: "New This Week",
+        href: "/collection/new-this-week",
+      },
+      {
         text: "Trending Now",
         href: "/collection/trending-this-week",
       },
       {
-        text: "Black Painters On Our Radar",
-        href: "/collection/black-painters-on-our-radar",
-      },
-      {
-        text: "Street Art Highlights",
-        href: "/collection/street-art-highlights",
+        text: "Artsy Vanguard Artists",
+        href: "/collection/the-artsy-vanguard",
         dividerBelow: true,
       },
       {
@@ -50,16 +50,16 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Curator's Picks",
           links: [
             {
-              text: "Artists On The Rise",
-              href: "/collection/artists-on-the-rise",
-            },
-            {
-              text: "Contemporary Now",
-              href: "/collection/contemporary-now",
+              text: "Rising Artists of Africa & Its Diaspora",
+              href: "/collection/rising-artists-of-africa-and-its-diaspora",
             },
             {
               text: "Women Artists Now",
               href: "/collection/women-artists-to-watch",
+            },
+            {
+              text: "Rising Artists of Asia & Its Diaspora",
+              href: "/collection/rising-artists-of-asia-and-its-diaspora",
             },
           ],
         },
@@ -159,12 +159,12 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/collection/top-auction-lots",
       },
       {
-        text: "Top Prints & Editions",
-        href: "/collection/iconic-prints",
+        text: "Curators’ Picks: Blue-Chip",
+        href: "/collection/curators-picks-blue-chip",
       },
       {
-        text: "The Collectibles Shop",
-        href: "/collection/the-collectibles-shop",
+        text: "Best of Prints & Editions",
+        href: "/collection/iconic-prints",
       },
       {
         text: "Price",
@@ -172,8 +172,8 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           title: "Price",
           links: [
             {
-              text: "Finds Under $50,000",
-              href: "/collection/finds-under-50000-dollars",
+              text: "Finds Under $25,000",
+              href: "/collection/finds-under-25000-dollars",
             },
             {
               text: "Finds Under $10,000",
@@ -182,10 +182,6 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             {
               text: "Finds Under $5,000",
               href: "/collection/finds-under-5000-dollars",
-            },
-            {
-              text: "Finds Under $2,500",
-              href: "/collection/finds-under-2500-dollars",
             },
             {
               text: "Finds Under $1,000",

@@ -9,7 +9,7 @@ import { BankDebitDetails } from "./BankDebitDetails"
 import { WireTransferDetails } from "./WireTransferDetails"
 
 export const PaymentMethodSummaryItem = ({
-  order: { paymentMethod, paymentMethodDetails },
+  order: { source, paymentMethodDetails },
   textColor = "black100",
   withDescription = true,
   ...others
@@ -29,7 +29,12 @@ export const PaymentMethodSummaryItem = ({
       case "BankAccount":
         return <BankDebitDetails {...paymentMethodDetails} />
       case "WireTransfer":
-        return <WireTransferDetails withDescription={withDescription} />
+        return (
+          <WireTransferDetails
+            withDescription={withDescription}
+            orderSource={source}
+          />
+        )
       default:
         null
     }
@@ -47,7 +52,7 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
   {
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
-        paymentMethod
+        source
         paymentMethodDetails {
           __typename
           ... on CreditCard {

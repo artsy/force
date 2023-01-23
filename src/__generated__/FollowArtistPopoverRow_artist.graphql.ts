@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7de1ccbde93f4ad737837754409b0f15>>
+ * @generated SignedSource<<e247c988495de6d1ef3e3022ac1ca04c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowArtistPopoverRow_artist$data = {
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly image: {
-    readonly cropped: {
-      readonly url: string;
-    } | null;
-  } | null;
   readonly internalID: string;
-  readonly name: string | null;
-  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "FollowArtistPopoverRow_artist";
 };
 export type FollowArtistPopoverRow_artist$key = {
@@ -34,11 +27,9 @@ const node: ReaderFragment = {
   "name": "FollowArtistPopoverRow_artist",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderArtist_artist"
     },
     {
       "alias": null,
@@ -46,66 +37,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedNationalityAndBirthday",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 45
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 45
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:45,width:45)"
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "3224c6f4704d3b7490b6ae620b73eae4";
+(node as any).hash = "bf665f4bb1bea0f20052eb4f3a2f328f";
 
 export default node;

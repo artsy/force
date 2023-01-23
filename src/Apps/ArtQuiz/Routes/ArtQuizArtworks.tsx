@@ -7,6 +7,8 @@ import {
   Flex,
   FullBleed,
   Text,
+  Tooltip,
+  useDidMount,
 } from "@artsy/palette"
 import {
   ArtQuizButton,
@@ -19,7 +21,7 @@ import {
 } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { FC, useCallback, useRef } from "react"
+import { FC, useCallback, useMemo, useRef } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
@@ -32,33 +34,39 @@ interface ArtQuizArtworksProps {
 }
 
 export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
+  const { submitMutation: submitDislike } = useDislikeArtwork()
+  const { submitMutation: submitSave } = useSaveArtwork()
+  const { submitMutation: submitUpdate } = useUpdateQuiz()
   const { router } = useRouter()
 
-  const edges = me.quiz.quizArtworkConnection!.edges!
-  const startingIndex = edges.findIndex(edge => {
+  // clone to make the array writable for sorting
+  const edges = me.quiz.quizArtworkConnection?.edges
+    ? [...me.quiz.quizArtworkConnection?.edges]
+    : []
+
+  // sort the artworks by position, ascending
+  const sortedEdges = useMemo(() => {
+    return edges.sort((a, b) => {
+      return a && b ? a.position - b.position : 0
+    })
+  }, [edges])
+
+  // check to see if the user has already started the quiz
+  const startingIndex = sortedEdges.findIndex(edge => {
     return edge?.interactedAt === null
   })
 
   const { cards, activeIndex, dispatch } = useArtQuizCards({
-    cards: edges.map(edge => ({
-      ...edge!.node,
-      interactedAt: edge!.interactedAt,
+    cards: sortedEdges.map(edge => ({
+      ...edge?.node,
+      interactedAt: edge?.interactedAt,
     })),
     startingIndex,
   })
 
-  const currentArtwork = edges[activeIndex]!.node!
-  const previousArtwork = activeIndex > 0 ? edges[activeIndex - 1]!.node! : null
-
-  const { submitMutation: submitDislike } = useDislikeArtwork()
-  const { submitMutation: submitSave } = useSaveArtwork()
-  const { submitMutation: submitUpdate } = useUpdateQuiz()
-
   const handlePrevious = useCallback(() => {
-    if (activeIndex === 0) {
-      router.push("/art-quiz/welcome")
-      return
-    }
+    const previousArtwork =
+      activeIndex > 0 ? sortedEdges[activeIndex - 1]?.node : null
 
     if (previousArtwork) {
       const { isSaved, isDisliked } = previousArtwork
@@ -97,12 +105,15 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     }
 
     dispatch({ type: "Previous" })
+    if (activeIndex === 0) {
+      router.push("/art-quiz/welcome")
+    }
   }, [
     activeIndex,
     dispatch,
     me.id,
-    previousArtwork,
     router,
+    sortedEdges,
     submitDislike,
     submitSave,
     submitUpdate,
@@ -110,52 +121,56 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
   const handleNext = useCallback(
     (action: "Like" | "Dislike") => () => {
+      const currentArtwork =
+        activeIndex < sortedEdges.length ? sortedEdges[activeIndex]?.node : null
+
+      if (currentArtwork) {
+        if (action === "Like") {
+          submitSave({
+            variables: {
+              input: {
+                artworkID: currentArtwork.internalID,
+              },
+            },
+          })
+        }
+
+        if (action === "Dislike") {
+          submitDislike({
+            variables: {
+              input: {
+                artworkID: currentArtwork.internalID,
+                remove: false,
+              },
+            },
+          })
+        }
+
+        submitUpdate({
+          variables: {
+            input: {
+              artworkId: currentArtwork.internalID,
+              userId: me.id,
+            },
+          },
+        })
+      }
+
+      dispatch({ type: action })
       if (activeIndex === cards.length - 1) {
         router.push("/art-quiz/results")
-        return
       }
-
-      if (action === "Like") {
-        submitSave({
-          variables: {
-            input: {
-              artworkID: currentArtwork.internalID,
-            },
-          },
-        })
-      }
-
-      if (action === "Dislike") {
-        submitDislike({
-          variables: {
-            input: {
-              artworkID: currentArtwork.internalID,
-              remove: false,
-            },
-          },
-        })
-      }
-
-      submitUpdate({
-        variables: {
-          input: {
-            artworkId: currentArtwork.internalID,
-            userId: me.id,
-          },
-        },
-      })
-      dispatch({ type: action })
     },
     [
       activeIndex,
-      cards.length,
-      currentArtwork.internalID,
+      sortedEdges,
       dispatch,
+      cards.length,
+      submitUpdate,
       me.id,
-      router,
       submitSave,
       submitDislike,
-      submitUpdate,
+      router,
     ]
   )
 
@@ -174,6 +189,12 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       likeRef.current.triggerAnimation()
     },
   })
+
+  const isMounted = useDidMount()
+
+  // prevents a false position from being displayed after the last quiz image, e.g. 17/16
+  const positionDisplay =
+    activeIndex + 1 > cards.length ? cards.length : activeIndex + 1
 
   return (
     <ArtQuizFullScreen>
@@ -197,7 +218,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
             alignItems="center"
             justifyContent="center"
           >
-            {activeIndex + 1} / {cards.length}
+            {positionDisplay} / {cards.length}
           </Text>
 
           <RouterLink
@@ -252,19 +273,28 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
           })}
         </Flex>
 
-        <Flex alignItems="stretch" justifyContent="center">
-          <ArtQuizButton
-            ref={dislikeRef}
-            variant="Dislike"
-            onClick={handleNext("Dislike")}
-          />
+        <Tooltip
+          content="Like it? Hit the heart. Not for you? Choose X."
+          variant="defaultDark"
+          pointer
+          placement="top"
+          textAlign="center"
+          visible={isMounted && activeIndex === 0}
+        >
+          <Flex alignItems="stretch" justifyContent="center">
+            <ArtQuizButton
+              ref={dislikeRef}
+              variant="Dislike"
+              onClick={handleNext("Dislike")}
+            />
 
-          <ArtQuizButton
-            ref={likeRef}
-            variant="Like"
-            onClick={handleNext("Like")}
-          />
-        </Flex>
+            <ArtQuizButton
+              ref={likeRef}
+              variant="Like"
+              onClick={handleNext("Like")}
+            />
+          </Flex>
+        </Tooltip>
       </FullBleed>
     </ArtQuizFullScreen>
   )

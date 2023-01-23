@@ -23,6 +23,7 @@ import { Form, useFormikContext } from "formik"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkFormMain_artwork$data } from "__generated__/MyCollectionArtworkFormMain_artwork.graphql"
@@ -36,7 +37,8 @@ export interface MyCollectionArtworkFormMainProps {
 export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainProps> = ({
   artwork,
 }) => {
-  const { artworkFormImagesRef, onBack } = useMyCollectionArtworkFormContext()
+  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+  const { onBack } = useMyCollectionArtworkFormContext()
   const {
     deleteCollectedArtwork: trackDeleteCollectedArtwork,
   } = useMyCollectionTracking()
@@ -65,7 +67,11 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
           return res.myCollectionDeleteArtwork?.artworkOrError?.mutationError
         },
       })
-      router.push({ pathname: "/settings/my-collection" })
+      router.push({
+        pathname: isCollectorProfileEnabled
+          ? "/collector-profile/my-collection"
+          : "/settings/my-collection",
+      })
     } catch (error) {
       logger.error(`Artwork not deleted`, error)
 
@@ -148,10 +154,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
 
             {!onlyPhotos && <MyCollectionArtworkFormDetails />}
             <Spacer y={4} />
-            <MyCollectionArtworkFormImages
-              ref={artworkFormImagesRef}
-              isEditing={isEditing}
-            />
+            <MyCollectionArtworkFormImages isEditing={isEditing} />
             <Spacer y={6} />
             {isEditing && !onlyPhotos && (
               <>

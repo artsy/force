@@ -105,6 +105,27 @@ describe("MyCollectionArtwork", () => {
         screen.queryByText("Interested in Selling This Work?")
       ).not.toBeInTheDocument()
     })
+
+    describe("when my-collection-web-phase-8-submission-status ff is enabled", () => {
+      it("with submission id: the section is rendered", () => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
+            "my-collection-web-phase-5": { flagEnabled: true },
+            "my-collection-web-phase-6-request-price-estimate": {
+              flagEnabled: true,
+            },
+            "my-collection-web-phase-8-submission-status": {
+              flagEnabled: true,
+            },
+          },
+        }))
+        const { renderWithRelay } = getWrapper()
+        renderWithRelay(mockResolversWithInsights)
+        expect(screen.queryByText("Submission Status")).toBeInTheDocument()
+        expect(screen.queryByText("In Progress")).toBeInTheDocument()
+      })
+    })
   })
 
   describe("Request Price Estimate section", () => {
@@ -123,7 +144,7 @@ describe("MyCollectionArtwork", () => {
         )
       })
 
-      it("the section is rendered with cx-collector-profile ff enables", () => {
+      it("the section is rendered with cx-collector-profile ff enabled", () => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
           featureFlags: {
             "my-collection-web-phase-4-demand-index": { flagEnabled: true },
@@ -178,7 +199,9 @@ const mockResolversWithInsights = {
     title: "Morons",
     date: "2007",
     artistNames: "Banksy",
-    submissionId: "submission-id",
+    consignmentSubmission: {
+      displayText: "submission in progress",
+    },
     hasMarketPriceInsights: true,
     artist: {
       targetSupply: {
@@ -195,7 +218,7 @@ const mockResolversWithInsightsWithoutSubmission = {
     date: "2007",
     artistNames: "Banksy",
     hasMarketPriceInsights: true,
-    submissionId: null,
+    consignmentSubmission: null,
     artist: {
       targetSupply: {
         isP1: true,
@@ -218,7 +241,7 @@ const mockResolversWithoutInsights = {
         isP1: true,
       },
     },
-    submissionId: null,
+    consignmentSubmission: null,
   }),
 }
 
@@ -229,7 +252,9 @@ const mockResolversNotP1 = {
     date: "2020",
     artistNames: "MAria",
     hasMarketPriceInsights: false,
-    submissionId: "submission-id",
+    consignmentSubmission: {
+      displayText: "submission in progress",
+    },
     artist: {
       targetSupply: {
         isP1: false,

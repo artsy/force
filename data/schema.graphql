@@ -2108,9 +2108,17 @@ type Artwork implements Node & Searchable & Sellable {
 
   # A globally unique ID.
   id: ID!
-  image: Image
+  image(
+    # Show all images, even if they are not ready or processing failed.
+    includeAll: Boolean
+    size: Int
+  ): Image
   imageRights: String
-  images(size: Int): [Image]
+  images(
+    # Show all images, even if they are not ready or processing failed.
+    includeAll: Boolean
+    size: Int
+  ): [Image]
   imageTitle: String
   imageUrl: String
 
@@ -2543,7 +2551,7 @@ type ArtworkVersion implements Node {
   artists: [Artist]
 
   # The Artwork Version attribution class
-  attributionClass: String
+  attributionClass: AttributionClass
 
   # The Image id
   defaultImageID: String
@@ -2676,6 +2684,7 @@ type AuctionResult implements Node {
   internalID: ID!
   isUpcoming: Boolean
   location: String
+  lotNumber: String
   mediumText: String
   organization: String
   performance: AuctionLotPerformance
@@ -2748,6 +2757,7 @@ type AuctionResultsByArtists {
   highEstimateCentsUsd: BigInt
   id: ID!
   location: String
+  lotNumber: String
   lowEstimateCents: BigInt
   lowEstimateCentsUsd: BigInt
   mediumText: String
@@ -3539,6 +3549,28 @@ type CitySponsoredContent {
   ): ShowConnection
 }
 
+# A collection of artworks
+type Collection {
+  # Number of artworks associated with this collection.
+  artworksCount: Int!
+
+  # True if this is the default collection for this user, i.e. the default Saved Artwork collection.
+  default: Boolean!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Name of the collection. Has a predictable value for 'standard' collections
+  # such as Saved Artwork, My Collection, etc. Can be provided by user otherwise.
+  name: String!
+
+  # True if this collection represents artworks explicitly saved by the user, false otherwise.
+  saves: Boolean!
+}
+
 enum CollectionSorts {
   POSITION_ASC
   POSITION_DESC
@@ -3806,6 +3838,7 @@ type CommerceBuyOrder implements CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   conversation: Conversation
   createdAt(
     format: String
@@ -3966,6 +3999,9 @@ enum CommerceCancelReasonTypeEnum {
 
   # cancelation reason is: buyer_rejected
   BUYER_REJECTED
+
+  # cancelation reason is: funds_not_received
+  FUNDS_NOT_RECEIVED
 
   # cancelation reason is: seller_lapsed
   SELLER_LAPSED
@@ -4535,6 +4571,7 @@ type CommerceOfferOrder implements CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   conversation: Conversation
   createdAt(
     format: String
@@ -4767,6 +4804,7 @@ interface CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
+  conditionsOfSale: String
   createdAt(
     format: String
 
@@ -6998,6 +7036,58 @@ union CreateConsignmentInquiryMutationType =
     ConsignmentInquiryMutationFailure
   | ConsignmentInquiryMutationSuccess
 
+type CreateFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateFeaturedLinkMutationInput {
+  clientMutationId: String
+  description: String!
+  href: String!
+  sourceBucket: String
+  sourceKey: String
+  subtitle: String
+  title: String!
+}
+
+type CreateFeaturedLinkMutationPayload {
+  clientMutationId: String
+  featuredLinkOrError: CreateFeaturedLinkResponseOrError
+}
+
+union CreateFeaturedLinkResponseOrError =
+    CreateFeaturedLinkFailure
+  | CreateFeaturedLinkSuccess
+
+type CreateFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
+}
+
+type CreateFeatureFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateFeatureMutationInput {
+  active: Boolean!
+  callout: String
+  clientMutationId: String
+  description: String
+  layout: FeatureLayouts
+  name: String!
+  subheadline: String
+}
+
+type CreateFeatureMutationPayload {
+  clientMutationId: String
+  featureOrError: createFeatureResponseOrError
+}
+
+union createFeatureResponseOrError = CreateFeatureFailure | CreateFeatureSuccess
+
+type CreateFeatureSuccess {
+  feature: Feature
+}
+
 input CreateGeminiEntryForAssetInput {
   clientMutationId: String
 
@@ -7598,6 +7688,48 @@ type DeleteCreditCardPayload {
   clientMutationId: String
   creditCardOrError: CreditCardMutationType
   me: Me
+}
+
+type DeleteFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteFeaturedLinkMutationInput {
+  clientMutationId: String
+  id: String!
+}
+
+type DeleteFeaturedLinkMutationPayload {
+  clientMutationId: String
+  featuredLinkOrError: DeleteFeaturedLinkResponseOrError
+}
+
+union DeleteFeaturedLinkResponseOrError =
+    DeleteFeaturedLinkFailure
+  | DeleteFeaturedLinkSuccess
+
+type DeleteFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
+}
+
+type DeleteFeatureFailure {
+  mutationError: GravityMutationError
+}
+
+input DeleteFeatureMutationInput {
+  clientMutationId: String
+  id: String!
+}
+
+type DeleteFeatureMutationPayload {
+  clientMutationId: String
+  featureOrError: DeleteFeatureResponseOrError
+}
+
+union DeleteFeatureResponseOrError = DeleteFeatureFailure | DeleteFeatureSuccess
+
+type DeleteFeatureSuccess {
+  feature: Feature
 }
 
 type deleteOrderedSetFailure {
@@ -8549,6 +8681,17 @@ type Feature {
   subheadline(format: Format): String
 }
 
+# A connection to a list of items.
+type FeatureConnection {
+  # A list of edges.
+  edges: [FeatureEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
 # An illustrated link chosen to highlight a Gene from a given GeneFamily
 type FeaturedGeneLink {
   href: String!
@@ -8575,7 +8718,36 @@ type FeaturedLink {
   title: String
 }
 
+# A connection to a list of items.
+type FeaturedLinkConnection {
+  # A list of edges.
+  edges: [FeaturedLinkEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type FeaturedLinkEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: FeaturedLink
+}
+
 union FeaturedLinkEntity = Artist | Gene | Partner
+
+# An edge in a connection.
+type FeatureEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Feature
+}
 
 type FeatureFlag {
   createdAt(
@@ -8664,6 +8836,13 @@ type FeatureMeta {
   description: String!
   image: String
   name: String!
+}
+
+enum FeatureSorts {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  NAME_ASC
+  NAME_DESC
 }
 
 type Feedback {
@@ -10482,6 +10661,28 @@ type MarketPriceInsightsEdge {
   node: MarketPriceInsights
 }
 
+type MarkNotificationAsReadFailure {
+  mutationError: GravityMutationError
+}
+
+input MarkNotificationAsReadInput {
+  clientMutationId: String
+  id: String!
+}
+
+type MarkNotificationAsReadPayload {
+  clientMutationId: String
+  responseOrError: MarkNotificationAsReadResponseOrError
+}
+
+union MarkNotificationAsReadResponseOrError =
+    MarkNotificationAsReadFailure
+  | MarkNotificationAsReadSuccess
+
+type MarkNotificationAsReadSuccess {
+  success: Boolean
+}
+
 union Match =
     Article
   | Artist
@@ -10630,6 +10831,9 @@ type Me implements Node {
 
   # Whether user is allowed to request email confirmation
   canRequestEmailConfirmation: Boolean!
+
+  # A collection belonging to the current user
+  collection(id: String!): Collection
   collectorLevel: Int
 
   # A collector profile.
@@ -11041,6 +11245,9 @@ type Message implements Node {
 
   # Unaltered text if possible, otherwise `body`: a parsed/sanitized version from Sendgrid.
   body: String
+
+  # Masked emails w/ display name of the recipients in copy.
+  cc: [String!]!
   createdAt(
     format: String
 
@@ -11076,6 +11283,9 @@ type Message implements Node {
     @deprecated(
       reason: "Payment Request was deprecated. The field was kept for legacy client support. [Will be removed in v2]"
     )
+
+  # Masked emails w/ display name of the recipients.
+  to: [String!]!
 }
 
 # A connection to a list of items.
@@ -11335,6 +11545,16 @@ type Mutation {
   # Create a credit card
   createCreditCard(input: CreditCardInput!): CreditCardPayload
 
+  # Creates a feature.
+  createFeature(
+    input: CreateFeatureMutationInput!
+  ): CreateFeatureMutationPayload
+
+  # Creates a featured link.
+  createFeaturedLink(
+    input: CreateFeaturedLinkMutationInput!
+  ): CreateFeaturedLinkMutationPayload
+
   # Attach an gemini asset to a consignment submission
   createGeminiEntryForAsset(
     input: CreateGeminiEntryForAssetInput!
@@ -11393,6 +11613,16 @@ type Mutation {
 
   # Remove a credit card
   deleteCreditCard(input: DeleteCreditCardInput!): DeleteCreditCardPayload
+
+  # deletes a feature.
+  deleteFeature(
+    input: DeleteFeatureMutationInput!
+  ): DeleteFeatureMutationPayload
+
+  # deletes a featured link.
+  deleteFeaturedLink(
+    input: DeleteFeaturedLinkMutationInput!
+  ): DeleteFeaturedLinkMutationPayload
 
   # Delete User Artsy Account
   deleteMyAccountMutation(input: DeleteAccountInput!): DeleteAccountPayload
@@ -11468,6 +11698,11 @@ type Mutation {
   markAllNotificationsAsRead(
     input: MarkAllNotificationsAsReadInput!
   ): MarkAllNotificationsAsReadPayload
+
+  # Mark an unread notifications as read
+  markNotificationAsRead(
+    input: MarkNotificationAsReadInput!
+  ): MarkNotificationAsReadPayload
 
   # Merge multiple artist records in order to deduplicate artists
   mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
@@ -11587,6 +11822,16 @@ type Mutation {
   updateConversation(
     input: UpdateConversationMutationInput!
   ): UpdateConversationMutationPayload
+
+  # updates a feature.
+  updateFeature(
+    input: UpdateFeatureMutationInput!
+  ): UpdateFeatureMutationPayload
+
+  # updates a featured link.
+  updateFeaturedLink(
+    input: UpdateFeaturedLinkMutationInput!
+  ): UpdateFeaturedLinkMutationPayload
 
   # Update a message.
   updateMessage(
@@ -11953,6 +12198,7 @@ input NotificationPreferenceInput {
 }
 
 enum NotificationTypesEnum {
+  ARTICLE_FEATURED_ARTIST
   ARTWORK_ALERT
   ARTWORK_PUBLISHED
   PARTNER_SHOW_OPENED
@@ -13807,6 +14053,25 @@ type Query {
     # The slug or ID of the Feature
     id: ID
   ): Feature
+  featuredLinksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): FeaturedLinkConnection
+  featuresConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    sort: FeatureSorts
+
+    # If present, will search by term
+    term: String
+  ): FeatureConnection
 
   # Partners Elastic Search results
   filterPartners(
@@ -16572,6 +16837,64 @@ type UpdateConversationMutationPayload {
   conversation: Conversation
 }
 
+type UpdateFeaturedLinkFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateFeaturedLinkMutationInput {
+  clientMutationId: String
+  description: String
+  href: String
+  id: String!
+  sourceBucket: String
+  sourceKey: String
+  subtitle: String
+  title: String
+}
+
+type UpdateFeaturedLinkMutationPayload {
+  clientMutationId: String
+
+  # On success: featured link updated.
+  featuredLinkOrError: UpdateFeaturedLinkResponseOrError
+}
+
+union UpdateFeaturedLinkResponseOrError =
+    UpdateFeaturedLinkFailure
+  | UpdateFeaturedLinkSuccess
+
+type UpdateFeaturedLinkSuccess {
+  featuredLink: FeaturedLink
+}
+
+type UpdateFeatureFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateFeatureMutationInput {
+  active: Boolean!
+  callout: String
+  clientMutationId: String
+  description: String
+  id: String!
+  layout: FeatureLayouts
+  name: String!
+  subheadline: String
+}
+
+type UpdateFeatureMutationPayload {
+  clientMutationId: String
+
+  # On success: the ordered set updated.
+  featureOrError: UpdateFeatureResponseOrError
+}
+
+union UpdateFeatureResponseOrError = UpdateFeatureFailure | UpdateFeatureSuccess
+
+type UpdateFeatureSuccess {
+  feature: Feature
+}
+
 type UpdateMessageFailure {
   mutationError: GravityMutationError
 }
@@ -17930,6 +18253,25 @@ type Viewer {
     # The slug or ID of the Feature
     id: ID
   ): Feature
+  featuredLinksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): FeaturedLinkConnection
+  featuresConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    sort: FeatureSorts
+
+    # If present, will search by term
+    term: String
+  ): FeatureConnection
 
   # Partners Elastic Search results
   filterPartners(

@@ -2,7 +2,7 @@ import {
   formatIsoDateNoZoneOffset,
   generateGoogleCalendarUrl,
   generateIcsCalendarUrl,
-} from "../helpers"
+} from "Apps/Auction/Components/AuctionDetails/helpers"
 
 describe("AddToCalendar date helpers", () => {
   let event

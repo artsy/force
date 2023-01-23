@@ -25,6 +25,7 @@ import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuth
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
+import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 
 interface AuthDialogSignUpProps {
   requestLocation?: AuthDialogSignUp_requestLocation$data | null
@@ -49,15 +50,23 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
       validateOnBlur={false}
       initialValues={{
         ...INITIAL_VALUES,
-        agreed_to_receive_emails: isAutomaticallySubscribed,
+        agreedToReceiveEmails: isAutomaticallySubscribed,
       }}
       validationSchema={VALIDATION_SCHEMA}
-      onSubmit={async ({ mode, ...values }, { setFieldValue, setStatus }) => {
+      onSubmit={async (
+        { mode, name, email, password, agreedToReceiveEmails },
+        { setFieldValue, setStatus }
+      ) => {
         setStatus({ error: null })
         setFieldValue("mode", "Loading")
 
         try {
-          const { user } = await signUp(values)
+          const { user } = await signUp({
+            email,
+            name,
+            password,
+            agreedToReceiveEmails,
+          })
 
           runAfterAuthentication({ accessToken: user.accessToken })
 
@@ -132,9 +141,9 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
 
               {!isAutomaticallySubscribed && (
                 <Checkbox
-                  selected={values.agreed_to_receive_emails}
+                  selected={values.agreedToReceiveEmails}
                   onSelect={selected => {
-                    setFieldValue("agreed_to_receive_emails", selected)
+                    setFieldValue("agreedToReceiveEmails", selected)
                   }}
                 >
                   <Text variant="xs">
@@ -242,10 +251,15 @@ export const AuthDialogSignUpQueryRenderer: FC = () => {
           }
         }
       `}
-      placeholder={<AuthDialogSignUp />}
+      placeholder={<AuthDialogSignUpPlaceholder />}
       render={({ error, props }) => {
-        if (error || !props || !props.requestLocation) {
-          return <AuthDialogSignUpFragmentContainer />
+        if (error) {
+          console.error(error)
+          return <AuthDialogSignUp />
+        }
+
+        if (!props?.requestLocation) {
+          return <AuthDialogSignUpPlaceholder />
         }
 
         return (
@@ -262,8 +276,7 @@ export const INITIAL_VALUES = {
   name: "",
   email: "",
   password: "",
-  accepted_terms_of_service: true,
-  agreed_to_receive_emails: false,
+  agreedToReceiveEmails: false,
   mode: "Pending",
 }
 
@@ -282,9 +295,6 @@ const VALIDATION_SCHEMA = Yup.object().shape({
       /[A-Z]{1}/,
       "Your password must have at least 1 uppercase letter."
     ),
-  accepted_terms_of_service: Yup.boolean()
-    .required("You must agree to our terms to continue.")
-    .oneOf([true]),
 })
 
 const GDPR_COUNTRY_CODES = [

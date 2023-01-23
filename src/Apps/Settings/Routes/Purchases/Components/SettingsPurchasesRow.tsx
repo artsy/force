@@ -231,7 +231,13 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
         <Text variant="xs" color="black60">
           Need Help?{" "}
-          <RouterLink to="mailto:support@artsy.net">Contact Us.</RouterLink>
+          {order.source === "private_sale" ? (
+            <RouterLink to="mailto:privatesales@artsy.net">
+              privatesales@artsy.net
+            </RouterLink>
+          ) : (
+            <RouterLink to="mailto:support@artsy.net">Contact Us.</RouterLink>
+          )}
         </Text>
       </Flex>
     </Box>
@@ -243,6 +249,7 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment SettingsPurchasesRow_order on CommerceOrder {
+        source
         internalID
         code
         displayState

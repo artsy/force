@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eae5d144508edd8daae57f7f81eb7979>>
+ * @generated SignedSource<<2281006f908d1c1176e0ee93af2d54fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
+export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NotificationItem_item$data = {
   readonly artworksConnection: {
@@ -26,6 +26,8 @@ export type NotificationItem_item$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly id: string;
+  readonly internalID: string;
   readonly isUnread: boolean;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
@@ -45,6 +47,13 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 };
@@ -54,7 +63,15 @@ return {
   "metadata": null,
   "name": "NotificationItem_item",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -133,14 +150,8 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
                 (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -203,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "1cd24fdc7ec71bb7334d69135fbfd0ce";
+(node as any).hash = "d329f50b2438b6a5cfd93b5cec50eb7b";
 
 export default node;
