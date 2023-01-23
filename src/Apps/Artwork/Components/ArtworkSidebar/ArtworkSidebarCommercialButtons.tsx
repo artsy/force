@@ -52,7 +52,7 @@ interface ArtworkSidebarCommercialButtonsProps {
 const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = ({
   artwork,
 }) => {
-  const { relayEnvironment, mediator, router, user } = useSystemContext()
+  const { relayEnvironment, router, user } = useSystemContext()
 
   const { t } = useTranslation()
 
