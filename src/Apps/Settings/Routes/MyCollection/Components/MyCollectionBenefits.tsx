@@ -35,7 +35,7 @@ export const MyCollectionBenefits: React.FC = () => {
   )
 
   const DesktopLayout = () => (
-    <GridColumns mb={12} gridRowGap={[4, 6]}>
+    <GridColumns gridRowGap={[4, 6]}>
       <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
