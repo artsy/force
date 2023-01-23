@@ -16,6 +16,7 @@ export const formatErrorMessage = (error: Error) => {
       return "No account with this email exists."
 
     case `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`:
+    case `Unexpected token '<', "<html> <"... is not valid JSON`:
       return "An error occurred. Please try again."
 
     default:
