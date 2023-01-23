@@ -17,8 +17,8 @@ import { SystemContextProps, useSystemContext } from "System"
 import { ModalType } from "Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
-import { openAuthModal } from "Utils/openAuthModal"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
+import { useAuthDialog } from "Components/AuthDialog"
 
 export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -213,7 +213,13 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
     estimatedPrice,
   } = getProps(props)
 
-  const { user, mediator } = useSystemContext()
+  const { user } = useSystemContext()
+
+  const { showAuthDialog } = useAuthDialog()
+
+  const intent = isUpcoming
+    ? Intent.seeEstimateAuctionRecords
+    : Intent.seePriceAuctionRecords
 
   if (!user) {
     return (
@@ -221,15 +227,27 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         alignSelf={"flex-start"}
         textDecoration="underline"
         onClick={() => {
-          mediator &&
-            openAuthModal(mediator, {
+          showAuthDialog({
+            current: {
+              mode: "SignUp",
+              options: {
+                title: mode => {
+                  const action = mode === "SignUp" ? "Sign up" : "Log in"
+                  return `${action} to see full auction records — for free`
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.auctionResults,
+                intent,
+              },
+            },
+            legacy: {
               mode: ModalType.signup,
               copy: "Sign up to see full auction records — for free",
               contextModule: ContextModule.auctionResults,
-              intent: isUpcoming
-                ? Intent.seeEstimateAuctionRecords
-                : Intent.seePriceAuctionRecords,
-            })
+              intent,
+            },
+          })
         }}
       >
         <Text variant={["xs", "sm"]}>

@@ -6,8 +6,6 @@ import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
-import { openAuthModal } from "Utils/openAuthModal"
-
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { RequestConditionReport_artwork$data } from "__generated__/RequestConditionReport_artwork.graphql"
 import { RequestConditionReport_me$data } from "__generated__/RequestConditionReport_me.graphql"
@@ -18,6 +16,7 @@ import {
 import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import { ModalType } from "Components/Authentication/Types"
 import track, { useTracking } from "react-tracking"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const logger = createLogger(
   "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
@@ -29,7 +28,7 @@ interface RequestConditionReportProps {
 }
 
 export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
-  const { mediator, relayEnvironment } = useSystemContext()
+  const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { trackEvent } = useTracking()
 
   const [requesting, setRequesting] = useState(false)
@@ -38,7 +37,8 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const { sendToast } = useToasts()
 
   const { me, artwork } = props
-  const isLoggedIn = Boolean(me)
+
+  const { showAuthDialog } = useAuthDialog()
 
   const requestConditionReport = () => {
     return new Promise<RequestConditionReportMutation$data>(
@@ -81,32 +81,39 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     })
   }
 
-  function trackRequestClick() {
-    trackEvent({
-      action_type:
-        DeprecatedAnalyticsSchema.ActionType.ClickedRequestConditionReport,
-      subject: DeprecatedAnalyticsSchema.Subject.RequestConditionReport,
-    })
-  }
-
   const handleLoginClick = () => {
+    showAuthDialog({
+      current: {
+        mode: "Login",
+        analytics: {
+          contextModule: ContextModule.aboutTheWork,
+          intent: Intent.requestConditionReport,
+        },
+      },
+      legacy: {
+        mode: ModalType.login,
+        redirectTo: location.href,
+        contextModule: ContextModule.aboutTheWork,
+        intent: Intent.requestConditionReport,
+      },
+    })
+
     // TODO: do we need this tracking?
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       subject: DeprecatedAnalyticsSchema.Subject.Login,
       sale_artwork_id: artwork?.saleArtwork?.internalID,
     })
-    openAuthModal(mediator!, {
-      mode: ModalType.login,
-      redirectTo: location.href,
-      contextModule: ContextModule.aboutTheWork,
-      intent: Intent.requestConditionReport,
-    })
   }
 
   const handleRequestConditionReportClick = () => {
     setRequesting(true)
-    trackRequestClick()
+
+    trackEvent({
+      action_type:
+        DeprecatedAnalyticsSchema.ActionType.ClickedRequestConditionReport,
+      subject: DeprecatedAnalyticsSchema.Subject.RequestConditionReport,
+    })
 
     requestConditionReport()
       .then(data => {

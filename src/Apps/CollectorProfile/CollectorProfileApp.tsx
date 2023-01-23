@@ -26,7 +26,13 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   }
 
   if (!isLoggedIn) {
-    return <EmptyMyCollectionPage />
+    return (
+      <>
+        <MetaTags title="Collector Profile | Artsy" />
+
+        <EmptyMyCollectionPage />
+      </>
+    )
   }
 
   const tabs = compact([

@@ -7,106 +7,144 @@ import {
   Image,
   Message,
   ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { EmptyMyCollectionPageProps } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
+import { useAuthDialog } from "Components/AuthDialog"
 import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { openAuthModal } from "Utils/openAuthModal"
 import { resized } from "Utils/resized"
-import { Media } from "Utils/Responsive"
 
-const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
-  loggedOutState,
-}) => {
+export const MyCollectionEmptyState: React.FC = () => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
-  const { mediator } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
+
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
 
   const image = resized(
     "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-    {
-      width: 770,
-      height: 652,
-    }
+    { width: 910, height: 770 } // TODO: Source image should be 4:3, ideally. Is currently 709:600
   )
 
-  return (
-    <GridColumns mb={12} gridRowGap={4} alignItems="center">
-      <Column span={6}>
-        <Text variant="xxl">Manage Your Art Collection Online</Text>
+  const { showAuthDialog } = useAuthDialog()
 
-        <Text variant="sm" mt={2} mb={6}>
+  return (
+    <GridColumns gridRowGap={4} alignItems="center">
+      <Column span={6} order={[1, 0]} py={[0, 2]}>
+        <Text variant={["xl", "xl", "xxl"]}>
+          Manage Your Art Collection Online
+        </Text>
+
+        <Spacer y={[0, 2]} />
+
+        <Text variant="sm">
           Access price and market insights and build an online record of your
           collection.
         </Text>
-        {!!loggedOutState ? (
-          <Button
-            variant="primaryBlack"
-            onClick={() => {
-              mediator &&
-                openAuthModal(mediator, {
-                  mode: ModalType.login,
-                  intent: Intent.login,
-                  contextModule: ContextModule.myCollectionHome,
-                  copy: "Log in to upload works to My Collection",
-                })
-              trackAddCollectedArtwork()
-            }}
-          >
-            Upload Artwork
-          </Button>
-        ) : (
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            variant="primaryBlack"
-            to={
-              isCollectorProfileEnabled
-                ? "/collector-profile/my-collection/artworks/new"
-                : "/my-collection/artworks/new"
-            }
-            onClick={() => trackAddCollectedArtwork()}
-          >
-            Upload Artwork
-          </Button>
-        )}
-        {!!loggedOutState && (
-          <Message mt={4} variant="info">
-            <Text variant="sm">
+
+        <Spacer y={[2, 4, 6]} />
+
+        <GridColumns>
+          <Column span={6}>
+            <Button
+              width="100%"
+              // @ts-ignore
+              as={RouterLink}
+              variant="primaryBlack"
+              to={
+                isCollectorProfileEnabled
+                  ? "/collector-profile/my-collection/artworks/new"
+                  : "/my-collection/artworks/new"
+              }
+              onClick={event => {
+                if (!isLoggedIn) {
+                  event.preventDefault()
+
+                  showAuthDialog({
+                    current: {
+                      mode: "Login",
+                      options: {
+                        title: mode => {
+                          const action = mode === "Login" ? "Log in" : "Sign up"
+                          return `${action} to upload works to My Collection`
+                        },
+                      },
+                      analytics: {
+                        contextModule: ContextModule.myCollectionHome,
+                        intent: Intent.login,
+                      },
+                    },
+                    legacy: {
+                      mode: ModalType.login,
+                      intent: Intent.login,
+                      contextModule: ContextModule.myCollectionHome,
+                      copy: "Log in to upload works to My Collection",
+                    },
+                  })
+
+                  return
+                }
+
+                trackAddCollectedArtwork()
+              }}
+            >
+              Upload Artwork
+            </Button>
+          </Column>
+        </GridColumns>
+
+        {!isLoggedIn && (
+          <>
+            <Spacer y={[2, 4]} />
+
+            <Message variant="info">
               Already have artworks in My Collection?{" "}
               <Clickable
                 textDecoration="underline"
                 onClick={() => {
-                  mediator &&
-                    openAuthModal(mediator, {
+                  showAuthDialog({
+                    current: {
+                      mode: "Login",
+                      options: {
+                        title: mode => {
+                          const action = mode === "Login" ? "Log in" : "Sign up"
+                          return `${action} to view My Collection`
+                        },
+                      },
+                      analytics: {
+                        contextModule: ContextModule.myCollectionHome,
+                        intent: Intent.login,
+                      },
+                    },
+                    legacy: {
                       mode: ModalType.login,
                       intent: Intent.login,
                       contextModule: ContextModule.myCollectionHome,
                       copy: "Log in to view My Collection",
-                    })
+                    },
+                  })
                 }}
               >
                 Log In
               </Clickable>{" "}
               to view them.
-            </Text>
-          </Message>
+            </Message>
+          </>
         )}
       </Column>
 
       <Column span={6}>
-        <ResponsiveBox aspectHeight={652} aspectWidth={770} maxWidth="100%">
+        <ResponsiveBox aspectWidth={910} aspectHeight={770} maxWidth="100%">
           <Image
-            src={image.src}
             width="100%"
             height="100%"
+            src={image.src}
             srcSet={image.srcSet}
             lazyLoad
             alt="Screenshot of My Collection sample screen on the App against a painting background"
@@ -114,123 +152,5 @@ const DesktopLayout: React.FC<EmptyMyCollectionPageProps> = ({
         </ResponsiveBox>
       </Column>
     </GridColumns>
-  )
-}
-
-const MobileLayout: React.FC<EmptyMyCollectionPageProps> = ({
-  loggedOutState,
-}) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
-  const { mediator } = useSystemContext()
-  const {
-    addCollectedArtwork: trackAddCollectedArtwork,
-  } = useMyCollectionTracking()
-
-  const image = resized(
-    "https://files.artsy.net/images/my-coll-get-app-img.jpg",
-    {
-      width: 770,
-      height: 652,
-    }
-  )
-
-  return (
-    <GridColumns gridRowGap={2} alignItems="center">
-      <Column span={6}>
-        <ResponsiveBox aspectHeight={652} aspectWidth={770} maxWidth="100%">
-          <Image
-            src={image.src}
-            width="100%"
-            height="100%"
-            srcSet={image.srcSet}
-            lazyLoad
-            alt="My Collection app hero image"
-          />
-        </ResponsiveBox>
-      </Column>
-
-      <Column span={6}>
-        <Text variant="xl" mt={2}>
-          Manage Your Art Collection Online
-        </Text>
-
-        <Text variant="sm" mt={0.5} mb={2}>
-          Access price and market insights and build an online record of your
-          collection.
-        </Text>
-        {!!loggedOutState ? (
-          <Button
-            variant="primaryBlack"
-            onClick={() => {
-              mediator &&
-                openAuthModal(mediator, {
-                  mode: ModalType.login,
-                  intent: Intent.login,
-                  contextModule: ContextModule.myCollectionHome,
-                  copy: "Log in to upload works to My Collection",
-                })
-              trackAddCollectedArtwork()
-            }}
-            width="100%"
-          >
-            Upload Artwork
-          </Button>
-        ) : (
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            variant="primaryBlack"
-            to={
-              isCollectorProfileEnabled
-                ? "/collector-profile/my-collection/artworks/new"
-                : "/my-collection/artworks/new"
-            }
-            onClick={() => trackAddCollectedArtwork()}
-            width="100%"
-          >
-            Upload Artwork
-          </Button>
-        )}
-
-        {!!loggedOutState && (
-          <Message mt={2} variant="info">
-            <Text variant="sm">
-              Already have artworks in My Collection?{" "}
-              <Clickable
-                textDecoration="underline"
-                onClick={() => {
-                  mediator &&
-                    openAuthModal(mediator, {
-                      mode: ModalType.login,
-                      intent: Intent.login,
-                      contextModule: ContextModule.myCollectionHome,
-                      copy: "Log in to view My Collection",
-                    })
-                }}
-              >
-                Log In
-              </Clickable>{" "}
-              to view them.
-            </Text>
-          </Message>
-        )}
-      </Column>
-    </GridColumns>
-  )
-}
-
-export const MyCollectionEmptyState: React.FC<EmptyMyCollectionPageProps> = ({
-  loggedOutState,
-}) => {
-  return (
-    <>
-      <Media at="xs">
-        <MobileLayout loggedOutState={loggedOutState} />
-      </Media>
-      <Media greaterThan="xs">
-        <DesktopLayout loggedOutState={loggedOutState} />
-      </Media>
-    </>
   )
 }

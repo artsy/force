@@ -22,15 +22,16 @@ import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
 import { Router } from "found"
 import { useRouter } from "System/Router/useRouter"
-import { openAuthModal } from "Server/openAuthModal"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork$data
   me: ArtworkSidebarBidAction_me$data
   router?: Router
+  showAuthDialog: ShowAuthDialog
 }
 
 export interface ArtworkSidebarBidActionState {
@@ -109,11 +110,28 @@ export class ArtworkSidebarBidAction extends React.Component<
     const redirectTo = href.replace("/auction/", "/auction/")
 
     if (!this.props.me) {
-      openAuthModal(ModalType.login, {
-        redirectTo,
-        intent: Intent.bid,
-        copy: "Log in to bid on artworks",
-        contextModule: ContextModule.artworkSidebar,
+      this.props.showAuthDialog({
+        current: {
+          mode: "Login",
+          options: {
+            redirectTo,
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to bid on artworks`
+            },
+          },
+          analytics: {
+            contextModule: ContextModule.artworkSidebar,
+            intent: Intent.bid,
+          },
+        },
+        legacy: {
+          mode: ModalType.login,
+          redirectTo,
+          intent: Intent.bid,
+          copy: "Log in to bid on artworks",
+          contextModule: ContextModule.artworkSidebar,
+        },
       })
     } else {
       this.props.router?.push(redirectTo)
@@ -356,51 +374,53 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 }
 
-export const ArtworkSidebarBidActionFragmentContainer = createFragmentContainer(
-  (props: ArtworkSidebarBidActionProps) => {
-    const { router } = useRouter()
-    return <ArtworkSidebarBidAction {...props} router={router} />
-  },
-  {
-    artwork: graphql`
-      fragment ArtworkSidebarBidAction_artwork on Artwork {
-        myLotStanding(live: true) {
-          most_recent_bid: mostRecentBid {
-            max_bid: maxBid {
-              cents
+export const ArtworkSidebarBidActionFragmentContainer = withAuthDialog(
+  createFragmentContainer(
+    (props: ArtworkSidebarBidActionProps) => {
+      const { router } = useRouter()
+      return <ArtworkSidebarBidAction {...props} router={router} />
+    },
+    {
+      artwork: graphql`
+        fragment ArtworkSidebarBidAction_artwork on Artwork {
+          myLotStanding(live: true) {
+            most_recent_bid: mostRecentBid {
+              max_bid: maxBid {
+                cents
+              }
             }
           }
-        }
-        slug
-        internalID
-        sale {
           slug
-          registrationStatus {
-            qualified_for_bidding: qualifiedForBidding
-          }
-          is_preview: isPreview
-          is_open: isOpen
-          is_live_open: isLiveOpen
-          is_closed: isClosed
-          is_registration_closed: isRegistrationClosed
-          requireIdentityVerification
-        }
-        sale_artwork: saleArtwork {
-          increments {
-            cents
-            display
-          }
-          endedAt
-        }
-      }
-    `,
-    me: graphql`
-      fragment ArtworkSidebarBidAction_me on Me {
-        isIdentityVerified
-        pendingIdentityVerification {
           internalID
+          sale {
+            slug
+            registrationStatus {
+              qualified_for_bidding: qualifiedForBidding
+            }
+            is_preview: isPreview
+            is_open: isOpen
+            is_live_open: isLiveOpen
+            is_closed: isClosed
+            is_registration_closed: isRegistrationClosed
+            requireIdentityVerification
+          }
+          sale_artwork: saleArtwork {
+            increments {
+              cents
+              display
+            }
+            endedAt
+          }
         }
-      }
-    `,
-  }
+      `,
+      me: graphql`
+        fragment ArtworkSidebarBidAction_me on Me {
+          isIdentityVerified
+          pendingIdentityVerification {
+            internalID
+          }
+        }
+      `,
+    }
+  )
 )

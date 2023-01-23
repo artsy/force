@@ -14,6 +14,7 @@ import {
   paramsToCamelCase,
   updateUrl,
 } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { useAuthDialog } from "Components/AuthDialog"
 import { ModalType } from "Components/Authentication/Types"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -31,7 +32,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import createLogger from "Utils/logger"
-import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
 import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
@@ -62,7 +62,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
-  const { user, mediator } = useContext(SystemContext)
+  const { user } = useContext(SystemContext)
+
   const enableUpcomingAuctionsFilter = useFeatureFlag(
     "cx-upcoming-auctions-filter"
   )
@@ -134,6 +135,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const previousFilters = usePrevious(filters) ?? {}
 
+  const { showAuthDialog } = useAuthDialog()
+
   // TODO: move this and artwork copy to util?
   useDeepCompareEffect(() => {
     Object.entries(filters ?? {}).forEach(([filterKey, currentFilter]) => {
@@ -144,13 +147,29 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         fetchResults()
 
         // If user is not logged-in, show auth modal, but only if it was never shown before.
-        if (!user && !authShownForFiltering && mediator) {
-          openAuthModal(mediator, {
-            contextModule: ContextModule.auctionResults,
-            copy: `Sign up to see auction results for ${artistName}`,
-            intent: Intent.viewAuctionResults,
-            mode: ModalType.signup,
+        if (!user && !authShownForFiltering) {
+          showAuthDialog({
+            current: {
+              mode: "SignUp",
+              options: {
+                title: mode => {
+                  const action = mode === "SignUp" ? "Sign up" : "Log in"
+                  return `${action} to see auction results for ${artistName}`
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.auctionResults,
+                intent: Intent.viewAuctionResults,
+              },
+            },
+            legacy: {
+              contextModule: ContextModule.auctionResults,
+              copy: `Sign up to see auction results for ${artistName}`,
+              intent: Intent.viewAuctionResults,
+              mode: ModalType.signup,
+            },
           })
+
           // Remember to not show auth modal again for this activity.
           toggleAuthShowForFiltering(true)
         }

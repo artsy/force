@@ -25,9 +25,9 @@ import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__
 import { useTracking } from "react-tracking"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { openAuthModal } from "Utils/openAuthModal"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
+import { useAuthDialog } from "Components/AuthDialog"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -52,22 +52,29 @@ interface ArtworkSidebarCommercialButtonsProps {
 const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsProps> = ({
   artwork,
 }) => {
-  const { relayEnvironment, mediator, router, user } = useSystemContext()
+  const { relayEnvironment, router, user } = useSystemContext()
+
   const { t } = useTranslation()
 
   const tracking = useTracking()
+
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false)
+
   const [
     isCommitingCreateOrderMutation,
     setIsCommitingCreateOrderMutation,
   ] = useState(false)
+
   const [
     isCommittingCreateOfferOrderMutation,
     setIsCommitingCreateOfferOrderMutation,
   ] = useState(false)
+
   const { inquiryComponent, showInquiry } = useInquiry({
     artworkID: artwork.internalID,
   })
+
+  const { showAuthDialog } = useAuthDialog()
 
   const onCloseModal = () => {
     setIsErrorModalVisible(false)
@@ -164,12 +171,27 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
         }
       )
     } else {
-      openAuthModal(mediator!, {
-        mode: ModalType.signup,
-        redirectTo: location.href,
-        contextModule: ContextModule.artworkSidebar,
-        intent: Intent.buyNow,
-        copy: "Sign up to buy art with ease",
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to buy art with ease`
+            },
+          },
+          analytics: {
+            contextModule: ContextModule.artworkSidebar,
+            intent: Intent.buyNow,
+          },
+        },
+        legacy: {
+          mode: ModalType.signup,
+          redirectTo: location.href,
+          contextModule: ContextModule.artworkSidebar,
+          intent: Intent.buyNow,
+          copy: "Sign up to buy art with ease",
+        },
       })
     }
   }
@@ -241,12 +263,27 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
         }
       )
     } else {
-      openAuthModal(mediator!, {
-        mode: ModalType.signup,
-        redirectTo: location.href,
-        contextModule: ContextModule.artworkSidebar,
-        intent: Intent.makeOffer,
-        copy: "Sign up to make an offer",
+      showAuthDialog({
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to make an offer`
+            },
+          },
+          analytics: {
+            contextModule: ContextModule.artworkSidebar,
+            intent: Intent.makeOffer,
+          },
+        },
+        legacy: {
+          mode: ModalType.signup,
+          redirectTo: location.href,
+          contextModule: ContextModule.artworkSidebar,
+          intent: Intent.makeOffer,
+          copy: "Sign up to make an offer",
+        },
       })
     }
   }

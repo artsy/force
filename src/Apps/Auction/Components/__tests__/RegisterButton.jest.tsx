@@ -4,19 +4,19 @@ import { RegisterButton_Test_Query } from "__generated__/RegisterButton_Test_Que
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { openAuthModal } from "Server/openAuthModal"
 import { useRouter } from "System/Router/useRouter"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 jest.mock("Server/openAuthModal")
 jest.mock("System/Router/useRouter")
+jest.mock("Components/AuthDialog/useAuthDialog")
 
 describe("RegisterButton", () => {
   const mockUseTracking = useTracking as jest.Mock
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
-  const mockOpenAuthModal = openAuthModal as jest.Mock
   const mockUseRouter = useRouter as jest.Mock
 
   const { getWrapper } = setupTestWrapper<RegisterButton_Test_Query>({
@@ -45,8 +45,9 @@ describe("RegisterButton", () => {
     mockUseTracking.mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
-
-    mockOpenAuthModal.mockImplementation(() => jest.fn())
+    ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+      return { showAuthDialog: jest.fn() }
+    })
 
     mockUseRouter.mockImplementation(() => ({
       router: {
@@ -209,9 +210,11 @@ describe("RegisterButton", () => {
     })
 
     it("opens auth modal if no me", () => {
-      const spy = jest.fn()
+      const showAuthDialog = jest.fn()
 
-      mockOpenAuthModal.mockImplementation(spy)
+      ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+        return { showAuthDialog }
+      })
 
       const wrapper = getWrapper({
         Me: () => ({
@@ -227,11 +230,26 @@ describe("RegisterButton", () => {
       })
 
       ;(wrapper.find("ButtonAction").props() as any).onClick()
-      expect(spy).toHaveBeenCalledWith("login", {
-        contextModule: "auctionSidebar",
-        copy: "Log in to bid on artworks",
-        intent: "registerToBid",
-        redirectTo: "/auction/sale-slug/register",
+
+      expect(showAuthDialog).toHaveBeenCalledWith({
+        current: {
+          mode: "Login",
+          analytics: {
+            contextModule: "auctionSidebar",
+            intent: "registerToBid",
+          },
+          options: {
+            title: expect.any(Function),
+            redirectTo: "/auction/sale-slug/register",
+          },
+        },
+        legacy: {
+          mode: "login",
+          contextModule: "auctionSidebar",
+          copy: "Log in to bid on artworks",
+          intent: "registerToBid",
+          redirectTo: "/auction/sale-slug/register",
+        },
       })
     })
 

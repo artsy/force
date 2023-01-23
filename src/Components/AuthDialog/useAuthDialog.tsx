@@ -43,3 +43,19 @@ export const useAuthDialog = () => {
 
   return { showAuthDialog }
 }
+
+export type ShowAuthDialog = ReturnType<typeof useAuthDialog>["showAuthDialog"]
+
+export interface InjectedAuthDialogProps {
+  showAuthDialog: ShowAuthDialog
+}
+
+export const withAuthDialog = <T extends InjectedAuthDialogProps>(
+  Component: React.ComponentType<T>
+) => {
+  return (props: Omit<T, "showAuthDialog">) => {
+    const { showAuthDialog } = useAuthDialog()
+
+    return <Component {...(props as T)} showAuthDialog={showAuthDialog} />
+  }
+}

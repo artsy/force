@@ -32,7 +32,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Column>
 
         <Column span={6}>
-          <Text variant="sm-display">
+          <Text variant="sm">
             Bid on works you love with auctions on Artsy. With bidding opening
             daily, Artsy connects collectors like you to art from leading
             auction houses, nonprofit organizations, and sellers across the
@@ -40,9 +40,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             and street art, so you can find works by your favorite artists—and
             discover new ones—all in one place.
           </Text>
+
+          <Spacer y={2} />
+
           <RouterLink
             to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
-            noUnderline
+            textDecoration="none"
+            display="block"
           >
             <ChevronButton>Learn more about bidding on Artsy</ChevronButton>
           </RouterLink>
