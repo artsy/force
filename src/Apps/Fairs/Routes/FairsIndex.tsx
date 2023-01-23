@@ -16,7 +16,6 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { ModalType } from "Components/Authentication/Types"
-import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
 import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
@@ -26,10 +25,10 @@ import { FairsPhonePromo } from "Apps/Fairs/Components/FairsPhonePromo"
 import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
 import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
 import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
-import { mediator } from "Server/mediator"
 import { useSystemContext } from "System"
 import { compact } from "lodash"
 import { cropped } from "Utils/resized"
+import { useAuthDialog } from "Components/AuthDialog"
 
 interface FairsIndexProps {
   featuredFairs: FairsIndex_featuredFairs$data
@@ -69,6 +68,8 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
     "https://files.artsy.net/images/fairs-header-img.jpg",
     { width: 767, height: 431 }
   )
+
+  const { showAuthDialog } = useAuthDialog()
 
   return (
     <>
@@ -192,10 +193,19 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                   <Button
                     variant="secondaryBlack"
                     onClick={() => {
-                      openAuthModal(mediator, {
-                        mode: ModalType.signup,
-                        intent: Intent.signup,
-                        contextModule: ContextModule.fairsHeader,
+                      showAuthDialog({
+                        current: {
+                          mode: "SignUp",
+                          analytics: {
+                            contextModule: ContextModule.fairsHeader,
+                            intent: Intent.signup,
+                          },
+                        },
+                        legacy: {
+                          mode: ModalType.signup,
+                          intent: Intent.signup,
+                          contextModule: ContextModule.fairsHeader,
+                        },
                       })
                     }}
                   >
