@@ -6,9 +6,9 @@ import { RouterLink } from "System/Router/RouterLink"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
-import { openAuthModal } from "Server/openAuthModal"
 import { ModalType } from "Components/Authentication/Types"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const logger = createLogger("RegisterButton")
 
@@ -26,15 +26,34 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
     me,
   })
 
+  const { showAuthDialog } = useAuthDialog()
+
   const checkRegistrationStatus = () => {
     const saleURL = `/auction/${sale.slug}`
 
     if (!me?.internalID) {
-      openAuthModal(ModalType.login, {
-        redirectTo: `${saleURL}/register`,
-        intent: Intent.registerToBid,
-        copy: "Log in to bid on artworks",
-        contextModule: ContextModule.auctionSidebar,
+      showAuthDialog({
+        current: {
+          mode: "Login",
+          options: {
+            redirectTo: `${saleURL}/register`,
+            title: mode => {
+              const action = mode === "Login" ? "Log in" : "Sign up"
+              return `${action} to bid on artworks`
+            },
+          },
+          analytics: {
+            contextModule: ContextModule.auctionSidebar,
+            intent: Intent.registerToBid,
+          },
+        },
+        legacy: {
+          mode: ModalType.login,
+          redirectTo: `${saleURL}/register`,
+          intent: Intent.registerToBid,
+          copy: "Log in to bid on artworks",
+          contextModule: ContextModule.auctionSidebar,
+        },
       })
 
       // Register
