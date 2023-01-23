@@ -44,16 +44,6 @@ describe("ArtQuizResults", () => {
         }),
       })
 
-      expect(screen.getByText("Calculating Results…")).toBeInTheDocument()
-
-      jest.advanceTimersByTime(2000)
-      await flushPromiseQueue()
-
-      expect(screen.getByText("Results Complete")).toBeInTheDocument()
-
-      jest.advanceTimersByTime(1000)
-      await flushPromiseQueue()
-
       expect(screen.getByText("Explore Your Quiz Results")).toBeInTheDocument()
       expect(
         screen.getByText(
