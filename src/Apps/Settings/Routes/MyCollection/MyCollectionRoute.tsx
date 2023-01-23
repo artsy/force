@@ -16,8 +16,8 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import {
   cleanImagesLocalStore,
   getAllLocalImagesByArtwork,
+  LocalImage,
   StoredArtworkWithImages,
-  StoredImage,
 } from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
@@ -56,7 +56,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const { myCollectionConnection } = me
 
   const getLocalImageSrcByArtworkID = useCallback(
-    (artworkID: string): StoredImage | null => {
+    (artworkID: string): LocalImage | null => {
       const allArtworkImages = localArtworksImages.find(
         localArtworkImagesObj => localArtworkImagesObj.artworkID === artworkID
       )?.images

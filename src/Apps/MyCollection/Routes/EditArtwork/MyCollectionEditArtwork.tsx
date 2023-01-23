@@ -11,7 +11,6 @@ import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { storeArtworkLocalImages } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
@@ -72,16 +71,10 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       )
 
       // Store images locally
-      if (artworkId) {
-        try {
-          await storeArtworkLocalImages(
-            artworkId,
-            localImages.map(({ photoID, ...rest }) => rest)
-          )
-        } catch (error) {
-          console.error("Failed to store images locally.", error)
-        }
-      }
+      // TODO: Store images locally
+      localImages.forEach(image => {
+        console.log(image)
+      })
 
       router.replace({
         pathname: isCollectorProfileEnabled

@@ -20,7 +20,7 @@ import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
-import { StoredImage } from "Utils/localImagesHelpers"
+import { LocalImage } from "Utils/localImagesHelpers"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
 import { ExtractNodeType } from "Utils/typeSupport"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
@@ -38,7 +38,7 @@ export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   contextModule?: AuthContextModule
   columnCount?: number | number[]
   hideSaleInfo?: boolean
-  getLocalImageSrcByArtworkID?: (artworkID: string) => StoredImage | null
+  getLocalImageSrcByArtworkID?: (artworkID: string) => LocalImage | null
   preloadImageCount?: number
   isAuctionArtwork?: boolean
   itemMargin?: number

@@ -23,8 +23,6 @@ export const useCreateOrUpdateArtwork = () => {
   ) => {
     const artworkInputValues = formValuesToMutationInput(values, artwork)
 
-    let artworkId: string | undefined
-
     if ((artworkInputValues as MyCollectionUpdateArtworkInput).artworkId) {
       const res = await updateArtwork({
         variables: {
@@ -35,8 +33,7 @@ export const useCreateOrUpdateArtwork = () => {
         },
       })
 
-      artworkId =
-        res.myCollectionUpdateArtwork?.artworkOrError?.artwork?.internalID
+      return res.myCollectionUpdateArtwork?.artworkOrError?.artwork
     } else {
       const res = await createArtwork({
         variables: {
@@ -44,12 +41,8 @@ export const useCreateOrUpdateArtwork = () => {
         },
       })
 
-      artworkId =
-        res.myCollectionCreateArtwork?.artworkOrError?.artworkEdge?.node
-          ?.internalID
+      return res.myCollectionCreateArtwork?.artworkOrError?.artworkEdge?.node
     }
-
-    return artworkId
   }
 
   return { createOrUpdateArtwork }

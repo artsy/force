@@ -1,9 +1,8 @@
 import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { useEffect, useState } from "react"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "react-relay"
-import { getArtworkLocalImages, StoredImage } from "Utils/localImagesHelpers"
+import { createFragmentContainer, graphql } from "react-relay"
+import { getArtworkLocalImages, LocalImage } from "Utils/localImagesHelpers"
 import { MyCollectionArtworkImageBrowser_artwork$data } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 
@@ -14,7 +13,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
   artwork,
 }) => {
   const { images } = artwork
-  const [localArtworkImages, setLocalArtworkImages] = useState<StoredImage[]>()
+  const [localArtworkImages, setLocalArtworkImages] = useState<LocalImage[]>()
 
   useEffect(() => {
     getArtworkLocalImages(artwork.internalID)

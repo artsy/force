@@ -1,11 +1,12 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
 import { MagnifyImage } from "Components/MagnifyImage"
+import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { StoredImage } from "Utils/localImagesHelpers"
+import { getLocalImage, LocalImage } from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
@@ -19,7 +20,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  localHeroImage?: StoredImage | null
+  localHeroImage?: LocalImage | null
   onClick?: () => void
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
@@ -120,8 +121,45 @@ const ArtworkGridItemImage: React.FC<Pick<
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
   const { src, srcSet } = imageURL
-    ? transform(imageURL, { width, height })
+    ? transform(imageURL, {
+        width,
+        height,
+      })
     : { src: "", srcSet: "" }
+
+  const [localImage, setLocalImage] = useState<LocalImage | null>(null)
+
+  const fetchLocalImage = async () => {
+    const imageID = artwork?.image?.internalID
+
+    if (!imageID) return
+
+    try {
+      const image = await getLocalImage(imageID)
+
+      setLocalImage(image)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchLocalImage()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (localImage) {
+    return (
+      <MagnifyImage
+        src={localImage.data}
+        srcSet={""}
+        height={localImage.height}
+        width={localImage.width}
+        lazyLoad={lazyLoad}
+        preventRightClick={!isTeam}
+      />
+    )
+  }
 
   if (imageURL) {
     return (
@@ -134,18 +172,7 @@ const ArtworkGridItemImage: React.FC<Pick<
       />
     )
   }
-  if (localHeroImage) {
-    return (
-      <MagnifyImage
-        src={localHeroImage.data}
-        srcSet={""}
-        height={localHeroImage.height}
-        width={localHeroImage.width}
-        lazyLoad={lazyLoad}
-        preventRightClick={!isTeam}
-      />
-    )
-  }
+
   return (
     <>
       <ResponsiveBox
@@ -231,6 +258,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         title
         imageTitle
         image {
+          internalID
           placeholder
           url(version: ["larger", "large"])
           aspectRatio

@@ -13,6 +13,9 @@ export const useUpdateArtwork = () => {
             ... on MyCollectionArtworkMutationSuccess {
               artwork {
                 internalID
+                images {
+                  internalID
+                }
               }
             }
             ... on MyCollectionArtworkMutationFailure {

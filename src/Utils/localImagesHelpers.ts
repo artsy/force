@@ -1,116 +1,60 @@
 import { LOCAL_PROFILE_IMAGE_KEY } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/utils/constants"
-import {
-  IMAGES_LOCAL_STORE_KEY,
-  IMAGES_LOCAL_STORE_LAST_UPDATED_AT,
-} from "Apps/Settings/Routes/MyCollection/constants"
 import localforage from "localforage"
 
-const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 1
+// Expiritation time is 5 minutes
+const EXPIRATION_TIME = 50 * 60 * 1000
+const IMAGE_KEY_PREFIX = "IMAGES_LOCAL_STORE_KEY"
+
 export interface LocalImage {
   data: string
   width: number
   height: number
-  expirationDate?: string
+  expires?: string
   photoID?: string
 }
-
-export type StoredImage = LocalImage
 
 export type StoredArtworkWithImages = {
   artworkID: string
   images: LocalImage[]
 }
 
-const addMinutes = (date: Date, minutes: number) => {
-  return new Date(date.getTime() + minutes * 60000)
+export const storeLocalImage = async (key: string, image: LocalImage) => {
+  const expires = new Date().getTime() + EXPIRATION_TIME
+
+  const storeKey = `${IMAGE_KEY_PREFIX}_${key}`
+  const storeValue = prepareImage(image, expires.toString())
+
+  return localforage.setItem(storeKey, storeValue)
 }
 
-const prepareImage = (image: LocalImage, expirationDate: string) => {
-  const imageToStore: StoredImage = {
-    expirationDate,
-    data: image.data,
-    height: image.height,
-    width: image.width,
-  }
+export const getLocalImage = async (
+  key: string
+): Promise<LocalImage | null> => {
+  const storeKey = `${IMAGE_KEY_PREFIX}_${key}`
+  const imageJSONString = await localforage.getItem(storeKey)
 
-  return imageToStore
-}
+  if (!imageJSONString) return null
 
-export const storeArtworkLocalImages = async (
-  artworkID: string,
-  images: LocalImage[]
-) => {
-  const expirationDate = addMinutes(
-    new Date(),
-    GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES
-  )
-
-  const imagesToStore: StoredImage[] = []
-  for (const image of images) {
-    imagesToStore.push(prepareImage(image, expirationDate.toString()))
-  }
-
-  const localArtworksImages = await getAllLocalImagesByArtwork()
-
-  // Get existing artworks with images except the one we are storing
-  const updatedLocalArtworksImages = localArtworksImages.filter(
-    artworkImagesObj => artworkImagesObj.artworkID !== artworkID
-  )
-
-  // Add the new artwork with images to the list
-  updatedLocalArtworksImages.push({
-    artworkID,
-    images: imagesToStore,
-  })
-
-  // Store the updated list
-  const artworkImages = JSON.stringify(updatedLocalArtworksImages || [])
-
-  return localforage.setItem(IMAGES_LOCAL_STORE_KEY, artworkImages)
-}
-
-export const storeLocalProfileImage = async (image: LocalImage) => {
-  const expirationDate = addMinutes(
-    new Date(),
-    GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES
-  )
-
-  const imageToStore = prepareImage(image, expirationDate.toString())
-
-  // Store the new image
-  const userImage = JSON.stringify(imageToStore || {})
-
-  return localforage.setItem(LOCAL_PROFILE_IMAGE_KEY, userImage)
-}
-
-//
-export const setLocalImagesStoreLastUpdatedAt = (
-  IMAGES_LOCAL_STORE_LAST_UPDATED_AT: string
-) => {
-  return localforage.setItem(
-    IMAGES_LOCAL_STORE_LAST_UPDATED_AT,
-    new Date().toString()
-  )
+  return JSON.parse(imageJSONString as string)
 }
 
 // Clean store after gemini processing time is over
-export const cleanImagesLocalStore = () => {
-  return localforage
-    .getItem(IMAGES_LOCAL_STORE_LAST_UPDATED_AT)
-    .then((date: string) => {
-      const lastUpdatedDate = new Date(date)
-      const currentDate = new Date()
-      const diffInMinutes =
-        (currentDate.getTime() - lastUpdatedDate.getTime()) / 60000
+export const cleanImagesLocalStore = async () => {
+  const keys = await localforage.keys()
 
-      if (diffInMinutes > GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES) {
-        return localforage.removeItem(IMAGES_LOCAL_STORE_KEY)
-      }
-    })
-    .catch(() => {
-      // If there is no last updated date, we can assume that the store is clean
-      console.log("No last updated date, store must be clean")
-    })
+  const imageKeys: string[] = keys.filter(key => {
+    key.startsWith(IMAGE_KEY_PREFIX)
+  })
+
+  imageKeys.forEach(async key => {
+    const item: LocalImage | null = await localforage.getItem(key)
+
+    if (!item?.expires || +item?.expires < new Date().getTime()) {
+      return
+    }
+
+    localforage.removeItem(key)
+  })
 }
 
 // Retrieve all artworks local images that have not expired from local storage
@@ -118,7 +62,7 @@ export const getAllLocalImagesByArtwork = (): Promise<
   StoredArtworkWithImages[]
 > => {
   return localforage
-    .getItem(IMAGES_LOCAL_STORE_KEY)
+    .getItem(IMAGE_KEY_PREFIX)
     .then((imagesByArtworkJSONString: string) => {
       if (imagesByArtworkJSONString) {
         const imagesByArtwork = JSON.parse(imagesByArtworkJSONString) as
@@ -128,9 +72,9 @@ export const getAllLocalImagesByArtwork = (): Promise<
           return imagesByArtwork.filter(artworkImagesObj => {
             const images = artworkImagesObj.images.filter(image => {
               // @ts-ignore
-              const expirationDate = new Date(image.expirationDate)
+              const expires = new Date(image.expires)
               // Only return images that have not expired
-              return expirationDate > new Date()
+              return expires > new Date()
             })
             // Return only artworks that have at least one image that has not expired
             return images.length > 0
@@ -163,7 +107,7 @@ export const getHeightAndWidthFromDataUrl = file => {
 // Retrieve artwork local images from local storage
 export const getArtworkLocalImages = async (
   artworkID: string
-): Promise<StoredImage[]> => {
+): Promise<LocalImage[]> => {
   const localArtworksImages = await getAllLocalImagesByArtwork()
   const artworkImages = localArtworksImages?.find(
     artworkImagesObj => artworkImagesObj.artworkID === artworkID
@@ -180,8 +124,8 @@ export const getProfileLocalImage = async (): Promise<
     .then((userImageJSONString: string) => {
       if (userImageJSONString) {
         const parsedImage = JSON.parse(userImageJSONString)
-        const expirationDate = new Date(parsedImage.expirationDate)
-        if (expirationDate > new Date()) {
+        const expires = new Date(parsedImage.expires)
+        if (expires > new Date()) {
           return parsedImage
         } else {
           // remove expired profile image
@@ -192,4 +136,15 @@ export const getProfileLocalImage = async (): Promise<
     .catch(error => {
       console.error("failed to get profile local image", error)
     })
+}
+
+const prepareImage = (image: LocalImage, expires: string) => {
+  const imageToStore: LocalImage = {
+    expires,
+    data: image.data,
+    height: image.height,
+    width: image.width,
+  }
+
+  return JSON.stringify(imageToStore)
 }

@@ -9,13 +9,32 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
       },
       id:
         "RmlsdGVyQXJ0d29ya3M6eyJhZ2dyZWdhdGlvbnMiOlsidG90YWwiXSwia2V5d29yZCI6ImFuZHkgd2FyaG9sIn0=",
-      pageInfo: { hasNextPage: true, endCursor: "YXJyYXljb25uZWN0aW9uOjI5" },
+      pageInfo: {
+        hasNextPage: true,
+        endCursor: "YXJyYXljb25uZWN0aW9uOjI5",
+      },
       pageCursors: {
         around: [
-          { cursor: "YXJyYXljb25uZWN0aW9uOi0x", page: 1, isCurrent: true },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjI5", page: 2, isCurrent: false },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjU5", page: 3, isCurrent: false },
-          { cursor: "YXJyYXljb25uZWN0aW9uOjg5", page: 4, isCurrent: false },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOi0x",
+            page: 1,
+            isCurrent: true,
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjI5",
+            page: 2,
+            isCurrent: false,
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjU5",
+            page: 3,
+            isCurrent: false,
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjg5",
+            page: 4,
+            isCurrent: false,
+          },
         ],
         first: null,
         last: {
@@ -33,6 +52,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-kenny-burrell",
             href: "/artwork/andy-warhol-kenny-burrell",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -77,6 +97,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-dollars-1-fs-ii-dot-274",
             href: "/artwork/andy-warhol-dollars-1-fs-ii-dot-274",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -121,6 +142,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-peaches",
             href: "/artwork/andy-warhol-peaches",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -168,6 +190,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             href:
               "/artwork/andy-warhol-actress-shots-andy-warhol-ny-daily-news-1968",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -213,6 +236,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-cosmos",
             href: "/artwork/andy-warhol-cosmos",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -257,6 +281,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-lee-iacocca-2",
             href: "/artwork/andy-warhol-lee-iacocca-2",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -301,6 +326,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-shoe-18",
             href: "/artwork/andy-warhol-shoe-18",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -345,6 +371,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-sewing-machine",
             href: "/artwork/andy-warhol-sewing-machine",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -389,6 +416,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-superman-f-and-s-ii-260-3",
             href: "/artwork/andy-warhol-superman-f-and-s-ii-260-3",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -433,6 +461,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-birmingham-race-riot-10",
             href: "/artwork/andy-warhol-birmingham-race-riot-10",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -479,6 +508,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
             href: "/artwork/andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -525,6 +555,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-rare-original-andy-warhol-record-art",
             href: "/artwork/andy-warhol-rare-original-andy-warhol-record-art",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -573,6 +604,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-philip-fagan-and-gerard-malanga",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -621,6 +653,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-photograph-of-cornelia-guest-1985",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -669,6 +702,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-photograph-of-timothy-hutton-1980",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -714,6 +748,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-muhammed-ali-1",
             href: "/artwork/andy-warhol-muhammed-ali-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -758,6 +793,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-untitled-jon-gould-1",
             href: "/artwork/andy-warhol-untitled-jon-gould-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -802,6 +838,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-geronimo-fs-ii-dot-384-12",
             href: "/artwork/andy-warhol-geronimo-fs-ii-dot-384-12",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -846,6 +883,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-jason-mccoy",
             href: "/artwork/andy-warhol-jason-mccoy",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -892,6 +930,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
             href: "/artwork/andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -938,6 +977,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -982,6 +1022,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-mao-f-dot-s-ii-dot-95",
             href: "/artwork/andy-warhol-mao-f-dot-s-ii-dot-95",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1028,6 +1069,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1072,6 +1114,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-truck-9",
             href: "/artwork/andy-warhol-truck-9",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1116,6 +1159,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-brillo-1",
             href: "/artwork/andy-warhol-brillo-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1162,6 +1206,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
             href: "/artwork/andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1206,6 +1251,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-martha-graham-15",
             href: "/artwork/andy-warhol-martha-graham-15",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1250,6 +1296,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-fish-fs-iiia-dot-39-1",
             href: "/artwork/andy-warhol-fish-fs-iiia-dot-39-1",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1294,6 +1341,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-untitled-female-figure",
             href: "/artwork/andy-warhol-untitled-female-figure",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",
@@ -1340,6 +1388,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQuery$rawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
             image: {
+              internalID: "5bbe671fa13448002a77b29e",
               resized: {
                 src: "",
                 srcSet: "",

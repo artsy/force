@@ -15,9 +15,11 @@ import styled from "styled-components"
 import {
   getProfileLocalImage,
   LocalImage,
-  storeLocalProfileImage,
+  storeLocalImage,
 } from "Utils/localImagesHelpers"
 import { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
+
+const LOCAL_IMAGE_KEY = "profile-image"
 
 interface SettingsEditProfileImageProps {
   me: SettingsEditProfileImage_me$data
@@ -49,7 +51,7 @@ const SettingsEditProfileImage = forwardRef<
   const storeImageLocally = async () => {
     // Store the image in local storage
     if (localImage) {
-      return void (await storeLocalProfileImage(localImage))
+      return void (await storeLocalImage(LOCAL_IMAGE_KEY, localImage))
     }
   }
 
