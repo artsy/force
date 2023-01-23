@@ -25,7 +25,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
   it("should NOT render indicator by default", () => {
     renderWithRelay({
       Me: () => ({
-        unreadConversationCount: 4,
+        unreadConversationCount: 0,
       }),
       Viewer: () => ({
         notificationsConnection: () => ({
