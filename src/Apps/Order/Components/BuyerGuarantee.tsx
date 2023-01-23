@@ -18,6 +18,7 @@ interface BuyerGuaranteeProps {
   contextPageOwnerType: string
   orderSource?: string | null
   renderArtsyPrivateSaleConditions?: boolean
+  privateSaleConditions?: string | null
 }
 
 export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
@@ -25,6 +26,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
   contextPageOwnerType,
   orderSource,
   renderArtsyPrivateSaleConditions,
+  privateSaleConditions,
 }) => {
   const { trackEvent } = useTracking()
 
@@ -60,28 +62,17 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
 
         <Spacer y={renderArtsyPrivateSaleConditions ? 4 : 2} />
 
-        <Text fontWeight="bold" variant="xs">
-          Additional conditions of sale
-        </Text>
-
-        <Spacer y={2} />
-
-        {/* TODO: will be pulled from Exchange when available */}
-        <Text variant="xs" color="black60">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi feugiat
-          aliquet commodo. Mauris ut elit tincidunt, aliquam dolor nec,
-          porttitor metus. Curabitur mi erat, sagittis porttitor augue sed,
-          consectetur iaculis elit. Etiam massa purus, tincidunt vel ipsum non,
-          venenatis iaculis nisi. Nam quis dapibus ante, id congue arcu.
-          Interdum et malesuada fames ac ante ipsum primis in faucibus curabitur
-          mi erat, sagittis porttitor. Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Morbi feugiat aliquet commodo. Mauris ut elit
-          tincidunt, aliquam dolor nec, porttitor metus. Curabitur mi erat,
-          sagittis porttitor augue sed, consectetur iaculis elit. Etiam massa
-          purus, tincidunt vel ipsum non, venenatis iaculis nisi. Nam quis
-          dapibus ante, id congue arcu. Interdum et malesuada fames ac ante
-          ipsum primis in faucibus curabitur mi erat, sagittis porttitor.
-        </Text>
+        {privateSaleConditions?.length && (
+          <>
+            <Text fontWeight="bold" variant="xs">
+              Additional conditions of sale
+            </Text>
+            <Spacer y={2} />
+            <Text variant="xs" color="black60">
+              {privateSaleConditions}
+            </Text>
+          </>
+        )}
       </StackableBorderBox>
     )
   }

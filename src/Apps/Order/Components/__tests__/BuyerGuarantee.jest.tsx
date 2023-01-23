@@ -67,6 +67,7 @@ describe("with private sale orders", () => {
         contextPageOwnerType="test-owner"
         orderSource="private_sale"
         renderArtsyPrivateSaleConditions={true}
+        privateSaleConditions="these are some extra conditions"
       />
     )
   })
@@ -78,9 +79,15 @@ describe("with private sale orders", () => {
     ).toBeInTheDocument()
   })
 
-  it("renders extra conditions of sale", () => {
+  it("renders extra conditions of sale title", () => {
     expect(
       screen.getByText("Additional conditions of sale")
+    ).toBeInTheDocument()
+  })
+
+  it("renders extra sale conditions", () => {
+    expect(
+      screen.getByText("these are some extra conditions")
     ).toBeInTheDocument()
   })
 })

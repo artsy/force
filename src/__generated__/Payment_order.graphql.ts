@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afb39046af5a8ccb880feca305b85510>>
+ * @generated SignedSource<<82f99a6e48137329ae6ada6413a73e6e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type Payment_order$data = {
   readonly bankAccountId: string | null;
   readonly buyerTotal: string | null;
   readonly buyerTotalCents: number | null;
+  readonly conditionsOfSale: string | null;
   readonly currencyCode: string;
   readonly internalID: string;
   readonly lineItems: {
@@ -75,6 +76,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "conditionsOfSale",
       "storageKey": null
     },
     {
@@ -260,6 +268,6 @@ return {
 };
 })();
 
-(node as any).hash = "8fadd3e4b83d745cac42f12278941429";
+(node as any).hash = "28bd9cb68f8ca66770df3cd8fbe14c97";
 
 export default node;
