@@ -15,7 +15,7 @@ export const useCreateArtwork = () => {
                 __id
                 node {
                   internalID
-                  images {
+                  images(includeAll: true) {
                     internalID
                   }
                 }

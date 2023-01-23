@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c698abfeec96a7e6d3dca56779373e9>>
+ * @generated SignedSource<<306889b73760ece2b09b2e47ce301716>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -104,7 +104,13 @@ v2 = {
 },
 v3 = {
   "alias": null,
-  "args": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "includeAll",
+      "value": true
+    }
+  ],
   "concreteType": "Image",
   "kind": "LinkedField",
   "name": "images",
@@ -112,7 +118,7 @@ v3 = {
   "selections": [
     (v2/*: any*/)
   ],
-  "storageKey": null
+  "storageKey": "images(includeAll:true)"
 },
 v4 = {
   "kind": "ClientExtension",
@@ -295,16 +301,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9a3db4e52e34e392918a3acf355c49ea",
+    "cacheID": "ac918b0a5e93b91587dad854b1cce889",
     "id": null,
     "metadata": {},
     "name": "useCreateArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateArtworkMutation(\n  $input: MyCollectionCreateArtworkInput!\n) {\n  myCollectionCreateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artworkEdge {\n          node {\n            internalID\n            images {\n              internalID\n            }\n            id\n          }\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateArtworkMutation(\n  $input: MyCollectionCreateArtworkInput!\n) {\n  myCollectionCreateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artworkEdge {\n          node {\n            internalID\n            images(includeAll: true) {\n              internalID\n            }\n            id\n          }\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cae62d27d53cfd636e0d328cfb7754cd";
+(node as any).hash = "edecaa95250d642f6187d43e0f800812";
 
 export default node;

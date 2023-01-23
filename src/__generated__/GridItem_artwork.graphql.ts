@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3627aa723d5595491464c7a428d9430>>
+ * @generated SignedSource<<84440e33fb139cac4e9cd3727d729f53>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,13 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "GridItem_artwork",
@@ -61,7 +67,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
@@ -136,6 +148,6 @@ return {
 };
 })();
 
-(node as any).hash = "c2a7733fe120e112e69fc4055dfd2687";
+(node as any).hash = "81e7fe3ffc04b57251dcd4477d90a9d6";
 
 export default node;

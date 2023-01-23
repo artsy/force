@@ -253,11 +253,14 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
   ArtworkGridItem,
   {
     artwork: graphql`
-      fragment GridItem_artwork on Artwork {
+      fragment GridItem_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         internalID
         title
         imageTitle
-        image {
+        image(includeAll: $includeAllImages) {
           internalID
           placeholder
           url(version: ["larger", "large"])

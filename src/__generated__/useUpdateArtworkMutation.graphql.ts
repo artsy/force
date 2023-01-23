@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b104d73b944bed10578a2660b72c61d>>
+ * @generated SignedSource<<5c5081ee547913e2b1a8ecd668ae0c07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -96,7 +96,13 @@ v2 = {
 },
 v3 = {
   "alias": null,
-  "args": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "includeAll",
+      "value": true
+    }
+  ],
   "concreteType": "Image",
   "kind": "LinkedField",
   "name": "images",
@@ -104,7 +110,7 @@ v3 = {
   "selections": [
     (v2/*: any*/)
   ],
-  "storageKey": null
+  "storageKey": "images(includeAll:true)"
 },
 v4 = {
   "kind": "InlineFragment",
@@ -251,16 +257,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "81b0db5b3e0006b8cadda119173722f9",
+    "cacheID": "78bfd0991b9cae521206bcebc2af90ba",
     "id": null,
     "metadata": {},
     "name": "useUpdateArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateArtworkMutation(\n  $input: MyCollectionUpdateArtworkInput!\n) {\n  myCollectionUpdateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artwork {\n          internalID\n          images {\n            internalID\n          }\n          id\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateArtworkMutation(\n  $input: MyCollectionUpdateArtworkInput!\n) {\n  myCollectionUpdateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artwork {\n          internalID\n          images(includeAll: true) {\n            internalID\n          }\n          id\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2cbc3068fa078881b9f1564079ae7744";
+(node as any).hash = "90dcdacc26b2ebaffb6ea29cfaeb1b98";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db04beddac757668b1a351e0c6b4101f>>
+ * @generated SignedSource<<bac59b21ea5c3729ff9952a2b28b9d9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,15 @@ export type MyCollectionArtworkGrid_artworks$key = {
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkGrid_artworks">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "includeAllImages",
+    "value": true
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -82,7 +90,13 @@ const node: ReaderFragment = {
             },
             {
               "alias": null,
-              "args": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "includeAll",
+                  "value": true
+                }
+              ],
               "concreteType": "Image",
               "kind": "LinkedField",
               "name": "image",
@@ -96,15 +110,15 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": null
+              "storageKey": "image(includeAll:true)"
             },
             {
-              "args": null,
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
             },
             {
-              "args": null,
+              "args": (v0/*: any*/),
               "kind": "FragmentSpread",
               "name": "FlatGridItem_artwork"
             }
@@ -118,7 +132,8 @@ const node: ReaderFragment = {
   "type": "MyCollectionConnection",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "3071b72bdb273e22ec969d871a43ceff";
+(node as any).hash = "90c729196de9afdcbd1c13676338c718";
 
 export default node;

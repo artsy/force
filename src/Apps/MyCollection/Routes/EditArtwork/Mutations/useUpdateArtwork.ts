@@ -13,7 +13,7 @@ export const useUpdateArtwork = () => {
             ... on MyCollectionArtworkMutationSuccess {
               artwork {
                 internalID
-                images {
+                images(includeAll: true) {
                   internalID
                 }
               }

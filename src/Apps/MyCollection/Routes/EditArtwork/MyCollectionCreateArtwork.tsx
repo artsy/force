@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { getLocalImage, storeLocalImage } from "Utils/localImagesHelpers"
+import { storeLocalImage } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
@@ -116,23 +116,9 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       trackSaveCollectedArtwork()
 
       // Store images locally
-      await Promise.all(
-        localImages.map(async (image, index) => {
-          // TODO: Read imageIDs from the end to support adding images to existing artworks
-          const imageID = artwork?.images?.[index]?.internalID
-
-          if (!imageID) return
-
-          try {
-            await storeLocalImage(imageID, image)
-
-            const localImage = await getLocalImage(imageID)
-            console.log({ localImage, imageID: imageID })
-          } catch (error) {
-            console.error("Failed to store images locally.", error)
-          }
-        })
-      )
+      localImages.map(async (image, index) => {
+        storeLocalImage(artwork?.images?.[index]?.internalID!, image)
+      })
 
       router.replace({
         pathname: isCollectorProfileEnabled

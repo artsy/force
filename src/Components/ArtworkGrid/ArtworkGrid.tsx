@@ -307,14 +307,17 @@ const InnerContainer = styled(Flex)`
 
 export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
   artworks: graphql`
-    fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
+    fragment ArtworkGrid_artworks on ArtworkConnectionInterface
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
       edges {
         node {
           id
           slug
           href
           internalID
-          image {
+          image(includeAll: $includeAllImages) {
             aspectRatio
           }
           ...GridItem_artwork

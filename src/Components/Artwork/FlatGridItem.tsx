@@ -1,15 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
-import { ResponsiveBox, Image, Flex } from "@artsy/palette"
+import { Flex, Image, ResponsiveBox } from "@artsy/palette"
+import { ArtworkSidebarAuctionProgressBar } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarAuctionProgressBar } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
 import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 
@@ -118,7 +118,10 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
   FlatGridItem,
   {
     artwork: graphql`
-      fragment FlatGridItem_artwork on Artwork {
+      fragment FlatGridItem_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         ...Metadata_artwork
         ...SaveButton_artwork
 
@@ -135,7 +138,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         internalID
         title
         image_title: imageTitle
-        image {
+        image(includeAll: $includeAllImages) {
           resized(width: 445, version: ["larger", "large"]) {
             src
             srcSet
