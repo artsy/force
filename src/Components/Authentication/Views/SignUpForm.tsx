@@ -18,6 +18,7 @@ import { AuthenticationPasswordInput } from "Components/Authentication/Component
 import { AuthenticationCheckbox } from "Components/Authentication/Components/AuthenticationCheckbox"
 import { AuthenticationFooter } from "Components/Authentication/Components/AuthenticationFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { AuthenticationSignUpPlaceholder } from "Components/Authentication/Components/AuthenticationSignUpPlaceholder"
 
 const gdprCountries = [
   "AT",
@@ -245,18 +246,23 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
           }
         }
       `}
-      placeholder={<SignUpForm {...passedProps} />}
+      placeholder={<AuthenticationSignUpPlaceholder />}
       render={({ error, props }) => {
-        if (error || !props || !props.requestLocation) {
-          return <SignUpFormFragmentContainer {...passedProps} />
-        } else {
-          return (
-            <SignUpFormFragmentContainer
-              {...passedProps}
-              requestLocation={props.requestLocation}
-            />
-          )
+        if (error) {
+          console.error(error)
+          return <SignUpForm {...passedProps} />
         }
+
+        if (!props?.requestLocation) {
+          return <AuthenticationSignUpPlaceholder />
+        }
+
+        return (
+          <SignUpFormFragmentContainer
+            {...passedProps}
+            requestLocation={props.requestLocation}
+          />
+        )
       }}
     />
   )
