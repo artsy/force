@@ -1,7 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
-  Button,
   Clickable,
   Column,
   Flex,
@@ -208,7 +207,6 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
 
 const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
   const {
-    filtersAtDefault,
     salePrice,
     salePriceUSD,
     auctionResult: { saleDate, currency, performance, boughtIn, isUpcoming },
@@ -217,139 +215,96 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
 
   const { user, mediator } = useSystemContext()
 
-  // If user is logged in we show prices
-  if (user || filtersAtDefault) {
-    const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
-    const awaitingResults = dateOfSale > DateTime.local()
-    const showPriceUSD = salePriceUSD && currency !== "USD"
-
-    if (isUpcoming) {
-      if (user) {
-        return (
-          <Box textAlign={["left", "right"]}>
-            <Text
-              fontWeight={[estimatedPrice ? "bold" : "normal", "normal"]}
-              variant={["xs", "sm-display"]}
-            >
-              {estimatedPrice ? (
-                `${estimatedPrice} (est)`
-              ) : (
-                <i>Estimate not available</i>
-              )}
-            </Text>
-          </Box>
-        )
-      }
-
-      return (
-        <Button
-          size="small"
-          variant="primaryGray"
-          onClick={() => {
-            mediator &&
-              openAuthModal(mediator, {
-                mode: ModalType.signup,
-                copy: "Sign up to see full auction records — for free",
-                contextModule: ContextModule.auctionResults,
-                intent: Intent.seeEstimateAuctionRecords,
-              })
-          }}
-        >
-          Sign up to see estimate
-        </Button>
-      )
-    }
-
+  if (!user) {
     return (
-      <Box
-        textAlign={["left", "right"]}
-        display={["flex", "block"]}
-        flexDirection="row"
-        flexWrap="wrap"
+      <Clickable
+        alignSelf={"flex-start"}
+        textDecoration="underline"
+        onClick={() => {
+          mediator &&
+            openAuthModal(mediator, {
+              mode: ModalType.signup,
+              copy: "Sign up to see full auction records — for free",
+              contextModule: ContextModule.auctionResults,
+              intent: isUpcoming
+                ? Intent.seeEstimateAuctionRecords
+                : Intent.seePriceAuctionRecords,
+            })
+        }}
       >
-        {salePrice && (
-          <Text fontWeight={["bold", "normal"]} variant={["xs", "sm-display"]}>
-            {salePrice}
-            {showPriceUSD ? ` • ${salePriceUSD}` : ""}
-          </Text>
-        )}
-
-        {!salePrice && boughtIn && (
-          <Text variant={["xs", "sm-display"]}>
-            <i>Bought In</i>
-          </Text>
-        )}
-
-        {!salePrice && awaitingResults && (
-          <Flex
-            flexDirection="row"
-            justifyContent="flex-end"
-            alignItems="center"
-          >
-            <TimerIcon fill="black100" width={16} height={16} />
-
-            <Spacer x="4px" />
-
-            <Text variant={["xs", "sm-display"]}>
-              <i>Awaiting results</i>
-            </Text>
-          </Flex>
-        )}
-
-        {!salePrice && !boughtIn && !awaitingResults && (
-          <Text variant={["xs", "sm-display"]}>
-            <i>Price not available</i>
-          </Text>
-        )}
-
-        {!!estimatedPrice &&
-          (user ? (
-            <Text variant="xs" color="black60" display={["none", "block"]}>
-              {estimatedPrice} (est)
-            </Text>
+        <Text variant={["xs", "sm"]}>
+          Sign up to see {isUpcoming ? "estimate" : "price"}
+        </Text>
+      </Clickable>
+    )
+  }
+  // If user is logged in we show prices
+  if (isUpcoming) {
+    return (
+      <Box textAlign={["left", "right"]}>
+        <Text
+          fontWeight={[estimatedPrice ? "bold" : "normal", "normal"]}
+          variant={["xs", "sm-display"]}
+        >
+          {estimatedPrice ? (
+            `${estimatedPrice} (est)`
           ) : (
-            <Clickable
-              textDecoration="underline"
-              onClick={() => {
-                mediator &&
-                  openAuthModal(mediator, {
-                    mode: ModalType.signup,
-                    copy: "Sign up to see full auction records — for free",
-                    contextModule: ContextModule.auctionResults,
-                    intent: Intent.seeEstimateAuctionRecords,
-                  })
-              }}
-            >
-              <Text variant="xs" color="black60">
-                Sign up to see estimate
-              </Text>
-            </Clickable>
-          ))}
-
-        <AuctionResultPerformance value={performance?.mid!} />
+            <i>Estimate not available</i>
+          )}
+        </Text>
       </Box>
     )
   }
 
-  // Otherwise we show prices only when filters at default
+  const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
+  const awaitingResults = dateOfSale > DateTime.local()
+  const showPriceUSD = salePriceUSD && currency !== "USD"
+
   return (
-    <Button
-      size="small"
-      variant="primaryGray"
-      onClick={() => {
-        mediator &&
-          openAuthModal(mediator, {
-            mode: ModalType.signup,
-            copy: "Sign up to see full auction records — for free",
-            contextModule: ContextModule.auctionResults,
-            intent: isUpcoming
-              ? Intent.seeEstimateAuctionRecords
-              : Intent.seePriceAuctionRecords,
-          })
-      }}
+    <Box
+      textAlign={["left", "right"]}
+      display={["flex", "block"]}
+      flexDirection="row"
+      flexWrap="wrap"
     >
-      Sign up to see {isUpcoming ? "estimate" : "price"}
-    </Button>
+      {salePrice && (
+        <Text fontWeight={["bold", "normal"]} variant={["xs", "sm-display"]}>
+          {salePrice}
+          {showPriceUSD ? ` • ${salePriceUSD}` : ""}
+        </Text>
+      )}
+
+      {!salePrice && boughtIn && (
+        <Text variant={["xs", "sm-display"]}>
+          <i>Bought In</i>
+        </Text>
+      )}
+
+      {!salePrice && awaitingResults && (
+        <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
+          <TimerIcon fill="black100" width={16} height={16} />
+
+          <Spacer x="4px" />
+
+          <Text variant={["xs", "sm-display"]}>
+            <i>Awaiting results</i>
+          </Text>
+        </Flex>
+      )}
+
+      {!salePrice && !boughtIn && !awaitingResults && (
+        <Text variant={["xs", "sm-display"]}>
+          <i>Price not available</i>
+        </Text>
+      )}
+
+      {!!estimatedPrice && (
+        <Text variant="xs" color="black60" display={["none", "block"]}>
+          {estimatedPrice} (est)
+        </Text>
+      )}
+      <AuctionResultPerformance value={performance?.mid!} />
+    </Box>
   )
 }
 

@@ -162,23 +162,50 @@ describe("AuctionResults", () => {
       expect(screen.getAllByRole("img")).toHaveLength(10)
     })
 
-    it("renders either price, awaiting results, bought in, or price not available", () => {
-      renderWithRelay(mockedResolver)
-
-      expect(screen.getAllByText("$20,000")).toHaveLength(2)
-      expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
-      expect(screen.getAllByText("Bought In")).toHaveLength(2)
-    })
-
-    it("renders price in original currency and in USD only if currency is not USD", () => {
-      renderWithRelay({
-        Artist: () => ({
-          ...AuctionResultsFixture.artist,
-        }),
+    describe("For Logged in users", () => {
+      beforeEach(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "cx-upcoming-auctions-filter": { flagEnabled: true },
+          },
+          user: { name: "Logged In", email: "loggedin@example.com" },
+        }))
       })
 
-      expect(screen.getAllByText("€12,000 • $15,000")).toHaveLength(2)
-      expect(screen.getAllByText("$20,000")).toHaveLength(2)
+      it("renders either price, awaiting results, bought in, or price not available", () => {
+        renderWithRelay(mockedResolver)
+
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+        expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
+        expect(screen.getAllByText("Bought In")).toHaveLength(2)
+      })
+
+      it("renders price in original currency and in USD only if currency is not USD", () => {
+        renderWithRelay({
+          Artist: () => ({
+            ...AuctionResultsFixture.artist,
+          }),
+        })
+
+        expect(screen.getAllByText("€12,000 • $15,000")).toHaveLength(2)
+        expect(screen.getAllByText("$20,000")).toHaveLength(2)
+      })
+    })
+
+    describe("For Logged Out users", () => {
+      beforeEach(() => {
+        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+          featureFlags: {
+            "cx-upcoming-auctions-filter": { flagEnabled: true },
+          },
+          user: null,
+        }))
+      })
+      it('Shows "Sign Up to see estimate/price" in place of price for unauthenticated users', () => {
+        renderWithRelay(mockedResolver)
+        expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(4)
+        expect(screen.getAllByText("Sign up to see price")).toHaveLength(16)
+      })
     })
 
     describe("sets filters from URL query", () => {
@@ -320,10 +347,6 @@ describe("AuctionResults", () => {
               createdAfterYear: 1880,
               createdBeforeYear: 1973,
             })
-            expect(screen.getAllByText("Sign up to see estimate")).toHaveLength(
-              4
-            )
-            expect(screen.getAllByText("Sign up to see price")).toHaveLength(16)
           })
         })
 
