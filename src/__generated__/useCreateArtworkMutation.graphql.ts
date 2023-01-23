@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbe5423b3ffe405ac670a47c9af90d09>>
+ * @generated SignedSource<<8c634ca43a56265a14559f509f6c6c0b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,6 +63,9 @@ export type useCreateArtworkMutation$data = {
       readonly artworkEdge?: {
         readonly __id: string;
         readonly node: {
+          readonly images: ReadonlyArray<{
+            readonly internalID: string | null;
+          } | null> | null;
           readonly internalID: string;
         } | null;
       } | null;
@@ -100,6 +103,18 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "images",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+},
+v4 = {
   "kind": "ClientExtension",
   "selections": [
     {
@@ -111,7 +126,7 @@ v3 = {
     }
   ]
 },
-v4 = {
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -178,11 +193,12 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -190,7 +206,7 @@ return {
                 "type": "MyCollectionArtworkMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -250,6 +266,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -260,7 +277,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -268,7 +285,7 @@ return {
                 "type": "MyCollectionArtworkMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -278,16 +295,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5df3d09326487c3f9e858baca117366a",
+    "cacheID": "9a3db4e52e34e392918a3acf355c49ea",
     "id": null,
     "metadata": {},
     "name": "useCreateArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateArtworkMutation(\n  $input: MyCollectionCreateArtworkInput!\n) {\n  myCollectionCreateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artworkEdge {\n          node {\n            internalID\n            id\n          }\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateArtworkMutation(\n  $input: MyCollectionCreateArtworkInput!\n) {\n  myCollectionCreateArtwork(input: $input) {\n    artworkOrError {\n      __typename\n      ... on MyCollectionArtworkMutationSuccess {\n        artworkEdge {\n          node {\n            internalID\n            images {\n              internalID\n            }\n            id\n          }\n        }\n      }\n      ... on MyCollectionArtworkMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ed93bdff6bff67b2d9e7d38edf0fdc4f";
+(node as any).hash = "cae62d27d53cfd636e0d328cfb7754cd";
 
 export default node;

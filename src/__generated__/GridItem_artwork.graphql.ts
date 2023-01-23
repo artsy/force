@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b34becb5ca41cf0e730b9d2d9e19cffd>>
+ * @generated SignedSource<<e3627aa723d5595491464c7a428d9430>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type GridItem_artwork$data = {
   readonly href: string | null;
   readonly image: {
     readonly aspectRatio: number;
+    readonly internalID: string | null;
     readonly placeholder: string | null;
     readonly url: string | null;
   } | null;
@@ -29,19 +30,21 @@ export type GridItem_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "GridItem_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -64,6 +67,7 @@ const node: ReaderFragment = {
       "name": "image",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -130,7 +134,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "0b26613b9883aff1017f6893d8745140";
+(node as any).hash = "c2a7733fe120e112e69fc4055dfd2687";
 
 export default node;
