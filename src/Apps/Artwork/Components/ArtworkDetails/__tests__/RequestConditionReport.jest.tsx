@@ -2,7 +2,6 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import { graphql } from "react-relay"
 import { RequestConditionReportFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
-import { mediator } from "Server/mediator"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/useSystemContext"
@@ -12,6 +11,7 @@ import {
   MockEnvironment,
 } from "relay-test-utils"
 import { useTracking } from "react-tracking"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
@@ -32,6 +32,8 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
+jest.mock("Components/AuthDialog/useAuthDialog")
+
 describe("RequestConditionReport", () => {
   let me
   const artwork = {
@@ -41,7 +43,6 @@ describe("RequestConditionReport", () => {
   }
   let relayEnv: MockEnvironment = createMockEnvironment()
   let trackEvent: jest.Mock
-  let trigger
 
   const { getWrapper } = setupTestWrapper({
     Component: ({ artwork }: any) => (
@@ -68,25 +69,17 @@ describe("RequestConditionReport", () => {
 
   beforeAll(() => {
     me = { internalID: "user-id", email: "user@example.com" }
-    mediator.on("open:auth", () => {})
 
     trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
-
-    jest.spyOn(mediator, "trigger")
-
-    trigger = jest.fn()
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
         isLoggedIn: true,
         relayEnvironment: relayEnv,
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger,
-        },
       }
+    })
+    ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+      return { showAuthDialog: jest.fn() }
     })
   })
 
@@ -141,15 +134,13 @@ describe("RequestConditionReport", () => {
   describe("when unauthenticated", () => {
     it("redirects to login/signup flow and tracks click event", async () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          user: null,
-          mediator: {
-            on: jest.fn(),
-            off: jest.fn(),
-            ready: jest.fn().mockReturnValue(true),
-            trigger,
-          },
-        }
+        return { user: null }
+      })
+
+      const showAuthDialog = jest.fn()
+
+      ;(useAuthDialog as jest.Mock).mockImplementation(() => {
+        return { showAuthDialog }
       })
 
       me = null
@@ -164,11 +155,20 @@ describe("RequestConditionReport", () => {
 
       await page.clickLogInButton()
 
-      expect(trigger).toHaveBeenCalledWith("open:auth", {
-        mode: "login",
-        redirectTo: "http://localhost/",
-        contextModule: "aboutTheWork",
-        intent: "requestConditionReport",
+      expect(showAuthDialog).toHaveBeenCalledWith({
+        current: {
+          mode: "Login",
+          analytics: {
+            contextModule: "aboutTheWork",
+            intent: "requestConditionReport",
+          },
+        },
+        legacy: {
+          mode: "login",
+          redirectTo: "http://localhost/",
+          contextModule: "aboutTheWork",
+          intent: "requestConditionReport",
+        },
       })
 
       expect(trackEvent).toHaveBeenCalledWith({
