@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<928930ae66bbb11ab3b18a05475e67cd>>
+ * @generated SignedSource<<eaa40c275c819530843ecc2ffa7e9182>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,14 +28,14 @@ export type PricingContextTestQuery$rawResponse = {
     readonly id: string;
     readonly listPrice: {
       readonly __typename: "Money";
-      readonly minor: number;
+      readonly minor: any;
     } | {
       readonly __typename: "PriceRange";
       readonly maxPrice: {
-        readonly minor: number;
+        readonly minor: any;
       } | null;
       readonly minPrice: {
-        readonly minor: number;
+        readonly minor: any;
       } | null;
     } | {
       readonly __typename: string;
@@ -112,6 +112,12 @@ v6 = {
   "type": "Money"
 },
 v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Long"
+},
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -412,10 +418,10 @@ return {
           "type": "AnalyticsHistogramBin"
         },
         "artwork.pricingContext.bins.maxPrice": (v5/*: any*/),
-        "artwork.pricingContext.bins.maxPriceCents": (v7/*: any*/),
+        "artwork.pricingContext.bins.maxPriceCents": (v8/*: any*/),
         "artwork.pricingContext.bins.minPrice": (v5/*: any*/),
-        "artwork.pricingContext.bins.minPriceCents": (v7/*: any*/),
-        "artwork.pricingContext.bins.numArtworks": (v7/*: any*/)
+        "artwork.pricingContext.bins.minPriceCents": (v8/*: any*/),
+        "artwork.pricingContext.bins.numArtworks": (v8/*: any*/)
       }
     },
     "name": "PricingContextTestQuery",
