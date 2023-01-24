@@ -87,12 +87,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     ? `${Math.floor(100 * (localImage.height / localImage.width))}%`
     : (artwork?.image?.url && artwork.image?.placeholder) || undefined
 
-  // const imagePlaceholder = localImage
-  //   ? `${Math.floor(100 * (localImage.height / localImage.width))}%`
-  //   : artwork?.image?.url
-  //   ? artwork.image?.placeholder ?? undefined
-  //   : undefined
-
   return (
     <div
       data-id={artwork.internalID}
