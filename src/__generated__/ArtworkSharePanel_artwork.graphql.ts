@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c98ee4a7d3fef9ae3a1fc327ece8b190>>
+ * @generated SignedSource<<b3eb119bce4255b46e721418952965f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,13 @@ export type ArtworkSharePanel_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSharePanel_artwork",
@@ -40,7 +46,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "images",
@@ -79,6 +91,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1aa535d73c67f2bc420065b91e091f3c";
+(node as any).hash = "2144e78e3edf05e063a1f87989c6f203";
 
 export default node;

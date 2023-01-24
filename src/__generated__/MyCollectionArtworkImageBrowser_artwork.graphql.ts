@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf7dfc04c45326b422bfd09c21ef7484>>
+ * @generated SignedSource<<a9346f860a9c0bc9ec064b827474d37e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkImageBrowser_artwork$data = {
-  readonly images: ReadonlyArray<{
-    readonly height: number | null;
-    readonly width: number | null;
-  } | null> | null;
+  readonly figures: ReadonlyArray<{
+    readonly height?: number | null;
+    readonly width?: number | null;
+  }>;
   readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkImageBrowser_artwork";
@@ -31,7 +31,13 @@ const node: ReaderFragment = {
   "name": "MyCollectionArtworkImageBrowser_artwork",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "includeAllImages",
+          "value": true
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtworkImageBrowser_artwork"
     },
@@ -44,34 +50,47 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "concreteType": "Image",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "includeAll",
+          "value": true
+        }
+      ],
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "images",
+      "name": "figures",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            }
+          ],
+          "type": "Image",
+          "abstractKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "figures(includeAll:true)"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "613d09ea3408c3f56693ed749f86a719";
+(node as any).hash = "7da29a5e1e8b4379b10cd8775e6731b7";
 
 export default node;

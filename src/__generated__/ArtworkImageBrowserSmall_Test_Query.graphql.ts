@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08fd9bdfe2852371d923f1ae31147109>>
+ * @generated SignedSource<<5ff3d255f8e8596bc28f68772a11f03b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,20 @@ var v0 = [
 v1 = [
   {
     "kind": "Literal",
+    "name": "includeAll",
+    "value": false
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = [
+  {
+    "kind": "Literal",
     "name": "height",
     "value": 800
   },
@@ -50,7 +64,7 @@ v1 = [
     "value": 800
   }
 ],
-v2 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -80,36 +94,23 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": "type",
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v7 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -117,21 +118,33 @@ v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v10 = {
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ID"
+},
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v11 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -187,12 +200,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v1/*: any*/),
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "images",
             "plural": true,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -218,28 +232,35 @@ return {
               },
               {
                 "alias": "fallback",
-                "args": (v1/*: any*/),
+                "args": (v3/*: any*/),
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v2/*: any*/),
+                "selections": (v4/*: any*/),
                 "storageKey": "cropped(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
-                "args": (v1/*: any*/),
+                "args": (v3/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v2/*: any*/),
+                "selections": (v4/*: any*/),
                 "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "versions",
+                "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "images(includeAll:false)"
           },
-          (v3/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -249,7 +270,7 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v1/*: any*/),
             "concreteType": null,
             "kind": "LinkedField",
             "name": "figures",
@@ -286,8 +307,8 @@ return {
                     "name": "height",
                     "storageKey": null
                   },
-                  (v4/*: any*/),
-                  (v5/*: any*/)
+                  (v5/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "type": "Video",
                 "abstractKey": null
@@ -377,7 +398,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -385,13 +406,13 @@ return {
                     "name": "isZoomable",
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "type": "Image",
                 "abstractKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "figures(includeAll:false)"
           },
           {
             "alias": null,
@@ -400,14 +421,14 @@ return {
             "name": "isSetVideoAsCover",
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "36d9ccab3ccdec0a0bf5101bb979c201",
+    "cacheID": "10cde12ead77bcddb39275ecc441b0d5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -423,7 +444,7 @@ return {
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v6/*: any*/),
+        "artwork.figures.__typename": (v7/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -436,33 +457,28 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.Overlap": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.Overlap": (v9/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "DeepZoomImageSize"
         },
-        "artwork.figures.deepZoom.Image.Size.Height": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.Size.Width": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.TileSize": (v8/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v7/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v7/*: any*/),
-        "artwork.figures.id": (v9/*: any*/),
-        "artwork.figures.internalID": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ID"
-        },
-        "artwork.figures.isZoomable": (v10/*: any*/),
-        "artwork.figures.playerUrl": (v6/*: any*/),
-        "artwork.figures.type": (v6/*: any*/),
-        "artwork.figures.videoHeight": (v11/*: any*/),
-        "artwork.figures.videoWidth": (v11/*: any*/),
-        "artwork.formattedMetadata": (v7/*: any*/),
-        "artwork.id": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Height": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Width": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.TileSize": (v9/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v8/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v8/*: any*/),
+        "artwork.figures.id": (v10/*: any*/),
+        "artwork.figures.internalID": (v11/*: any*/),
+        "artwork.figures.isZoomable": (v12/*: any*/),
+        "artwork.figures.playerUrl": (v7/*: any*/),
+        "artwork.figures.type": (v7/*: any*/),
+        "artwork.figures.videoHeight": (v13/*: any*/),
+        "artwork.figures.videoWidth": (v13/*: any*/),
+        "artwork.formattedMetadata": (v8/*: any*/),
+        "artwork.id": (v10/*: any*/),
         "artwork.images": {
           "enumValues": null,
           "nullable": true,
@@ -475,30 +491,37 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artwork.images.fallback.height": (v11/*: any*/),
-        "artwork.images.fallback.src": (v6/*: any*/),
-        "artwork.images.fallback.srcSet": (v6/*: any*/),
-        "artwork.images.fallback.width": (v11/*: any*/),
-        "artwork.images.isDefault": (v10/*: any*/),
-        "artwork.images.placeholder": (v7/*: any*/),
+        "artwork.images.fallback.height": (v13/*: any*/),
+        "artwork.images.fallback.src": (v7/*: any*/),
+        "artwork.images.fallback.srcSet": (v7/*: any*/),
+        "artwork.images.fallback.width": (v13/*: any*/),
+        "artwork.images.internalID": (v11/*: any*/),
+        "artwork.images.isDefault": (v12/*: any*/),
+        "artwork.images.placeholder": (v8/*: any*/),
         "artwork.images.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artwork.images.resized.height": (v8/*: any*/),
-        "artwork.images.resized.src": (v6/*: any*/),
-        "artwork.images.resized.srcSet": (v6/*: any*/),
-        "artwork.images.resized.width": (v8/*: any*/),
-        "artwork.internalID": (v9/*: any*/),
-        "artwork.isSetVideoAsCover": (v10/*: any*/),
-        "artwork.slug": (v9/*: any*/)
+        "artwork.images.resized.height": (v9/*: any*/),
+        "artwork.images.resized.src": (v7/*: any*/),
+        "artwork.images.resized.srcSet": (v7/*: any*/),
+        "artwork.images.resized.width": (v9/*: any*/),
+        "artwork.images.versions": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
+        "artwork.internalID": (v10/*: any*/),
+        "artwork.isSetVideoAsCover": (v12/*: any*/),
+        "artwork.slug": (v10/*: any*/)
       }
     },
     "name": "ArtworkImageBrowserSmall_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  ...ArtworkVideoPlayer_artwork\n  isSetVideoAsCover\n  figures {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork_FOvjt\n  ...ArtworkVideoPlayer_artwork_FOvjt\n  isSetVideoAsCover\n  figures(includeAll: false) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_FOvjt on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_FOvjt on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();

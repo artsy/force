@@ -1,23 +1,23 @@
 import {
-  Flex,
-  Separator,
-  Text,
-  Input,
+  Box,
+  BoxProps,
   Button,
   Clickable,
-  FacebookIcon,
-  TwitterIcon,
   EnvelopeIcon,
+  FacebookIcon,
+  Flex,
+  Input,
   Link,
-  BoxProps,
-  Box,
   PinterestIcon,
+  Separator,
+  Text,
   TumblrIcon,
+  TwitterIcon,
 } from "@artsy/palette"
-import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
-import { useRef, useState } from "react"
 import * as React from "react"
+import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
@@ -172,9 +172,12 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
   ArtworkSharePanel,
   {
     artwork: graphql`
-      fragment ArtworkSharePanel_artwork on Artwork {
+      fragment ArtworkSharePanel_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         href
-        images {
+        images(includeAll: $includeAllImages) {
           url
         }
         artworkMeta: meta {

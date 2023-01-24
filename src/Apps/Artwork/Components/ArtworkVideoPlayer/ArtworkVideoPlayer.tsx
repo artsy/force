@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react"
-import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
-import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser"
-import { ViewedVideo } from "@artsy/cohesion/dist/Schema/Events/Video"
 import { ActionType, ClickedPlayVideo, OwnerType } from "@artsy/cohesion"
+import { ViewedVideo } from "@artsy/cohesion/dist/Schema/Events/Video"
+import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
+import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser"
+import { FC, useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { ArtworkVideoPlayer_artwork$data } from "__generated__/ArtworkVideoPlayer_artwork.graphql"
 
 interface ArtworkVideoPlayerProps extends BoxProps {
   activeIndex: number
@@ -109,10 +109,13 @@ export const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   ArtworkVideoPlayer,
   {
     artwork: graphql`
-      fragment ArtworkVideoPlayer_artwork on Artwork {
+      fragment ArtworkVideoPlayer_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         internalID
         slug
-        figures {
+        figures(includeAll: $includeAllImages) {
           ... on Video {
             __typename
             playerUrl

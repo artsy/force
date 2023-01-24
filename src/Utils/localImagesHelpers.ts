@@ -151,3 +151,8 @@ const prepareImage = (image: LocalImage, expires: string) => {
 
   return JSON.stringify(imageToStore)
 }
+
+export const isImageVersionAvailable = (
+  image: { readonly versions: any } | null,
+  version: string
+) => !!image?.versions?.includes(version)

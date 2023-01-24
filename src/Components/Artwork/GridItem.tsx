@@ -6,7 +6,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { getLocalImage, LocalImage } from "Utils/localImagesHelpers"
+import {
+  getLocalImage,
+  isImageVersionAvailable,
+  LocalImage,
+} from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
@@ -45,6 +49,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
 
   const fetchLocalImage = async () => {
+    if (isImageVersionAvailable(artwork?.image, "large")) {
+      setLocalImage(null)
+
+      return
+    }
     const imageID = artwork?.image?.internalID
 
     if (!imageID) return
@@ -282,6 +291,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
           placeholder
           url(version: ["larger", "large"])
           aspectRatio
+          versions
         }
         artistNames
         href

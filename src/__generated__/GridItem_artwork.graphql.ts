@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84440e33fb139cac4e9cd3727d729f53>>
+ * @generated SignedSource<<a6b31277e7de58f7c9d7f1e96bc26a8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type GridItem_artwork$data = {
     readonly internalID: string | null;
     readonly placeholder: string | null;
     readonly url: string | null;
+    readonly versions: ReadonlyArray<string | null> | null;
   } | null;
   readonly imageTitle: string | null;
   readonly internalID: string;
@@ -109,6 +110,13 @@ return {
           "kind": "ScalarField",
           "name": "aspectRatio",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -148,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "81e7fe3ffc04b57251dcd4477d90a9d6";
+(node as any).hash = "cc706764048e427219ade8fc37fa131b";
 
 export default node;

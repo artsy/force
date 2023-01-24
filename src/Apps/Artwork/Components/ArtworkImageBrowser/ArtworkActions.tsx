@@ -1,22 +1,22 @@
-import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
-import { useSystemContext } from "System"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { Media } from "Utils/Responsive"
-import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
-import { Box, Flex, Join, Spacer, Popover } from "@artsy/palette"
-import { userIsAdmin, userIsTeam } from "Utils/user"
-import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
+import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
+import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
 import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
 } from "Components/ViewInRoom/ViewInRoom"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import styled from "styled-components"
+import { useSystemContext } from "System"
 import { getENV } from "Utils/getENV"
+import { Media } from "Utils/Responsive"
+import { userIsAdmin, userIsTeam } from "Utils/user"
+import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
+import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
+import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
-import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
@@ -214,10 +214,14 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
   ArtworkActions,
   {
     artwork: graphql`
-      fragment ArtworkActions_artwork on Artwork {
+      fragment ArtworkActions_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         ...ArtworkActionsSaveButton_artwork
         ...ArtworkDownloadButton_artwork
         ...ArtworkSharePanel_artwork
+          @arguments(includeAllImages: $includeAllImages)
         ...ViewInRoom_artwork
         slug
         downloadableImageUrl

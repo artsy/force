@@ -80,8 +80,6 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
         storeLocalImage(reversedImages[index]?.internalID!, image)
       })
 
-      debugger
-
       router.replace({
         pathname: isCollectorProfileEnabled
           ? "/collector-profile/my-collection"

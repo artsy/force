@@ -1,3 +1,5 @@
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Clickable,
@@ -6,18 +8,16 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
-import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
-import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
-import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
-import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
-import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
-import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { isTouch } from "Utils/device"
+import { useDetectActivity } from "Utils/Hooks/useDetectActivity"
+import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
+import { ArtworkImageBrowserLarge_artwork$data } from "__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork$data
@@ -147,11 +147,16 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
   ArtworkImageBrowserLarge,
   {
     artwork: graphql`
-      fragment ArtworkImageBrowserLarge_artwork on Artwork {
+      fragment ArtworkImageBrowserLarge_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         ...ArtworkLightbox_artwork
+          @arguments(includeAllImages: $includeAllImages)
         ...ArtworkVideoPlayer_artwork
+          @arguments(includeAllImages: $includeAllImages)
         isSetVideoAsCover
-        figures {
+        figures(includeAll: $includeAllImages) {
           ... on Image {
             ...DeepZoom_image
             __typename
