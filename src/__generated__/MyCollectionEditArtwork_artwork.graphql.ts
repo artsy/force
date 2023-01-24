@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fba260388a8fbb594c4c65b195910712>>
+ * @generated SignedSource<<2c774501ea0760fc5e10a50d098ba9f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,7 +61,7 @@ export type MyCollectionEditArtwork_artwork$data = {
   readonly pricePaid: {
     readonly currencyCode: string;
     readonly display: string | null;
-    readonly minor: number;
+    readonly minor: any;
   } | null;
   readonly provenance: string | null;
   readonly slug: string;

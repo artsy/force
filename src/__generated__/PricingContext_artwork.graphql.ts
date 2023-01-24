@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<187e6f31af5ff4be9879d0df7a34a082>>
+ * @generated SignedSource<<aba1d789d58e46a3287afad57b19bb34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,14 +19,14 @@ export type PricingContext_artwork$data = {
   readonly category: string | null;
   readonly listPrice: {
     readonly __typename: "Money";
-    readonly minor: number;
+    readonly minor: any;
   } | {
     readonly __typename: "PriceRange";
     readonly maxPrice: {
-      readonly minor: number;
+      readonly minor: any;
     } | null;
     readonly minPrice: {
-      readonly minor: number;
+      readonly minor: any;
     } | null;
   } | {
     // This will never be '%other', but we need some
