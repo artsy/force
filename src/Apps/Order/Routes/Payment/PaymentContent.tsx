@@ -68,44 +68,28 @@ export const PaymentContent: FC<Props> = props => {
     }
   }, [order, selectedPaymentMethod, tracking])
 
-  // we can be sure that when 1 method is available, it'll always be credit card
-  if (order.availablePaymentMethods.length === 1) {
-    return (
-      <>
-        <CreditCardPickerFragmentContainer
-          commitMutation={props.commitMutation}
-          me={me}
-          order={order}
-          innerRef={CreditCardPicker}
-        />
-        <Spacer y={4} />
-        <SaveAndContinueButton
-          media={{ greaterThan: "xs" }}
-          onClick={onSetPayment}
-        />
-        <Spacer y={2} />
-      </>
-    )
-  }
-
   return (
     <>
-      <Text variant="lg-display">Payment method</Text>
-      <Spacer y={2} />
-      <RadioGroup
-        data-test="payment-methods"
-        onSelect={val => {
-          setSelectedPaymentMethod(val as CommercePaymentMethodEnum)
-        }}
-        defaultValue={selectedPaymentMethod}
-      >
-        {getAvailablePaymentMethods(order.availablePaymentMethods).map(
-          method => method
-        )}
-      </RadioGroup>
-      <Spacer y={4} />
-      <Text variant="lg-display">Payment details</Text>
-      <Spacer y={2} />
+      {order.availablePaymentMethods.length > 1 && (
+        <>
+          <Text variant="lg-display">Payment method</Text>
+          <Spacer y={2} />
+          <RadioGroup
+            data-test="payment-methods"
+            onSelect={val => {
+              setSelectedPaymentMethod(val as CommercePaymentMethodEnum)
+            }}
+            defaultValue={selectedPaymentMethod}
+          >
+            {getAvailablePaymentMethods(order.availablePaymentMethods).map(
+              method => method
+            )}
+          </RadioGroup>
+          <Spacer y={4} />
+          <Text variant="lg-display">Payment details</Text>
+          <Spacer y={2} />
+        </>
+      )}
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
@@ -171,21 +155,25 @@ const getAvailablePaymentMethods = (
   availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps>[] => {
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
-  const paymentMethods = [
-    <BorderedRadio
-      data-test-id="credit-card"
-      key="CREDIT_CARD"
-      value={paymentMethod}
-      label={
-        <>
-          <CreditCardIcon type="Unknown" fill="black100" />
-          <Text variant="sm-display" ml={0.5}>
-            Credit card
-          </Text>
-        </>
-      }
-    />,
-  ]
+  const paymentMethods: Array<ReactElement<RadioProps>> = []
+
+  if (availablePaymentMethods.includes("CREDIT_CARD")) {
+    paymentMethods.push(
+      <BorderedRadio
+        data-test-id="credit-card"
+        key="CREDIT_CARD"
+        value={paymentMethod}
+        label={
+          <>
+            <CreditCardIcon type="Unknown" fill="black100" />
+            <Text variant="sm-display" ml={0.5}>
+              Credit card
+            </Text>
+          </>
+        }
+      />
+    )
+  }
 
   // push wire transfer as the last option
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
@@ -251,6 +239,7 @@ const getAvailablePaymentMethods = (
       </BorderedRadio>
     )
   }
+
   return paymentMethods
 }
 
