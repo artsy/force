@@ -1,6 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { Button, Box, Text, Spacer, Column, GridColumns } from "@artsy/palette"
 import { DownloadApp } from "./Components/DownloadApp"
 import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -24,6 +23,11 @@ export const ThankYou: React.FC = () => {
       ? "/collector-profile/my-collection"
       : "/settings/my-collection"
     router.replace(route)
+  }
+
+  const submitAnotherWork = () => {
+    trackSubmitAnotherWorkClick()
+    router.push("/sell/submission/contact-information")
   }
 
   const trackSubmitAnotherWorkClick = () =>
@@ -74,35 +78,32 @@ export const ThankYou: React.FC = () => {
         />
       )}
 
-      <Flex
-        pb={2}
-        width={["100%", "60%"]}
-        flexDirection={["column", "row"]}
-        alignItems={["stretch", "center"]}
-      >
-        <RouterLink to="/sell/submission">
-          <Button
-            mr={[0, 150]}
-            width="100%"
-            data-test-id="submit-another-work"
-            size="large"
-            variant="primaryBlack"
-            onClick={trackSubmitAnotherWorkClick}
-          >
-            Submit Another Work
-          </Button>
-        </RouterLink>
-        <Spacer x={[0, 2]} y={[2, 0]} />
-        <Button
-          width="100%"
-          data-test-id="swa-thank-you-view-in-my-collection-button"
-          size="large"
-          variant="secondaryBlack"
-          onClick={goToMyCollection}
-        >
-          View Artwork in My Collection
-        </Button>
-      </Flex>
+      <Box pb={2} display={["block", "flex"]}>
+        <GridColumns>
+          <Column span={[12, 6, 6, 6]}>
+            <Button
+              width="100%"
+              data-test-id="submit-another-work"
+              size="large"
+              variant="primaryBlack"
+              onClick={submitAnotherWork}
+            >
+              Submit Another Work
+            </Button>
+          </Column>
+          <Column span={[12, 6, 6, 6]}>
+            <Button
+              width="100%"
+              data-test-id="swa-thank-you-view-in-my-collection-button"
+              size="large"
+              variant="secondaryBlack"
+              onClick={goToMyCollection}
+            >
+              View Artwork in My Collection
+            </Button>
+          </Column>
+        </GridColumns>
+      </Box>
 
       <DownloadApp mb={[2, 6]} />
 

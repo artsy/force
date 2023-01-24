@@ -35,6 +35,9 @@ describe("ThankYou page", () => {
             id: "12345",
           },
         },
+        router: {
+          push: jest.fn(),
+        },
       }
     })
   })
