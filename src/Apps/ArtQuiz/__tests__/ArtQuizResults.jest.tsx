@@ -1,6 +1,5 @@
 import { ArtQuizResultsFragmentContainer } from "Apps/ArtQuiz/Routes/ArtQuizResults"
 import { screen } from "@testing-library/react"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
@@ -43,16 +42,6 @@ describe("ArtQuizResults", () => {
           savedArtworks: [{ __typename: "Artwork" }],
         }),
       })
-
-      expect(screen.getByText("Calculating Results…")).toBeInTheDocument()
-
-      jest.advanceTimersByTime(2000)
-      await flushPromiseQueue()
-
-      expect(screen.getByText("Results Complete")).toBeInTheDocument()
-
-      jest.advanceTimersByTime(1000)
-      await flushPromiseQueue()
 
       expect(screen.getByText("Explore Your Quiz Results")).toBeInTheDocument()
       expect(

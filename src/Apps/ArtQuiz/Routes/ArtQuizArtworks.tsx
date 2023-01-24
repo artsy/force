@@ -21,13 +21,15 @@ import {
 } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-import { FC, useCallback, useMemo, useRef } from "react"
+
+import { FC, useCallback, useMemo, useRef, useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
 import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
+import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -38,6 +40,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { submitMutation: submitSave } = useSaveArtwork()
   const { submitMutation: submitUpdate } = useUpdateQuiz()
   const { router } = useRouter()
+  const [showLoader, setShowLoader] = useState(false)
 
   // clone to make the array writable for sorting
   const edges = me.quiz.quizArtworkConnection?.edges
@@ -105,6 +108,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     }
 
     dispatch({ type: "Previous" })
+
     if (activeIndex === 0) {
       router.push("/art-quiz/welcome")
     }
@@ -157,8 +161,10 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       }
 
       dispatch({ type: action })
+
       if (activeIndex === cards.length - 1) {
         router.push("/art-quiz/results")
+        setShowLoader(true)
       }
     },
     [
@@ -195,6 +201,14 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   // prevents a false position from being displayed after the last quiz image, e.g. 17/16
   const positionDisplay =
     activeIndex + 1 > cards.length ? cards.length : activeIndex + 1
+
+  const handleReady = useCallback(() => {
+    router.push("/art-quiz/results")
+  }, [router])
+
+  if (showLoader) {
+    return <ArtQuizResultsLoader onReady={handleReady} />
+  }
 
   return (
     <ArtQuizFullScreen>
