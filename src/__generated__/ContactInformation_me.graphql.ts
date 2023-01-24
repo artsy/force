@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25a26056312cbb21726f110ecd6b4543>>
+ * @generated SignedSource<<180a9b5de8344136b3405dea45711808>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,6 @@ export type ContactInformation_me$data = {
   readonly name: string | null;
   readonly phone: string | null;
   readonly phoneNumber: {
-    readonly international: string | null;
-    readonly isValid: boolean | null;
-    readonly national: string | null;
     readonly regionCode: string | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ContactInformationForm_me">;
@@ -75,39 +72,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isValid",
-          "storageKey": null
-        },
-        {
-          "alias": "international",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "INTERNATIONAL"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": "display(format:\"INTERNATIONAL\")"
-        },
-        {
-          "alias": "national",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "NATIONAL"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": "display(format:\"NATIONAL\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "regionCode",
           "storageKey": null
         }
@@ -124,6 +88,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7986b13515ba645c6a7cf3a39182705e";
+(node as any).hash = "f9f59b7af2a2be16a9ce9cd2bc916fa5";
 
 export default node;

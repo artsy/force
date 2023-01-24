@@ -19,9 +19,6 @@ const mockMe = {
   email: "serge@test.test",
   phone: "+1 415-555-0132",
   phoneNumber: {
-    isValid: true,
-    international: "+1 415-555-0132",
-    national: "(415) 555-0132",
     regionCode: "us",
   },
 }
@@ -324,7 +321,7 @@ describe("Contact Information step", () => {
 
       expect(getInput("name")).toHaveValue(mockMe.name)
       expect(getInput("email")).toHaveValue(mockMe.email)
-      expect(getInput("phoneNumber")).toHaveValue(mockMe.phoneNumber.national)
+      expect(getInput("phoneNumber")).toHaveValue(" 415-555-0132")
     })
 
     it("submiting a valid form", async () => {
@@ -348,7 +345,7 @@ describe("Contact Information step", () => {
           externalId: mockSubmission.externalId,
           userName: "Serge",
           userEmail: "serge@test.test",
-          userPhone: "+1 (415) 555-0132",
+          userPhone: "+1 415-555-0132",
           state: "SUBMITTED",
           sessionID: "SessionID",
         })

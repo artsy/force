@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11da8acd5a6b8b29511eae7732a2b1e0>>
+ * @generated SignedSource<<3a97338d3176eefbf97fdffdb9ccc598>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -102,39 +102,6 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isValid",
-                "storageKey": null
-              },
-              {
-                "alias": "international",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "INTERNATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"INTERNATIONAL\")"
-              },
-              {
-                "alias": "national",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "NATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "regionCode",
                 "storageKey": null
               }
@@ -154,12 +121,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "31cf6e0ad43af0f1670e393660715e35",
+    "cacheID": "e830af00090111b550e6226fba77370b",
     "id": null,
     "metadata": {},
     "name": "consignFromMyCollectionRoutes_contactInformationMeQuery",
     "operationKind": "query",
-    "text": "query consignFromMyCollectionRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": "query consignFromMyCollectionRoutes_contactInformationMeQuery {\n  me {\n    ...ContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
   }
 };
 

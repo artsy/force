@@ -30,16 +30,21 @@ const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
 const getContactInformationFormInitialValues = (
   me: ContactInformation_me$data
-): ContactInformationFormModel => ({
-  name: me?.name || "",
-  email: me?.email || "",
-  phoneNumber:
-    me?.phoneNumber?.national ||
-    me?.phone ||
-    me?.phoneNumber?.international ||
-    "",
-  phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
-})
+): ContactInformationFormModel => {
+  const userRegionCode = me?.phoneNumber?.regionCode ?? ""
+  const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
+  let phoneNumber = me?.phone ?? ""
+
+  if (countryCode) {
+    phoneNumber = phoneNumber.replace(`+${countryCode}`, "")
+  }
+  return {
+    name: me?.name || "",
+    email: me?.email || "",
+    phoneNumber,
+    phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
+  }
+}
 
 export interface ContactInformationProps {
   me: ContactInformation_me$data
@@ -270,9 +275,6 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
         email
         phone
         phoneNumber {
-          isValid
-          international: display(format: INTERNATIONAL)
-          national: display(format: NATIONAL)
           regionCode
         }
         ...ContactInformationForm_me

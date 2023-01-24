@@ -31,16 +31,21 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
-): ContactInformationFormModel => ({
-  name: me?.name || "",
-  email: me?.email || "",
-  phoneNumber:
-    me?.phoneNumber?.national ||
-    me?.phone ||
-    me?.phoneNumber?.international ||
-    "",
-  phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
-})
+): ContactInformationFormModel => {
+  const userRegionCode = me?.phoneNumber?.regionCode ?? ""
+  const countryCode = COUNTRY_CODES[userRegionCode.toLocaleUpperCase()]
+  let phoneNumber = me?.phone ?? ""
+
+  if (countryCode) {
+    phoneNumber = phoneNumber.replace(`+${countryCode}`, "")
+  }
+  return {
+    name: me?.name || "",
+    email: me?.email || "",
+    phoneNumber,
+    phoneNumberCountryCode: me?.phoneNumber?.regionCode || "us",
+  }
+}
 
 export interface PriceEstimateContactInformationProps {
   artwork: PriceEstimateContactInformation_artwork$data
@@ -210,9 +215,6 @@ export const PriceEstimateContactInformationFragmentContainer = createFragmentCo
         email
         phone
         phoneNumber {
-          isValid
-          international: display(format: INTERNATIONAL)
-          national: display(format: NATIONAL)
           regionCode
         }
         ...ContactInformationForm_me

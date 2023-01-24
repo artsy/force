@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<148ad34b23c8ba0e360bfce385fe6e5a>>
+ * @generated SignedSource<<b5a1d99f128a1e475e7f685914977147>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,39 +166,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isValid",
-                "storageKey": null
-              },
-              {
-                "alias": "international",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "INTERNATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"INTERNATIONAL\")"
-              },
-              {
-                "alias": "national",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "NATIONAL"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": "display(format:\"NATIONAL\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "regionCode",
                 "storageKey": null
               }
@@ -212,12 +179,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c119851c3921520d4d09d4cb6c3acff6",
+    "cacheID": "2e73d76539933061e68bf77bc01e4cbb",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_priceEstimateContactInformationQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_priceEstimateContactInformationQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...PriceEstimateContactInformation_artwork\n    id\n  }\n  me {\n    ...PriceEstimateContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment PriceEstimateContactInformation_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment PriceEstimateContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
+    "text": "query myCollectionRoutes_priceEstimateContactInformationQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...PriceEstimateContactInformation_artwork\n    id\n  }\n  me {\n    ...PriceEstimateContactInformation_me\n    id\n  }\n}\n\nfragment ContactInformationForm_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n}\n\nfragment PriceEstimateContactInformation_artwork on Artwork {\n  internalID\n  slug\n}\n\nfragment PriceEstimateContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    regionCode\n  }\n  ...ContactInformationForm_me\n}\n"
   }
 };
 })();
