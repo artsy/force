@@ -241,6 +241,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         onRendered={handleMarketStatsRendered}
       />
 
+      <Spacer y={6} />
+
       <Jump id="artistAuctionResultsTop" />
 
       <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>

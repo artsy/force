@@ -1,6 +1,6 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
+import { Column, GridColumns, Select, Text } from "@artsy/palette"
 import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { rest } from "lodash"
 import * as React from "react"
@@ -29,7 +29,10 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
 
   const priceInsights = extractNodes(priceInsightsConnection)
 
-  useEffect(() => onRendered?.(priceInsights.length > 0), [priceInsights])
+  useEffect(() => onRendered?.(priceInsights.length > 0), [
+    onRendered,
+    priceInsights,
+  ])
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
@@ -70,7 +73,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
   )
 
   return (
-    <Box mb={[4, 12]} mt={[0, 6]}>
+    <>
       <Text variant={["sm-display", "lg-display"]}>
         Market Signals{" "}
         <MarketStatsInfoButton
@@ -205,7 +208,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
           </GridColumns>
         </Column>
       </GridColumns>
-    </Box>
+    </>
   )
 }
 
