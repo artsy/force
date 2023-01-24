@@ -1,19 +1,21 @@
 import { getENV } from "Utils/getENV"
 import { mediator } from "Server/mediator"
-import { ModalOptions, ModalType } from "Components/Authentication/Types"
-import { openAuthModal } from "Utils/openAuthModal"
 import { useEffect } from "react"
 import Cookies from "cookies-js"
+import { useAuthDialog, ShowAuthDialog } from "Components/AuthDialog"
+import { merge } from "lodash"
 
 interface UseScrollToOpenAuthModal {
   key: string
-  modalOptions: ModalOptions
+  options: Parameters<ShowAuthDialog>[0]
 }
 
 export const useScrollToOpenAuthModal = ({
   key,
-  modalOptions,
+  options,
 }: UseScrollToOpenAuthModal) => {
+  const { showAuthDialog } = useAuthDialog()
+
   useEffect(() => {
     // Does not display if previously dismissed, is mobile, or is logged in
     if (Cookies.get(key) || getENV("IS_MOBILE") || getENV("CURRENT_USER")) {
@@ -26,11 +28,19 @@ export const useScrollToOpenAuthModal = ({
 
     const handleScroll = () => {
       setTimeout(() => {
-        openAuthModal(mediator, {
-          mode: ModalType.signup,
-          triggerSeconds: 2,
-          ...modalOptions,
-        })
+        const payload = merge(
+          {
+            current: {
+              options: {
+                onClose: dismiss,
+                onSuccess: dismiss,
+              },
+            },
+          },
+          options
+        )
+
+        showAuthDialog(payload)
       }, 2000)
     }
 
@@ -43,5 +53,5 @@ export const useScrollToOpenAuthModal = ({
       mediator.off("modal:closed", dismiss)
       mediator.off("auth:sign_up:success", dismiss)
     }
-  }, [key, modalOptions])
+  }, [key, options, showAuthDialog])
 }

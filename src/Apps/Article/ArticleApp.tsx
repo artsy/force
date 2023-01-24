@@ -11,30 +11,14 @@ import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
 import { ArticleAdProvider } from "./Components/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
-import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { useRouter } from "System/Router/useRouter"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
 
 interface ArticleAppProps {
   article: ArticleApp_article$data
 }
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
-  const {
-    match: { location },
-  } = useRouter()
-
-  useScrollToOpenAuthModal({
-    key: "editorial-signup-dismissed",
-    modalOptions: {
-      intent: Intent.viewEditorial,
-      contextModule: ContextModule.popUpModal,
-      copy: "Sign up for the latest in art market news",
-      // TODO: Onboarding is triggered based on contents of redirectTo
-      // prop. Move this to `afterSignupAction.action`
-      redirectTo: location.pathname,
-    },
-  })
+  useScrollToOpenEditorialAuthModal()
 
   return (
     <ArticleAdProvider>
