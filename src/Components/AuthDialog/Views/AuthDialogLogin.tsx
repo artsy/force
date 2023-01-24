@@ -20,7 +20,10 @@ import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessa
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export const AuthDialogLogin: FC = () => {
-  const { dispatch } = useAuthDialogContext()
+  const {
+    dispatch,
+    state: { options },
+  } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
 
@@ -51,6 +54,8 @@ export const AuthDialogLogin: FC = () => {
           setFieldValue("mode", "Success")
 
           track.loggedIn({ service: "email", userId: user.id })
+
+          options.onSuccess?.()
         } catch (err) {
           console.error(err)
 

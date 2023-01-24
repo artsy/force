@@ -33,9 +33,14 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
     track.impression({ title })
   }, [title, track])
 
+  const handleClose = () => {
+    onClose()
+    options.onClose?.()
+  }
+
   return (
     <ModalDialog
-      onClose={onClose}
+      onClose={handleClose}
       title={title}
       hasLogo
       m={[1, 2]}

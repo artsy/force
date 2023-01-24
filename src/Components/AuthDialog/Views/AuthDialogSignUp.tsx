@@ -34,7 +34,10 @@ interface AuthDialogSignUpProps {
 export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
   requestLocation,
 }) => {
-  const { dispatch } = useAuthDialogContext()
+  const {
+    dispatch,
+    state: { options },
+  } = useAuthDialogContext()
 
   const { runAfterAuthentication } = useAfterAuthentication()
 
@@ -73,6 +76,8 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
           setFieldValue("mode", "Success")
 
           track.signedUp({ service: "email", userId: user.id })
+
+          options.onSuccess?.()
         } catch (err) {
           console.error(err)
 
