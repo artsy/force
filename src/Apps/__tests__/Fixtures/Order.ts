@@ -352,6 +352,7 @@ export const UntouchedBuyOrder = {
   __isCommerceOrder: "CommerceBuyOrder",
   mode: "BUY",
   source: "artwork_page",
+  conditionsOfSale: null,
 } as const
 
 export const UntouchedPrivateSaleOrder = {
@@ -360,6 +361,7 @@ export const UntouchedPrivateSaleOrder = {
   __isCommerceOrder: "CommerceBuyOrder",
   mode: "BUY",
   source: "private_sale",
+  conditionsOfSale: "conditions of sale provided by admin",
 } as const
 
 export const UntouchedBuyOrderWithArtsyShippingDomesticFromUS = {

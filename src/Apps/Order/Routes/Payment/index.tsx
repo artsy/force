@@ -412,6 +412,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               contextPageOwnerType={OwnerType.ordersPayment}
               orderSource={order.source}
               renderArtsyPrivateSaleConditions={true}
+              privateSaleConditions={order.conditionsOfSale}
             />
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
@@ -470,6 +471,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment Payment_order on CommerceOrder {
         source
+        conditionsOfSale
         bankAccountId
         availablePaymentMethods
         buyerTotalCents

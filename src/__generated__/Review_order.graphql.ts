@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1aab52504343c62a3b6592f8d1f16886>>
+ * @generated SignedSource<<e2c9efe555d4611ef57c081dfbd55e87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_
 import { FragmentRefs } from "relay-runtime";
 export type Review_order$data = {
   readonly code: string;
+  readonly conditionsOfSale: string | null;
   readonly impulseConversationId: string | null;
   readonly internalID: string;
   readonly itemsTotal: string | null;
@@ -96,6 +97,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "conditionsOfSale",
       "storageKey": null
     },
     {
@@ -256,6 +264,6 @@ return {
 };
 })();
 
-(node as any).hash = "ac3ec77035ad1fb6be9298d8d1cfe8a8";
+(node as any).hash = "ded9ff82be68ca0280c18c66c24394ba";
 
 export default node;

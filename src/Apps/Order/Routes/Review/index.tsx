@@ -457,6 +457,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               contextPageOwnerType={OwnerType.ordersReview}
               orderSource={order.source}
               renderArtsyPrivateSaleConditions={false}
+              privateSaleConditions={order.conditionsOfSale}
             />
             <Spacer y={[2, 4]} />
             <Media at="xs">
@@ -483,6 +484,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         mode
         code
         source
+        conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
         stateExpiresAt(format: "MMM D")
