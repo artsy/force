@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6cb5d64ad6d81a6f61fffffe93724044>>
+ * @generated SignedSource<<c032231e1fa7e38edb6ea075d34295a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,7 +95,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 1
+                "value": 3
               }
             ],
             "concreteType": "NotificationConnection",
@@ -134,7 +134,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "notificationsConnection(first:1)"
+            "storageKey": "notificationsConnection(first:3)"
           }
         ],
         "storageKey": null
@@ -161,12 +161,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "161f7d365ffde245eccdc0776dab2a05",
+    "cacheID": "5f03181679499944b34bf5e8828c472c",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsIndicatorQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  viewer {\n    ...NavBarMobileMenuNotificationsIndicator_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  viewer {\n    ...NavBarMobileMenuNotificationsIndicator_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -37,10 +37,7 @@ describe("shouldDisplayNotification", () => {
 
 describe("hasNewNotifications", () => {
   it("returns false if parameter was not passed", () => {
-    let result = hasNewNotifications(undefined)
-    expect(result).toEqual(false)
-
-    result = hasNewNotifications(null)
+    let result = hasNewNotifications("")
     expect(result).toEqual(false)
   })
 

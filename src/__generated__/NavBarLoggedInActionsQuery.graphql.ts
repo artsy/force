@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b78789170ff5d6d136aa9e2d5fa0edb>>
+ * @generated SignedSource<<8a56efd9199a86c99ac9b22c87405971>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,7 +50,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 1
+    "value": 3
   }
 ],
 v1 = {
@@ -246,7 +246,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "notificationsConnection(first:1)"
+        "storageKey": "notificationsConnection(first:3)"
       },
       {
         "alias": null,
@@ -358,7 +358,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "notificationsConnection(first:1)"
+        "storageKey": "notificationsConnection(first:3)"
       },
       {
         "alias": null,
@@ -441,7 +441,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1b2662798101b5f8b04dd20d40c55c30",
+    "cacheID": "a9c0bef93a7833090631225c0f7ce15f",
     "id": null,
     "metadata": {
       "connection": [
@@ -459,11 +459,11 @@ return {
     },
     "name": "NavBarLoggedInActionsQuery",
     "operationKind": "query",
-    "text": "query NavBarLoggedInActionsQuery {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query NavBarLoggedInActionsQuery {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6676ff50874d4e5fc99abcc48e88bd04";
+(node as any).hash = "b92f4f22d6e99b25e1d6c828fba7fe41";
 
 export default node;

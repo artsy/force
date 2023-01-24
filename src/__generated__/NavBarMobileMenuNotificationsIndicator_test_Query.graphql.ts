@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd1bc1e53dc286780356924b44b167ba>>
+ * @generated SignedSource<<ca5b2b31d08136ca7b54f4ce477e0fd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,7 +101,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 1
+                "value": 3
               }
             ],
             "concreteType": "NotificationConnection",
@@ -140,7 +140,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "notificationsConnection(first:1)"
+            "storageKey": "notificationsConnection(first:3)"
           }
         ],
         "storageKey": null
@@ -167,7 +167,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b20e958a41135af41a2bf83652feaad7",
+    "cacheID": "c7ceb3c401c7e29f7bad978f57c10f49",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -219,7 +219,7 @@ return {
     },
     "name": "NavBarMobileMenuNotificationsIndicator_test_Query",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  viewer {\n    ...NavBarMobileMenuNotificationsIndicator_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  viewer {\n    ...NavBarMobileMenuNotificationsIndicator_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

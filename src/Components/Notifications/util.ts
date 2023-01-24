@@ -1,4 +1,5 @@
 import { NotificationTypesEnum } from "__generated__/NotificationsList_viewer.graphql"
+import { DateTime } from "luxon"
 
 export const LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY =
   "last_seen_notification_published_at"
@@ -18,27 +19,21 @@ const isArtworksBasedNotification = (
   return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
 }
 
-export const setLastSeenNotificationDate = date => {
-  if (!date) {
-    return
-  }
-
-  window.localStorage.setItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY, date)
-}
-
-export const hasNewNotifications = lastNotificationDatetime => {
+export const hasNewNotifications = (lastNotificationDatetime: string) => {
   if (!lastNotificationDatetime) {
     return false
   }
 
-  if (!window.localStorage.getItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY)) {
+  const prevLastNotificationDatetime = window.localStorage.getItem(
+    LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY
+  )
+
+  if (!prevLastNotificationDatetime) {
     return true
   }
 
-  return (
-    Date.parse(lastNotificationDatetime) >
-    Date.parse(
-      window.localStorage.getItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY)!
-    )
-  )
+  const prevDate = DateTime.fromISO(prevLastNotificationDatetime)
+  const newDate = DateTime.fromISO(lastNotificationDatetime)
+
+  return newDate > prevDate
 }

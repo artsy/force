@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d10d1495261f107713d26374c1ba65e>>
+ * @generated SignedSource<<c0a24f53339281b23a0582ced9b1224e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 1
+          "value": 3
         }
       ],
       "concreteType": "NotificationConnection",
@@ -75,13 +75,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "notificationsConnection(first:1)"
+      "storageKey": "notificationsConnection(first:3)"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "96fbbd2dcc318d0c902c09b28607a0c0";
+(node as any).hash = "2267dcfda64b3f072431bf6a990a97ab";
 
 export default node;

@@ -70,13 +70,14 @@ export const NavBarLoggedInActions: React.FC<Partial<
           >
             <BellIcon title="Notifications" fill="currentColor" />
 
-            {hasNewNotifications(notification?.publishedAt) && (
-              <NavBarNotificationIndicator
-                position="absolute"
-                top="15px"
-                right="9px"
-              />
-            )}
+            {hasNotifications &&
+              hasNewNotifications(notification?.publishedAt ?? "") && (
+                <NavBarNotificationIndicator
+                  position="absolute"
+                  top="15px"
+                  right="9px"
+                />
+              )}
           </NavBarItemButton>
         )}
       </Dropdown>
@@ -133,7 +134,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
       environment={relayEnvironment}
       query={graphql`
         query NavBarLoggedInActionsQuery {
-          notificationsConnection(first: 1) {
+          notificationsConnection(first: 3) {
             edges {
               node {
                 publishedAt

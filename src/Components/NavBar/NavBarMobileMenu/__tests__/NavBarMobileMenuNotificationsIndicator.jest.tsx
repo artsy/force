@@ -24,13 +24,12 @@ const { renderWithRelay } = setupTestWrapperTL({
 describe("NavBarMobileMenuNotificationsIndicator", () => {
   it("should NOT render indicator by default", () => {
     renderWithRelay({
-      Me: () => ({
-        unreadConversationCount: 0,
+      NotificationConnection: () => ({
+        edges: [],
       }),
-      Viewer: () => ({
-        notificationsConnection: () => ({
-          edges: [],
-        }),
+      Me: () => ({
+        unreadNotificationsCount: 0,
+        unreadConversationCount: 0,
       }),
     })
 
@@ -40,12 +39,11 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
 
   it("should render indicator when there are unread conversations", () => {
     renderWithRelay({
-      Viewer: () => ({
-        notificationsConnection: () => ({
-          edges: [],
-        }),
+      NotificationConnection: () => ({
+        edges: [],
       }),
       Me: () => ({
+        unreadNotificationsCount: 0,
         unreadConversationCount: 5,
       }),
     })
@@ -57,12 +55,11 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
   it("should render indicator when there are unread notifications", () => {
     window.localStorage.removeItem(LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY)
     renderWithRelay({
-      Viewer: () => ({
-        notificationsConnection: () => ({
-          edges: notificationEdges,
-        }),
+      NotificationConnection: () => ({
+        edges: notificationEdges,
       }),
       Me: () => ({
+        unreadNotificationsCount: 1,
         unreadConversationCount: 0,
       }),
     })
@@ -77,12 +74,11 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       "2023-01-17T16:58:39Z"
     )
     renderWithRelay({
-      Viewer: () => ({
-        notificationsConnection: () => ({
-          edges: [],
-        }),
+      NotificationConnection: () => ({
+        edges: notificationEdges,
       }),
       Me: () => ({
+        unreadNotificationsCount: 1,
         unreadConversationCount: 0,
       }),
     })

@@ -17,7 +17,10 @@ import { SystemContext } from "System"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
-import { shouldDisplayNotification, setLastSeenNotificationDate } from "./util"
+import {
+  shouldDisplayNotification,
+  LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
+} from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 
 interface NotificationsListQueryRendererProps {
@@ -44,12 +47,16 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   const nodes = extractNodes(viewer.notifications).filter(node =>
     shouldDisplayNotification(node)
   )
+  const recentNotificationPublishedAt = nodes[0]?.publishedAtAbsolute
 
   useEffect(() => {
-    if (nodes?.length > 0) {
-      setLastSeenNotificationDate(nodes[0].publishedAtAbsolute)
+    if (type === "all" && recentNotificationPublishedAt) {
+      window.localStorage.setItem(
+        LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
+        recentNotificationPublishedAt
+      )
     }
-  }, [nodes])
+  }, [type, recentNotificationPublishedAt])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea7d3a8c5b147a445b1b9a91c598a33c>>
+ * @generated SignedSource<<be37a7aaad2e791e64fabd7c6b1e9304>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,7 +95,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 1
+                "value": 3
               }
             ],
             "concreteType": "NotificationConnection",
@@ -134,7 +134,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "notificationsConnection(first:1)"
+            "storageKey": "notificationsConnection(first:3)"
           }
         ],
         "storageKey": null
@@ -154,6 +154,13 @@ return {
             "name": "unreadConversationCount",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "unreadNotificationsCount",
+            "storageKey": null
+          },
           (v0/*: any*/)
         ],
         "storageKey": null
@@ -161,12 +168,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4492ee5fc353fb5bad3630d8e8819f20",
+    "cacheID": "81c689e4bdfd02e15a905ef3974ec591",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsQuery {\n  viewer {\n    ...NavBarMobileMenuNotifications_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadConversationCount\n}\n\nfragment NavBarMobileMenuNotifications_viewer on Viewer {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NavBarMobileMenuNotificationsQuery {\n  viewer {\n    ...NavBarMobileMenuNotifications_viewer\n  }\n  me {\n    ...NavBarMobileMenuNotifications_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotifications_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n}\n\nfragment NavBarMobileMenuNotifications_viewer on Viewer {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

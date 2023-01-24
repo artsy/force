@@ -32,7 +32,9 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
+  const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
+  const hasNotifications = unreadNotificationsCount > 0
   const notification = extractNodes(
     viewer?.notificationsConnection
   ).filter(node => shouldDisplayNotification(node))[0]
@@ -60,7 +62,10 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
             }}
           >
             Activity
-            {hasNewNotifications(notification?.publishedAt) && <Indicator />}
+            {hasNotifications &&
+              hasNewNotifications(notification?.publishedAt ?? "") && (
+                <Indicator />
+              )}
           </NavBarMobileMenuItemLink>
           <NavBarMobileMenuItemLink
             to="/user/conversations"
@@ -83,7 +88,7 @@ const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment NavBarMobileMenuNotifications_viewer on Viewer {
-        notificationsConnection(first: 1) {
+        notificationsConnection(first: 3) {
           edges {
             node {
               publishedAt
@@ -95,6 +100,7 @@ const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment NavBarMobileMenuNotifications_me on Me {
         unreadConversationCount
+        unreadNotificationsCount
       }
     `,
   }

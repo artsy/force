@@ -29,7 +29,7 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
   ).filter(node => shouldDisplayNotification(node))[0]
 
   const shouldDisplayIndicator =
-    hasConversations || hasNewNotifications(notification?.publishedAt)
+    hasConversations || hasNewNotifications(notification?.publishedAt ?? "")
 
   if (!shouldDisplayIndicator) {
     return null
@@ -50,7 +50,7 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
   {
     viewer: graphql`
       fragment NavBarMobileMenuNotificationsIndicator_viewer on Viewer {
-        notificationsConnection(first: 1) {
+        notificationsConnection(first: 3) {
           edges {
             node {
               publishedAt
