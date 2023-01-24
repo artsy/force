@@ -7,21 +7,14 @@ import { getENV } from "Utils/getENV"
 import { NewsApp_viewer$data } from "__generated__/NewsApp_viewer.graphql"
 import { NewsIndexArticlesPaginationContainer } from "./Components/NewsIndexArticles"
 import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd"
-import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
+
 interface NewsAppProps {
   viewer: NewsApp_viewer$data
 }
 
 const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
-  useScrollToOpenAuthModal({
-    key: "editorial-signup-dismissed",
-    modalOptions: {
-      intent: Intent.viewEditorial,
-      contextModule: ContextModule.popUpModal,
-      copy: "Sign up for the latest in art market news",
-    },
-  })
+  useScrollToOpenEditorialAuthModal()
 
   return (
     <ArticleAdProvider>

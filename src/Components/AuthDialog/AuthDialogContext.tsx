@@ -38,6 +38,8 @@ export type AuthDialogOptions = {
   redirectTo?: string
   /** Copy displayed in dialog header */
   title?: string | ((mode: AuthDialogMode) => string)
+  onClose?: () => void
+  onSuccess?: () => void
 }
 
 type AuthDialogAnalytics = {

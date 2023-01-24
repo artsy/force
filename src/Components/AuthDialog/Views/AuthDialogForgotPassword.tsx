@@ -16,7 +16,10 @@ import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessa
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 
 export const AuthDialogForgotPassword: FC = () => {
-  const { dispatch } = useAuthDialogContext()
+  const {
+    dispatch,
+    state: { options },
+  } = useAuthDialogContext()
 
   const track = useAuthDialogTracking()
 
@@ -35,6 +38,8 @@ export const AuthDialogForgotPassword: FC = () => {
           setFieldValue("mode", "Success")
 
           track.resetPassword()
+
+          options.onSuccess?.()
         } catch (err) {
           console.error(err)
 

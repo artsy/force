@@ -5,10 +5,10 @@ import { useSystemContext } from "System"
 import { getENV } from "Utils/getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { openAuthModal } from "Utils/openAuthModal"
 import { mediator } from "Server/mediator"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
 
 const KEY = "artist-page-signup-dismissed"
 
@@ -41,6 +41,8 @@ export const USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY = graphql`
 
 export const useScrollToOpenArtistAuthModal = () => {
   const { relayEnvironment } = useSystemContext()
+
+  const { showAuthDialog } = useAuthDialog()
 
   useEffect(() => {
     if (!relayEnvironment) return
@@ -76,16 +78,33 @@ export const useScrollToOpenArtistAuthModal = () => {
 
       const handleScroll = () => {
         setTimeout(() => {
-          openAuthModal(mediator, {
-            contextModule: ContextModule.popUpModal,
-            copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
-            // TODO: Onboarding is triggered based on contents of redirectTo
-            // prop. Move this to `afterSignupAction` prop
-            redirectTo: location.href,
-            image,
-            intent: Intent.viewArtist,
-            mode: ModalType.signup,
-            triggerSeconds: 4,
+          showAuthDialog({
+            current: {
+              mode: "SignUp",
+              options: {
+                image: true,
+                onClose: dismiss,
+                onSuccess: dismiss,
+                title: mode => {
+                  const action = mode === "SignUp" ? "Sign up" : "Log in"
+                  return `${action} to discover new works by ${artist.name} and more artists you love`
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.popUpModal,
+                intent: Intent.viewArtist,
+                trigger: "scroll",
+              },
+            },
+            legacy: {
+              contextModule: ContextModule.popUpModal,
+              copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
+              redirectTo: location.href,
+              image,
+              intent: Intent.viewArtist,
+              mode: ModalType.signup,
+              triggerSeconds: 4,
+            },
           })
         }, 2000)
       }
@@ -102,5 +121,5 @@ export const useScrollToOpenArtistAuthModal = () => {
     }
 
     init()
-  }, [relayEnvironment])
+  }, [relayEnvironment, showAuthDialog])
 }
