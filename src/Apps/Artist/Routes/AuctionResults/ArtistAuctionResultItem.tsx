@@ -275,7 +275,9 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
   }
 
   const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
-  const awaitingResults = dateOfSale > DateTime.local()
+
+  // Did the sale happened last month and the price hasn't been realized yet?
+  const awaitingResults = dateOfSale.plus({ month: 1 }) > DateTime.local()
   const showPriceUSD = salePriceUSD && currency !== "USD"
 
   return (
