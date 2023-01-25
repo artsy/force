@@ -60,9 +60,12 @@ declare module "sharify" {
       GOOGLE_ADWORDS_ID: string
       GRAVITY_WEBSOCKET_URL: string
       IP_ADDRESS: string
+      IMGIX_URL: string
+      IMGIX_TOKEN: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       JSON_PAGE_DATA: any
+      LAMBDA_IMAGE_RESIZING_URL: string
       METAPHYSICS_ENDPOINT: string
       NETWORK_CACHE_SIZE: string
       NETWORK_CACHE_TTL: string
