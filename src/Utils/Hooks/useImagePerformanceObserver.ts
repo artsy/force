@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { sendToVolley, VolleyMetric } from "Server/volley"
 import { getENV } from "Utils/getENV"
-import { GEMINI_CLOUDFRONT_URL, getImageService } from "Utils/resizer"
+import { getImageService } from "Utils/resizer"
 
 const DEVICE_TYPE = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
@@ -9,6 +9,12 @@ type Entry = Pick<
   PerformanceResourceTiming,
   "initiatorType" | "transferSize" | "name" | "duration"
 >
+
+const TRACKING_URL_ALLOWLIST = [
+  getENV("GEMINI_CLOUDFRONT_URL"),
+  getENV("LAMBDA_IMAGE_RESIZING_URL"),
+  getENV("IMGIX_URL"),
+].filter(Boolean)
 
 export const useImagePerformanceObserver = () => {
   const queue = useRef<{ entry: Entry; rootPath: string }[]>([])
@@ -28,8 +34,8 @@ export const useImagePerformanceObserver = () => {
             entry.initiatorType !== "img" ||
             // Ensure they are uncached
             entry.transferSize === 0 ||
-            // Ensure they are Gemini images
-            !entry.name.includes(GEMINI_CLOUDFRONT_URL) ||
+            // Ensure they come from image domains we want to track
+            !TRACKING_URL_ALLOWLIST.some(url => entry.name.includes(url)) ||
             // Ensure they have transfer size supported
             !entry.transferSize
           ) {

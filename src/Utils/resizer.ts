@@ -2,15 +2,17 @@ import { configureImageServices, ServiceConfigurations } from "@artsy/img"
 import { getFeatureVariant } from "System/useFeatureFlag"
 import { getENV } from "./getENV"
 
-export const GEMINI_CLOUDFRONT_URL =
-  getENV("GEMINI_CLOUDFRONT_URL") ?? "https://d7hftxdivxxvm.cloudfront.net"
+export const GEMINI_CLOUDFRONT_URL = getENV("GEMINI_CLOUDFRONT_URL")
+export const LAMBDA_IMAGE_RESIZING_URL = getENV("LAMBDA_IMAGE_RESIZING_URL")
+export const IMGIX_URL = getENV("IMGIX_URL")
+export const IMGIX_TOKEN = getENV("IMGIX_TOKEN")
 
 const services = configureImageServices({
   gemini: {
     endpoint: GEMINI_CLOUDFRONT_URL,
   },
   lambda: {
-    endpoint: "https://d1j88w5k23s1nr.cloudfront.net",
+    endpoint: LAMBDA_IMAGE_RESIZING_URL,
     sources: [
       {
         source: "https://d32dm0rphc51dk.cloudfront.net",
@@ -25,6 +27,10 @@ const services = configureImageServices({
         bucket: "artsy-media-uploads",
       },
     ],
+  },
+  imgix: {
+    endpoint: IMGIX_URL,
+    token: IMGIX_TOKEN,
   },
 })
 

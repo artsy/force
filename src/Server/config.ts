@@ -73,7 +73,10 @@ export const GOOGLE_CLIENT_ID: any = null
 export const GOOGLE_SECRET: any = null
 export const GRAVITY_WEBSOCKET_URL: any = "wss://stagingapi.artsy.net/cable"
 export const IMAGE_PROXY: any = "GEMINI"
+export const IMGIX_URL: any = null
+export const IMGIX_TOKEN: any = null
 export const IP_DENYLIST: any = ""
+export const LAMBDA_IMAGE_RESIZING_URL: any = null
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
 export const NODE_ENV: any = "development"
