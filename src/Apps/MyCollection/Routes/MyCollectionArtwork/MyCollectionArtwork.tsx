@@ -148,7 +148,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             {isP1Artist &&
               isMyCollectionPhase5Enabled &&
-              (displayText ? (
+              (!!displayText ? (
                 <>
                   <Separator my={2} />
                   <MyCollectionArtworkSWASectionSubmitted
@@ -176,7 +176,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             />
             {isMyCollectionPhase5Enabled &&
               isP1Artist &&
-              displayText &&
+              !!displayText &&
               isMyCollectionPhase8Enabled && (
                 <MyCollectionArtworkSWASectionSubmitted
                   displayText={displayText}
@@ -190,7 +190,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   />
                   {isMyCollectionPhase5Enabled && isP1Artist && (
                     <>
-                      {displayText ? (
+                      {!!displayText ? (
                         !isMyCollectionPhase8Enabled && (
                           <MyCollectionArtworkSWASectionSubmitted
                             displayText={displayText}

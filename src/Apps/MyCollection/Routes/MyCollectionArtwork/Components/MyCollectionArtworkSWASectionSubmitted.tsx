@@ -38,10 +38,18 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     "my-collection-web-phase-8-submission-status"
   )
 
+  if (!Boolean(displayText)) {
+    return null
+  }
+
   const article =
     "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
 
   const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
+
+  if (!Boolean(approvedDisplayText)) {
+    return null
+  }
 
   if (Boolean(displayText) && isMyCollectionPhase8Enabled) {
     return (
