@@ -26,6 +26,7 @@ import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 interface NotificationsListQueryRendererProps {
   type: NotificationType
   paginationType?: NotificationPaginationType
+  setLastSeenNotificationDateTime: (lastDateTime: string) => void
 }
 
 interface NotificationsListProps extends NotificationsListQueryRendererProps {
@@ -38,6 +39,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   relay,
   type,
   paginationType = "showMoreButton",
+  setLastSeenNotificationDateTime,
 }) => {
   const [loading, setLoading] = useState(false)
   const [currentPaginationType, setCurrentPaginationType] = useState(
@@ -51,12 +53,9 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 
   useEffect(() => {
     if (type === "all" && recentNotificationPublishedAt) {
-      window.localStorage.setItem(
-        LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
-        recentNotificationPublishedAt
-      )
+      setLastSeenNotificationDateTime(recentNotificationPublishedAt)
     }
-  }, [type, recentNotificationPublishedAt])
+  }, [type, recentNotificationPublishedAt, setLastSeenNotificationDateTime])
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -187,6 +186,7 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
 export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
   type,
   paginationType,
+  setLastSeenNotificationDateTime,
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
   const types = getNotificationTypes(type)
@@ -224,6 +224,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
             viewer={props.viewer}
             paginationType={paginationType}
             type={type}
+            setLastSeenNotificationDateTime={setLastSeenNotificationDateTime}
           />
         )
       }}

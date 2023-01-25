@@ -1,5 +1,6 @@
 import { NotificationTypesEnum } from "__generated__/NotificationsList_viewer.graphql"
 import { DateTime } from "luxon"
+import { useCallback, useEffect, useState } from "react"
 
 export const LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY =
   "last_seen_notification_published_at"
@@ -21,6 +22,7 @@ const isArtworksBasedNotification = (
 
 export const hasNewNotifications = (lastNotificationDatetime: string) => {
   if (!lastNotificationDatetime) {
+    console.log("[debug] step 1")
     return false
   }
 
@@ -29,11 +31,38 @@ export const hasNewNotifications = (lastNotificationDatetime: string) => {
   )
 
   if (!prevLastNotificationDatetime) {
+    console.log("[debug] step 2")
     return true
   }
 
   const prevDate = DateTime.fromISO(prevLastNotificationDatetime)
   const newDate = DateTime.fromISO(lastNotificationDatetime)
+  console.log("[debug] step 3", newDate > prevDate)
 
   return newDate > prevDate
+}
+
+export const useCustomHookName = (datetime: string) => {
+  const [canDisplayUnseenIndicator, setCanDisplayUnseenIndicator] = useState(
+    false
+  )
+
+  useEffect(() => {
+    setCanDisplayUnseenIndicator(hasNewNotifications(datetime))
+  }, [datetime])
+
+  const setLastSeenNotificationDateTime = useCallback(
+    (lastDateTime: string) => {
+      console.log("[debug] setLastSeenNotificationDateTime")
+
+      window.localStorage.setItem(
+        LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
+        lastDateTime
+      )
+      setCanDisplayUnseenIndicator(false)
+    },
+    [setCanDisplayUnseenIndicator]
+  )
+
+  return { canDisplayUnseenIndicator, setLastSeenNotificationDateTime }
 }

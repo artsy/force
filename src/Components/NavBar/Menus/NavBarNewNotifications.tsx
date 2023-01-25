@@ -5,6 +5,7 @@ import { useScrollLock } from "Utils/Hooks/useScrollLock"
 
 interface NavBarNewNotificationsProps {
   unreadCounts: number
+  setLastSeenNotificationDateTime: (lastDateTime: string) => void
 }
 
 export const NavBarNewNotifications: React.FC<NavBarNewNotificationsProps> = props => {

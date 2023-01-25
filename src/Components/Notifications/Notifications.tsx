@@ -5,10 +5,12 @@ import { NotificationPaginationType } from "./types"
 
 interface NotificationsProps extends NofiticationsTabsProps {
   paginationType?: NotificationPaginationType
+  setLastSeenNotificationDateTime: (lastDateTime: string) => void
 }
 
 export const Notifications: React.FC<NotificationsProps> = ({
   paginationType,
+  setLastSeenNotificationDateTime,
   ...rest
 }) => {
   return (
@@ -17,12 +19,14 @@ export const Notifications: React.FC<NotificationsProps> = ({
         <NotificationsListQueryRenderer
           type="all"
           paginationType={paginationType}
+          setLastSeenNotificationDateTime={setLastSeenNotificationDateTime}
         />
       </Tab>
       <Tab name="Alerts">
         <NotificationsListQueryRenderer
           type="alerts"
           paginationType={paginationType}
+          setLastSeenNotificationDateTime={setLastSeenNotificationDateTime}
         />
       </Tab>
     </NofiticationsTabs>

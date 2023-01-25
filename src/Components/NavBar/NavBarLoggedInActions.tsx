@@ -20,6 +20,7 @@ import { extractNodes } from "Utils/extractNodes"
 import {
   shouldDisplayNotification,
   hasNewNotifications,
+  useCustomHookName,
 } from "Components/Notifications/util"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
@@ -28,21 +29,31 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me, notificationsConnection }) => {
   const { trackEvent } = useTracking()
 
-  const notification = extractNodes(notificationsConnection).filter(node =>
+  const notifications = extractNodes(notificationsConnection).filter(node =>
     shouldDisplayNotification(node)
-  )[0]
+  )
+  const recentNotifications = notifications[0]
+  const recentPublishedAt = recentNotifications?.publishedAt
 
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
 
+  const {
+    canDisplayUnseenIndicator,
+    setLastSeenNotificationDateTime,
+  } = useCustomHookName(recentPublishedAt)
+
   return (
     <>
       <Dropdown
         zIndex={Z.dropdown}
         dropdown={
-          <NavBarNewNotifications unreadCounts={unreadNotificationsCount} />
+          <NavBarNewNotifications
+            setLastSeenNotificationDateTime={setLastSeenNotificationDateTime}
+            unreadCounts={unreadNotificationsCount}
+          />
         }
         placement="bottom-end"
         offset={0}
@@ -70,14 +81,13 @@ export const NavBarLoggedInActions: React.FC<Partial<
           >
             <BellIcon title="Notifications" fill="currentColor" />
 
-            {hasNotifications &&
-              hasNewNotifications(notification?.publishedAt ?? "") && (
-                <NavBarNotificationIndicator
-                  position="absolute"
-                  top="15px"
-                  right="9px"
-                />
-              )}
+            {canDisplayUnseenIndicator && hasNotifications && (
+              <NavBarNotificationIndicator
+                position="absolute"
+                top="15px"
+                right="9px"
+              />
+            )}
           </NavBarItemButton>
         )}
       </Dropdown>
