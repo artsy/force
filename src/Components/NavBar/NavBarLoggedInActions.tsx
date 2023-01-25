@@ -18,9 +18,8 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import {
-  shouldDisplayNotification,
-  hasNewNotifications,
-  useCustomHookName,
+  getRecentNotification,
+  useUnseenNotificationsIndicator,
 } from "Components/Notifications/util"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
@@ -29,11 +28,8 @@ export const NavBarLoggedInActions: React.FC<Partial<
 >> = ({ me, notificationsConnection }) => {
   const { trackEvent } = useTracking()
 
-  const notifications = extractNodes(notificationsConnection).filter(node =>
-    shouldDisplayNotification(node)
-  )
-  const recentNotifications = notifications[0]
-  const recentPublishedAt = recentNotifications?.publishedAt
+  const notificationNodes = extractNodes(notificationsConnection)
+  const recentNotification = getRecentNotification(notificationNodes)
 
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
@@ -43,7 +39,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
   const {
     canDisplayUnseenIndicator,
     setLastSeenNotificationDateTime,
-  } = useCustomHookName(recentPublishedAt)
+  } = useUnseenNotificationsIndicator(recentNotification?.publishedAt)
 
   return (
     <>
@@ -148,6 +144,9 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
             edges {
               node {
                 publishedAt
+                artworks: artworksConnection {
+                  totalCount
+                }
               }
             }
           }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a56efd9199a86c99ac9b22c87405971>>
+ * @generated SignedSource<<d4ce8eaa1ff5931367cd6ba01b0ad4e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,9 @@ export type NavBarLoggedInActionsQuery$data = {
   readonly notificationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly artworks: {
+          readonly totalCount: number | null;
+        } | null;
         readonly publishedAt: string;
       } | null;
     } | null> | null;
@@ -61,46 +64,64 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "alias": null,
+  "alias": "artworks",
   "args": null,
-  "kind": "ScalarField",
-  "name": "unreadNotificationsCount",
+  "concreteType": "ArtworkConnection",
+  "kind": "LinkedField",
+  "name": "artworksConnection",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "totalCount",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "unreadConversationCount",
+  "name": "unreadNotificationsCount",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "unreadConversationCount",
+  "storageKey": null
+},
+v5 = {
   "kind": "Literal",
   "name": "sort",
   "value": "PUBLISHED_AT_DESC"
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "summary",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "artists",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": "published_at",
   "args": [
     {
@@ -113,7 +134,7 @@ v8 = {
   "name": "publishedAt",
   "storageKey": "publishedAt(format:\"MMM DD\")"
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -153,21 +174,21 @@ v9 = {
   ],
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -192,20 +213,20 @@ v12 = {
   ],
   "storageKey": null
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v14 = [
+v15 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   },
-  (v4/*: any*/)
+  (v5/*: any*/)
 ];
 return {
   "fragment": {
@@ -238,7 +259,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/)
+                  (v1/*: any*/),
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -256,8 +278,8 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -269,7 +291,7 @@ return {
               {
                 "alias": "notifications",
                 "args": [
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "concreteType": "FollowedArtistsArtworksGroupConnection",
                 "kind": "LinkedField",
@@ -292,20 +314,20 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
                           (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v10/*: any*/)
+                          (v10/*: any*/),
+                          (v11/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v13/*: any*/)
                 ],
                 "storageKey": "__WorksForYou_notifications_connection(sort:\"PUBLISHED_AT_DESC\")"
               }
@@ -350,7 +372,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v1/*: any*/),
-                  (v13/*: any*/)
+                  (v2/*: any*/),
+                  (v14/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -368,8 +391,8 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -380,7 +403,7 @@ return {
             "selections": [
               {
                 "alias": "notifications",
-                "args": (v14/*: any*/),
+                "args": (v15/*: any*/),
                 "concreteType": "FollowedArtistsArtworksGroupConnection",
                 "kind": "LinkedField",
                 "name": "bundledArtworksByArtistConnection",
@@ -402,27 +425,27 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
                           (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v13/*: any*/),
-                          (v10/*: any*/)
+                          (v10/*: any*/),
+                          (v14/*: any*/),
+                          (v11/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v13/*: any*/)
                 ],
                 "storageKey": "bundledArtworksByArtistConnection(first:10,sort:\"PUBLISHED_AT_DESC\")"
               },
               {
                 "alias": "notifications",
-                "args": (v14/*: any*/),
+                "args": (v15/*: any*/),
                 "filters": [
                   "sort"
                 ],
@@ -434,14 +457,14 @@ return {
             ],
             "storageKey": null
           },
-          (v13/*: any*/)
+          (v14/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "a9c0bef93a7833090631225c0f7ce15f",
+    "cacheID": "7bba4ac6b7d0da61037461462f1d9017",
     "id": null,
     "metadata": {
       "connection": [
@@ -459,11 +482,11 @@ return {
     },
     "name": "NavBarLoggedInActionsQuery",
     "operationKind": "query",
-    "text": "query NavBarLoggedInActionsQuery {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        id\n      }\n    }\n  }\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query NavBarLoggedInActionsQuery {\n  notificationsConnection(first: 3) {\n    edges {\n      node {\n        publishedAt\n        artworks: artworksConnection {\n          totalCount\n        }\n        id\n      }\n    }\n  }\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b92f4f22d6e99b25e1d6c828fba7fe41";
+(node as any).hash = "e00166234bdd780c49384470c07d2815";
 
 export default node;

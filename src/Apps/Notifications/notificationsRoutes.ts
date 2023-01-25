@@ -22,6 +22,9 @@ export const notificationsRoutes: AppRouteConfig[] = [
         me {
           ...NotificationsApp_me
         }
+        viewer {
+          ...NotificationsApp_viewer
+        }
       }
     `,
   },

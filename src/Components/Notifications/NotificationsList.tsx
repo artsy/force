@@ -17,10 +17,7 @@ import { SystemContext } from "System"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
-import {
-  shouldDisplayNotification,
-  LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
-} from "./util"
+import { getRecentNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
 
 interface NotificationsListQueryRendererProps {
@@ -46,10 +43,9 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     paginationType
   )
 
-  const nodes = extractNodes(viewer.notifications).filter(node =>
-    shouldDisplayNotification(node)
-  )
-  const recentNotificationPublishedAt = nodes[0]?.publishedAtAbsolute
+  const nodes = extractNodes(viewer.notifications)
+  const recentNotification = getRecentNotification(nodes)
+  const recentNotificationPublishedAt = recentNotification?.publishedAtAbsolute
 
   useEffect(() => {
     if (type === "all" && recentNotificationPublishedAt) {

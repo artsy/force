@@ -20,9 +20,10 @@ const isArtworksBasedNotification = (
   return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
 }
 
-export const hasNewNotifications = (lastNotificationDatetime: string) => {
-  if (!lastNotificationDatetime) {
-    console.log("[debug] step 1")
+export const hasNewNotifications = (
+  lastNotificationDateTime: string | undefined
+) => {
+  if (!lastNotificationDateTime) {
     return false
   }
 
@@ -31,18 +32,28 @@ export const hasNewNotifications = (lastNotificationDatetime: string) => {
   )
 
   if (!prevLastNotificationDatetime) {
-    console.log("[debug] step 2")
     return true
   }
 
   const prevDate = DateTime.fromISO(prevLastNotificationDatetime)
-  const newDate = DateTime.fromISO(lastNotificationDatetime)
-  console.log("[debug] step 3", newDate > prevDate)
+  const newDate = DateTime.fromISO(lastNotificationDateTime)
 
   return newDate > prevDate
 }
 
-export const useCustomHookName = (datetime: string) => {
+export const getRecentNotification = <T extends object>(
+  notificationsNodes: T[]
+): T | undefined => {
+  const nodes = notificationsNodes.filter(node =>
+    shouldDisplayNotification(node)
+  )
+
+  return nodes[0]
+}
+
+export const useUnseenNotificationsIndicator = (
+  datetime: string | undefined
+) => {
   const [canDisplayUnseenIndicator, setCanDisplayUnseenIndicator] = useState(
     false
   )
@@ -53,8 +64,6 @@ export const useCustomHookName = (datetime: string) => {
 
   const setLastSeenNotificationDateTime = useCallback(
     (lastDateTime: string) => {
-      console.log("[debug] setLastSeenNotificationDateTime")
-
       window.localStorage.setItem(
         LAST_SEEN_NOTIFICATION_PUBLISHED_AT_KEY,
         lastDateTime

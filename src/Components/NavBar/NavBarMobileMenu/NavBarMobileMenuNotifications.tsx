@@ -16,8 +16,8 @@ import { NavBarMobileMenuNotifications_viewer$data } from "__generated__/NavBarM
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import {
-  shouldDisplayNotification,
-  hasNewNotifications,
+  getRecentNotification,
+  useUnseenNotificationsIndicator,
 } from "Components/Notifications/util"
 
 interface NavBarMobileMenuNotificationsProps {
@@ -35,9 +35,13 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
-  const notification = extractNodes(
-    viewer?.notificationsConnection
-  ).filter(node => shouldDisplayNotification(node))[0]
+
+  const notificationNodes = extractNodes(viewer?.notificationsConnection)
+  const recentNotification = getRecentNotification(notificationNodes)
+
+  const { canDisplayUnseenIndicator } = useUnseenNotificationsIndicator(
+    recentNotification?.publishedAt
+  )
 
   return (
     <>
@@ -62,10 +66,7 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
             }}
           >
             Activity
-            {hasNotifications &&
-              hasNewNotifications(notification?.publishedAt ?? "") && (
-                <Indicator />
-              )}
+            {canDisplayUnseenIndicator && hasNotifications && <Indicator />}
           </NavBarMobileMenuItemLink>
           <NavBarMobileMenuItemLink
             to="/user/conversations"
