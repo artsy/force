@@ -1,15 +1,10 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
 import { compact } from "lodash"
 import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
-import {
-  getLocalImage,
-  isImageVersionAvailable,
-  LocalImage,
-} from "Utils/localImagesHelpers"
+import { useLocalImage } from "Utils/localImagesHelpers"
 import { userIsTeam } from "Utils/user"
 import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
@@ -20,6 +15,8 @@ interface ArtworkLightboxProps extends ClickableProps {
   maxHeight: number
   lazyLoad?: boolean
 }
+
+const MAX_WIDTH = 800
 
 const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   artwork,
@@ -39,32 +36,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   ]
   const image = hasGeometry ? resized : fallback
 
-  const [localImage, setLocalImage] = useState<LocalImage | null>(null)
+  const localImage = useLocalImage(images[activeIndex])
 
-  const fetchLocalImage = useCallback(() => getLocalImage(internalID!), [
-    internalID,
-  ])
-
-  const changeLocalImage = async () => {
-    if (isImageVersionAvailable(images[activeIndex], "large") || !internalID) {
-      setLocalImage(null)
-
-      return
-    }
-
-    try {
-      const image = await fetchLocalImage()
-
-      setLocalImage(image)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    changeLocalImage()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [internalID])
+  console.log({ localImage })
 
   if (!images?.[activeIndex] || !image) {
     return null
@@ -98,7 +72,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           mx={[0, 2]}
           // @ts-ignore
           maxWidth={
-            800 * (localImage?.aspectRatio ?? 1) || image.width || "100%"
+            localImage
+              ? Math.min(localImage?.aspectRatio || 1, 1) * MAX_WIDTH
+              : image.width || "100%"
           }
           aspectWidth={localImage?.width || image.width || 1}
           aspectHeight={localImage?.height || image.height || 1}
@@ -109,34 +85,19 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             preload={!!isDefault}
             lazyLoad={!!lazyLoad}
           />
-          {localImage ? (
-            <Image
-              data-testid="artwork-lightbox-image"
-              id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
-              key={`${internalID}`}
-              width="100%"
-              height={maxHeight}
-              src={localImage.data}
-              alt={artwork.formattedMetadata ?? ""}
-              lazyLoad={lazyLoad}
-              preventRightClick={!isTeam}
-              style={{ position: "relative", border: "1px solid red" }}
-            />
-          ) : (
-            <Image
-              data-testid="artwork-lightbox-image"
-              id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
-              key={image.src}
-              width="100%"
-              height="100%"
-              src={image.src}
-              srcSet={image.srcSet}
-              alt={artwork.formattedMetadata ?? ""}
-              lazyLoad={lazyLoad}
-              preventRightClick={!isTeam}
-              style={{ position: "relative" }}
-            />
-          )}
+          <Image
+            data-testid="artwork-lightbox-image"
+            id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
+            key={`${internalID}`}
+            width="100%"
+            height={localImage ? maxHeight : "100%"}
+            src={localImage?.data || image.src}
+            srcSet={localImage ? undefined : image.srcSet}
+            alt={artwork.formattedMetadata ?? ""}
+            lazyLoad={lazyLoad}
+            preventRightClick={!isTeam}
+            style={{ position: "relative" }}
+          />
         </ResponsiveBox>
       </Clickable>
     </>
