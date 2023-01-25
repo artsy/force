@@ -1,6 +1,6 @@
 import { LOCAL_PROFILE_IMAGE_KEY } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/utils/constants"
 import localforage from "localforage"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 // Expiritation time is 5 minutes
 // TODO: Decrease number
@@ -154,30 +154,27 @@ const prepareImage = (image: LocalImage, expires: string) => {
 }
 
 export const isImageVersionAvailable = (
-  image: { readonly versions: any } | null,
+  image: { versions: any } | null,
   version: string
 ) => !!image?.versions?.includes(version)
 
-export const useLocalImage = (image: any) => {
+export const useLocalImage = (
+  image: { internalID: string | null; versions: any } | null
+) => {
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
-
-  const fetchLocalImage = useCallback(() => getLocalImage(image.internalID!), [
-    image.internalID,
-  ])
 
   const isImageAvailable = isImageVersionAvailable(image, "large")
 
   const changeLocalImage = async () => {
-    if (isImageAvailable || !image.internalID) {
+    if (isImageAvailable || !image?.internalID) {
       setLocalImage(null)
 
       return
     }
 
     try {
-      const image = await fetchLocalImage()
-
-      setLocalImage(image)
+      // TODO: Check if we can memoize this
+      setLocalImage(await getLocalImage(image?.internalID!))
     } catch (error) {
       console.log(error)
     }
@@ -186,7 +183,7 @@ export const useLocalImage = (image: any) => {
   useEffect(() => {
     changeLocalImage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [image.internalID])
+  }, [image?.internalID])
 
   return localImage
 }

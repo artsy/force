@@ -38,8 +38,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   const localImage = useLocalImage(images[activeIndex])
 
-  console.log({ localImage })
-
   if (!images?.[activeIndex] || !image) {
     return null
   }

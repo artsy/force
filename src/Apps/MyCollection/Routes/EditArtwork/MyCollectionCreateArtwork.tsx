@@ -115,6 +115,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
 
       trackSaveCollectedArtwork()
 
+      console.log({ localImages })
       // Store images locally
       localImages.map(async (image, index) => {
         storeLocalImage(artwork?.images?.[index]?.internalID!, image)

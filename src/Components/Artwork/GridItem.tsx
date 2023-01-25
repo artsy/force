@@ -1,16 +1,11 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
 import { MagnifyImage } from "Components/MagnifyImage"
-import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import {
-  getLocalImage,
-  isImageVersionAvailable,
-  LocalImage,
-} from "Utils/localImagesHelpers"
+import { LocalImage, useLocalImage } from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
@@ -46,31 +41,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   to,
   ...rest
 }) => {
-  const [localImage, setLocalImage] = useState<LocalImage | null>(null)
-
-  const fetchLocalImage = async () => {
-    if (isImageVersionAvailable(artwork?.image, "large")) {
-      setLocalImage(null)
-
-      return
-    }
-    const imageID = artwork?.image?.internalID
-
-    if (!imageID) return
-
-    try {
-      const image = await getLocalImage(imageID)
-
-      setLocalImage(image)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchLocalImage()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const localImage = useLocalImage(artwork.image)
 
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
