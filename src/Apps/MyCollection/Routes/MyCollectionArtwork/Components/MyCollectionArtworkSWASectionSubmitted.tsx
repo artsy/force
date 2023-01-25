@@ -51,21 +51,26 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     return null
   }
 
-  if (Boolean(displayText) && isMyCollectionPhase8Enabled) {
+  if (isMyCollectionPhase8Enabled) {
     return (
       <>
         <SubmissionStatusModal
           show={isSubmissionStatusModalOpen}
           onClose={() => setIsSubmissionStatusModalOpen(false)}
         />
+
         <Flex
-          alignItems="stretch"
           flexDirection={["column", "row"]}
-          mb={2}
-          mt={2}
+          alignItems={["normal", "stretch"]}
+          my={2}
         >
-          <Flex alignItems={["center", "flex-start"]} flex={1}>
-            <Text variant={["xs", "sm"]} flex={1}>
+          <Flex alignItems={["center", "flex-start"]} flex={[1, 0]}>
+            <Text
+              variant={["xs", "sm"]}
+              minWidth={[100, 100, 190]}
+              mr={2}
+              flex={1}
+            >
               Submission Status
             </Text>
             <Media lessThan="sm">
@@ -79,14 +84,17 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
               </Clickable>
             </Media>
           </Flex>
-          <Text
-            variant="sm"
-            flex={1}
-            color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
-          >
-            {toTitleCase(approvedDisplayText)}
-          </Text>
+
+          <Flex flex={1} flexDirection="column">
+            <Text
+              variant="sm"
+              color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
+            >
+              {toTitleCase(approvedDisplayText)}
+            </Text>
+          </Flex>
         </Flex>
+
         <Media greaterThanOrEqual="sm">
           <Text mb={2} color="black60" variant="xs">
             Our specialists have reviewed this submission and determined taht we
@@ -140,6 +148,8 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
   onClose,
 }) => {
   if (!show) return null
+  const article =
+    "https://support.artsy.net/hc/en-us/articles/360046646494-What-items-do-you-accept-"
 
   return (
     <ModalDialog
@@ -151,20 +161,26 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
         </Button>
       }
     >
-      <Text variant="sm-display">What does my Artwork’s status mean?</Text>
+      <Text variant="xs" mb={2}>
+        {`What does my Artwork’s status mean?`.toUpperCase()}
+      </Text>
       <Text as="li" variant="sm-display">
-        Submission in Progress - the artwork is being reviewed or is in the
-        sales process.
+        Submission in Progress - the artwork is being reviewed or is in the sale
+        process.
       </Text>
       <Text as="li" variant="sm-display" mt={2}>
         Evaluation Complete - our specialists have reviewed this submission and
         determined that we do not currently have a market for it.
       </Text>
-      <Text variant="sm-display" mt={2}>
-        Have a question?
+      <Text variant="xs" my={2}>
+        {`Find out more`.toUpperCase()}
+      </Text>
+      <Text variant="sm-display" mb={2}>
+        For more information, see our Collector Help Center article{" "}
+        <RouterLink to={article}>What items do you accept?</RouterLink>
       </Text>
       <Text variant="sm-display">
-        Visit our help center or get in touch with one of our specialists at{" "}
+        Or get in touch with one of our specialists at{" "}
         <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>.
       </Text>
     </ModalDialog>
