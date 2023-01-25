@@ -16,9 +16,20 @@ import { Media } from "Utils/Responsive"
 // TODO:- We are using displayText for Statuses for now. Consider changing the logic when proper statuses are made available on Metaphysics.
 // See https://artsyproduct.atlassian.net/browse/SWA-217
 // same as on Eigen
-const STATUSES: { [key: string]: { color: string; text: string } } = {
-  "submission in progress": { color: "yellow150", text: "In Progress" },
-  "submission evaluated": { color: "orange150", text: "Evaluation Complete" },
+const STATUSES: {
+  [key: string]: { color: string; text: string; description?: string }
+} = {
+  "submission in progress": {
+    color: "yellow150",
+    text: "In Progress",
+    description: "The artwork is being reviewd or is in the sale process",
+  },
+  "submission evaluated": {
+    color: "orange150",
+    text: "Evaluation Complete",
+    description:
+      "Our specialists have reviewed this submission and determined that we do not currently have a market for it.  ",
+  },
   sold: { color: "black100", text: "Artwork Sold" },
 }
 
@@ -46,6 +57,8 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
 
   const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
+  const statusDescription =
+    STATUSES[displayText!.toLowerCase()]?.description || ""
 
   if (!Boolean(approvedDisplayText)) {
     return null
@@ -97,8 +110,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
 
         <Media greaterThanOrEqual="sm">
           <Text mb={2} color="black60" variant="xs">
-            Our specialists have reviewed this submission and determined taht we
-            do not currently have a market for it.
+            {statusDescription}
           </Text>
 
           <Text mb={2} color="black60" variant="xs">
