@@ -1,5 +1,6 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
 import { compact } from "lodash"
+import { scale } from "proportional-scale"
 import * as React from "react"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,7 +17,7 @@ interface ArtworkLightboxProps extends ClickableProps {
   lazyLoad?: boolean
 }
 
-const MAX_WIDTH = 800
+const MAX_SIZE = 800
 
 const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   artwork,
@@ -33,12 +34,21 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   const localImage = useLocalImage(images[activeIndex])
 
+  const resizedLocalImage = localImage && {
+    src: localImage.data,
+    srcSet: undefined,
+    ...scale({ ...localImage, maxWidth: MAX_SIZE, maxHeight: MAX_SIZE }),
+  }
+
   if (!images?.[activeIndex]) return null
 
   const { fallback, internalID, isDefault, placeholder, resized } = images[
     activeIndex
   ]
-  const image = hasGeometry ? resized : fallback
+
+  const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
+
+  console.log({ resizedLocalImage, image })
 
   if (!image) return null
 
@@ -69,13 +79,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           bg="black10"
           mx={[0, 2]}
           // @ts-ignore
-          maxWidth={
-            localImage
-              ? Math.min(localImage?.aspectRatio || 1, 1) * MAX_WIDTH
-              : image.width || "100%"
-          }
-          aspectWidth={localImage?.width || image.width || 1}
-          aspectHeight={localImage?.height || image.height || 1}
+          maxWidth={image.width || "100%"}
+          aspectWidth={image.width || 1}
+          aspectHeight={image.height || 1}
         >
           <ArtworkLightboxPlaceholder
             key={placeholder!}
@@ -88,9 +94,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={`${internalID}`}
             width="100%"
-            height={localImage ? maxHeight : "100%"}
-            src={localImage?.data || image.src}
-            srcSet={localImage ? undefined : image.srcSet}
+            height={"100%"}
+            src={image.src}
+            srcSet={image.srcSet}
             alt={artwork.formattedMetadata ?? ""}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}

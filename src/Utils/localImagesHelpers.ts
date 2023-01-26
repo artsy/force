@@ -103,9 +103,9 @@ export const useLocalImageStorage = (
     )
 
   const changeLocalImage = async () => {
-    if (isImageAvailable || !key) {
-      setLocalImage(null)
+    setLocalImage(null)
 
+    if (isImageAvailable || !key) {
       return
     }
 
