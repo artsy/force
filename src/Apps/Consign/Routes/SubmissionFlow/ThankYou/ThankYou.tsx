@@ -93,6 +93,7 @@ export const ThankYou: React.FC = () => {
           </Column>
           <Column span={[12, 6, 6, 6]}>
             <Button
+              mt={[1, 0]}
               width="100%"
               data-test-id="swa-thank-you-view-in-my-collection-button"
               size="large"
