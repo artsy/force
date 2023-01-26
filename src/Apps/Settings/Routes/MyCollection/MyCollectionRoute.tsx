@@ -13,7 +13,7 @@ import {
 } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { cleanLocalImages } from "Utils/localImagesHelpers"
+import { cleanLocalImages } from "Utils/localImageHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 

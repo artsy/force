@@ -10,7 +10,7 @@ import {
   PROFILE_IMAGE_KEY,
   storeLocalImage,
   useLocalImageStorage,
-} from "Utils/localImagesHelpers"
+} from "Utils/localImageHelpers"
 import { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
 
 interface SettingsEditProfileImageProps {

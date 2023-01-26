@@ -7,7 +7,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import {
   PROFILE_IMAGE_KEY,
   useLocalImageStorage,
-} from "Utils/localImagesHelpers"
+} from "Utils/localImageHelpers"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
 
