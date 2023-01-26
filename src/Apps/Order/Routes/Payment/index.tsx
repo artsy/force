@@ -406,14 +406,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                 transactionStep="payment"
                 order={order}
               />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersPayment}
+                contextPageOwnerType={OwnerType.ordersPayment}
+                orderSource={order.source}
+                renderArtsyPrivateSaleConditions={true}
+                privateSaleConditions={order.conditionsOfSale}
+              />
             </Flex>
-            <BuyerGuarantee
-              contextModule={ContextModule.ordersPayment}
-              contextPageOwnerType={OwnerType.ordersPayment}
-              orderSource={order.source}
-              renderArtsyPrivateSaleConditions={true}
-              privateSaleConditions={order.conditionsOfSale}
-            />
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
               <>

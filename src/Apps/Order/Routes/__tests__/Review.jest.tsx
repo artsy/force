@@ -646,9 +646,12 @@ describe("Review", () => {
       expect(button.text()).toContain("Complete Purchase")
     })
 
-    it("renders Artsy Private Sales conditions", () => {
+    it("renders Artsy Private Sales conditions complete message", () => {
       expect(page.text()).toContain(
         "Artsy Private Sales LLC Conditions of Sale"
+      )
+      expect(page.text()).toContain(
+        "and any Additional Terms specified on this page and in the order confirmation email."
       )
     })
   })

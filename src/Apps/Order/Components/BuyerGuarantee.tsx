@@ -40,12 +40,12 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
     }
   }
 
-  if (orderSource === "private_sale") {
+  if (
+    orderSource === "private_sale" &&
+    (renderArtsyPrivateSaleConditions || privateSaleConditions?.length)
+  ) {
     return (
-      <StackableBorderBox
-        flexDirection="column"
-        style={{ position: "relative", borderTop: "none" }}
-      >
+      <StackableBorderBox flexDirection="column">
         {renderArtsyPrivateSaleConditions && (
           <Text variant="sm" color="black60">
             This purchase is subject to{" "}
@@ -77,25 +77,29 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
     )
   }
 
-  return (
-    <Flex p={2} my={1} backgroundColor="black10">
-      <CircleBlackCheckIcon mr={1} />
-      <Flex flexDirection="column">
-        <Text fontWeight="bold" variant="sm-display">
-          Your purchase is protected.
-        </Text>
-        <Text variant="xs" color="black60">
-          Learn more about{" "}
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            href={BUYER_GUARANTEE_URL}
-            onClick={handleClick}
-          >
-            Artsy’s buyer protection.
-          </Link>
-        </Text>
+  if (orderSource !== "private_sale") {
+    return (
+      <Flex p={2} my={1} backgroundColor="black10">
+        <CircleBlackCheckIcon mr={1} />
+        <Flex flexDirection="column">
+          <Text fontWeight="bold" variant="sm-display">
+            Your purchase is protected.
+          </Text>
+          <Text variant="xs" color="black60">
+            Learn more about{" "}
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={BUYER_GUARANTEE_URL}
+              onClick={handleClick}
+            >
+              Artsy’s buyer protection.
+            </Link>
+          </Text>
+        </Flex>
       </Flex>
-    </Flex>
-  )
+    )
+  }
+
+  return null
 }
