@@ -35,6 +35,7 @@ import { orderRoutes } from "Apps/Order/orderRoutes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
 import { partnerRoutes } from "Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "Apps/Partners/partnersRoutes"
+import { privateSaleConditionsRoutes } from "Apps/PrivateSaleConditions/privateSaleConditionsRoutes"
 import { searchRoutes } from "Apps/Search/searchRoutes"
 import { settingsRoutes } from "Apps/Settings/settingsRoutes"
 import { showRoutes } from "Apps/Show/showRoutes"
@@ -104,6 +105,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: preferencesRoutes },
     { routes: pressRoutes },
     { routes: priceDatabaseRoutes },
+    { routes: privateSaleConditionsRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },
     { routes: showRoutes },
