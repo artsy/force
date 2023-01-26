@@ -13,7 +13,7 @@ import {
 } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { cleanImagesLocalStore } from "Utils/localImagesHelpers"
+import { cleanLocalImages } from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
@@ -31,7 +31,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   useEffect(() => {
-    cleanImagesLocalStore()
+    cleanLocalImages()
   }, [])
 
   const { myCollectionConnection } = me

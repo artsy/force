@@ -16,11 +16,6 @@ export interface LocalImage {
   aspectRatio?: number
 }
 
-export type StoredArtworkWithImages = {
-  artworkID: string
-  images: LocalImage[]
-}
-
 export const storeLocalImage = async (key: string, image: LocalImage) => {
   const expires = new Date().getTime() + EXPIRATION_TIME
 
@@ -42,7 +37,7 @@ export const getLocalImage = async (
 }
 
 // Clean store after gemini processing time is over
-export const cleanImagesLocalStore = async () => {
+export const cleanLocalImages = async () => {
   const keys = await localforage.keys()
 
   const imageKeys: string[] = keys.filter(key => {
@@ -58,65 +53,6 @@ export const cleanImagesLocalStore = async () => {
 
     localforage.removeItem(key)
   })
-}
-
-// Retrieve all artworks local images that have not expired from local storage
-export const getAllLocalImagesByArtwork = (): Promise<
-  StoredArtworkWithImages[]
-> => {
-  return localforage
-    .getItem(IMAGE_KEY_PREFIX)
-    .then((imagesByArtworkJSONString: string) => {
-      if (imagesByArtworkJSONString) {
-        const imagesByArtwork = JSON.parse(imagesByArtworkJSONString) as
-          | StoredArtworkWithImages[]
-          | null
-        if (Array.isArray(imagesByArtwork)) {
-          return imagesByArtwork.filter(artworkImagesObj => {
-            const images = artworkImagesObj.images.filter(image => {
-              // @ts-ignore
-              const expires = new Date(image.expires)
-              // Only return images that have not expired
-              return expires > new Date()
-            })
-            // Return only artworks that have at least one image that has not expired
-            return images.length > 0
-          })
-        }
-      }
-      return []
-    })
-    .catch(error => {
-      console.error("failed to get all local images", error)
-      return []
-    })
-}
-
-// Return height and width of local image file
-export const getHeightAndWidthFromDataUrl = file => {
-  const imageDataURL = URL.createObjectURL(file)
-  return new Promise(resolve => {
-    const img = new Image()
-    img.onload = () => {
-      resolve({
-        height: img.height,
-        width: img.width,
-      })
-    }
-    img.src = imageDataURL
-  })
-}
-
-// Retrieve artwork local images from local storage
-export const getArtworkLocalImages = async (
-  artworkID: string
-): Promise<LocalImage[]> => {
-  const localArtworksImages = await getAllLocalImagesByArtwork()
-  const artworkImages = localArtworksImages?.find(
-    artworkImagesObj => artworkImagesObj.artworkID === artworkID
-  )
-
-  return artworkImages?.images || []
 }
 
 export const getProfileLocalImage = async (): Promise<
