@@ -1,12 +1,12 @@
 import loadable from "@loadable/component"
 import { RedirectException } from "found"
 import { AppRouteConfig } from "System/Router/Route"
-import { checkForRedirect } from "./Server/checkForRedirect"
-import { setReferer } from "./Server/setReferer"
+import { checkForRedirect } from "Apps/Authentication/Server/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Server/setReferer"
 import { flow } from "lodash"
-import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
-import { setCookies } from "./Utils/helpers"
-import { redirectPostAuth } from "./Server/redirectPostAuth"
+import { redirectIfLoggedIn } from "Apps/Authentication/Server/redirectIfLoggedIn"
+import { setCookies } from "Apps/Authentication/Utils/helpers"
+import { redirectPostAuth } from "Apps/Authentication/Server/redirectPostAuth"
 import { stringify } from "qs"
 
 const ForgotPasswordRoute = loadable(

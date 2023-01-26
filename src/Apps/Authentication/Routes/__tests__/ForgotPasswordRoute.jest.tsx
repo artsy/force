@@ -1,6 +1,6 @@
 import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
 import { render, screen } from "@testing-library/react"
-import { ForgotPasswordRoute } from "../ForgotPasswordRoute"
+import { ForgotPasswordRoute } from "Apps/Authentication/Routes/ForgotPasswordRoute"
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 

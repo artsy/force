@@ -1,4 +1,4 @@
-import { redirectPostAuth } from "../redirectPostAuth"
+import { redirectPostAuth } from "Apps/Authentication/Server/redirectPostAuth"
 import { getENV } from "Utils/getENV"
 
 jest.mock("Utils/getENV", () => ({

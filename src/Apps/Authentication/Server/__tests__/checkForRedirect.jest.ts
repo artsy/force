@@ -1,5 +1,5 @@
-import { checkForRedirect } from "../checkForRedirect"
-import { isStaticAuthRoute } from "../isStaticAuthRoute"
+import { checkForRedirect } from "Apps/Authentication/Server/checkForRedirect"
+import { isStaticAuthRoute } from "Apps/Authentication/Server/isStaticAuthRoute"
 
 jest.mock("../isStaticAuthRoute", () => ({
   isStaticAuthRoute: jest.fn(),

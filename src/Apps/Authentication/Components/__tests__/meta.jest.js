@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { AuthenticationMeta } from "../meta.tsx"
+import { AuthenticationMeta } from "Apps/Authentication/Components/meta"
 
 describe("AuthenticationMeta", () => {
   it("Renders expected data", () => {

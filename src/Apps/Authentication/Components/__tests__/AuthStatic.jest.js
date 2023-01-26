@@ -2,7 +2,7 @@ import { merge } from "lodash"
 import { mount } from "enzyme"
 import { ModalHeader } from "Components/Modal/ModalHeader"
 import { FormSwitcher } from "Components/Authentication/FormSwitcher"
-import { AuthStatic } from "../AuthStatic"
+import { AuthStatic } from "Apps/Authentication/Components/AuthStatic"
 
 describe("AuthStatic", () => {
   const getWrapper = props => {

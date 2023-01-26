@@ -2,7 +2,7 @@ import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
 import { render, screen } from "@testing-library/react"
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
-import { SignupRoute } from "../SignupRoute"
+import { SignupRoute } from "Apps/Authentication/Routes/SignupRoute"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),

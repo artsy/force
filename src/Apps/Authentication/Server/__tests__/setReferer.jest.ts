@@ -1,4 +1,4 @@
-import { setReferer } from "../setReferer"
+import { setReferer } from "Apps/Authentication/Server/setReferer"
 
 describe("setReferer", () => {
   it("sets AUTHENTICATION_REFERER based on header", () => {

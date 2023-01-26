@@ -4,7 +4,7 @@ import { MockBoot } from "DevTools"
 import { mockLocation, resetMockLocation } from "DevTools/mockLocation"
 import { useRouter } from "System/Router/useRouter"
 import { resetPassword } from "Utils/auth"
-import { ResetPasswordRoute } from "../ResetPasswordRoute"
+import { ResetPasswordRoute } from "Apps/Authentication/Routes/ResetPasswordRoute"
 import { getENV } from "Utils/getENV"
 
 jest.mock("System/Router/useRouter")

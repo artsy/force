@@ -1,4 +1,4 @@
-import { isStaticAuthRoute } from "../isStaticAuthRoute"
+import { isStaticAuthRoute } from "Apps/Authentication/Server/isStaticAuthRoute"
 
 describe("isStaticAuthRoute", () => {
   it("returns true if conditions met", () => {
