@@ -1,4 +1,4 @@
-import { computeTitle } from "Apps/Authentication/Utils/computeTitle"
+import { computeTitle } from "Apps/Authentication/Legacy/Utils/computeTitle"
 
 describe("compute title", () => {
   it("returns copy if found", () => {

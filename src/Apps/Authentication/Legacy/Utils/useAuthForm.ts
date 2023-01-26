@@ -1,4 +1,4 @@
-import { AuthenticationMetaProps } from "Apps/Authentication/Components/AuthenticationMeta"
+import { AuthenticationMetaProps } from "Apps/Authentication/Legacy/Components/AuthenticationMeta"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"

@@ -1,18 +1,18 @@
-import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
+import { useAuthForm } from "Apps/Authentication/Legacy/Utils/useAuthForm"
 import { render, screen } from "@testing-library/react"
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
-import { SignupRoute } from "Apps/Authentication/Routes/SignupRoute"
+import { LoginRoute } from "Apps/Authentication/Legacy/Routes/LoginRoute"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Utils/useAuthForm", () => ({
+jest.mock("Apps/Authentication/Legacy/Utils/useAuthForm", () => ({
   useAuthForm: jest.fn(),
 }))
 
-describe("SignupRoute", () => {
+describe("LoginRoute", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockUseAuthForm = useAuthForm as jest.Mock
 
@@ -29,14 +29,14 @@ describe("SignupRoute", () => {
 
     mockUseAuthForm.mockImplementation(() => ({
       meta: {
-        title: "Signup to Artsy",
-        type: ModalType.signup,
+        title: "Login to Artsy",
+        type: ModalType.login,
       },
       options: queryParams,
-      type: ModalType.signup,
+      type: ModalType.login,
     }))
 
-    render(<SignupRoute />)
-    expect(screen.getAllByText("Signup to Artsy").length).toBe(2)
+    render(<LoginRoute />)
+    expect(screen.getAllByText("Login to Artsy").length).toBe(2)
   })
 })

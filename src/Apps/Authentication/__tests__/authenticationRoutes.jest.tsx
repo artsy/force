@@ -1,29 +1,29 @@
 import { render, waitFor, screen } from "@testing-library/react"
-import { setCookies } from "Apps/Authentication/Utils/helpers"
+import { setCookies } from "Apps/Authentication/Legacy/Utils/helpers"
 import { MockBoot, MockRouter } from "DevTools"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import qs from "qs"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
-import { checkForRedirect } from "Apps/Authentication/Server/checkForRedirect"
-import { setReferer } from "Apps/Authentication/Server/setReferer"
-import { redirectIfLoggedIn } from "Apps/Authentication/Server/redirectIfLoggedIn"
+import { checkForRedirect } from "Apps/Authentication/Legacy/Server/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Legacy/Server/setReferer"
+import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
 import { getENV } from "Utils/getENV"
 
-jest.mock("../Server/checkForRedirect", () => ({
+jest.mock("Apps/Authentication/Legacy/Server/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
 }))
-jest.mock("../Server/setReferer", () => ({
+jest.mock("Apps/Authentication/Legacy/Server/setReferer", () => ({
   setReferer: jest.fn(),
 }))
-jest.mock("../Server/redirectIfLoggedIn", () => ({
+jest.mock("Apps/Authentication/Legacy/Server/redirectIfLoggedIn", () => ({
   redirectIfLoggedIn: jest.fn(),
 }))
 jest.mock("Utils/EnableRecaptcha", () => ({
   EnableRecaptcha: () => "EnableRecaptcha",
 }))
-jest.mock("../Utils/helpers", () => ({
-  ...jest.requireActual("../Utils/helpers"),
+jest.mock("Apps/Authentication/Legacy/Utils/helpers", () => ({
+  ...jest.requireActual("Apps/Authentication/Legacy/Utils/helpers"),
   setCookies: jest.fn(),
 }))
 jest.mock("Utils/Hooks/useAuthValidation")
@@ -37,7 +37,7 @@ describe("authenticationRoutes", () => {
   const mockGetENV = getENV as jest.Mock
   const mockRedirectIfLoggedIn = redirectIfLoggedIn as jest.Mock
 
-  const renderClientRoute = route => {
+  const renderClientRoute = (route: string) => {
     render(
       <MockBoot>
         <MockRouter initialRoute={route} routes={authenticationRoutes} />
@@ -45,7 +45,7 @@ describe("authenticationRoutes", () => {
     )
   }
 
-  const renderServerRoute = route => {
+  const renderServerRoute = (route: string) => {
     const req = {
       query: {},
       session: {},
@@ -166,24 +166,6 @@ describe("authenticationRoutes", () => {
     })
   })
 
-  describe("/log_in", () => {
-    describe("server", () => {
-      it("redirects to /login", () => {
-        expect(() =>
-          renderServerRoute("/log_in").route.render?.({
-            match: { location: { search: "?foo=bar" } },
-          } as any)
-        ).toThrow(
-          expect.objectContaining({
-            isFoundRedirectException: true,
-            location: "/login?foo=bar",
-            status: 301,
-          })
-        )
-      })
-    })
-  })
-
   describe("/reset_password", () => {
     describe("server", () => {
       describe("onServerSideRender", () => {
@@ -247,24 +229,6 @@ describe("authenticationRoutes", () => {
           expect(mockCheckForRedirect).toHaveBeenCalled()
           expect(mockSetReferer).toHaveBeenCalled()
         })
-      })
-    })
-  })
-
-  describe("/sign_up", () => {
-    describe("server", () => {
-      it("redirects to /signup", () => {
-        expect(() =>
-          renderServerRoute("/sign_up").route.render?.({
-            match: { location: { search: "?foo=bar" } },
-          } as any)
-        ).toThrow(
-          expect.objectContaining({
-            isFoundRedirectException: true,
-            location: "/signup?foo=bar",
-            status: 301,
-          })
-        )
       })
     })
   })

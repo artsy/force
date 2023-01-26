@@ -1,6 +1,6 @@
-import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
+import { useAuthForm } from "Apps/Authentication/Legacy/Utils/useAuthForm"
 import { render, screen } from "@testing-library/react"
-import { ForgotPasswordRoute } from "Apps/Authentication/Routes/ForgotPasswordRoute"
+import { ForgotPasswordRoute } from "Apps/Authentication/Legacy/Routes/ForgotPasswordRoute"
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 
@@ -8,7 +8,7 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Utils/useAuthForm", () => ({
+jest.mock("Apps/Authentication/Legacy/Utils/useAuthForm", () => ({
   useAuthForm: jest.fn(),
 }))
 

@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { ModalManager } from "Components/Authentication/ModalManager"
-import { ModalContainer } from "Apps/Authentication/Components/ModalContainer"
+import { ModalContainer } from "Apps/Authentication/Legacy/Components/ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { mediator } from "Server/mediator"

@@ -1,7 +1,7 @@
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
-import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
+import { useAuthForm } from "Apps/Authentication/Legacy/Utils/useAuthForm"
 import { renderHook } from "@testing-library/react-hooks"
 
 jest.mock("System/Router/useRouter", () => ({

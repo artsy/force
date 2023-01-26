@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { AuthenticationMeta } from "Apps/Authentication/Components/meta"
+import { AuthenticationMeta } from "Apps/Authentication/Legacy/Components/meta"
 
 describe("AuthenticationMeta", () => {
   it("Renders expected data", () => {

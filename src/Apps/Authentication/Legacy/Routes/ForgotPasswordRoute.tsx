@@ -1,9 +1,9 @@
 import { ModalType } from "Components/Authentication/Types"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
-import { AuthenticationMeta } from "Apps/Authentication/Components/AuthenticationMeta"
-import { AuthStatic } from "Apps/Authentication/Components/AuthStatic"
-import { useAuthForm } from "Apps/Authentication/Utils/useAuthForm"
+import { AuthenticationMeta } from "Apps/Authentication/Legacy/Components/AuthenticationMeta"
+import { AuthStatic } from "Apps/Authentication/Legacy/Components/AuthStatic"
+import { useAuthForm } from "Apps/Authentication/Legacy/Utils/useAuthForm"
 
 export const ForgotPasswordRoute: React.FC = () => {
   const { match } = useRouter()

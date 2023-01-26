@@ -6,7 +6,7 @@ import {
   maybeUpdateRedirectTo,
   setCookies,
   updateURLWithOnboardingParam,
-} from "Apps/Authentication/Utils/helpers"
+} from "Apps/Authentication/Legacy/Utils/helpers"
 import {
   COMMERCIAL_AUTH_INTENTS,
   ModalType,

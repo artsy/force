@@ -2,7 +2,7 @@ import * as React from "react"
 import { FormSwitcher } from "Components/Authentication/FormSwitcher"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { ModalHeader } from "Components/Modal/ModalHeader"
-import { handleSubmit } from "Apps/Authentication/Utils/helpers"
+import { handleSubmit } from "Apps/Authentication/Legacy/Utils/helpers"
 import { Flex, BoxProps, Text, Spacer } from "@artsy/palette"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 

@@ -3,7 +3,10 @@ import { Component } from "react"
 import { data as sd } from "sharify" // eslint-disable-line no-restricted-imports
 
 import { ActionType, AuthModalType, AuthService } from "@artsy/cohesion"
-import { handleSubmit, setCookies } from "Apps/Authentication/Utils/helpers"
+import {
+  handleSubmit,
+  setCookies,
+} from "Apps/Authentication/Legacy/Utils/helpers"
 import { ModalManager } from "Components/Authentication/ModalManager"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { mediator } from "Server/mediator"
