@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
 import { AppRouteConfig } from "System/Router/Route"
 import { checkForRedirect } from "Apps/Authentication/Server/checkForRedirect"
 import { setReferer } from "Apps/Authentication/Server/setReferer"
@@ -78,12 +77,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
     },
   },
   {
-    path: "/log_in",
-    render: ({ match }) => {
-      throw new RedirectException(`/login${match.location.search}`, 301)
-    },
-  },
-  {
     path: "/reset_password",
     layout: "ContainerOnly",
     getComponent: () => ResetPasswordRoute,
@@ -136,12 +129,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
     onClientSideRender: ({ match }) => {
       setCookies(match.location.query)
       SignupRoute.preload()
-    },
-  },
-  {
-    path: "/sign_up",
-    render: ({ match }) => {
-      throw new RedirectException(`/signup${match.location.search}`, 301)
     },
   },
   {

@@ -150,6 +150,8 @@ const PERMANENT_REDIRECTS = {
   "/editorial": "/articles",
   "/auction-partnerships": "https://partners.artsy.net/auction-partnerships/",
   "/collector-profile": "/collector-profile/my-collection",
+  "/log_in": "/login",
+  "/sign_up": "/signup",
 }
 
 const router = express.Router()
