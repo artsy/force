@@ -177,12 +177,17 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
         {`What does my Artwork’s status mean?`.toUpperCase()}
       </Text>
       <Text as="li" variant="sm-display">
-        Submission in Progress - the artwork is being reviewed or is in the sale
-        process.
+        <Text display="inline-block" fontWeight="bold">
+          Submission in Progress
+        </Text>{" "}
+        - the artwork is being reviewed or is in the sale process.
       </Text>
       <Text as="li" variant="sm-display" mt={2}>
-        Evaluation Complete - our specialists have reviewed this submission and
-        determined that we do not currently have a market for it.
+        <Text display="inline-block" fontWeight="bold">
+          Evaluation Complete
+        </Text>{" "}
+        - our specialists have reviewed this submission and determined that we
+        do not currently have a market for it.
       </Text>
       <Text variant="xs" my={2}>
         {`Find out more`.toUpperCase()}
