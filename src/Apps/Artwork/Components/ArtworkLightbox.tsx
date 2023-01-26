@@ -48,8 +48,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
 
-  console.log({ resizedLocalImage, image })
-
   if (!image) return null
 
   return (

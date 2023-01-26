@@ -63,9 +63,13 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
-  const imagePlaceholder = localImage
-    ? `${Math.floor(100 * (localImage.height / localImage.width))}%`
-    : (artwork?.image?.url && artwork.image?.placeholder) || undefined
+  const localImagePlaceholder =
+    localImage && `${100 * (localImage.height / localImage.width)}%`
+
+  const imagePlaceholder =
+    localImagePlaceholder ||
+    (artwork?.image?.url && artwork.image?.placeholder) ||
+    undefined
 
   return (
     <div

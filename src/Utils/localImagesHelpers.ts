@@ -1,9 +1,9 @@
 import localforage from "localforage"
 import { useEffect, useState } from "react"
 
-// Expiritation time is 5 minutes
+// Expiration time is 5 minutes
 // TODO: Decrease number
-const EXPIRATION_TIME = 500 * 60 * 1000
+const EXPIRATION_TIME = 5 * 60 * 1000
 const IMAGE_KEY_PREFIX = "IMAGES"
 export const PROFILE_IMAGE_KEY = "PROFILE_IMAGE"
 const DEFAULT_IMAGE_VERSION = "large"
@@ -37,7 +37,7 @@ export const getLocalImage = async (
   return JSON.parse(imageJSONString as string)
 }
 
-// Clean store after gemini processing time is over
+// Clean all images that have been expired
 export const cleanLocalImages = async () => {
   const keys = await localforage.keys()
 
@@ -55,21 +55,6 @@ export const cleanLocalImages = async () => {
     localforage.removeItem(key)
   })
 }
-
-const prepareImage = (image: LocalImage, expires: string) => {
-  const imageToStore: LocalImage = {
-    expires,
-    data: image.data,
-    height: image.height,
-    width: image.width,
-    aspectRatio: image.width / (image.height || 1),
-  }
-
-  return JSON.stringify(imageToStore)
-}
-
-export const isImageVersionAvailable = (versions: any[], version: string) =>
-  !!versions?.includes(version)
 
 /**
  * Returns the local image if it is stored and the requested image version is not available
@@ -123,3 +108,18 @@ export const useLocalImageStorage = (
 
   return localImage
 }
+
+const prepareImage = (image: LocalImage, expires: string) => {
+  const imageToStore: LocalImage = {
+    expires,
+    data: image.data,
+    height: image.height,
+    width: image.width,
+    aspectRatio: image.width / (image.height || 1),
+  }
+
+  return JSON.stringify(imageToStore)
+}
+
+export const isImageVersionAvailable = (versions: any[], version: string) =>
+  !!versions?.includes(version)
