@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 const EXPIRATION_TIME = 500 * 60 * 1000
 const IMAGE_KEY_PREFIX = "IMAGES"
 export const PROFILE_IMAGE_KEY = "PROFILE_IMAGE"
+const DEFAULT_IMAGE_VERSION = "large"
 
 export interface LocalImage {
   data: string
@@ -70,31 +71,46 @@ const prepareImage = (image: LocalImage, expires: string) => {
 export const isImageVersionAvailable = (versions: any[], version: string) =>
   !!versions?.includes(version)
 
+/**
+ * Returns the local image if it is stored and the requested image version is not available
+ */
 export const useLocalImage = (
-  image: { internalID: string | null; versions: any } | null
+  image: { internalID: string | null; versions: any } | null,
+  requestedImageVersion?: string
 ) => {
-  return useLocalImageStorage(image?.internalID, image?.versions)
+  return useLocalImageStorage(
+    image?.internalID,
+    image?.versions,
+    requestedImageVersion
+  )
 }
 
+/**
+ * Returns the local image for a given key if it is stored and if the requested image version is not available
+ */
 export const useLocalImageStorage = (
-  internalID: string | null | undefined,
-  versions?: any
+  key: string | null | undefined,
+  imageVersions?: any,
+  requestedImageVersion?: string
 ) => {
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
 
   const isImageAvailable =
-    versions && isImageVersionAvailable(versions, "large")
+    imageVersions &&
+    isImageVersionAvailable(
+      imageVersions,
+      requestedImageVersion || DEFAULT_IMAGE_VERSION
+    )
 
   const changeLocalImage = async () => {
-    if (isImageAvailable || !internalID) {
+    if (isImageAvailable || !key) {
       setLocalImage(null)
 
       return
     }
 
     try {
-      // TODO: Check if we can memoize this
-      setLocalImage(await getLocalImage(internalID!))
+      setLocalImage(await getLocalImage(key!))
     } catch (error) {
       console.error(error)
     }
@@ -103,7 +119,7 @@ export const useLocalImageStorage = (
   useEffect(() => {
     changeLocalImage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [internalID])
+  }, [key])
 
   return localImage
 }
