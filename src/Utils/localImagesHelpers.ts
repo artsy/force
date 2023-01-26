@@ -1,11 +1,11 @@
-import { LOCAL_PROFILE_IMAGE_KEY } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/utils/constants"
 import localforage from "localforage"
 import { useEffect, useState } from "react"
 
 // Expiritation time is 5 minutes
 // TODO: Decrease number
 const EXPIRATION_TIME = 500 * 60 * 1000
-const IMAGE_KEY_PREFIX = "IMAGES_LOCAL_STORE_KEY"
+const IMAGE_KEY_PREFIX = "IMAGES"
+export const PROFILE_IMAGE_KEY = "PROFILE_IMAGE"
 
 export interface LocalImage {
   data: string
@@ -55,28 +55,6 @@ export const cleanLocalImages = async () => {
   })
 }
 
-export const getProfileLocalImage = async (): Promise<
-  LocalImage | undefined
-> => {
-  return localforage
-    .getItem(LOCAL_PROFILE_IMAGE_KEY)
-    .then((userImageJSONString: string) => {
-      if (userImageJSONString) {
-        const parsedImage = JSON.parse(userImageJSONString)
-        const expires = new Date(parsedImage.expires)
-        if (expires > new Date()) {
-          return parsedImage
-        } else {
-          // remove expired profile image
-          localforage.removeItem(LOCAL_PROFILE_IMAGE_KEY)
-        }
-      }
-    })
-    .catch(error => {
-      console.error("failed to get profile local image", error)
-    })
-}
-
 const prepareImage = (image: LocalImage, expires: string) => {
   const imageToStore: LocalImage = {
     expires,
@@ -89,20 +67,26 @@ const prepareImage = (image: LocalImage, expires: string) => {
   return JSON.stringify(imageToStore)
 }
 
-export const isImageVersionAvailable = (
-  image: { versions: any } | null,
-  version: string
-) => !!image?.versions?.includes(version)
+export const isImageVersionAvailable = (versions: any[], version: string) =>
+  !!versions?.includes(version)
 
 export const useLocalImage = (
   image: { internalID: string | null; versions: any } | null
 ) => {
+  return useLocalImageStorage(image?.internalID, image?.versions)
+}
+
+export const useLocalImageStorage = (
+  internalID: string | null | undefined,
+  versions?: any
+) => {
   const [localImage, setLocalImage] = useState<LocalImage | null>(null)
 
-  const isImageAvailable = isImageVersionAvailable(image, "large")
+  const isImageAvailable =
+    versions && isImageVersionAvailable(versions, "large")
 
   const changeLocalImage = async () => {
-    if (isImageAvailable || !image?.internalID) {
+    if (isImageAvailable || !internalID) {
       setLocalImage(null)
 
       return
@@ -110,16 +94,16 @@ export const useLocalImage = (
 
     try {
       // TODO: Check if we can memoize this
-      setLocalImage(await getLocalImage(image?.internalID!))
+      setLocalImage(await getLocalImage(internalID!))
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
   useEffect(() => {
     changeLocalImage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [image?.internalID])
+  }, [internalID])
 
   return localImage
 }
