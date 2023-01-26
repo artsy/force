@@ -31,16 +31,16 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   const images = compact(artwork.images)
   const hasGeometry = !!images[0]?.resized?.width
 
+  const localImage = useLocalImage(images[activeIndex])
+
+  if (!images?.[activeIndex]) return null
+
   const { fallback, internalID, isDefault, placeholder, resized } = images[
     activeIndex
   ]
   const image = hasGeometry ? resized : fallback
 
-  const localImage = useLocalImage(images[activeIndex])
-
-  if (!images?.[activeIndex] || !image) {
-    return null
-  }
+  if (!image) return null
 
   return (
     <>

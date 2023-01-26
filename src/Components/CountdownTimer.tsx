@@ -1,10 +1,10 @@
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { Flex, Spacer, StackableBorderBox, Text } from "@artsy/palette"
+import { ProgressBarTimer } from "Components/ProgressBarTimer"
+import { TimeRemaining } from "Components/TimeRemaining"
 import { DateTime } from "luxon"
 import React from "react"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
-import StopwatchIcon from "@artsy/icons/StopwatchIcon"
-import { TimeRemaining } from "Components/TimeRemaining"
-import { ProgressBarTimer } from "Components/ProgressBarTimer"
 
 const FIVE_HOURS_IN_SECONDS = 60 * 60 * 5
 
@@ -26,7 +26,6 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
   countdownStart,
 }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })
-  console.log({ currentTime })
   const endDateTime = DateTime.fromISO(countdownEnd).toLocal()
 
   const minutes =
