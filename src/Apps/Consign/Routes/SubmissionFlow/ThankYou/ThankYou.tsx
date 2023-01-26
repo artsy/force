@@ -91,9 +91,8 @@ export const ThankYou: React.FC = () => {
               Submit Another Work
             </Button>
           </Column>
-          <Column span={[12, 6, 6, 6]}>
+          <Column span={[12, 6, 6, 6]} mt={[1, 0]}>
             <Button
-              mt={[1, 0]}
               width="100%"
               data-test-id="swa-thank-you-view-in-my-collection-button"
               size="large"
