@@ -36,23 +36,13 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const {
-    internalID,
-    isInAuction,
-    isInquireable,
-    isAcquireable,
-    isOfferable,
-    partner,
-    sale,
-    slug,
-  } = artwork
+  const { internalID, isInquireable, partner, sale, slug } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
   const isCBNEnabled = useFeatureFlag("conversational-buy-now")
-  const artworkEcommerceAvailable = isAcquireable || isOfferable
   const shouldRenderContactGalleryCTA =
-    isCBNEnabled && !isInquireable && !isInAuction && artworkEcommerceAvailable
+    isCBNEnabled && partner?.type !== "Gallery" && !isInquireable
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
@@ -133,13 +123,12 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
-        isInAuction
-        isAcquireable
-        isOfferable
         partner {
           name
           href
           cities
+          type
+          partnerType
         }
         sale {
           name
