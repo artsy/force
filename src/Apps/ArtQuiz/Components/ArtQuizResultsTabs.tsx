@@ -24,11 +24,9 @@ export const ArtQuizResultsTabs: FC<ArtQuizResultsTabsProps> = ({
   return (
     <>
       <Spacer y={[4, 6]} />
-      <Text variant={["lg-display", "xl"]}>
-        {t("artQuizPage.results.title")}
-      </Text>
+      <Text variant={["lg", "xl"]}>{t("artQuizPage.results.title")}</Text>
       <Spacer y={[0, 1]} />
-      <Text color="black60" variant={["lg-display", "md"]}>
+      <Text color="black60" variant={["sm", "md"]}>
         {t("artQuizPage.results.subtitle")}
       </Text>
       <Spacer y={[2, 4]} />
