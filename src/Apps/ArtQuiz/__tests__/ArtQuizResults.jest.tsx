@@ -52,8 +52,8 @@ describe("ArtQuizResults", () => {
 
       expect(screen.getByText("Email My Results")).toBeInTheDocument()
       expect(screen.getByText("Works You Liked")).toBeInTheDocument()
-      expect(screen.getByText("Recommended Artworks")).toBeInTheDocument()
-      expect(screen.getByText("Recommended Artists")).toBeInTheDocument()
+      expect(screen.getByText("Explore Artworks")).toBeInTheDocument()
+      expect(screen.getByText("Explore Artists")).toBeInTheDocument()
     })
   })
 })
