@@ -30,6 +30,8 @@ import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
 import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
 import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
+import { useTracking } from "react-tracking"
+import { ContextModule } from "@artsy/cohesion"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -39,6 +41,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { submitMutation: submitDislike } = useDislikeArtwork()
   const { submitMutation: submitSave } = useSaveArtwork()
   const { submitMutation: submitUpdate } = useUpdateQuiz()
+  const { trackEvent } = useTracking()
   const { router } = useRouter()
   const [showLoader, setShowLoader] = useState(false)
 
@@ -137,6 +140,12 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
               },
             },
           })
+          trackEvent({
+            action: "Saved Artwork",
+            context_module: ContextModule.onboardingActivity,
+            entity_slug: currentArtwork.slug,
+            entity_id: currentArtwork.internalID,
+          })
         }
 
         if (action === "Dislike") {
@@ -175,6 +184,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       submitUpdate,
       me.id,
       submitSave,
+      trackEvent,
       submitDislike,
       router,
     ]
