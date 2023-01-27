@@ -7052,6 +7052,28 @@ type CreateBidderPayload {
   clientMutationId: String
 }
 
+type CreateCollectionFailure {
+  mutationError: GravityMutationError
+}
+
+input createCollectionInput {
+  clientMutationId: String
+  name: String!
+}
+
+type createCollectionPayload {
+  clientMutationId: String
+  responseOrError: CreateCollectionResponseOrError
+}
+
+union CreateCollectionResponseOrError =
+    CreateCollectionFailure
+  | CreateCollectionSuccess
+
+type CreateCollectionSuccess {
+  collection: Collection
+}
+
 input CreateConsignmentInquiryMutationInput {
   clientMutationId: String
   email: String!
@@ -10898,6 +10920,7 @@ type Me implements Node {
     hasReply: Boolean
     last: Int
     partnerId: String
+    toBeReplied: Boolean
     type: ConversationsInputMode = USER
   ): ConversationConnection
   createdAt(
@@ -11567,6 +11590,9 @@ type Mutation {
 
   # Creates a bidder position
   createBidderPosition(input: BidderPositionInput!): BidderPositionPayload
+
+  # Create a collection
+  createCollection(input: createCollectionInput!): createCollectionPayload
 
   # Make inquiry about consignments
   createConsignmentInquiry(
@@ -14014,6 +14040,7 @@ type Query {
     hasReply: Boolean
     last: Int
     partnerId: String
+    toBeReplied: Boolean
     type: ConversationsInputMode = USER
   ): ConversationConnection
 
@@ -18216,6 +18243,7 @@ type Viewer {
     hasReply: Boolean
     last: Int
     partnerId: String
+    toBeReplied: Boolean
     type: ConversationsInputMode = USER
   ): ConversationConnection
 
