@@ -134,7 +134,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       })
     } catch (error) {
       logger.error(`Artwork not created`, error)
-
       sendToast({
         variant: "error",
         message: "An error occurred",
