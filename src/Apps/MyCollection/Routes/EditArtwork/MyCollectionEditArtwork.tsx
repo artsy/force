@@ -77,7 +77,7 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       const reversedImages = reverse([...(updatedArtwork?.images ?? [])])
 
       reverse(localImages).forEach((image, index) => {
-        if (reversedImages[index]?.internalID!) return
+        if (!reversedImages[index]?.internalID) return
 
         storeLocalImage(reversedImages[index]?.internalID!, image)
       })
