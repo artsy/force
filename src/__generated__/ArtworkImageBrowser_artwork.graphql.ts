@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce95ff7c096d04256e8e9c8505802d00>>
+ * @generated SignedSource<<9e5c6b38f9b76800414e2b883e5340a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,24 +34,38 @@ export type ArtworkImageBrowser_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork">;
 };
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [],
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "includeAllImages",
+    "variableName": "includeAllImages"
+  }
+];
+return {
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkImageBrowser_artwork",
   "selections": [
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkActions_artwork"
     },
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkImageBrowserSmall_artwork"
     },
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkImageBrowserLarge_artwork"
     },
@@ -64,7 +78,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": null,
       "kind": "LinkedField",
       "name": "figures",
@@ -133,7 +153,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "4e875a2951207bbb5d162ebe8a367427";
+(node as any).hash = "4726d6d5fdb93a8545b71bf226f2f3a8";
 
 export default node;

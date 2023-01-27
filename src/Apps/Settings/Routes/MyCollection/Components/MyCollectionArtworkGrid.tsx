@@ -10,11 +10,11 @@ export const MyCollectionArtworkGrid = createFragmentContainer(ArtworkGrid, {
           slug
           href
           internalID
-          image {
+          image(includeAll: true) {
             aspectRatio
           }
-          ...GridItem_artwork
-          ...FlatGridItem_artwork
+          ...GridItem_artwork @arguments(includeAllImages: true)
+          ...FlatGridItem_artwork @arguments(includeAllImages: true)
         }
       }
     }

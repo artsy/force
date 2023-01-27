@@ -8,10 +8,11 @@ import { useDeleteArtworkImage } from "Apps/MyCollection/Routes/EditArtwork/Muta
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
 import { MetaTags } from "Components/MetaTags"
 import { Formik } from "formik"
+import { reverse } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { storeArtworkLocalImages } from "Utils/localImagesHelpers"
+import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
@@ -38,7 +39,7 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
 
   const handleSubmit = async (values: ArtworkModel) => {
     try {
-      const artworkId = await createOrUpdateArtwork(values, artwork)
+      const updatedArtwork = await createOrUpdateArtwork(values, artwork)
 
       // Wait until image processing has started
       if (values.newPhotos.length) {
@@ -71,17 +72,15 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
         })
       )
 
-      // Store images locally
-      if (artworkId) {
-        try {
-          await storeArtworkLocalImages(
-            artworkId,
-            localImages.map(({ photoID, ...rest }) => rest)
-          )
-        } catch (error) {
-          console.error("Failed to store images locally.", error)
-        }
-      }
+      // Store images locally and start from the end because
+      // it's only possible to add new images at the end
+      const reversedImages = reverse([...(updatedArtwork?.images ?? [])])
+
+      reverse(localImages).forEach((image, index) => {
+        if (reversedImages[index]?.internalID!) return
+
+        storeLocalImage(reversedImages[index]?.internalID!, image)
+      })
 
       router.replace({
         pathname: isCollectorProfileEnabled
@@ -90,8 +89,8 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       })
       router.push({
         pathname: isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artwork/${artworkId}`
-          : `/my-collection/artwork/${artworkId}`,
+          ? `/collector-profile/my-collection/artwork/${updatedArtwork?.internalID}`
+          : `/my-collection/artwork/${updatedArtwork?.internalID}`,
       })
     } catch (error) {
       logger.error(`Artwork not updated`, error)

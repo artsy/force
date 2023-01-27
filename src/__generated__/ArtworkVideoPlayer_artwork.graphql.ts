@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1f51b84f07f7c7ab2057345a762118c>>
+ * @generated SignedSource<<ebf225abed775d8d5c2bc805ad61b3cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,13 @@ export type ArtworkVideoPlayer_artwork$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkVideoPlayer_artwork",
@@ -52,7 +58,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": null,
       "kind": "LinkedField",
       "name": "figures",
@@ -101,6 +113,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8a5fdfc21456a80b8eab8068244edde0";
+(node as any).hash = "7d4bc447bdd7fa1993d8de1b6b9f0cbd";
 
 export default node;

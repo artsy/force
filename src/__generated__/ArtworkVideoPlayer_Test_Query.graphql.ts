@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8483e31a3380a9481c75242678ae73b2>>
+ * @generated SignedSource<<19274f31acf26b5804bead73ef4e2385>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -93,7 +93,13 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "includeAll",
+                "value": false
+              }
+            ],
             "concreteType": null,
             "kind": "LinkedField",
             "name": "figures",
@@ -136,7 +142,7 @@ return {
                 "abstractKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "figures(includeAll:false)"
           },
           (v1/*: any*/)
         ],
@@ -145,12 +151,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d22aa2cb46f40eef1fefb9d8984e6aed",
+    "cacheID": "bf1b7117bb2734c344098a8a3aa56a24",
     "id": null,
     "metadata": {},
     "name": "ArtworkVideoPlayer_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkVideoPlayer_Test_Query {\n  artwork(id: \"foo\") {\n    ...ArtworkVideoPlayer_artwork\n    id\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkVideoPlayer_Test_Query {\n  artwork(id: \"foo\") {\n    ...ArtworkVideoPlayer_artwork\n    id\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork on Artwork {\n  internalID\n  slug\n  figures(includeAll: false) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n"
   }
 };
 })();

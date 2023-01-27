@@ -1,9 +1,9 @@
-import { MockBoot } from "DevTools"
 import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
-import { graphql } from "react-relay"
-import { FairArtworks_Query$rawResponse } from "__generated__/FairArtworks_Query.graphql"
-import { useTracking } from "react-tracking"
+import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { FairArtworks_Query$rawResponse } from "__generated__/FairArtworks_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({
@@ -114,6 +114,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
             internalID: "zzz123",
             image: {
+              internalID: "imageabc123",
               resized: {
                 src: "",
                 srcSet: "",
@@ -123,6 +124,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
               aspectRatio: 1.27,
               placeholder: "78.76427829698858%",
               url: "https://test.artsy.net/image",
+              versions: [],
             },
             title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 2222",
@@ -192,6 +194,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
             internalID: "xxx123",
             image: {
+              internalID: "yyy123",
               resized: {
                 src: "",
                 srcSet: "",
@@ -201,6 +204,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
               aspectRatio: 1.43,
               placeholder: "69.82024597918638%",
               url: "https://test.artsy.net/image2",
+              versions: [],
             },
             title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 3333",

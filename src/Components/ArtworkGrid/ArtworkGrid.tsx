@@ -8,7 +8,9 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { FlatGridItemFragmentContainer } from "Components/Artwork/FlatGridItem"
-import GridItem from "Components/Artwork/GridItem"
+import GridItem, {
+  DEFAULT_GRID_ITEM_ASPECT_RATIO,
+} from "Components/Artwork/GridItem"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Masonry, MasonryProps } from "Components/Masonry"
@@ -20,7 +22,6 @@ import ReactDOM from "react-dom"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
-import { StoredImage } from "Utils/localImagesHelpers"
 import { Media, valuesWithBreakpointProps } from "Utils/Responsive"
 import { ExtractNodeType } from "Utils/typeSupport"
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
@@ -38,7 +39,6 @@ export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   contextModule?: AuthContextModule
   columnCount?: number | number[]
   hideSaleInfo?: boolean
-  getLocalImageSrcByArtworkID?: (artworkID: string) => StoredImage | null
   preloadImageCount?: number
   isAuctionArtwork?: boolean
   itemMargin?: number
@@ -137,7 +137,6 @@ export class ArtworkGridContainer extends React.Component<
   ) {
     const {
       contextModule,
-      getLocalImageSrcByArtworkID,
       hideSaleInfo,
       preloadImageCount,
       showHighDemandIcon,
@@ -168,7 +167,6 @@ export class ArtworkGridContainer extends React.Component<
             contextModule={contextModule}
             artwork={artwork}
             hideSaleInfo={hideSaleInfo}
-            localHeroImage={getLocalImageSrcByArtworkID?.(artwork.internalID)}
             key={artwork.id}
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             lazyLoad={artworkIndex >= preloadImageCount}
@@ -307,14 +305,17 @@ const InnerContainer = styled(Flex)`
 
 export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
   artworks: graphql`
-    fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
+    fragment ArtworkGrid_artworks on ArtworkConnectionInterface
+      @argumentDefinitions(
+        includeAllImages: { type: "Boolean", defaultValue: false }
+      ) {
       edges {
         node {
           id
           slug
           href
           internalID
-          image {
+          image(includeAll: $includeAllImages) {
             aspectRatio
           }
           ...GridItem_artwork
@@ -384,7 +385,8 @@ export function createSectionedArtworks(
         section.push(artwork)
 
         // Keep track of total section aspect ratio
-        const aspectRatio = artwork.image?.aspectRatio || 1 // Ensure we never divide by null/0
+        const aspectRatio =
+          artwork.image?.aspectRatio || DEFAULT_GRID_ITEM_ASPECT_RATIO // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sectionRatioSums[sectionIndex] += 1 / aspectRatio

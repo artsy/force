@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { storeArtworkLocalImages } from "Utils/localImagesHelpers"
+import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
@@ -111,26 +111,21 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     // Create the new artwork
 
     try {
-      const artworkId = await createOrUpdateArtwork(values)
+      const artwork = await createOrUpdateArtwork(values)
 
       trackSaveCollectedArtwork()
 
       // Store images locally
-      if (artworkId) {
-        try {
-          await storeArtworkLocalImages(
-            artworkId,
-            localImages.map(({ photoID, ...rest }) => rest)
-          )
-        } catch (error) {
-          console.error("Failed to store images locally.", error)
-        }
-      }
+      localImages.forEach((image, index) => {
+        if (!artwork?.images?.[index]?.internalID) return
+
+        storeLocalImage(artwork?.images?.[index]?.internalID!, image)
+      })
 
       router.replace({
         pathname: isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artworks/${artworkId}/edit`
-          : `/my-collection/artworks/${artworkId}/edit`,
+          ? `/collector-profile/my-collection/artworks/${artwork?.internalID}/edit`
+          : `/my-collection/artworks/${artwork?.internalID}/edit`,
       })
       router.push({
         pathname: isCollectorProfileEnabled
@@ -139,7 +134,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       })
     } catch (error) {
       logger.error(`Artwork not created`, error)
-
       sendToast({
         variant: "error",
         message: "An error occurred",

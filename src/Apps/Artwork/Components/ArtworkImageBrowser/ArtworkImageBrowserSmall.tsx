@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   ProgressDots,
   Swiper,
@@ -7,11 +6,12 @@ import {
   SwiperRail,
   SwiperRailProps,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
-import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 import { ArtworkVideoPlayerFragmentContainer } from "Apps/Artwork/Components/ArtworkVideoPlayer"
+import { DeepZoomFragmentContainer, useDeepZoom } from "Components/DeepZoom"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkImageBrowserSmall_artwork$data } from "__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork$data
@@ -124,11 +124,16 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
   ArtworkImageBrowserSmall,
   {
     artwork: graphql`
-      fragment ArtworkImageBrowserSmall_artwork on Artwork {
+      fragment ArtworkImageBrowserSmall_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         ...ArtworkLightbox_artwork
+          @arguments(includeAllImages: $includeAllImages)
         ...ArtworkVideoPlayer_artwork
+          @arguments(includeAllImages: $includeAllImages)
         isSetVideoAsCover
-        figures {
+        figures(includeAll: $includeAllImages) {
           ... on Image {
             ...DeepZoom_image
             internalID

@@ -3,20 +3,14 @@ import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorPro
 import { EditProfileFormModel } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import { LocalImagePreview } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/Components/LocalImagePreview"
 import { useFormikContext } from "formik"
-import {
-  ChangeEvent,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-} from "react"
+import { ChangeEvent, forwardRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import {
-  getProfileLocalImage,
-  LocalImage,
-  storeLocalProfileImage,
-} from "Utils/localImagesHelpers"
+  PROFILE_IMAGE_KEY,
+  storeLocalImage,
+  useLocalImageStorage,
+} from "Utils/localImageHelpers"
 import { SettingsEditProfileImage_me$data } from "__generated__/SettingsEditProfileImage_me.graphql"
 
 interface SettingsEditProfileImageProps {
@@ -32,9 +26,9 @@ const SettingsEditProfileImage = forwardRef<
   SettingsEditProfileImageProps
 >(({ me }, ref) => {
   const { setFieldValue } = useFormikContext<EditProfileFormModel>()
-  const [localImage, setLocalImage] = useState<LocalImage>()
+  const localImage = useLocalImageStorage(PROFILE_IMAGE_KEY)
+
   const [localImageBase64, setLocalImageBase64] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
 
   const convertFileToBase64 = (file: File) => {
     // convert file to base64
@@ -46,35 +40,6 @@ const SettingsEditProfileImage = forwardRef<
     }
   }
 
-  const storeImageLocally = async () => {
-    // Store the image in local storage
-    if (localImage) {
-      return void (await storeLocalProfileImage(localImage))
-    }
-  }
-
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        storeImageLocally,
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [storeImageLocally, localImage]
-  )
-
-  useEffect(() => {
-    getProfileLocalImage()
-      .then(image => {
-        if (image) {
-          setLocalImage(image)
-        }
-      })
-      .catch(error => console.error("Error getting local profile image", error))
-      .finally(() => setIsLoading(false))
-  }, [])
-
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
 
@@ -82,6 +47,7 @@ const SettingsEditProfileImage = forwardRef<
 
     // Convert file to base64 and save it to state to store it in local storage
     convertFileToBase64(newImage)
+
     setFieldValue("photo", newImage)
   }
 
@@ -96,15 +62,11 @@ const SettingsEditProfileImage = forwardRef<
 
     if (currentSrc.startsWith("data:image")) {
       // Save the image dimensions as well as local path to the localImages array
-      setLocalImage({ data: currentSrc, width, height })
+      storeLocalImage(PROFILE_IMAGE_KEY, { data: currentSrc, width, height })
     }
   }
 
   const renderProfileImage = () => {
-    if (isLoading) {
-      return <LocalImagePreview isLoading={isLoading} />
-    }
-
     if (localImage || !!localImageBase64) {
       return (
         <LocalImagePreview

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b34becb5ca41cf0e730b9d2d9e19cffd>>
+ * @generated SignedSource<<a6b31277e7de58f7c9d7f1e96bc26a8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,10 @@ export type GridItem_artwork$data = {
   readonly href: string | null;
   readonly image: {
     readonly aspectRatio: number;
+    readonly internalID: string | null;
     readonly placeholder: string | null;
     readonly url: string | null;
+    readonly versions: ReadonlyArray<string | null> | null;
   } | null;
   readonly imageTitle: string | null;
   readonly internalID: string;
@@ -29,19 +31,27 @@ export type GridItem_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
 };
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [],
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "GridItem_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -58,12 +68,19 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -92,6 +109,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
           "storageKey": null
         }
       ],
@@ -130,7 +154,8 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "0b26613b9883aff1017f6893d8745140";
+(node as any).hash = "cc706764048e427219ade8fc37fa131b";
 
 export default node;

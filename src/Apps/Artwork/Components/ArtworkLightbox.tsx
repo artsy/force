@@ -1,11 +1,13 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
-import { Link } from "react-head"
 import { compact } from "lodash"
+import { scale } from "proportional-scale"
 import * as React from "react"
+import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "System"
+import { useLocalImage } from "Utils/localImageHelpers"
 import { userIsTeam } from "Utils/user"
+import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
 
 interface ArtworkLightboxProps extends ClickableProps {
@@ -14,6 +16,8 @@ interface ArtworkLightboxProps extends ClickableProps {
   maxHeight: number
   lazyLoad?: boolean
 }
+
+const MAX_SIZE = 800
 
 const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   artwork,
@@ -28,16 +32,23 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   const images = compact(artwork.images)
   const hasGeometry = !!images[0]?.resized?.width
 
-  if (!images?.[activeIndex]) {
-    return null
+  const localImage = useLocalImage(images[activeIndex])
+
+  const resizedLocalImage = localImage && {
+    src: localImage.data,
+    srcSet: undefined,
+    ...scale({ ...localImage, maxWidth: MAX_SIZE, maxHeight: MAX_SIZE }),
   }
 
-  const { resized, fallback, placeholder, isDefault } = images[activeIndex]
-  const image = hasGeometry ? resized : fallback
+  if (!images?.[activeIndex]) return null
 
-  if (!image) {
-    return null
-  }
+  const { fallback, internalID, isDefault, placeholder, resized } = images[
+    activeIndex
+  ]
+
+  const image = resizedLocalImage ?? (hasGeometry ? resized : fallback)
+
+  if (!image) return null
 
   return (
     <>
@@ -76,13 +87,12 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             preload={!!isDefault}
             lazyLoad={!!lazyLoad}
           />
-
           <Image
             data-testid="artwork-lightbox-image"
             id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
-            key={image.src}
+            key={`${internalID}`}
             width="100%"
-            height="100%"
+            height={"100%"}
             src={image.src}
             srcSet={image.srcSet}
             alt={artwork.formattedMetadata ?? ""}
@@ -100,9 +110,13 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
   ArtworkLightbox,
   {
     artwork: graphql`
-      fragment ArtworkLightbox_artwork on Artwork {
+      fragment ArtworkLightbox_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         formattedMetadata
-        images {
+        images(includeAll: $includeAllImages) {
+          internalID
           isDefault
           placeholder: url(version: ["small", "medium"])
           fallback: cropped(
@@ -125,6 +139,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
+          versions
         }
       }
     `,

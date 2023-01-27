@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { LocalImage } from "Utils/localImagesHelpers"
+import { LocalImage } from "Utils/localImageHelpers"
 
 interface MyCollectionArtworkFormContextProps {
   onBack: () => void

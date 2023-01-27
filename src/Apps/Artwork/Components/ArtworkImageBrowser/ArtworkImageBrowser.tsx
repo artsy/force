@@ -125,12 +125,18 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer(
   ArtworkImageBrowser,
   {
     artwork: graphql`
-      fragment ArtworkImageBrowser_artwork on Artwork {
+      fragment ArtworkImageBrowser_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         ...ArtworkActions_artwork
+          @arguments(includeAllImages: $includeAllImages)
         ...ArtworkImageBrowserSmall_artwork
+          @arguments(includeAllImages: $includeAllImages)
         ...ArtworkImageBrowserLarge_artwork
+          @arguments(includeAllImages: $includeAllImages)
         internalID
-        figures {
+        figures(includeAll: $includeAllImages) {
           __typename
           ... on Image {
             isDefault

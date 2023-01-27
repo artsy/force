@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbe392f36b0c2314ae785e60011183eb>>
+ * @generated SignedSource<<02e3a2f03764825d60db037d49d40874>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,13 @@ export type ArtworkGrid_artworks$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkGrid_artworks",
@@ -82,7 +88,13 @@ const node: ReaderFragment = {
             },
             {
               "alias": null,
-              "args": null,
+              "args": [
+                {
+                  "kind": "Variable",
+                  "name": "includeAll",
+                  "variableName": "includeAllImages"
+                }
+              ],
               "concreteType": "Image",
               "kind": "LinkedField",
               "name": "image",
@@ -119,6 +131,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isArtworkConnectionInterface"
 };
 
-(node as any).hash = "19b468e1292c87f591e4e48e3e351518";
+(node as any).hash = "06779604fb6132105ed09f08851b1eba";
 
 export default node;

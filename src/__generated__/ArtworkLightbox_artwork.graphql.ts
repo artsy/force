@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4570c15dd8abfe8f723b29ba3bfb9112>>
+ * @generated SignedSource<<9a2f487f0ab6ade8f2316b7883d92dcc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ArtworkLightbox_artwork$data = {
       readonly srcSet: string;
       readonly width: number;
     } | null;
+    readonly internalID: string | null;
     readonly isDefault: boolean | null;
     readonly placeholder: string | null;
     readonly resized: {
@@ -27,6 +28,7 @@ export type ArtworkLightbox_artwork$data = {
       readonly srcSet: string;
       readonly width: number | null;
     } | null;
+    readonly versions: ReadonlyArray<string | null> | null;
   } | null> | null;
   readonly " $fragmentType": "ArtworkLightbox_artwork";
 };
@@ -88,7 +90,13 @@ v1 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkLightbox_artwork",
@@ -102,12 +110,25 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "images",
       "plural": true,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -150,6 +171,13 @@ return {
           "plural": false,
           "selections": (v1/*: any*/),
           "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -160,6 +188,6 @@ return {
 };
 })();
 
-(node as any).hash = "c08feb918e53ca3bef0b7c07a3735fa1";
+(node as any).hash = "44ea6777bdc5927cb3d0e8de087fca82";
 
 export default node;

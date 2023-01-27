@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { StoredImage } from "Utils/localImagesHelpers"
+import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
@@ -13,13 +13,14 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
 
+export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
+
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork$data
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
-  localHeroImage?: StoredImage | null
   onClick?: () => void
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
@@ -33,7 +34,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   disableRouterLinking,
   hideSaleInfo,
   lazyLoad = true,
-  localHeroImage,
   onClick,
   showHighDemandIcon = false,
   showHoverDetails,
@@ -41,6 +41,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   to,
   ...rest
 }) => {
+  const localImage = useLocalImage(artwork.image)
+
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -61,6 +63,14 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
+  const localImagePlaceholder =
+    localImage && `${100 * (localImage.height / localImage.width)}%`
+
+  const imagePlaceholder =
+    localImagePlaceholder ||
+    (artwork?.image?.url && artwork.image?.placeholder) ||
+    undefined
+
   return (
     <div
       data-id={artwork.internalID}
@@ -73,24 +83,25 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         position="relative"
         width="100%"
         bg="black10"
-        style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
+        style={{
+          paddingBottom: imagePlaceholder,
+        }}
       >
         <LinkContainer
           artwork={artwork}
           disableRouterLinking={disableRouterLinking}
+          localImage={localImage}
           onClick={handleClick}
           to={to}
         >
           <ArtworkGridItemImage
             artwork={artwork}
             lazyLoad={lazyLoad}
-            localHeroImage={localHeroImage}
+            localImage={localImage}
           />
         </LinkContainer>
-
         <Badge artwork={artwork} />
       </Box>
-
       <Metadata
         artwork={artwork}
         isHovered={isHovered}
@@ -107,21 +118,48 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   )
 }
 
-const ArtworkGridItemImage: React.FC<Pick<
-  ArtworkGridItemProps,
-  "localHeroImage" | "artwork" | "lazyLoad"
->> = ({ artwork, lazyLoad, localHeroImage }) => {
+const ArtworkGridItemImage: React.FC<
+  Pick<ArtworkGridItemProps, "artwork" | "lazyLoad"> & {
+    localImage: LocalImage | null
+  }
+> = ({ artwork, lazyLoad, localImage }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
-  const aspectRatio = artwork.image?.aspectRatio ?? 1
+  const aspectRatio =
+    localImage?.aspectRatio ??
+    artwork.image?.aspectRatio ??
+    DEFAULT_GRID_ITEM_ASPECT_RATIO
   const width = 445
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
   const { src, srcSet } = imageURL
-    ? transform(imageURL, { width, height })
+    ? transform(imageURL, {
+        width,
+        height,
+      })
     : { src: "", srcSet: "" }
+
+  if (localImage) {
+    return (
+      <ResponsiveBox
+        aspectWidth={localImage.width}
+        aspectHeight={localImage.height}
+        position="relative"
+        maxWidth="100%"
+      >
+        <MagnifyImage
+          src={localImage.data}
+          srcSet={""}
+          width={localImage.width}
+          height={localImage.height}
+          lazyLoad={lazyLoad}
+          preventRightClick={!isTeam}
+        />
+      </ResponsiveBox>
+    )
+  }
 
   if (imageURL) {
     return (
@@ -134,18 +172,7 @@ const ArtworkGridItemImage: React.FC<Pick<
       />
     )
   }
-  if (localHeroImage) {
-    return (
-      <MagnifyImage
-        src={localHeroImage.data}
-        srcSet={""}
-        height={localHeroImage.height}
-        width={localHeroImage.width}
-        lazyLoad={lazyLoad}
-        preventRightClick={!isTeam}
-      />
-    )
-  }
+
   return (
     <>
       <ResponsiveBox
@@ -193,9 +220,10 @@ const DisabledLink = styled(Box)`
 
 const LinkContainer: React.FC<
   Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking" | "to"> & {
+    localImage: LocalImage | null
     onClick: () => void
   }
-> = ({ artwork, children, disableRouterLinking, onClick, to }) => {
+> = ({ artwork, children, disableRouterLinking, onClick, localImage, to }) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -214,7 +242,7 @@ const LinkContainer: React.FC<
       to={to !== undefined ? to : artwork.href}
       onClick={onClick}
       aria-label={`${artwork.title} by ${artwork.artistNames}`}
-      position={imageURL ? "absolute" : "relative"}
+      position={imageURL || localImage ? "absolute" : "relative"}
       data-testid="artwork-link"
     >
       {children}
@@ -226,14 +254,19 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
   ArtworkGridItem,
   {
     artwork: graphql`
-      fragment GridItem_artwork on Artwork {
+      fragment GridItem_artwork on Artwork
+        @argumentDefinitions(
+          includeAllImages: { type: "Boolean", defaultValue: false }
+        ) {
         internalID
         title
         imageTitle
-        image {
+        image(includeAll: $includeAllImages) {
+          internalID
           placeholder
           url(version: ["larger", "large"])
           aspectRatio
+          versions
         }
         artistNames
         href

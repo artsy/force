@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c82ba57449816fd1bc5a2dcb09299c3>>
+ * @generated SignedSource<<4c001786965a8e957000b486a19c9a7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,13 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkActions_artwork",
@@ -51,7 +57,13 @@ return {
       "name": "ArtworkDownloadButton_artwork"
     },
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAllImages",
+          "variableName": "includeAllImages"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtworkSharePanel_artwork"
     },
@@ -100,6 +112,6 @@ return {
 };
 })();
 
-(node as any).hash = "3281d551bc9ebd3d0e0a0e01131c9fd2";
+(node as any).hash = "b8fc70913bd27a735d1b1e5ab6e2fdfe";
 
 export default node;

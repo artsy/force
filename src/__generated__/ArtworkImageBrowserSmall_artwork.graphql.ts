@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4d3a61f9207074b7eb26346e2405ddd>>
+ * @generated SignedSource<<d57be732142f8dab6dec733de14eaa36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,14 @@ export type ArtworkImageBrowserSmall_artwork$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Variable",
+    "name": "includeAllImages",
+    "variableName": "includeAllImages"
+  }
+],
+v1 = {
   "alias": "type",
   "args": null,
   "kind": "ScalarField",
@@ -41,18 +48,24 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "includeAllImages"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkImageBrowserSmall_artwork",
   "selections": [
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkLightbox_artwork"
     },
     {
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "FragmentSpread",
       "name": "ArtworkVideoPlayer_artwork"
     },
@@ -65,7 +78,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "includeAll",
+          "variableName": "includeAllImages"
+        }
+      ],
       "concreteType": null,
       "kind": "LinkedField",
       "name": "figures",
@@ -93,7 +112,7 @@ return {
               "name": "isZoomable",
               "storageKey": null
             },
-            (v0/*: any*/)
+            (v1/*: any*/)
           ],
           "type": "Image",
           "abstractKey": null
@@ -101,7 +120,7 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
-            (v0/*: any*/)
+            (v1/*: any*/)
           ],
           "type": "Video",
           "abstractKey": null
@@ -115,6 +134,6 @@ return {
 };
 })();
 
-(node as any).hash = "48fc88192197f6a29ae440a7282aa2ee";
+(node as any).hash = "0d41a4d1c2d807c3a273730a4f0dd0d6";
 
 export default node;
