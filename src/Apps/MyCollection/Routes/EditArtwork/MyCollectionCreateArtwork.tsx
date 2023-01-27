@@ -116,7 +116,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       trackSaveCollectedArtwork()
 
       // Store images locally
-      localImages.forEach(async (image, index) => {
+      localImages.forEach((image, index) => {
         if (!artwork?.images?.[index]?.internalID) return
 
         storeLocalImage(artwork?.images?.[index]?.internalID!, image)
