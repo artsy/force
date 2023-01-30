@@ -30,12 +30,12 @@
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
       },
       "title": "Explore Your Quiz Results",
-      "subtitle": "Explore these collections and artists recommended for you based on your saved works. Follow them to see their latest works on your Artsy home.",
+      "subtitle": "We think you’ll enjoy these works and artists based on your likes. To tailor your recommendations to your art tastes, follow artists and save works you love.",
       "tabs": {
         "worksYouLiked": "Works You Liked",
-        "recommendedCollections": "Recommended Collections",
-        "recommendedArtworks": "Recommended Artworks",
-        "recommendedArtists": "Recommended Artists"
+        "recommendedCollections": "Explore Collections",
+        "recommendedArtworks": "Explore Artworks",
+        "recommendedArtists": "Explore Artists"
       }
     },
     "welcomeScreen": {
