@@ -54,12 +54,12 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/rising-artists-of-africa-and-its-diaspora",
             },
             {
-              text: "Women Artists Now",
-              href: "/collection/women-artists-to-watch",
-            },
-            {
               text: "Rising Artists of Asia & Its Diaspora",
               href: "/collection/rising-artists-of-asia-and-its-diaspora",
+            },
+            {
+              text: "Women Artists Now",
+              href: "/collection/women-artists-to-watch",
             },
           ],
         },
@@ -155,12 +155,12 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/collection/curators-picks-emerging",
       },
       {
-        text: "Top Auction Lots",
-        href: "/collection/top-auction-lots",
-      },
-      {
         text: "Curators’ Picks: Blue-Chip",
         href: "/collection/curators-picks-blue-chip",
+      },
+      {
+        text: "Top Auction Lots",
+        href: "/collection/top-auction-lots",
       },
       {
         text: "Best of Prints & Editions",
