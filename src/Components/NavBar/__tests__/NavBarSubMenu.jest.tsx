@@ -37,14 +37,14 @@ describe("NavBarSubMenu", () => {
       "/collection/curators-picks-emerging"
     )
 
-    expect(linkMenuItems.at(1).text()).toContain("Top Auction Lots")
+    expect(linkMenuItems.at(1).text()).toContain("Curators’ Picks: Blue-Chip")
     expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/collection/top-auction-lots"
+      "/collection/curators-picks-blue-chip"
     )
 
-    expect(linkMenuItems.at(2).text()).toContain("Curators’ Picks: Blue-Chip")
+    expect(linkMenuItems.at(2).text()).toContain("Top Auction Lots")
     expect(linkMenuItems.at(2).prop("href")).toEqual(
-      "/collection/curators-picks-blue-chip"
+      "/collection/top-auction-lots"
     )
 
     expect(linkMenuItems.at(3).text()).toContain("Best of Prints & Editions")
