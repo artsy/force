@@ -10,6 +10,7 @@ interface SavesItemProps {
   artworksCount: number
   isSelected?: boolean
   imagesLayout: "stacked" | "grid"
+  onClick: () => void
 }
 
 export const SavesItem: FC<SavesItemProps> = ({
@@ -17,6 +18,7 @@ export const SavesItem: FC<SavesItemProps> = ({
   artworksCount,
   isSelected,
   imagesLayout,
+  onClick,
 }) => {
   const imageURLs = []
 
@@ -31,6 +33,7 @@ export const SavesItem: FC<SavesItemProps> = ({
       justifyContent="space-between"
       borderColor={isSelected ? "brand" : "transparent"}
       style={isSelected ? { boxShadow: DROP_SHADOW } : undefined}
+      onClick={onClick}
     >
       {imagesLayout === "stacked" ? (
         <StackedImageLayout imageURLs={imageURLs} />
