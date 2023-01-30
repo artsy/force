@@ -2,13 +2,13 @@ import { Tab } from "@artsy/palette"
 import { NofiticationsTabs, NofiticationsTabsProps } from "./NotificationsTabs"
 import { NotificationsListQueryRenderer } from "./NotificationsList"
 import { NotificationPaginationType } from "./types"
-import { useEffect, useCallback } from "react"
+import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System"
 import createLogger from "Utils/logger"
 
-const logger = createLogger("MarkNotificationsAsSeen")
+const logger = createLogger("Notifications")
 
 interface NotificationsProps extends NofiticationsTabsProps {
   paginationType?: NotificationPaginationType
@@ -20,7 +20,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
 
-  const markAsSeen = useCallback(async () => {
+  const markAsSeen = async () => {
     if (!relayEnvironment) {
       return
     }
@@ -38,11 +38,12 @@ export const Notifications: React.FC<NotificationsProps> = ({
     } catch (error) {
       logger.error(error)
     }
-  }, [relayEnvironment])
+  }
 
   useEffect(() => {
     markAsSeen()
-  }, [markAsSeen])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <NofiticationsTabs {...rest}>

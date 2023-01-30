@@ -18,7 +18,7 @@ const updater = (
   if (!me) {
     return
   }
-  // Set unread notifications count to 0
+  // Set unseen notifications count to 0
   me.setValue(0, "unseenNotificationsCount")
 }
 

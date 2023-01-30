@@ -28,7 +28,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
   const hasUnseenNotifications = unseenNotificationsCount > 0
-  const displayBlueDot = hasNotifications && hasUnseenNotifications
+  const shouldDisplayBlueDot = hasNotifications && hasUnseenNotifications
 
   return (
     <>
@@ -63,7 +63,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
           >
             <BellIcon title="Notifications" fill="currentColor" />
 
-            {displayBlueDot && (
+            {shouldDisplayBlueDot && (
               <NavBarNotificationIndicator
                 position="absolute"
                 top="15px"
