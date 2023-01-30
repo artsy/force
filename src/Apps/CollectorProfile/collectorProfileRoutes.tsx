@@ -56,6 +56,16 @@ const Saves2 = loadable(
   }
 )
 
+const Saves2ById = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves2/CollectorProfileSaves2ByIdRoute"
+    ),
+  {
+    resolveComponent: component => component.CollectorProfileSaves2ByIdRoute,
+  }
+)
+
 const FollowsRoute = loadable(
   () =>
     import(
@@ -191,6 +201,13 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         getComponent: () => Saves2,
         onClientSideRender: () => {
           Saves2.preload()
+        },
+      },
+      {
+        path: "saves2/:id",
+        getComponent: () => Saves2ById,
+        onClientSideRender: () => {
+          Saves2ById.preload()
         },
       },
       {
