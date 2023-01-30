@@ -1,4 +1,5 @@
 import { Box, Flex, Image, Spacer } from "@artsy/palette"
+import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 
 interface FourUpImageLayoutProps {
@@ -16,26 +17,22 @@ const IMAGE_OFFSET = "2px"
 export const FourUpImageLayout: FC<FourUpImageLayoutProps> = ({
   imageURLs,
 }) => {
-  // Ensure we have an array of exactly 4 images
-  const artworkImageURLs = [null, null, null, null].reduce(
-    (acc, _, i) => [...acc, imageURLs[i] ?? null],
-    [] as string[]
-  )
+  const preparedImageURLs = prepareImageURLs(imageURLs)
 
   return (
     <Box>
       <Flex flexDirection="row">
-        <RowImage url={artworkImageURLs[0]} />
+        <RowImage url={preparedImageURLs[0]} />
         <Spacer x={IMAGE_OFFSET} />
-        <RowImage url={artworkImageURLs[1]} />
+        <RowImage url={preparedImageURLs[1]} />
       </Flex>
 
       <Spacer y={IMAGE_OFFSET} />
 
       <Flex flexDirection="row">
-        <RowImage url={artworkImageURLs[2]} />
+        <RowImage url={preparedImageURLs[2]} />
         <Spacer x={IMAGE_OFFSET} />
-        <RowImage url={artworkImageURLs[3]} />
+        <RowImage url={preparedImageURLs[3]} />
       </Flex>
     </Box>
   )
