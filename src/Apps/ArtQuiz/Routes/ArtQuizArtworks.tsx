@@ -300,6 +300,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         <Tooltip
           content="Like it? Hit the heart. Not for you? Choose X."
           variant="defaultDark"
+          offset={-10}
           pointer
           placement="top"
           textAlign="center"
