@@ -43,10 +43,12 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
       <Box
         width={SIZE}
         height={SIZE}
-        bg="black10"
+        bg="black5"
         position="absolute"
         top={OFFSET_BY_INDEX}
         left={OFFSET_BY_INDEX}
+        border="1px solid"
+        borderColor="black10"
       />
     )
   }

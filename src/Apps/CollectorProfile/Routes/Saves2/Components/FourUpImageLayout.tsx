@@ -42,7 +42,15 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
   const SIZE = [SMALL_IMAGE_SIZE, LARGE_IMAGE_SIZE]
 
   if (url === null) {
-    return <Box width={SIZE} height={SIZE} bg="black10" />
+    return (
+      <Box
+        width={SIZE}
+        height={SIZE}
+        bg="black5"
+        border="1px solid"
+        borderColor="black10"
+      />
+    )
   }
 
   return <Image width={SIZE} height={SIZE} preventRightClick src={url} />
