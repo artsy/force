@@ -1,4 +1,4 @@
-import { Shelf, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { HTML, Shelf, SkeletonText, Spacer, Text } from "@artsy/palette"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -23,9 +23,13 @@ const ArtQuizTrendingCollection: FC<ArtQuizTrendingCollectionProps> = ({
     <>
       <Text variant="lg-display">{collection.title}</Text>
 
-      <Text variant="lg-display" color="black60">
-        {collection.description}
-      </Text>
+      {collection.description && (
+        <HTML
+          color="black60"
+          html={collection.description}
+          variant="lg-display"
+        />
+      )}
 
       <Spacer y={[2, 4]} />
 
