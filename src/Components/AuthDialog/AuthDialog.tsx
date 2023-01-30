@@ -56,7 +56,7 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
   )
 }
 
-const AuthDialogView: FC = () => {
+export const AuthDialogView: FC = () => {
   const { state } = useAuthDialogContext()
 
   switch (state.mode) {
@@ -69,7 +69,7 @@ const AuthDialogView: FC = () => {
   }
 }
 
-const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
+export const DEFAULT_TITLES: Record<AuthDialogMode, string> = {
   Login: "Log in to collect art by the world’s leading artists",
   SignUp: "Sign up to collect art by the world’s leading artists",
   ForgotPassword: "Reset your password", // pragma: allowlist secret

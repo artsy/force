@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom"
-import { ModalContainer } from "Apps/Authentication/Components/ModalContainer"
+import { ModalContainer } from "Apps/Authentication/Legacy/Components/ModalContainer"
 
 /**
  * FIXME: Replace this super legacy code with react portal

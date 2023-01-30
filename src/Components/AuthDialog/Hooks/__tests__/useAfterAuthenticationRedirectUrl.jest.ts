@@ -55,6 +55,18 @@ describe("useAfterAuthenticationRedirectUrl", () => {
     )
   })
 
+  it("should redirect back to the current URL and include any query params", () => {
+    window.location.pathname = "/some/path"
+    window.location.href = "https://www.artsy.net/some/path"
+    window.location.search = "?foo=bar"
+
+    const { result } = renderHook(() => useAfterAuthenticationRedirectUrl())
+
+    expect(result.current.redirectUrl).toEqual(
+      "https://www.artsy.net/some/path?foo=bar&onboarding=true"
+    )
+  })
+
   it("should redirect back to the default path if we are on the signup path", () => {
     window.location.pathname = "/signup"
     window.location.href = "https://www.artsy.net/signup"

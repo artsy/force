@@ -1,6 +1,7 @@
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useElligibleForOnboarding } from "Components/AuthDialog/Hooks/useElligibleForOnboarding"
 import { useMemo } from "react"
+import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
 
 /**
@@ -13,8 +14,10 @@ export const useAfterAuthenticationRedirectUrl = () => {
 
   const { isElligibleForOnboarding } = useElligibleForOnboarding()
 
+  const { defaultRedirect } = useDefaultRedirect()
+
   const redirectUrl = useMemo(() => {
-    const redirect = options.redirectTo || getDefaultRedirect()
+    const redirect = options.redirectTo || defaultRedirect
     const redirectUri = new URL(redirect, getENV("APP_URL"))
 
     if (isElligibleForOnboarding) {
@@ -33,19 +36,30 @@ export const useAfterAuthenticationRedirectUrl = () => {
     }
 
     return redirectUri.toString()
-  }, [isElligibleForOnboarding, options.redirectTo])
+  }, [defaultRedirect, isElligibleForOnboarding, options.redirectTo])
 
   return { redirectUrl }
 }
 
-const getDefaultRedirect = () => {
+const useDefaultRedirect = () => {
   const { loginPagePath, signupPagePath } = getENV("AP")
+
+  const router = useRouter()
+
+  // In a client-side context we have the window.location object, but we won't have
+  // the router context. In a server-side context we have the router context,
+  // but we won't have the window.location object.
+  const location = router.match ? router.match.location : window.location
 
   // If we're on the login or sign up path; we should redirect to the default (index).
   // Otherwise stay on the same page.
-  return [loginPagePath, signupPagePath].includes(window.location.pathname)
+  const defaultRedirect = [loginPagePath, signupPagePath].includes(
+    location.pathname
+  )
     ? DEFAULT_AFTER_AUTH_REDIRECT_PATH
-    : window.location.href
+    : location.pathname + (location.search || "")
+
+  return { defaultRedirect }
 }
 
 const DEFAULT_AFTER_AUTH_REDIRECT_PATH = "/"

@@ -1,44 +1,43 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
 import { AppRouteConfig } from "System/Router/Route"
-import { checkForRedirect } from "./Server/checkForRedirect"
-import { setReferer } from "./Server/setReferer"
+import { checkForRedirect } from "Apps/Authentication/Legacy/Server/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Legacy/Server/setReferer"
 import { flow } from "lodash"
-import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
-import { setCookies } from "./Utils/helpers"
-import { redirectPostAuth } from "./Server/redirectPostAuth"
+import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
+import { setCookies } from "Apps/Authentication/Legacy/Utils/helpers"
+import { redirectPostAuth } from "Apps/Authentication/Legacy/Server/redirectPostAuth"
 import { stringify } from "qs"
 
 const ForgotPasswordRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/ForgotPasswordRoute"
+      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationForgotPasswordRoute"
     ),
-  { resolveComponent: component => component.ForgotPasswordRoute }
+  { resolveComponent: component => component.AuthenticationForgotPasswordRoute }
 )
 
 const ResetPasswordRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/ResetPasswordRoute"
+      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationResetPasswordRoute"
     ),
-  { resolveComponent: component => component.ResetPasswordRoute }
+  { resolveComponent: component => component.AuthenticationResetPasswordRoute }
 )
 
 const LoginRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/LoginRoute"
+      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationLoginRoute"
     ),
-  { resolveComponent: component => component.LoginRoute }
+  { resolveComponent: component => component.AuthenticationLoginRoute }
 )
 
 const SignupRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "authenticationBundle" */ "./Routes/SignupRoute"
+      /* webpackChunkName: "authenticationBundle" */ "./Routes/AuthenticationSignUpRoute"
     ),
-  { resolveComponent: component => component.SignupRoute }
+  { resolveComponent: component => component.AuthenticationSignUpRoute }
 )
 
 const runAuthMiddleware = flow(checkForRedirect, setReferer)
@@ -75,12 +74,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
     onClientSideRender: ({ match }) => {
       setCookies(match.location.query)
       LoginRoute.preload()
-    },
-  },
-  {
-    path: "/log_in",
-    render: ({ match }) => {
-      throw new RedirectException(`/login${match.location.search}`, 301)
     },
   },
   {
@@ -136,12 +129,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
     onClientSideRender: ({ match }) => {
       setCookies(match.location.query)
       SignupRoute.preload()
-    },
-  },
-  {
-    path: "/sign_up",
-    render: ({ match }) => {
-      throw new RedirectException(`/signup${match.location.search}`, 301)
     },
   },
   {

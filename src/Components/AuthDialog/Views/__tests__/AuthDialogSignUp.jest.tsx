@@ -10,6 +10,7 @@ jest.mock("Utils/getENV", () => ({
         facebookPath: "/users/auth/facebook",
         googlePath: "/users/auth/google",
       },
+      APP_URL: "https://www.artsy.net",
     }[key]
   }),
 }))

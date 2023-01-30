@@ -1,7 +1,7 @@
 import Cookies from "cookies-js"
 import ReactDOM from "react-dom"
-import { ModalContainer } from "Apps/Authentication/Components/ModalContainer"
-import { initAuthModalContainer } from "../initAuthModalContainer"
+import { ModalContainer } from "Apps/Authentication/Legacy/Components/ModalContainer"
+import { initAuthModalContainer } from "Utils/initAuthModalContainer"
 
 jest.mock("sharify")
 jest.mock("cookies-js")

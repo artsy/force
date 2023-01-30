@@ -125,9 +125,7 @@ export const auctionRoutes: AppRouteConfig[] = [
         onClientSideRender: ({ match }) => {
           if (!match.context.user) {
             const redirectTo = match.location.pathname + match.location.search
-            match.router.push(
-              `/login?redirectTo=${redirectTo}&afterSignUpAction=${redirectTo}`
-            )
+            match.router.push(`/login?redirectTo=${redirectTo}`)
           }
         },
         onServerSideRender: checkIfLoggedIn,
