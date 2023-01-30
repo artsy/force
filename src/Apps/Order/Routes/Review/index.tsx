@@ -451,14 +451,15 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 order={order}
                 transactionStep="review"
               />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersReview}
+                contextPageOwnerType={OwnerType.ordersReview}
+                orderSource={order.source}
+                renderArtsyPrivateSaleConditions={false}
+                privateSaleConditions={order.conditionsOfSale}
+              />
             </Flex>
-            <BuyerGuarantee
-              contextModule={ContextModule.ordersReview}
-              contextPageOwnerType={OwnerType.ordersReview}
-              orderSource={order.source}
-              renderArtsyPrivateSaleConditions={false}
-              privateSaleConditions={order.conditionsOfSale}
-            />
+
             <Spacer y={[2, 4]} />
             <Media at="xs">
               <SubmitButton />
