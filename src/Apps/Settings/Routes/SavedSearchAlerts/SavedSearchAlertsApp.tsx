@@ -55,7 +55,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("CREATED_AT_DESC")
   const [loading, setLoading] = useState(false)
-  const alerts = extractNodes(me.savedSearchesConnection)
+  const alerts = extractNodes(me.savedSearchesConnection).filter(Boolean)
   const isEditMode = editAlertEntity !== null
 
   const closeEditForm = () => {
