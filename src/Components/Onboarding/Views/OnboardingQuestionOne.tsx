@@ -2,16 +2,16 @@ import { Spacer, Text, Box, Join, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
+import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFigure"
+import { OnboardingQuestionPanel } from "Components/Onboarding/Components/OnboardingQuestionPanel"
 import {
   OPTION_NO_IM_JUST_STARTING_OUT,
   OPTION_YES_I_LOVE_COLLECTING_ART,
-} from "../config"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+} from "Components/Onboarding/config"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingQuestionOneMutation } from "__generated__/OnboardingQuestionOneMutation.graphql"
-import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 
 export const OnboardingQuestionOne: FC = () => {

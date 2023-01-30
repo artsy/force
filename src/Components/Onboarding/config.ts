@@ -17,6 +17,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
         VIEW_QUESTION_THREE,
         {
           [DECISION_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN]: {
+            [OPTION_ART_QUIZ]: [VIEW_ART_QUIZ],
             [OPTION_TOP_AUCTION_LOTS]: [VIEW_TOP_AUCTION_LOTS],
             [OPTION_A_CURATED_SELECTION_OF_ARTWORKS]: [VIEW_CURATED_ARTWORKS],
             [OPTION_ARTISTS_ON_THE_RISE]: [VIEW_ARTISTS_ON_THE_RISE],
@@ -84,6 +85,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
 /* prettier-ignore */ export const OPTION_ARTISTS_ON_THE_RISE = "Artists on the rise"
 /* prettier-ignore */ export const OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN = "Artists I want to collect"
 /* prettier-ignore */ export const OPTION_FOLLOW_GALLERIES_I_LOVE = "Galleries I'm interested in"
+/* prettier-ignore */ export const OPTION_ART_QUIZ = "The Art Taste Quiz"
 
 /* prettier-ignore */ export const VIEW_WELCOME = "VIEW_WELCOME"
 /* prettier-ignore */ export const VIEW_QUESTION_ONE = "VIEW_QUESTION_ONE"
@@ -95,6 +97,7 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
 /* prettier-ignore */ export const VIEW_CURATED_ARTWORKS = "VIEW_CURATED_ARTWORKS"
 /* prettier-ignore */ export const VIEW_ARTISTS_ON_THE_RISE = "VIEW_ARTISTS_ON_THE_RISE"
 /* prettier-ignore */ export const VIEW_FOLLOW_GALLERIES = "VIEW_FOLLOW_GALLERIES"
+/* prettier-ignore */ export const VIEW_ART_QUIZ = "VIEW_ART_QUIZ"
 
 /* prettier-ignore */ export const VIEW_THANK_YOU = "VIEW_THANK_YOU"
 

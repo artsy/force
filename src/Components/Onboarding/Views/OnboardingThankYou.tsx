@@ -1,3 +1,4 @@
+/* eslint-disable no-relative-import-paths/no-relative-import-paths */
 import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"

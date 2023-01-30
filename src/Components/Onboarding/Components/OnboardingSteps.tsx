@@ -10,23 +10,30 @@ import {
   VIEW_FOLLOW_ARTISTS,
   VIEW_ARTISTS_ON_THE_RISE,
   VIEW_THANK_YOU,
-} from "../config"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { OnboardingWelcome } from "../Views/OnboardingWelcome"
-import { OnboardingQuestionOne } from "../Views/OnboardingQuestionOne"
-import { OnboardingQuestionThree } from "../Views/OnboardingQuestionThree"
-import { OnboardingQuestionTwo } from "../Views/OnboardingQuestionTwo"
-import { OnboardingFollowArtists } from "../Views/OnboardingFollowArtists"
-import { OnboardingTopAuctionLots } from "../Views/OnboardingTopAuctionLots"
-import { OnboardingCuratedArtworks } from "../Views/OnboardingCuratedArtworks"
-import { OnboardingArtistsOnTheRise } from "../Views/OnboardingArtistsOnTheRise"
-import { OnboardingFollowGalleries } from "../Views/OnboardingFollowGalleries"
-import { OnboardingThankYou } from "../Views/OnboardingThankYou"
+  VIEW_ART_QUIZ,
+} from "Components/Onboarding/config"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { OnboardingWelcome } from "Components/Onboarding/Views/OnboardingWelcome"
+import { OnboardingQuestionOne } from "Components/Onboarding/Views/OnboardingQuestionOne"
+import { OnboardingQuestionThree } from "Components/Onboarding/Views/OnboardingQuestionThree"
+import { OnboardingQuestionTwo } from "Components/Onboarding/Views/OnboardingQuestionTwo"
+import { OnboardingFollowArtists } from "Components/Onboarding/Views/OnboardingFollowArtists"
+import { OnboardingTopAuctionLots } from "Components/Onboarding/Views/OnboardingTopAuctionLots"
+import { OnboardingCuratedArtworks } from "Components/Onboarding/Views/OnboardingCuratedArtworks"
+import { OnboardingArtistsOnTheRise } from "Components/Onboarding/Views/OnboardingArtistsOnTheRise"
+import { OnboardingFollowGalleries } from "Components/Onboarding/Views/OnboardingFollowGalleries"
+import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
+import { useRouter } from "System/Router/useRouter"
+import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 
 interface OnboardingStepsProps {}
 
 export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
-  const { current } = useOnboardingContext()
+  const { router } = useRouter()
+
+  const tracking = useOnboardingTracking()
+
+  const { current, onComplete, onClose } = useOnboardingContext()
 
   switch (current) {
     case VIEW_WELCOME:
@@ -40,6 +47,14 @@ export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
 
     case VIEW_QUESTION_THREE:
       return <OnboardingQuestionThree />
+
+    case VIEW_ART_QUIZ: {
+      tracking.userCompletedOnboarding()
+      onComplete()
+      onClose()
+      router.push("/art-quiz/welcome")
+      return null
+    }
 
     case VIEW_FOLLOW_ARTISTS:
       return <OnboardingFollowArtists />
