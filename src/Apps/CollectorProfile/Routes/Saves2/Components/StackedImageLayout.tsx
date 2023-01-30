@@ -3,7 +3,7 @@ import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prep
 import { FC } from "react"
 
 interface StackedImageLayoutProps {
-  imageURLs: string[]
+  imageURLs: (string | null)[]
 }
 
 interface StackImageProps {

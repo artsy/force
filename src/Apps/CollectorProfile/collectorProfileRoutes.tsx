@@ -52,7 +52,8 @@ const Saves2 = loadable(
       /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves2/CollectorProfileSaves2Route"
     ),
   {
-    resolveComponent: component => component.CollectorProfileSaves2Route,
+    resolveComponent: component =>
+      component.CollectorProfileSaves2RouteFragmentContainer,
   }
 )
 
@@ -202,6 +203,13 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           Saves2.preload()
         },
+        query: graphql`
+          query collectorProfileRoutes_Saves2Query {
+            me {
+              ...CollectorProfileSaves2Route_me
+            }
+          }
+        `,
       },
       {
         path: "saves2/:id",

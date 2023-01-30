@@ -3,7 +3,7 @@ import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prep
 import { FC } from "react"
 
 interface FourUpImageLayoutProps {
-  imageURLs: string[]
+  imageURLs: (string | null)[]
 }
 
 interface RowImageProps {
