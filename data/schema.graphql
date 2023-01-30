@@ -7646,6 +7646,11 @@ type CurrentEvent {
 # Date in YYYY-MM-DD format
 scalar Date
 
+# A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+# `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+# 8601 standard for representation of dates and times using the Gregorian calendar.
+scalar DateTime
+
 type DaySchedule {
   dayOfWeek: String
   endTime: Int
@@ -10740,6 +10745,28 @@ type MarkNotificationAsReadSuccess {
   success: Boolean
 }
 
+type MarkNotificationsAsSeenFailure {
+  mutationError: GravityMutationError
+}
+
+input MarkNotificationsAsSeenInput {
+  clientMutationId: String
+  until: DateTime!
+}
+
+type MarkNotificationsAsSeenPayload {
+  clientMutationId: String
+  responseOrError: MarkNotificationsAsSeenResponseOrError
+}
+
+union MarkNotificationsAsSeenResponseOrError =
+    MarkNotificationsAsSeenFailure
+  | MarkNotificationsAsSeenSuccess
+
+type MarkNotificationsAsSeenSuccess {
+  success: Boolean
+}
+
 union Match =
     Article
   | Artist
@@ -11241,6 +11268,9 @@ type Me implements Node {
 
   # A count of unread notifications.
   unreadNotificationsCount: Int!
+
+  # A count of unseen notifications.
+  unseenNotificationsCount: Int!
 
   # A list of lots a user is watching.
   watchedLotConnection(
@@ -11773,6 +11803,11 @@ type Mutation {
     input: MarkNotificationAsReadInput!
   ): MarkNotificationAsReadPayload
 
+  # Mark notifications as seen
+  markNotificationsAsSeen(
+    input: MarkNotificationsAsSeenInput!
+  ): MarkNotificationsAsSeenPayload
+
   # Merge multiple artist records in order to deduplicate artists
   mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
 
@@ -12239,6 +12274,11 @@ type NotificationCounts {
     label: String
   ): FormattedNumber
   unread(
+    # Returns a `String` when format is specified. e.g.`'0,0.0000''`
+    format: String
+    label: String
+  ): FormattedNumber
+  unseen(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
     label: String

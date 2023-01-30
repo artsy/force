@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27373a86c5908e268a5675f0033a37bc>>
+ * @generated SignedSource<<ec8625a1b35dc13513ad57b001689984>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,6 +80,13 @@ const node: ConcreteRequest = {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "unseenNotificationsCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -89,12 +96,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "fcad35569728dba5274eae66eabbcd8d",
+    "cacheID": "ec976fe5ff6b59412b518bf94d4f33dd",
     "id": null,
     "metadata": {},
     "name": "NavBarMobileMenuNotificationsIndicatorQuery",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicatorQuery {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n  unseenNotificationsCount\n}\n"
   }
 };
 

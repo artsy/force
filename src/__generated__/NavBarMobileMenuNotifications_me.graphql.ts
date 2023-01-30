@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<256df34dea610f5b0f0c98e34048963f>>
+ * @generated SignedSource<<f3612dffe88ecd2b814abbdb3fa7efd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type NavBarMobileMenuNotifications_me$data = {
   readonly unreadConversationCount: number;
   readonly unreadNotificationsCount: number;
+  readonly unseenNotificationsCount: number;
   readonly " $fragmentType": "NavBarMobileMenuNotifications_me";
 };
 export type NavBarMobileMenuNotifications_me$key = {
@@ -39,12 +40,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "unreadConversationCount",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "unseenNotificationsCount",
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "0064720241150f809384bc103216037a";
+(node as any).hash = "edc8de2d253d1ce56d8c58bfb45abe93";
 
 export default node;

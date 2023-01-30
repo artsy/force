@@ -23,6 +23,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       Me: () => ({
         unreadConversationCount: 0,
         unreadNotificationsCount: 0,
+        unseenNotificationsCount: 0,
       }),
     })
 
@@ -47,6 +48,7 @@ describe("NavBarMobileMenuNotificationsIndicator", () => {
       Me: () => ({
         unreadConversationCount: 0,
         unreadNotificationsCount: 5,
+        unseenNotificationsCount: 1,
       }),
     })
 
