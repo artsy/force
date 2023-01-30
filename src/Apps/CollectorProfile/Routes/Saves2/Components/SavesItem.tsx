@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/FourUpImageLayout"
+import { StackedImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/StackedImageLayout"
 import { FC } from "react"
 
 const DROP_SHADOW = "0px 2px 12px rgba(0, 0, 0, 0.13)"
@@ -8,13 +9,17 @@ interface SavesItemProps {
   title: string
   artworksCount: number
   isSelected?: boolean
+  imagesLayout: "stacked" | "grid"
 }
 
 export const SavesItem: FC<SavesItemProps> = ({
   title,
   artworksCount,
   isSelected,
+  imagesLayout,
 }) => {
+  const imageURLs = []
+
   return (
     <Flex
       p={1}
@@ -27,7 +32,11 @@ export const SavesItem: FC<SavesItemProps> = ({
       borderColor={isSelected ? "brand" : "transparent"}
       style={isSelected ? { boxShadow: DROP_SHADOW } : undefined}
     >
-      <FourUpImageLayout imageURLs={[]} />
+      {imagesLayout === "stacked" ? (
+        <StackedImageLayout imageURLs={imageURLs} />
+      ) : (
+        <FourUpImageLayout imageURLs={imageURLs} />
+      )}
 
       <Box>
         <Text variant={["xs", "sm-display"]} overflowEllipsis>
