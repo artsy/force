@@ -10,6 +10,6 @@ node \
   --max_old_space_size=4096 \
   ./node_modules/.bin/jest \
     --logHeapUsage \
-    --maxWorkers 3 \
+    --maxWorkers 2 \
     --config jest.config.js \
     "$@"
