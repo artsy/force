@@ -56,7 +56,7 @@ type State = {
   options: AuthDialogOptions
 }
 
-const INITIAL_STATE: State = {
+export const INITIAL_STATE: State = {
   analytics: {
     contextModule: ContextModule.header,
     trigger: "click",
@@ -66,7 +66,7 @@ const INITIAL_STATE: State = {
   options: {},
 }
 
-const AuthDialogContext = createContext<{
+export const AuthDialogContext = createContext<{
   dispatch: React.Dispatch<Action>
   hideAuthDialog(): void
   showAuthDialog(options: {
@@ -90,7 +90,7 @@ type Action =
   | { type: "SHOW" }
   | { type: "HIDE" }
 
-const reducer = (state: State, action: Action) => {
+export const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case "MODE":
       return { ...state, mode: action.payload.mode }

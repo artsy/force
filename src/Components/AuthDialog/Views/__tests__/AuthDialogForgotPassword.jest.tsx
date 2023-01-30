@@ -1,3 +1,4 @@
+//
 import { screen, render, fireEvent, waitFor } from "@testing-library/react"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { forgotPassword } from "Utils/auth"
@@ -10,6 +11,7 @@ jest.mock("Utils/getENV", () => ({
   getENV: jest.fn().mockImplementation(key => {
     return {
       AP: {},
+      APP_URL: "https://www.artsy.net",
     }[key]
   }),
 }))
