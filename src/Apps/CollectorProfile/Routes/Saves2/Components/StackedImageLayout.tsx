@@ -68,7 +68,6 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         src={image.src}
         srcSet={image.srcSet}
         aria-label="Image"
-        preventRightClick
       />
     </Box>
   )

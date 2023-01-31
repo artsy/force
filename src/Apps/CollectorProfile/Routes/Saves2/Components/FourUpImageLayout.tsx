@@ -64,7 +64,6 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
     <Image
       width={SIZE}
       height={SIZE}
-      preventRightClick
       src={image.src}
       srcSet={image.srcSet}
       aria-label="Image"
