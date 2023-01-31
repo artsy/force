@@ -572,6 +572,52 @@ describe("Payment", () => {
 
   describe("Private sale orders", () => {
     let page: PaymentTestPage
+    const paymentMethodExpectsMap: Record<
+      Exclude<CommercePaymentMethodEnum, "%future added value">,
+      () => void
+    > = {
+      CREDIT_CARD: () => {
+        expect(
+          page
+            .find(CreditCardPickerFragmentContainer)
+            .closest(Collapse)
+            .first()
+            .props().open
+        ).toBe(true)
+      },
+      WIRE_TRANSFER: () => {
+        expect(page.text()).toContain(
+          "• To pay by wire transfer, complete checkout to view banking"
+        )
+        expect(page.text()).toContain(
+          "• Please inform your bank that you will be responsible for all wire transfer fees."
+        )
+      },
+      US_BANK_ACCOUNT: () => {
+        expect(page.text()).toContain(
+          "Search for your bank institution or select from the options below."
+        )
+        expect(
+          page
+            .find(BankAccountPickerFragmentContainer)
+            .closest(Collapse)
+            .first()
+            .props().open
+        ).toBe(true)
+      },
+      SEPA_DEBIT: () => {
+        expect(page.text()).toContain(
+          "Your bank account must be located in one of the SEPA countries."
+        )
+        expect(
+          page
+            .find(BankAccountPickerFragmentContainer)
+            .closest(Collapse)
+            .first()
+            .props().open
+        ).toBe(true)
+      },
+    }
 
     const privateSaleOrderWithWire = {
       ...PrivateSaleOrderWithShippingDetails,
@@ -583,26 +629,11 @@ describe("Payment", () => {
 
     beforeEach(() => {
       jest.clearAllMocks()
-      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
-        return {
-          selectedPaymentMethod: "WIRE_TRANSFER",
-        }
-      })
 
       const wrapper = getWrapper({
         CommerceOrder: () => privateSaleOrderWithWire,
       })
       page = new PaymentTestPage(wrapper)
-    })
-
-    it("renders correct content for wire transfer", () => {
-      expect(page.text()).toContain(
-        "• To pay by wire transfer, complete checkout to view banking"
-      )
-
-      expect(page.text()).toContain(
-        "• Please inform your bank that you will be responsible for all wire transfer fees."
-      )
     })
 
     it("shows private sale stepper if the order source is private sale", () => {
@@ -611,5 +642,44 @@ describe("Payment", () => {
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
+
+    it("shows avaliable payment methods", () => {
+      const paymentMethods = page.find("[data-test='payment-methods']").first()
+      expect(paymentMethods.text()).toContain("Wire transfer")
+      expect(paymentMethods.text()).toContain("Credit card")
+    })
+
+    it.each(
+      Object.keys(paymentMethodExpectsMap).map(paymentMethod => [paymentMethod])
+    )(
+      "shows content for %s if only this payment method avaliable",
+      paymentMethod => {
+        const order = {
+          ...PrivateSaleOrderWithShippingDetails,
+          availablePaymentMethods: [
+            paymentMethod,
+          ] as CommercePaymentMethodEnum[],
+        }
+        ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+          return {
+            selectedPaymentMethod: paymentMethod,
+            setSelectedPaymentMethod: jest.fn(),
+            setBankAccountSelection: jest.fn(),
+            setIsSavingPayment: jest.fn(),
+          }
+        })
+
+        const wrapper = getWrapper({
+          CommerceOrder: () => order,
+        })
+        page = new PaymentTestPage(wrapper)
+
+        paymentMethodExpectsMap[paymentMethod]()
+        expect(page.find("[data-test='payment-methods']").length).toEqual(0)
+        expect(
+          page.find(Collapse).filterWhere(x => x.prop("open")).length
+        ).toEqual(1)
+      }
+    )
   })
 })

@@ -1,5 +1,4 @@
-import { getInitialPaymentMethodValue } from "./../orderUtils"
-import { isPaymentSet } from "../orderUtils"
+import { getInitialPaymentMethodValue, isPaymentSet } from "./../orderUtils"
 import {
   CommercePaymentMethodEnum,
   Payment_order$data,
@@ -84,6 +83,16 @@ describe("order utils", () => {
             availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
           } as unknown) as Payment_order$data)
         ).toEqual("CREDIT_CARD")
+      })
+
+      it("returns WIRE_TRANSFER if available payment methods doesn't include US_BANK_ACCOUNT and CREDIT_CARD", () => {
+        expect(
+          getInitialPaymentMethodValue(({
+            paymentMethodDetails: null,
+            paymentMethod: "CREDIT_CARD",
+            availablePaymentMethods: ["WIRE_TRANSFER"],
+          } as unknown) as Payment_order$data)
+        ).toEqual("WIRE_TRANSFER")
       })
     })
   })
