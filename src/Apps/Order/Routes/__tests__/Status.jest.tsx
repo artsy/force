@@ -668,12 +668,13 @@ describe("Status", () => {
           )
         })
 
-        it("renders content for Artsy's bank details", async () => {
+        it("renders correct Artsy bank details for orders in USD", async () => {
           const wrapper = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
               paymentMethod: "WIRE_TRANSFER",
+              currencyCode: "USD",
             }),
           })
           const page = new StatusTestPage(wrapper)
@@ -687,6 +688,52 @@ describe("Status", () => {
           expect(page.text()).toContain("Wells Fargo Bank, N.A.")
           expect(page.text()).toContain("420 Montgomery Street")
           expect(page.text()).toContain("San Francisco, CA 9410")
+        })
+
+        it("renders correct Artsy bank details for orders in GBP", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+              currencyCode: "GBP",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain("Send wire transfer to")
+          expect(page.text()).toContain("Account name: Art.sy Inc.")
+          expect(page.text()).toContain("Account Number: 88005417")
+          expect(page.text()).toContain("IBAN: GB30PNBP16567188005417")
+          expect(page.text()).toContain("SWIFT: PNBPGB2L")
+          expect(page.text()).toContain("Sort Code: 16-56-71")
+          expect(page.text()).toContain("Bank address")
+          expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
+          expect(page.text()).toContain("1 Planation Place")
+          expect(page.text()).toContain("30 Fenchurch Street")
+          expect(page.text()).toContain("London, United Kingdom, EC3M 3BD")
+        })
+
+        it("renders correct Artsy bank details for orders in EUR", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => ({
+              ...BuyOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+              currencyCode: "EUR",
+            }),
+          })
+          const page = new StatusTestPage(wrapper)
+
+          expect(page.text()).toContain("Send wire transfer to")
+          expect(page.text()).toContain("Account name: Art.sy Inc.")
+          expect(page.text()).toContain("IBAN: GB73PNBP16567188005419")
+          expect(page.text()).toContain("BIC: PNBPGB2LXXX")
+          expect(page.text()).toContain("Bank address")
+          expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
+          expect(page.text()).toContain("1 Planation Place")
+          expect(page.text()).toContain("30 Fenchurch Street")
+          expect(page.text()).toContain("London, United Kingdom, EC3M 3BD")
         })
       })
 
