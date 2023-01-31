@@ -1,12 +1,10 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, DROP_SHADOW, Flex, Text } from "@artsy/palette"
 import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/FourUpImageLayout"
 import { StackedImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/StackedImageLayout"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { SavesItem_item$data } from "__generated__/SavesItem_item.graphql"
-
-const ITEM_DROP_SHADOW = "0px 2px 12px rgba(0, 0, 0, 0.13)"
 
 interface SavesItemProps {
   isSelected?: boolean
@@ -34,7 +32,7 @@ const SavesItem: FC<SavesItemProps> = ({
       flexDirection="column"
       justifyContent="space-between"
       borderColor={isSelected ? "brand" : "transparent"}
-      style={isSelected ? { boxShadow: ITEM_DROP_SHADOW } : undefined}
+      style={isSelected ? { boxShadow: DROP_SHADOW } : undefined}
       onClick={onClick}
     >
       {imagesLayout === "stacked" ? (
