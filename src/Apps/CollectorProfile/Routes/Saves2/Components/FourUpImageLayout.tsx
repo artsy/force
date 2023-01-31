@@ -50,6 +50,7 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
         bg="black5"
         border="1px solid"
         borderColor="black10"
+        aria-label="Image placeholder"
       />
     )
   }
@@ -66,6 +67,7 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
       preventRightClick
       src={image.src}
       srcSet={image.srcSet}
+      aria-label="Image"
     />
   )
 }
