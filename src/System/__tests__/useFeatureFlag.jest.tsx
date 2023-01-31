@@ -125,7 +125,7 @@ describe("useTrackFeatureVariantView", () => {
     trackFeatureVariant()
 
     expect(window?.analytics?.track).toHaveBeenLastCalledWith(
-      "experimentViewed",
+      "experiment_viewed",
       {
         context_owner_slug: "daniel-arsham",
         context_owner_type: "artist",
