@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d1156ca1e33981616883a750cdc9126>>
+ * @generated SignedSource<<cd2af457c090e18d3fc5a62440fef9f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Status_order$data = {
   readonly __typename: string;
   readonly code: string;
+  readonly currencyCode: string;
   readonly displayState: CommerceOrderDisplayStateEnum;
   readonly internalID: string;
   readonly lineItems: {
@@ -116,6 +117,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
       "storageKey": null
     },
     {
@@ -439,6 +447,6 @@ return {
 };
 })();
 
-(node as any).hash = "dcda7489f9ffdb48ee8da16de8b16d6b";
+(node as any).hash = "2f8ee17c649f06304e663c56c1f01c26";
 
 export default node;

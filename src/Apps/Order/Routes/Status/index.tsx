@@ -54,6 +54,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
   const shouldButtonDisplay = isEigen && !isModal && !isDeclined
   const shouldContinueToInbox =
     isEigen && isSubmittedOffer && order.source === "artwork_page"
+
   const {
     title,
     description,
@@ -172,6 +173,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       __typename
       internalID
       code
+      currencyCode
       displayState
       state
       mode
