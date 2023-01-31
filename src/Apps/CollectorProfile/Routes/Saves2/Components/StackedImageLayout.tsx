@@ -50,6 +50,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         left={OFFSET_BY_INDEX}
         border="1px solid"
         borderColor="black10"
+        aria-label="Image placeholder"
       />
     )
   }
@@ -66,6 +67,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         height={SIZE}
         src={image.src}
         srcSet={image.srcSet}
+        aria-label="Image"
         preventRightClick
       />
     </Box>
