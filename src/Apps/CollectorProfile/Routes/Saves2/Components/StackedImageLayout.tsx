@@ -67,7 +67,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         height={SIZE}
         src={image.src}
         srcSet={image.srcSet}
-        aria-label="Image"
+        alt=""
       />
     </Box>
   )

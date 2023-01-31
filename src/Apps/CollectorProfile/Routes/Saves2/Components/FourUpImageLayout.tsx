@@ -66,7 +66,7 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
       height={SIZE}
       src={image.src}
       srcSet={image.srcSet}
-      aria-label="Image"
+      alt=""
     />
   )
 }

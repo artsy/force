@@ -65,7 +65,7 @@ describe("SavesItem", () => {
       CollectionsConnection: () => collectionsConnection,
     })
 
-    expect(screen.getAllByLabelText("Image")).toHaveLength(4)
+    expect(screen.getAllByAltText("")).toHaveLength(4)
   })
 
   it("should call `onClick` handler when the item is tapped", () => {
