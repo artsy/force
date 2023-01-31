@@ -1,10 +1,12 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
 import { SavesItem_test_Query } from "__generated__/SavesItem_test_Query.graphql"
 
 jest.unmock("react-relay")
+
+const mockOnClick = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
   Component: props => {
@@ -15,7 +17,7 @@ const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
         <SavesItemFragmentContainer
           item={item}
           imagesLayout="grid"
-          onClick={jest.fn()}
+          onClick={mockOnClick}
         />
       )
     }
@@ -38,6 +40,10 @@ const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
 })
 
 describe("SavesItem", () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it("should render the title", () => {
     renderWithRelay({
       CollectionsConnection: () => collectionsConnection,
@@ -51,16 +57,65 @@ describe("SavesItem", () => {
       CollectionsConnection: () => collectionsConnection,
     })
 
-    expect(screen.getByText("5 Artworks")).toBeInTheDocument()
+    expect(screen.getByText("4 Artworks")).toBeInTheDocument()
   })
 
-  // TODO: Check images
-  // TODO: Check onClick handler
+  it("should render all artwork images", () => {
+    renderWithRelay({
+      CollectionsConnection: () => collectionsConnection,
+    })
+
+    expect(screen.getAllByLabelText("Image")).toHaveLength(4)
+  })
+
+  it("should call `onClick` handler when the item is tapped", () => {
+    renderWithRelay({
+      CollectionsConnection: () => collectionsConnection,
+    })
+
+    fireEvent.click(screen.getByText("Collection Name"))
+
+    expect(mockOnClick).toHaveBeenCalled()
+  })
 })
+
+const artworksConnection = {
+  edges: [
+    {
+      node: {
+        image: {
+          url: "artwork-image-url-1",
+        },
+      },
+    },
+    {
+      node: {
+        image: {
+          url: "artwork-image-url-2",
+        },
+      },
+    },
+    {
+      node: {
+        image: {
+          url: "artwork-image-url-3",
+        },
+      },
+    },
+    {
+      node: {
+        image: {
+          url: "artwork-image-url-4",
+        },
+      },
+    },
+  ],
+}
 
 const collectionNode = {
   name: "Collection Name",
-  artworksCount: 5,
+  artworksCount: 4,
+  artworksConnection,
   default: false,
 }
 
