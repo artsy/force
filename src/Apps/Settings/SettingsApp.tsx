@@ -1,11 +1,12 @@
-import { Text } from "@artsy/palette"
+import { Text, useToasts } from "@artsy/palette"
 import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
-import React from "react"
+import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
+import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 
@@ -17,7 +18,26 @@ interface SettingsAppProps {
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const { isLoggedIn } = useSystemContext()
+
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
+
+  const { sendToast } = useToasts()
+
+  const {
+    match: { location },
+  } = useRouter()
+
+  // Errors might come back from 3rd party authentication
+  // as a string in an `error` query param, so display them if present.
+  useEffect(() => {
+    if (!location.query.error) return
+
+    sendToast({
+      message: location.query.error,
+      variant: "error",
+      ttl: Infinity,
+    })
+  }, [location.query.error, sendToast])
 
   const tabsWhenCollectorProfileEnabled = compact([
     { name: "Edit Profile", url: "/settings/edit-profile" },
