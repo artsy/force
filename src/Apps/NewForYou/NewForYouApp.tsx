@@ -1,12 +1,13 @@
 import React, { FC } from "react"
 import { MetaTags } from "Components/MetaTags"
-import { Message, Spacer, Text } from "@artsy/palette"
+import { Clickable, Message, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NewForYouApp_viewer$data } from "__generated__/NewForYouApp_viewer.graphql"
 import { NewForYouArtworksGridFragmentContainer } from "Apps/NewForYou/Components/NewForYouArtworksGrid"
-import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System"
-import { useRouter } from "System/Router/useRouter"
+import { useAuthDialog } from "Components/AuthDialog"
+import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { ModalType } from "Components/Authentication/Types"
 
 interface NewForYouAppProps {
   viewer: NewForYouApp_viewer$data
@@ -14,24 +15,50 @@ interface NewForYouAppProps {
 
 export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
   const { isLoggedIn } = useSystemContext()
-  const { route } = useRouter()
+
+  const { showAuthDialog } = useAuthDialog()
+
+  const handleClick = () => {
+    showAuthDialog({
+      current: {
+        mode: "Login",
+        options: {
+          title: mode => {
+            const action = mode === "Login" ? "Log in" : "Sign up"
+            return `${action} to see your personalized recommendations`
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.newWorksForYouRail as AuthContextModule,
+        },
+      },
+      legacy: {
+        mode: ModalType.login,
+        copy: "Log in to see your personalized recommendations",
+        contextModule: ContextModule.newWorksForYouRail as AuthContextModule,
+      },
+    })
+  }
 
   return (
     <>
-      <Spacer y={2} />
       <MetaTags title="New For You" />
-      <Text variant="xl" mt={4}>
-        New Works for You
-      </Text>
+
       <Spacer y={4} />
+
+      <Text variant="xl">New Works for You</Text>
+
+      <Spacer y={4} />
+
       {!isLoggedIn && (
         <>
           <Message variant="warning">
-            <RouterLink to={`/login?redirectTo=${route.path}`}>
+            <Clickable onClick={handleClick} textDecoration="underline">
               Log in
-            </RouterLink>{" "}
+            </Clickable>{" "}
             to see your personalized recommendations.
           </Message>
+
           <Spacer y={4} />
         </>
       )}
