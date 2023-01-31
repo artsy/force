@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Spacer } from "@artsy/palette"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
+import { cropped } from "Utils/resized"
 
 interface FourUpImageLayoutProps {
   imageURLs: (string | null)[]
@@ -53,5 +54,18 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
     )
   }
 
-  return <Image width={SIZE} height={SIZE} preventRightClick src={url} />
+  const image = cropped(url, {
+    width: LARGE_IMAGE_SIZE,
+    height: LARGE_IMAGE_SIZE,
+  })
+
+  return (
+    <Image
+      width={SIZE}
+      height={SIZE}
+      preventRightClick
+      src={image.src}
+      srcSet={image.srcSet}
+    />
+  )
 }
