@@ -15,6 +15,7 @@ import {
 } from "./Components"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { HeaderNew } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Header"
+import { Hightlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -46,7 +47,11 @@ export const MarketingLandingApp = () => {
     return (
       <>
         <SellMeta />
-        <HeaderNew />
+
+        <Join separator={<Spacer y={[6, 12]} />}>
+          <HeaderNew />
+          <Hightlights />
+        </Join>
       </>
     )
   }

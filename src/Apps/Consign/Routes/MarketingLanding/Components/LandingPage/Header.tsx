@@ -45,14 +45,14 @@ export const HeaderNew = () => {
           Sell art from your collection
         </Text>
 
-        <Spacer y={[0, 2]} />
+        <Spacer y={[0.5, 2]} />
 
         <Text variant={["xs", "lg"]}>
           Our experts find the best sales opportunity for your work, through our
           vast global network of buyers.
         </Text>
 
-        <Spacer y={[2, 4, 6]} />
+        <Spacer y={[4, 6]} />
 
         <GridColumns>
           <Column span={4}>
@@ -65,6 +65,7 @@ export const HeaderNew = () => {
               onClick={event => {
                 /* track event */
               }}
+              mb={[1, 0]}
             >
               Start Selling
             </Button>
