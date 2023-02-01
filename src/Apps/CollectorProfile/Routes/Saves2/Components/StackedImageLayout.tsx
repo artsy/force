@@ -49,7 +49,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         top={OFFSET_BY_INDEX}
         left={OFFSET_BY_INDEX}
         border="1px solid"
-        borderColor="black10"
+        borderColor="black15"
         aria-label="Image placeholder"
         justifyContent="center"
         alignItems="center"

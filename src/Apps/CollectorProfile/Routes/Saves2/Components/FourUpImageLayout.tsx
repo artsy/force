@@ -49,7 +49,7 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
         height={SIZE}
         bg="black5"
         border="1px solid"
-        borderColor="black10"
+        borderColor="black15"
         aria-label="Image placeholder"
         justifyContent="center"
         alignItems="center"
