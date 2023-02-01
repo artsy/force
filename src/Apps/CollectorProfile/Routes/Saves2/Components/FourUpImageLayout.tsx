@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Spacer } from "@artsy/palette"
+import { Box, Flex, Image, NoArtworkIcon, Spacer } from "@artsy/palette"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
@@ -44,14 +44,18 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
 
   if (url === null) {
     return (
-      <Box
+      <Flex
         width={SIZE}
         height={SIZE}
         bg="black5"
         border="1px solid"
         borderColor="black10"
         aria-label="Image placeholder"
-      />
+        justifyContent="center"
+        alignItems="center"
+      >
+        <NoArtworkIcon width="18px" height="18px" fill="black60" />
+      </Flex>
     )
   }
 
