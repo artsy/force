@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77c6dff63895c0215af19752ad1d4140>>
+ * @generated SignedSource<<0dd871f2185fe16e73c7741a88f85a25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type MarkNotificationsAsSeenInput = {
   clientMutationId?: string | null;
-  until: any;
+  until: string;
 };
 export type markNotificationsAsSeenMutation$variables = {
   input: MarkNotificationsAsSeenInput;
