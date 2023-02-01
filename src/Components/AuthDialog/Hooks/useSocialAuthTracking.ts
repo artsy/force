@@ -1,8 +1,9 @@
+import * as Yup from "yup"
+import Cookies from "cookies-js"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { useEffect } from "react"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
-import * as Yup from "yup"
 
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 
@@ -53,7 +54,7 @@ export const useSocialAuthTracking = () => {
   }, [location.pathname, track, user])
 }
 
-const schema = Yup.object().shape({
+const schema = Yup.object({
   action: Yup.string().oneOf(["loggedIn", "signedUp"]).required(),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
 })
