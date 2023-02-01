@@ -7130,6 +7130,8 @@ input CreateFeatureMutationInput {
   description: String
   layout: FeatureLayouts
   name: String!
+  sourceBucket: String
+  sourceKey: String
   subheadline: String
 }
 
@@ -7646,11 +7648,6 @@ type CurrentEvent {
 # Date in YYYY-MM-DD format
 scalar Date
 
-# A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
-# `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
-# 8601 standard for representation of dates and times using the Gregorian calendar.
-scalar DateTime
-
 type DaySchedule {
   dayOfWeek: String
   endTime: Int
@@ -7713,6 +7710,30 @@ type DeleteBankAccountPayload {
   bankAccountOrError: BankAccountMutationType
   clientMutationId: String
   me: Me
+}
+
+type DeleteCollectionFailure {
+  mutationError: GravityMutationError
+}
+
+input deleteCollectionInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteCollectionPayload {
+  clientMutationId: String
+
+  # On success: the deleted collection
+  responseOrError: DeleteCollectionResponseOrError
+}
+
+union DeleteCollectionResponseOrError =
+    DeleteCollectionFailure
+  | DeleteCollectionSuccess
+
+type DeleteCollectionSuccess {
+  collection: Collection
 }
 
 type DeleteConversationFailure {
@@ -10751,7 +10772,9 @@ type MarkNotificationsAsSeenFailure {
 
 input MarkNotificationsAsSeenInput {
   clientMutationId: String
-  until: DateTime!
+
+  # Until what point of time notifications were seen. ISO8601 standard-formatted string.
+  until: String!
 }
 
 type MarkNotificationsAsSeenPayload {
@@ -11705,6 +11728,9 @@ type Mutation {
   # Remove a bank account
   deleteBankAccount(input: DeleteBankAccountInput!): DeleteBankAccountPayload
 
+  # Delete a collection
+  deleteCollection(input: deleteCollectionInput!): deleteCollectionPayload
+
   # Soft-delete a conversation.
   deleteConversation(
     input: DeleteConversationMutationInput!
@@ -11907,6 +11933,9 @@ type Mutation {
   updateCMSLastAccessTimestamp(
     input: UpdateCMSLastAccessTimestampMutationInput!
   ): UpdateCMSLastAccessTimestampMutationPayload
+
+  # Update a collection
+  updateCollection(input: updateCollectionInput!): updateCollectionPayload
 
   # Updating a collector profile (loyalty applicant status).
   updateCollectorProfile(
@@ -16773,6 +16802,31 @@ type UpdateCMSLastAccessTimestampSuccess {
   partner: Partner
 }
 
+type UpdateCollectionFailure {
+  mutationError: GravityMutationError
+}
+
+input updateCollectionInput {
+  clientMutationId: String
+
+  # The internal ID of the collection
+  id: String!
+  name: String!
+}
+
+type updateCollectionPayload {
+  clientMutationId: String
+  responseOrError: UpdateCollectionResponseOrError
+}
+
+union UpdateCollectionResponseOrError =
+    UpdateCollectionFailure
+  | UpdateCollectionSuccess
+
+type UpdateCollectionSuccess {
+  collection: Collection
+}
+
 input UpdateCollectorProfileInput {
   # List of affiliated auction house ids, referencing Galaxy.
   affiliatedAuctionHouseIds: [String]
@@ -16983,13 +17037,15 @@ type UpdateFeatureFailure {
 }
 
 input UpdateFeatureMutationInput {
-  active: Boolean!
+  active: Boolean
   callout: String
   clientMutationId: String
   description: String
   id: String!
   layout: FeatureLayouts
-  name: String!
+  name: String
+  sourceBucket: String
+  sourceKey: String
   subheadline: String
 }
 
