@@ -26,7 +26,11 @@ export const StackedImageLayout: FC<StackedImageLayoutProps> = ({
   return (
     <Box position="relative">
       {reversedImageURLs.map((imageURL, index) => (
-        <StackImage url={imageURL} index={index} />
+        <StackImage
+          key={`stacked-image-${index}`}
+          url={imageURL}
+          index={index}
+        />
       ))}
     </Box>
   )
