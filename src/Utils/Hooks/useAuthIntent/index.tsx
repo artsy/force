@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import Cookies from "cookies-js"
 import { createContext, FC, useContext, useEffect, useState } from "react"
 import { useSystemContext } from "System"
@@ -19,27 +20,6 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
 
-const isValid = (value: any): value is AfterAuthAction => {
-  return (
-    typeof value === "object" &&
-    "action" in value &&
-    "kind" in value &&
-    "objectId" in value
-  )
-}
-
-const parse = (value: any): AfterAuthAction | null => {
-  try {
-    const parsed = JSON.parse(value)
-
-    if (!isValid(parsed)) return null
-
-    return parsed
-  } catch (err) {
-    return null
-  }
-}
-
 export const runAuthIntent = async ({
   user,
   relayEnvironment,
@@ -57,7 +37,12 @@ export const runAuthIntent = async ({
 
   const value = parse(afterAuthActionCookie)
 
-  if (value === null) return
+  if (!value) {
+    // Expire the cookie so we don't keep trying to parse it
+    Cookies.expire(AFTER_AUTH_ACTION_KEY)
+
+    return
+  }
 
   try {
     await (() => {
@@ -141,4 +126,30 @@ export const useAuthIntent = () => {
 
 export const setAfterAuthAction = (afterAuthAction: AfterAuthAction) => {
   Cookies.set(AFTER_AUTH_ACTION_KEY, JSON.stringify(afterAuthAction))
+}
+
+const schema = Yup.object({
+  action: Yup.string()
+    .oneOf(["associateSubmission", "createAlert", "follow", "save"])
+    .required(),
+  kind: Yup.string()
+    .oneOf(["artist", "artworks", "gene", "profile", "submission"])
+    .required(),
+  objectId: Yup.string().required(),
+})
+
+export const isValid = (value: any): value is AfterAuthAction => {
+  return schema.isValidSync(value)
+}
+
+const parse = (value: any): AfterAuthAction | null => {
+  try {
+    const parsed = JSON.parse(value)
+
+    if (!isValid(parsed)) return null
+
+    return parsed
+  } catch (err) {
+    return null
+  }
 }
