@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<368af23b13fc7e149d3901400acfab0e>>
+ * @generated SignedSource<<24a90a670b614110f164d63523f6fe37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -209,12 +209,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "994cb7cd4dc693780a21dda0bde22317",
+    "cacheID": "42b61fb95d73aa8c94ae0ef00d4e9ae7",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_Saves2Query",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
