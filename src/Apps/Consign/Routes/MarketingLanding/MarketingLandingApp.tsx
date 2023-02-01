@@ -13,8 +13,14 @@ import {
   SoldRecentlyOnArtsyQueryRenderer,
   WhySellWithArtsy,
 } from "./Components"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { HeaderNew } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Header"
 
 export const MarketingLandingApp = () => {
+  const enableNewSWALandingPage = useFeatureFlag(
+    "cx-swa-landing-page-redesign-2023"
+  )
+
   const {
     match: {
       location: { query },
@@ -34,7 +40,16 @@ export const MarketingLandingApp = () => {
         sessionStorage.setItem("utmParams", JSON.stringify(queryUtmParams))
       }
     }
-  }, [])
+  }, [query.utm_medium, query.utm_source, query.utm_term])
+
+  if (enableNewSWALandingPage) {
+    return (
+      <>
+        <SellMeta />
+        <HeaderNew />
+      </>
+    )
+  }
 
   return (
     <>
