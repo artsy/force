@@ -11934,6 +11934,9 @@ type Mutation {
     input: UpdateCMSLastAccessTimestampMutationInput!
   ): UpdateCMSLastAccessTimestampMutationPayload
 
+  # Update a collection
+  updateCollection(input: updateCollectionInput!): updateCollectionPayload
+
   # Updating a collector profile (loyalty applicant status).
   updateCollectorProfile(
     input: UpdateCollectorProfileInput!
@@ -16797,6 +16800,31 @@ union UpdateCMSLastAccessTimestampResponseOrError =
 
 type UpdateCMSLastAccessTimestampSuccess {
   partner: Partner
+}
+
+type UpdateCollectionFailure {
+  mutationError: GravityMutationError
+}
+
+input updateCollectionInput {
+  clientMutationId: String
+
+  # The internal ID of the collection
+  id: String!
+  name: String!
+}
+
+type updateCollectionPayload {
+  clientMutationId: String
+  responseOrError: UpdateCollectionResponseOrError
+}
+
+union UpdateCollectionResponseOrError =
+    UpdateCollectionFailure
+  | UpdateCollectionSuccess
+
+type UpdateCollectionSuccess {
+  collection: Collection
 }
 
 input UpdateCollectorProfileInput {
