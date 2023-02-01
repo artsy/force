@@ -69,9 +69,11 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
               dimensionsDisplay(artworkDimensions)}
           </Text>
         )}
-        <Text variant="sm" color="black60">
-          {attributionClass.shortDescription}
-        </Text>
+        {attributionClass && attributionClass.shortDscription && (
+          <Text variant="sm" color="black60">
+            {attributionClass.shortDescription}
+          </Text>
+        )}
       </Flex>
       {image && image.resized && (
         <Image
