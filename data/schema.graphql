@@ -10766,6 +10766,30 @@ type MarkNotificationAsReadSuccess {
   success: Boolean
 }
 
+type MarkNotificationsAsSeenFailure {
+  mutationError: GravityMutationError
+}
+
+input MarkNotificationsAsSeenInput {
+  clientMutationId: String
+
+  # Until what point of time notifications were seen. ISO8601 standard-formatted string.
+  until: String!
+}
+
+type MarkNotificationsAsSeenPayload {
+  clientMutationId: String
+  responseOrError: MarkNotificationsAsSeenResponseOrError
+}
+
+union MarkNotificationsAsSeenResponseOrError =
+    MarkNotificationsAsSeenFailure
+  | MarkNotificationsAsSeenSuccess
+
+type MarkNotificationsAsSeenSuccess {
+  success: Boolean
+}
+
 union Match =
     Article
   | Artist
@@ -11267,6 +11291,9 @@ type Me implements Node {
 
   # A count of unread notifications.
   unreadNotificationsCount: Int!
+
+  # A count of unseen notifications.
+  unseenNotificationsCount: Int!
 
   # A list of lots a user is watching.
   watchedLotConnection(
@@ -11802,6 +11829,11 @@ type Mutation {
     input: MarkNotificationAsReadInput!
   ): MarkNotificationAsReadPayload
 
+  # Mark notifications as seen
+  markNotificationsAsSeen(
+    input: MarkNotificationsAsSeenInput!
+  ): MarkNotificationsAsSeenPayload
+
   # Merge multiple artist records in order to deduplicate artists
   mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
 
@@ -12268,6 +12300,11 @@ type NotificationCounts {
     label: String
   ): FormattedNumber
   unread(
+    # Returns a `String` when format is specified. e.g.`'0,0.0000''`
+    format: String
+    label: String
+  ): FormattedNumber
+  unseen(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
     format: String
     label: String
