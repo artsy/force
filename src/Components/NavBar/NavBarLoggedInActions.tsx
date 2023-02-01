@@ -24,8 +24,11 @@ export const NavBarLoggedInActions: React.FC<Partial<
   const { trackEvent } = useTracking()
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
   const unreadConversationCount = me?.unreadConversationCount ?? 0
+  const unseenNotificationsCount = me?.unseenNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
+  const hasUnseenNotifications = unseenNotificationsCount > 0
+  const shouldDisplayBlueDot = hasNotifications && hasUnseenNotifications
 
   return (
     <>
@@ -60,7 +63,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
           >
             <BellIcon title="Notifications" fill="currentColor" />
 
-            {hasNotifications && (
+            {shouldDisplayBlueDot && (
               <NavBarNotificationIndicator
                 position="absolute"
                 top="15px"
@@ -125,6 +128,7 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
         query NavBarLoggedInActionsQuery {
           me {
             unreadNotificationsCount
+            unseenNotificationsCount
             unreadConversationCount
             followsAndSaves {
               notifications: bundledArtworksByArtistConnection(

@@ -25,8 +25,11 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
   const { trackEvent } = useTracking()
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
+  const unseenNotificationsCount = me?.unseenNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
+  const hasUnseenNotifications = unseenNotificationsCount > 0
+  const shouldDisplayBlueDot = hasNotifications && hasUnseenNotifications
 
   return (
     <>
@@ -51,7 +54,7 @@ export const NavBarMobileMenuNotifications: React.FC<NavBarMobileMenuNotificatio
             }}
           >
             Activity
-            {hasNotifications && <Indicator />}
+            {shouldDisplayBlueDot && <Indicator />}
           </NavBarMobileMenuItemLink>
           <NavBarMobileMenuItemLink
             to="/user/conversations"
@@ -76,6 +79,7 @@ const NavBarMobileMenuNotificationsFragmentContainer = createFragmentContainer(
       fragment NavBarMobileMenuNotifications_me on Me {
         unreadNotificationsCount
         unreadConversationCount
+        unseenNotificationsCount
       }
     `,
   }

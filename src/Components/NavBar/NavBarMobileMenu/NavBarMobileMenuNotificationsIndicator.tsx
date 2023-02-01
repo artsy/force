@@ -16,9 +16,12 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
 }) => {
   const unreadConversationCount = me?.unreadConversationCount ?? 0
   const unreadNotificationsCount = me?.unreadNotificationsCount ?? 0
+  const unseenNotificationsCount = me?.unseenNotificationsCount ?? 0
   const hasConversations = unreadConversationCount > 0
   const hasNotifications = unreadNotificationsCount > 0
-  const shouldDisplayIndicator = hasConversations || hasNotifications
+  const hasUnseenNotifications = unseenNotificationsCount > 0
+  const shouldDisplayIndicator =
+    hasConversations || (hasNotifications && hasUnseenNotifications)
 
   if (!shouldDisplayIndicator) {
     return null
@@ -41,6 +44,7 @@ export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFra
       fragment NavBarMobileMenuNotificationsIndicator_me on Me {
         unreadConversationCount
         unreadNotificationsCount
+        unseenNotificationsCount
       }
     `,
   }
