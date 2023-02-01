@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f558874bec1d8d551e37f4ade9b028cd>>
+ * @generated SignedSource<<368af23b13fc7e149d3901400acfab0e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,7 +76,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 10
+                "value": 20
               }
             ],
             "concreteType": "CollectionsConnection",
@@ -200,7 +200,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "collectionsConnection(first:10)"
+            "storageKey": "collectionsConnection(first:20)"
           },
           (v0/*: any*/)
         ],
@@ -209,12 +209,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "890e0e56a1c9451d69544a5bdcb30c53",
+    "cacheID": "994cb7cd4dc693780a21dda0bde22317",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_Saves2Query",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  collectionsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

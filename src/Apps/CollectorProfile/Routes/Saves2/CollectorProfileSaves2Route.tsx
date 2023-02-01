@@ -38,7 +38,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
-        collectionsConnection(first: 10) {
+        collectionsConnection(first: 20) {
           edges {
             node {
               internalID
