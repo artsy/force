@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34e6b82b61d068d5c42c4e4c916760f1>>
+ * @generated SignedSource<<baccbbe38b2a8e279561a8410995e668>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -79,6 +79,7 @@ return {
             "name": "quiz",
             "plural": false,
             "selections": [
+              (v0/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -237,8 +238,7 @@ return {
                   }
                 ],
                 "storageKey": "quizArtworkConnection(first:16)"
-              },
-              (v0/*: any*/)
+              }
             ],
             "storageKey": null
           }
@@ -248,12 +248,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "540f4dcb29c417a208b53461376d6316",
+    "cacheID": "67730fc8bf683c963bb85f0ffd75e400",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    id\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
