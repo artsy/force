@@ -1,7 +1,11 @@
 import { SavesArtworkGridFragmentContainer } from "./SavesArtworkGrid"
+import { SavesArtworkGridHeader } from "./SavesArtworkGridHeader"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
-import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  Counts,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
 import { FC } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -27,13 +31,23 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection }) => {
     { value: "created_at", text: "Oldest First" },
   ]
 
+  const counts: Counts = {
+    artworks: collection.artworks?.totalCount ?? 0,
+  }
+
   return (
     <ArtworkFilterContextProvider
       filters={match.location.query}
+      counts={counts}
       sortOptions={sortOptions}
     >
       <Text variant="lg-display">{collection.name}</Text>
+
       <Spacer y={4} />
+
+      <SavesArtworkGridHeader />
+
+      <Spacer y={2} />
 
       <SavesArtworkGridFragmentContainer artworks={collection.artworks!} />
     </ArtworkFilterContextProvider>

@@ -1,4 +1,5 @@
-import { Shelf } from "@artsy/palette"
+import { Shelf, Spacer } from "@artsy/palette"
+import { SavesArtworksQueryRenderer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesArtworks"
 import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
 import { orderBy } from "lodash"
 import { FC, useRef } from "react"
@@ -40,16 +41,22 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   }
 
   return (
-    <Shelf showProgress={false}>
-      {collections.map(collection => (
-        <SavesItemFragmentContainer
-          key={collection.internalID}
-          item={collection}
-          isSelected={collection.internalID === selectedCollectionId}
-          imagesLayout={collection.default ? "grid" : "stacked"}
-        />
-      ))}
-    </Shelf>
+    <>
+      <Shelf showProgress={false}>
+        {collections.map(collection => (
+          <SavesItemFragmentContainer
+            key={collection.internalID}
+            item={collection}
+            isSelected={collection.internalID === selectedCollectionId}
+            imagesLayout={collection.default ? "grid" : "stacked"}
+          />
+        ))}
+      </Shelf>
+
+      <Spacer y={2} />
+
+      <SavesArtworksQueryRenderer collectionID={selectedCollectionId} />
+    </>
   )
 }
 
