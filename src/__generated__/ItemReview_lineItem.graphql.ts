@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<487901bf5dc083e4908a10a0423e350d>>
+ * @generated SignedSource<<de18aa322c82772431cb0889f08e1a83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type ItemReview_lineItem$data = {
       readonly cm: string | null;
       readonly in: string | null;
     } | null;
-    readonly edition_sets: ReadonlyArray<{
+    readonly editionSets: ReadonlyArray<{
       readonly dimensions: {
         readonly cm: string | null;
         readonly in: string | null;
@@ -95,7 +95,7 @@ return {
         },
         (v0/*: any*/),
         {
-          "alias": "edition_sets",
+          "alias": null,
           "args": null,
           "concreteType": "EditionSet",
           "kind": "LinkedField",
@@ -214,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "75f9c26984f79c37602c39fb3da9413c";
+(node as any).hash = "8601239fca6c49d96f72358690a5fa16";
 
 export default node;
