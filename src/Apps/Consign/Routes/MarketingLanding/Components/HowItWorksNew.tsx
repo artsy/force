@@ -5,33 +5,36 @@ const reasons = [
   {
     index: "01",
     title: "Submit your artwork",
-    text:
-      "Upload artwork images and details through our online tool. Our specialists will let you know if we currently have market demand.",
+    text: "Upload images and artwork details via our online submission tool.",
   },
   {
     index: "02",
-    title: "Meet your expert",
+    title: "Get an assigned expert",
     text:
-      "If your artwork is accepted, you’re matched with a specialist to guide you on pricing, sales options, and vetting potential buyers.",
+      "Our specialists will review your submission and provide a price estimate.",
   },
   {
     index: "03",
-    title: "Get a sales option",
+    title: "Be guided at every step",
     text:
-      "You’ll get a tailored sales strategy with a price estimate and we select the best sales option for your work, either auction, private sale or direct listing on Artsy.",
+      "Our specialists will review your submission and provide a price estimate.",
   },
   {
     index: "04",
     title: "Sell your work",
     text:
-      "Your artwork stays with you until it sells. Meanwhile, our logistics team handles everything, from organizing shipping to getting your payment to you.",
+      "Once your work sells, our logistics team will handle artwork shipping and payment.",
   },
 ]
 export const HowItWorksNew: React.FC = () => {
   return (
     <>
-      <Text mb={[2, 6]} variant={["lg-display", "xxl"]}>
+      <Text mb={[0.5, 1]} variant={["lg-display", "xxl"]}>
         How it works
+      </Text>
+      <Text mb={[2, 6]} variant={["xs", "sm"]}>
+        Submit your artwork to discover if Artsy currently has a market for your
+        work
       </Text>
       <GridColumns gridRowGap={10} alignItems="flex-start">
         {reasons.map(i => (
