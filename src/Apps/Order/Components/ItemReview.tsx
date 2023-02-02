@@ -17,32 +17,13 @@ const dimensionsDisplay = dimensions => (
 )
 
 export const ItemReview: React.FC<ItemReviewProps> = ({
-  lineItem: {
-    artwork: {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      date,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      dimensions: artworkDimensions,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      edition_sets,
-    },
-    artworkVersion: {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artistNames,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      title,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      medium,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      image,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      attributionClass,
-    },
-    editionSetId,
-  },
+  lineItem: { artwork, artworkVersion, editionSetId },
   orderSource,
 }) => {
   const isPrivateSale = orderSource === "private_sale"
+  const { artistNames, title, medium, attributionClass, image } =
+    artworkVersion || {}
+  const { date, dimensions: artworkDimensions, edition_sets } = artwork || {}
 
   return (
     <BorderBox p={[2, 4]}>
@@ -62,20 +43,21 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
             {editionSetId &&
               edition_sets &&
               dimensionsDisplay(
-                edition_sets.find(e => e.internalID === editionSetId).dimensions
+                edition_sets.find(e => e?.internalID === editionSetId)
+                  ?.dimensions
               )}
             {!editionSetId &&
               artworkDimensions &&
               dimensionsDisplay(artworkDimensions)}
           </Text>
         )}
-        {attributionClass && attributionClass.shortDscription && (
+        {attributionClass && attributionClass.shortDescription && (
           <Text variant="sm" color="black60">
             {attributionClass.shortDescription}
           </Text>
         )}
       </Flex>
-      {image && image.resized && (
+      {image && image.resized && title && (
         <Image
           maxHeight={375}
           width={185}
