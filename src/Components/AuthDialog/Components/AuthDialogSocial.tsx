@@ -52,6 +52,7 @@ export const AuthDialogSocial: FC = () => {
         as="a"
         href={`${applePath}?${query}`}
         onClick={handleClick("apple")}
+        rel="nofollow"
       >
         Continue with Apple
       </Button>
@@ -64,6 +65,7 @@ export const AuthDialogSocial: FC = () => {
         as="a"
         href={`${googlePath}?${query}`}
         onClick={handleClick("google")}
+        rel="nofollow"
       >
         Continue with Google
       </Button>
@@ -76,6 +78,7 @@ export const AuthDialogSocial: FC = () => {
         as="a"
         href={`${facebookPath}?${query}`}
         onClick={handleClick("facebook")}
+        rel="nofollow"
       >
         Continue with Facebook
       </Button>
