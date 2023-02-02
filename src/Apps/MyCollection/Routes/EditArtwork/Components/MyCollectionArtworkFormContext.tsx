@@ -47,13 +47,19 @@ export const useLocalImageState = () => {
 
     setLocalImages([...localImages, image])
   }
+
   const removeLocalImage = (photoID: string) => {
     setLocalImages(localImages.filter(image => image.photoID !== photoID))
+  }
+
+  const clearLocalImages = () => {
+    setLocalImages([])
   }
 
   return {
     localImages,
     addLocalImage,
     removeLocalImage,
+    clearLocalImages,
   }
 }
