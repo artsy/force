@@ -1,4 +1,5 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
+import { Button, Column, GridColumns, Text } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 const reasons = [
   {
@@ -36,6 +37,23 @@ export const HowItWorksNew: React.FC = () => {
         {reasons.map(i => (
           <RowItem index={i.index} title={i.title} text={i.text} />
         ))}
+      </GridColumns>
+      <GridColumns>
+        <Column span={2}>
+          <Button
+            mt={[4, 6]}
+            width={"100%"}
+            // @ts-ignore
+            as={RouterLink}
+            variant="primaryBlack"
+            to="/sell/submission"
+            onClick={event => {
+              /* track event */
+            }}
+          >
+            Start Selling
+          </Button>
+        </Column>
       </GridColumns>
     </>
   )
