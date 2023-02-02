@@ -23,7 +23,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   const isPrivateSale = orderSource === "private_sale"
   const { artistNames, title, medium, attributionClass, image } =
     artworkVersion || {}
-  const { date, dimensions: artworkDimensions, edition_sets } = artwork || {}
+  const { date, dimensions: artworkDimensions, editionSets } = artwork || {}
 
   return (
     <BorderBox p={[2, 4]}>
@@ -41,9 +41,9 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
         {!isPrivateSale && (
           <Text>
             {editionSetId &&
-              edition_sets &&
+              editionSets &&
               dimensionsDisplay(
-                edition_sets.find(e => e?.internalID === editionSetId)
+                editionSets.find(e => e?.internalID === editionSetId)
                   ?.dimensions
               )}
             {!editionSetId &&
@@ -51,13 +51,13 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
               dimensionsDisplay(artworkDimensions)}
           </Text>
         )}
-        {attributionClass && attributionClass.shortDescription && (
+        {attributionClass?.shortDescription && (
           <Text variant="sm" color="black60">
             {attributionClass.shortDescription}
           </Text>
         )}
       </Flex>
-      {image && image.resized && title && (
+      {image?.resized && title && (
         <Image
           maxHeight={375}
           width={185}
@@ -78,7 +78,7 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
           in
           cm
         }
-        edition_sets: editionSets {
+        editionSets {
           internalID
           dimensions {
             in
