@@ -16,8 +16,20 @@ export const privateSaleConditionsRoutes: AppRouteConfig[] = [
   {
     path: "/private-sale-conditions",
     getComponent: () => PrivateSaleConditions,
-    onClientSideRender: () => {
-      PrivateSaleConditionsApp.preload()
+    onServerSideRender: ({ req, res }) => {
+      if (!req.user) {
+        res.redirect(`/login?redirectTo=${req.originalUrl}`)
+      }
+    },
+    onClientSideRender: ({ match }) => {
+      if (!match.context.user) {
+        const redirectTo = match.location.pathname + match.location.search
+        match.router.push(
+          `/login?redirectTo=${redirectTo}&afterSignUpAction=${redirectTo}`
+        )
+      } else {
+        PrivateSaleConditionsApp.preload()
+      }
     },
   },
 ]

@@ -1,40 +1,12 @@
-import { useSystemContext } from "System"
-import { useAuthDialog } from "Components/AuthDialog"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { ModalType } from "Components/Authentication/Types"
+import { Flex, Spacer, Text } from "@artsy/palette"
 
 export const PrivateSaleConditions = () => {
-  const { user } = useSystemContext()
-  const { showAuthDialog } = useAuthDialog()
-
-  if (!user?.id) {
-    showAuthDialog({
-      current: {
-        mode: "SignUp",
-        options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to buy art with ease`
-          },
-        },
-        analytics: {
-          contextModule: ContextModule.artworkSidebar,
-          intent: Intent.buyNow,
-        },
-      },
-      legacy: {
-        mode: ModalType.signup,
-        redirectTo: "/",
-        contextModule: ContextModule.artworkSidebar,
-        intent: Intent.buyNow,
-        copy: "Sign up to buy art with ease",
-      },
-    })
-  }
-
+  // TODO: will be reworked once content is provided
   return (
-    <div>
-      <h1>conditions</h1>
-    </div>
+    <Flex flexDirection="column">
+      <Text variant="md">Artsy PS Conditions</Text>
+      <Spacer />
+      <Text variant="sm">...</Text>
+    </Flex>
   )
 }
