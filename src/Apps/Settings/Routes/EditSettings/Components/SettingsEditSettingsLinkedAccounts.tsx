@@ -148,10 +148,12 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
     } catch (err) {
       console.error(err)
 
+      const error = Array.isArray(err) ? err[0] : err
+
       sendToast({
         variant: "error",
         message: "There was an error disconnecting your account.",
-        description: err.message,
+        description: error.message,
       })
 
       setMode("Connected")
