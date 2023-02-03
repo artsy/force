@@ -8,7 +8,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
 import { FC } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Spacer, Text } from "@artsy/palette"
@@ -19,7 +19,6 @@ interface SavesArtworksQueryRendererProps {
 
 interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
   collection: SavesArtworks_collection$data
-  relay: RelayRefetchProp
 }
 
 const SavesArtworks: FC<SavesArtworksProps> = ({ collection }) => {
@@ -54,38 +53,24 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection }) => {
   )
 }
 
-const QUERY = graphql`
-  query SavesArtworksQuery($collectionID: String!) {
-    me {
-      collection(id: $collectionID) {
-        ...SavesArtworks_collection
+const SavesArtworksFragmentContainer = createFragmentContainer(SavesArtworks, {
+  collection: graphql`
+    fragment SavesArtworks_collection on Collection {
+      name
+      artworks: artworksConnection(first: 30) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        pageCursors {
+          ...Pagination_pageCursors
+        }
+        ...SavesArtworkGrid_filtered_artworks
       }
     }
-  }
-`
-
-const SavesArtworksRefetchContainer = createRefetchContainer(
-  SavesArtworks,
-  {
-    collection: graphql`
-      fragment SavesArtworks_collection on Collection {
-        name
-        artworks: artworksConnection(first: 30) {
-          totalCount
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-          pageCursors {
-            ...Pagination_pageCursors
-          }
-          ...SavesArtworkGrid_filtered_artworks
-        }
-      }
-    `,
-  },
-  QUERY
-)
+  `,
+})
 
 export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = ({
   collectionID,
@@ -108,7 +93,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         }
 
         return (
-          <SavesArtworksRefetchContainer
+          <SavesArtworksFragmentContainer
             collectionID={collectionID}
             collection={props.me.collection}
           />
@@ -126,3 +111,13 @@ const PLACEHOLDER = () => {
     </Box>
   )
 }
+
+const QUERY = graphql`
+  query SavesArtworksQuery($collectionID: String!) {
+    me {
+      collection(id: $collectionID) {
+        ...SavesArtworks_collection
+      }
+    }
+  }
+`
