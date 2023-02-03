@@ -1,5 +1,4 @@
 import { SavesArtworkGridFragmentContainer } from "./SavesArtworkGrid"
-import { SavesArtworkGridHeader } from "./SavesArtworkGridHeader"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
 import {
@@ -8,20 +7,26 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
 import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Spacer, Text } from "@artsy/palette"
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
+  relay: RelayRefetchProp
 }
 
 interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
   collection: SavesArtworks_collection$data
+  collectionID: string
 }
 
-const SavesArtworks: FC<SavesArtworksProps> = ({ collection }) => {
+const SavesArtworks: FC<SavesArtworksProps> = ({
+  collection,
+  collectionID,
+  relay,
+}) => {
   const { match } = useRouter()
 
   // TODO: Update sort options
@@ -44,26 +49,41 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection }) => {
 
       <Spacer y={4} />
 
-      <SavesArtworkGridHeader />
-
-      <Spacer y={2} />
-
-      <SavesArtworkGridFragmentContainer artworks={collection.artworks!} />
+      <SavesArtworkGridFragmentContainer
+        artworks={collection.artworks!}
+        collectionID={collectionID}
+        relayRefetch={relay.refetch}
+      />
     </ArtworkFilterContextProvider>
   )
 }
 
-const SavesArtworksFragmentContainer = createFragmentContainer(SavesArtworks, {
-  collection: graphql`
-    fragment SavesArtworks_collection on Collection {
-      name
-      artworks: artworksConnection(first: 30) {
-        totalCount
-        ...SavesArtworkGrid_filtered_artworks
+const QUERY = graphql`
+  query SavesArtworksQuery($collectionID: String!, $after: String) {
+    me {
+      collection(id: $collectionID) {
+        ...SavesArtworks_collection @arguments(after: $after)
       }
     }
-  `,
-})
+  }
+`
+
+const SavesArtworksRefetchContainer = createRefetchContainer(
+  SavesArtworks,
+  {
+    collection: graphql`
+      fragment SavesArtworks_collection on Collection
+        @argumentDefinitions(after: { type: "String" }) {
+        name
+        artworks: artworksConnection(first: 30, after: $after) {
+          totalCount
+          ...SavesArtworkGrid_filtered_artworks
+        }
+      }
+    `,
+  },
+  QUERY
+)
 
 export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = ({
   collectionID,
@@ -86,7 +106,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         }
 
         return (
-          <SavesArtworksFragmentContainer
+          <SavesArtworksRefetchContainer
             collectionID={collectionID}
             collection={props.me.collection}
           />
@@ -104,13 +124,3 @@ const PLACEHOLDER = () => {
     </Box>
   )
 }
-
-const QUERY = graphql`
-  query SavesArtworksQuery($collectionID: String!) {
-    me {
-      collection(id: $collectionID) {
-        ...SavesArtworks_collection
-      }
-    }
-  }
-`

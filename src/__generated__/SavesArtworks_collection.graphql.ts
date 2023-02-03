@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2cf7e797802fa77f51879514c3ff1cb1>>
+ * @generated SignedSource<<9ccee12708dd90ed5df8539ad28c1e06>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,13 @@ export type SavesArtworks_collection$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "SavesArtworks_collection",
@@ -39,6 +45,11 @@ const node: ReaderFragment = {
     {
       "alias": "artworks",
       "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
         {
           "kind": "Literal",
           "name": "first",
@@ -63,13 +74,13 @@ const node: ReaderFragment = {
           "name": "SavesArtworkGrid_filtered_artworks"
         }
       ],
-      "storageKey": "artworksConnection(first:30)"
+      "storageKey": null
     }
   ],
   "type": "Collection",
   "abstractKey": null
 };
 
-(node as any).hash = "3e5ed1385835dd369020588d320a591c";
+(node as any).hash = "4916d0ddf9719ac998e2f8765c63cc13";
 
 export default node;
