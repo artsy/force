@@ -8,10 +8,6 @@ jest.mock("Utils/getENV", () => ({
     return {
       APP_URL: "https://www.artsy.net",
       API_URL: "https://api.artsy.net",
-      AP: {
-        loginPagePath: "/login",
-        signupPagePath: "/signup",
-      },
     }[key]
   }),
 }))
