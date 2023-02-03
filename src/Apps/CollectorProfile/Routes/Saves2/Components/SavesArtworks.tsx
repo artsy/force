@@ -10,8 +10,9 @@ import { FC } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
@@ -101,7 +102,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
 }) => {
   return (
     <SystemQueryRenderer<SavesArtworksQuery>
-      placeholder={PLACEHOLDER}
+      placeholder={<SavesArtworksGridPlaceholder />}
       query={QUERY}
       variables={{
         collectionID,
@@ -113,7 +114,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         }
 
         if (!props?.me?.collection) {
-          return PLACEHOLDER
+          return <SavesArtworksGridPlaceholder />
         }
 
         return (
@@ -124,14 +125,5 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         )
       }}
     />
-  )
-}
-
-// TODO: Update placeholder
-const PLACEHOLDER = () => {
-  return (
-    <Box>
-      <Text>Loading...</Text>
-    </Box>
   )
 }
