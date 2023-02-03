@@ -35,7 +35,12 @@ interface MyCollectionCreateArtworkProps {
 export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps> = ({
   me,
 }) => {
-  const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
+  const {
+    localImages,
+    addLocalImage,
+    clearLocalImages,
+    removeLocalImage,
+  } = useLocalImageState()
 
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const enableNewMyCUploadFlow = useFeatureFlag(
@@ -72,6 +77,8 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   }
 
   const handleBack = () => {
+    clearLocalImages()
+
     if (currentStep === "artist-select" || !enableNewMyCUploadFlow) {
       router.push({
         pathname: isCollectorProfileEnabled
