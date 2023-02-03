@@ -95,7 +95,8 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
 
   const onImgLoad = (
     image: React.SyntheticEvent<HTMLImageElement, Event>,
-    photoID: string
+    photoID: string,
+    index: number
   ) => {
     const {
       naturalHeight: height,
@@ -105,23 +106,29 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
 
     // Handle images added through the select artwork step
     if (!isEditing && currentSrc.includes("cloudfront.net")) {
-      addLocalImage({
-        data: currentSrc,
-        width,
-        height,
-        photoID,
-      })
+      addLocalImage(
+        {
+          data: currentSrc,
+          width,
+          height,
+          photoID,
+        },
+        index
+      )
     }
 
     // Handle images added locally
     if (currentSrc.startsWith("data:image")) {
       // Save the image dimensions as well as local path to the localImages array
-      addLocalImage({
-        data: currentSrc,
-        width,
-        height,
-        photoID,
-      })
+      addLocalImage(
+        {
+          data: currentSrc,
+          width,
+          height,
+          photoID,
+        },
+        index
+      )
     }
   }
 
@@ -203,11 +210,11 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
         )
       })}
 
-      {allPhotos.map(photo => (
+      {allPhotos.map((photo, index) => (
         <PhotoThumbnail
           mt={2}
           key={photo?.id}
-          onLoad={image => void onImgLoad(image, photo.id)}
+          onLoad={image => void onImgLoad(image, photo.id, index)}
           photo={photo}
           data-testid="photo-thumbnail"
           onDelete={handlePhotoDelete}
