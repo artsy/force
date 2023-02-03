@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2eec84516093e434cec6d7ce45409d24>>
+ * @generated SignedSource<<2cf7e797802fa77f51879514c3ff1cb1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavesArtworks_collection$data = {
   readonly artworks: {
-    readonly pageCursors: {
-      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
-    };
-    readonly pageInfo: {
-      readonly endCursor: string | null;
-      readonly hasNextPage: boolean;
-    };
     readonly totalCount: number | null;
     readonly " $fragmentSpreads": FragmentRefs<"SavesArtworkGrid_filtered_artworks">;
   } | null;
@@ -65,47 +58,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
-            }
-          ],
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "SavesArtworkGrid_filtered_artworks"
@@ -118,6 +70,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b9c2825df3dd3abd5c4de9811a932927";
+(node as any).hash = "3e5ed1385835dd369020588d320a591c";
 
 export default node;

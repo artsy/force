@@ -59,13 +59,6 @@ const SavesArtworksFragmentContainer = createFragmentContainer(SavesArtworks, {
       name
       artworks: artworksConnection(first: 30) {
         totalCount
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        pageCursors {
-          ...Pagination_pageCursors
-        }
         ...SavesArtworkGrid_filtered_artworks
       }
     }
