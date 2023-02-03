@@ -1,4 +1,4 @@
-import { SavesArtworkGridFragmentContainer } from "./SavesArtworkGrid"
+import { SavesArtworksGridFragmentContainer } from "./SavesArtworksGrid"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
 import {
@@ -14,12 +14,12 @@ import { Box, Spacer, Text } from "@artsy/palette"
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
-  relay: RelayRefetchProp
 }
 
 interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
   collection: SavesArtworks_collection$data
   collectionID: string
+  relay: RelayRefetchProp
 }
 
 const SavesArtworks: FC<SavesArtworksProps> = ({
@@ -49,7 +49,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
 
       <Spacer y={4} />
 
-      <SavesArtworkGridFragmentContainer
+      <SavesArtworksGridFragmentContainer
         artworks={collection.artworks!}
         collectionID={collectionID}
         relayRefetch={relay.refetch}
@@ -77,7 +77,7 @@ const SavesArtworksRefetchContainer = createRefetchContainer(
         name
         artworks: artworksConnection(first: 30, after: $after) {
           totalCount
-          ...SavesArtworkGrid_filtered_artworks
+          ...SavesArtworksGrid_artworks
         }
       }
     `,

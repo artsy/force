@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ccee12708dd90ed5df8539ad28c1e06>>
+ * @generated SignedSource<<104e538aacb0ecd19d9fece3bc1e40d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SavesArtworks_collection$data = {
   readonly artworks: {
     readonly totalCount: number | null;
-    readonly " $fragmentSpreads": FragmentRefs<"SavesArtworkGrid_filtered_artworks">;
+    readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_artworks">;
   } | null;
   readonly name: string;
   readonly " $fragmentType": "SavesArtworks_collection";
@@ -71,7 +71,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "SavesArtworkGrid_filtered_artworks"
+          "name": "SavesArtworksGrid_artworks"
         }
       ],
       "storageKey": null
@@ -81,6 +81,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4916d0ddf9719ac998e2f8765c63cc13";
+(node as any).hash = "e7b3b75225bc29aec9475777f702acd5";
 
 export default node;

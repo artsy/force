@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavesArtworkGrid_filtered_artworks$data } from "__generated__/SavesArtworkGrid_filtered_artworks.graphql"
+import { SavesArtworksGrid_artworks$data } from "__generated__/SavesArtworksGrid_artworks.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -14,7 +14,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC, useState } from "react"
-import { SavesArtworkGridHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesArtworkGridHeader"
+import { SavesArtworksGridHeader } from "./SavesArtworksGridHeader"
 import { Spacer } from "@artsy/palette"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { usePrevious } from "Utils/Hooks/usePrevious"
@@ -22,8 +22,8 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 
-interface SavesArtworkGridProps {
-  artworks: SavesArtworkGrid_filtered_artworks$data
+interface SavesArtworksGridProps {
+  artworks: SavesArtworksGrid_artworks$data
   collectionID: string
   relayRefetch: RelayRefetchProp["refetch"]
 }
@@ -32,7 +32,7 @@ interface SavesArtworkGridProps {
  * In the future we plan to use the `BaseArtworkFilter` and `ArtworkFilterArtworkGrid` components
  * when filter support is added.
  */
-const SavesArtworkGrid: FC<SavesArtworkGridProps> = ({
+const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   artworks,
   relayRefetch,
 }) => {
@@ -144,7 +144,7 @@ const SavesArtworkGrid: FC<SavesArtworkGridProps> = ({
     <>
       <Jump id="artworksGrid" />
 
-      <SavesArtworkGridHeader />
+      <SavesArtworksGridHeader />
 
       <Spacer y={2} />
 
@@ -154,7 +154,6 @@ const SavesArtworkGrid: FC<SavesArtworkGridProps> = ({
           columnCount={[2, 2, 2, 3]}
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
-          onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
@@ -184,11 +183,11 @@ const SavesArtworkGrid: FC<SavesArtworkGridProps> = ({
   )
 }
 
-export const SavesArtworkGridFragmentContainer = createFragmentContainer(
-  SavesArtworkGrid,
+export const SavesArtworksGridFragmentContainer = createFragmentContainer(
+  SavesArtworksGrid,
   {
     artworks: graphql`
-      fragment SavesArtworkGrid_filtered_artworks on ArtworkConnection {
+      fragment SavesArtworksGrid_artworks on ArtworkConnection {
         pageInfo {
           hasNextPage
           endCursor

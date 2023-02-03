@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e09ca4c771034e4b544f38ee07ab46bd>>
+ * @generated SignedSource<<1e241cf5eedf7655452f718ecf01261f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesArtworkGrid_filtered_artworks$data = {
+export type SavesArtworksGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly id: string;
@@ -24,18 +24,18 @@ export type SavesArtworkGrid_filtered_artworks$data = {
     readonly hasNextPage: boolean;
   };
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-  readonly " $fragmentType": "SavesArtworkGrid_filtered_artworks";
+  readonly " $fragmentType": "SavesArtworksGrid_artworks";
 };
-export type SavesArtworkGrid_filtered_artworks$key = {
-  readonly " $data"?: SavesArtworkGrid_filtered_artworks$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworkGrid_filtered_artworks">;
+export type SavesArtworksGrid_artworks$key = {
+  readonly " $data"?: SavesArtworksGrid_artworks$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_artworks">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavesArtworkGrid_filtered_artworks",
+  "name": "SavesArtworksGrid_artworks",
   "selections": [
     {
       "alias": null,
@@ -117,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c766da0407c7aa558de2391a75e8aa8a";
+(node as any).hash = "0a60d49cb2eae3590b750a371aa88e40";
 
 export default node;
