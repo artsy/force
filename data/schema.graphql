@@ -10975,9 +10975,11 @@ type Me implements Node {
   collectionsConnection(
     after: String
     before: String
+    default: Boolean
     first: Int
     last: Int
     page: Int
+    saves: Boolean
     size: Int
   ): CollectionsConnection
   collectorLevel: Int
