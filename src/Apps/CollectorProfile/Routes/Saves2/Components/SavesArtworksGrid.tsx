@@ -76,12 +76,9 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   const fetchResults = () => {
     setFetching(true)
 
-    // we currently support only `page` filter
     const relayParams = {
       after: artworks.pageInfo.endCursor,
     }
-
-    console.log("[debug] fetchResults", relayParams)
 
     relayRefetch(relayParams, null, error => {
       if (error) {
@@ -139,7 +136,11 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     if (filtersHaveUpdated) {
       const [filterKey] = changedFilterEntity
 
-      fetchResults()
+      // we currently support only `page` filter in relay query
+      if (filterKey === "page") {
+        fetchResults()
+      }
+
       trackAnalytics(filterKey)
     }
   }, [context.filters])
@@ -162,7 +163,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
           columnCount={[2, 2, 2, 3]}
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
-          emptyStateComponent={context.ZeroState && <context.ZeroState />}
+          emptyStateComponent={null}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(

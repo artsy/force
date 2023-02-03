@@ -11,6 +11,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Spacer, Text } from "@artsy/palette"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
@@ -34,6 +35,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
     { value: "updated_at", text: "Recently Saved" },
     { value: "created_at", text: "Oldest First" },
   ]
+  const defaultSort = sortOptions[0].value
 
   const counts: Counts = {
     artworks: collection.artworks?.totalCount ?? 0,
@@ -44,6 +46,13 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
       filters={match.location.query}
       counts={counts}
       sortOptions={sortOptions}
+      onChange={state => {
+        updateUrl(state, {
+          defaultValues: {
+            sort: defaultSort,
+          },
+        })
+      }}
     >
       <Text variant="lg-display">{collection.name}</Text>
 
