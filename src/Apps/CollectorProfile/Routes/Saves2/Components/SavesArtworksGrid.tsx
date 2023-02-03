@@ -1,5 +1,6 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SavesArtworksGrid_artworks$data } from "__generated__/SavesArtworksGrid_artworks.graphql"
+import { SavesArtworksGrid_collection$data } from "__generated__/SavesArtworksGrid_collection.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -21,9 +22,11 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
+import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
 
 interface SavesArtworksGridProps {
   artworks: SavesArtworksGrid_artworks$data
+  collection: SavesArtworksGrid_collection$data
   collectionID: string
   relayRefetch: RelayRefetchProp["refetch"]
 }
@@ -34,6 +37,7 @@ interface SavesArtworksGridProps {
  */
 const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   artworks,
+  collection,
   relayRefetch,
 }) => {
   const { trackEvent } = useTracking()
@@ -140,6 +144,10 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     }
   }, [context.filters])
 
+  if (artworks.edges?.length === 0) {
+    return <SavesEmptyStateFragmentContainer collection={collection} />
+  }
+
   return (
     <>
       <Jump id="artworksGrid" />
@@ -201,6 +209,11 @@ export const SavesArtworksGridFragmentContainer = createFragmentContainer(
           }
         }
         ...ArtworkGrid_artworks
+      }
+    `,
+    collection: graphql`
+      fragment SavesArtworksGrid_collection on Collection {
+        ...SavesEmptyState_collection
       }
     `,
   }

@@ -51,6 +51,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
 
       <SavesArtworksGridFragmentContainer
         artworks={collection.artworks!}
+        collection={collection}
         collectionID={collectionID}
         relayRefetch={relay.refetch}
       />
@@ -79,6 +80,7 @@ const SavesArtworksRefetchContainer = createRefetchContainer(
           totalCount
           ...SavesArtworksGrid_artworks
         }
+        ...SavesArtworksGrid_collection
       }
     `,
   },

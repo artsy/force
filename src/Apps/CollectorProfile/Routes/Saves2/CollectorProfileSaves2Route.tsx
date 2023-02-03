@@ -1,6 +1,6 @@
 import { Shelf, Spacer } from "@artsy/palette"
-import { SavesArtworksQueryRenderer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesArtworks"
-import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
+import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
+import { SavesItemFragmentContainer } from "./Components/SavesItem"
 import { orderBy } from "lodash"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
