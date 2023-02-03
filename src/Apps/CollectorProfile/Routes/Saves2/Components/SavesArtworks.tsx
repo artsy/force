@@ -10,7 +10,7 @@ import { FC } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Spacer, Text } from "@artsy/palette"
+import { Flex, Join, MoreIcon, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
 
@@ -55,7 +55,16 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
         })
       }}
     >
-      <Text variant="lg-display">{collection.name}</Text>
+      <Flex
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Join separator={<Spacer x={2} />}>
+          <Text variant="lg-display">{collection.name}</Text>
+          {!collection.default && <MoreIcon width="24px" height="24px" />}
+        </Join>
+      </Flex>
 
       <Spacer y={4} />
 
@@ -86,6 +95,7 @@ const SavesArtworksRefetchContainer = createRefetchContainer(
       fragment SavesArtworks_collection on Collection
         @argumentDefinitions(after: { type: "String" }) {
         name
+        default
         artworks: artworksConnection(first: 30, after: $after) {
           totalCount
           ...SavesArtworksGrid_artworks

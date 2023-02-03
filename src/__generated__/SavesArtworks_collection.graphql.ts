@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<949924f3d28513162aec3873c9d2462b>>
+ * @generated SignedSource<<2034b278f2373180e99ab9fd847c490e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SavesArtworks_collection$data = {
     readonly totalCount: number | null;
     readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_artworks">;
   } | null;
+  readonly default: boolean;
   readonly name: string;
   readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_collection">;
   readonly " $fragmentType": "SavesArtworks_collection";
@@ -41,6 +42,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "default",
       "storageKey": null
     },
     {
@@ -87,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "564d26d998d8f82a16013ecf8dd3cc10";
+(node as any).hash = "906d8797c3de6cdac209dead62f718c0";
 
 export default node;
