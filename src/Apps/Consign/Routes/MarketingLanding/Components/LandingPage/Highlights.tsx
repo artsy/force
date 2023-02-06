@@ -28,7 +28,7 @@ const reasons = [
 ]
 export const Hightlights: React.FC = () => {
   return (
-    <GridColumns gridRowGap={10} alignItems="center">
+    <GridColumns gridColumnGap={[0, 6]} alignItems="fex-start">
       {reasons.map(i => (
         <RowItem icon={i.icon} title={i.title} text={i.text} />
       ))}
@@ -43,12 +43,12 @@ interface RowItemProps {
 }
 const RowItem: React.FC<RowItemProps> = ({ icon, title, text }) => {
   return (
-    <Column span={4} pr={[0, 6]} mb={[2, 0]}>
+    <Column span={4} pr={[0, 2]} mb={[2, 0]}>
       {icon}
       <Text mt={[0.5, 2]} variant={["md", "xl"]}>
         {title}
       </Text>
-      <Text mt={1} variant={["xs", "sm"]}>
+      <Text mt={[0.5, 1]} variant={["xs", "sm"]}>
         {text}
       </Text>
     </Column>
