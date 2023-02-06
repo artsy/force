@@ -570,6 +570,28 @@ describe("Payment", () => {
     })
   })
 
+  describe("only wire transfer enabled", () => {
+    let page: PaymentTestPage
+
+    const wireOrder = {
+      ...testOrder,
+      availablePaymentMethods: ["WIRE_TRANSFER"] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      jest.clearAllMocks()
+
+      const wrapper = getWrapper({
+        CommerceOrder: () => wireOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders wire transfer title", () => {
+      expect(page.text()).toContain("Wire transfer payment details")
+    })
+  })
+
   describe("Private sale orders", () => {
     let page: PaymentTestPage
     const paymentMethodExpectsMap: Record<
