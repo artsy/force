@@ -13,7 +13,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { trackEvent } from "Server/analytics/helpers"
 import { useAnalyticsContext, useSystemContext } from "System"
 
-export const HeaderNew = () => {
+export const HeaderSWA = () => {
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()

@@ -14,9 +14,9 @@ import {
   WhySellWithArtsy,
 } from "./Components"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { HeaderNew } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Header"
-import { Hightlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
-import { HowWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowWeSell"
+import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
+import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
+import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -50,9 +50,9 @@ export const MarketingLandingApp = () => {
         <SellMeta />
 
         <Join separator={<Spacer y={[6, 12]} />}>
-          <HeaderNew />
-          <Hightlights />
-          <HowWeSell />
+          <HeaderSWA />
+          <Highlights />
+          <WaysWeSell />
         </Join>
       </>
     )

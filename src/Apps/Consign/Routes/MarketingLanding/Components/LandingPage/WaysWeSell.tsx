@@ -53,7 +53,7 @@ const data: StepsWithImageBlackDataType[] = [
   },
 ]
 
-export const HowWeSell = () => {
+export const WaysWeSell = () => {
   return (
     <Box mx={[-2, -4]} px={[2, 4]} py={[4, 6, 12]} backgroundColor="black100">
       <Text mb={[1, 2]} variant={["lg-display", "xxl"]} color="white100">
