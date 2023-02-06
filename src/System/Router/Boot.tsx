@@ -32,6 +32,7 @@ import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
+import { ProgressiveOnboardingContextProvider } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 
 export interface BootProps {
   children: React.ReactNode
@@ -91,9 +92,11 @@ export const Boot = track(undefined, {
                       <StickyProvider>
                         <AuthIntentProvider>
                           <AuthDialogProvider>
-                            <FocusVisible />
-                            <SiftContainer />
-                            {children}
+                            <ProgressiveOnboardingContextProvider>
+                              <FocusVisible />
+                              <SiftContainer />
+                              {children}
+                            </ProgressiveOnboardingContextProvider>
                           </AuthDialogProvider>
                         </AuthIntentProvider>
                       </StickyProvider>

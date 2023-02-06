@@ -20,7 +20,7 @@ interface UseSizeAndPosition {
   debounce?: number
   trackMutation?: boolean
   trackResize?: boolean
-  targetRef?: MutableRefObject<HTMLElement | null>
+  target?: MutableRefObject<HTMLElement | null> | HTMLElement
 }
 
 /**
@@ -32,14 +32,15 @@ export const useSizeAndPosition = ({
   debounce: debounceMs = 0,
   trackMutation = false,
   trackResize = true,
-  targetRef,
+  target,
 }: UseSizeAndPosition = {}) => {
   const ref = useRef<HTMLElement | null>(null)
 
   const [geometry, setGeometry] = useState<Geometry>(DEFAULT_GEOMETRY)
 
   const handleUpdate = useCallback(() => {
-    const el = targetRef?.current || ref.current
+    const el =
+      (!!target && "current" in target ? target.current : target) || ref.current
 
     if (!el) return
 
@@ -49,7 +50,7 @@ export const useSizeAndPosition = ({
       width: el.offsetWidth,
       height: el.offsetHeight,
     })
-  }, [targetRef])
+  }, [target])
 
   const handler = debounceMs ? debounce(handleUpdate, debounceMs) : handleUpdate
 

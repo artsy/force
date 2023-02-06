@@ -106,6 +106,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
             px={0}
             pl={1}
             active={visible}
+            data-onboarding="UserProfile"
             {...anchorProps}
           >
             <SoloIcon title="Your account" fill="currentColor" />

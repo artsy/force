@@ -3,4 +3,5 @@ export const Z = {
   globalNav: 100,
   dropdown: 200,
   footer: 1,
+  onboarding: 300,
 }

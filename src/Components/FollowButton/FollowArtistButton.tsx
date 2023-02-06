@@ -167,6 +167,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 
         return (
           <FollowButton
+            data-onboarding="FollowArtist"
             data-test="followArtistButton"
             ref={anchorRef}
             isFollowed={!!artist.isFollowed}

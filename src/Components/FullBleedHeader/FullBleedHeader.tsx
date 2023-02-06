@@ -26,7 +26,7 @@ export const FullBleedHeader: FC<FullBleedHeaderProps> = ({
   ...rest
 }) => {
   const { ref, ...position } = useSizeAndPosition({
-    targetRef: relativeTo,
+    target: relativeTo,
   })
 
   const imageRef = useRef<HTMLImageElement | null>(null)

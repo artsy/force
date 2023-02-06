@@ -100,6 +100,7 @@ export const NavBarUserMenu: React.FC = () => {
               aria-label="View your Saves &amp; Follows"
               to="/collector-profile/saves"
               onClick={trackClick}
+              data-onboarding="SavesAndFollows"
             >
               <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
             </NavBarMenuItemLink>

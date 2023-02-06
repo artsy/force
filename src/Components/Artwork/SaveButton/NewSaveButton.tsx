@@ -72,6 +72,7 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
       onMouseLeave={handleMouseLeave}
       height={BTN_HEIGHT}
       width={BTN_WIDTH}
+      data-onboarding="SaveArtwork"
     >
       {isSaved || isHovered ? (
         <HeartFillIcon
