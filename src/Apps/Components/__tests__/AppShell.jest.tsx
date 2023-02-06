@@ -17,6 +17,13 @@ jest.mock("react-tracking", () => ({
   }),
 }))
 
+// jest.mock(
+//   "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl",
+//   () => ({
+//     useAfterAuthenticationRedirectUrl: () => ({}),
+//   })
+// )
+
 describe("AppShell", () => {
   it("renders a NavBar", async () => {
     const { ClientApp } = await buildClientApp({

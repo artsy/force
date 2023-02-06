@@ -18,7 +18,11 @@ export const useAfterAuthenticationRedirectUrl = () => {
 
   const redirectUrl = useMemo(() => {
     const redirect = options.redirectTo || defaultRedirect
-    const redirectUri = new URL(redirect, getENV("APP_URL"))
+
+    const redirectUri = new URL(
+      redirect,
+      getENV("APP_URL") ?? "https://www.artsy.net"
+    )
 
     if (isElligibleForOnboarding) {
       redirectUri.searchParams.append("onboarding", "true")
@@ -42,8 +46,6 @@ export const useAfterAuthenticationRedirectUrl = () => {
 }
 
 const useDefaultRedirect = () => {
-  const { loginPagePath, signupPagePath } = getENV("AP")
-
   const router = useRouter()
 
   // In a client-side context we have the window.location object, but we won't have
@@ -53,9 +55,7 @@ const useDefaultRedirect = () => {
 
   // If we're on the login or sign up path; we should redirect to the default (index).
   // Otherwise stay on the same page.
-  const defaultRedirect = [loginPagePath, signupPagePath].includes(
-    location.pathname
-  )
+  const defaultRedirect = ["/login", "/signup"].includes(location.pathname)
     ? DEFAULT_AFTER_AUTH_REDIRECT_PATH
     : location.pathname + (location.search || "")
 

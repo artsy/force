@@ -13,20 +13,26 @@ import { getENV } from "Utils/getENV"
 jest.mock("Apps/Authentication/Legacy/Server/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
 }))
+
 jest.mock("Apps/Authentication/Legacy/Server/setReferer", () => ({
   setReferer: jest.fn(),
 }))
+
 jest.mock("Apps/Authentication/Legacy/Server/redirectIfLoggedIn", () => ({
   redirectIfLoggedIn: jest.fn(),
 }))
+
 jest.mock("Utils/EnableRecaptcha", () => ({
   EnableRecaptcha: () => "EnableRecaptcha",
 }))
+
 jest.mock("Apps/Authentication/Legacy/Utils/helpers", () => ({
   ...jest.requireActual("Apps/Authentication/Legacy/Utils/helpers"),
   setCookies: jest.fn(),
 }))
+
 jest.mock("Utils/Hooks/useAuthValidation")
+
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
 }))

@@ -3,6 +3,7 @@ import {
   AuthImpression,
   AuthModalType,
   CreatedAccount,
+  Intent,
   ResetYourPassword,
   SuccessfullyLoggedIn,
 } from "@artsy/cohesion"
@@ -43,19 +44,21 @@ export const useAuthDialogTracking = () => {
     loggedIn: ({
       service = "email",
       userId,
+      intent = analytics.intent || Intent.login,
+      trigger = analytics.trigger || "click",
     }: {
       service: SuccessfullyLoggedIn["service"]
       userId: SuccessfullyLoggedIn["user_id"]
+      intent?: SuccessfullyLoggedIn["intent"]
+      trigger?: SuccessfullyLoggedIn["trigger"]
     }) => {
-      if (!analytics.intent || !analytics.trigger) return
-
       const payload: SuccessfullyLoggedIn = {
         action: ActionType.successfullyLoggedIn,
         auth_redirect: redirectUrl,
         context_module: analytics.contextModule,
-        intent: analytics.intent,
+        intent,
         service,
-        trigger: analytics.trigger,
+        trigger,
         type: AuthModalType.login,
         user_id: userId,
       }
@@ -66,20 +69,22 @@ export const useAuthDialogTracking = () => {
     signedUp: ({
       service = "email",
       userId,
+      intent = analytics.intent || Intent.signup,
+      trigger = analytics.trigger || "click",
     }: {
       service: CreatedAccount["service"]
       userId: CreatedAccount["user_id"]
+      intent?: CreatedAccount["intent"]
+      trigger?: CreatedAccount["trigger"]
     }) => {
-      if (!analytics.intent || !analytics.trigger) return
-
       const payload: CreatedAccount = {
         action: ActionType.createdAccount,
         auth_redirect: redirectUrl,
         context_module: analytics.contextModule,
-        intent: analytics.intent,
+        intent,
         onboarding: isElligibleForOnboarding,
         service,
-        trigger: analytics.trigger,
+        trigger,
         type: AuthModalType.signup,
         user_id: userId,
       }
