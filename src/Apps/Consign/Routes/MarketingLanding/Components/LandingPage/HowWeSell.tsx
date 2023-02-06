@@ -36,7 +36,6 @@ const data: StepsWithImageBlackDataType[] = [
     text:
       "We maximize your profitability by selecting the right auction partner for your work from our network in 190 countries.",
     title: "Auctions",
-    imageHeight: 392,
   },
   {
     src: waysWeSellImage2.src,
@@ -44,7 +43,6 @@ const data: StepsWithImageBlackDataType[] = [
     text:
       "Our bespoke process will match your work to potential buyers through an exclusive network of collectors.",
     title: "Private Sales",
-    imageHeight: 317,
   },
   {
     src: waysWeSellImage3.src,
@@ -52,7 +50,6 @@ const data: StepsWithImageBlackDataType[] = [
     text:
       "We list your work directly on Artsy.net, the world’s largest online art marketplace, reaching over 3 million art lovers daily.",
     title: "Online storefront",
-    imageHeight: 358,
   },
 ]
 
@@ -75,7 +72,6 @@ export const HowWeSell = () => {
               srcSet={step.srcSet}
               text={step.text}
               title={step.title}
-              imageHeight={step.imageHeight}
             />
           )
         })}
