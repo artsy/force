@@ -51,7 +51,7 @@ export const HowItWorksSteps: React.FC = () => {
       <Text mb={[2, 6]} variant={["lg-display", "xxl"]}>
         How it works
       </Text>
-      <GridColumns gridRowGap={10} alignItems="flex-start">
+      <GridColumns gridColumnGap={[0, 6]} alignItems="flex-start">
         {reasons.map(i => (
           <RowItem index={i.index} title={i.title} text={i.text} />
         ))}
@@ -61,7 +61,7 @@ export const HowItWorksSteps: React.FC = () => {
           <Button
             // @ts-ignore
             as={RouterLink}
-            mt={[4, 6]}
+            mt={[2, 6]}
             width={"100%"}
             variant="primaryBlack"
             to="/sell/submission"
