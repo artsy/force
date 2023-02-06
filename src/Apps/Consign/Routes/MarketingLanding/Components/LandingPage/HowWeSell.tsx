@@ -1,60 +1,125 @@
-import {
-  StepsWithImageBlack,
-  StepsWithImageBlackDataType,
-} from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/StepWithImageBlack"
+import React from "react"
+import { Text, Image, Box, Shelf } from "@artsy/palette"
+
+export type StepsWithImageBlackDataType = {
+  src: string
+  srcSet: string
+  text?: string
+  title?: string
+  useBlackBackground?: boolean
+  imageHeight?: number
+}
+
 import { resized } from "Utils/resized"
 
 const imageWidth = 600
 
+const waysWeSellImage1 = resized(
+  "https://files.artsy.net/images/auctions-swa-landing-page.jpg",
+  { width: imageWidth, height: 392, quality: 100 }
+)
+
+const waysWeSellImage2 = resized(
+  "https://files.artsy.net/images/privat-sales-swa-landing-page.png",
+  { width: imageWidth, height: 317, quality: 100 }
+)
+
+const waysWeSellImage3 = resized(
+  "https://files.artsy.net/images/online-storefront-swa-landing-page.png",
+  { width: imageWidth, height: 358, quality: 100 }
+)
+
+const data: StepsWithImageBlackDataType[] = [
+  {
+    src: waysWeSellImage1.src,
+    srcSet: waysWeSellImage1.srcSet,
+    text:
+      "We maximize your profitability by selecting the right auction partner for your work from our network in 190 countries.",
+    title: "Auctions",
+    imageHeight: 392,
+  },
+  {
+    src: waysWeSellImage2.src,
+    srcSet: waysWeSellImage2.srcSet,
+    text:
+      "Our bespoke process will match your work to potential buyers through an exclusive network of collectors.",
+    title: "Private Sales",
+    imageHeight: 317,
+  },
+  {
+    src: waysWeSellImage3.src,
+    srcSet: waysWeSellImage3.srcSet,
+    text:
+      "We list your work directly on Artsy.net, the world’s largest online art marketplace, reaching over 3 million art lovers daily.",
+    title: "Online storefront",
+    imageHeight: 358,
+  },
+]
+
 export const HowWeSell = () => {
-  const howItWorksImage1 = resized(
-    "https://files.artsy.net/images/auctions-swa-landing-page.jpg",
-    { width: imageWidth, height: 392, quality: 100 }
-  )
-
-  const howItWorksImage2 = resized(
-    "https://files.artsy.net/images/privat-sales-swa-landing-page.png",
-    { width: imageWidth, height: 317, quality: 100 }
-  )
-
-  const howItWorksImage3 = resized(
-    "https://files.artsy.net/images/online-storefront-swa-landing-page.png",
-    { width: imageWidth, height: 358, quality: 100 }
-  )
-
-  const data: StepsWithImageBlackDataType[] = [
-    {
-      src: howItWorksImage1.src,
-      srcSet: howItWorksImage1.srcSet,
-      text:
-        "We maximize your profitability by selecting the right auction partner for your work from our network in 190 countries.",
-      title: "Auctions",
-      imageHeight: 392,
-    },
-    {
-      src: howItWorksImage2.src,
-      srcSet: howItWorksImage2.srcSet,
-      text:
-        "Our bespoke process will match your work to potential buyers through an exclusive network of collectors.",
-      title: "Private Sales",
-      imageHeight: 317,
-    },
-    {
-      src: howItWorksImage3.src,
-      srcSet: howItWorksImage3.srcSet,
-      text:
-        "We list your work directly on Artsy.net, the world’s largest online art marketplace, reaching over 3 million art lovers daily.",
-      title: "Online storefront",
-      imageHeight: 358,
-    },
-  ]
-
   return (
-    <StepsWithImageBlack
-      useBlackBackground
-      sectionTitle="How we sell your work"
-      sectionSubtitle="We create a tailored strategy to find the optimal sales method for your artwork."
-      data={data}
-    />
+    <Box mx={[-2, -4]} px={[2, 4]} py={[4, 6, 12]} backgroundColor="black100">
+      <Text mb={[1, 2]} variant={["lg-display", "xxl"]} color="white100">
+        Ways we sell your work
+      </Text>
+
+      <Text mb={[2, 4, 6]} variant={["xs", "sm"]} color="white100">
+        We create a tailored strategy to find the optimal sales method for your
+        artwork.
+      </Text>
+      <Shelf showProgress={false}>
+        {data.map(step => {
+          return (
+            <ShelfItem
+              src={step.src}
+              srcSet={step.srcSet}
+              text={step.text}
+              title={step.title}
+              imageHeight={step.imageHeight}
+            />
+          )
+        })}
+      </Shelf>
+    </Box>
   )
 }
+
+const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
+  src,
+  title,
+  text,
+  srcSet,
+}) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    justifyContent="flex-end"
+    data-test="artworkShelfArtwork"
+    minWidth={250}
+  >
+    <Box maxHeight={[250, 320]} maxWidth="100%" bg="black10" mb={[1, 2]}>
+      <Image
+        src={src}
+        srcSet={srcSet}
+        width="100%"
+        height="100%"
+        lazyLoad
+        alt={`${title} image`}
+        style={{
+          display: "block",
+        }}
+      />
+    </Box>
+    {title && (
+      <Text mb={[0.5, 1]} variant={["md", "xl"]} color="white100">
+        {title}
+      </Text>
+    )}
+
+    {text && (
+      <Text variant={["xs", "sm"]} color="white100">
+        {text}
+      </Text>
+    )}
+  </Box>
+)
