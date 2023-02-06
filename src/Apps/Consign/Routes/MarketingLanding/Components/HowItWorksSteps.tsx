@@ -29,7 +29,7 @@ const reasons = [
       "Your artwork stays with you until it sells. Meanwhile, our logistics team handles everything, from organizing shipping to getting your payment to you.",
   },
 ]
-export const HowItWorksNew: React.FC = () => {
+export const HowItWorksSteps: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
