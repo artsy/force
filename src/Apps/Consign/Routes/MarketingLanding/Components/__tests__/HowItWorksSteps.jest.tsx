@@ -1,4 +1,3 @@
-// HowItWorksSteps
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
