@@ -1,4 +1,6 @@
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext, useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 
 const reasons = [
@@ -28,6 +30,21 @@ const reasons = [
   },
 ]
 export const HowItWorksNew: React.FC = () => {
+  const { user } = useSystemContext()
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
+
+  const trackStartSellingClick = () => {
+    trackEvent({
+      action: "clickedStartSelling",
+      context_module: "HowItWorks",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Start Selling",
+      user_id: user?.id,
+      destination_path: "/sell/submission",
+    })
+  }
+
   return (
     <>
       <Text mb={[2, 6]} variant={["lg-display", "xxl"]}>
@@ -41,15 +58,13 @@ export const HowItWorksNew: React.FC = () => {
       <GridColumns>
         <Column span={2}>
           <Button
-            mt={[4, 6]}
-            width={"100%"}
             // @ts-ignore
             as={RouterLink}
+            mt={[4, 6]}
+            width={"100%"}
             variant="primaryBlack"
             to="/sell/submission"
-            onClick={event => {
-              /* track event */
-            }}
+            onClick={trackStartSellingClick}
           >
             Start Selling
           </Button>
