@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
-import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/HowItWorksSteps"
+import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 
 jest.mock("react-tracking")
 // TODO: Remove feature flag mock when feature flag is removed
