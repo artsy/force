@@ -8,13 +8,8 @@ if [ ! -f ".env" ]; then
     cp .env.oss .env
 fi
 
-# prepare a production build
-if [ ! -f server.dist.js ]; then
-    yarn build
-fi
-
-# start server in the background in production mode
-NODE_ENV=production nohup yarn start &
+# start server in the background in development mode
+NODE_ENV=development nohup yarn start &
 
 # Leverage the server boot time to begin the cypress install.
 ./node_modules/.bin/cypress install

@@ -1,4 +1,3 @@
-//
 import { screen, render, fireEvent, waitFor } from "@testing-library/react"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
 import { forgotPassword } from "Utils/auth"

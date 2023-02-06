@@ -113,39 +113,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             )}
           </>
         ) : null,
-        content: isWireTransfer ? (
-          <>
-            <Text
-              variant={["xs", "sm-display"]}
-              fontWeight="bold"
-              color="black100"
-            >
-              Send wire transfer to
-            </Text>
-            <Spacer y={1} />
-            <Text>Account name: Art.sy Inc.</Text>
-            <Text>Account number: 4243851425</Text>
-            <Text>Routing number: 121000248</Text>
-            <Text>International SWIFT: WFBIUS6S</Text>
-            <Spacer y={2} />
-            <Text
-              variant={["xs", "sm-display"]}
-              fontWeight="bold"
-              color="black100"
-            >
-              Bank address
-            </Text>
-            <Spacer y={1} />
-            <Text>Wells Fargo Bank, N.A.</Text>
-            <Text>420 Montgomery Street</Text>
-            <Text>San Francisco, CA 9410</Text>
-            <Spacer y={2} />
-            <Text color="#1023D7">
-              Add order number #{order.code} to the notes section in your wire
-              transfer.
-            </Text>
-          </>
-        ) : null,
+        content: isWireTransfer ? wireTransferArtsyBankDetails(order) : null,
       }
     case "IN_TRANSIT":
       return {
@@ -426,6 +394,115 @@ export const processingApprovalDescription = (
   return `Thank you for your purchase. ${deliverText(
     order
   )}More delivery information will be available once your order ships.`
+}
+
+export const wireTransferArtsyBankDetails = order => {
+  switch (order.currencyCode) {
+    case "GBP":
+      return (
+        <>
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Send wire transfer to
+          </Text>
+          <Spacer y={1} />
+          <Text>Account name: Art.sy Inc.</Text>
+          <Text>Account Number: 88005417</Text>
+          <Text>IBAN: GB30PNBP16567188005417</Text>
+          <Text>SWIFT: PNBPGB2L</Text>
+          <Text>Sort Code: 16-56-71</Text>
+          <Spacer y={2} />
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Bank address
+          </Text>
+          <Spacer y={1} />
+          <Text>Wells Fargo Bank, N.A. London Branch</Text>
+          <Text>1 Planation Place</Text>
+          <Text>30 Fenchurch Street</Text>
+          <Text>London, United Kingdom, EC3M 3BD</Text>
+          <Spacer y={2} />
+          <Text color="#1023D7">
+            Add order number #{order.code} to the notes section in your wire
+            transfer.
+          </Text>
+        </>
+      )
+    case "EUR":
+      return (
+        <>
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Send wire transfer to
+          </Text>
+          <Spacer y={1} />
+          <Text>Account name: Art.sy Inc.</Text>
+          <Text>IBAN: GB73PNBP16567188005419</Text>
+          <Text>BIC: PNBPGB2LXXX</Text>
+          <Spacer y={2} />
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Bank address
+          </Text>
+          <Spacer y={1} />
+          <Text>Wells Fargo Bank, N.A. London Branch</Text>
+          <Text>1 Planation Place</Text>
+          <Text>30 Fenchurch Street</Text>
+          <Text>London, United Kingdom, EC3M 3BD</Text>
+          <Spacer y={2} />
+          <Text color="#1023D7">
+            Add order number #{order.code} to the notes section in your wire
+            transfer.
+          </Text>
+        </>
+      )
+    default:
+      return (
+        <>
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Send wire transfer to
+          </Text>
+          <Spacer y={1} />
+          <Text>Account name: Art.sy Inc.</Text>
+          <Text>Account number: 4243851425</Text>
+          <Text>Routing number: 121000248</Text>
+          <Text>International SWIFT: WFBIUS6S</Text>
+          <Spacer y={2} />
+          <Text
+            variant={["xs", "sm-display"]}
+            fontWeight="bold"
+            color="black100"
+          >
+            Bank address
+          </Text>
+          <Spacer y={1} />
+          <Text>Wells Fargo Bank, N.A.</Text>
+          <Text>420 Montgomery Street</Text>
+          <Text>San Francisco, CA 9410</Text>
+          <Spacer y={2} />
+          <Text color="#1023D7">
+            Add order number #{order.code} to the notes section in your wire
+            transfer.
+          </Text>
+        </>
+      )
+  }
 }
 
 export const deliverText = (order): React.ReactNode => {

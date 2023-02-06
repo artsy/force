@@ -128,6 +128,7 @@ export const AuthDialogLogin: FC = () => {
                 <Text variant="xs" textAlign="right" color="black60">
                   <Clickable
                     textDecoration="underline"
+                    data-test="forgot"
                     onClick={() => {
                       dispatch({
                         type: "MODE",

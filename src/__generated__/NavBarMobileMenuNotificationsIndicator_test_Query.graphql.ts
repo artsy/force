@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61b128d4f3c2fd252caaa4870613d135>>
+ * @generated SignedSource<<bbd961aa3bebca860e06dfdd336b58b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -87,6 +87,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "unseenNotificationsCount",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -96,7 +103,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37ccc0b48e759e445c0c355569c560bd",
+    "cacheID": "7e937619485679b0ea694a36eebcd8b5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -113,12 +120,13 @@ return {
           "type": "ID"
         },
         "me.unreadConversationCount": (v0/*: any*/),
-        "me.unreadNotificationsCount": (v0/*: any*/)
+        "me.unreadNotificationsCount": (v0/*: any*/),
+        "me.unseenNotificationsCount": (v0/*: any*/)
       }
     },
     "name": "NavBarMobileMenuNotificationsIndicator_test_Query",
     "operationKind": "query",
-    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n}\n"
+    "text": "query NavBarMobileMenuNotificationsIndicator_test_Query {\n  me {\n    ...NavBarMobileMenuNotificationsIndicator_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuNotificationsIndicator_me on Me {\n  unreadConversationCount\n  unreadNotificationsCount\n  unseenNotificationsCount\n}\n"
   }
 };
 })();

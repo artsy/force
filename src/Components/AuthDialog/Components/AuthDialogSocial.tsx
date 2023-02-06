@@ -7,6 +7,7 @@ import {
   FacebookIcon,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { stringify } from "qs"
 import { FC } from "react"
 import { getENV } from "Utils/getENV"
@@ -16,7 +17,7 @@ export const AuthDialogSocial: FC = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP")
 
   const {
-    state: { options, analytics },
+    state: { options, analytics, mode },
   } = useAuthDialogContext()
 
   // These params are handled by the routes in the Passport app,
@@ -34,6 +35,13 @@ export const AuthDialogSocial: FC = () => {
     { skipNulls: true }
   )
 
+  const handleClick = (service: "facebook" | "apple" | "google") => () => {
+    setSocialAuthTracking({
+      action: { Login: "loggedIn", SignUp: "signedUp" }[mode],
+      service,
+    })
+  }
+
   return (
     <Join separator={<Spacer y={1} />}>
       <Button
@@ -43,6 +51,8 @@ export const AuthDialogSocial: FC = () => {
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
+        onClick={handleClick("apple")}
+        rel="nofollow"
       >
         Continue with Apple
       </Button>
@@ -54,6 +64,8 @@ export const AuthDialogSocial: FC = () => {
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}
+        onClick={handleClick("google")}
+        rel="nofollow"
       >
         Continue with Google
       </Button>
@@ -65,6 +77,8 @@ export const AuthDialogSocial: FC = () => {
         // @ts-ignore
         as="a"
         href={`${facebookPath}?${query}`}
+        onClick={handleClick("facebook")}
+        rel="nofollow"
       >
         Continue with Facebook
       </Button>

@@ -17,32 +17,13 @@ const dimensionsDisplay = dimensions => (
 )
 
 export const ItemReview: React.FC<ItemReviewProps> = ({
-  lineItem: {
-    artwork: {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      date,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      dimensions: artworkDimensions,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      edition_sets,
-    },
-    artworkVersion: {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artistNames,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      title,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      medium,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      image,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      attributionClass,
-    },
-    editionSetId,
-  },
+  lineItem: { artwork, artworkVersion, editionSetId },
   orderSource,
 }) => {
   const isPrivateSale = orderSource === "private_sale"
+  const { artistNames, title, medium, attributionClass, image } =
+    artworkVersion || {}
+  const { date, dimensions: artworkDimensions, editionSets } = artwork || {}
 
   return (
     <BorderBox p={[2, 4]}>
@@ -60,20 +41,23 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
         {!isPrivateSale && (
           <Text>
             {editionSetId &&
-              edition_sets &&
+              editionSets &&
               dimensionsDisplay(
-                edition_sets.find(e => e.internalID === editionSetId).dimensions
+                editionSets.find(e => e?.internalID === editionSetId)
+                  ?.dimensions
               )}
             {!editionSetId &&
               artworkDimensions &&
               dimensionsDisplay(artworkDimensions)}
           </Text>
         )}
-        <Text variant="sm" color="black60">
-          {attributionClass.shortDescription}
-        </Text>
+        {attributionClass?.shortDescription && (
+          <Text variant="sm" color="black60">
+            {attributionClass.shortDescription}
+          </Text>
+        )}
       </Flex>
-      {image && image.resized && (
+      {image?.resized && title && (
         <Image
           maxHeight={375}
           width={185}
@@ -94,7 +78,7 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
           in
           cm
         }
-        edition_sets: editionSets {
+        editionSets {
           internalID
           dimensions {
             in

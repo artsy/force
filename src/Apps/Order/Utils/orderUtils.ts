@@ -1,13 +1,14 @@
+import { BankAccountSelection } from "Apps/Order/Routes/Payment"
 import {
   CommercePaymentMethodEnum,
   Payment_order$data,
 } from "__generated__/Payment_order.graphql"
-import { BankAccountSelection } from "../Routes/Payment/index"
 
 const initialPaymentMethods: CommercePaymentMethodEnum[] = [
   "US_BANK_ACCOUNT",
   "SEPA_DEBIT",
   "CREDIT_CARD",
+  "WIRE_TRANSFER",
 ]
 
 export const isPaymentSet = (
