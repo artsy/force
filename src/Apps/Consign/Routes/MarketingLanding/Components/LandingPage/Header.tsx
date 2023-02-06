@@ -22,18 +22,16 @@ export const HeaderNew = () => {
     ? "/sell/inquiry"
     : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
 
-  /*   const trackSubmitClick = () => {
+  const trackStartSellingClick = () => {
     trackEvent({
-      // @ts-ignore
-      action: "clickedSubmitAnArtwork",
-      // @ts-ignore
-      context_module: "StickyBanner",
+      action: "clickedStartSelling",
+      context_module: "Header",
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
       destination_path: "/sell/submission",
     })
-  } */
+  }
 
   const trackGetInTouchClick = () => {
     trackEvent({
@@ -75,7 +73,7 @@ export const HeaderNew = () => {
               as={RouterLink}
               variant="primaryBlack"
               to="/sell/submission"
-              //  onClick={trackSubmitClick}
+              onClick={trackStartSellingClick}
               mb={[1, 0]}
             >
               Start Selling
