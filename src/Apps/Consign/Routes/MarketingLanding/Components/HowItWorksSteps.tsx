@@ -29,6 +29,7 @@ const reasons = [
       "Your artwork stays with you until it sells. Meanwhile, our logistics team handles everything, from organizing shipping to getting your payment to you.",
   },
 ]
+
 export const HowItWorksSteps: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
@@ -65,6 +66,7 @@ export const HowItWorksSteps: React.FC = () => {
             variant="primaryBlack"
             to="/sell/submission"
             onClick={trackStartSellingClick}
+            data-testid="start-selling-button"
           >
             Start Selling
           </Button>
