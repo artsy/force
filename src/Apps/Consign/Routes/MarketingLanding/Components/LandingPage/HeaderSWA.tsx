@@ -10,13 +10,14 @@ import {
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { trackEvent } from "Server/analytics/helpers"
 import { useAnalyticsContext, useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 
 export const HeaderSWA = () => {
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
 
   const getInTouchRoute = enableSWAInquiryFlow
     ? "/sell/inquiry"
@@ -27,7 +28,7 @@ export const HeaderSWA = () => {
       action: "clickedStartSelling",
       context_module: "Header",
       context_page_owner_type: contextPageOwnerType,
-      label: "Submit an Artwork",
+      label: "Start Selling",
       user_id: user?.id,
       destination_path: "/sell/submission",
     })
@@ -68,13 +69,14 @@ export const HeaderSWA = () => {
         <GridColumns>
           <Column span={4}>
             <Button
-              width={"100%"}
               // @ts-ignore
               as={RouterLink}
+              width={"100%"}
               variant="primaryBlack"
               to="/sell/submission"
               onClick={trackStartSellingClick}
               mb={[1, 0]}
+              data-testid="start-selling-button"
             >
               Start Selling
             </Button>

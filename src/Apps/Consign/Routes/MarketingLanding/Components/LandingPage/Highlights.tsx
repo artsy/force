@@ -26,7 +26,7 @@ const reasons = [
       "We connect your work with the most interested buyers from over 3 million art lovers in 190 countries.",
   },
 ]
-export const Hightlights: React.FC = () => {
+export const Highlights: React.FC = () => {
   return (
     <GridColumns gridColumnGap={[0, 6]} alignItems="fex-start">
       {reasons.map(i => (
