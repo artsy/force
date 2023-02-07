@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45bf76a6ff42caf0d6661b3477d3d046>>
+ * @generated SignedSource<<8fbfadb152f529dae898124e21e32265>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtQuizArtworks_me$data = {
   readonly id: string;
   readonly quiz: {
-    readonly id: string;
     readonly quizArtworkConnection: {
       readonly edges: ReadonlyArray<{
         readonly interactedAt: string | null;
         readonly node: {
-          readonly id: string;
           readonly image: {
             readonly resized: {
               readonly height: number | null;
@@ -44,21 +42,19 @@ export type ArtQuizArtworks_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtQuizArtworks_me",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -67,7 +63,6 @@ return {
       "name": "quiz",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": [
@@ -112,7 +107,6 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -234,8 +228,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "e81bd5f8a4176d5bdf8c03676078e293";
+(node as any).hash = "2c1459d1f5884b942c8ebd3dbaa9a1b3";
 
 export default node;

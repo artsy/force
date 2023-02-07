@@ -174,7 +174,6 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       dispatch({ type: action })
 
       if (activeIndex === cards.length - 1) {
-        router.push("/art-quiz/results")
         setShowLoader(true)
       }
     },
@@ -188,7 +187,6 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       submitSave,
       trackEvent,
       submitDislike,
-      router,
     ]
   )
 
@@ -304,7 +302,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
         <Tooltip
           content={tooltipText.map(text => (
-            <Text>{text}</Text>
+            <Text variant="xs">{text}</Text>
           ))}
           variant="defaultDark"
           offset={-10}
@@ -344,7 +342,6 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
               interactedAt
               position
               node {
-                id
                 internalID
                 image {
                   resized(

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<23836b092f50a2c7042f41b5e4e745ff>>
+ * @generated SignedSource<<78ebf5c426d41caf1d7f9d5ae154f987>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -103,7 +103,6 @@ return {
             "name": "quiz",
             "plural": false,
             "selections": [
-              (v0/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -148,7 +147,6 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v0/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -253,7 +251,8 @@ return {
                             "kind": "ScalarField",
                             "name": "title",
                             "storageKey": null
-                          }
+                          },
+                          (v0/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -262,7 +261,8 @@ return {
                   }
                 ],
                 "storageKey": "quizArtworkConnection(first:16)"
-              }
+              },
+              (v0/*: any*/)
             ],
             "storageKey": null
           }
@@ -272,7 +272,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d96b87106e31b834cea39d869850f9d5",
+    "cacheID": "7e10cc72ccd62d5fc5b08bc3818cafa5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -351,7 +351,7 @@ return {
     },
     "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    id\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          id\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
