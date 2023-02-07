@@ -81,7 +81,7 @@ const QUERY = graphql`
   query SavesArtworksQuery(
     $collectionID: String!
     $after: String
-    $sort: CollectionSorts
+    $sort: CollectionArtworkSorts
   ) {
     me {
       collection(id: $collectionID) {
@@ -98,7 +98,7 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
       fragment SavesArtworks_collection on Collection
         @argumentDefinitions(
           after: { type: "String" }
-          sort: { type: "CollectionSorts" }
+          sort: { type: "CollectionArtworkSorts" }
         ) {
         name
         default
