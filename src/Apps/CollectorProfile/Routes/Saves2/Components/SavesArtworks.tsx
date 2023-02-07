@@ -91,7 +91,7 @@ const QUERY = graphql`
   }
 `
 
-const SavesArtworksRefetchContainer = createRefetchContainer(
+export const SavesArtworksRefetchContainer = createRefetchContainer(
   SavesArtworks,
   {
     collection: graphql`
