@@ -57,6 +57,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
         aria-label="Image placeholder"
         justifyContent="center"
         alignItems="center"
+        flexShrink={0}
       >
         <NoArtworkIcon width="18px" height="18px" fill="black60" />
       </Flex>
