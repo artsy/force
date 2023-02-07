@@ -1,7 +1,15 @@
-import { Text, useToasts } from "@artsy/palette"
+import {
+  Breadcrumbs,
+  ChevronIcon,
+  Flex,
+  Spacer,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { Link } from "found"
 import { compact } from "lodash"
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -73,9 +81,31 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     <>
       <MetaTags title="Settings | Artsy" />
 
-      <Text variant={["lg-display", "xl"]} mt={[2, 4]}>
-        {isCollectorProfileEnabled ? "Settings" : `Hi, ${me.name}`}
-      </Text>
+      {isCollectorProfileEnabled ? (
+        <>
+          <Spacer y={2} />
+          <Breadcrumbs>
+            <Link to="/collector-profile/my-collection">
+              <Flex flexDirection="row" alignItems="center" py={2}>
+                <ChevronIcon
+                  direction="left"
+                  color="black100"
+                  height={14}
+                  width={18}
+                  mr={0.5}
+                />
+                <Text>Collector Profile</Text>
+              </Flex>
+            </Link>
+          </Breadcrumbs>
+          <Spacer y={6} />
+        </>
+      ) : (
+        <Text
+          variant={["lg-display", "xl"]}
+          mt={[2, 4]}
+        >{`Hi, ${me.name}`}</Text>
+      )}
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
         {isCollectorProfileEnabled
