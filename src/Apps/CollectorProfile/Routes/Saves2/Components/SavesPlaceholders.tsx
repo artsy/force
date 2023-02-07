@@ -42,12 +42,12 @@ const SavesArtworksRowResponsivePlaceholder = () => {
   return (
     <>
       {/* Mobile view */}
-      <Media at="xs">
+      <Media lessThan="lg">
         <SavesArtworksRowPlaceholder count={2} />
       </Media>
 
       {/* Desktop view */}
-      <Media greaterThan="xs">
+      <Media greaterThanOrEqual="lg">
         <SavesArtworksRowPlaceholder count={3} />
       </Media>
     </>
