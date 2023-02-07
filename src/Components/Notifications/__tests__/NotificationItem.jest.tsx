@@ -85,6 +85,19 @@ describe("NotificationItem", () => {
 
       expect(screen.getByText("+ 6")).toBeInTheDocument()
     })
+
+    it("should not be rendered when notification is not artwork-based", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          notificationType: "PARTNER_SHOW_OPENED",
+          objectsCount: 10,
+        }),
+      })
+
+      const label = screen.queryByLabelText("Remaining artworks count")
+      expect(label).not.toBeInTheDocument()
+    })
   })
 
   describe("Unread notification indicator", () => {

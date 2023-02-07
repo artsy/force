@@ -10,6 +10,7 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System"
 import createLogger from "Utils/logger"
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
+import { isArtworksBasedNotification } from "./util"
 
 const logger = createLogger("NotificationItem")
 
@@ -24,6 +25,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const { relayEnvironment } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = item.objectsCount - 4
+  const shouldDisplayCounts =
+    isArtworksBasedNotification(item.notificationType) &&
+    remainingArtworksCount > 0
 
   const getNotificationType = () => {
     if (item.notificationType === "ARTWORK_ALERT") {
@@ -109,7 +113,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
             })}
           </Join>
 
-          {remainingArtworksCount > 0 && (
+          {shouldDisplayCounts && (
             <Text
               variant="xs"
               color="black60"
