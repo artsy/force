@@ -73,13 +73,38 @@ describe("CollectorProfileSaves2Route", () => {
       expect(selectedElement).toHaveTextContent("Collection Two")
     })
   })
+
+  it("should `lock` the initial collection in the 2nd slot when collection id is passed in url during initial mount", () => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        params: {
+          id: "collection-three-id",
+        },
+      },
+    }))
+
+    renderWithRelay({
+      CollectionsConnection: () => collectionsConnection,
+    })
+
+    const selectedElement = screen.getAllByRole("link")
+    const lockedElement = selectedElement[1]
+
+    // Check the second slot
+    expect(lockedElement).toHaveTextContent("Collection Three")
+    expect(isAriaCurrentAttributeSetToTrue(lockedElement)).toBe(true)
+  })
 })
+
+const isAriaCurrentAttributeSetToTrue = (element: HTMLElement) => {
+  const attribute = element.getAttribute("aria-current")
+
+  return attribute === "true"
+}
 
 const getCurrentCollectionElement = () => {
   return screen.getAllByRole("link").find(element => {
-    const attribute = element.getAttribute("aria-current")
-
-    return attribute === "true"
+    return isAriaCurrentAttributeSetToTrue(element)
   })
 }
 
