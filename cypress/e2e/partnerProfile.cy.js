@@ -6,18 +6,18 @@ describe("partner/:partner_id", () => {
   it("renders metadata", () => {
     cy.title().should(
       "eq",
-      "Mariane Ibrahim Gallery | Artists, Art for Sale, and Contact Info | Artsy"
+      "Maison Gerard | Artists, Art for Sale, and Contact Info | Artsy"
     )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
         "eq",
-        "Seven years after founding her namesake gallery in Seattle, Ibrahim and her program officially launched their next space in Chicago in 2019. Mariane Ibrahim …"
+        "Since 1974, Maison Gerard has specialized in fine French Art Deco furniture, lighting and objets d’art, with a …"
       )
   })
 
   it("renders page content", () => {
-    cy.get("h1").should("contain", "Mariane Ibrahim Gallery")
+    cy.get("h1").should("contain", "Maison Gerard")
   })
 
   it.skip("shows the list of shows", () => {
@@ -44,7 +44,7 @@ describe("partner/:partner_id", () => {
 
   it("show contact information for active partner", () => {
     cy.visit("partner/maison-gerard/contact")
-    cy.contains("Chicago")
+    cy.contains("New York")
     cy.contains("Locations")
   })
 })
