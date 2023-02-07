@@ -28,7 +28,11 @@ const SavesItem: FC<SavesItemProps> = ({ isSelected, imagesLayout, item }) => {
   }
 
   return (
-    <RouterLink to={getLink()} textDecoration="none">
+    <RouterLink
+      to={getLink()}
+      textDecoration="none"
+      aria-current={!!isSelected}
+    >
       <Flex
         p={1}
         width={[138, 222]}
