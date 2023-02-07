@@ -24,19 +24,18 @@ interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
   relay: RelayRefetchProp
 }
 
+const sortOptions: SortOptions = [
+  { value: "SAVED_AT_DESC", text: "Recently Saved" },
+  { value: "SAVED_AT_ASC", text: "Oldest First" },
+]
+const defaultSort = sortOptions[0].value
+
 const SavesArtworks: FC<SavesArtworksProps> = ({
   collection,
   collectionID,
   relay,
 }) => {
   const { match } = useRouter()
-
-  // TODO: Update sort options
-  const sortOptions: SortOptions = [
-    { value: "updated_at", text: "Recently Saved" },
-    { value: "created_at", text: "Oldest First" },
-  ]
-  const defaultSort = sortOptions[0].value
 
   const counts: Counts = {
     artworks: collection.artworks?.totalCount ?? 0,
@@ -79,10 +78,14 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
 }
 
 const QUERY = graphql`
-  query SavesArtworksQuery($collectionID: String!, $after: String) {
+  query SavesArtworksQuery(
+    $collectionID: String!
+    $after: String
+    $sort: CollectionSorts
+  ) {
     me {
       collection(id: $collectionID) {
-        ...SavesArtworks_collection @arguments(after: $after)
+        ...SavesArtworks_collection @arguments(after: $after, sort: $sort)
       }
     }
   }
@@ -93,10 +96,13 @@ const SavesArtworksRefetchContainer = createRefetchContainer(
   {
     collection: graphql`
       fragment SavesArtworks_collection on Collection
-        @argumentDefinitions(after: { type: "String" }) {
+        @argumentDefinitions(
+          after: { type: "String" }
+          sort: { type: "CollectionSorts" }
+        ) {
         name
         default
-        artworks: artworksConnection(first: 30, after: $after) {
+        artworks: artworksConnection(first: 30, after: $after, sort: $sort) {
           totalCount
           ...SavesArtworksGrid_artworks
         }
@@ -116,6 +122,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
       query={QUERY}
       variables={{
         collectionID,
+        sort: defaultSort,
       }}
       render={({ props, error }) => {
         if (error) {

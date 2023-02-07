@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2034b278f2373180e99ab9fd847c490e>>
+ * @generated SignedSource<<435d24dbb522320f8140b6b4e4fb9798>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sort"
     }
   ],
   "kind": "Fragment",
@@ -63,6 +68,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 30
+        },
+        {
+          "kind": "Variable",
+          "name": "sort",
+          "variableName": "sort"
         }
       ],
       "concreteType": "ArtworkConnection",
@@ -95,6 +105,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "906d8797c3de6cdac209dead62f718c0";
+(node as any).hash = "4c910d49c284d96af802bdce10dec72d";
 
 export default node;

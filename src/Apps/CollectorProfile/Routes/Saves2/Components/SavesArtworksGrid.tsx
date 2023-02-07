@@ -73,14 +73,19 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     context.setFilter("page", page)
   }
 
-  const fetchResults = () => {
+  const fetchResults = (changedFilterKey: string) => {
     setFetching(true)
 
-    const relayParams = {
-      after: artworks.pageInfo.endCursor,
+    const variables: Record<string, any> = {
+      sort: filters.sort,
     }
 
-    relayRefetch(relayParams, null, error => {
+    // TODO: Pass `page` argument when FX-4593 is completed
+    if (changedFilterKey === "page") {
+      variables.after = artworks.pageInfo.endCursor
+    }
+
+    relayRefetch(variables, null, error => {
       if (error) {
         console.error(error)
       }
@@ -136,11 +141,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     if (filtersHaveUpdated) {
       const [filterKey] = changedFilterEntity
 
-      // we currently support only `page` filter in relay query
-      if (filterKey === "page") {
-        fetchResults()
-      }
-
+      fetchResults(filterKey)
       trackAnalytics(filterKey)
     }
   }, [context.filters])
