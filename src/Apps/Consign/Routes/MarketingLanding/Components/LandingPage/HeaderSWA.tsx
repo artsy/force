@@ -53,7 +53,7 @@ export const HeaderSWA = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
-        <Text variant={["xl", "xl", "xxxl"]}>
+        <Text as="h1" variant={["xl", "xl", "xxxl"]}>
           Sell art from your collection
         </Text>
 
