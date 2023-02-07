@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, media, Text } from "@artsy/palette"
+import { Box, Join, media, Spacer, Text } from "@artsy/palette"
 import { compact } from "lodash"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
@@ -39,56 +39,54 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
     : [{ name: null, edges }]
 
   return (
-    <Columns variant="sm">
+    <Join separator={<Spacer y={4} />}>
       {groups.map(({ name, edges }, i) => {
         return (
-          <React.Fragment key={name ?? i}>
+          <Box key={name ?? i}>
             {name && (
-              <Text
-                variant="sm"
-                overflow="visible"
-                py={0.5}
-                style={{ breakBefore: "column" }}
-                fontWeight="bold"
-              >
-                {name}
-              </Text>
+              <>
+                <Text variant="sm-display">{name}</Text>
+
+                <Spacer y={2} />
+              </>
             )}
 
-            {edges.map(edge => {
-              if (!edge.node) return null
+            <Columns variant="sm">
+              {edges.map(edge => {
+                if (!edge.node) return null
 
-              const artist = edge.node
+                const artist = edge.node
 
-              // No partner artworks for this artist
-              if ((edge.counts?.artworks ?? 0) === 0) {
+                // No partner artworks for this artist
+                if ((edge.counts?.artworks ?? 0) === 0) {
+                  return (
+                    <Box key={artist.internalID} color="black60" py={0.5}>
+                      {artist.name}
+                    </Box>
+                  )
+                }
+
                 return (
-                  <Box key={artist.internalID} color="black60" py={0.5}>
+                  <RouterLink
+                    key={artist.internalID}
+                    to={
+                      partner.displayFullPartnerPage
+                        ? `${partner.href}/artists/${artist.slug}`
+                        : `${artist.href}`
+                    }
+                    display="block"
+                    py={0.5}
+                    textDecoration="none"
+                  >
                     {artist.name}
-                  </Box>
+                  </RouterLink>
                 )
-              }
-
-              return (
-                <RouterLink
-                  key={artist.internalID}
-                  to={
-                    partner.displayFullPartnerPage
-                      ? `${partner.href}/artists/${artist.slug}`
-                      : `${artist.href}`
-                  }
-                  display="block"
-                  py={0.5}
-                  textDecoration="none"
-                >
-                  {artist.name}
-                </RouterLink>
-              )
-            })}
-          </React.Fragment>
+              })}
+            </Columns>
+          </Box>
         )
       })}
-    </Columns>
+    </Join>
   )
 }
 
