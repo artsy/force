@@ -17,6 +17,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
+import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -53,6 +54,7 @@ export const MarketingLandingApp = () => {
           <HeaderSWA />
           <Highlights />
           <WaysWeSell />
+          <HowItWorksSteps />
         </Join>
       </>
     )
