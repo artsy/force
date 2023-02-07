@@ -15,7 +15,9 @@ import {
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { Rail } from "Components/Rail"
 import { useState } from "react"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import { useAnalyticsContext, useSystemContext } from "System"
 
 interface PillData {
   type: Specialty
@@ -38,12 +40,38 @@ const pills: PillData[] = [
 ]
 
 export const MeetTheSpecialists: React.FC = () => {
+  const { user } = useSystemContext()
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const { trackEvent } = useTracking()
+
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
     "auctions"
   )
-  const [toDisplay, setToDisplay] = useState(
+  const [specialistsTooDisplay, setSpecialistsTooDisplay] = useState(
     SPECIALISTS.filter(i => i.specialty === "auctions")
   )
+
+  const contactTheSpecialistClick = () => {
+    trackEvent({
+      action: "clickedGetInTouch",
+      context_module: "MeetTheSpecialists",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Contact specialist_name",
+      user_id: user?.id,
+      user_email: user?.email,
+    })
+  }
+
+  const trackStartSellingClick = () => {
+    trackEvent({
+      action: "clickedStartSelling",
+      context_module: "MeetTheSpecialists",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Start Selling",
+      user_id: user?.id,
+      destination_path: "/sell/submission",
+    })
+  }
 
   return (
     <>
@@ -63,7 +91,9 @@ export const MeetTheSpecialists: React.FC = () => {
             variant="default"
             onClick={() => {
               setSelectedSpecialty(pill.type)
-              setToDisplay(SPECIALISTS.filter(i => i.specialty === pill.type))
+              setSpecialistsTooDisplay(
+                SPECIALISTS.filter(i => i.specialty === pill.type)
+              )
             }}
           >
             {pill.title}
@@ -73,7 +103,7 @@ export const MeetTheSpecialists: React.FC = () => {
       <Rail
         title=""
         getItems={() => {
-          return toDisplay.map(i => (
+          return specialistsTooDisplay.map(i => (
             <ResponsiveBox
               aspectWidth={445}
               aspectHeight={644}
@@ -109,7 +139,11 @@ export const MeetTheSpecialists: React.FC = () => {
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
                     {i.bio}
                   </Text>
-                  <Button variant="secondaryWhite" mb={2}>
+                  <Button
+                    variant="secondaryWhite"
+                    mb={2}
+                    onClick={contactTheSpecialistClick}
+                  >
                     Contact {i.firstName}
                   </Button>
                 </Box>
@@ -132,9 +166,7 @@ export const MeetTheSpecialists: React.FC = () => {
             as={RouterLink}
             variant="primaryBlack"
             to="/sell/submission"
-            onClick={event => {
-              /* track event */
-            }}
+            onClick={trackStartSellingClick}
           >
             Start Selling
           </Button>
