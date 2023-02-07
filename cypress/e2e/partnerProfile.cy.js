@@ -1,37 +1,37 @@
 describe("partner/:partner_id", () => {
   before(() => {
-    cy.visit("partner/mariane-ibrahim-gallery")
+    cy.visit("partner/gagosian")
   })
 
   it("renders metadata", () => {
     cy.title().should(
       "eq",
-      "Mariane Ibrahim Gallery | Artists, Art for Sale, and Contact Info | Artsy"
+      "Gagosian | Artists, Art for Sale, and Contact Info | Artsy"
     )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
         "eq",
-        "Seven years after founding her namesake gallery in Seattle, Ibrahim and her program officially launched their next space in Chicago in 2019. Mariane Ibrahim …"
+        "Gagosian is a global gallery specializing in modern and contemporary art with nineteen locations worldwide."
       )
   })
 
   it("renders page content", () => {
-    cy.get("h1").should("contain", "Mariane Ibrahim Gallery")
+    cy.get("h1").should("contain", "Gagosian")
   })
 
   it.skip("shows the list of shows", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/shows")
+    cy.visit("partner/gagosian/shows")
     cy.contains("Past Events")
   })
 
   it("shows partner artists", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/artists")
+    cy.visit("partner/gagosian/artists")
     cy.contains("Artists")
   })
 
   it("shows partner articles", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/articles")
+    cy.visit("partner/gagosian/articles")
     cy.contains("Articles")
   })
 
@@ -43,8 +43,8 @@ describe("partner/:partner_id", () => {
   })
 
   it("show contact information for active partner", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/contact")
-    cy.contains("Chicago")
+    cy.visit("partner/gagosian/contact")
+    cy.contains("New York")
     cy.contains("Locations")
   })
 })

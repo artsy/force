@@ -1,9 +1,10 @@
 import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("Consign", () => {
-  it("/sell", () => {
+  it.skip("/sell", () => {
+    // pending until the redesign is no longer under a feature flag
     visitWithStatusRetries("sell")
-    cy.get("h1").should("contain", "Sell Artworks from Your Collection")
+    cy.get("h1").should("contain", "Sell art from your collection")
     cy.title().should("eq", "Sell Artwork with Artsy | Art Consignment | Artsy")
   })
 
