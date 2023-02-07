@@ -1,15 +1,10 @@
 import * as React from "react"
 import { PartnerArtistList_partner$data } from "__generated__/PartnerArtistList_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, media, Text, THEME_V3 } from "@artsy/palette"
+import { Box, media, Text } from "@artsy/palette"
 import { compact } from "lodash"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-
-// Values here used to implement column headers in CSS
-const PADDING = 0.5
-const OFFSET =
-  parseInt(THEME_V3.textVariants.sm.lineHeight, 10) + PADDING * 10 * 2
 
 export interface PartnerArtistListProps {
   partner: PartnerArtistList_partner$data
@@ -44,43 +39,31 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
     : [{ name: null, edges }]
 
   return (
-    <Columns
-      variant="sm"
-      pt={partner.distinguishRepresentedArtists ? OFFSET : 0}
-    >
+    <Columns variant="sm">
       {groups.map(({ name, edges }, i) => {
         return (
           <React.Fragment key={name ?? i}>
             {name && (
               <Text
                 variant="sm"
-                height={OFFSET}
                 overflow="visible"
-                style={{
-                  breakBefore: "column",
-                  whiteSpace: "nowrap",
-                  transform: `translateY(-${OFFSET}px)`,
-                }}
+                py={0.5}
+                style={{ breakBefore: "column" }}
+                fontWeight="bold"
               >
                 {name}
               </Text>
             )}
 
-            {edges.map((edge, i) => {
+            {edges.map(edge => {
               if (!edge.node) return null
 
               const artist = edge.node
-              const mt = !!name && i === 0 ? -OFFSET : 0
 
               // No partner artworks for this artist
               if ((edge.counts?.artworks ?? 0) === 0) {
                 return (
-                  <Box
-                    key={artist.internalID}
-                    color="black60"
-                    py={PADDING}
-                    mt={mt}
-                  >
+                  <Box key={artist.internalID} color="black60" py={0.5}>
                     {artist.name}
                   </Box>
                 )
@@ -95,8 +78,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                       : `${artist.href}`
                   }
                   display="block"
-                  py={PADDING}
-                  mt={mt}
+                  py={0.5}
                   textDecoration="none"
                 >
                   {artist.name}
