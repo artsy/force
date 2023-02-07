@@ -98,7 +98,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
               </Flex>
             </Link>
           </Breadcrumbs>
-          <Spacer y={4} />
+          <Spacer y={6} />
         </>
       ) : (
         <Text
