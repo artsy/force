@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82f99a6e48137329ae6ada6413a73e6e>>
+ * @generated SignedSource<<eff89f1c12262b1ccef7aa14aa64badf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_order$data = {
+  readonly artworkDetails: string | null;
   readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
   readonly bankAccountId: string | null;
   readonly buyerTotal: string | null;
@@ -47,7 +48,7 @@ export type Payment_order$data = {
     readonly __typename: "%other";
   } | null;
   readonly source: CommerceOrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
 export type Payment_order$key = {
@@ -71,6 +72,13 @@ return {
   "metadata": null,
   "name": "Payment_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artworkDetails",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -260,6 +268,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "AdditionalArtworkDetails_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
     }
   ],
@@ -268,6 +281,6 @@ return {
 };
 })();
 
-(node as any).hash = "28bd9cb68f8ca66770df3cd8fbe14c97";
+(node as any).hash = "2d3df89931377ab122173a0d48131178";
 
 export default node;

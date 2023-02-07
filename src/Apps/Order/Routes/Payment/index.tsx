@@ -31,6 +31,7 @@ import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import {
   buyNowFlowSteps,
   privateFlowSteps,
@@ -406,6 +407,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                 transactionStep="payment"
                 order={order}
               />
+              {order.source === "private_sale" && order.artworkDetails && (
+                <AdditionalArtworkDetails order={order} />
+              )}
               <BuyerGuarantee
                 contextModule={ContextModule.ordersPayment}
                 contextPageOwnerType={OwnerType.ordersPayment}
@@ -470,6 +474,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        artworkDetails
         source
         conditionsOfSale
         bankAccountId
@@ -492,6 +497,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...CreditCardPicker_order
         ...BankAccountPicker_order
         ...ArtworkSummaryItem_order
+        ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
       }
     `,
