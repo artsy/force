@@ -28,11 +28,15 @@ import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import { useSystemContext } from "System"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
   const { isEigen } = useSystemContext()
+  const enableNewSWALandingPage = useFeatureFlag(
+    "cx-swa-landing-page-redesign-2023"
+  )
 
   if (isEigen) {
     return null
@@ -131,10 +135,11 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Text variant="sm">
-              <FooterLink my={2} to="/meet-the-specialists">
-                Talk to a Specialist
-              </FooterLink>
-
+              {!enableNewSWALandingPage && (
+                <FooterLink my={2} to="/meet-the-specialists">
+                  Talk to a Specialist
+                </FooterLink>
+              )}
               <FooterLink my={2} to="https://support.artsy.net">
                 Visit our Help Center
               </FooterLink>
