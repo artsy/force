@@ -258,7 +258,7 @@ const getPaymentMethodInfo = (
         return (
           <>
             {availablePaymentMethods?.length === 1 && (
-              <Text variant="md">Wire transfer payment details</Text>
+              <Text variant="lg-display">Wire transfer payment details</Text>
             )}
             <Text color="black60" variant="sm">
               • To pay by wire transfer, complete checkout to view banking
@@ -275,7 +275,7 @@ const getPaymentMethodInfo = (
       return (
         <>
           {availablePaymentMethods?.length === 1 && (
-            <Text variant="md">Wire transfer payment details</Text>
+            <Text variant="lg-display">Wire transfer payment details</Text>
           )}
           <Text color="black60" variant="sm">
             • To pay by wire transfer, complete checkout and a member of the
