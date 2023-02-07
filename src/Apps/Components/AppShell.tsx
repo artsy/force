@@ -11,6 +11,7 @@ import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 import { Layout } from "Apps/Components/Layouts"
+import { useSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -25,6 +26,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   useRunAuthIntent()
   useAuthValidation()
+  useSocialAuthTracking()
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null

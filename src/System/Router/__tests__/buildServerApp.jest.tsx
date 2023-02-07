@@ -15,7 +15,7 @@ import { Media } from "Utils/Responsive"
 import { NextFunction, Request } from "express"
 import type { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
-import { findRoutesByPath } from "../Utils/findRoutesByPath"
+import { findRoutesByPath } from "System/Router/Utils/findRoutesByPath"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")

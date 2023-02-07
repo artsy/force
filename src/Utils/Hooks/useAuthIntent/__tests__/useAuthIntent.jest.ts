@@ -1,5 +1,5 @@
 import { createMockEnvironment } from "relay-test-utils"
-import { runAuthIntent } from "Utils/Hooks/useAuthIntent/index"
+import { isValid, runAuthIntent } from "Utils/Hooks/useAuthIntent/index"
 import Cookies from "cookies-js"
 import { followGeneMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowGeneMutation"
 import { followArtistMutation } from "Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowArtistMutation"
@@ -371,5 +371,27 @@ describe("runAuthIntent", () => {
         expect(global.console.error).toBeCalled()
       })
     })
+  })
+})
+
+describe("isValid", () => {
+  it("validates the cookie object", () => {
+    expect(
+      isValid({ action: "follow", kind: "artist", objectId: "example" })
+    ).toBe(true)
+    expect(
+      isValid({ action: "save", kind: "artworks", objectId: "example" })
+    ).toBe(true)
+    expect(
+      isValid({ action: "follow", kind: "invalid", objectId: "example" })
+    ).toBe(false)
+    expect(isValid({ action: "follow", kind: "artist" })).toBe(false)
+    expect(isValid({ action: "follow", objectId: "example" })).toBe(false)
+    expect(isValid({ kind: "artist", objectId: "example" })).toBe(false)
+    expect(isValid({ action: "follow" })).toBe(false)
+    expect(isValid({ kind: "artist" })).toBe(false)
+    expect(isValid({ objectId: "example" })).toBe(false)
+    expect(isValid({})).toBe(false)
+    expect(isValid("")).toBe(false)
   })
 })

@@ -98,6 +98,7 @@ export const AuthDialogForgotPassword: FC = () => {
                 Don’t need to reset?{" "}
                 <Clickable
                   textDecoration="underline"
+                  data-test="login"
                   onClick={() => {
                     dispatch({ type: "MODE", payload: { mode: "Login" } })
                   }}
@@ -107,6 +108,7 @@ export const AuthDialogForgotPassword: FC = () => {
                 or{" "}
                 <Clickable
                   textDecoration="underline"
+                  data-test="signup"
                   onClick={() => {
                     dispatch({ type: "MODE", payload: { mode: "SignUp" } })
                   }}
