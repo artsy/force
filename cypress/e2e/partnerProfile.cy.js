@@ -1,6 +1,6 @@
 describe("partner/:partner_id", () => {
   before(() => {
-    cy.visit("partner/mariane-ibrahim-gallery")
+    cy.visit("partner/maison-gerard")
   })
 
   it("renders metadata", () => {
@@ -21,17 +21,17 @@ describe("partner/:partner_id", () => {
   })
 
   it.skip("shows the list of shows", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/shows")
+    cy.visit("partner/maison-gerard/shows")
     cy.contains("Past Events")
   })
 
   it("shows partner artists", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/artists")
+    cy.visit("partner/maison-gerard/artists")
     cy.contains("Artists")
   })
 
   it("shows partner articles", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/articles")
+    cy.visit("partner/maison-gerard/articles")
     cy.contains("Articles")
   })
 
@@ -43,7 +43,7 @@ describe("partner/:partner_id", () => {
   })
 
   it("show contact information for active partner", () => {
-    cy.visit("partner/mariane-ibrahim-gallery/contact")
+    cy.visit("partner/maison-gerard/contact")
     cy.contains("Chicago")
     cy.contains("Locations")
   })
