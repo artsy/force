@@ -13,7 +13,7 @@ export const checkForRedirect = ({ req, res }) => {
     (!isStaticAuth ? referrer : undefined)
 
   let newRedirect
-  if (redirectTo === ("/reset_password" || "/user/delete")) {
+  if (["/reset_password", "/user/delete"].includes(redirectTo)) {
     newRedirect = "/"
   } else if (!!redirectTo) {
     newRedirect = sanitizeRedirect(redirectTo)

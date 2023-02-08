@@ -86,4 +86,10 @@ describe("sanitizeRedirect", () => {
 attacker.com/`)
     ).toEqual("/")
   })
+
+  it("leaves query params alone", () => {
+    expect(sanitizeRedirect("http://artsy.net?foo=bar")).toEqual(
+      "http://artsy.net?foo=bar"
+    )
+  })
 })

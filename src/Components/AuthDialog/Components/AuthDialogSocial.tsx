@@ -7,11 +7,11 @@ import {
   FacebookIcon,
 } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
+import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { stringify } from "qs"
 import { FC } from "react"
 import { getENV } from "Utils/getENV"
-import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 
 export const AuthDialogSocial: FC = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP")
@@ -20,13 +20,15 @@ export const AuthDialogSocial: FC = () => {
     state: { options, analytics, mode },
   } = useAuthDialogContext()
 
+  const { redirectUrl } = useAfterAuthenticationRedirectUrl()
+
   // These params are handled by the routes in the Passport app,
   // they get pushed onto the session and then handled when the social
   // service redirects back to Force.
   const query = stringify(
     {
       afterSignUpAction: options.afterAuthAction,
-      "redirect-to": sanitizeRedirect(options.redirectTo),
+      "redirect-to": redirectUrl,
       "signup-intent": analytics.intent,
       "signup-referer": getENV("AUTHENTICATION_REFERER"),
       accepted_terms_of_service: true,

@@ -53,7 +53,7 @@ describe("checkForRedirect", () => {
   })
 
   it("redirects to `/` if redirectTo=/user/delete", () => {
-    const { res } = setup({ query: { redirectTo: "/reset_password" } })
+    const { res } = setup({ query: { redirectTo: "/user/delete" } })
     expect(res.locals.sd.AUTHENTICATION_REDIRECT_TO).toEqual("/")
   })
 })
