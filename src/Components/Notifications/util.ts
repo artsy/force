@@ -9,7 +9,7 @@ export const shouldDisplayNotification = notification => {
   return artworksCount > 0
 }
 
-const isArtworksBasedNotification = (
+export const isArtworksBasedNotification = (
   notificationType: NotificationTypesEnum
 ) => {
   return ["ARTWORK_ALERT", "ARTWORK_PUBLISHED"].includes(notificationType)
