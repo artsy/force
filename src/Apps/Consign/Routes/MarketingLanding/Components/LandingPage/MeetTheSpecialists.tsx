@@ -18,7 +18,6 @@ import { useState } from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useAnalyticsContext, useSystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface PillData {
   type: Specialty
@@ -44,7 +43,6 @@ export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
     "auctions"
@@ -148,11 +146,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     mb={2}
                     onClick={contactTheSpecialistClick}
                     data-testid={`get-in-touch-button-${i.firstName}`}
-                    to={
-                      enableSWAInquiryFlow
-                        ? "/sell/inquiry"
-                        : `mailto:${i.email}?subject=Inquiry about selling with Artsy`
-                    }
+                    to={`mailto:${i.email}`}
                   >
                     Contact {i.firstName}
                   </Button>

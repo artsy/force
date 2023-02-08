@@ -30,7 +30,6 @@ describe("MeetTheSpecialists", () => {
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -71,32 +70,13 @@ describe("MeetTheSpecialists", () => {
   })
 
   describe("Contact the specialist button", () => {
-    it("links out to get in touch flow", () => {
-      render(<MeetTheSpecialists />)
-
-      const link = screen.getByTestId("get-in-touch-button-Shlomi")
-
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "/sell/inquiry")
-    })
-
     it("links out to email provider", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-          "swa-inquiry-flow": { flagEnabled: false },
-        },
-      }))
-
       render(<MeetTheSpecialists />)
 
       const link = screen.getByTestId("get-in-touch-button-Shlomi")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute(
-        "href",
-        "mailto:shlomi.rabi@artsy.net?subject=Inquiry about selling with Artsy"
-      )
+      expect(link).toHaveAttribute("href", "mailto:shlomi.rabi@artsy.net")
     })
   })
 })
