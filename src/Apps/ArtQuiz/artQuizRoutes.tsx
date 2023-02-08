@@ -91,6 +91,13 @@ export const artQuizRoutes: AppRouteConfig[] = [
             me {
               ...ArtQuizArtworks_me
             }
+            artworksConnection(first: 1) {
+              edges {
+                node {
+                  isSaved
+                }
+              }
+            }
           }
         `,
       },
