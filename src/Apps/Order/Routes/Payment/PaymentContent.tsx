@@ -135,7 +135,11 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Wire transfer */}
       <Collapse open={selectedPaymentMethod === "WIRE_TRANSFER"}>
-        {getPaymentMethodInfo(selectedPaymentMethod, order.source)}
+        {getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
+        )}
         <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
@@ -245,13 +249,17 @@ const getAvailablePaymentMethods = (
 
 const getPaymentMethodInfo = (
   paymentMethod: CommercePaymentMethodEnum | string,
-  orderSource?: string
+  orderSource?: string,
+  availablePaymentMethods?: readonly CommercePaymentMethodEnum[]
 ) => {
   switch (paymentMethod) {
     case "WIRE_TRANSFER":
       if (orderSource === "private_sale") {
         return (
           <>
+            {availablePaymentMethods?.length === 1 && (
+              <Text variant="lg-display">Wire transfer payment details</Text>
+            )}
             <Text color="black60" variant="sm">
               • To pay by wire transfer, complete checkout to view banking
               details and wire transfer instructions.
@@ -266,6 +274,9 @@ const getPaymentMethodInfo = (
 
       return (
         <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">Wire transfer payment details</Text>
+          )}
           <Text color="black60" variant="sm">
             • To pay by wire transfer, complete checkout and a member of the
             Artsy team will contact you with next steps by email.
