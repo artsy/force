@@ -31,6 +31,7 @@ describe("MeetTheSpecialists", () => {
       featureFlags: {
         "get-in-touch-flow-web": { flagEnabled: true },
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
+        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -75,12 +76,27 @@ describe("MeetTheSpecialists", () => {
       render(<MeetTheSpecialists />)
 
       const link = screen.getByTestId("get-in-touch-button-Shlomi")
+
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
+    })
+
+    it("links out to email provider", () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
+          "swa-inquiry-flow": { flagEnabled: false },
+        },
+      }))
+
+      render(<MeetTheSpecialists />)
+
+      const link = screen.getByTestId("get-in-touch-button-Shlomi")
+
       expect(link).toBeInTheDocument()
       expect(link).toHaveAttribute(
         "href",
-        expect.stringContaining(
-          "mailto:shlomi.rabi@artsy.net?subject=Inquiry about selling with Artsy"
-        )
+        "mailto:shlomi.rabi@artsy.net?subject=Inquiry about selling with Artsy"
       )
     })
   })

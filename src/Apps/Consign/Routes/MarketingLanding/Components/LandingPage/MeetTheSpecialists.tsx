@@ -45,11 +45,6 @@ export const MeetTheSpecialists: React.FC = () => {
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
-  const getInTouchRoute = email => {
-    enableSWAInquiryFlow
-      ? "/sell/inquiry"
-      : `mailto:${email}?subject=Inquiry about selling with Artsy`
-  }
 
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
     "auctions"

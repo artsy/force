@@ -14,10 +14,10 @@ import { useAnalyticsContext, useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 
 export const HeaderSWA = () => {
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
+  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
   const getInTouchRoute = enableSWAInquiryFlow
     ? "/sell/inquiry"
@@ -31,6 +31,17 @@ export const HeaderSWA = () => {
       label: "Start Selling",
       destination_path: "/sell/submission",
       user_id: user?.id,
+    })
+  }
+
+  const trackGetInTouchClick = () => {
+    trackEvent({
+      action: "clickedGetInTouch",
+      context_module: "Header",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Get in Touch",
+      user_id: user?.id,
+      user_email: user?.email,
     })
   }
 
@@ -77,6 +88,7 @@ export const HeaderSWA = () => {
               as={RouterLink}
               variant="secondaryBlack"
               data-testid="get-in-touch-button"
+              onClick={trackGetInTouchClick}
               to={getInTouchRoute}
             >
               Get in Touch
