@@ -1,6 +1,6 @@
-import { Box } from "@artsy/palette"
+import { Box, Spinner } from "@artsy/palette"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 
 export const ArtQuizFullScreen: FC = ({ children }) => {
   const { mobile, desktop } = useNavBarHeight()
@@ -14,9 +14,16 @@ export const ArtQuizFullScreen: FC = ({ children }) => {
    **/
   const [height, setHeight] = useState(0)
 
+  const childrenRef = useRef<HTMLDivElement | null>(null)
+
+  const [childrenHeight, setChildrenHeight] = useState(0)
+
   useEffect(() => {
     const handleResize = () => {
+      if (!childrenRef.current) return
+
       setHeight(window.innerHeight)
+      setChildrenHeight(childrenRef.current.clientHeight)
     }
 
     handleResize()
@@ -28,9 +35,29 @@ export const ArtQuizFullScreen: FC = ({ children }) => {
     }
   }, [])
 
+  const isLoading = height === 0
+  const isOverflowing = childrenHeight > height - desktop
+
   return (
-    <Box height={[`${height - mobile}px`, `${height - desktop}px`]}>
-      {children}
+    <Box
+      position="relative"
+      height={[
+        `${height - mobile}px`,
+        isOverflowing ? "100%" : `${height - desktop}px`,
+      ]}
+    >
+      {isLoading && <Spinner />}
+
+      <Box
+        ref={childrenRef as any}
+        height="100%"
+        style={{
+          opacity: isLoading ? 0 : 1,
+          transition: "opacity 250ms",
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   )
 }

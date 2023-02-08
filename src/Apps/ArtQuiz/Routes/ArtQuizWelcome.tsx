@@ -6,6 +6,7 @@ import {
   ArtsyMarkBlackIcon,
   FullBleed,
   ArtsyLogoIcon,
+  Box,
 } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
@@ -33,7 +34,9 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
           leftProps={{ display: ["none", "block"] }}
           right={
             <Flex flexDirection="column" justifyContent="center" p={[2, 4]}>
-              <ArtsyLogoIcon />
+              <Box flexShrink={0}>
+                <ArtsyLogoIcon />
+              </Box>
 
               <Spacer y={2} />
 
@@ -53,27 +56,29 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
 
               <Spacer y={12} />
 
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                width="100%"
-                onClick={onStartQuiz}
-                to="/art-quiz/artworks"
-              >
-                {t("artQuizPage.welcomeScreen.getStartedButton")}
-              </Button>
+              <Box flexShrink={0}>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  width="100%"
+                  onClick={onStartQuiz}
+                  to="/art-quiz/artworks"
+                >
+                  {t("artQuizPage.welcomeScreen.getStartedButton")}
+                </Button>
 
-              <Spacer y={1} />
+                <Spacer y={1} />
 
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                variant="tertiary"
-                width="100%"
-                to="/"
-              >
-                {t("artQuizPage.welcomeScreen.skipButton")}
-              </Button>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  variant="tertiary"
+                  width="100%"
+                  to="/"
+                >
+                  {t("artQuizPage.welcomeScreen.skipButton")}
+                </Button>
+              </Box>
             </Flex>
           }
         />
