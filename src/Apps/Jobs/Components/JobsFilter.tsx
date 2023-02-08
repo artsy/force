@@ -13,8 +13,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { JobsFilter_viewer$data } from "__generated__/JobsFilter_viewer.graphql"
 import { JobLinkFragmentContainer } from "./JobLink"
 
-const LEADGEN_LOCATION = "Don't See Your Dream Job?"
-const LEADGEN_DEPARTMENT_ID = "84312"
+export const LEADGEN_LOCATION = "Don't See Your Dream Job?"
+export const LEADGEN_DEPARTMENT_ID = "84312"
 
 interface JobsFilterProps {
   viewer: JobsFilter_viewer$data
