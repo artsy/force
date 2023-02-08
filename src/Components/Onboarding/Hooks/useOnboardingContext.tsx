@@ -9,7 +9,7 @@ import {
 import { useSystemContext } from "System"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
-import { useConfig } from "../config"
+import { useConfig } from "Components/Onboarding/config"
 
 export type State = {
   questionOne: string | null
