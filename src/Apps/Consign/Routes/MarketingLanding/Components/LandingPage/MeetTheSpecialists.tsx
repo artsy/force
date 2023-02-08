@@ -18,6 +18,7 @@ import { useState } from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useAnalyticsContext, useSystemContext } from "System"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface PillData {
   type: Specialty
@@ -43,6 +44,12 @@ export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
+  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
+  const getInTouchRoute = email => {
+    enableSWAInquiryFlow
+      ? "/sell/inquiry"
+      : `mailto:${email}?subject=Inquiry about selling with Artsy`
+  }
 
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
     "auctions"
@@ -68,8 +75,8 @@ export const MeetTheSpecialists: React.FC = () => {
       context_module: "MeetTheSpecialists",
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
-      user_id: user?.id,
       destination_path: "/sell/submission",
+      user_id: user?.id,
     })
   }
 
@@ -140,9 +147,17 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.bio}
                   </Text>
                   <Button
+                    // @ts-ignore
+                    as={RouterLink}
                     variant="secondaryWhite"
                     mb={2}
                     onClick={contactTheSpecialistClick}
+                    data-testid={`get-in-touch-button-${i.firstName}`}
+                    to={
+                      enableSWAInquiryFlow
+                        ? "/sell/inquiry"
+                        : `mailto:${i.email}?subject=Inquiry about selling with Artsy`
+                    }
                   >
                     Contact {i.firstName}
                   </Button>
@@ -165,8 +180,9 @@ export const MeetTheSpecialists: React.FC = () => {
             // @ts-ignore
             as={RouterLink}
             variant="primaryBlack"
-            to="/sell/submission"
             onClick={trackStartSellingClick}
+            data-testid="start-selling-button"
+            to="/sell/submission"
           >
             Start Selling
           </Button>
