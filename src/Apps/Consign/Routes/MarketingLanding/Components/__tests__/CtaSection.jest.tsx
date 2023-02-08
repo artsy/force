@@ -29,7 +29,6 @@ describe("CtaSection", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
-        "get-in-touch-flow-web": { flagEnabled: true },
         "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
@@ -92,7 +91,6 @@ describe("CtaSection", () => {
     it("links out to email provider", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         featureFlags: {
-          "get-in-touch-flow-web": { flagEnabled: true },
           "swa-inquiry-flow": { flagEnabled: false },
         },
       }))

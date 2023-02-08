@@ -29,7 +29,6 @@ describe("HeaderSWA", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
-        "get-in-touch-flow-web": { flagEnabled: true },
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
         "swa-inquiry-flow": { flagEnabled: true },
       },
