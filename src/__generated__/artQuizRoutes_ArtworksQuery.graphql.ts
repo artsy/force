@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28ff92966c10e47b2f8b16852fd6a276>>
+ * @generated SignedSource<<f7d16aa8be27480557003f62d1edd2d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,13 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type artQuizRoutes_ArtworksQuery$variables = {};
 export type artQuizRoutes_ArtworksQuery$data = {
+  readonly artworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly isSaved: boolean | null;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
   } | null;
@@ -22,7 +29,21 @@ export type artQuizRoutes_ArtworksQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isSaved",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -51,6 +72,40 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "FilterArtworksConnection",
+        "kind": "LinkedField",
+        "name": "artworksConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "FilterArtworksEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Artwork",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "artworksConnection(first:1)"
       }
     ],
     "type": "Query",
@@ -70,7 +125,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -207,13 +262,7 @@ return {
                             "name": "isDisliked",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isSaved",
-                            "storageKey": null
-                          },
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -228,7 +277,7 @@ return {
                             "name": "title",
                             "storageKey": null
                           },
-                          (v0/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -238,26 +287,62 @@ return {
                 ],
                 "storageKey": "quizArtworkConnection(first:16)"
               },
-              (v0/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "FilterArtworksConnection",
+        "kind": "LinkedField",
+        "name": "artworksConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "FilterArtworksEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Artwork",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
+        ],
+        "storageKey": "artworksConnection(first:1)"
       }
     ]
   },
   "params": {
-    "cacheID": "9ff1cf9afcb5af586e52156236d50577",
+    "cacheID": "8fe129c5b80fc775e999a1fc03b76323",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        isSaved\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "154c34d36d5c2519977bd499d2b214f1";
+(node as any).hash = "7c1da55bfdb8f74ab5874008f1cae02a";
 
 export default node;
