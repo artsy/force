@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d90ab1c286acc4be806f5f47579022c5>>
+ * @generated SignedSource<<8fbfadb152f529dae898124e21e32265>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,6 @@ export type ArtQuizArtworks_me$data = {
       readonly edges: ReadonlyArray<{
         readonly interactedAt: string | null;
         readonly node: {
-          readonly id: string;
           readonly image: {
             readonly resized: {
               readonly height: number | null;
@@ -43,21 +42,19 @@ export type ArtQuizArtworks_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtQuizArtworks_me",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -110,7 +107,6 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -232,8 +228,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "201bf867fa8c594d506db56ee2e62d46";
+(node as any).hash = "2c1459d1f5884b942c8ebd3dbaa9a1b3";
 
 export default node;

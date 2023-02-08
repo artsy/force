@@ -16,6 +16,9 @@
     }
   },
   "artQuizPage": {
+    "artworksScreen": {
+      "tooltip": "Like it? Hit the heart. \n Not for you? Choose X."
+    },
     "loadingScreen": {
       "calculatingResults": "Calculating Results…",
       "resultsComplete": "Results Complete"

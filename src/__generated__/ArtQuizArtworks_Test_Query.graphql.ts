@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28ff92966c10e47b2f8b16852fd6a276>>
+ * @generated SignedSource<<78ebf5c426d41caf1d7f9d5ae154f987>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artQuizRoutes_ArtworksQuery$variables = {};
-export type artQuizRoutes_ArtworksQuery$data = {
+export type ArtQuizArtworks_Test_Query$variables = {};
+export type ArtQuizArtworks_Test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
   } | null;
 };
-export type artQuizRoutes_ArtworksQuery = {
-  response: artQuizRoutes_ArtworksQuery$data;
-  variables: artQuizRoutes_ArtworksQuery$variables;
+export type ArtQuizArtworks_Test_Query = {
+  response: ArtQuizArtworks_Test_Query$data;
+  variables: ArtQuizArtworks_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -28,13 +28,37 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "artQuizRoutes_ArtworksQuery",
+    "name": "ArtQuizArtworks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -60,7 +84,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "artQuizRoutes_ArtworksQuery",
+    "name": "ArtQuizArtworks_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -248,16 +272,90 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9ff1cf9afcb5af586e52156236d50577",
+    "cacheID": "7e10cc72ccd62d5fc5b08bc3818cafa5",
     "id": null,
-    "metadata": {},
-    "name": "artQuizRoutes_ArtworksQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.id": (v1/*: any*/),
+        "me.quiz": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Quiz"
+        },
+        "me.quiz.id": (v1/*: any*/),
+        "me.quiz.quizArtworkConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "QuizArtworkConnection"
+        },
+        "me.quiz.quizArtworkConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "QuizArtworkEdge"
+        },
+        "me.quiz.quizArtworkConnection.edges.interactedAt": (v2/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.quiz.quizArtworkConnection.edges.node.id": (v1/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.quiz.quizArtworkConnection.edges.node.image.resized": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ResizedImageUrl"
+        },
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.height": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.src": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.srcSet": (v4/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.width": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.internalID": (v1/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.isDisliked": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.quiz.quizArtworkConnection.edges.node.isSaved": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.quiz.quizArtworkConnection.edges.node.slug": (v1/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.title": (v2/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.position": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        }
+      }
+    },
+    "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "154c34d36d5c2519977bd499d2b214f1";
+(node as any).hash = "f284f1e055d060048d333081794ba7b1";
 
 export default node;

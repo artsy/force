@@ -32,6 +32,7 @@ import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
 import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoader"
 import { useTracking } from "react-tracking"
 import { ContextModule } from "@artsy/cohesion"
+import { useTranslation } from "react-i18next"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -43,6 +44,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { submitMutation: submitUpdate } = useUpdateQuiz()
   const { trackEvent } = useTracking()
   const { router } = useRouter()
+  const { t } = useTranslation()
   const [showLoader, setShowLoader] = useState(false)
 
   // clone to make the array writable for sorting
@@ -172,7 +174,6 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       dispatch({ type: action })
 
       if (activeIndex === cards.length - 1) {
-        router.push("/art-quiz/results")
         setShowLoader(true)
       }
     },
@@ -186,7 +187,6 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
       submitSave,
       trackEvent,
       submitDislike,
-      router,
     ]
   )
 
@@ -219,6 +219,9 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   if (showLoader) {
     return <ArtQuizResultsLoader onReady={handleReady} />
   }
+
+  // Using split to create a deliberate break in text for better readability
+  const tooltipText = t("artQuizPage.artworksScreen.tooltip").split("\n")
 
   return (
     <ArtQuizFullScreen>
@@ -298,7 +301,9 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         </Flex>
 
         <Tooltip
-          content="Like it? Hit the heart. Not for you? Choose X."
+          content={tooltipText.map(text => (
+            <Text variant="xs">{text}</Text>
+          ))}
           variant="defaultDark"
           offset={-10}
           pointer
@@ -337,7 +342,6 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
               interactedAt
               position
               node {
-                id
                 internalID
                 image {
                   resized(
