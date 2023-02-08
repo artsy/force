@@ -1,8 +1,7 @@
-/* eslint-disable no-relative-import-paths/no-relative-import-paths */
 import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
-import { useOnboardingContext } from "../Hooks/useOnboardingContext"
-import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
+import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "Components/Onboarding/Hooks/useOnboardingFadeTransition"
 
 interface OnboardingThankYouProps {
   autoClose?: boolean
