@@ -12,6 +12,7 @@ import {
 } from "Apps/Order/Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
+import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -451,6 +452,9 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 order={order}
                 transactionStep="review"
               />
+              {order.source === "private_sale" && order.artworkDetails && (
+                <AdditionalArtworkDetails order={order} />
+              )}
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
@@ -480,6 +484,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Review_order on CommerceOrder {
+        artworkDetails
         internalID
         paymentMethod
         mode
@@ -510,6 +515,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ...ArtworkSummaryItem_order
+        ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
         ...PaymentMethodSummaryItem_order

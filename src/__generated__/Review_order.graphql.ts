@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2c9efe555d4611ef57c081dfbd55e87>>
+ * @generated SignedSource<<9119d3704ab4c3340e0acf44c49e7076>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Review_order$data = {
+  readonly artworkDetails: string | null;
   readonly code: string;
   readonly conditionsOfSale: string | null;
   readonly impulseConversationId: string | null;
@@ -41,7 +42,7 @@ export type Review_order$data = {
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly source: CommerceOrderSourceEnum;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
 export type Review_order$key = {
@@ -70,6 +71,13 @@ return {
   "metadata": null,
   "name": "Review_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artworkDetails",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -236,6 +244,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "AdditionalArtworkDetails_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
     },
     {
@@ -264,6 +277,6 @@ return {
 };
 })();
 
-(node as any).hash = "ded9ff82be68ca0280c18c66c24394ba";
+(node as any).hash = "7d599449a868d3ea1abe3bc1d4bd793b";
 
 export default node;

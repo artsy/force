@@ -654,5 +654,12 @@ describe("Review", () => {
         "and any Additional Terms specified on this page and in the order confirmation email."
       )
     })
+
+    it("displays additional artwork details from order", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "additional artwork details provided by admin"
+      )
+    })
   })
 })

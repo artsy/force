@@ -643,6 +643,13 @@ describe("Payment", () => {
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
 
+    it("displays additional artwork details from order", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "additional artwork details provided by admin"
+      )
+    })
+
     it("shows avaliable payment methods", () => {
       const paymentMethods = page.find("[data-test='payment-methods']").first()
       expect(paymentMethods.text()).toContain("Wire transfer")
