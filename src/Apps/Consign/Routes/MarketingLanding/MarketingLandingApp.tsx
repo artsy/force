@@ -20,6 +20,7 @@ import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/Land
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
+import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -59,6 +60,7 @@ export const MarketingLandingApp = () => {
           <HowItWorksSteps />
           <MeetTheSpecialists />
           <FAQSWA />
+          <Footer />
         </Join>
       </>
     )
