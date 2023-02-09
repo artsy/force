@@ -8,7 +8,6 @@ import { Media } from "Utils/Responsive"
 
 export const CtaSection: React.FC = () => {
   const { trackEvent } = useTracking()
-  const showGetInTouchCTA = useFeatureFlag("get-in-touch-flow-web")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
@@ -51,20 +50,18 @@ export const CtaSection: React.FC = () => {
         >
           Submit an Artwork
         </Button>
-        {showGetInTouchCTA && (
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            variant="secondaryNeutral"
-            onClick={trackGetInTouchClick}
-            mt={2}
-            width={"100%"}
-            data-testid="get-in-touch-button"
-            to={getInTouchRoute}
-          >
-            Get in Touch
-          </Button>
-        )}
+        <Button
+          // @ts-ignore
+          as={RouterLink}
+          variant="secondaryNeutral"
+          onClick={trackGetInTouchClick}
+          mt={2}
+          width={"100%"}
+          data-testid="get-in-touch-button"
+          to={getInTouchRoute}
+        >
+          Get in Touch
+        </Button>
       </AppContainer>
     </Media>
   )

@@ -41,8 +41,8 @@ export const HowItWorksSteps: React.FC = () => {
       context_module: "HowItWorks",
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
-      user_id: user?.id,
       destination_path: "/sell/submission",
+      user_id: user?.id,
     })
   }
 

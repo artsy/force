@@ -18,6 +18,7 @@ import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/Landi
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
+import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { FAWSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 
 export const MarketingLandingApp = () => {
@@ -56,6 +57,7 @@ export const MarketingLandingApp = () => {
           <Highlights />
           <WaysWeSell />
           <HowItWorksSteps />
+          <MeetTheSpecialists />
           <FAWSWA />
         </Join>
       </>

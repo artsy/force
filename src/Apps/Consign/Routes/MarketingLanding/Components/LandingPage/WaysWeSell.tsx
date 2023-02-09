@@ -93,7 +93,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
     data-test="artworkShelfArtwork"
     minWidth={250}
   >
-    <Box maxHeight={[250, 320]} maxWidth="100%" bg="black10" mb={[1, 2]}>
+    <Box maxWidth="100%" bg="black10" mb={[1, 2]}>
       <Image
         src={src}
         srcSet={srcSet}

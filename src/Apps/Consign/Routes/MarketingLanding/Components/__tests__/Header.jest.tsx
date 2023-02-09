@@ -29,7 +29,7 @@ describe("Header", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
-        "get-in-touch-flow-web": { flagEnabled: true },
+        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -63,15 +63,6 @@ describe("Header", () => {
   })
 
   describe("Get in Touch button", () => {
-    it("links out to get in touch flow", () => {
-      render(<Header />)
-
-      const link = screen.getByTestId("get-in-touch-button")
-
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Get in Touch")
-    })
-
     it("tracks click", () => {
       render(<Header />)
 
@@ -86,6 +77,34 @@ describe("Header", () => {
         user_id: "user-id",
         user_email: "user-email@artsy.net",
       })
+    })
+
+    it("links out to get in touch flow", () => {
+      render(<Header />)
+
+      const link = screen.getByTestId("get-in-touch-button")
+
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveTextContent("Get in Touch")
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
+    })
+
+    it("links out to email provider", () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "swa-inquiry-flow": { flagEnabled: false },
+        },
+      }))
+      render(<Header />)
+
+      const link = screen.getByTestId("get-in-touch-button")
+
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveTextContent("Get in Touch")
+      expect(link).toHaveAttribute(
+        "href",
+        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+      )
     })
   })
 })
