@@ -45,7 +45,7 @@ export const cleanLocalImages = async () => {
   })
 
   imageKeys.forEach(async key => {
-    const item: LocalImage | null = await localforage.getItem(key)
+    const item = await getLocalImage(key)
 
     if (!item?.expires || +item?.expires < new Date().getTime()) {
       return
