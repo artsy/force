@@ -40,14 +40,12 @@ export const getLocalImage = async (
 export const cleanLocalImages = async () => {
   const keys = await localforage.keys()
 
-  const imageKeys: string[] = keys.filter(key => {
-    key.startsWith(IMAGE_KEY_PREFIX)
-  })
+  const imageKeys = keys.filter(key => key.startsWith(IMAGE_KEY_PREFIX))
 
   imageKeys.forEach(async key => {
-    const item: LocalImage | null = await localforage.getItem(key)
+    const item = JSON.parse((await localforage.getItem(key)) || "{}")
 
-    if (!item?.expires || +item?.expires < new Date().getTime()) {
+    if (!item?.expires || +item?.expires > new Date().getTime()) {
       return
     }
 
