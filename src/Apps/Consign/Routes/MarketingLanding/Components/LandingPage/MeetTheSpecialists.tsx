@@ -51,7 +51,7 @@ export const MeetTheSpecialists: React.FC = () => {
     SPECIALISTS.filter(i => i.specialty === "auctions")
   )
 
-  const contactTheSpecialistClick = () => {
+  const trackContactTheSpecialistClick = () => {
     trackEvent({
       action: "clickedGetInTouch",
       context_module: "MeetTheSpecialists",
@@ -144,7 +144,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     as={RouterLink}
                     variant="secondaryWhite"
                     mb={2}
-                    onClick={contactTheSpecialistClick}
+                    onClick={trackContactTheSpecialistClick}
                     data-testid={`get-in-touch-button-${i.firstName}`}
                     to={`mailto:${i.email}`}
                   >
