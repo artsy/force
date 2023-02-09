@@ -19,7 +19,7 @@ import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/Land
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
-import { FAWSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
+import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -58,7 +58,7 @@ export const MarketingLandingApp = () => {
           <WaysWeSell />
           <HowItWorksSteps />
           <MeetTheSpecialists />
-          <FAWSWA />
+          <FAQSWA />
         </Join>
       </>
     )
