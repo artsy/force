@@ -20,7 +20,12 @@ export const FAQSWA: React.FC = () => {
     "https://support.artsy.net/hc/en-us/categories/360003689533-Sell"
 
   return (
-    <Box mx={[-2, -4]} pt={[4, 12]} pb={[0, 12]} backgroundColor="black100">
+    <Box
+      mx={[-2, -4]}
+      pt={[4, 6, 12]}
+      pb={[0, 6, 12]}
+      backgroundColor="black100"
+    >
       <GridColumns alignItems="center">
         <Column span={6} py={[0, 2]} pr={[2, 2]} pl={[2, 4]}>
           <Text variant={["md", "xxl"]} mb={4} textColor="white100">
@@ -30,7 +35,7 @@ export const FAQSWA: React.FC = () => {
             Have more questions?
           </Text>
           <GridColumns alignItems="center">
-            <Column span={4}>
+            <Column span={[12, 6, 4]}>
               <Button
                 // @ts-ignore
                 as={RouterLink}

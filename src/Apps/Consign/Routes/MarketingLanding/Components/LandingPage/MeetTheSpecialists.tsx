@@ -158,12 +158,11 @@ export const MeetTheSpecialists: React.FC = () => {
         showProgress={false}
       />
       <Text mb={[2, 4]} variant={["md", "lg-display"]}>
-        Interested in selling multiple artworks, or not sure which of our
-        experts is the right fit for your work? Get in touch and we'll connect
-        you.
+        Not sure which of our experts is the right fit for your work? Get in
+        touch and we'll connect you.
       </Text>
       <GridColumns>
-        <Column span={2}>
+        <Column span={[12, 3, 2]}>
           <Button
             width={"100%"}
             // @ts-ignore
