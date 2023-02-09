@@ -28,6 +28,9 @@ describe("CollectorProfileSaves2Route", () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         params: {},
+        location: {
+          query: {},
+        },
       },
     }))
   })
@@ -62,6 +65,9 @@ describe("CollectorProfileSaves2Route", () => {
           params: {
             id: "collection-two-id",
           },
+          location: {
+            query: {},
+          },
         },
       }))
 
@@ -79,6 +85,9 @@ describe("CollectorProfileSaves2Route", () => {
       match: {
         params: {
           id: "collection-three-id",
+        },
+        location: {
+          query: {},
         },
       },
     }))

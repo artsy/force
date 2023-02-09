@@ -16,6 +16,8 @@ import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
+  initialPage?: number
+  initialSort?: string
 }
 
 interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
@@ -80,12 +82,12 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
 const QUERY = graphql`
   query SavesArtworksQuery(
     $collectionID: String!
-    $after: String
     $sort: CollectionArtworkSorts
+    $page: Int
   ) {
     me {
       collection(id: $collectionID) {
-        ...SavesArtworks_collection @arguments(after: $after, sort: $sort)
+        ...SavesArtworks_collection @arguments(page: $page, sort: $sort)
       }
     }
   }
@@ -97,12 +99,12 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
     collection: graphql`
       fragment SavesArtworks_collection on Collection
         @argumentDefinitions(
-          after: { type: "String" }
+          page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
         name
         default
-        artworks: artworksConnection(first: 30, after: $after, sort: $sort) {
+        artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
           totalCount
           ...SavesArtworksGrid_artworks
         }
@@ -115,6 +117,8 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
 
 export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = ({
   collectionID,
+  initialPage,
+  initialSort,
 }) => {
   return (
     <SystemQueryRenderer<SavesArtworksQuery>
@@ -122,7 +126,8 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
       query={QUERY}
       variables={{
         collectionID,
-        sort: defaultSort,
+        sort: initialSort ?? defaultSort,
+        page: initialPage,
       }}
       render={({ props, error }) => {
         if (error) {

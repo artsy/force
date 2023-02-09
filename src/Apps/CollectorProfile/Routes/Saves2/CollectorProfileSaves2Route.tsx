@@ -17,6 +17,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 }) => {
   const { match } = useRouter()
   const initialCollectionId = useRef(match.params.id)
+  const { page, sort } = match.location.query ?? {}
   const nodes = extractNodes(me.collectionsConnection)
   // Placing the default collection at the top of the list
   let collections = orderBy(nodes, ["default"], ["desc"])
@@ -55,7 +56,11 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
       <Spacer y={2} />
 
-      <SavesArtworksQueryRenderer collectionID={selectedCollectionId} />
+      <SavesArtworksQueryRenderer
+        collectionID={selectedCollectionId}
+        initialPage={(page as unknown) as number}
+        initialSort={sort}
+      />
     </>
   )
 }

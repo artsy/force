@@ -76,13 +76,9 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   const fetchResults = (changedFilterKey: string) => {
     setFetching(true)
 
-    const variables: Record<string, any> = {
+    const variables = {
       sort: filters.sort,
-    }
-
-    // TODO: Pass `page` argument when FX-4593 is completed
-    if (changedFilterKey === "page") {
-      variables.after = artworks.pageInfo.endCursor
+      page: filters.page,
     }
 
     relayRefetch(variables, null, error => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02e63c14e23f7d8a9ee50b72bb13911e>>
+ * @generated SignedSource<<0973b61ded8c0463627b43f2060f8a61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,9 +28,9 @@ export type SavesArtworks_collection$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "after"
+      "name": "page"
     },
     {
       "defaultValue": null,
@@ -60,14 +60,14 @@ const node: ReaderFragment = {
       "alias": "artworks",
       "args": [
         {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
           "kind": "Literal",
           "name": "first",
           "value": 30
+        },
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
         },
         {
           "kind": "Variable",
@@ -105,6 +105,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fb40cc789f43e7486fb8ca9768ce6d1b";
+(node as any).hash = "ef853f001261c2ce1049bfa3600e3858";
 
 export default node;
