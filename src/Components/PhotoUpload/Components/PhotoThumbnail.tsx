@@ -185,7 +185,7 @@ const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
-      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <Text variant="xs">{formatFileSize(photo)}</Text>
       <RemoveButton withIconButton handleDelete={onDelete} />
     </Flex>
   </>
@@ -210,7 +210,7 @@ const PhotoThumbnailSuccessState: React.FC<
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
-      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <Text variant="xs">{formatFileSize(photo)}</Text>
       <RemoveButton handleDelete={onDelete} />
     </Flex>
   </>
@@ -239,7 +239,7 @@ const PhotoThumbnailProcessingState: React.FC<PhotoThumbnailStateProps> = ({
       <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
     </Flex>
     <Flex alignItems="center" justifyContent="space-between">
-      <Text variant="xs">{formatFileSize(photo.size)}</Text>
+      <Text variant="xs">{formatFileSize(photo)}</Text>
       <RemoveButton handleDelete={onDelete} />
     </Flex>
   </>
