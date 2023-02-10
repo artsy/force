@@ -7,7 +7,7 @@ import {
 } from "relay-runtime"
 import { useSystemContext } from "System"
 
-export const useQuery = <T extends OperationType>({
+export const useClientQuery = <T extends OperationType>({
   environment,
   query,
   variables = {},

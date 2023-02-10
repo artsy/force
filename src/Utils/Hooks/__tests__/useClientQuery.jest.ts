@@ -1,24 +1,24 @@
 import { renderHook } from "@testing-library/react-hooks"
 import { graphql } from "react-relay"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
-import { useQuery } from "Utils/Hooks/useQuery"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 
 jest.unmock("react-relay")
 
 const TEST_QUERY = graphql`
-  query useQueryTestQuery {
+  query useClientQueryTestQuery {
     artwork(id: "example") {
       id
     }
   }
 `
 
-describe("useQuery", () => {
+describe("useClientQuery", () => {
   it("executes the query, updating the loading state", async () => {
     const environment = createMockEnvironment()
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useQuery({ environment, query: TEST_QUERY })
+      useClientQuery({ environment, query: TEST_QUERY })
     )
 
     environment.mock.resolveMostRecentOperation(operation => {
@@ -37,7 +37,7 @@ describe("useQuery", () => {
 
   it('skips the query if "skip" is true', () => {
     const { result } = renderHook(() =>
-      useQuery({ query: TEST_QUERY, skip: true })
+      useClientQuery({ query: TEST_QUERY, skip: true })
     )
 
     expect(result.current.data).toBeNull()

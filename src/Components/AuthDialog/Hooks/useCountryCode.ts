@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { getENV } from "Utils/getENV"
-import { useQuery } from "Utils/Hooks/useQuery"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { useCountryCodeQuery } from "__generated__/useCountryCodeQuery.graphql"
 
 const USE_COUNTRY_CODE_QUERY = graphql`
@@ -15,7 +15,7 @@ const USE_COUNTRY_CODE_QUERY = graphql`
 export const useCountryCode = () => {
   const { isLoggedIn } = useSystemContext()
 
-  const { data, loading, error } = useQuery<useCountryCodeQuery>({
+  const { data, loading, error } = useClientQuery<useCountryCodeQuery>({
     query: USE_COUNTRY_CODE_QUERY,
     variables: {
       ip: getENV("IP_ADDRESS") || "0.0.0.0",

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92e71b6205ff62217fe32ef66b75f792>>
+ * @generated SignedSource<<89e9d18d483af9bebc02fd6251561ab2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type useQueryTestQuery$variables = {};
-export type useQueryTestQuery$data = {
+export type useClientQueryTestQuery$variables = {};
+export type useClientQueryTestQuery$data = {
   readonly artwork: {
     readonly id: string;
   } | null;
 };
-export type useQueryTestQuery = {
-  response: useQueryTestQuery$data;
-  variables: useQueryTestQuery$variables;
+export type useClientQueryTestQuery = {
+  response: useClientQueryTestQuery$data;
+  variables: useClientQueryTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -52,7 +52,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "useQueryTestQuery",
+    "name": "useClientQueryTestQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -61,20 +61,20 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "useQueryTestQuery",
+    "name": "useClientQueryTestQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "92df5a7bbee7373e3e18a3f2d24163de",
+    "cacheID": "249bc7811c01aa3a1496127742d32f2c",
     "id": null,
     "metadata": {},
-    "name": "useQueryTestQuery",
+    "name": "useClientQueryTestQuery",
     "operationKind": "query",
-    "text": "query useQueryTestQuery {\n  artwork(id: \"example\") {\n    id\n  }\n}\n"
+    "text": "query useClientQueryTestQuery {\n  artwork(id: \"example\") {\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a01b68c8bcd00a77f59a283837617044";
+(node as any).hash = "1f1804ac5386052514c401be9e665e7a";
 
 export default node;
