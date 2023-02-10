@@ -31,13 +31,6 @@ const REVIEWS: ReviewsData[] = [
     reviewerName: "Joe Bloggs",
     galery: "White Cube Gallery",
   },
-  {
-    reviewText:
-      "4 My specialist kept me transparently informed from our initial conversation throughout. They took care of everything smoothly - from finding the right buyer to taking care of shipping and final payment.",
-    image: "image",
-    reviewerName: "Joe Bloggs",
-    galery: "White Cube Gallery",
-  },
 ]
 
 export const Reviews: React.FC = () => {
