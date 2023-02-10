@@ -16,24 +16,14 @@ import { AuthDialogSocial } from "Components/AuthDialog/Components/AuthDialogSoc
 import { Form, Formik } from "formik"
 import { FC } from "react"
 import { signUp } from "Utils/auth"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { getENV } from "Utils/getENV"
-import { AuthDialogSignUpQuery } from "__generated__/AuthDialogSignUpQuery.graphql"
-import { AuthDialogSignUp_requestLocation$data } from "__generated__/AuthDialogSignUp_requestLocation.graphql"
 import { useAfterAuthentication } from "Components/AuthDialog/Hooks/useAfterAuthentication"
 import { formatErrorMessage } from "Components/AuthDialog/Utils/formatErrorMessage"
 import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
+import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
 
-interface AuthDialogSignUpProps {
-  requestLocation?: AuthDialogSignUp_requestLocation$data | null
-}
-
-export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
-  requestLocation,
-}) => {
+export const AuthDialogSignUp: FC = () => {
   const {
     dispatch,
     state: { options },
@@ -43,10 +33,15 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
 
   const track = useAuthDialogTracking()
 
-  const countryCode = requestLocation?.countryCode
+  const { loading, countryCode } = useCountryCode()
+
   const isAutomaticallySubscribed = !!(
     countryCode && !GDPR_COUNTRY_CODES.includes(countryCode)
   )
+
+  if (loading) {
+    return <AuthDialogSignUpPlaceholder />
+  }
 
   return (
     <Formik
@@ -57,7 +52,7 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
       }}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={async (
-        { mode, name, email, password, agreedToReceiveEmails },
+        { name, email, password, agreedToReceiveEmails },
         { setFieldValue, setStatus }
       ) => {
         setStatus({ error: null })
@@ -231,49 +226,6 @@ export const AuthDialogSignUp: FC<AuthDialogSignUpProps> = ({
         )
       }}
     </Formik>
-  )
-}
-
-const AuthDialogSignUpFragmentContainer = createFragmentContainer(
-  AuthDialogSignUp,
-  {
-    requestLocation: graphql`
-      fragment AuthDialogSignUp_requestLocation on RequestLocation {
-        countryCode
-      }
-    `,
-  }
-)
-
-export const AuthDialogSignUpQueryRenderer: FC = () => {
-  return (
-    <SystemQueryRenderer<AuthDialogSignUpQuery>
-      variables={{ ip: getENV("IP_ADDRESS") || "0.0.0.0" }}
-      query={graphql`
-        query AuthDialogSignUpQuery($ip: String!) {
-          requestLocation(ip: $ip) {
-            ...AuthDialogSignUp_requestLocation
-          }
-        }
-      `}
-      placeholder={<AuthDialogSignUpPlaceholder />}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return <AuthDialogSignUp />
-        }
-
-        if (!props?.requestLocation) {
-          return <AuthDialogSignUpPlaceholder />
-        }
-
-        return (
-          <AuthDialogSignUpFragmentContainer
-            requestLocation={props.requestLocation}
-          />
-        )
-      }}
-    />
   )
 }
 

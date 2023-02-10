@@ -5,7 +5,7 @@ import {
 } from "Components/AuthDialog/AuthDialogContext"
 import { AuthDialogLogin } from "Components/AuthDialog/Views/AuthDialogLogin"
 import { AuthDialogForgotPassword } from "Components/AuthDialog/Views/AuthDialogForgotPassword"
-import { AuthDialogSignUpQueryRenderer } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import { AuthDialogSignUp } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { FC, useEffect } from "react"
 import { useRecaptcha } from "Utils/EnableRecaptcha"
 import { resized } from "Utils/resized"
@@ -63,7 +63,7 @@ export const AuthDialogView: FC = () => {
     case "Login":
       return <AuthDialogLogin />
     case "SignUp":
-      return <AuthDialogSignUpQueryRenderer />
+      return <AuthDialogSignUp />
     case "ForgotPassword":
       return <AuthDialogForgotPassword />
   }
