@@ -9,16 +9,27 @@ import { uploadFileToS3 } from "./uploadFileToS3"
 
 const logger = createLogger("PhotoUpload/fileUtils.ts")
 
+export const AUTOMATICALLY_ADDED_PHOTO_NAME = "Automatically added"
+
 export const KBSize = 1000
 export const MBSize = Math.pow(KBSize, 2)
 const NO_SIZE = ""
 
-export function formatFileSize(size?: number): string {
-  if (!size) {
+export function formatFileSize(photo: {
+  size?: number
+  name?: string
+}): string {
+  const { size, name } = photo
+
+  if (!size || name === AUTOMATICALLY_ADDED_PHOTO_NAME) {
     return NO_SIZE
   }
 
   const sizeInMB = (size / MBSize).toFixed(2)
+
+  if (sizeInMB === "0.00") {
+    return "< 0.01 MB"
+  }
 
   return `${sizeInMB} MB`
 }

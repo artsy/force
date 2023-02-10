@@ -13,7 +13,11 @@ import {
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
-import { normalizePhoto, Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import {
+  AUTOMATICALLY_ADDED_PHOTO_NAME,
+  normalizePhoto,
+  Photo,
+} from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
 import { findLast } from "lodash"
@@ -83,7 +87,7 @@ export const getUploadPhotosFormInitialValues = (
     photos =
       myCollectionArtwork?.images
         ?.map(image => ({
-          name: "Automatically added",
+          name: AUTOMATICALLY_ADDED_PHOTO_NAME,
           externalUrl: image?.url!,
           type: "image/jpg",
         }))
