@@ -5,14 +5,11 @@ import { isFunction } from "lodash"
 import { useEffect } from "react"
 import * as React from "react"
 import createLogger from "Utils/logger"
-import { useRunAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
-import { useAuthValidation } from "Utils/Hooks/useAuthValidation"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 import { Layout } from "Apps/Components/Layouts"
-import { useSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
-import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -22,13 +19,9 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = props => {
   useImagePerformanceObserver()
+  useSetupAuth()
 
   const { onboardingComponent } = useOnboardingModal()
-
-  useRunAuthIntent()
-  useAuthValidation()
-  useSocialAuthTracking()
-  useCountryCode()
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
