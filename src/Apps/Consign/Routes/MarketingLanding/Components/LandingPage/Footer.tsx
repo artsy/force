@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   const trackStartSellingClick = () => {
     trackEvent({
       action: "clickedStartSelling",
-      context_module: "HowItWorks",
+      context_module: "Footer",
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",
