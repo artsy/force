@@ -20,7 +20,12 @@ export const HeroCarousel: FC<HeroCarouselProps> = ({
   return (
     <>
       <Media at="xs">
-        <HeroCarouselSmall onChange={onChange}>{children}</HeroCarouselSmall>
+        <HeroCarouselSmall
+          onChange={onChange}
+          progressbarVariant={progressbarVariant}
+        >
+          {children}
+        </HeroCarouselSmall>
       </Media>
 
       <Media greaterThan="xs">
