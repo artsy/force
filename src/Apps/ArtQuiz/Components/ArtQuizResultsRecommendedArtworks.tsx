@@ -5,7 +5,7 @@ import { ArtQuizResultsRecommendedArtworks_me$data } from "__generated__/ArtQuiz
 import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizResultsRecommendedArtworksQuery.graphql"
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
-import { Spacer } from "@artsy/palette"
+import { Message, Spacer } from "@artsy/palette"
 import { uniqBy } from "lodash"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import { extractNodes } from "Utils/extractNodes"
@@ -28,6 +28,12 @@ const ArtQuizResultsRecommendedArtworks: FC<ArtQuizResultsRecommendedArtworksPro
       "internalID"
     ),
   })
+
+  if (artworks.shuffled.length === 0) {
+    return (
+      <Message>We don't have any recommendations for you at this time.</Message>
+    )
+  }
 
   return (
     <Masonry columnCount={[2, 3, 4]}>
