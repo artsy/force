@@ -132,20 +132,29 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         )
 
         if (isEigen) {
-          if (order.mode === "OFFER" && order.source === "artwork_page") {
-            window?.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                key: "goToInboxOnMakeOfferSubmission",
-                orderCode: order.code,
-                message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
-              })
-            )
-            // We cannot expect Eigen to respond all the time to messages sent from the webview
-            // a default fallback page is safer for old/broken Eigen versions
-            setTimeout(() => {
-              router.push(`/orders/${order.internalID}/status`)
-            }, 500)
-            return
+          if (order.mode === "OFFER") {
+            if (order.state === "IN_REVIEW") {
+              window?.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  key: "orderSuccessful",
+                  orderCode: order.code,
+                })
+              )
+            } else if (order.source === "artwork_page") {
+              window?.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  key: "goToInboxOnMakeOfferSubmission",
+                  orderCode: order.code,
+                  message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+                })
+              )
+              // We cannot expect Eigen to respond all the time to messages sent from the webview
+              // a default fallback page is safer for old/broken Eigen versions
+              setTimeout(() => {
+                router.push(`/orders/${order.internalID}/status`)
+              }, 500)
+              return
+            }
           }
 
           if (order.mode === "BUY") {
@@ -157,7 +166,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
         // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
         // TODO: It must be only `if (isEigen) {` after removing the feature flag
-        if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
+        if (
+          (!isCBNEnabled && order.mode !== "OFFER") ||
+          (order.mode === "OFFER" && order.state === "IN_REVIEW") ||
+          isEigen
+        ) {
           return router.push(`/orders/${orderId}/status`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
@@ -165,7 +178,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           return router.push(`/user/conversations/${conversationId}`)
         }
         // Make offer from the artwork page redirects to the artwork page with a confirmation modal
-        if (order.mode === "OFFER") {
+        if (order.mode === "OFFER" && order.state !== "IN_REVIEW") {
           return router.push(`/artwork/${artworkId}?order-submitted=true`)
         }
         // Purchase from the artwork page redirects to the status page
@@ -484,6 +497,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Review_order on CommerceOrder {
+        state
         artworkDetails
         internalID
         paymentMethod

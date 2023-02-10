@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9119d3704ab4c3340e0acf44c49e7076>>
+ * @generated SignedSource<<f1586cf5e52a6dea82b200db7a33dc6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Review_order$data = {
@@ -41,6 +42,7 @@ export type Review_order$data = {
   } | null;
   readonly paymentMethod: CommercePaymentMethodEnum | null;
   readonly source: CommerceOrderSourceEnum;
+  readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
@@ -71,6 +73,13 @@ return {
   "metadata": null,
   "name": "Review_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -277,6 +286,6 @@ return {
 };
 })();
 
-(node as any).hash = "7d599449a868d3ea1abe3bc1d4bd793b";
+(node as any).hash = "8e57e03a900d4f0df50a6aa6fc427f90";
 
 export default node;

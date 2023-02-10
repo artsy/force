@@ -15,6 +15,7 @@ import { graphql } from "react-relay"
 import {
   submitOfferOrderFailedConfirmation,
   submitOfferOrderSuccess,
+  submitOfferOrderSuccessInReview,
   submitOfferOrderWithActionRequired,
   submitOfferOrderWithFailure,
   submitOfferOrderWithNoInventoryFailure,
@@ -130,10 +131,6 @@ describe("Review", () => {
       }
     `,
   })
-
-  // beforeEach(hooks.clearErrors)
-
-  // afterEach(hooks.clearMocksAndErrors)
 
   describe("buy-mode orders", () => {
     it("enables the button and routes to the payoff page", async () => {
@@ -660,6 +657,60 @@ describe("Review", () => {
       expect(page.text()).toContain(
         "additional artwork details provided by admin"
       )
+    })
+  })
+
+  describe("in-review offers", () => {
+    const testOffer = {
+      ...OfferOrderWithShippingDetails,
+      state: "IN_REVIEW",
+      internalID: "offer-order-id",
+      impulseConversationId: null,
+    }
+
+    it("enables the button and routes to the status page", async () => {
+      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
+    })
+
+    describe("isEigen", () => {
+      const testOffer = {
+        ...OfferOrderWithShippingDetails,
+        state: "IN_REVIEW",
+        internalID: "offer-order-id",
+        impulseConversationId: null,
+      }
+
+      beforeEach(async () => {
+        isEigen = true
+      })
+
+      it("dispatches message and routes to status page", async () => {
+        mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOffer,
+        })
+        const page = new ReviewTestPage(wrapper)
+        await page.clickSubmit()
+
+        expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
+          JSON.stringify({
+            key: "orderSuccessful",
+            orderCode: "abcdefg",
+          })
+        )
+
+        await waitFor(() =>
+          expect(pushMock).toHaveBeenCalledWith("/orders/offer-order-id/status")
+        )
+      })
     })
   })
 })

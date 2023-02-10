@@ -69,3 +69,14 @@ export const submitOfferOrderSuccess = {
     },
   },
 }
+
+export const submitOfferOrderSuccessInReview = {
+  submitOfferOrderWithConversation: {
+    orderOrError: {
+      order: {
+        ...OfferOrderWithShippingDetails,
+        state: "IN_REVIEW",
+      },
+    },
+  },
+}
