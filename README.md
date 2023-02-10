@@ -23,7 +23,7 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 
 ## History
 
-Force was [open-sourced in 2014](http://artsy.github.io/blog/2014/09/05/we-open-sourced-our-isomorphic-javascript-website) and was an early successful implementation of [an isomorphic JavaScript application, rendering both the server and client side](http://artsy.github.io/blog/2013/11/30/rendering-on-the-server-and-client-in-node-dot-js). It is developed in the open since August 2016.
+Force was [open-sourced in 2014](http://artsy.github.io/blog/2014/09/05/we-open-sourced-our-isomorphic-javascript-website) and was an early successful implementation of [an isomorphic JavaScript application, rendering both the server and client side](http://artsy.github.io/blog/2013/11/30/rendering-on-the-server-and-client-in-node-dot-js). It has been developed in the open since August 2016.
 
 Since then it has evolved into what we regard as a fairly bullet-proof stack: [React](https://reactjs.org/), [Relay](https://relay.dev/) (a GraphQL client library), TypeScript, and our design system [Palette](https://palette.artsy.net/).
 
