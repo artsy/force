@@ -27,12 +27,14 @@ import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 interface HeroCarouselLargeProps {
   children: React.ReactNode
   fullBleed?: boolean
+  progressbarVariant?: "dot" | "dash"
   onChange?: (index) => void
 }
 
 export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
   children,
   fullBleed = true,
+  progressbarVariant,
   onChange,
 }) => {
   const length = Children.count(children)
@@ -81,6 +83,8 @@ export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
 
   if (!children) return null
 
+  const displayWithDots = progressbarVariant === "dot"
+
   return (
     <div ref={containerRef as any}>
       {fullBleed ? (
@@ -96,15 +100,23 @@ export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
           </Carousel>
         </FullBleed>
       ) : (
-        <Carousel
-          Cell={Cell}
-          Rail={Rail}
-          Next={Disable}
-          Previous={Disable}
-          initialIndex={index}
-        >
-          {children}
-        </Carousel>
+        <Flex flexDirection="row">
+          {displayWithDots && (
+            <ShelfPrevious alignSelf="center" onClick={handlePrev} />
+          )}
+          <Carousel
+            Cell={Cell}
+            Rail={Rail}
+            Next={Disable}
+            Previous={Disable}
+            initialIndex={index}
+          >
+            {children}
+          </Carousel>
+          {displayWithDots && (
+            <ShelfNext alignSelf="center" onClick={handleNext} />
+          )}
+        </Flex>
       )}
 
       {length > 1 && (
@@ -114,20 +126,24 @@ export const HeroCarouselLarge: React.FC<HeroCarouselLargeProps> = ({
           <Flex alignItems="center">
             <Box flex={1}>
               <ProgressDots
-                variant="dash"
+                variant={progressbarVariant ? progressbarVariant : "dash"}
                 amount={length}
                 activeIndex={index}
                 onClick={handleClick}
               />
             </Box>
 
-            <Spacer x={2} />
+            {!displayWithDots && (
+              <>
+                <Spacer x={2} />
 
-            <ShelfPrevious onClick={handlePrev} />
+                <ShelfPrevious onClick={handlePrev} />
 
-            <Spacer x={1} />
+                <Spacer x={1} />
 
-            <ShelfNext onClick={handleNext} />
+                <ShelfNext onClick={handleNext} />
+              </>
+            )}
           </Flex>
         </>
       )}

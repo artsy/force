@@ -7,12 +7,14 @@ export interface HeroCarouselProps {
   children: ReactNode
   /** Only utilizes full-bleed at desktop sizes */
   fullBleed?: boolean
+  progressbarVariant?: "dot" | "dash"
   onChange?: (index) => void
 }
 
 export const HeroCarousel: FC<HeroCarouselProps> = ({
   children,
   fullBleed = true,
+  progressbarVariant,
   onChange,
 }) => {
   return (
@@ -22,7 +24,11 @@ export const HeroCarousel: FC<HeroCarouselProps> = ({
       </Media>
 
       <Media greaterThan="xs">
-        <HeroCarouselLarge onChange={onChange} fullBleed={fullBleed}>
+        <HeroCarouselLarge
+          onChange={onChange}
+          fullBleed={fullBleed}
+          progressbarVariant={progressbarVariant}
+        >
           {children}
         </HeroCarouselLarge>
       </Media>
