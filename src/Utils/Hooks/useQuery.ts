@@ -12,6 +12,7 @@ export const useQuery = <T extends OperationType>({
   query,
   variables = {},
   cacheConfig = {},
+  skip = false,
 }: {
   environment?: Environment
   query: GraphQLTaggedNode
@@ -20,6 +21,7 @@ export const useQuery = <T extends OperationType>({
     networkCacheConfig?: CacheConfig | null | undefined
     fetchPolicy?: FetchQueryFetchPolicy | null | undefined
   } | null
+  skip?: boolean
 }) => {
   const { relayEnvironment } = useSystemContext()
 
@@ -28,7 +30,7 @@ export const useQuery = <T extends OperationType>({
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (data || error) return
+    if (skip || data || error) return
 
     const exec = async () => {
       try {
@@ -54,5 +56,5 @@ export const useQuery = <T extends OperationType>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error, query, relayEnvironment, variables])
 
-  return { data, error, loading }
+  return { data, error, loading: skip ? false : loading }
 }
