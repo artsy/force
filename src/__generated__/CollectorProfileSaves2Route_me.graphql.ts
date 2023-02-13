@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<68f6ca4b12df51a73969e8d20b6eba79>>
+ * @generated SignedSource<<3c5f9f62fa6128bc259d7366bffa92d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -80,7 +80,7 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 20
+          "value": 30
         },
         {
           "kind": "Literal",
@@ -125,7 +125,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(default:false,first:20,saves:true)"
+      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
     }
   ],
   "type": "Me",
@@ -133,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "09e0ae544fde84607cd63834a5be2d91";
+(node as any).hash = "5c3ef77024cb69947341378af7658e8e";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4424f098656d6c540941195a31786bbc>>
+ * @generated SignedSource<<10283aa313a0232f09c0b84e8190e1cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -252,7 +252,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 20
+                "value": 30
               },
               {
                 "kind": "Literal",
@@ -287,7 +287,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "collectionsConnection(default:false,first:20,saves:true)"
+            "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
           },
           (v0/*: any*/)
         ],
@@ -296,7 +296,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f19a354d18c2d7075b51d6ec44a979c7",
+    "cacheID": "94486b30e85e45dc38b9c592fa58dab6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -347,7 +347,7 @@ return {
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 20, default: false, saves: true) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

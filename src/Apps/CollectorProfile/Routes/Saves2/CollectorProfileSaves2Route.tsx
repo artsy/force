@@ -78,7 +78,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
         }
 
         otherSaves: collectionsConnection(
-          first: 20
+          first: 30
           default: false
           saves: true
         ) {
