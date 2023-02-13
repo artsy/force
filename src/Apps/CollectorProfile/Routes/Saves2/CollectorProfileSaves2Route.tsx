@@ -21,8 +21,8 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const nodes = extractNodes(me.collectionsConnection)
   // Placing the default collection at the top of the list
   let collections = orderBy(nodes, ["default"], ["desc"])
-  const savedCollections = collections[0]
-  const selectedCollectionId = match.params.id ?? savedCollections.internalID
+  const savedCollection = collections[0]
+  const selectedCollectionId = match.params.id ?? savedCollection.internalID
 
   if (initialCollectionId.current !== undefined) {
     const index = collections.findIndex(
