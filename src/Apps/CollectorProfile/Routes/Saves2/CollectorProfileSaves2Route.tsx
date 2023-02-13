@@ -20,31 +20,35 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const { page, sort } = match.location.query ?? {}
   const nodes = extractNodes(me.collectionsConnection)
   // Placing the default collection at the top of the list
-  let collections = orderBy(nodes, ["default"], ["desc"])
-  const savedCollection = collections[0]
+  let savedCollections = orderBy(nodes, ["default"], ["desc"])
+  const savedCollection = savedCollections[0]
   const selectedCollectionId = match.params.id ?? savedCollection.internalID
 
   if (initialCollectionId.current !== undefined) {
-    const index = collections.findIndex(
+    const index = savedCollections.findIndex(
       collection => collection.internalID === initialCollectionId.current
     )
 
     // "Locking" the initial collection in the 2nd slot
     if (index !== -1) {
       // Remove the initial collection from collections array
-      const initialCollection = collections.splice(index, 1)
+      const initialCollection = savedCollections.splice(index, 1)
 
       // Ignore the first collection (the default saved collection)
-      const otherCollections = collections.slice(1)
+      const otherSavedCollections = savedCollections.slice(1)
 
-      collections = [collections[0], ...initialCollection, ...otherCollections]
+      savedCollections = [
+        savedCollections[0],
+        ...initialCollection,
+        ...otherSavedCollections,
+      ]
     }
   }
 
   return (
     <>
       <Shelf showProgress={false}>
-        {collections.map(collection => (
+        {savedCollections.map(collection => (
           <SavesItemFragmentContainer
             key={collection.internalID}
             item={collection}
