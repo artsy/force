@@ -79,13 +79,15 @@ interface SettingsPurchasesRowProps {
 
 const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
-  const { artwork, fulfillments } = lineItem
+  const { artwork, artworkVersion, fulfillments } = lineItem
   const { requestedFulfillment } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const isOrderActive = order.state !== "CANCELED" && order.state !== "REFUNDED"
   const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
-  const image = artwork?.image?.cropped
+  const image = artworkVersion?.image?.cropped
+
+  const isPrivateSale = order.source === "private_sale"
 
   return (
     <Box border="1px solid" borderColor="black10">
@@ -155,14 +157,18 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
             </Text>
 
             <Text variant="xs" color="black60">
-              <RouterLink
-                to={artwork?.href!}
-                display="block"
-                color="black60"
-                textDecoration="none"
-              >
-                {artwork?.title}
-              </RouterLink>
+              {isPrivateSale ? (
+                artwork?.title
+              ) : (
+                <RouterLink
+                  to={artwork?.href!}
+                  display="block"
+                  color="black60"
+                  textDecoration="none"
+                >
+                  {artwork?.title}
+                </RouterLink>
+              )}
             </Text>
           </Box>
         </Column>
@@ -231,7 +237,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
         <Text variant="xs" color="black60">
           Need Help?{" "}
-          {order.source === "private_sale" ? (
+          {isPrivateSale ? (
             <RouterLink to="mailto:privatesales@artsy.net">
               privatesales@artsy.net
             </RouterLink>
@@ -275,14 +281,16 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         lineItems {
           edges {
             node {
-              artwork {
-                href
+              artworkVersion {
                 image {
                   cropped(width: 45, height: 45) {
                     src
                     srcSet
                   }
                 }
+              }
+              artwork {
+                href
                 partner {
                   href
                   initials
