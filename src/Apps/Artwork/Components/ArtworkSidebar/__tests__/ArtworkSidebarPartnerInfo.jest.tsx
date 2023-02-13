@@ -107,7 +107,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
   })
 
   describe("Contact Gallery CTA", () => {
-    it("acquirable artwork (BN only) displays button", () => {
+    it("displays contact gallery button when partner is inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
@@ -120,7 +120,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("acquirable and offerable artwork (BNMO) displays button", () => {
+    it("does not display contact gallery button when partner is inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
