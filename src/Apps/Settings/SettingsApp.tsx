@@ -83,7 +83,6 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
 
       {isCollectorProfileEnabled ? (
         <>
-          <Spacer y={2} />
           <Breadcrumbs>
             <Link to="/collector-profile/my-collection">
               <Flex flexDirection="row" alignItems="center" py={2}>
@@ -91,10 +90,11 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
                   direction="left"
                   color="black100"
                   height={14}
-                  width={18}
-                  mr={0.5}
+                  width={14}
                 />
-                <Text>Collector Profile</Text>
+                <Text variant="xs" pl={1}>
+                  Collector Profile
+                </Text>
               </Flex>
             </Link>
           </Breadcrumbs>
