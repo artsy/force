@@ -1,7 +1,6 @@
 import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesItemFragmentContainer } from "./Components/SavesItem"
-import { orderBy } from "lodash"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
@@ -18,44 +17,43 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const { match } = useRouter()
   const initialCollectionId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
-  const nodes = extractNodes(me.collectionsConnection)
-  // Placing the default collection at the top of the list
-  let savedCollections = orderBy(nodes, ["default"], ["desc"])
-  const savedCollection = savedCollections[0]
+  const savedCollection = me.defaultSaves!
   const selectedCollectionId = match.params.id ?? savedCollection.internalID
+  let otherCollections = extractNodes(me.otherSaves)
 
   if (initialCollectionId.current !== undefined) {
-    const index = savedCollections.findIndex(
+    const index = otherCollections.findIndex(
       collection => collection.internalID === initialCollectionId.current
     )
 
-    // "Locking" the initial collection in the 2nd slot
     if (index !== -1) {
-      // Remove the initial collection from collections array
-      const initialCollection = savedCollections.splice(index, 1)
+      // Remove the initial collection from array
+      const initialCollection = otherCollections.splice(index, 1)
 
-      // Ignore the first collection (the default saved collection)
-      const otherSavedCollections = savedCollections.slice(1)
-
-      savedCollections = [
-        savedCollections[0],
-        ...initialCollection,
-        ...otherSavedCollections,
-      ]
+      // "Locking" the initial collection in the first slot
+      otherCollections = [...initialCollection, ...otherCollections]
     }
   }
+
+  // Always display "Saved Artwork" collection first in the list
+  const savedCollections = [savedCollection, ...otherCollections]
 
   return (
     <>
       <Shelf showProgress={false}>
-        {savedCollections.map(collection => (
-          <SavesItemFragmentContainer
-            key={collection.internalID}
-            item={collection}
-            isSelected={collection.internalID === selectedCollectionId}
-            imagesLayout={collection.default ? "grid" : "stacked"}
-          />
-        ))}
+        {savedCollections.map(collection => {
+          const isDefaultCollection =
+            collection.internalID === savedCollection.internalID
+
+          return (
+            <SavesItemFragmentContainer
+              key={collection.internalID}
+              item={collection}
+              isSelected={collection.internalID === selectedCollectionId}
+              imagesLayout={isDefaultCollection ? "grid" : "stacked"}
+            />
+          )
+        })}
       </Shelf>
 
       <Spacer y={2} />
@@ -74,7 +72,16 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
-        collectionsConnection(first: 20) {
+        defaultSaves: collection(id: "saved-artwork") {
+          internalID
+          ...SavesItem_item
+        }
+
+        otherSaves: collectionsConnection(
+          first: 20
+          default: false
+          saves: true
+        ) {
           edges {
             node {
               internalID

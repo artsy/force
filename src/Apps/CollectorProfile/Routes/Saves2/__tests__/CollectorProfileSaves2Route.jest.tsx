@@ -41,9 +41,13 @@ describe("CollectorProfileSaves2Route", () => {
 
   it("should render collections", () => {
     renderWithRelay({
-      CollectionsConnection: () => collectionsConnection,
+      Me: () => ({
+        defaultSaves: savedArtworksCollection,
+        otherSaves: collectionsConnection,
+      }),
     })
 
+    expect(screen.getByText("Saved Artworks")).toBeInTheDocument()
     expect(screen.getByText("Collection One")).toBeInTheDocument()
     expect(screen.getByText("Collection Two")).toBeInTheDocument()
     expect(screen.getByText("Collection Three")).toBeInTheDocument()
@@ -52,11 +56,14 @@ describe("CollectorProfileSaves2Route", () => {
   describe("Selected State", () => {
     it("should render the first collection as selected when collection id is NOT passed in url", () => {
       renderWithRelay({
-        CollectionsConnection: () => collectionsConnection,
+        Me: () => ({
+          defaultSaves: savedArtworksCollection,
+          otherSaves: collectionsConnection,
+        }),
       })
 
       const selectedElement = getCurrentCollectionElement()
-      expect(selectedElement).toHaveTextContent("Collection One")
+      expect(selectedElement).toHaveTextContent("Saved Artworks")
     })
 
     it("should render the corresponding collection as selected when collection id is passed in url", () => {
@@ -72,7 +79,10 @@ describe("CollectorProfileSaves2Route", () => {
       }))
 
       renderWithRelay({
-        CollectionsConnection: () => collectionsConnection,
+        Me: () => ({
+          defaultSaves: savedArtworksCollection,
+          otherSaves: collectionsConnection,
+        }),
       })
 
       const selectedElement = getCurrentCollectionElement()
@@ -93,7 +103,10 @@ describe("CollectorProfileSaves2Route", () => {
     }))
 
     renderWithRelay({
-      CollectionsConnection: () => collectionsConnection,
+      Me: () => ({
+        defaultSaves: savedArtworksCollection,
+        otherSaves: collectionsConnection,
+      }),
     })
 
     const selectedElement = screen.getAllByRole("link")
@@ -115,6 +128,11 @@ const getCurrentCollectionElement = () => {
   return screen.getAllByRole("link").find(element => {
     return isAriaCurrentAttributeSetToTrue(element)
   })
+}
+
+const savedArtworksCollection = {
+  internalID: "saved-artwork",
+  name: "Saved Artworks",
 }
 
 const collectionsConnection = {

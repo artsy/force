@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24a90a670b614110f164d63523f6fe37>>
+ * @generated SignedSource<<c4fd0ced088250dd22f672787807f7be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,102 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "default",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "artworksCount",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "first",
+        "value": 4
+      }
+    ],
+    "concreteType": "ArtworkConnection",
+    "kind": "LinkedField",
+    "name": "artworksConnection",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "ArtworkEdge",
+        "kind": "LinkedField",
+        "name": "edges",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artwork",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"square\")"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": "artworksConnection(first:4)"
+  },
+  (v0/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -71,12 +166,38 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
+            "alias": "defaultSaves",
             "args": [
+              {
+                "kind": "Literal",
+                "name": "id",
+                "value": "saved-artwork"
+              }
+            ],
+            "concreteType": "Collection",
+            "kind": "LinkedField",
+            "name": "collection",
+            "plural": false,
+            "selections": (v1/*: any*/),
+            "storageKey": "collection(id:\"saved-artwork\")"
+          },
+          {
+            "alias": "otherSaves",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "default",
+                "value": false
+              },
               {
                 "kind": "Literal",
                 "name": "first",
                 "value": 20
+              },
+              {
+                "kind": "Literal",
+                "name": "saves",
+                "value": true
               }
             ],
             "concreteType": "CollectionsConnection",
@@ -99,108 +220,14 @@ return {
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "default",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "artworksCount",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "first",
-                            "value": 4
-                          }
-                        ],
-                        "concreteType": "ArtworkConnection",
-                        "kind": "LinkedField",
-                        "name": "artworksConnection",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "ArtworkEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Artwork",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "Image",
-                                    "kind": "LinkedField",
-                                    "name": "image",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": null,
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "version",
-                                            "value": "square"
-                                          }
-                                        ],
-                                        "kind": "ScalarField",
-                                        "name": "url",
-                                        "storageKey": "url(version:\"square\")"
-                                      }
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  (v0/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "artworksConnection(first:4)"
-                      },
-                      (v0/*: any*/)
-                    ],
+                    "selections": (v1/*: any*/),
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "collectionsConnection(first:20)"
+            "storageKey": "collectionsConnection(default:false,first:20,saves:true)"
           },
           (v0/*: any*/)
         ],
@@ -209,12 +236,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42b61fb95d73aa8c94ae0ef00d4e9ae7",
+    "cacheID": "262103f443f0b3436dd608ea4cb2440c",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_Saves2Query",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query collectorProfileRoutes_Saves2Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 20, default: false, saves: true) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
