@@ -1,5 +1,4 @@
 import React from "react"
-import { omit } from "lodash"
 import {
   ModalBase,
   ModalBaseProps,
@@ -35,18 +34,18 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
       }
       dialogProps={{
         width: ["100%", 900],
-        ...modalProps.dialogProps,
+        height: ["100%", "90%"],
+        maxHeight: [null, 800],
       }}
-      {...omit(modalProps, "dialogProps")}
+      {...modalProps}
     >
       <Box
         width="100%"
-        height="100vh"
-        minHeight={["100vh", "100%"]}
-        overflowY="auto"
         position="relative"
         bg="white100"
+        overflowY="auto"
         style={{
+          WebkitOverflowScrolling: "touch",
           boxShadow: DROP_SHADOW,
           ...(isMounted
             ? {

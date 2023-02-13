@@ -1,6 +1,6 @@
 import { useDialog } from "Utils/Hooks/useDialog"
-import { OnboardingModal } from "../Components/OnboardingModal"
-import { OnboardingSteps } from "../Components/OnboardingSteps"
+import { OnboardingModal } from "Components/Onboarding/Components/OnboardingModal"
+import { OnboardingSteps } from "Components/Onboarding/Components/OnboardingSteps"
 import { OnboardingProvider } from "./useOnboardingContext"
 
 interface UseOnboarding {
@@ -12,11 +12,7 @@ export const useOnboarding = ({ onClose }: UseOnboarding) => {
     Dialog: () => {
       return (
         <OnboardingProvider onClose={onClose}>
-          <OnboardingModal
-            onClose={hideDialog}
-            height={["100%", "90%"]}
-            dialogProps={{ height: ["100%", "90%"], maxHeight: 800 }}
-          >
+          <OnboardingModal onClose={hideDialog}>
             <OnboardingSteps />
           </OnboardingModal>
         </OnboardingProvider>
