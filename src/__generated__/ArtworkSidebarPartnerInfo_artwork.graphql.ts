@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e500e4ec1b0d5434fa35ff5a1f7775f>>
+ * @generated SignedSource<<f328574467f7db9ecc8abedd5d418c08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
-  readonly isAcquireable: boolean | null;
-  readonly isInAuction: boolean | null;
-  readonly isInquireable: boolean | null;
-  readonly isOfferable: boolean | null;
   readonly partner: {
     readonly cities: ReadonlyArray<string | null> | null;
     readonly href: string | null;
+    readonly isInquireable: boolean;
     readonly name: string | null;
   } | null;
   readonly sale: {
@@ -71,34 +68,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "isInquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isAcquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isOfferable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
@@ -111,6 +80,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "cities",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isInquireable",
           "storageKey": null
         }
       ],
@@ -135,6 +111,6 @@ return {
 };
 })();
 
-(node as any).hash = "694d0c5e63586da8b18d91d42093cec2";
+(node as any).hash = "5cdfecf3144ae7df9b006ba4b8239480";
 
 export default node;

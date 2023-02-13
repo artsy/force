@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e9a415a0e3a87b44d283be1192e2f77>>
+ * @generated SignedSource<<6c15a6203822f727e876f45392e700a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -57,12 +57,6 @@ v4 = {
   "type": "ID"
 },
 v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
-v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -126,34 +120,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "isInquireable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isInAuction",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isAcquireable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isOfferable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Partner",
             "kind": "LinkedField",
             "name": "partner",
@@ -166,6 +132,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "cities",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isInquireable",
                 "storageKey": null
               },
               (v3/*: any*/)
@@ -193,7 +166,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dc8b9842dc6f0ec41c98c3a204ef6796",
+    "cacheID": "b3b5e1c3310777b3cf8cfe43716b28c4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -205,10 +178,6 @@ return {
         },
         "artwork.id": (v4/*: any*/),
         "artwork.internalID": (v4/*: any*/),
-        "artwork.isAcquireable": (v5/*: any*/),
-        "artwork.isInAuction": (v5/*: any*/),
-        "artwork.isInquireable": (v5/*: any*/),
-        "artwork.isOfferable": (v5/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -221,24 +190,30 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artwork.partner.href": (v6/*: any*/),
+        "artwork.partner.href": (v5/*: any*/),
         "artwork.partner.id": (v4/*: any*/),
-        "artwork.partner.name": (v6/*: any*/),
+        "artwork.partner.isInquireable": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.partner.name": (v5/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.href": (v6/*: any*/),
+        "artwork.sale.href": (v5/*: any*/),
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v6/*: any*/),
+        "artwork.sale.name": (v5/*: any*/),
         "artwork.slug": (v4/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  isAcquireable\n  isOfferable\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

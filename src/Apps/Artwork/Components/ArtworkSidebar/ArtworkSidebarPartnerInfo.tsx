@@ -8,7 +8,6 @@ import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { themeGet } from "@styled-system/theme-get"
 
 interface ArtworkSidebarPartnerInfoProps {
@@ -36,23 +35,10 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const {
-    internalID,
-    isInAuction,
-    isInquireable,
-    isAcquireable,
-    isOfferable,
-    partner,
-    sale,
-    slug,
-  } = artwork
+  const { internalID, partner, sale, slug } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
-  const artworkEcommerceAvailable = isAcquireable || isOfferable
-  const shouldRenderContactGalleryCTA =
-    isCBNEnabled && !isInquireable && !isInAuction && artworkEcommerceAvailable
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
@@ -87,7 +73,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {shouldRenderContactGalleryCTA && (
+        {!!partner.isInquireable && (
           <Button size="small" variant="secondaryBlack" onClick={handleInquiry}>
             {t("artworkPage.sidebar.partner.contactGalleryCta")}
           </Button>
@@ -132,14 +118,11 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
         slug
-        isInquireable
-        isInAuction
-        isAcquireable
-        isOfferable
         partner {
           name
           href
           cities
+          isInquireable
         }
         sale {
           name
