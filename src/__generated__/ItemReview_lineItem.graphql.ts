@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de18aa322c82772431cb0889f08e1a83>>
+ * @generated SignedSource<<af7bf69c3112dfcf433c3479fc67ca38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem$data = {
   readonly artwork: {
-    readonly date: string | null;
-    readonly dimensions: {
-      readonly cm: string | null;
-      readonly in: string | null;
-    } | null;
     readonly editionSets: ReadonlyArray<{
       readonly dimensions: {
         readonly cm: string | null;
@@ -29,6 +24,11 @@ export type ItemReview_lineItem$data = {
     readonly artistNames: string | null;
     readonly attributionClass: {
       readonly shortDescription: string | null;
+    } | null;
+    readonly date: string | null;
+    readonly dimensions: {
+      readonly cm: string | null;
+      readonly in: string | null;
     } | null;
     readonly image: {
       readonly resized: {
@@ -89,14 +89,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "date",
-          "storageKey": null
-        },
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "EditionSet",
           "kind": "LinkedField",
           "name": "editionSets",
@@ -124,6 +116,13 @@ return {
       "name": "artworkVersion",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "date",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -197,7 +196,8 @@ return {
             }
           ],
           "storageKey": null
-        }
+        },
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -214,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "8601239fca6c49d96f72358690a5fa16";
+(node as any).hash = "1a3fe10edfce0207b339f3dd75c77079";
 
 export default node;

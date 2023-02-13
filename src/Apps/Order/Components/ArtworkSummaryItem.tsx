@@ -33,8 +33,8 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   const firstLineItem = get({}, () => lineItems?.edges?.[0]?.node!)
   const { artwork, artworkVersion } = firstLineItem!
 
-  const { artistNames, title, image } = artworkVersion || {}
-  const { date, shippingOrigin } = artwork || {}
+  const { artistNames, title, image, date } = artworkVersion || {}
+  const { shippingOrigin } = artwork || {}
 
   const imageURL =
     image &&
@@ -68,7 +68,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             display="inline"
           >
             {title}
-            {!isPrivateSale && date && `, ${date}`}
+            {date && `, ${date}`}
           </Text>
         </Box>
         {!isPrivateSale && (
@@ -120,10 +120,10 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
                 }
               }
               artwork {
-                date
                 shippingOrigin
               }
               artworkVersion {
+                date
                 artistNames
                 title
                 image {

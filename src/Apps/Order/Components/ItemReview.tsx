@@ -21,9 +21,16 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   orderSource,
 }) => {
   const isPrivateSale = orderSource === "private_sale"
-  const { artistNames, title, medium, attributionClass, image } =
-    artworkVersion || {}
-  const { date, dimensions: artworkDimensions, editionSets } = artwork || {}
+  const {
+    artistNames,
+    title,
+    medium,
+    attributionClass,
+    image,
+    date,
+    dimensions: artworkDimensions,
+  } = artworkVersion || {}
+  const { editionSets } = artwork || {}
 
   return (
     <BorderBox p={[2, 4]}>
@@ -33,24 +40,22 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
         </Text>
         <Text fontStyle="italic" variant="sm" color="black60">
           {title}
-          {!isPrivateSale && date && `, (${date})`}
+          {date && `, (${date})`}
         </Text>
         <Text variant="sm" color="black60">
           {medium}
         </Text>
-        {!isPrivateSale && (
-          <Text>
-            {editionSetId &&
-              editionSets &&
-              dimensionsDisplay(
-                editionSets.find(e => e?.internalID === editionSetId)
-                  ?.dimensions
-              )}
-            {!editionSetId &&
-              artworkDimensions &&
-              dimensionsDisplay(artworkDimensions)}
-          </Text>
-        )}
+        <Text>
+          {!isPrivateSale &&
+            editionSetId &&
+            editionSets &&
+            dimensionsDisplay(
+              editionSets.find(e => e?.internalID === editionSetId)?.dimensions
+            )}
+          {!editionSetId &&
+            artworkDimensions &&
+            dimensionsDisplay(artworkDimensions)}
+        </Text>
         {attributionClass?.shortDescription && (
           <Text variant="sm" color="black60">
             {attributionClass.shortDescription}
@@ -73,11 +78,6 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
   lineItem: graphql`
     fragment ItemReview_lineItem on CommerceLineItem {
       artwork {
-        date
-        dimensions {
-          in
-          cm
-        }
         editionSets {
           internalID
           dimensions {
@@ -87,6 +87,7 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
         }
       }
       artworkVersion {
+        date
         artistNames
         title
         medium
@@ -97,6 +98,10 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
           resized(width: 185) {
             url
           }
+        }
+        dimensions {
+          in
+          cm
         }
       }
       editionSetId

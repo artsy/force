@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<278eec4ade9dd6975b4bc17e4fdfb906>>
+ * @generated SignedSource<<afb8a8ad7b648db61c91a763744ca11a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,6 @@ export type RejectTestQuery$rawResponse = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly date: string | null;
             readonly id: string;
             readonly shippingOrigin: string | null;
             readonly slug: string;
@@ -56,6 +55,7 @@ export type RejectTestQuery$rawResponse = {
           } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
+            readonly date: string | null;
             readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
@@ -91,7 +91,6 @@ export type RejectTestQuery$rawResponse = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly date: string | null;
             readonly id: string;
             readonly shippingOrigin: string | null;
             readonly slug: string;
@@ -113,6 +112,7 @@ export type RejectTestQuery$rawResponse = {
           } | null;
           readonly artworkVersion: {
             readonly artistNames: string | null;
+            readonly date: string | null;
             readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
@@ -306,13 +306,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "date",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "shippingOrigin",
                             "storageKey": null
                           }
@@ -358,6 +351,13 @@ return {
                         "name": "artworkVersion",
                         "plural": false,
                         "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "date",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -502,7 +502,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cf7a52f988d7dd7da330b3a0546ca705",
+    "cacheID": "1269121b6a6d4056047ae7deed352e4b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -550,7 +550,6 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "order.lineItems.edges.node.artwork.date": (v8/*: any*/),
         "order.lineItems.edges.node.artwork.id": (v7/*: any*/),
         "order.lineItems.edges.node.artwork.shippingOrigin": (v8/*: any*/),
         "order.lineItems.edges.node.artwork.slug": (v7/*: any*/),
@@ -571,6 +570,7 @@ return {
           "type": "ArtworkVersion"
         },
         "order.lineItems.edges.node.artworkVersion.artistNames": (v8/*: any*/),
+        "order.lineItems.edges.node.artworkVersion.date": (v8/*: any*/),
         "order.lineItems.edges.node.artworkVersion.id": (v7/*: any*/),
         "order.lineItems.edges.node.artworkVersion.image": {
           "enumValues": null,
@@ -621,7 +621,7 @@ return {
     },
     "name": "RejectTestQuery",
     "operationKind": "query",
-    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  source\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  currencyCode\n  mode\n  source\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          date\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
   }
 };
 })();
