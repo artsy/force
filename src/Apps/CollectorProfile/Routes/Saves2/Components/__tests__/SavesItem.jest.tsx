@@ -40,12 +40,31 @@ describe("SavesItem", () => {
     expect(screen.getByText("Collection Name")).toBeInTheDocument()
   })
 
-  it("should render the artworks count", () => {
-    renderWithRelay({
-      CollectionsConnection: () => collectionsConnection,
+  describe("should render the artworks count", () => {
+    it("singular form", () => {
+      renderWithRelay({
+        CollectionsConnection: () => ({
+          edges: [
+            {
+              node: {
+                ...collectionNode,
+                artworksCount: 1,
+              },
+            },
+          ],
+        }),
+      })
+
+      expect(screen.getByText("1 Artwork")).toBeInTheDocument()
     })
 
-    expect(screen.getByText("4 Artworks")).toBeInTheDocument()
+    it("plural form", () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      expect(screen.getByText("4 Artworks")).toBeInTheDocument()
+    })
   })
 
   it("should render all artwork images", () => {
