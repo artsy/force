@@ -27,7 +27,6 @@ import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
 interface SavesArtworksGridProps {
   artworks: SavesArtworksGrid_artworks$data
   collection: SavesArtworksGrid_collection$data
-  collectionID: string
   relayRefetch: RelayRefetchProp["refetch"]
 }
 

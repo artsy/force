@@ -21,12 +21,7 @@ const { renderWithRelay } = setupTestWrapperTL<SavesArtworks_Test_Query>({
       return null
     }
 
-    return (
-      <SavesArtworksRefetchContainer
-        collectionID="collectionID"
-        collection={props.me.collection}
-      />
-    )
+    return <SavesArtworksRefetchContainer collection={props.me.collection} />
   },
   query: graphql`
     query SavesArtworks_Test_Query @relay_test_operation {

@@ -20,10 +20,11 @@ interface SavesArtworksQueryRendererProps {
   initialSort?: string
 }
 
-interface SavesArtworksProps extends SavesArtworksQueryRendererProps {
+interface SavesArtworksProps {
   collection: SavesArtworks_collection$data
-  collectionID: string
   relay: RelayRefetchProp
+  initialPage?: number
+  initialSort?: string
 }
 
 const sortOptions: SortOptions = [
@@ -32,11 +33,7 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
-const SavesArtworks: FC<SavesArtworksProps> = ({
-  collection,
-  collectionID,
-  relay,
-}) => {
+const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
   const { match } = useRouter()
 
   const counts: Counts = {
@@ -72,7 +69,6 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
       <SavesArtworksGridFragmentContainer
         artworks={collection.artworks!}
         collection={collection}
-        collectionID={collectionID}
         relayRefetch={relay.refetch}
       />
     </ArtworkFilterContextProvider>
@@ -140,10 +136,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         }
 
         return (
-          <SavesArtworksRefetchContainer
-            collectionID={collectionID}
-            collection={props.me.collection}
-          />
+          <SavesArtworksRefetchContainer collection={props.me.collection} />
         )
       }}
     />
