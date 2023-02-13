@@ -20,7 +20,7 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
       <Box
         display={["none", "block"]}
         bg="black100"
-        flexBasis={["30%", "50%"]}
+        flexBasis="50%"
         position="relative"
         flexShrink={0}
         {...leftProps}

@@ -31,9 +31,13 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
               <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
             </Flex>
           }
-          leftProps={{ display: ["none", "block"] }}
           right={
-            <Flex flexDirection="column" justifyContent="center" p={[2, 4]}>
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              p={[2, 4]}
+              width="100%"
+            >
               <Box flexShrink={0}>
                 <ArtsyLogoIcon />
               </Box>

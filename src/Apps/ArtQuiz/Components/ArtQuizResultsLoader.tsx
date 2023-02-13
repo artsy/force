@@ -49,7 +49,6 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
               <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
             </Flex>
           }
-          leftProps={{ display: ["none", "block"] }}
           right={
             <Flex
               width="100%"
