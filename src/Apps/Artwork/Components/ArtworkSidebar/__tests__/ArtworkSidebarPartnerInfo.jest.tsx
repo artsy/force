@@ -107,93 +107,56 @@ describe("ArtworkSidebarPartnerInfo", () => {
   })
 
   describe("Contact Gallery CTA", () => {
-    it("acquirable artwork (BN only) displays button", () => {
+    it("does not display contact gallery button when artwork is inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
-          isAcquireable: true,
+          isInquireable: true,
+          partner: {
+            isInquireable: true,
+          },
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("displays contact gallery button when partner is inquireable and artwork is not inquireable", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isInquireable: false,
+          partner: {
+            isInquireable: true,
+          },
         }),
       })
 
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("acquirable and offerable artwork (BNMO) displays button", () => {
+    it("does not display contact gallery button when partner is not inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-          isAcquireable: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
-    })
-
-    it("auction lot doesn't display button", () => {
-      renderWithRelay({
-        Artwork: () => ({ ...ArtworkInNonAuctionSale, isInAuction: true }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
-    })
-
-    it("offerable artwork (MO only) displays button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
-    })
-
-    it("inquirable and offerable artwork doesn't display button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-          isInquireable: true,
+          isInquireable: false,
+          partner: {
+            isInquireable: false,
+          },
         }),
       })
 
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
-    it("inquirable and acquirable artwork doesn't display button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isAcquireable: true,
-          isInquireable: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
-    })
-
-    it("inquirable artwork doesn't display button", () => {
+    it("does not display contact gallery button when partner is not inquireable and artwork is inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isInquireable: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
-    })
-
-    it("doesn't display button if feature flag is disabled", () => {
-      mockUseSystemContext.mockImplementation(() => ({
-        featureFlags: { "conversational-buy-now": { flagEnabled: false } },
-      }))
-
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-          isAcquireable: true,
+          partner: {
+            isInquireable: false,
+          },
         }),
       })
 
@@ -205,7 +168,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           slug: "test-slug",
-          isAcquireable: true,
+          partner: {
+            isInquireable: true,
+          },
         }),
       })
 

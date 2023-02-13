@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e500e4ec1b0d5434fa35ff5a1f7775f>>
+ * @generated SignedSource<<d2ca823d1be92a606a3a5efdd178e315>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
-  readonly isAcquireable: boolean | null;
-  readonly isInAuction: boolean | null;
   readonly isInquireable: boolean | null;
-  readonly isOfferable: boolean | null;
   readonly partner: {
     readonly cities: ReadonlyArray<string | null> | null;
     readonly href: string | null;
+    readonly isInquireable: boolean;
     readonly name: string | null;
   } | null;
   readonly sale: {
@@ -38,10 +36,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "isInquireable",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -68,34 +73,7 @@ return {
       "name": "slug",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isAcquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isOfferable",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -104,15 +82,16 @@ return {
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "cities",
           "storageKey": null
-        }
+        },
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -124,8 +103,8 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
-        (v1/*: any*/)
+        (v1/*: any*/),
+        (v2/*: any*/)
       ],
       "storageKey": null
     }
@@ -135,6 +114,6 @@ return {
 };
 })();
 
-(node as any).hash = "694d0c5e63586da8b18d91d42093cec2";
+(node as any).hash = "da5b640e870574e095613971197caded";
 
 export default node;

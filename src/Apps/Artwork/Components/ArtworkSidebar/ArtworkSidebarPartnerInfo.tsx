@@ -8,7 +8,6 @@ import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { ArtworkSidebarPartnerInfo_artwork$data } from "__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { themeGet } from "@styled-system/theme-get"
 
 interface ArtworkSidebarPartnerInfoProps {
@@ -36,27 +35,17 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const {
-    internalID,
-    isInAuction,
-    isInquireable,
-    isAcquireable,
-    isOfferable,
-    partner,
-    sale,
-    slug,
-  } = artwork
+  const { internalID, partner, sale, slug, isInquireable } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
-  const artworkEcommerceAvailable = isAcquireable || isOfferable
-  const shouldRenderContactGalleryCTA =
-    isCBNEnabled && !isInquireable && !isInAuction && artworkEcommerceAvailable
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
   })
+
+  const shouldRenderContactGalleryCTA =
+    !isInquireable && !!partner?.isInquireable
 
   const handleInquiry = () => {
     trackEvent({
@@ -133,13 +122,11 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
-        isInAuction
-        isAcquireable
-        isOfferable
         partner {
           name
           href
           cities
+          isInquireable
         }
         sale {
           name
