@@ -117,6 +117,11 @@ const OrderArtworkVersionNode = {
       shortDescription: "Unique work",
       id: "unique",
     },
+    date: "2016",
+    dimensions: {
+      cm: "91.4 × 91.4 cm",
+      in: "36 × 36 in",
+    },
   },
 }
 

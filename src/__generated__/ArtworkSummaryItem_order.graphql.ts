@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2bcf3d54120aeeb4cd65960abb0151a1>>
+ * @generated SignedSource<<661a0ca8ce8de6375243782bf141a92f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,6 @@ export type ArtworkSummaryItem_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly date: string | null;
           readonly shippingOrigin: string | null;
         } | null;
         readonly artworkOrEditionSet: {
@@ -34,6 +33,7 @@ export type ArtworkSummaryItem_order$data = {
         } | null;
         readonly artworkVersion: {
           readonly artistNames: string | null;
+          readonly date: string | null;
           readonly image: {
             readonly resized_ArtworkSummaryItem: {
               readonly url: string;
@@ -184,13 +184,6 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "date",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "shippingOrigin",
                       "storageKey": null
                     }
@@ -205,6 +198,13 @@ return {
                   "name": "artworkVersion",
                   "plural": false,
                   "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "date",
+                      "storageKey": null
+                    },
                     {
                       "alias": null,
                       "args": null,
@@ -272,6 +272,6 @@ return {
 };
 })();
 
-(node as any).hash = "2ffacbf36ba21f6ddf63662b2e040e11";
+(node as any).hash = "91a4bd398554cc733807e209ce30f77c";
 
 export default node;
