@@ -571,8 +571,7 @@ describe("Review", () => {
   })
 
   describe("Inquiry buy-mode orders", () => {
-    // TODO: Unskip test when "conversational-buy-now" feature flag is removed
-    it.skip("enables the button and routes to the conversation", async () => {
+    it("enables the button and routes to the conversation", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
       const wrapper = getWrapper({
         CommerceOrder: () => ({

@@ -120,9 +120,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             }
           })
       } else {
-        const { order, router, isEigen, featureFlags } = props
-        const isCBNEnabled =
-          featureFlags?.["conversational-buy-now"]?.flagEnabled
+        const { order, router, isEigen } = props
         const orderId = order.internalID
         const conversationId = order.impulseConversationId
 
@@ -165,11 +163,9 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
 
         // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
-        // TODO: It must be only `if (isEigen) {` after removing the feature flag
         if (
-          (!isCBNEnabled && order.mode !== "OFFER") ||
-          (order.mode === "OFFER" && order.state === "IN_REVIEW") ||
-          isEigen
+          isEigen ||
+          (order.mode === "OFFER" && order.state === "IN_REVIEW")
         ) {
           return router.push(`/orders/${orderId}/status`)
         }
@@ -182,9 +178,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           return router.push(`/artwork/${artworkId}?order-submitted=true`)
         }
         // Purchase from the artwork page redirects to the status page
-        if (isCBNEnabled) {
-          return router.push(`/orders/${orderId}/status`)
-        }
+        return router.push(`/orders/${orderId}/status`)
       }
     } catch (error) {
       handleSubmitError(error)

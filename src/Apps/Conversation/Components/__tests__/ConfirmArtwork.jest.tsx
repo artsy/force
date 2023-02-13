@@ -1,8 +1,7 @@
-import { ConfirmArtworkModalFragmentContainer } from "../ConfirmArtworkModal"
+import { ConfirmArtworkModalFragmentContainer } from "Apps/Conversation/Components/ConfirmArtworkModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -68,12 +67,6 @@ describe("ConfirmArtworkModal", () => {
 })
 
 describe("Artwork editions", () => {
-  let useSystemContext = baseUseSystemContext as jest.Mock
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
-    }))
-  })
   const mockEditions = {
     Artwork: () => ({
       isEdition: true,
