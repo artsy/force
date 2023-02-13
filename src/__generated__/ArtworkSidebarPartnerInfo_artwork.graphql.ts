@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f328574467f7db9ecc8abedd5d418c08>>
+ * @generated SignedSource<<d2ca823d1be92a606a3a5efdd178e315>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork$data = {
   readonly internalID: string;
+  readonly isInquireable: boolean | null;
   readonly partner: {
     readonly cities: ReadonlyArray<string | null> | null;
     readonly href: string | null;
@@ -35,10 +36,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "isInquireable",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -65,6 +73,7 @@ return {
       "name": "slug",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -73,8 +82,8 @@ return {
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -82,13 +91,7 @@ return {
           "name": "cities",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isInquireable",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -100,8 +103,8 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
-        (v1/*: any*/)
+        (v1/*: any*/),
+        (v2/*: any*/)
       ],
       "storageKey": null
     }
@@ -111,6 +114,6 @@ return {
 };
 })();
 
-(node as any).hash = "5cdfecf3144ae7df9b006ba4b8239480";
+(node as any).hash = "da5b640e870574e095613971197caded";
 
 export default node;

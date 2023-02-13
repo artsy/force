@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c15a6203822f727e876f45392e700a2>>
+ * @generated SignedSource<<55282598602f95feaf08339adaa4e7c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,30 +33,37 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "isInquireable",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "href",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -117,6 +124,7 @@ return {
             "name": "slug",
             "storageKey": null
           },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -125,8 +133,8 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -134,14 +142,8 @@ return {
                 "name": "cities",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isInquireable",
-                "storageKey": null
-              },
-              (v3/*: any*/)
+              (v1/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -153,20 +155,20 @@ return {
             "name": "sale",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"artwork_from_partner_with_locations\")"
       }
     ]
   },
   "params": {
-    "cacheID": "b3b5e1c3310777b3cf8cfe43716b28c4",
+    "cacheID": "2dcb470f97b837b92541ecc8221868eb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -176,8 +178,14 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.id": (v4/*: any*/),
-        "artwork.internalID": (v4/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.internalID": (v5/*: any*/),
+        "artwork.isInquireable": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -190,30 +198,30 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artwork.partner.href": (v5/*: any*/),
-        "artwork.partner.id": (v4/*: any*/),
+        "artwork.partner.href": (v6/*: any*/),
+        "artwork.partner.id": (v5/*: any*/),
         "artwork.partner.isInquireable": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.partner.name": (v5/*: any*/),
+        "artwork.partner.name": (v6/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.href": (v5/*: any*/),
-        "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v5/*: any*/),
-        "artwork.slug": (v4/*: any*/)
+        "artwork.sale.href": (v6/*: any*/),
+        "artwork.sale.id": (v5/*: any*/),
+        "artwork.sale.name": (v6/*: any*/),
+        "artwork.slug": (v5/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    cities\n    isInquireable\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

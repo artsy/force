@@ -107,10 +107,25 @@ describe("ArtworkSidebarPartnerInfo", () => {
   })
 
   describe("Contact Gallery CTA", () => {
-    it("displays contact gallery button when partner is inquireable", () => {
+    it("does not display contact gallery button when artwork is inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
+          isInquireable: true,
+          partner: {
+            isInquireable: true,
+          },
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("displays contact gallery button when partner is inquireable and artwork is not inquireable", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isInquireable: false,
           partner: {
             isInquireable: true,
           },
@@ -120,10 +135,25 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("does not display contact gallery button when partner is inquireable", () => {
+    it("does not display contact gallery button when partner is not inquireable", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
+          isInquireable: false,
+          partner: {
+            isInquireable: false,
+          },
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("does not display contact gallery button when partner is not inquireable and artwork is inquireable", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isInquireable: true,
           partner: {
             isInquireable: false,
           },

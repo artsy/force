@@ -35,7 +35,7 @@ const StyledPartnerLink = styled(RouterLink)`
 const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const { internalID, partner, sale, slug } = artwork
+  const { internalID, partner, sale, slug, isInquireable } = artwork
 
   const { t } = useTranslation()
   const { trackEvent } = useTracking()
@@ -43,6 +43,9 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
   })
+
+  const shouldRenderContactGalleryCTA =
+    !isInquireable && !!partner?.isInquireable
 
   const handleInquiry = () => {
     trackEvent({
@@ -73,7 +76,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {!!partner.isInquireable && (
+        {shouldRenderContactGalleryCTA && (
           <Button size="small" variant="secondaryBlack" onClick={handleInquiry}>
             {t("artworkPage.sidebar.partner.contactGalleryCta")}
           </Button>
@@ -118,6 +121,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
         slug
+        isInquireable
         partner {
           name
           href
