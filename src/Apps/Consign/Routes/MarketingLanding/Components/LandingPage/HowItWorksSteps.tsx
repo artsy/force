@@ -48,7 +48,7 @@ export const HowItWorksSteps: React.FC = () => {
 
   return (
     <>
-      <Text mb={[2, 6]} variant={["lg-display", "xxl"]}>
+      <Text mb={[2, 6]} variant={["lg-display", "xl", "xxl"]}>
         How it works
       </Text>
       <GridColumns gridColumnGap={[0, 6]} alignItems="flex-start">
