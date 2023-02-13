@@ -195,7 +195,6 @@ export const SavesArtworksGridFragmentContainer = createFragmentContainer(
       fragment SavesArtworksGrid_artworks on ArtworkConnection {
         pageInfo {
           hasNextPage
-          endCursor
         }
         pageCursors {
           ...Pagination_pageCursors

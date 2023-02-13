@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e241cf5eedf7655452f718ecf01261f>>
+ * @generated SignedSource<<a36ad7d60a6bac0bd8af308d816b5275>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,6 @@ export type SavesArtworksGrid_artworks$data = {
     readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
   };
   readonly pageInfo: {
-    readonly endCursor: string | null;
     readonly hasNextPage: boolean;
   };
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
@@ -50,13 +49,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "hasNextPage",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endCursor",
           "storageKey": null
         }
       ],
@@ -117,6 +109,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0a60d49cb2eae3590b750a371aa88e40";
+(node as any).hash = "790831c49416e879986179817f81e602";
 
 export default node;
