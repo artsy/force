@@ -16,11 +16,13 @@ import {
 } from "@artsy/palette"
 
 interface HeroCarouselSmallProps {
+  progressbarVariant?: "dot" | "dash"
   onChange?: (index) => void
 }
 
 export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
   children,
+  progressbarVariant,
   onChange,
 }) => {
   const length = Children.count(children)
@@ -34,6 +36,8 @@ export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
 
     setIndex(index)
   }
+
+  const displayWithDots = progressbarVariant === "dot"
 
   return (
     <>
@@ -51,7 +55,11 @@ export const HeroCarouselSmall: FC<HeroCarouselSmallProps> = ({
         <>
           <Spacer y={2} />
 
-          <ProgressDots variant="dash" amount={length} activeIndex={index} />
+          <ProgressDots
+            variant={displayWithDots ? "dot" : "dash"}
+            amount={length}
+            activeIndex={index}
+          />
         </>
       )}
     </>

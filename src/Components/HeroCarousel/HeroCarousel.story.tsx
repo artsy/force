@@ -14,6 +14,7 @@ export const Default = () => {
         {},
         { children: <ExampleCell>Single cell</ExampleCell> },
         { fullBleed: false },
+        { fullBleed: false, progressbarVariant: "dot" },
       ]}
     >
       <HeroCarousel>

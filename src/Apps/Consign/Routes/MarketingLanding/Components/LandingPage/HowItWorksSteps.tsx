@@ -57,12 +57,12 @@ export const HowItWorksSteps: React.FC = () => {
         ))}
       </GridColumns>
       <GridColumns>
-        <Column span={2}>
+        <Column span={[12, 3, 2]}>
           <Button
             // @ts-ignore
             as={RouterLink}
             mt={[2, 6]}
-            width={"100%"}
+            width="100%"
             variant="primaryBlack"
             to="/sell/submission"
             onClick={trackStartSellingClick}
