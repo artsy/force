@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e38421086f679684a268f8f196843577>>
+ * @generated SignedSource<<7c412111c38544513f7c8058da7d0959>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,12 +29,6 @@ export type SettingsPurchasesRow_order$data = {
             readonly href: string | null;
           } | null> | null;
           readonly href: string | null;
-          readonly image: {
-            readonly cropped: {
-              readonly src: string;
-              readonly srcSet: string;
-            } | null;
-          } | null;
           readonly partner: {
             readonly href: string | null;
             readonly initials: string | null;
@@ -50,6 +44,14 @@ export type SettingsPurchasesRow_order$data = {
           } | null;
           readonly shippingOrigin: string | null;
           readonly title: string | null;
+        } | null;
+        readonly artworkVersion: {
+          readonly image: {
+            readonly cropped: {
+              readonly src: string;
+              readonly srcSet: string;
+            } | null;
+          } | null;
         } | null;
         readonly fulfillments: {
           readonly edges: ReadonlyArray<{
@@ -95,14 +97,7 @@ var v0 = {
   "name": "__typename",
   "storageKey": null
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": [
@@ -139,7 +134,14 @@ v2 = [
     ],
     "storageKey": "cropped(height:45,width:45)"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -301,12 +303,11 @@ return {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Artwork",
+                  "concreteType": "ArtworkVersion",
                   "kind": "LinkedField",
-                  "name": "artwork",
+                  "name": "artworkVersion",
                   "plural": false,
                   "selections": [
-                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -314,9 +315,21 @@ return {
                       "kind": "LinkedField",
                       "name": "image",
                       "plural": false,
-                      "selections": (v2/*: any*/),
+                      "selections": (v1/*: any*/),
                       "storageKey": null
-                    },
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "artwork",
+                  "plural": false,
+                  "selections": [
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -325,7 +338,7 @@ return {
                       "name": "partner",
                       "plural": false,
                       "selections": [
-                        (v1/*: any*/),
+                        (v2/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -355,7 +368,7 @@ return {
                               "kind": "LinkedField",
                               "name": "icon",
                               "plural": false,
-                              "selections": (v2/*: any*/),
+                              "selections": (v1/*: any*/),
                               "storageKey": null
                             }
                           ],
@@ -393,7 +406,7 @@ return {
                       "name": "artists",
                       "plural": true,
                       "selections": [
-                        (v1/*: any*/)
+                        (v2/*: any*/)
                       ],
                       "storageKey": null
                     }
@@ -461,6 +474,6 @@ return {
 };
 })();
 
-(node as any).hash = "3a4c1cbefcb8dfa253df76b32a82c09f";
+(node as any).hash = "f241267fa70b8bb2bb0063509efa4860";
 
 export default node;

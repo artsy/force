@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<969148b347f8e1f5b36e68231e1ef4c7>>
+ * @generated SignedSource<<6b61413653d78096a8e3630a0285d1b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -68,14 +68,7 @@ v5 = {
   "name": "id",
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": [
@@ -113,6 +106,13 @@ v7 = [
     "storageKey": "cropped(height:45,width:45)"
   }
 ],
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
 v8 = {
   "enumValues": null,
   "nullable": false,
@@ -493,12 +493,11 @@ return {
                                   {
                                     "alias": null,
                                     "args": null,
-                                    "concreteType": "Artwork",
+                                    "concreteType": "ArtworkVersion",
                                     "kind": "LinkedField",
-                                    "name": "artwork",
+                                    "name": "artworkVersion",
                                     "plural": false,
                                     "selections": [
-                                      (v6/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -506,9 +505,22 @@ return {
                                         "kind": "LinkedField",
                                         "name": "image",
                                         "plural": false,
-                                        "selections": (v7/*: any*/),
+                                        "selections": (v6/*: any*/),
                                         "storageKey": null
                                       },
+                                      (v5/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Artwork",
+                                    "kind": "LinkedField",
+                                    "name": "artwork",
+                                    "plural": false,
+                                    "selections": [
+                                      (v7/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -517,7 +529,7 @@ return {
                                         "name": "partner",
                                         "plural": false,
                                         "selections": [
-                                          (v6/*: any*/),
+                                          (v7/*: any*/),
                                           {
                                             "alias": null,
                                             "args": null,
@@ -541,7 +553,7 @@ return {
                                                 "kind": "LinkedField",
                                                 "name": "icon",
                                                 "plural": false,
-                                                "selections": (v7/*: any*/),
+                                                "selections": (v6/*: any*/),
                                                 "storageKey": null
                                               },
                                               (v5/*: any*/)
@@ -581,7 +593,7 @@ return {
                                         "name": "artists",
                                         "plural": true,
                                         "selections": [
-                                          (v6/*: any*/),
+                                          (v7/*: any*/),
                                           (v5/*: any*/)
                                         ],
                                         "storageKey": null
@@ -664,7 +676,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8ac2a2e9098279660499d60b959f3fd",
+    "cacheID": "1ac19a04dae6a6212cdfaf04cfd4f83d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -754,10 +766,6 @@ return {
         "me.orders.edges.node.lineItems.edges.node.artwork.artists.id": (v8/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.artwork.href": (v9/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.artwork.id": (v8/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.image": (v11/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.image.cropped": (v12/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.image.cropped.src": (v10/*: any*/),
-        "me.orders.edges.node.lineItems.edges.node.artwork.image.cropped.srcSet": (v10/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -781,6 +789,17 @@ return {
         "me.orders.edges.node.lineItems.edges.node.artwork.partner.profile.id": (v8/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.artwork.shippingOrigin": (v9/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.artwork.title": (v9/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkVersion"
+        },
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion.id": (v8/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion.image": (v11/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion.image.cropped": (v12/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion.image.cropped.src": (v10/*: any*/),
+        "me.orders.edges.node.lineItems.edges.node.artworkVersion.image.cropped.srcSet": (v10/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.fulfillments": {
           "enumValues": null,
           "nullable": true,
@@ -890,7 +909,7 @@ return {
     },
     "name": "SettingsPurchases_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  source\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED, PROCESSING_APPROVAL], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  source\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artworkVersion {\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        artwork {\n          href\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED, PROCESSING_APPROVAL], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

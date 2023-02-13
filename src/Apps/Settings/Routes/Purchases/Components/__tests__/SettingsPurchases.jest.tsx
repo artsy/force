@@ -33,24 +33,24 @@ describe("SettingsPurchases", () => {
     expect(screen.getByText("Contact Us.")).toBeInTheDocument()
   })
 
-  it("renders correct help email address for PS orders", () => {
-    renderWithRelay({
-      Me: () => ({
-        name: "jane doe",
-        orders: {
-          totalCount: 1,
-          edges: [
-            {
-              node: {
-                code: "123",
-                source: "private_sale",
+  describe("with private sale orders", () => {
+    it("renders correct help email address for PS orders", () => {
+      renderWithRelay({
+        Me: () => ({
+          orders: {
+            edges: [
+              {
+                node: {
+                  code: "123",
+                  source: "private_sale",
+                },
               },
-            },
-          ],
-        },
-      }),
-    })
+            ],
+          },
+        }),
+      })
 
-    expect(screen.getByText("privatesales@artsy.net")).toBeInTheDocument()
+      expect(screen.getByText("privatesales@artsy.net")).toBeInTheDocument()
+    })
   })
 })
