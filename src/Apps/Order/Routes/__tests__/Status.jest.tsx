@@ -190,7 +190,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please proceed with the wire transfer to complete your purchase"
+            "Please proceed with the wire transfer within 7 days to complete your purchase."
           )
 
           const message = page.getMessage()
@@ -208,16 +208,13 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
+            "Find the total amount due and Artsy’s banking details below."
           )
           expect(page.text()).toContain(
-            "Find the order total and Artsy’s banking details below."
+            "Please inform your bank that you are responsible for all wire transfer fees."
           )
           expect(page.text()).toContain(
-            "Please inform your bank that you will be responsible for all wire transfer fees."
-          )
-          expect(page.text()).toContain(
-            "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
+            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net."
           )
         })
 
@@ -609,7 +606,7 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please proceed with the wire transfer to complete your purchase"
+            "Please proceed with the wire transfer within 7 days to complete your purchase."
           )
 
           const message = page.getMessage()
@@ -655,16 +652,13 @@ describe("Status", () => {
           const page = new StatusTestPage(wrapper)
 
           expect(page.text()).toContain(
-            "Please provide your proof of payment within 7 days. After this period, your order will be eligible for cancellation by the gallery."
+            "Find the total amount due and Artsy’s banking details below."
           )
           expect(page.text()).toContain(
-            "Find the order total and Artsy’s banking details below."
+            "Please inform your bank that you are responsible for all wire transfer fees."
           )
           expect(page.text()).toContain(
-            "Please inform your bank that you will be responsible for all wire transfer fees."
-          )
-          expect(page.text()).toContain(
-            "Once you have made the transfer, please email orders@artsy.net with your proof of payment."
+            "Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to orders@artsy.net."
           )
         })
 
