@@ -2035,7 +2035,7 @@ type Artwork implements Node & Searchable & Sellable {
   ): AuctionResultConnection
   conditionDescription: ArtworkInfoRow
 
-  # Notes by a partner on the artwork, requires partner access
+  # Notes by a partner or MyCollection user on the artwork, can only be accessed by partner or the user that owns the artwork
   confidentialNotes: String
   consignmentSubmission: ArtworkConsignmentSubmission
   contactLabel: String
@@ -12162,6 +12162,7 @@ input MyCollectionCreateArtworkInput {
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  confidentialNotes: String
   costCurrencyCode: String
   costMajor: Int
   costMinor: Int
@@ -12249,6 +12250,7 @@ input MyCollectionUpdateArtworkInput {
 
   # The given location of the user as structured data
   collectorLocation: EditableLocation
+  confidentialNotes: String
   costCurrencyCode: String
   costMajor: Int
   costMinor: Int
