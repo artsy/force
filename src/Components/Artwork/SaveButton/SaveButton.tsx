@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { NewSaveButton_artwork$data } from "__generated__/NewSaveButton_artwork.graphql"
+import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
@@ -8,16 +8,12 @@ import { useTracking } from "react-tracking"
 import { useState } from "react"
 import { isTouch } from "Utils/device"
 
-export interface SaveTrackingProps {
-  context_page?: string
-}
-
 export interface SaveButtonProps {
-  artwork: NewSaveButton_artwork$data
+  artwork: SaveButton_artwork$data
   contextModule: AuthContextModule
 }
 
-interface NewSaveButtonBaseProps {
+interface SaveButtonBaseProps {
   isSaved: boolean
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
@@ -25,7 +21,7 @@ interface NewSaveButtonBaseProps {
 const BTN_HEIGHT = 20
 const BTN_WIDTH = 20
 
-export const NewSaveButtonBase: React.FC<NewSaveButtonBaseProps> = ({
+export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
   isSaved,
   onClick,
 }) => {
@@ -72,7 +68,7 @@ export const NewSaveButtonBase: React.FC<NewSaveButtonBaseProps> = ({
   )
 }
 
-export const NewSaveButton: React.FC<SaveButtonProps> = ({
+export const SaveButton: React.FC<SaveButtonProps> = ({
   artwork,
   contextModule,
 }) => {
@@ -100,20 +96,17 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
     handleSave()
   }
 
-  return <NewSaveButtonBase isSaved={isSaved} onClick={handleClick} />
+  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
 }
 
-export const NewSaveButtonFragmentContainer = createFragmentContainer(
-  NewSaveButton,
-  {
-    artwork: graphql`
-      fragment NewSaveButton_artwork on Artwork {
-        id
-        internalID
-        slug
-        is_saved: isSaved
-        title
-      }
-    `,
-  }
-)
+export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
+  artwork: graphql`
+    fragment SaveButton_artwork on Artwork {
+      id
+      internalID
+      slug
+      is_saved: isSaved
+      title
+    }
+  `,
+})

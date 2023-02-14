@@ -21,7 +21,7 @@ import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
-import { NewSaveButtonFragmentContainer } from "./SaveButton"
+import { SaveButtonFragmentContainer } from "./SaveButton"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -229,7 +229,7 @@ export const Details: React.FC<DetailsProps> = ({
     }
 
     return (
-      <NewSaveButtonFragmentContainer
+      <SaveButtonFragmentContainer
         contextModule={contextModule!}
         artwork={rest.artwork}
       />
@@ -406,7 +406,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
-      ...NewSaveButton_artwork
+      ...SaveButton_artwork
       ...HoverDetails_artwork
     }
   `,

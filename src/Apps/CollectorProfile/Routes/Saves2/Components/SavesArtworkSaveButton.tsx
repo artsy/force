@@ -1,4 +1,4 @@
-import { NewSaveButtonBase } from "Components/Artwork/SaveButton/NewSaveButton"
+import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useState } from "react"
 
 interface SavesArtworkSaveButtonProps {
@@ -22,5 +22,5 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
     console.log("[debug]", artworkId, collectionId)
   }
 
-  return <NewSaveButtonBase isSaved={isSaved} onClick={handleClick} />
+  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
 }
