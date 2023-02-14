@@ -665,13 +665,13 @@ describe("OrderApp", () => {
     )
   })
 
-  it("redirects user to home page for private sale orders when Artsy logo is clicked", () => {
+  it("redirects user to home page when Artsy logo is clicked", () => {
     const props = getProps({
       location: "/order/123/review",
     })
     const page = getWrapper({
       context: { isEigen: false },
-      props: { ...props, order: PrivateSaleOrderWithShippingDetails },
+      props: { ...props, order: UntouchedBuyOrder },
     })
 
     const logo = page.find(`[data-test="logoLink"]`).first()
