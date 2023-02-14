@@ -17336,6 +17336,7 @@ union updateOrderedSetResponseOrError =
   | updateOrderedSetSuccess
 
 type updateOrderedSetSuccess {
+  feature: Feature
   set: OrderedSet
 }
 
