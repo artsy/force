@@ -17,16 +17,66 @@ export interface SaveButtonProps {
   contextModule: AuthContextModule
 }
 
+interface NewSaveButtonBaseProps {
+  isSaved: boolean
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
+
 const BTN_HEIGHT = 20
 const BTN_WIDTH = 20
+
+export const NewSaveButtonBase: React.FC<NewSaveButtonBaseProps> = ({
+  isSaved,
+  onClick,
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+  const title = isSaved ? "Unsave" : "Save"
+
+  const handleMouseEnter = () => {
+    if (!isTouch) {
+      setIsHovered(true)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (!isTouch) {
+      setIsHovered(false)
+    }
+  }
+
+  return (
+    <Clickable
+      data-test="saveButton"
+      height={BTN_HEIGHT}
+      width={BTN_WIDTH}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      {isSaved || isHovered ? (
+        <HeartFillIcon
+          title={title}
+          fill="blue100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
+      ) : (
+        <HeartIcon
+          title={title}
+          fill="black100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
+      )}
+    </Clickable>
+  )
+}
 
 export const NewSaveButton: React.FC<SaveButtonProps> = ({
   artwork,
   contextModule,
 }) => {
   const tracking = useTracking()
-  const [isHovered, setIsHovered] = useState(false)
-
   const isSaved = !!artwork.is_saved
 
   const { handleSave } = useSaveArtwork({
@@ -50,46 +100,7 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
     handleSave()
   }
 
-  const handleMouseEnter = () => {
-    if (!isTouch) {
-      setIsHovered(true)
-    }
-  }
-
-  const handleMouseLeave = () => {
-    if (!isTouch) {
-      setIsHovered(false)
-    }
-  }
-
-  const title = isSaved ? "Unsave" : "Save"
-
-  return (
-    <Clickable
-      data-test="saveButton"
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      height={BTN_HEIGHT}
-      width={BTN_WIDTH}
-    >
-      {isSaved || isHovered ? (
-        <HeartFillIcon
-          title={title}
-          fill="blue100"
-          width={BTN_WIDTH}
-          height={BTN_HEIGHT}
-        />
-      ) : (
-        <HeartIcon
-          title={title}
-          fill="black100"
-          width={BTN_WIDTH}
-          height={BTN_HEIGHT}
-        />
-      )}
-    </Clickable>
-  )
+  return <NewSaveButtonBase isSaved={isSaved} onClick={handleClick} />
 }
 
 export const NewSaveButtonFragmentContainer = createFragmentContainer(
