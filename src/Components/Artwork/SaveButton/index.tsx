@@ -1,3 +1,3 @@
-export { SaveButtonFragmentContainer } from "./SaveButton"
+export { DeprecatedSaveButtonFragmentContainer } from "./DeprecatedSaveButton"
 export { NewSaveButtonFragmentContainer } from "./NewSaveButton"
 export { useSaveButton } from "./useSaveButton"

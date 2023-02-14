@@ -1,5 +1,5 @@
 import { RootTestPage } from "DevTools/RootTestPage"
-import { SaveButtonFragmentContainer } from "Components/Artwork/SaveButton/index"
+import { DeprecatedSaveButtonFragmentContainer } from "Components/Artwork/SaveButton/index"
 import { graphql } from "react-relay"
 import { mockLocation } from "DevTools/mockLocation"
 import { ContextModule } from "@artsy/cohesion"
@@ -16,14 +16,14 @@ jest.mock("react-tracking")
 jest.mock("../SaveArtworkMutation")
 jest.mock("Components/AuthDialog/useAuthDialog")
 
-class SaveButtonTestPage extends RootTestPage {
+class DeprecatedSaveButtonTestPage extends RootTestPage {
   async clickSaveButton() {
     this.find("button").first().simulate("click")
     await this.update()
   }
 }
 
-describe("Save artwork", () => {
+describe("Deprecated Save artwork", () => {
   let defaultMutationResults
   let trackEvent
 
@@ -38,16 +38,16 @@ describe("Save artwork", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot>
-        <SaveButtonFragmentContainer
+        <DeprecatedSaveButtonFragmentContainer
           contextModule={ContextModule.worksForSaleRail}
           {...props}
         />
       </MockBoot>
     ),
     query: graphql`
-      query SaveButtonTestQuery @relay_test_operation {
+      query DeprecatedSaveButtonTestQuery @relay_test_operation {
         artwork(id: "example-artwork-id") {
-          ...SaveButton_artwork
+          ...DeprecatedSaveButton_artwork
         }
       }
     `,
@@ -85,7 +85,7 @@ describe("Save artwork", () => {
     const wrapper = getWrapper({
       Artwork: () => artwork,
     })
-    const page = new SaveButtonTestPage(wrapper)
+    const page = new DeprecatedSaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 
@@ -101,7 +101,7 @@ describe("Save artwork", () => {
     const wrapper = getWrapper({
       Artwork: () => ({ ...artwork, is_saved: true }),
     })
-    const page = new SaveButtonTestPage(wrapper)
+    const page = new DeprecatedSaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 
@@ -126,7 +126,7 @@ describe("Save artwork", () => {
     const wrapper = getWrapper({
       Artwork: () => artwork,
     })
-    const page = new SaveButtonTestPage(wrapper)
+    const page = new DeprecatedSaveButtonTestPage(wrapper)
 
     await page.clickSaveButton()
 

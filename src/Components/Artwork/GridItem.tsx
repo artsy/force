@@ -274,7 +274,6 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         artistNames
         href
         ...Metadata_artwork
-        ...SaveButton_artwork
         ...Badge_artwork
       }
     `,

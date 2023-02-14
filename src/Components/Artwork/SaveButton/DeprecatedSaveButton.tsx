@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
+import { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
@@ -9,16 +9,12 @@ import { useState } from "react"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 
-export interface SaveTrackingProps {
-  context_page?: string
-}
-
-export interface SaveButtonProps {
-  artwork: SaveButton_artwork$data
+export interface DeprecatedSaveButtonProps {
+  artwork: DeprecatedSaveButton_artwork$data
   contextModule: AuthContextModule
 }
 
-export const SaveButton: React.FC<SaveButtonProps> = ({
+export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
   artwork,
   contextModule,
 }) => {
@@ -58,7 +54,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
 
   return (
     <Clickable
-      data-test="saveButton"
+      data-test="deprecatedSaveButton"
       position="absolute"
       right={10}
       bottom={10}
@@ -101,14 +97,17 @@ const Inner = styled(Flex)<{ isSaved: boolean }>`
   }}
 `
 
-export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
-  artwork: graphql`
-    fragment SaveButton_artwork on Artwork {
-      id
-      internalID
-      slug
-      is_saved: isSaved
-      title
-    }
-  `,
-})
+export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
+  DeprecatedSaveButton,
+  {
+    artwork: graphql`
+      fragment DeprecatedSaveButton_artwork on Artwork {
+        id
+        internalID
+        slug
+        is_saved: isSaved
+        title
+      }
+    `,
+  }
+)
