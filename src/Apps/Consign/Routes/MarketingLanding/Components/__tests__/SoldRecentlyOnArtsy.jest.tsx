@@ -31,7 +31,9 @@ describe("SoldRecentlyOnArtsy", () => {
   })
 
   it("renders correct components", () => {
-    renderWithRelay()
+    renderWithRelay({
+      RecentlySoldArtworkTypeConnection: () => recentlySoldArtworkConnection,
+    })
 
     expect(screen.queryByText(/^Sold Recently on Artsy/)).toBeInTheDocument()
 
@@ -42,7 +44,9 @@ describe("SoldRecentlyOnArtsy", () => {
   })
 
   it("tracks artwork item click", () => {
-    renderWithRelay()
+    renderWithRelay({
+      RecentlySoldArtworkTypeConnection: () => recentlySoldArtworkConnection,
+    })
 
     fireEvent.click(screen.getByTestId("soldRecentlyItem"))
 
@@ -51,11 +55,26 @@ describe("SoldRecentlyOnArtsy", () => {
       action: "clickedArtworkGroup",
       context_module: "artworkRecentlySoldGrid",
       context_page_owner_type: "consign",
-      destination_page_owner_id: "<Artwork-mock-id-7>",
-      destination_page_owner_slug: "<Artwork-mock-id-8>",
+      destination_page_owner_id: "artwork-id",
+      destination_page_owner_slug: "artwork-slug",
       destination_page_owner_type: "artwork",
       horizontal_slide_position: 0,
       type: "thumbnail",
     })
   })
 })
+
+const artwork = {
+  internalID: "artwork-id",
+  slug: "artwork-slug",
+}
+
+const recentlySoldArtworkConnection = {
+  edges: [
+    {
+      node: {
+        artwork,
+      },
+    },
+  ],
+}

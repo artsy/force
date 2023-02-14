@@ -75,14 +75,28 @@ describe("ArtistFeaturedWorksRail", () => {
   })
 
   it("tracks work click", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Artist: () => ({
+        filterArtworksConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "artwork-id-one",
+                slug: "artwork-slug-one",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
     wrapper.find("RouterLink").last().simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "clickedArtworkGroup",
         context_module: "topWorksRail",
-        destination_page_owner_id: "<Artwork-mock-id-9>",
-        destination_page_owner_slug: "<Artwork-mock-id-10>",
+        destination_page_owner_id: "artwork-id-one",
+        destination_page_owner_slug: "artwork-slug-one",
         destination_page_owner_type: "artwork",
         horizontal_slide_position: 1,
         type: "thumbnail",
