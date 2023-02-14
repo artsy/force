@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
@@ -6,20 +6,12 @@ import { SavesItem_test_Query } from "__generated__/SavesItem_test_Query.graphql
 
 jest.unmock("react-relay")
 
-const mockOnClick = jest.fn()
-
 const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
   Component: props => {
     const item = props.me?.collectionsConnection?.edges?.[0]?.node
 
     if (item) {
-      return (
-        <SavesItemFragmentContainer
-          item={item}
-          imagesLayout="grid"
-          onClick={mockOnClick}
-        />
-      )
+      return <SavesItemFragmentContainer item={item} imagesLayout="grid" />
     }
 
     return null
@@ -40,10 +32,6 @@ const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
 })
 
 describe("SavesItem", () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("should render the title", () => {
     renderWithRelay({
       CollectionsConnection: () => collectionsConnection,
@@ -52,12 +40,31 @@ describe("SavesItem", () => {
     expect(screen.getByText("Collection Name")).toBeInTheDocument()
   })
 
-  it("should render the artworks count", () => {
-    renderWithRelay({
-      CollectionsConnection: () => collectionsConnection,
+  describe("should render the artworks count", () => {
+    it("singular form", () => {
+      renderWithRelay({
+        CollectionsConnection: () => ({
+          edges: [
+            {
+              node: {
+                ...collectionNode,
+                artworksCount: 1,
+              },
+            },
+          ],
+        }),
+      })
+
+      expect(screen.getByText("1 Artwork")).toBeInTheDocument()
     })
 
-    expect(screen.getByText("4 Artworks")).toBeInTheDocument()
+    it("plural form", () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      expect(screen.getByText("4 Artworks")).toBeInTheDocument()
+    })
   })
 
   it("should render all artwork images", () => {
@@ -68,14 +75,35 @@ describe("SavesItem", () => {
     expect(screen.getAllByAltText("")).toHaveLength(4)
   })
 
-  it("should call `onClick` handler when the item is tapped", () => {
+  it("should render the correct link", () => {
     renderWithRelay({
       CollectionsConnection: () => collectionsConnection,
     })
 
-    fireEvent.click(screen.getByText("Collection Name"))
+    const link = screen.getByRole("link")
+    const href = "/collector-profile/saves2/collection-id"
 
-    expect(mockOnClick).toHaveBeenCalled()
+    expect(link).toHaveAttribute("href", href)
+  })
+
+  it("should render the correct link for default collection", () => {
+    renderWithRelay({
+      CollectionsConnection: () => ({
+        edges: [
+          {
+            node: {
+              ...collectionNode,
+              default: true,
+            },
+          },
+        ],
+      }),
+    })
+
+    const link = screen.getByRole("link")
+    const href = "/collector-profile/saves2"
+
+    expect(link).toHaveAttribute("href", href)
   })
 })
 
@@ -113,6 +141,7 @@ const artworksConnection = {
 }
 
 const collectionNode = {
+  internalID: "collection-id",
   name: "Collection Name",
   artworksCount: 4,
   artworksConnection,
