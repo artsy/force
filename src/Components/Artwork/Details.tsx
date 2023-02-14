@@ -12,6 +12,7 @@ import {
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { isFunction } from "lodash"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,6 +34,7 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 const ConditionalLink: React.FC<
@@ -201,6 +203,7 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
+  renderSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
@@ -215,6 +218,23 @@ export const Details: React.FC<DetailsProps> = ({
 
   const showHighDemandInfo =
     !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
+
+  const renderSaveButtonComponent = () => {
+    if (!showSaveButton) {
+      return null
+    }
+
+    if (isFunction(renderSaveButton)) {
+      return renderSaveButton(rest.artwork.internalID)
+    }
+
+    return (
+      <NewSaveButtonFragmentContainer
+        contextModule={contextModule!}
+        artwork={rest.artwork}
+      />
+    )
+  }
 
   return (
     <Box>
@@ -243,12 +263,7 @@ export const Details: React.FC<DetailsProps> = ({
         {!hideArtistName && (
           <ArtistLine showSaveButton={showSaveButton} {...rest} />
         )}
-        {showSaveButton && (
-          <NewSaveButtonFragmentContainer
-            contextModule={contextModule!}
-            artwork={rest.artwork}
-          />
-        )}
+        {renderSaveButtonComponent()}
       </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
@@ -343,6 +358,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork {
+      internalID
       href
       title
       date

@@ -26,6 +26,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   to?: string | null
+  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -39,6 +40,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHoverDetails,
   showSaveButton = true,
   to,
+  renderSaveButton,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
@@ -113,6 +115,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         showHoverDetails={showHoverDetails}
         disableRouterLinking={disableRouterLinking}
         to={to}
+        renderSaveButton={renderSaveButton}
       />
     </div>
   )
