@@ -24,6 +24,7 @@ export interface MetadataProps
   showHoverDetails?: boolean
   showSaveButton?: boolean
   to?: string | null
+  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -38,6 +39,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   showHighDemandIcon = false,
   showHoverDetails,
   showSaveButton,
+  renderSaveButton,
   ...rest
 }) => {
   return (
@@ -58,6 +60,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
+        renderSaveButton={renderSaveButton}
       />
     </LinkContainer>
   )
