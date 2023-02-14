@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ffa4e6e9a3f80557e5d38a00c0b1dc2c>>
+ * @generated SignedSource<<ee780c85ddd00d42888cba57368e1eb2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SaveButtonTestQuery$variables = {};
-export type SaveButtonTestQuery$data = {
+export type DeprecatedSaveButtonTestQuery$variables = {};
+export type DeprecatedSaveButtonTestQuery$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"SaveButton_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"DeprecatedSaveButton_artwork">;
   } | null;
 };
-export type SaveButtonTestQuery = {
-  response: SaveButtonTestQuery$data;
-  variables: SaveButtonTestQuery$variables;
+export type DeprecatedSaveButtonTestQuery = {
+  response: DeprecatedSaveButtonTestQuery$data;
+  variables: DeprecatedSaveButtonTestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -40,7 +40,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SaveButtonTestQuery",
+    "name": "DeprecatedSaveButtonTestQuery",
     "selections": [
       {
         "alias": null,
@@ -53,7 +53,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SaveButton_artwork"
+            "name": "DeprecatedSaveButton_artwork"
           }
         ],
         "storageKey": "artwork(id:\"example-artwork-id\")"
@@ -66,7 +66,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SaveButtonTestQuery",
+    "name": "DeprecatedSaveButtonTestQuery",
     "selections": [
       {
         "alias": null,
@@ -117,7 +117,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1cbe5325f819672486b47a6c3c8326f",
+    "cacheID": "6fcac4f64056538d81215e56048581b8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -144,13 +144,13 @@ return {
         }
       }
     },
-    "name": "SaveButtonTestQuery",
+    "name": "DeprecatedSaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query SaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...SaveButton_artwork\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4197398aea6751a896b08a6a2465ca4a";
+(node as any).hash = "aad83146eaf8ba415d9a6e42e723e4ac";
 
 export default node;

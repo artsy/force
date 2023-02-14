@@ -11,7 +11,10 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
 import { FlatGridItem_artwork$data } from "__generated__/FlatGridItem_artwork.graphql"
 import Metadata from "./Metadata"
-import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
+import {
+  DeprecatedSaveButtonFragmentContainer,
+  useSaveButton,
+} from "./SaveButton"
 
 interface FlatGridItemProps {
   artwork: FlatGridItem_artwork$data
@@ -90,7 +93,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
           )}
 
           {isSaveButtonVisible && (
-            <SaveButtonFragmentContainer
+            <DeprecatedSaveButtonFragmentContainer
               contextModule={ContextModule.artworkGrid}
               artwork={artwork}
             />
@@ -123,7 +126,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
           includeAllImages: { type: "Boolean", defaultValue: false }
         ) {
         ...Metadata_artwork
-        ...SaveButton_artwork
+        ...DeprecatedSaveButton_artwork
 
         sale {
           extendedBiddingPeriodMinutes

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ce2d1dccc8000553cf4e421304afbb8>>
+ * @generated SignedSource<<1e55a73595d65f844d93c3974e97df75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -59,7 +59,7 @@ export type Details_artwork$data = {
   } | null;
   readonly sale_message: string | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "NewSaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {
@@ -362,7 +362,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "NewSaveButton_artwork"
+      "name": "SaveButton_artwork"
     },
     {
       "args": null,
@@ -375,6 +375,6 @@ return {
 };
 })();
 
-(node as any).hash = "cddb819f3d3b9b49c49f4e0b5addbea1";
+(node as any).hash = "37ad5ff97d6da053ddc0ca0c31bbef80";
 
 export default node;
