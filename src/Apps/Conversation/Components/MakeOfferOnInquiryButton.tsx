@@ -5,7 +5,6 @@ import { TappedMakeOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import { MakeOfferOnInquiryButton_conversation$data } from "__generated__/MakeOfferOnInquiryButton_conversation.graphql"
 import { Button, Spacer } from "@artsy/palette"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface MakeOfferOnInquiryButtonProps {
   openInquiryModal: () => void
@@ -17,7 +16,6 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
   conversation,
 }) => {
   const tracking = useTracking()
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
@@ -25,7 +23,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
 
   const { isEdition, editionSets, is_acquireable: isAcquireable } = artwork
   const isUniqueArtwork = !isEdition || editionSets?.length! === 1
-  const isPurchaseButtonPresent = isCBNEnabled && isAcquireable
+  const isPurchaseButtonPresent = isAcquireable
   const variant = isPurchaseButtonPresent ? "secondaryBlack" : "primaryBlack"
   const conversationID = conversation.internalID!
 

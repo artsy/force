@@ -120,9 +120,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             }
           })
       } else {
-        const { order, router, isEigen, featureFlags } = props
-        const isCBNEnabled =
-          featureFlags?.["conversational-buy-now"]?.flagEnabled
+        const { order, router, isEigen } = props
         const orderId = order.internalID
         const conversationId = order.impulseConversationId
 
@@ -131,21 +129,35 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
+        // TODO: replace usage with order.state === "IN_REVIEW" once buyerStatus
+        // is implemented in Exchange.
+        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
+        const orderInReviewFacsimile = order.paymentMethod === "WIRE_TRANSFER"
+
         if (isEigen) {
-          if (order.mode === "OFFER" && order.source === "artwork_page") {
-            window?.ReactNativeWebView?.postMessage(
-              JSON.stringify({
-                key: "goToInboxOnMakeOfferSubmission",
-                orderCode: order.code,
-                message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
-              })
-            )
-            // We cannot expect Eigen to respond all the time to messages sent from the webview
-            // a default fallback page is safer for old/broken Eigen versions
-            setTimeout(() => {
-              router.push(`/orders/${order.internalID}/status`)
-            }, 500)
-            return
+          if (order.mode === "OFFER") {
+            if (orderInReviewFacsimile) {
+              window?.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  key: "orderSuccessful",
+                  orderCode: order.code,
+                })
+              )
+            } else if (order.source === "artwork_page") {
+              window?.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  key: "goToInboxOnMakeOfferSubmission",
+                  orderCode: order.code,
+                  message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+                })
+              )
+              // We cannot expect Eigen to respond all the time to messages sent from the webview
+              // a default fallback page is safer for old/broken Eigen versions
+              setTimeout(() => {
+                router.push(`/orders/${order.internalID}/status`)
+              }, 500)
+              return
+            }
           }
 
           if (order.mode === "BUY") {
@@ -156,8 +168,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
 
         // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
-        // TODO: It must be only `if (isEigen) {` after removing the feature flag
-        if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
+        if (isEigen || (order.mode === "OFFER" && orderInReviewFacsimile)) {
           return router.push(`/orders/${orderId}/status`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
@@ -169,9 +180,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           return router.push(`/artwork/${artworkId}?order-submitted=true`)
         }
         // Purchase from the artwork page redirects to the status page
-        if (isCBNEnabled) {
-          return router.push(`/orders/${orderId}/status`)
-        }
+        return router.push(`/orders/${orderId}/status`)
       }
     } catch (error) {
       handleSubmitError(error)
@@ -484,6 +493,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Review_order on CommerceOrder {
+        state
         artworkDetails
         internalID
         paymentMethod
