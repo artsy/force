@@ -14,17 +14,17 @@ export type StepsWithImageBlackDataType = {
 const IMAGE_WIDTH = 600
 
 const waysWeSellImage1 = resized(
-  "https://files.artsy.net/images/auctions-swa-landing-page.jpg",
+  "https://files.artsy.net/images/ways-we-sell-auctions-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 392, quality: 100 }
 )
 
 const waysWeSellImage2 = resized(
-  "https://files.artsy.net/images/privat-sales-swa-landing-page.png",
+  "https://files.artsy.net/images/ways-we-sell-privat-sales-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 317, quality: 100 }
 )
 
 const waysWeSellImage3 = resized(
-  "https://files.artsy.net/images/online-storefront-swa-landing-page.png",
+  "https://files.artsy.net/images/ways-we-sell-online-storefront-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 358, quality: 100 }
 )
 

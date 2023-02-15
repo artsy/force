@@ -46,8 +46,8 @@ export const HeaderSWA = () => {
   }
 
   const image = resized(
-    "https://files.artsy.net/images/content-card-swa-landing-page.png",
-    { width: 1104, height: 833 } // TODO: Source image should be 4:3, ideally
+    "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
+    { width: 1104, height: 833 }
   )
 
   return (
@@ -67,11 +67,11 @@ export const HeaderSWA = () => {
         <Spacer y={[4, 6]} />
 
         <GridColumns>
-          <Column span={4}>
+          <Column span={[12, 5, 4]}>
             <Button
               // @ts-ignore
               as={RouterLink}
-              width={"100%"}
+              width="100%"
               variant="primaryBlack"
               to="/sell/submission"
               onClick={trackStartSellingClick}
@@ -81,9 +81,9 @@ export const HeaderSWA = () => {
               Start Selling
             </Button>
           </Column>
-          <Column span={4}>
+          <Column span={[12, 5, 4]}>
             <Button
-              width={"100%"}
+              width="100%"
               // @ts-ignore
               as={RouterLink}
               variant="secondaryBlack"
@@ -97,7 +97,7 @@ export const HeaderSWA = () => {
         </GridColumns>
       </Column>
 
-      <Column span={7}>
+      <Column span={7} mx={[-2, 0]}>
         <ResponsiveBox aspectWidth={1104} aspectHeight={833} maxWidth="100%">
           <Image
             width="100%"
