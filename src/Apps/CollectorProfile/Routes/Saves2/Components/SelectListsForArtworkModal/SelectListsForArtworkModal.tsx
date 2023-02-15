@@ -47,7 +47,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   }
 
   const handleSaveClicked = () => {
-    console.log("[debug] save pressed")
+    onClose()
   }
 
   return (
