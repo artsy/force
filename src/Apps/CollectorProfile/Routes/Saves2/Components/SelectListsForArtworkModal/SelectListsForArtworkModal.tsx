@@ -61,7 +61,13 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       }}
       {...modalProps}
     >
-      <Box width="100%" bg="white100">
+      <Box
+        width="100%"
+        bg="white100"
+        onClick={event => {
+          event.preventDefault()
+        }}
+      >
         <Flex flexDirection="row" justifyContent="space-between" m={2}>
           <Text variant="lg-display">{title}</Text>
           <Clickable onClick={onClose} ml={1} aria-label="Close">
