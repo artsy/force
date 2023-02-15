@@ -10,24 +10,26 @@ import {
   Spacer,
   Clickable,
   CloseIcon,
-  Button,
-  CheckCircleIcon,
   Join,
 } from "@artsy/palette"
-import { useTranslation } from "react-i18next"
+import {
+  ListItemEntity,
+  SelectListItem,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
+import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
+import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 
-export interface SavesModalProps extends ModalBaseProps {
+export interface SelectListsForArtworkModalProps extends ModalBaseProps {
   title: string
   onClose: () => void
 }
 
-export const SavesModal: React.FC<SavesModalProps> = ({
+export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   children,
   onClose,
   title,
   ...rest
 }) => {
-  const { t } = useTranslation()
   const isMounted = useDidMount()
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [boxProps, modalProps] = splitBoxProps(rest)
@@ -42,6 +44,10 @@ export const SavesModal: React.FC<SavesModalProps> = ({
     }
 
     setSelectedIds([...selectedIds, selectedId])
+  }
+
+  const handleSaveClicked = () => {
+    console.log("[debug] save pressed")
   }
 
   return (
@@ -65,19 +71,7 @@ export const SavesModal: React.FC<SavesModalProps> = ({
 
         <Spacer y={4} />
 
-        <Flex flexDirection="row" alignItems="center" m={2}>
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flexShrink={0} width={50} height={50} bg="black10" />
-            <Spacer x={1} />
-            <Text>Marie Pop, The NAR, 2016</Text>
-          </Flex>
-
-          <Spacer x={1} />
-
-          <Button variant="secondaryBlack" size="small">
-            Create New List
-          </Button>
-        </Flex>
+        <SelectListsForArtworkHeader />
 
         <Box
           overflowY="auto"
@@ -92,48 +86,20 @@ export const SavesModal: React.FC<SavesModalProps> = ({
               const isSelected = selectedIds.includes(item.id)
 
               return (
-                <Clickable
-                  display="flex"
-                  width="100%"
-                  flexDirection="row"
-                  alignItems="center"
-                  borderRadius={10}
-                  p={1}
-                  border="1px solid"
-                  borderColor={isSelected ? "brand" : "transparent"}
-                  onClick={() => handleItemSelected(item.id)}
-                >
-                  <Flex width={60} height={60} bg="black10" flexShrink={0} />
-
-                  <Spacer x={1} />
-
-                  <Flex flexDirection="column" flex={1}>
-                    <Text variant="sm-display">{item.title}</Text>
-                    <Text variant="sm-display" color="black60">
-                      {t("collectorSaves.artworkLists.artworkWithCount", {
-                        count: item.count,
-                      })}
-                    </Text>
-                  </Flex>
-
-                  <Spacer x={1} />
-
-                  <CheckCircleIcon width={24} height={24} />
-                </Clickable>
+                <SelectListItem
+                  item={item}
+                  isSelected={isSelected}
+                  onClick={handleItemSelected}
+                />
               )
             })}
           </Join>
         </Box>
 
-        <Flex
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          m={2}
-        >
-          <Text variant="sm-display">2 lists selected</Text>
-          <Button>Save</Button>
-        </Flex>
+        <SelectListsForArtworkFooter
+          selectedListsCount={selectedIds.length}
+          onSaveClick={handleSaveClicked}
+        />
       </Box>
     </ModalBase>
   )
@@ -165,7 +131,7 @@ const getStyles = (isMounted: boolean) => {
   }
 }
 
-const items = [
+const items: ListItemEntity[] = [
   {
     id: "collection-id-one",
     title: "All Saves",
