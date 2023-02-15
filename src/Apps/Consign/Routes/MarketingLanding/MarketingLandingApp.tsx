@@ -23,6 +23,7 @@ import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingP
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -65,6 +66,7 @@ export const MarketingLandingApp = () => {
           <Reviews />
           <FAQSWA />
           <Footer />
+          <FooterBanner />
         </Join>
       </>
     )
