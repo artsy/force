@@ -3,7 +3,7 @@ import { MockBoot, renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
 import { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
-import { ViewingRoomWorksRouteFragmentContainer } from "../../Works/ViewingRoomWorksRoute"
+import { ViewingRoomWorksRouteFragmentContainer } from "Apps/ViewingRoom/Routes/Works/ViewingRoomWorksRoute"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -75,6 +75,7 @@ describe("ViewingRoomWorksRoute", () => {
       expect(html).toContain("2015")
       expect(html).toContain("some description")
       expect(html).toContain("$500")
+      expect(html).toContain('href="/artist/bill-miles')
     })
 
     it("displays a buy button", () => {
@@ -161,12 +162,66 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             ],
             id: "QXJ0d29yazo1ZGU2YjQ5YWE2NjVmYzAwMGRiNzgxOTc=",
-            artistNames: "Bill Miles",
             title: "Beep Beep",
             date: "2015",
             additionalInformation: "some description",
-            saleMessage: "$500",
             href: "/artwork/bill-miles-beep-beep",
+            artist: {
+              id: "artist-id",
+              targetSupply: {
+                isP1: true,
+              },
+            },
+            marketPriceInsights: {
+              demandRank: 0.9,
+            },
+            artists: [
+              {
+                id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+                href: "/artist/bill-miles",
+                name: "Bill Miles",
+              },
+            ],
+            slug: "bill-miles-tulips-p17-14",
+            is_saved: false,
+            sale_message: "$500",
+            cultural_maker: null,
+            collecting_institution: "This Really Great Gallery",
+            partner: {
+              id: "opaque-partner-id",
+              name: "Forum Auctions",
+              href: "/auction/forum-auctions",
+            },
+            sale: {
+              id: "opaque-sale-id",
+              is_auction: false,
+              is_closed: false,
+              cascadingEndTimeIntervalMinutes: null,
+              extendedBiddingIntervalMinutes: null,
+              startAt: "2022-03-11T12:33:37.000Z",
+              endAt: "2022-03-12T12:33:37.000Z",
+            },
+            sale_artwork: {
+              lotID: "lot-id",
+              lotLabel: "0",
+              id: "opaque-sale-artwork-id",
+              highest_bid: { display: "$2,600" },
+              opening_bid: { display: "$2,400" },
+              counts: { bidder_positions: 0 },
+              endAt: "2022-03-12T12:33:37.000Z",
+              formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+              extendedBiddingEndAt: null,
+            },
+            attributionClass: {
+              id: "attributionClass-id",
+              name: "Unique",
+            },
+            mediumType: {
+              filterGene: {
+                id: "gene-id",
+                name: "Prints",
+              },
+            },
           },
         },
         {
@@ -251,12 +306,66 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             ],
             id: "QXJ0d29yazo1ZGU2YjNhNDY4ODJiNzAwMGVlZTMxZjg=",
-            artistNames: "Emma Johnson",
             title: "Please Do Not Touch",
             date: "2018",
             additionalInformation: "some description",
-            saleMessage: "Contact for price",
             href: "/artwork/emma-johnson-please-do-not-touch",
+            artist: {
+              id: "artist-id",
+              targetSupply: {
+                isP1: true,
+              },
+            },
+            marketPriceInsights: {
+              demandRank: 0.9,
+            },
+            artists: [
+              {
+                id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
+                href: "/artist/bill-miles",
+                name: "Bill Miles",
+              },
+            ],
+            slug: "bill-miles-tulips-p17-14",
+            is_saved: false,
+            sale_message: "$450",
+            cultural_maker: null,
+            collecting_institution: "This Really Great Gallery",
+            partner: {
+              id: "opaque-partner-id",
+              name: "Forum Auctions",
+              href: "/auction/forum-auctions",
+            },
+            sale: {
+              id: "opaque-sale-id",
+              is_auction: false,
+              is_closed: false,
+              cascadingEndTimeIntervalMinutes: null,
+              extendedBiddingIntervalMinutes: null,
+              startAt: "2022-03-11T12:33:37.000Z",
+              endAt: "2022-03-12T12:33:37.000Z",
+            },
+            sale_artwork: {
+              lotID: "lot-id",
+              lotLabel: "0",
+              id: "opaque-sale-artwork-id",
+              highest_bid: { display: "$2,600" },
+              opening_bid: { display: "$2,400" },
+              counts: { bidder_positions: 0 },
+              endAt: "2022-03-12T12:33:37.000Z",
+              formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+              extendedBiddingEndAt: null,
+            },
+            attributionClass: {
+              id: "attributionClass-id",
+              name: "Unique",
+            },
+            mediumType: {
+              filterGene: {
+                id: "gene-id",
+                name: "Prints",
+              },
+            },
           },
         },
       ],
