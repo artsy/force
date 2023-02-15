@@ -14,7 +14,7 @@ const ArtistLine: React.FC<SoldArtworkDetailsProps> = ({
 }) => {
   if (cultural_maker) {
     return (
-      <Text variant="sm-display" overflowEllipsis>
+      <Text variant={["sm-display", "lg-display"]} overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -25,7 +25,7 @@ const ArtistLine: React.FC<SoldArtworkDetailsProps> = ({
   }
 
   return (
-    <Text variant="sm-display" overflowEllipsis>
+    <Text variant={["sm-display", "lg-display"]} overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -44,7 +44,7 @@ const TitleLine: React.FC<SoldArtworkDetailsProps> = ({
   artwork: { title, date },
 }) => {
   return (
-    <Text variant="sm-display" overflowEllipsis>
+    <Text variant={["xs", "sm-display"]} overflowEllipsis>
       {title}
       {date && `, ${date}`}
     </Text>
@@ -53,7 +53,7 @@ const TitleLine: React.FC<SoldArtworkDetailsProps> = ({
 
 const SoldArtworkDetails: React.FC<SoldArtworkDetailsProps> = ({ artwork }) => {
   return (
-    <Box maxWidth="100%">
+    <Box maxWidth="100%" my={1}>
       <ArtistLine artwork={artwork} />
       <Box position="relative">
         <TitleLine artwork={artwork} />

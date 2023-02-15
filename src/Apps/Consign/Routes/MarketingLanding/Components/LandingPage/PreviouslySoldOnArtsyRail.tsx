@@ -1,5 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import { shuffle } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "Components/Rail"
@@ -43,6 +43,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
   return (
     <Rail
       title="Previously sold on Artsy"
+      showProgress={false}
       getItems={() => {
         return artworks.map(
           ({ artwork, lowEstimate, highEstimate, priceRealized }, i) => {
@@ -58,9 +59,26 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
                 // FIXME:
                 contextModule={ContextModule.artworkRecentlySoldGrid as any}
               >
-                <Text>{lowEstimate?.display}</Text>
-                <Text>{highEstimate?.display}</Text>
-                <Text>{priceRealized?.display}</Text>
+                <Flex justifyContent="space-between" mb={[0.5, 1.5]}>
+                  <Text variant={["lg-display", "xl"]} overflowEllipsis>
+                    {priceRealized?.display}
+                  </Text>
+                  <Text
+                    variant={["lg-display", "xl"]}
+                    color="green100"
+                    overflowEllipsis
+                  >
+                    123%
+                  </Text>
+                </Flex>
+
+                <Text
+                  variant={["xs", "sm-display"]}
+                  color="black60"
+                  overflowEllipsis
+                >
+                  Estimate {lowEstimate?.display} - {highEstimate?.display}
+                </Text>
               </SoldArtworkFragmentContainer>
             )
           }
