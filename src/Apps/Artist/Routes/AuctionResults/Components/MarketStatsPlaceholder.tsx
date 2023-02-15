@@ -65,7 +65,7 @@ export const MarketStatsPlaceholder: React.FC = () => (
                   Sale price
                 </SkeletonText>
 
-                <SkeletonText variant={["xxl", "xxl"]}>$492k</SkeletonText>
+                <SkeletonText variant={["xxl", "xxl"]}>$492K</SkeletonText>
               </Column>
 
               <Column
