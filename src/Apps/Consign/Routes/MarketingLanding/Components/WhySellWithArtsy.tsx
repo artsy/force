@@ -7,6 +7,7 @@ import {
   Image,
   Box,
 } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 const reasons = [
   {
@@ -21,8 +22,13 @@ const reasons = [
   },
   {
     title: "Tap into our expertise",
-    text:
-      "Our specialists guide you through everything you need to know and will handle it all, from pricing to shipping.",
+    text: (
+      <>
+        <RouterLink to="/meet-the-specialists">Our specialists</RouterLink>{" "}
+        guide you through everything you need to know and will handle it all,
+        from pricing to shipping.
+      </>
+    ),
   },
 ]
 
