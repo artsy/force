@@ -83,6 +83,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
                   variant={["xs", "sm-display"]}
                   color="black60"
                   overflowEllipsis
+                  data-testid="previouslySoldItem-estimate"
                 >
                   Estimate {lowEstimate?.display} - {highEstimate?.display}
                 </Text>
@@ -127,6 +128,7 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Previously sold on Artsy"
+      showProgress={false}
       getItems={() => {
         return [...new Array(20)].map((_, i) => {
           return (
@@ -172,20 +174,6 @@ const PLACEHOLDER = (
                   USD 100,000–100,000
                 </SkeletonText>
               </Flex>
-              {/*
-              <Flex
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <SkeletonText variant="xs" overflowEllipsis>
-                  Sold for (incl. premium)
-                </SkeletonText>
-
-                <SkeletonText variant="xs" overflowEllipsis>
-                  USD 100,000
-                </SkeletonText>
-              </Flex> */}
             </Box>
           )
         })
