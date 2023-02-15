@@ -79,38 +79,41 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           isPrivateSaleOrder
         ),
         alertMessageTitle: isWireTransfer
-          ? "Please proceed with the wire transfer to complete your purchase"
+          ? "Please proceed with the wire transfer within 7 days to complete your purchase."
           : null,
         alertMessage: isWireTransfer ? (
           <>
-            <Text>
-              Please provide your proof of payment within 7 days. After this
-              period, your order will be eligible for cancellation by the
-              gallery.
-            </Text>
             <Spacer y={2} />
             <Text>
-              1. &nbsp; Find the order total and Artsy’s banking details below.
+              1. &nbsp; Find the total amount due and Artsy’s banking details
+              below.
             </Text>
             <Text>
-              2. &nbsp;Please inform your bank that you will be responsible for
-              all wire transfer fees.
+              2. &nbsp;Please inform your bank that you are responsible for all
+              wire transfer fees.
             </Text>
 
-            {isPrivateSaleOrder ? (
-              <Text>
-                3. &nbsp;Once you have made the transfer, email proof of payment
-                to{" "}
-                <RouterLink to="privatesales@artsy.net">
+            <Text>
+              3. &nbsp;Please make the transfer in the currency displayed on the
+              order breakdown and then email proof of payment to{" "}
+              {isPrivateSaleOrder ? (
+                <RouterLink
+                  color="#1023D7"
+                  textDecoration="none"
+                  to="privatesales@artsy.net"
+                >
                   privatesales@artsy.net.
                 </RouterLink>
-              </Text>
-            ) : (
-              <Text>
-                3. &nbsp;Once you have made the transfer, please email
-                orders@artsy.net with your proof of payment.
-              </Text>
-            )}
+              ) : (
+                <RouterLink
+                  color="#1023D7"
+                  textDecoration="none"
+                  to="orders@artsy.net"
+                >
+                  orders@artsy.net.
+                </RouterLink>
+              )}
+            </Text>
           </>
         ) : null,
         content: isWireTransfer ? wireTransferArtsyBankDetails(order) : null,
