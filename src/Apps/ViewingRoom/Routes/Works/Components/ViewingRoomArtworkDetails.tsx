@@ -3,6 +3,7 @@ import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork$data } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
+import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 
@@ -11,30 +12,24 @@ interface ViewingRoomArtworkDetailsProps {
 }
 
 export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps> = ({
-  artwork: {
-    artistNames,
-    title,
-    date,
-    href,
-    additionalInformation,
-    saleMessage,
-  },
+  artwork,
+  artwork: { href, additionalInformation },
 }) => {
   const { trackEvent } = useTracking()
 
   return (
     <>
-      <Text variant="sm-display">{artistNames}</Text>
-
-      <Text variant="sm-display" color="black60" overflowEllipsis>
-        {[title, date].filter(s => s).join(", ")}
-      </Text>
-
-      {saleMessage && (
-        <Text variant="sm-display" color="black60">
-          {saleMessage}
-        </Text>
-      )}
+      <DetailsFragmentContainer
+        includeLinks={true}
+        artwork={artwork}
+        hideSaleInfo={false}
+        hidePartnerName={true}
+        hideArtistName={false}
+        isHovered={false}
+        showHighDemandIcon={false}
+        showHoverDetails={false}
+        showSaveButton={true}
+      />
 
       <GridColumns>
         <Column span={4}>
@@ -75,13 +70,10 @@ export const ViewingRoomArtworkDetailsFragmentContainer = createFragmentContaine
   {
     artwork: graphql`
       fragment ViewingRoomArtworkDetails_artwork on Artwork {
+        ...Details_artwork
         id
         additionalInformation
-        artistNames
-        title
-        date
         href
-        saleMessage
       }
     `,
   }
