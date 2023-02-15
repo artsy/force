@@ -1,5 +1,12 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Flex, Text } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Text,
+} from "@artsy/palette"
 import { shuffle } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "Components/Rail"
@@ -116,15 +123,41 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
   }
 )
 
-/* const PLACEHOLDER = (
+const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Previously sold on Artsy"
       getItems={() => {
         return [...new Array(20)].map((_, i) => {
           return (
-            <ShelfArtworkPlaceholder index={i} hideSaleInfo>
-              <Spacer y={4} />
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-end"
+              width="100%"
+            >
+              <SkeletonBox width={[305, 362, 420]} height={[380, 495]} />
+
+              <Flex justifyContent="space-between" mb={[0.5, 1.5]}>
+                <Text variant={["lg-display", "xl"]} overflowEllipsis>
+                  $100,000
+                </Text>
+                <Text
+                  variant={["lg-display", "xl"]}
+                  color="green100"
+                  overflowEllipsis
+                >
+                  123%
+                </Text>
+              </Flex>
+
+              <Text
+                variant={["xs", "sm-display"]}
+                color="black60"
+                overflowEllipsis
+              >
+                Estimate $100,000–100,000
+              </Text>
 
               <Flex
                 flexDirection="row"
@@ -139,7 +172,7 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
                   USD 100,000–100,000
                 </SkeletonText>
               </Flex>
-
+              {/*
               <Flex
                 flexDirection="row"
                 alignItems="center"
@@ -152,15 +185,15 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
                 <SkeletonText variant="xs" overflowEllipsis>
                   USD 100,000
                 </SkeletonText>
-              </Flex>
-            </ShelfArtworkPlaceholder>
+              </Flex> */}
+            </Box>
           )
         })
       }}
     />
   </Skeleton>
 )
- */
+
 export const PreviouslySoldOnArtsyRailQueryRenderer: React.FC = () => {
   return (
     <SystemQueryRenderer<PreviouslySoldOnArtsyRailQuery>
@@ -172,7 +205,7 @@ export const PreviouslySoldOnArtsyRailQueryRenderer: React.FC = () => {
           }
         }
       `}
-      //   placeholder={PLACEHOLDER}
+      placeholder={PLACEHOLDER}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
@@ -180,7 +213,7 @@ export const PreviouslySoldOnArtsyRailQueryRenderer: React.FC = () => {
         }
 
         if (!props || !props.recentlySoldArtworks) {
-          return // PLACEHOLDER
+          return PLACEHOLDER
         }
 
         return (
