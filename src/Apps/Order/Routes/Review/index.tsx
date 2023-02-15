@@ -129,9 +129,14 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
+        // TODO: replace usage with order.state === "IN_REVIEW" once buyerStatus
+        // is implemented in Exchange.
+        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
+        const orderInReviewFacsimile = order.paymentMethod === "WIRE_TRANSFER"
+
         if (isEigen) {
           if (order.mode === "OFFER") {
-            if (order.state === "IN_REVIEW") {
+            if (orderInReviewFacsimile) {
               window?.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   key: "orderSuccessful",
@@ -163,10 +168,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
 
         // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
-        if (
-          isEigen ||
-          (order.mode === "OFFER" && order.state === "IN_REVIEW")
-        ) {
+        if (isEigen || (order.mode === "OFFER" && orderInReviewFacsimile)) {
           return router.push(`/orders/${orderId}/status`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
@@ -174,7 +176,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           return router.push(`/user/conversations/${conversationId}`)
         }
         // Make offer from the artwork page redirects to the artwork page with a confirmation modal
-        if (order.mode === "OFFER" && order.state !== "IN_REVIEW") {
+        if (order.mode === "OFFER") {
           return router.push(`/artwork/${artworkId}?order-submitted=true`)
         }
         // Purchase from the artwork page redirects to the status page
