@@ -223,6 +223,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Offer"
       steps={offerFlowSteps}
       content={
@@ -384,6 +385,7 @@ export const OfferFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...PriceOptions_order
+        ...OrderStepper_order
       }
     `,
   }

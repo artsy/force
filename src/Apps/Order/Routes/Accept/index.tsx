@@ -256,6 +256,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Review"
       steps={counterofferFlowSteps}
       content={
@@ -368,6 +369,7 @@ export const AcceptFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...ShippingSummaryItem_order
         ...PaymentMethodSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

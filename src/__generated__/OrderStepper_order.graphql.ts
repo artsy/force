@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4365ab23abe2c5467ce02624637cb3b>>
+ * @generated SignedSource<<daeebbe6f265ffea2d311fd772f4fd33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,70 +10,67 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_order$data = {
+export type OrderStepper_order$data = {
+  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+  readonly bankAccountId: string | null;
+  readonly creditCard: {
+    readonly internalID: string;
+  } | null;
   readonly internalID: string;
+  readonly lastOffer?: {
+    readonly createdAt: string;
+    readonly internalID: string;
+  } | null;
+  readonly lastTransactionFailed: boolean | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly artsyShippingInternational: boolean | null;
-          readonly euShippingOrigin: boolean | null;
-          readonly onlyShipsDomestically: boolean | null;
-          readonly pickup_available: boolean | null;
-          readonly processWithArtsyShippingDomestic: boolean | null;
-          readonly shippingCountry: string | null;
           readonly slug: string;
         } | null;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
             readonly node: {
-              readonly id: string;
               readonly isSelected: boolean;
             } | null;
-            readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
           } | null> | null;
         } | null;
       } | null;
     } | null> | null;
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
-  readonly requestedFulfillment: {
-    readonly __typename: "CommercePickup";
-    readonly phoneNumber: string | null;
+  readonly myLastOffer?: {
+    readonly createdAt: string;
+    readonly internalID: string;
+  } | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "BankAccount";
+    readonly id: string;
   } | {
-    readonly __typename: "CommerceShip";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly phoneNumber: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly __typename: "CreditCard";
+    readonly id: string;
   } | {
-    readonly __typename: "CommerceShipArta";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly phoneNumber: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
-  readonly " $fragmentType": "Shipping_order";
+  readonly " $fragmentType": "OrderStepper_order";
 };
-export type Shipping_order$key = {
-  readonly " $data"?: Shipping_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
+export type OrderStepper_order$key = {
+  readonly " $data"?: OrderStepper_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OrderStepper_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -81,74 +78,49 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "phoneNumber",
+  "name": "internalID",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "name",
+    "name": "id",
     "storageKey": null
-  },
+  }
+],
+v3 = [
+  (v0/*: any*/),
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "addressLine1",
+    "name": "createdAt",
     "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "addressLine2",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "city",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "region",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "country",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "postalCode",
-    "storageKey": null
-  },
-  (v0/*: any*/)
+  }
 ];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Shipping_order",
+  "name": "OrderStepper_order",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "bankAccountId",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -166,38 +138,98 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lastTransactionFailed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "paymentMethodDetails",
+      "plural": false,
+      "selections": [
+        (v1/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "CreditCard",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "BankAccount",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isManualPayment",
+              "storageKey": null
+            }
+          ],
+          "type": "WireTransfer",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "lastOffer",
+          "plural": false,
+          "selections": (v3/*: any*/),
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "awaitingResponseFrom",
+          "storageKey": null
+        }
+      ],
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            (v0/*: any*/)
-          ],
-          "type": "CommercePickup",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "CommerceShip",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "CommerceShipArta",
-          "abstractKey": null
-        }
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -239,48 +271,6 @@ return {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "processWithArtsyShippingDomestic",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "artsyShippingInternational",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": "pickup_available",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "pickupAvailable",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "onlyShipsDomestically",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "euShippingOrigin",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "shippingCountry",
-                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -302,11 +292,6 @@ return {
                       "plural": true,
                       "selections": [
                         {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "ShippingQuotes_shippingQuotes"
-                        },
-                        {
                           "alias": null,
                           "args": null,
                           "concreteType": "CommerceShippingQuote",
@@ -314,13 +299,6 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "id",
-                              "storageKey": null
-                            },
                             {
                               "alias": null,
                               "args": null,
@@ -347,19 +325,16 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "OrderStepper_order"
+      "concreteType": "CreditCard",
+      "kind": "LinkedField",
+      "name": "creditCard",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
@@ -367,6 +342,6 @@ return {
 };
 })();
 
-(node as any).hash = "3720bc2915f2de540a7e198c5122956d";
+(node as any).hash = "a3abf2cb6b5220fa88ce97b19ef36566";
 
 export default node;
