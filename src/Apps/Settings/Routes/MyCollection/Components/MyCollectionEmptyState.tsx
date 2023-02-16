@@ -12,7 +12,6 @@ import {
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -67,24 +66,16 @@ export const MyCollectionEmptyState: React.FC = () => {
                   event.preventDefault()
 
                   showAuthDialog({
-                    current: {
-                      mode: "Login",
-                      options: {
-                        title: mode => {
-                          const action = mode === "Login" ? "Log in" : "Sign up"
-                          return `${action} to upload works to My Collection`
-                        },
-                      },
-                      analytics: {
-                        contextModule: ContextModule.myCollectionHome,
-                        intent: Intent.login,
+                    mode: "Login",
+                    options: {
+                      title: mode => {
+                        const action = mode === "Login" ? "Log in" : "Sign up"
+                        return `${action} to upload works to My Collection`
                       },
                     },
-                    legacy: {
-                      mode: ModalType.login,
-                      intent: Intent.login,
+                    analytics: {
                       contextModule: ContextModule.myCollectionHome,
-                      copy: "Log in to upload works to My Collection",
+                      intent: Intent.login,
                     },
                   })
 
@@ -109,24 +100,16 @@ export const MyCollectionEmptyState: React.FC = () => {
                 textDecoration="underline"
                 onClick={() => {
                   showAuthDialog({
-                    current: {
-                      mode: "Login",
-                      options: {
-                        title: mode => {
-                          const action = mode === "Login" ? "Log in" : "Sign up"
-                          return `${action} to view My Collection`
-                        },
-                      },
-                      analytics: {
-                        contextModule: ContextModule.myCollectionHome,
-                        intent: Intent.login,
+                    mode: "Login",
+                    options: {
+                      title: mode => {
+                        const action = mode === "Login" ? "Log in" : "Sign up"
+                        return `${action} to view My Collection`
                       },
                     },
-                    legacy: {
-                      mode: ModalType.login,
-                      intent: Intent.login,
+                    analytics: {
                       contextModule: ContextModule.myCollectionHome,
-                      copy: "Log in to view My Collection",
+                      intent: Intent.login,
                     },
                   })
                 }}

@@ -15,7 +15,6 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -80,21 +79,14 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
     }
 
     showAuthDialog({
-      current: {
-        mode: "SignUp",
-        options: {
-          title: authModalOptions.copy,
-          afterAuthAction: authModalOptions.afterSignUpAction,
-        },
-        analytics: {
-          intent: authModalOptions.intent,
-          contextModule: authModalOptions.contextModule,
-        },
+      mode: "SignUp",
+      options: {
+        title: authModalOptions.copy,
+        afterAuthAction: authModalOptions.afterSignUpAction,
       },
-      legacy: {
-        mode: ModalType.signup,
-        redirectTo: window.location.href,
-        ...authModalOptions,
+      analytics: {
+        intent: authModalOptions.intent,
+        contextModule: authModalOptions.contextModule,
       },
     })
   }

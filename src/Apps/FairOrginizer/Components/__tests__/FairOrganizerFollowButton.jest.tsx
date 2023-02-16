@@ -80,32 +80,18 @@ describe("FairOrganizerFollowButton", () => {
     wrapper.simulate("click")
 
     expect(showAuthDialog).toHaveBeenCalledWith({
-      current: {
-        analytics: {
-          contextModule: "fairOrganizerHeader",
-          intent: "followPartner",
-        },
-        mode: "SignUp",
-        options: {
-          afterAuthAction: {
-            action: "follow",
-            kind: "profile",
-            objectId: "faiOrganizerSlug",
-          },
-          title: expect.any(Function),
-        },
+      analytics: {
+        contextModule: "fairOrganizerHeader",
+        intent: "followPartner",
       },
-      legacy: {
-        afterSignUpAction: {
+      mode: "SignUp",
+      options: {
+        afterAuthAction: {
           action: "follow",
           kind: "profile",
           objectId: "faiOrganizerSlug",
         },
-        contextModule: "fairOrganizerHeader",
-        copy: "Sign up to follow fairOrganizerName",
-        intent: "followPartner",
-        mode: "signup",
-        redirectTo: "http://localhost/",
+        title: expect.any(Function),
       },
     })
   })

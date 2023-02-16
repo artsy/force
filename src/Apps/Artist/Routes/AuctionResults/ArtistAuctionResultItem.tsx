@@ -14,7 +14,6 @@ import {
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { SystemContextProps, useSystemContext } from "System"
-import { ModalType } from "Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
@@ -228,22 +227,14 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         textDecoration="underline"
         onClick={() => {
           showAuthDialog({
-            current: {
-              mode: "SignUp",
-              options: {
-                title: mode => {
-                  const action = mode === "SignUp" ? "Sign up" : "Log in"
-                  return `${action} to see full auction records — for free`
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.auctionResults,
-                intent,
+            mode: "SignUp",
+            options: {
+              title: mode => {
+                const action = mode === "SignUp" ? "Sign up" : "Log in"
+                return `${action} to see full auction records — for free`
               },
             },
-            legacy: {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
+            analytics: {
               contextModule: ContextModule.auctionResults,
               intent,
             },

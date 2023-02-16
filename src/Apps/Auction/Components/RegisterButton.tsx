@@ -6,7 +6,6 @@ import { RouterLink } from "System/Router/RouterLink"
 import createLogger from "Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
-import { ModalType } from "Components/Authentication/Types"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -33,26 +32,17 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
 
     if (!me?.internalID) {
       showAuthDialog({
-        current: {
-          mode: "Login",
-          options: {
-            redirectTo: `${saleURL}/register`,
-            title: mode => {
-              const action = mode === "Login" ? "Log in" : "Sign up"
-              return `${action} to bid on artworks`
-            },
-          },
-          analytics: {
-            contextModule: ContextModule.auctionSidebar,
-            intent: Intent.registerToBid,
+        mode: "Login",
+        options: {
+          redirectTo: `${saleURL}/register`,
+          title: mode => {
+            const action = mode === "Login" ? "Log in" : "Sign up"
+            return `${action} to bid on artworks`
           },
         },
-        legacy: {
-          mode: ModalType.login,
-          redirectTo: `${saleURL}/register`,
-          intent: Intent.registerToBid,
-          copy: "Log in to bid on artworks",
+        analytics: {
           contextModule: ContextModule.auctionSidebar,
+          intent: Intent.registerToBid,
         },
       })
 

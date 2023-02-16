@@ -14,7 +14,6 @@ import {
   RequestConditionReportMutation$data,
 } from "__generated__/RequestConditionReportMutation.graphql"
 import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
-import { ModalType } from "Components/Authentication/Types"
 import track, { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -83,16 +82,8 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   const handleLoginClick = () => {
     showAuthDialog({
-      current: {
-        mode: "Login",
-        analytics: {
-          contextModule: ContextModule.aboutTheWork,
-          intent: Intent.requestConditionReport,
-        },
-      },
-      legacy: {
-        mode: ModalType.login,
-        redirectTo: location.href,
+      mode: "Login",
+      analytics: {
         contextModule: ContextModule.aboutTheWork,
         intent: Intent.requestConditionReport,
       },

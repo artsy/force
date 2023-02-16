@@ -145,36 +145,18 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toHaveBeenCalledWith({
-        current: {
-          analytics: {
-            contextModule: "artworkGrid",
-            intent: "createAlert",
-          },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "createAlert",
-              kind: "artist",
-              objectId: "owner-slug",
-            },
-            title: "Sign up to create an alert",
-          },
+        analytics: {
+          contextModule: "artworkGrid",
+          intent: "createAlert",
         },
-        legacy: {
-          afterSignUpAction: {
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "createAlert",
             kind: "artist",
             objectId: "owner-slug",
           },
-          contextModule: "artworkGrid",
-          copy: "Sign up to create an alert",
-          entity: {
-            name: "Owner Name",
-            slug: "owner-slug",
-          },
-          intent: "createAlert",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: "Sign up to create an alert",
         },
       })
     })

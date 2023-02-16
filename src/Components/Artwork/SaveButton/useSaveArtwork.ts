@@ -2,7 +2,6 @@ import { useSystemContext } from "System"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 type Artwork = {
   internalID: string
@@ -56,35 +55,21 @@ export const useSaveArtwork = ({
       }
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to save artworks`
-            },
-            afterAuthAction: {
-              action: "save",
-              kind: "artworks",
-              objectId: artwork.internalID,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to save artworks`
           },
-          analytics: {
-            intent: Intent.saveArtwork,
-            contextModule,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+          afterAuthAction: {
             action: "save",
             kind: "artworks",
-            objectId: artwork.slug!,
+            objectId: artwork.internalID,
           },
-          contextModule,
-          copy: `Sign up to save artworks`,
+        },
+        analytics: {
           intent: Intent.saveArtwork,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
+          contextModule,
         },
       })
     }

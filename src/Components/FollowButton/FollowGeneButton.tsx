@@ -15,7 +15,6 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FollowGeneButtonQuery } from "__generated__/FollowGeneButtonQuery.graphql"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene$data
@@ -68,35 +67,21 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to follow ${gene.name}`
-            },
-            afterAuthAction: {
-              action: "follow",
-              kind: "gene",
-              objectId: gene.slug,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to follow ${gene.name}`
           },
-          analytics: {
-            intent: Intent.followGene,
-            contextModule,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+          afterAuthAction: {
             action: "follow",
             kind: "gene",
             objectId: gene.slug,
           },
+        },
+        analytics: {
+          intent: Intent.followGene,
           contextModule,
-          copy: `Sign up to follow ${gene.name}`,
-          intent: Intent.followArtist,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
         },
       })
 
