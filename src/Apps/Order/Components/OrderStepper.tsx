@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { Media } from "Utils/Responsive"
-import { Box, Step, Stepper } from "@artsy/palette"
+import { Box, Clickable, Step, Stepper } from "@artsy/palette"
+import { useRouter } from "System/Router/useRouter"
 
 function typedArray<T extends string>(...elems: T[]): T[] {
   return elems
@@ -22,7 +24,18 @@ export function OrderStepper<Steps extends string[]>({
   steps: Steps
   currentStep: Steps extends Array<infer K> ? K : never
 }) {
-  const stepIndex = steps.indexOf(currentStep)
+  const { router } = useRouter()
+  const [stepIndex, setStepIndex] = useState(steps.indexOf(currentStep))
+
+  const handleStepClick = (step: string) => {
+    const clickedStepIndex = steps.indexOf(step)
+    setStepIndex(clickedStepIndex)
+
+    const activeStep = currentStep.toLocaleLowerCase()
+    const nextStep = step.toLocaleLowerCase()
+    router.push(window.location.pathname.replace(activeStep, nextStep))
+  }
+
   return (
     <>
       <Media between={["xs", "md"]}>
@@ -30,11 +43,17 @@ export function OrderStepper<Steps extends string[]>({
           <Stepper
             initialTabIndex={stepIndex}
             currentStepIndex={stepIndex}
-            disableNavigation
-            autoScroll
+            disableNavigation={false}
           >
             {steps.map(step => (
-              <Step name={step} key={step} />
+              <Step
+                name={
+                  <Clickable onClick={() => handleStepClick(step)}>
+                    {step}
+                  </Clickable>
+                }
+                key={step}
+              />
             ))}
           </Stepper>
         </Box>
@@ -43,11 +62,21 @@ export function OrderStepper<Steps extends string[]>({
         <Stepper
           initialTabIndex={stepIndex}
           currentStepIndex={stepIndex}
-          disableNavigation
-          autoScroll
+          disableNavigation={false}
         >
-          {steps.map(step => (
-            <Step name={step} key={step} />
+          {steps.map((step, idx) => (
+            <Step
+              name={
+                stepIndex >= idx ? (
+                  <Clickable onClick={() => handleStepClick(step)}>
+                    {step}
+                  </Clickable>
+                ) : (
+                  step
+                )
+              }
+              key={step}
+            />
           ))}
         </Stepper>
       </Media>
