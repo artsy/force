@@ -110,6 +110,21 @@
     "artworkLists": {
       "artworkWithCount_one": "{{count}} Artwork",
       "artworkWithCount_other": "{{count}} Artworks"
+    },
+    "savesHeader": {
+      "listCreated": "List Created",
+      "savedArtworks": "Saved Artworks",
+      "curateYourList": "Curate your own lists of the works you love",
+      "createNewList": "Create New List"
+    },
+    "createNewListModal": {
+      "genericError": "Something went wrong.",
+      "title": "Create a new list",
+      "createList": "Create List",
+      "back": "Back",
+      "nameLabel": "Name your list",
+      "namePlaceholder": "E.g. Photography, Warhol, etc.",
+      "remainingCharacters": "{{count}} characters remaining"
     }
   },
   "navbar": {

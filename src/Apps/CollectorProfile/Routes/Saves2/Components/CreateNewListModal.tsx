@@ -17,8 +17,9 @@ import {
   CreateCollectionMutationResult,
 } from "Apps/CollectorProfile/Routes/Saves2/types"
 import { Media } from "Utils/Responsive"
+import { useTranslation } from "react-i18next"
 
-interface Props {
+interface CreateNewListModalProps {
   visible: boolean
   onClose: () => void
   onComplete: (result: CreateCollectionMutationResult) => void
@@ -28,11 +29,11 @@ const logger = createLogger(
   "CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 )
 
-const CreateNewListModal: React.FC<Props> = ({
-  visible,
+const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onClose,
   onComplete,
 }) => {
+  const { t } = useTranslation()
   const maxNameLength = 40
   const { relayEnvironment } = useSystemContext()
   const [formFieldError, setFormFieldError] = useState("")
@@ -49,7 +50,6 @@ const CreateNewListModal: React.FC<Props> = ({
 
     try {
       const response = await createCollection(relayEnvironment, params)
-
       const responseOrError = response.createCollection?.responseOrError
 
       if (responseOrError?.collection) {
@@ -58,11 +58,13 @@ const CreateNewListModal: React.FC<Props> = ({
         const error = (
           responseOrError?.mutationError?.message ?? ""
         ).toLowerCase()
-        setFormFieldError(error ?? "Something went wrong")
+        setFormFieldError(
+          error ?? t("collectorSaves.createNewListModal.genericError")
+        )
       }
     } catch (error) {
       logger.error(error)
-      setFormFieldError("Something went wrong")
+      setFormFieldError(t("collectorSaves.createNewListModal.genericError"))
     }
   }
 
@@ -71,21 +73,14 @@ const CreateNewListModal: React.FC<Props> = ({
       initialValues={{ name: "" }}
       onSubmit={handleSubmit}
     >
-      {({
-        values,
-        isSubmitting,
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-      }) => {
+      {({ values, isSubmitting, handleSubmit, handleChange, handleBlur }) => {
         const isCreateButtonDisabled = !values.name
 
         return (
           <ModalDialog
             width={["100%", 713]}
             onClose={onClose}
-            title="Create a new list"
+            title={t("collectorSaves.createNewListModal.title")}
             data-testid="CreateNewList"
             footer={
               <>
@@ -97,7 +92,7 @@ const CreateNewListModal: React.FC<Props> = ({
                       loading={isSubmitting}
                       onClick={() => handleSubmit()}
                     >
-                      Create List
+                      {t("collectorSaves.createNewListModal.createList")}
                     </Button>
                   </Flex>
                 </Media>
@@ -110,7 +105,7 @@ const CreateNewListModal: React.FC<Props> = ({
                     onClick={() => handleSubmit()}
                     width="100%"
                   >
-                    Create List
+                    {t("collectorSaves.createNewListModal.createList")}
                   </Button>
 
                   <Spacer y={1} />
@@ -120,16 +115,18 @@ const CreateNewListModal: React.FC<Props> = ({
                     width="100%"
                     onClick={onClose}
                   >
-                    Back
+                    {t("collectorSaves.createNewListModal.back")}
                   </Button>
                 </Media>
               </>
             }
           >
             <LabeledInput
-              title="Name your list"
+              title={t("collectorSaves.createNewListModal.nameLabel")}
               name="name"
-              placeholder="E.g. Photography, Warhol, etc."
+              placeholder={t(
+                "collectorSaves.createNewListModal.namePlaceholder"
+              )}
               value={values.name}
               onChange={e => {
                 handleChange("name")(e)
@@ -151,7 +148,11 @@ const CreateNewListModal: React.FC<Props> = ({
               }
             />
             <Spacer y={1} />
-            <Text variant="xs">{remainingCharacters} characters remaining</Text>
+            <Text variant="xs">
+              {t("collectorSaves.createNewListModal.remainingCharacters", {
+                count: remainingCharacters,
+              })}
+            </Text>
           </ModalDialog>
         )
       }}
@@ -159,19 +160,11 @@ const CreateNewListModal: React.FC<Props> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<Props> = ({
-  visible,
-  onClose,
-  onComplete,
-}) => {
+export const CreateNewListModalContainer: React.FC<CreateNewListModalProps> = props => {
+  const { visible } = props
+
   if (visible) {
-    return (
-      <CreateNewListModal
-        visible={visible}
-        onClose={onClose}
-        onComplete={onComplete}
-      />
-    )
+    return <CreateNewListModal {...props} />
   }
 
   return null

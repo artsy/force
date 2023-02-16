@@ -4,22 +4,23 @@ import { CreateNewListModalContainer } from "./CreateNewListModal"
 import { Media } from "Utils/Responsive"
 import { CreateCollectionMutationResult } from "Apps/CollectorProfile/Routes/Saves2/types"
 import { useToasts } from "@artsy/palette"
+import { useTranslation } from "react-i18next"
 
 export const SavesHeader: React.FC = () => {
-  const [modalIsOpened, setModalIsOpened] = useState(false)
+  const { t } = useTranslation()
   const { sendToast } = useToasts()
+  const [modalIsOpened, setModalIsOpened] = useState(false)
 
   const handleCreateNewListClick = () => {
     setModalIsOpened(true)
   }
 
-  const handleComplete = (result: CreateCollectionMutationResult) => {
-    console.log("[Debug] handleComplete", result)
+  const handleComplete = (_result: CreateCollectionMutationResult) => {
     setModalIsOpened(false)
 
     sendToast({
       variant: "success",
-      message: "List created",
+      message: t("collectorSaves.savesHeader.listCreated"),
     })
   }
 
@@ -32,20 +33,22 @@ export const SavesHeader: React.FC = () => {
       />
 
       <Join separator={<Spacer y={0.5} />}>
-        <Text variant="lg-display">Saved Artworks</Text>
+        <Text variant="lg-display">
+          {t("collectorSaves.savesHeader.savedArtworks")}
+        </Text>
 
         {/* Desktop view */}
         <Media greaterThanOrEqual="sm">
           <Flex justifyContent="space-between">
             <Text variant="sm-display" color="black60">
-              Curate your own lists of the works you love
+              {t("collectorSaves.savesHeader.curateYourList")}
             </Text>
             <Button
               variant="secondaryBlack"
               size="small"
               onClick={handleCreateNewListClick}
             >
-              Create New List
+              {t("collectorSaves.savesHeader.createNewList")}
             </Button>
           </Flex>
         </Media>
@@ -53,7 +56,7 @@ export const SavesHeader: React.FC = () => {
         {/* Mobile view */}
         <Media lessThan="sm">
           <Text variant="sm-display" color="black60">
-            Curate your own lists of the works you love
+            {t("collectorSaves.savesHeader.curateYourList")}
           </Text>
           <Spacer y={2} />
           <Button
@@ -61,7 +64,7 @@ export const SavesHeader: React.FC = () => {
             size="small"
             onClick={handleCreateNewListClick}
           >
-            Create New List
+            {t("collectorSaves.savesHeader.createNewList")}
           </Button>
         </Media>
       </Join>
