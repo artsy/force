@@ -1,14 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import {
-  Box,
-  Flex,
-  Join,
-  Link,
-  LinkProps,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
@@ -16,6 +8,8 @@ import { isFunction } from "lodash"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -26,6 +20,7 @@ import { SaveButtonFragmentContainer } from "./SaveButton"
 interface DetailsProps {
   artwork: Details_artwork$data
   contextModule?: AuthContextModule
+  underlineOnHover?: boolean
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
@@ -39,16 +34,30 @@ interface DetailsProps {
 
 const ConditionalLink: React.FC<
   Pick<DetailsProps, "includeLinks"> &
-    LinkProps &
+    RouterLinkProps &
     React.AnchorHTMLAttributes<HTMLAnchorElement>
 > = ({ includeLinks, children, ...rest }) => {
-  return includeLinks ? <Link {...rest}>{children}</Link> : <>{children}</>
+  return includeLinks ? (
+    <RouterLink {...rest}>{children}</RouterLink>
+  ) : (
+    <>{children}</>
+  )
 }
+
+const StyledConditionalLink = styled(ConditionalLink)`
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: ${themeGet("colors.black100")};
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
 const ArtistLine: React.FC<DetailsProps> = ({
   artwork: { cultural_maker, artists },
   includeLinks,
   showSaveButton,
+  underlineOnHover,
 }) => {
   if (cultural_maker) {
     return (
@@ -75,15 +84,19 @@ const ArtistLine: React.FC<DetailsProps> = ({
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
+        const ArtistLinkComponent = underlineOnHover
+          ? StyledConditionalLink
+          : ConditionalLink
+
         return (
-          <ConditionalLink
+          <ArtistLinkComponent
             includeLinks={includeLinks}
-            href={artist.href}
+            to={artist.href}
             key={i}
           >
             {artist.name}
             {i !== artists.length - 1 && ", "}
-          </ConditionalLink>
+          </ArtistLinkComponent>
         )
       })}
     </Text>
@@ -93,14 +106,19 @@ const ArtistLine: React.FC<DetailsProps> = ({
 const TitleLine: React.FC<DetailsProps> = ({
   includeLinks,
   artwork: { title, date, href },
+  underlineOnHover,
 }) => {
+  const TitleLinkComponent = underlineOnHover
+    ? StyledConditionalLink
+    : ConditionalLink
+
   return (
-    <ConditionalLink includeLinks={includeLinks} href={href!}>
+    <TitleLinkComponent includeLinks={includeLinks} to={href!}>
       <Text variant="sm-display" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
-    </ConditionalLink>
+    </TitleLinkComponent>
   )
 }
 
@@ -118,7 +136,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (partner) {
     return (
-      <ConditionalLink includeLinks={includeLinks} href={partner?.href!}>
+      <ConditionalLink includeLinks={includeLinks} to={partner?.href!}>
         <Text variant="xs" color="black60" overflowEllipsis>
           {partner.name}
         </Text>
