@@ -47,7 +47,7 @@ describe("CollectorProfileSaves2Route", () => {
       }),
     })
 
-    expect(screen.getByText("Saved Artworks")).toBeInTheDocument()
+    expect(screen.getAllByText("Saved Artworks").length).toBe(2)
     expect(screen.getByText("Collection One")).toBeInTheDocument()
     expect(screen.getByText("Collection Two")).toBeInTheDocument()
     expect(screen.getByText("Collection Three")).toBeInTheDocument()
