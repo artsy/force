@@ -134,12 +134,10 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OrderStepper_order on CommerceOrder {
-        bankAccountId
-        internalID
         mode
-        state
-        source
-        lastTransactionFailed
+        requestedFulfillment {
+          __typename
+        }
         paymentMethodDetails {
           __typename
           ... on CreditCard {
@@ -151,20 +149,6 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
           ... on WireTransfer {
             isManualPayment
           }
-        }
-        ... on CommerceOfferOrder {
-          myLastOffer {
-            internalID
-            createdAt
-          }
-          lastOffer {
-            internalID
-            createdAt
-          }
-          awaitingResponseFrom
-        }
-        requestedFulfillment {
-          __typename
         }
         lineItems {
           edges {
@@ -181,9 +165,6 @@ export const OrderStepperFragmentContainer = createFragmentContainer(
               }
             }
           }
-        }
-        creditCard {
-          internalID
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<daeebbe6f265ffea2d311fd772f4fd33>>
+ * @generated SignedSource<<13d599a2c98b3fb76d98f311338efda3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,22 +10,8 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderStepper_order$data = {
-  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-  readonly bankAccountId: string | null;
-  readonly creditCard: {
-    readonly internalID: string;
-  } | null;
-  readonly internalID: string;
-  readonly lastOffer?: {
-    readonly createdAt: string;
-    readonly internalID: string;
-  } | null;
-  readonly lastTransactionFailed: boolean | null;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -43,10 +29,6 @@ export type OrderStepper_order$data = {
     } | null> | null;
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
-  readonly myLastOffer?: {
-    readonly createdAt: string;
-    readonly internalID: string;
-  } | null;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly id: string;
@@ -64,8 +46,6 @@ export type OrderStepper_order$data = {
   readonly requestedFulfillment: {
     readonly __typename: string;
   } | null;
-  readonly source: CommerceOrderSourceEnum;
-  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "OrderStepper_order";
 };
 export type OrderStepper_order$key = {
@@ -78,32 +58,15 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "id",
-    "storageKey": null
-  }
-],
-v3 = [
-  (v0/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "createdAt",
     "storageKey": null
   }
 ];
@@ -117,36 +80,19 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "bankAccountId",
-      "storageKey": null
-    },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "state",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "source",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lastTransactionFailed",
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "requestedFulfillment",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
       "storageKey": null
     },
     {
@@ -157,16 +103,16 @@ return {
       "name": "paymentMethodDetails",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v0/*: any*/),
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "type": "CreditCard",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "type": "BankAccount",
           "abstractKey": null
         },
@@ -184,52 +130,6 @@ return {
           "type": "WireTransfer",
           "abstractKey": null
         }
-      ],
-      "storageKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "myLastOffer",
-          "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "lastOffer",
-          "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "awaitingResponseFrom",
-          "storageKey": null
-        }
-      ],
-      "type": "CommerceOfferOrder",
-      "abstractKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "requestedFulfillment",
-      "plural": false,
-      "selections": [
-        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -323,18 +223,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "CreditCard",
-      "kind": "LinkedField",
-      "name": "creditCard",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
@@ -342,6 +230,6 @@ return {
 };
 })();
 
-(node as any).hash = "a3abf2cb6b5220fa88ce97b19ef36566";
+(node as any).hash = "e5c5c953e638b03b3668625bf318ab6d";
 
 export default node;
