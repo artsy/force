@@ -6,6 +6,7 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
+import { times } from "lodash"
 
 export interface SelectListsForArtworkModalProps {
   onClose: () => void
@@ -69,35 +70,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   )
 }
 
-const items: ListItemEntity[] = [
-  {
-    id: "collection-id-one",
-    title: "All Saves",
-    count: 36,
-  },
-  {
-    id: "collection-id-two",
-    title: "Works for Justine",
-    count: 15,
-  },
-  {
-    id: "collection-id-three",
-    title: "Works for Liam",
-    count: 5,
-  },
-  {
-    id: "collection-id-four",
-    title: "Dining room",
-    count: 10,
-  },
-  {
-    id: "collection-id-five",
-    title: "Works for Kidane",
-    count: 1,
-  },
-  {
-    id: "collection-id-six",
-    title: "Abstract",
-    count: 6,
-  },
-]
+const items: ListItemEntity[] = times(20).map(item => ({
+  id: `collection-id-${item}`,
+  title: `Collection #${item + 1}`,
+  count: item,
+}))
