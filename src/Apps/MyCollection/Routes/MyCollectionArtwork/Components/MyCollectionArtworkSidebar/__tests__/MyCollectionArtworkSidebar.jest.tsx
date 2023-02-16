@@ -66,6 +66,19 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("Berlin")).toBeInTheDocument()
     })
 
+    it("includes Notes when notes are present", () => {
+      renderWithRelay(
+        {
+          Artwork: () => ({
+            ...mockResolversWithData,
+            confidentialNotes: "A short text",
+          }),
+        },
+        false
+      )
+      expect(screen.getByText("A short text")).toBeInTheDocument()
+    })
+
     describe("when metric is set to 'cm'", () => {
       beforeEach(() => {
         renderWithRelay(
