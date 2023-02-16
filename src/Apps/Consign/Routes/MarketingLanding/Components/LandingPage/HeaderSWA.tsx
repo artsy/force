@@ -59,7 +59,7 @@ export const HeaderSWA = () => {
 
         <Spacer y={[0.5, 2]} />
 
-        <Text variant={["xs", "lg"]}>
+        <Text variant={["xs", "md", "lg"]}>
           Our experts find the best sales opportunity for your work, through our
           vast global network of buyers.
         </Text>
@@ -97,7 +97,7 @@ export const HeaderSWA = () => {
         </GridColumns>
       </Column>
 
-      <Column span={7} mx={[-2, 0]}>
+      <Column span={7} ml={[-2, 0]} mr={[-2, -4]}>
         <ResponsiveBox aspectWidth={1104} aspectHeight={833} maxWidth="100%">
           <Image
             width="100%"
