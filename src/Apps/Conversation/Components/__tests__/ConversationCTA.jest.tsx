@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationCTAFragmentContainer } from "../ConversationCTA"
+import { ConversationCTAFragmentContainer } from "Apps/Conversation/Components/ConversationCTA"
 import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
 import { screen, fireEvent } from "@testing-library/react"
@@ -157,12 +157,6 @@ describe("ConversationCTA", () => {
       internalID: "internal-test-id",
       activeOrders: null,
       items: [{ liveArtwork: { __typename: "Artwork", ...artwork } }],
-    })
-
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: { "conversational-buy-now": { flagEnabled: true } },
-      }))
     })
 
     it("renders a message about buyer guarantee", () => {
