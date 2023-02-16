@@ -1,17 +1,5 @@
 import React, { useState } from "react"
-import {
-  ModalBase,
-  ModalBaseProps,
-  splitBoxProps,
-  useDidMount,
-  Box,
-  Text,
-  Flex,
-  Spacer,
-  Clickable,
-  CloseIcon,
-  Join,
-} from "@artsy/palette"
+import { Spacer, Join, ModalDialog } from "@artsy/palette"
 import {
   ListItemEntity,
   SelectListItem,
@@ -19,21 +7,14 @@ import {
 import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 
-export interface SelectListsForArtworkModalProps extends ModalBaseProps {
-  title: string
+export interface SelectListsForArtworkModalProps {
   onClose: () => void
 }
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
-  children,
   onClose,
-  title,
-  ...rest
 }) => {
-  const isMounted = useDidMount()
   const [selectedIds, setSelectedIds] = useState<string[]>([])
-  const [boxProps, modalProps] = splitBoxProps(rest)
-  const styles = getStyles(isMounted ?? false)
 
   const handleItemSelected = (selectedId: string) => {
     if (selectedIds.includes(selectedId)) {
@@ -51,90 +32,41 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   }
 
   return (
-    <ModalBase
+    <ModalDialog
+      title="Select lists for this artwork"
       onClose={onClose}
-      style={styles.modal}
+      onClick={event => {
+        event.preventDefault()
+      }}
       dialogProps={{
         width: ["100%", 700],
-        height: ["100%", "90%"],
+        height: ["100%", "auto"],
         maxHeight: [null, 800],
       }}
-      {...modalProps}
-    >
-      <Box
-        width="100%"
-        bg="white100"
-        onClick={event => {
-          event.preventDefault()
-        }}
-      >
-        <Flex flexDirection="row" justifyContent="space-between" m={2}>
-          <Text variant="lg-display">{title}</Text>
-          <Clickable onClick={onClose} ml={1} aria-label="Close">
-            <CloseIcon fill="black100" />
-          </Clickable>
-        </Flex>
-
-        <Spacer y={4} />
-
-        <SelectListsForArtworkHeader />
-
-        <Box
-          overflowY="auto"
-          style={{
-            WebkitOverflowScrolling: "touch",
-            margin: 20,
-          }}
-          {...boxProps}
-        >
-          <Join separator={<Spacer y={1} />}>
-            {items.map(item => {
-              const isSelected = selectedIds.includes(item.id)
-
-              return (
-                <SelectListItem
-                  item={item}
-                  isSelected={isSelected}
-                  onClick={handleItemSelected}
-                />
-              )
-            })}
-          </Join>
-        </Box>
-
+      m={0}
+      header={<SelectListsForArtworkHeader />}
+      footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedIds.length}
           onSaveClick={handleSaveClicked}
         />
-      </Box>
-    </ModalBase>
+      }
+    >
+      <Join separator={<Spacer y={1} />}>
+        {items.map(item => {
+          const isSelected = selectedIds.includes(item.id)
+
+          return (
+            <SelectListItem
+              item={item}
+              isSelected={isSelected}
+              onClick={handleItemSelected}
+            />
+          )
+        })}
+      </Join>
+    </ModalDialog>
   )
-}
-
-const getStyles = (isMounted: boolean) => {
-  if (isMounted) {
-    return {
-      modal: {
-        backgroundColor: "rgba(229, 229, 229, 0.5)",
-        transition: "background-color 250ms",
-      },
-      content: {
-        opacity: 1,
-        transform: "translateY(0)",
-        transition: "opacity 100ms, transform 250ms",
-      },
-    }
-  }
-
-  return {
-    modal: {
-      backgroundColor: "transparent",
-    },
-    content: {
-      opacity: 0,
-      transform: "translateY(10px)",
-    },
-  }
 }
 
 const items: ListItemEntity[] = [

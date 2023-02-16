@@ -18,7 +18,6 @@ export const SelectListsForArtworkFooter: FC<SelectListsForArtworkFooterProps> =
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      m={2}
     >
       <Text variant="sm-display">
         {t("collectorSaves.selectedListsForArtwork.listsCount", {

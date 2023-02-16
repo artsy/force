@@ -31,12 +31,7 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
     <>
       <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
 
-      {visible && (
-        <SelectListsForArtworkModal
-          title="Select lists for this artwork"
-          onClose={handleCloseModal}
-        />
-      )}
+      {visible && <SelectListsForArtworkModal onClose={handleCloseModal} />}
     </>
   )
 }
