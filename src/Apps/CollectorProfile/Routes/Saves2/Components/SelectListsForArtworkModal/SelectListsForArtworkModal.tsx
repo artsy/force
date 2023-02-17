@@ -105,7 +105,7 @@ const SelectListsForArtworkModalFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SelectListsForArtworkModal_me on Me {
-        collectionsConnection(first: 20) {
+        collectionsConnection(first: 30) {
           edges {
             node {
               internalID
