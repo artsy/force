@@ -4,6 +4,8 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectListItem_item$data } from "__generated__/SelectListItem_item.graphql"
+import { SelectListItemImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItemImage"
+import { extractNodes } from "Utils/extractNodes"
 
 const ICON_SIZE = 24
 
@@ -19,6 +21,8 @@ const SelectListItem: FC<SelectListItemProps> = ({
   onClick,
 }) => {
   const { t } = useTranslation()
+  const nodes = extractNodes(item.artworksConnection)
+  const imageURL = nodes[0]?.image?.url ?? null
 
   return (
     <Clickable
@@ -32,7 +36,7 @@ const SelectListItem: FC<SelectListItemProps> = ({
       borderColor={isSelected ? "brand" : "transparent"}
       onClick={() => onClick(item.internalID)}
     >
-      <Flex width={60} height={60} bg="black10" flexShrink={0} />
+      <SelectListItemImage url={imageURL} />
 
       <Spacer x={1} />
 
@@ -64,6 +68,15 @@ export const SelectListItemFragmentContainer = createFragmentContainer(
         internalID
         name
         artworksCount
+        artworksConnection(first: 1) {
+          edges {
+            node {
+              image {
+                url(version: "square")
+              }
+            }
+          }
+        }
       }
     `,
   }

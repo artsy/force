@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b74b91d0e5c6d4eaf4e11a98f16f7a65>>
+ * @generated SignedSource<<271bd70faaf226841e0d5976bedf003f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -156,6 +156,70 @@ return {
                         "name": "artworksCount",
                         "storageKey": null
                       },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 1
+                          }
+                        ],
+                        "concreteType": "ArtworkConnection",
+                        "kind": "LinkedField",
+                        "name": "artworksConnection",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtworkEdge",
+                            "kind": "LinkedField",
+                            "name": "edges",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Artwork",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Image",
+                                    "kind": "LinkedField",
+                                    "name": "image",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": [
+                                          {
+                                            "kind": "Literal",
+                                            "name": "version",
+                                            "value": "square"
+                                          }
+                                        ],
+                                        "kind": "ScalarField",
+                                        "name": "url",
+                                        "storageKey": "url(version:\"square\")"
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v2/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": "artworksConnection(first:1)"
+                      },
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -192,12 +256,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ba6bf6786c43e4c66a179ab8a3d6ade",
+    "cacheID": "31e58a253b5d30a1b777e1b17083cf7a",
     "id": null,
     "metadata": {},
     "name": "SelectListsForArtworkModalQuery",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  internalID\n  name\n  artworksCount\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  title\n}\n\nfragment SelectListsForArtworkModal_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  internalID\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  title\n}\n\nfragment SelectListsForArtworkModal_me on Me {\n  collectionsConnection(first: 20) {\n    edges {\n      node {\n        internalID\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
