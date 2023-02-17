@@ -11,7 +11,6 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
   artworkId,
   collectionId,
 }) => {
-  const [isSaved] = useState(true)
   const [visible, setVisible] = useState(false)
 
   const handleClick = (
@@ -29,7 +28,7 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
 
   return (
     <>
-      <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
+      <SaveButtonBase isSaved onClick={handleClick} />
 
       {visible && <SelectListsForArtworkModal onClose={handleCloseModal} />}
     </>
