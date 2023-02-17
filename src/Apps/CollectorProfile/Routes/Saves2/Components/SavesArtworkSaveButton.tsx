@@ -1,4 +1,4 @@
-import { SelectListsForArtworkModal } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useState } from "react"
 
@@ -30,7 +30,12 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
     <>
       <SaveButtonBase isSaved onClick={handleClick} />
 
-      {visible && <SelectListsForArtworkModal onClose={handleCloseModal} />}
+      {visible && (
+        <SelectListsForArtworkModalQueryRender
+          artworkID={artworkId}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   )
 }
