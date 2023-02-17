@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog, Text } from "@artsy/palette"
+import { Spacer, Join, ModalDialog } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
@@ -9,7 +9,10 @@ import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsFor
 import { SelectListsForArtworkModal_artwork$data } from "__generated__/SelectListsForArtworkModal_artwork.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { SelectListsPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
+import {
+  SelectListsForArtworkHeaderPlaceholder,
+  SelectListsPlaceholder,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
@@ -83,7 +86,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       m={0}
       header={
         artwork === null ? (
-          <Text>Placeholder</Text>
+          <SelectListsForArtworkHeaderPlaceholder />
         ) : (
           <SelectListsForArtworkHeaderFragmentContainer artwork={artwork} />
         )

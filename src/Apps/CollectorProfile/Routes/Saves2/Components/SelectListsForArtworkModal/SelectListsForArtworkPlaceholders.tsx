@@ -1,5 +1,21 @@
 import { Flex, Join, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 
+export const SelectListsForArtworkHeaderPlaceholder = () => {
+  return (
+    <Flex flexDirection="row" alignItems="center">
+      <Flex flex={1} flexDirection="row" alignItems="center">
+        <SkeletonBox width={50} height={50} />
+        <Spacer x={1} />
+        <SkeletonText>Artwork Title, 2022</SkeletonText>
+      </Flex>
+
+      <Spacer x={1} />
+
+      <SkeletonBox width={130} height={30} />
+    </Flex>
+  )
+}
+
 export const SelectListItemPlaceholder = () => {
   return (
     <Flex p={1} flexDirection="row" alignItems="center">
