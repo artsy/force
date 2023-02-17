@@ -9,6 +9,7 @@ import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsFor
 import { SelectListsForArtworkModal_artwork$data } from "__generated__/SelectListsForArtworkModal_artwork.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
+import { SelectListsPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
@@ -43,6 +44,29 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     onClose()
   }
 
+  const renderContent = () => {
+    // Query is in progress
+    if (me === null) {
+      return <SelectListsPlaceholder />
+    }
+
+    return (
+      <Join separator={<Spacer y={1} />}>
+        {collections.map(item => {
+          const isSelected = selectedIds.includes(item.internalID)
+
+          return (
+            <SelectListItemFragmentContainer
+              item={item}
+              isSelected={isSelected}
+              onClick={handleItemSelected}
+            />
+          )
+        })}
+      </Join>
+    )
+  }
+
   return (
     <ModalDialog
       title="Select lists for this artwork"
@@ -64,19 +88,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         />
       }
     >
-      <Join separator={<Spacer y={1} />}>
-        {collections.map(item => {
-          const isSelected = selectedIds.includes(item.internalID)
-
-          return (
-            <SelectListItemFragmentContainer
-              item={item}
-              isSelected={isSelected}
-              onClick={handleItemSelected}
-            />
-          )
-        })}
-      </Join>
+      {renderContent()}
     </ModalDialog>
   )
 }
