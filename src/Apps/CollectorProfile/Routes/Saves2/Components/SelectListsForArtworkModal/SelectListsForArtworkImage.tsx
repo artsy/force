@@ -5,11 +5,13 @@ import { cropped } from "Utils/resized"
 
 const IMAGE_SIZE = 60
 
-interface SelectListItemImageProps {
+interface SelectListsForArtworkImageProps {
   url: string | null
 }
 
-export const SelectListItemImage: FC<SelectListItemImageProps> = ({ url }) => {
+export const SelectListsForArtworkImage: FC<SelectListsForArtworkImageProps> = ({
+  url,
+}) => {
   if (url === null) {
     return <SavesNoImage width={IMAGE_SIZE} height={IMAGE_SIZE} />
   }
