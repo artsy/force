@@ -1,6 +1,9 @@
 import { CheckCircleIcon, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+
+const ICON_SIZE = 24
 
 export interface ListItemEntity {
   id: string
@@ -48,7 +51,11 @@ export const SelectListItem: FC<SelectListItemProps> = ({
 
       <Spacer x={1} />
 
-      <CheckCircleIcon width={24} height={24} />
+      {isSelected ? (
+        <CheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
+      ) : (
+        <EmptyCheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
+      )}
     </Clickable>
   )
 }
