@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog } from "@artsy/palette"
+import { Spacer, Join, ModalDialog, Text } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
-import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
+import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,6 +24,7 @@ export interface SelectListsForArtworkModalProps {
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
+  artwork,
   onClose,
 }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
@@ -80,7 +81,13 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         maxHeight: [null, 800],
       }}
       m={0}
-      header={<SelectListsForArtworkHeader />}
+      header={
+        artwork === null ? (
+          <Text>Placeholder</Text>
+        ) : (
+          <SelectListsForArtworkHeaderFragmentContainer artwork={artwork} />
+        )
+      }
       footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedIds.length}
@@ -110,7 +117,7 @@ const SelectListsForArtworkModalFragmentContainer = createFragmentContainer(
     `,
     artwork: graphql`
       fragment SelectListsForArtworkModal_artwork on Artwork {
-        title
+        ...SelectListsForArtworkHeader_artwork
       }
     `,
   }
