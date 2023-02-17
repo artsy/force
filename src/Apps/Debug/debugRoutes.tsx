@@ -1,6 +1,7 @@
-import { Text } from "@artsy/palette"
+import { Clickable, Text } from "@artsy/palette"
 import loadable from "@loadable/component"
 import { HttpError } from "found"
+import { useState } from "react"
 import { AppRouteConfig } from "System/Router/Route"
 import { RouterLink } from "System/Router/RouterLink"
 
@@ -51,7 +52,33 @@ export const debugRoutes: AppRouteConfig[] = [
       {
         path: "error-500",
         onServerSideRender: () => {
-          throw new Error("500")
+          throw new Error("An error")
+        },
+      },
+      {
+        path: "client-error-500",
+        Component: () => {
+          const [error, setError] = useState(false)
+
+          return (
+            <>
+              {error && (
+                // @ts-ignore
+                // eslint-disable-next-line react/jsx-no-undef
+                <Example />
+              )}
+              <Text mt={4} variant="sm-display">
+                <Clickable
+                  textDecoration="underline"
+                  onClick={() => {
+                    setError(true)
+                  }}
+                >
+                  Click to 500
+                </Clickable>
+              </Text>
+            </>
+          )
         },
       },
     ],

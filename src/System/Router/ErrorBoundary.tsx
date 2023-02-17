@@ -4,6 +4,7 @@ import createLogger from "Utils/logger"
 import { ErrorPage } from "Components/ErrorPage"
 import { Button, ThemeProviderV3 } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { getENV } from "Utils/getENV"
 
 const logger = createLogger()
 
@@ -38,8 +39,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error) {
-    const message = error?.message || "Internal Server Error"
-    const detail = error.stack
+    const displayStackTrace = getENV("NODE_ENV") === "development"
+    const message = `${error?.message || "Internal Server Error"}
+Current URL: ${window.location.href}
+Time: ${new Date().toUTCString()}`
+    const detail = displayStackTrace ? error.stack : undefined
 
     /**
      * Check to see if there's been a network error while asynchronously loading
