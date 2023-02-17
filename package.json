@@ -81,7 +81,7 @@
     "@artsy/icons": "3.2.1",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "29.3.0",
+    "@artsy/palette": "29.5.0",
     "@artsy/palette-charts": "28.3.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/to-title-case": "^1.1.0",
