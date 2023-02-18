@@ -30,7 +30,7 @@ export const ContextualMenuItem: React.FC<ContextualMenuItemProps> = ({
 const ContextualMenuItemContent = styled(Clickable)`
   user-select: none;
 
-  transition: background-color 150ms;
+  transition: background-color 250ms;
   &:hover {
     background-color: ${themeGet("colors.black5")};
   }

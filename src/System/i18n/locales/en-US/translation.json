@@ -25,7 +25,7 @@
     },
     "title": "Art Taste Quiz",
     "results": {
-      "emailButton": "Email My Results",   
+      "emailButton": "Email My Results",
       "emailSuccess": "Results sent to {{email}}",
       "emailError": "Something went wrong. Please try again.",
       "empty": {
@@ -130,6 +130,17 @@
     "selectedListsForArtwork": {
       "listsCount_one": "{{count}} list selected",
       "listsCount_other": "{{count}} lists selected"
+    },
+    "contextualMenu": {
+      "edit": "Edit List",
+      "delete": "Delete List"
+    },
+    "deleteListModal": {
+      "title": "Delete {{name}} list?",
+      "message": "You’ll lose any works that are only saved on this list.",
+      "cancel": "Cancel",
+      "delete": "Yes, Delete List",
+      "success": "Changes saved"
     }
   },
   "navbar": {
@@ -178,7 +189,7 @@
     "meetTheSpecialists": "Meet the Specialists",
     "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
     "privateSales": "Private Sales & Advisory"
-  }, 
+  },
   "searchApp": {
     "noResultsFound": "No results found.",
     "resultsCount_zero": "No results found for",

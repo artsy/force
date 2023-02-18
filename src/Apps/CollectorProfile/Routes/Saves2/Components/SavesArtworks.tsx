@@ -10,9 +10,10 @@ import { FC } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { Flex, Join, MoreIcon, Spacer, Text } from "@artsy/palette"
+import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
+import { SavesContextualMenu } from "./Actions/SavesContextualMenu"
 
 interface SavesArtworksQueryRendererProps {
   collectionID: string
@@ -60,7 +61,9 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
       >
         <Join separator={<Spacer x={2} />}>
           <Text variant="lg-display">{collection.name}</Text>
-          {!collection.default && <MoreIcon width="24px" height="24px" />}
+          {!collection.default && (
+            <SavesContextualMenu collection={collection} />
+          )}
         </Join>
       </Flex>
 
@@ -98,6 +101,7 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
+        internalID
         name
         default
         artworks: artworksConnection(first: 30, page: $page, sort: $sort) {

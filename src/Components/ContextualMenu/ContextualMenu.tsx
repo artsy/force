@@ -2,11 +2,30 @@ import React, { ReactElement } from "react"
 
 import MoreIcon from "@artsy/icons/MoreIcon"
 import { Clickable, Dropdown } from "@artsy/palette"
-import { ContextualMenuItem } from "Components/ContextualMenu/ContextualMenuItem"
+import {
+  ContextualMenuDivider,
+  ContextualMenuItem,
+} from "Components/ContextualMenu/ContextualMenuItem"
+
+const MORE_ICON_SIZE = [24, 32]
 
 interface ContextualMenuProps {
   /** Supply `ContextualMenuItem`s and `ContextualMenuDivider`s as needed  */
   children: React.ReactNode
+}
+
+const validateChildren = (children: React.ReactNode) => {
+  const childTypes =
+    React.Children.map(children, (child: ReactElement) => child.type) || []
+
+  const hasOnlyValidChildren = childTypes.every(
+    t => t === ContextualMenuItem || t === ContextualMenuDivider
+  )
+
+  if (!hasOnlyValidChildren)
+    throw new Error(
+      "ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider as children."
+    )
 }
 
 /**
@@ -14,6 +33,8 @@ interface ContextualMenuProps {
  * and a Dropdown component from Palette.
  */
 export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
+  validateChildren(children)
+
   return (
     <Dropdown
       openDropdownByClick
@@ -47,10 +68,9 @@ export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
             {...anchorProps}
             px={2}
             pt={1}
-            tras
             aria-label="Open contextual menu"
           >
-            <MoreIcon width={[24, 32]} height={[24, 32]} />
+            <MoreIcon width={MORE_ICON_SIZE} height={MORE_ICON_SIZE} />
           </Clickable>
         )
       }}

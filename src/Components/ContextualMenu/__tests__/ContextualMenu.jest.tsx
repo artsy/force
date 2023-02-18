@@ -57,4 +57,18 @@ describe("ContextualMenu", () => {
     expect(firstHandler).toHaveBeenCalledTimes(1)
     expect(secondHandler).toHaveBeenCalledTimes(1)
   })
+
+  it("only accepts permitted children", () => {
+    expect(() => {
+      render(
+        <ContextualMenu>
+          <ContextualMenuItem>Do the first thing</ContextualMenuItem>
+          <ContextualMenuItem>Do the second thing</ContextualMenuItem>
+          <div>Do the third thing</div>
+        </ContextualMenu>
+      )
+    }).toThrowError(
+      /ContextualMenu accepts only ContextualMenuItem and ContextualMenuDivider/
+    )
+  })
 })
