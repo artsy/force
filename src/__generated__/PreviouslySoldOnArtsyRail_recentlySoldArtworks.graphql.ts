@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fa9af54b1878c4fe3c62d50d6b72d3c>>
+ * @generated SignedSource<<12da7ca1099fac6f1e13094550eb4849>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,9 @@ export type PreviouslySoldOnArtsyRail_recentlySoldArtworks$data = {
       } | null;
       readonly lowEstimate: {
         readonly display: string | null;
+      } | null;
+      readonly performance: {
+        readonly mid: string | null;
       } | null;
       readonly priceRealized: {
         readonly display: string | null;
@@ -127,6 +130,24 @@ return {
               "plural": false,
               "selections": (v0/*: any*/),
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "RecenltySoldArtworkPerformance",
+              "kind": "LinkedField",
+              "name": "performance",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "mid",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -140,6 +161,6 @@ return {
 };
 })();
 
-(node as any).hash = "5183da64d6562eb5e951bd67a5411ad5";
+(node as any).hash = "000c317d1d14b80122cc35e1f496e33a";
 
 export default node;

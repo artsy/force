@@ -1,12 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import {
-  Box,
-  Flex,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Skeleton, SkeletonBox, Text } from "@artsy/palette"
 import { shuffle } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "Components/Rail"
@@ -53,7 +46,10 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
       showProgress={false}
       getItems={() => {
         return artworks.map(
-          ({ artwork, lowEstimate, highEstimate, priceRealized }, i) => {
+          (
+            { artwork, lowEstimate, highEstimate, priceRealized, performance },
+            i
+          ) => {
             if (!artwork) return <></>
 
             return (
@@ -75,7 +71,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
                     color="green100"
                     overflowEllipsis
                   >
-                    123%
+                    {performance?.mid}
                   </Text>
                 </Flex>
 
@@ -117,6 +113,9 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
             priceRealized {
               display
             }
+            performance {
+              mid
+            }
           }
         }
       }
@@ -140,40 +139,12 @@ const PLACEHOLDER = (
             >
               <SkeletonBox width={[305, 362, 420]} height={[380, 495]} />
 
-              <Flex justifyContent="space-between" mb={[0.5, 1.5]}>
-                <Text variant={["lg-display", "xl"]} overflowEllipsis>
-                  $100,000
-                </Text>
-                <Text
-                  variant={["lg-display", "xl"]}
-                  color="green100"
-                  overflowEllipsis
-                >
-                  123%
-                </Text>
+              <Flex justifyContent="space-between" mb={[0.5, 1.5]} mt={0.5}>
+                <SkeletonBox width={[150, 180, 210]} height={[30, 48]} />
+                <SkeletonBox width={[75, 90, 105]} height={[30, 48]} />
               </Flex>
 
-              <Text
-                variant={["xs", "sm-display"]}
-                color="black60"
-                overflowEllipsis
-              >
-                Estimate $100,000–100,000
-              </Text>
-
-              <Flex
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <SkeletonText variant="xs" overflowEllipsis>
-                  Estimate
-                </SkeletonText>
-
-                <SkeletonText variant="xs" overflowEllipsis>
-                  USD 100,000–100,000
-                </SkeletonText>
-              </Flex>
+              <SkeletonBox width={200} height={20} />
             </Box>
           )
         })

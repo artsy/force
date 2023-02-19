@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fed7829cbe2c5000b553f76a5d26a906>>
+ * @generated SignedSource<<308eff1db51602f45e11e1c414bb33c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -277,6 +277,24 @@ return {
                     "plural": false,
                     "selections": (v2/*: any*/),
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "RecenltySoldArtworkPerformance",
+                    "kind": "LinkedField",
+                    "name": "performance",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "mid",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -290,7 +308,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5eb5937d1645e1d4feea85a356b6531c",
+    "cacheID": "2fff7aff28347f7d980f5566fcad39d0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -348,13 +366,20 @@ return {
         "recentlySoldArtworks.edges.node.highEstimate.display": (v3/*: any*/),
         "recentlySoldArtworks.edges.node.lowEstimate": (v6/*: any*/),
         "recentlySoldArtworks.edges.node.lowEstimate.display": (v3/*: any*/),
+        "recentlySoldArtworks.edges.node.performance": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "RecenltySoldArtworkPerformance"
+        },
+        "recentlySoldArtworks.edges.node.performance.mid": (v3/*: any*/),
         "recentlySoldArtworks.edges.node.priceRealized": (v6/*: any*/),
         "recentlySoldArtworks.edges.node.priceRealized.display": (v3/*: any*/)
       }
     },
     "name": "PreviouslySoldOnArtsyRail_tests_Query",
     "operationKind": "query",
-    "text": "query PreviouslySoldOnArtsyRail_tests_Query {\n  recentlySoldArtworks {\n    ...PreviouslySoldOnArtsyRail_recentlySoldArtworks\n  }\n}\n\nfragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...SoldArtwork_artwork\n        slug\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n    }\n  }\n}\n\nfragment SoldArtworkDetails_artwork on Artwork {\n  href\n  title\n  date\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n}\n\nfragment SoldArtwork_artwork on Artwork {\n  ...SoldArtworkDetails_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": "query PreviouslySoldOnArtsyRail_tests_Query {\n  recentlySoldArtworks {\n    ...PreviouslySoldOnArtsyRail_recentlySoldArtworks\n  }\n}\n\nfragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...SoldArtwork_artwork\n        slug\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n      performance {\n        mid\n      }\n    }\n  }\n}\n\nfragment SoldArtworkDetails_artwork on Artwork {\n  href\n  title\n  date\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n}\n\nfragment SoldArtwork_artwork on Artwork {\n  ...SoldArtworkDetails_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
   }
 };
 })();

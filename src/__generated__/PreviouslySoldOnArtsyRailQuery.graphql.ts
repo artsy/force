@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18cd0885c025dd9da75888b2e417d44c>>
+ * @generated SignedSource<<f306286e7394240ffbdb70fd8fa938c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -253,6 +253,24 @@ return {
                     "plural": false,
                     "selections": (v2/*: any*/),
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "RecenltySoldArtworkPerformance",
+                    "kind": "LinkedField",
+                    "name": "performance",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "mid",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -266,12 +284,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5de33d956700e61a96b6f33551b214af",
+    "cacheID": "4e7018711237e182b965e16c99e2fb11",
     "id": null,
     "metadata": {},
     "name": "PreviouslySoldOnArtsyRailQuery",
     "operationKind": "query",
-    "text": "query PreviouslySoldOnArtsyRailQuery {\n  recentlySoldArtworks {\n    ...PreviouslySoldOnArtsyRail_recentlySoldArtworks\n  }\n}\n\nfragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...SoldArtwork_artwork\n        slug\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n    }\n  }\n}\n\nfragment SoldArtworkDetails_artwork on Artwork {\n  href\n  title\n  date\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n}\n\nfragment SoldArtwork_artwork on Artwork {\n  ...SoldArtworkDetails_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": "query PreviouslySoldOnArtsyRailQuery {\n  recentlySoldArtworks {\n    ...PreviouslySoldOnArtsyRail_recentlySoldArtworks\n  }\n}\n\nfragment PreviouslySoldOnArtsyRail_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...SoldArtwork_artwork\n        slug\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n      performance {\n        mid\n      }\n    }\n  }\n}\n\nfragment SoldArtworkDetails_artwork on Artwork {\n  href\n  title\n  date\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n}\n\nfragment SoldArtwork_artwork on Artwork {\n  ...SoldArtworkDetails_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
   }
 };
 })();
