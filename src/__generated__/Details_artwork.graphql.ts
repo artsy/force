@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b26ecad03a93f18ed609a96583735a76>>
+ * @generated SignedSource<<1e55a73595d65f844d93c3974e97df75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type Details_artwork$data = {
   readonly cultural_maker: string | null;
   readonly date: string | null;
   readonly href: string | null;
+  readonly internalID: string;
   readonly marketPriceInsights: {
     readonly demandRank: number | null;
   } | null;
@@ -58,7 +59,7 @@ export type Details_artwork$data = {
   } | null;
   readonly sale_message: string | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "NewSaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"HoverDetails_artwork" | "SaveButton_artwork">;
   readonly " $fragmentType": "Details_artwork";
 };
 export type Details_artwork$key = {
@@ -110,6 +111,13 @@ return {
   "metadata": null,
   "name": "Details_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -354,7 +362,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "NewSaveButton_artwork"
+      "name": "SaveButton_artwork"
     },
     {
       "args": null,
@@ -367,6 +375,6 @@ return {
 };
 })();
 
-(node as any).hash = "958f68c7156c0bb40d30f343ffa6db34";
+(node as any).hash = "37ad5ff97d6da053ddc0ca0c31bbef80";
 
 export default node;

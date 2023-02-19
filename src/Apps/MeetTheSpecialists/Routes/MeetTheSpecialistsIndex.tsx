@@ -139,7 +139,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Akanksha Ballaney",
-    title: "Associate Director, Private Sales",
+    title: "Director, Private Sales",
     location: "New York",
     email: "akanksha@artsy.net",
     image: "https://files.artsy.net/images/akanksha.jpeg",
@@ -157,7 +157,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     title: "Senior Private Sales Director",
     location: "London",
     email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/Adriana.jpg",
+    image: "https://files.artsy.net/images/IMG_1436.jpg",
   },
   {
     name: "Meave Hamill",
@@ -206,7 +206,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Sarah Punzel",
-    title: "Private Sales Coordinator",
+    title: "Private Sales Business Associate",
     location: "New York",
     email: "sarah.punzel@artsy.net",
     image: "https://files.artsy.net/images/Sarah_Punzel.png",

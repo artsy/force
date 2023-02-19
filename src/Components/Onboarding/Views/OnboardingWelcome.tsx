@@ -19,7 +19,7 @@ export const OnboardingWelcome = () => {
   return (
     <SplitLayout
       left={<OnboardingWelcomeAnimatedPanel ref={register(0)} />}
-      leftProps={{ display: "block" }}
+      leftProps={{ display: "block", flexBasis: ["30%", "50%"] }}
       right={
         <Flex flexDirection="column" justifyContent="space-between" p={[2, 4]}>
           {/* Vertically centers next Box */}

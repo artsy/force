@@ -75,7 +75,7 @@ export const MeetTheSpecialists: React.FC = () => {
 
   return (
     <>
-      <Text mb={[0.5, 1]} variant={["lg-display", "xxl"]}>
+      <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
         Meet the specialists
       </Text>
       <Text mb={[2, 4]} variant={["xs", "sm"]}>

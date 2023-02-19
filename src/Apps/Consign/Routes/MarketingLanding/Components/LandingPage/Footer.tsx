@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
     <>
       <Box px={[2, 4, 12]} mb={[2, 6]}>
         <Text
-          variant={["lg-display", "xxl"]}
+          variant={["lg-display", "xl", "xxl"]}
           mb={[2, 4]}
           pr={0}
           textAlign="center"

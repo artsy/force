@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b600ec495be40a949453022e3c75ed7>>
+ * @generated SignedSource<<3c5f9f62fa6128bc259d7366bffa92d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
-  readonly collectionsConnection: {
+  readonly defaultSaves: {
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+  } | null;
+  readonly otherSaves: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly default: boolean;
@@ -27,19 +31,61 @@ export type CollectorProfileSaves2Route_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSaves2Route_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "SavesItem_item"
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "CollectorProfileSaves2Route_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "defaultSaves",
       "args": [
         {
           "kind": "Literal",
+          "name": "id",
+          "value": "saved-artwork"
+        }
+      ],
+      "concreteType": "Collection",
+      "kind": "LinkedField",
+      "name": "collection",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        (v1/*: any*/)
+      ],
+      "storageKey": "collection(id:\"saved-artwork\")"
+    },
+    {
+      "alias": "otherSaves",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "default",
+          "value": false
+        },
+        {
+          "kind": "Literal",
           "name": "first",
-          "value": 20
+          "value": 30
+        },
+        {
+          "kind": "Literal",
+          "name": "saves",
+          "value": true
         }
       ],
       "concreteType": "CollectionsConnection",
@@ -63,13 +109,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -77,11 +117,7 @@ const node: ReaderFragment = {
                   "name": "default",
                   "storageKey": null
                 },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "SavesItem_item"
-                }
+                (v1/*: any*/)
               ],
               "storageKey": null
             }
@@ -89,13 +125,14 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(first:20)"
+      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "7b4395e3ff0188bf00db39ea72937d3e";
+(node as any).hash = "5c3ef77024cb69947341378af7658e8e";
 
 export default node;

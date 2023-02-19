@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4650bcb8978384addebc5a6cd8c99a5f>>
+ * @generated SignedSource<<c6cd1b4559dd38db2890f3ea9d91a343>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -150,7 +150,21 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "default",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "name",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
                         "storageKey": null
                       },
                       {
@@ -241,7 +255,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1924cab8e1d93e7228a48348e01d0e1",
+    "cacheID": "167289e70307205b7596f816d0bde1e4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -306,7 +320,14 @@ return {
           "plural": false,
           "type": "Int"
         },
+        "me.collectionsConnection.edges.node.default": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.collectionsConnection.edges.node.id": (v2/*: any*/),
+        "me.collectionsConnection.edges.node.internalID": (v2/*: any*/),
         "me.collectionsConnection.edges.node.name": {
           "enumValues": null,
           "nullable": false,
@@ -318,7 +339,7 @@ return {
     },
     "name": "SavesItem_test_Query",
     "operationKind": "query",
-    "text": "query SavesItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...SavesItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment SavesItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SavesItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...SavesItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

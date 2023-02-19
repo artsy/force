@@ -31,7 +31,6 @@ import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "Apps/Conversation/Utils/useOnScreen"
 import { UpdateConversation } from "Apps/Conversation/Mutation/UpdateConversationMutation"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { useRouter } from "System/Router/useRouter"
@@ -76,11 +75,10 @@ const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   const isActionable =
     !!artwork?.isOfferable ||
     !!artwork?.isOfferableFromInquiry ||
-    (!!isCBNEnabled && !!artwork?.isAcquireable)
+    !!artwork?.isAcquireable
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
@@ -123,6 +121,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const initialMount = useRef(true)
   const initialScroll = useRef(true)
   const scrollContainer = useRef<HTMLDivElement>(null)
+
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
   const [lastMessageID, setLastMessageID] = useState<string | null>()
   const [lastOrderUpdate, setLastOrderUpdate] = useState<string | null>()
@@ -217,13 +216,14 @@ const Conversation: React.FC<ConversationProps> = props => {
       !!conversation.isLastMessageToUser ? 3000 : 0
     )
   }, [lastMessageID])
-  // -Workaround Reply render resizing race condition
 
+  // -Workaround Reply render resizing race condition
   useEffect(() => {
     if (initialMount.current) scrollToBottom()
     const rect = scrollContainer.current?.getBoundingClientRect()
     setToastBottom(window.innerHeight - (rect?.bottom ?? 0) + 30)
   }, [scrollContainer?.current?.clientHeight])
+
   // -On scroll down
   useEffect(() => {
     if (isBottomVisible) refreshData()

@@ -106,6 +106,12 @@
       }
     }
   },
+  "collectorSaves": {
+    "artworkLists": {
+      "artworkWithCount_one": "{{count}} Artwork",
+      "artworkWithCount_other": "{{count}} Artworks"
+    }
+  },
   "navbar": {
     "show": "Show",
     "shows": "Shows",
