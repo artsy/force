@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c6b10631b2f77754e21e80c0ec590a2>>
+ * @generated SignedSource<<9dc16d84a063f28890998e8cbad2a51a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type MyCollectionArtworkSidebarMetadata_artwork$data = {
     readonly shortDescription: string | null;
   } | null;
   readonly category: string | null;
+  readonly confidentialNotes: string | null;
   readonly dimensions: {
     readonly cm: string | null;
     readonly in: string | null;
@@ -44,6 +45,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "category",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "confidentialNotes",
       "storageKey": null
     },
     {
@@ -140,6 +148,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c250744be463a5dbffca79870782261b";
+(node as any).hash = "0a75b085f903fd7a9295ac1a7aaa0d8c";
 
 export default node;
