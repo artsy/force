@@ -1,4 +1,4 @@
-import { Button, Text, useToasts } from "@artsy/palette"
+import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
@@ -13,7 +13,6 @@ import {
   artworkDetailsValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
 import {
   createOrUpdateConsignSubmission,
@@ -34,6 +33,7 @@ import { trackEvent } from "Server/analytics/helpers"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { TopContextBar } from "Components/TopContextBar"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -221,7 +221,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         : "/my-collection"
       : "/sell"
     let backTo = defaultBackLink
-    if (stepIndex === 0 && artworkId) {
+    if (isFirstStep && artworkId) {
       return backTo + `/artwork/${artworkId}`
     }
     let prevStep = ""
@@ -253,9 +253,11 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
   return (
     <>
-      <BackLink py={2} mb={6} to={backTo} width="min-content">
+      <TopContextBar displayBackArrow hideSeparator href={backTo}>
         Back
-      </BackLink>
+      </TopContextBar>
+
+      <Spacer y={6} />
 
       <SubmissionStepper currentStep="Artwork Details" />
 
