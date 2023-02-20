@@ -253,7 +253,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         <AuctionFilterMobileActionSheet
           onClose={() => toggleMobileActionSheet(false)}
         >
-          <AuctionFilters />
+          <AuctionFilters
+            hideUpcomingAuctionResults={upcomingAuctionResultsCount === 0}
+          />
         </AuctionFilterMobileActionSheet>
       )}
 
