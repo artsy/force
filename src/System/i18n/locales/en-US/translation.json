@@ -110,6 +110,10 @@
     "artworkLists": {
       "artworkWithCount_one": "{{count}} Artwork",
       "artworkWithCount_other": "{{count}} Artworks"
+    },
+    "selectedListsForArtwork": {
+      "listsCount_one": "{{count}} list selected",
+      "listsCount_other": "{{count}} lists selected"
     }
   },
   "navbar": {

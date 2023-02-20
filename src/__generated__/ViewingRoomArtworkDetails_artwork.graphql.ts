@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2318936484e0093cb12120568c1849d>>
+ * @generated SignedSource<<ea5bf2603d23704fc7e08414c712b94c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomArtworkDetails_artwork$data = {
   readonly additionalInformation: string | null;
-  readonly artistNames: string | null;
-  readonly date: string | null;
   readonly href: string | null;
   readonly id: string;
-  readonly saleMessage: string | null;
-  readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "ViewingRoomArtworkDetails_artwork";
 };
 export type ViewingRoomArtworkDetails_artwork$key = {
@@ -31,6 +28,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ViewingRoomArtworkDetails_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "Details_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -49,35 +51,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "artistNames",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleMessage",
       "storageKey": null
     }
   ],
@@ -85,6 +59,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "17b59b378f42d4a5091389b5e193ab25";
+(node as any).hash = "591548577ce680c3c23e8c4c03f59f29";
 
 export default node;

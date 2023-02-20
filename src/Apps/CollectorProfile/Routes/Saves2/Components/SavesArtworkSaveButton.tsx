@@ -1,3 +1,4 @@
+import { SelectListsForArtworkModal } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useState } from "react"
 
@@ -10,17 +11,26 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
   artworkId,
   collectionId,
 }) => {
-  const [isSaved, setIsSaved] = useState(true)
+  const [visible, setVisible] = useState(false)
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-    setIsSaved(!isSaved)
 
-    // TODO: Display modal window with collections
     console.log("[debug]", artworkId, collectionId)
+    setVisible(true)
   }
 
-  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
+  const handleCloseModal = () => {
+    setVisible(false)
+  }
+
+  return (
+    <>
+      <SaveButtonBase isSaved onClick={handleClick} />
+
+      {visible && <SelectListsForArtworkModal onClose={handleCloseModal} />}
+    </>
+  )
 }

@@ -23,6 +23,7 @@ import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingP
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 
@@ -64,6 +65,7 @@ export const MarketingLandingApp = () => {
           <HowItWorksSteps />
           <SpeakToTheTeam />
           <MeetTheSpecialists />
+          <PreviouslySoldOnArtsyRailQueryRenderer />
           <CollectorsOverview />
           <Reviews />
           <FAQSWA />
