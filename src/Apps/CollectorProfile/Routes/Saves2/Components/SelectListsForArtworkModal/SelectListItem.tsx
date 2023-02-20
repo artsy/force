@@ -35,6 +35,8 @@ const SelectListItem: FC<SelectListItemProps> = ({
       border="1px solid"
       borderColor={isSelected ? "brand" : "transparent"}
       onClick={onClick}
+      role="option"
+      aria-selected={!!isSelected}
     >
       <SelectListsForArtworkImage url={imageURL} />
 

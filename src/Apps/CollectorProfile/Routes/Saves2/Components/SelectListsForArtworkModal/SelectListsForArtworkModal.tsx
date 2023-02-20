@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog } from "@artsy/palette"
+import { Spacer, Join, ModalDialog, Box } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
@@ -118,17 +118,19 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     }
 
     return (
-      <Join separator={<Spacer y={1} />}>
-        {collections.map(item => {
-          return (
-            <SelectListItemFragmentContainer
-              item={item}
-              isSelected={checkIsItemSelected(item)}
-              onClick={() => handleItemPress(item)}
-            />
-          )
-        })}
-      </Join>
+      <Box role="listbox">
+        <Join separator={<Spacer y={1} />}>
+          {collections.map(item => {
+            return (
+              <SelectListItemFragmentContainer
+                item={item}
+                isSelected={checkIsItemSelected(item)}
+                onClick={() => handleItemPress(item)}
+              />
+            )
+          })}
+        </Join>
+      </Box>
     )
   }
 
@@ -165,7 +167,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   )
 }
 
-const SelectListsForArtworkModalFragmentContainer = createFragmentContainer(
+export const SelectListsForArtworkModalFragmentContainer = createFragmentContainer(
   SelectListsForArtworkModal,
   {
     me: graphql`
