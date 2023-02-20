@@ -56,7 +56,7 @@ const reasons = [
 
 export const Highlights: React.FC = () => {
   return (
-    <GridColumns gridColumnGap={[0, 4, 6]} alignItems="fex-start">
+    <GridColumns gridColumnGap={[0, 2, 4]} alignItems="fex-start">
       {reasons.map(i => (
         <RowItem icon={i.icon} title={i.title} text={i.text} />
       ))}

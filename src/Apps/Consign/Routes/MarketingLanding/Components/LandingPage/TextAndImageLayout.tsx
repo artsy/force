@@ -16,9 +16,7 @@ export const TextAndImageLayout: React.FC<{
       <GridColumns alignItems="center">
         <Column span={6} py={[0, 2]} pr={[2, 2]} pl={[2, 4]}>
           {text}
-          <GridColumns alignItems="center">
-            <Column span={[12, 6, 4]}>{button}</Column>
-          </GridColumns>
+          {button}
         </Column>
 
         <Column span={6} order={[1, 0]}>

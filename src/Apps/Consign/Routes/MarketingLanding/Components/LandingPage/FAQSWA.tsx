@@ -18,7 +18,7 @@ export const FAQSWA: React.FC = () => {
           <Text variant={["md", "xl", "xxl"]} mb={4} textColor="white100">
             No upfront fees, clear pricing estimates and commission structures.
           </Text>
-          <Text variant={["xs", "sm"]} mb={[2, 4]} textColor="white100">
+          <Text variant={["xs", "sm", "sm"]} mb={[2, 4]} textColor="white100">
             Have more questions?
           </Text>
         </>
@@ -28,7 +28,7 @@ export const FAQSWA: React.FC = () => {
           // @ts-ignore
           as={RouterLink}
           variant="secondaryWhite"
-          width="100%"
+          width={["100%", 300]}
           to={supportUrl}
           data-testid="read-FAQs-button"
         >

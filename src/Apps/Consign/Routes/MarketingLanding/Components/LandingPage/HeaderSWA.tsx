@@ -67,7 +67,7 @@ export const HeaderSWA = () => {
         <Spacer y={[4, 6]} />
 
         <GridColumns>
-          <Column span={[12, 5, 4]}>
+          <Column span={[12, 6, 5]}>
             <Button
               // @ts-ignore
               as={RouterLink}
@@ -81,7 +81,7 @@ export const HeaderSWA = () => {
               Start Selling
             </Button>
           </Column>
-          <Column span={[12, 5, 4]}>
+          <Column span={[12, 6, 5]}>
             <Button
               width="100%"
               // @ts-ignore

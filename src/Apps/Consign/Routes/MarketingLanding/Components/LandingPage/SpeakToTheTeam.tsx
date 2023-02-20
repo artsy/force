@@ -35,10 +35,10 @@ export const SpeakToTheTeam: React.FC = () => {
     <TextAndImageLayout
       text={
         <>
-          <Text variant={["md", "xl", "xxl"]} textColor="white100">
+          <Text variant={["lg", "xl", "xxl"]} textColor="white100">
             Interested in selling multiple artworks?
           </Text>
-          <Text variant={["md", "xl", "xxl"]} mb={4} textColor="white100">
+          <Text variant={["lg", "xl", "xxl"]} mb={4} textColor="white100">
             Speak with our team.
           </Text>
         </>
@@ -48,7 +48,7 @@ export const SpeakToTheTeam: React.FC = () => {
           // @ts-ignore
           as={RouterLink}
           variant="primaryWhite"
-          width="100%"
+          width={["100%", 300]}
           to={getInTouchRoute}
           onClick={trackGetInTouchClick}
           data-testid="get-in-touch-button"

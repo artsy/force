@@ -1,9 +1,7 @@
 import {
   Box,
   Button,
-  Column,
   Flex,
-  GridColumns,
   Pill,
   ResponsiveBox,
   Text,
@@ -161,21 +159,17 @@ export const MeetTheSpecialists: React.FC = () => {
         Not sure which of our experts is the right fit for your work? Get in
         touch and we'll connect you.
       </Text>
-      <GridColumns>
-        <Column span={[12, 3, 2]}>
-          <Button
-            width={"100%"}
-            // @ts-ignore
-            as={RouterLink}
-            variant="primaryBlack"
-            onClick={trackStartSellingClick}
-            data-testid="start-selling-button"
-            to="/sell/submission"
-          >
-            Start Selling
-          </Button>
-        </Column>
-      </GridColumns>
+      <Button
+        width={["100%", 300]}
+        // @ts-ignore
+        as={RouterLink}
+        variant="primaryBlack"
+        onClick={trackStartSellingClick}
+        data-testid="start-selling-button"
+        to="/sell/submission"
+      >
+        Start Selling
+      </Button>
     </>
   )
 }

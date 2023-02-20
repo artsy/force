@@ -56,22 +56,18 @@ export const HowItWorksSteps: React.FC = () => {
           <RowItem index={i.index} title={i.title} text={i.text} />
         ))}
       </GridColumns>
-      <GridColumns>
-        <Column span={[12, 3, 2]}>
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            mt={[2, 6]}
-            width="100%"
-            variant="primaryBlack"
-            to="/sell/submission"
-            onClick={trackStartSellingClick}
-            data-testid="start-selling-button"
-          >
-            Start Selling
-          </Button>
-        </Column>
-      </GridColumns>
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        mt={[2, 6]}
+        width={["100%", 300]}
+        variant="primaryBlack"
+        to="/sell/submission"
+        onClick={trackStartSellingClick}
+        data-testid="start-selling-button"
+      >
+        Start Selling
+      </Button>
     </>
   )
 }
@@ -84,10 +80,10 @@ interface RowItemProps {
 const RowItem: React.FC<RowItemProps> = ({ index, title, text }) => {
   return (
     <Column span={3} mb={[2, 0]}>
-      <Text mt={[0.5, 2]} variant={["lg-display", "xxl"]}>
+      <Text mt={[0.5, 2]} variant={["lg-display", "xl", "xxl"]}>
         {index}
       </Text>
-      <Text mt={[0.5, 2]} variant={["md", "xl"]}>
+      <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>
         {title}
       </Text>
       <Text mt={1} variant={["xs", "sm"]}>

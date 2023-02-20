@@ -106,7 +106,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
       />
     </Box>
     {title && (
-      <Text mb={[0.5, 1]} variant={["md", "xl"]} color="white100">
+      <Text mb={[0.5, 1]} variant={["md", "lg-display", "xl"]} color="white100">
         {title}
       </Text>
     )}
