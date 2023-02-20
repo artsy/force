@@ -129,7 +129,8 @@
     },
     "selectedListsForArtwork": {
       "listsCount_one": "{{count}} list selected",
-      "listsCount_other": "{{count}} lists selected"
+      "listsCount_other": "{{count}} lists selected",
+      "saveButton": "Save"
     },
     "contextualMenu": {
       "edit": "Edit List",

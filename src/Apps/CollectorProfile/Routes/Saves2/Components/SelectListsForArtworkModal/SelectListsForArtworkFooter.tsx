@@ -24,7 +24,9 @@ export const SelectListsForArtworkFooter: FC<SelectListsForArtworkFooterProps> =
           count: selectedListsCount,
         })}
       </Text>
-      <Button onClick={onSaveClick}>Save</Button>
+      <Button onClick={onSaveClick}>
+        {t("collectorSaves.selectedListsForArtwork.saveButton")}
+      </Button>
     </Flex>
   )
 }
