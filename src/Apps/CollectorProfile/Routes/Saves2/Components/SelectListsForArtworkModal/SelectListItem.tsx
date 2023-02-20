@@ -12,7 +12,7 @@ const ICON_SIZE = 24
 interface SelectListItemProps {
   item: SelectListItem_item$data
   isSelected: boolean
-  onClick: (id: string) => void
+  onClick: () => void
 }
 
 const SelectListItem: FC<SelectListItemProps> = ({
@@ -34,7 +34,7 @@ const SelectListItem: FC<SelectListItemProps> = ({
       p={1}
       border="1px solid"
       borderColor={isSelected ? "brand" : "transparent"}
-      onClick={() => onClick(item.internalID)}
+      onClick={onClick}
     >
       <SelectListsForArtworkImage url={imageURL} />
 
@@ -65,7 +65,6 @@ export const SelectListItemFragmentContainer = createFragmentContainer(
   {
     item: graphql`
       fragment SelectListItem_item on Collection {
-        internalID
         name
         artworksCount
         artworksConnection(first: 1) {

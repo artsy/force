@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32af1c21facd8adc6e36a082d28b17a4>>
+ * @generated SignedSource<<0967f63b7a37bb42f3bae7ab7cb850b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,6 @@ export type SelectListItem_item$data = {
     } | null> | null;
   } | null;
   readonly artworksCount: number;
-  readonly internalID: string;
   readonly name: string;
   readonly " $fragmentType": "SelectListItem_item";
 };
@@ -36,13 +35,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "SelectListItem_item",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -125,6 +117,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "82e8f954382f5165a82cd664a0b0ac01";
+(node as any).hash = "373729c726892165d91d80908b9129b1";
 
 export default node;
