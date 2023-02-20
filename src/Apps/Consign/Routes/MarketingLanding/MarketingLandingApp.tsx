@@ -23,6 +23,7 @@ import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingP
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(
@@ -61,6 +62,7 @@ export const MarketingLandingApp = () => {
           <WaysWeSell />
           <HowItWorksSteps />
           <MeetTheSpecialists />
+          <PreviouslySoldOnArtsyRailQueryRenderer />
           <CollectorsOverview />
           <Reviews />
           <FAQSWA />
