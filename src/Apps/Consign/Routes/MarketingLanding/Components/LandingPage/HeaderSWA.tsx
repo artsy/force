@@ -53,13 +53,13 @@ export const HeaderSWA = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
-        <Text as="h1" variant={["xl", "xl", "xxxl"]}>
+        <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
 
         <Spacer y={[0.5, 2]} />
 
-        <Text variant={["xs", "md", "lg"]}>
+        <Text variant={["xs", "sm", "lg"]}>
           Our experts find the best sales opportunity for your work, through our
           vast global network of buyers.
         </Text>

@@ -56,7 +56,7 @@ export const WaysWeSell = () => {
   return (
     <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]} backgroundColor="black100">
       <Text mb={[1, 2]} variant={["lg-display", "xl", "xxl"]} color="white100">
-        Ways we sell your work
+        Ways to sell with Artsy
       </Text>
 
       <Text mb={[2, 4, 6]} variant={["xs", "sm"]} color="white100">
