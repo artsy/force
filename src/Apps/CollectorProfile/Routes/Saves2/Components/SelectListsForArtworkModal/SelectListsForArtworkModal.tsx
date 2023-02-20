@@ -47,6 +47,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     uniq([...addToCollectionIDs, ...selectedCollectionIdsByDefault]),
     removeFromCollectionIDs
   )
+  const hasChanges =
+    addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
 
   console.log("[debug] addToCollectionIDs", addToCollectionIDs)
   console.log("[debug] removeFromCollectionIDs", removeFromCollectionIDs)
@@ -153,6 +155,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedCollectionIds.length}
+          hasChanges={hasChanges}
           onSaveClick={handleSaveClicked}
         />
       }
