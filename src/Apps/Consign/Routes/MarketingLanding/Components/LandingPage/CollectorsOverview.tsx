@@ -39,7 +39,7 @@ export const CollectorsOverview: React.FC = () => {
               <Column flexDirection="column" span={[6, 8]}>
                 <Box>
                   <Text variant={["xl", "xxl", "xxxl"]}>{i.value}</Text>
-                  <Text variant={["xs", "md", "lg-display"]}>{i.title}</Text>
+                  <Text variant={["xs", "sm", "lg-display"]}>{i.title}</Text>
                 </Box>
               </Column>
             ))}

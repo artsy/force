@@ -1,5 +1,5 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Button, Text, useToasts } from "@artsy/palette"
+import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
@@ -8,7 +8,6 @@ import {
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { COUNTRY_CODES } from "Utils/countries"
-import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -25,6 +24,7 @@ import {
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { TopContextBar } from "Components/TopContextBar"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -97,7 +97,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           relayEnvironment,
           {
             externalId: submission?.externalId,
-            artistID: stepIndex === 0 ? "" : undefined,
+            artistID: isFirstStep ? "" : undefined,
             userName: name.trim(),
             userEmail: submissionEmail,
             userPhone: phoneNumberInternational,
@@ -187,7 +187,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       : "/sell"
 
     let backTo = defaultBackLink
-    if (stepIndex === 0 && artworkId) {
+    if (isFirstStep && artworkId) {
       return backTo + `/artwork/${artworkId}`
     }
     let prevStep = ""
@@ -219,9 +219,22 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   return (
     <>
-      <BackLink py={2} mb={6} width="min-content" to={backTo}>
-        Back
-      </BackLink>
+      {isFirstStep && !artworkId ? (
+        <TopContextBar
+          displayBackArrow
+          hideSeparator
+          onClick={() => router.go(-1)}
+          redirectTo="/sell"
+        >
+          Back
+        </TopContextBar>
+      ) : (
+        <TopContextBar displayBackArrow hideSeparator href={backTo}>
+          Back
+        </TopContextBar>
+      )}
+
+      <Spacer y={6} />
 
       <SubmissionStepper currentStep="Contact Information" />
 

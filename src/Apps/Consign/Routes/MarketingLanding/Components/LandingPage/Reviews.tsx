@@ -50,7 +50,7 @@ const ListItem: React.FC<{ review: ReviewsData }> = ({ review }) => {
   return (
     <Flex alignItems="center" flexDirection="column">
       <Text
-        variant={["md", "xl"]}
+        variant={["md", "lg", "xl"]}
         width={["100%", "80%"]}
         textAlign="center"
         mb={4}
@@ -58,8 +58,8 @@ const ListItem: React.FC<{ review: ReviewsData }> = ({ review }) => {
         "{reviewText}"
       </Text>
       <Avatar size="xs" initials={image} mb={1} />
-      <Text variant={["xs", "sm"]}>{reviewerName}</Text>
-      <Text variant={["xs", "sm"]} color="black60">
+      <Text variant={["xs", "xs", "sm"]}>{reviewerName}</Text>
+      <Text variant={["xs", "xs", "sm"]} color="black60">
         {galery}
       </Text>
     </Flex>

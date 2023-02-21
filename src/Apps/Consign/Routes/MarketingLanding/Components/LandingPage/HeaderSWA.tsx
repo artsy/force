@@ -46,20 +46,20 @@ export const HeaderSWA = () => {
   }
 
   const image = resized(
-    "https://files.artsy.net/images/content-card-swa-landing-page.png",
-    { width: 1104, height: 833 } // TODO: Source image should be 4:3, ideally
+    "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
+    { width: 1104, height: 833 }
   )
 
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
-        <Text as="h1" variant={["xl", "xl", "xxxl"]}>
+        <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
 
         <Spacer y={[0.5, 2]} />
 
-        <Text variant={["xs", "lg"]}>
+        <Text variant={["xs", "sm", "lg"]}>
           Our experts find the best sales opportunity for your work, through our
           vast global network of buyers.
         </Text>
@@ -67,11 +67,11 @@ export const HeaderSWA = () => {
         <Spacer y={[4, 6]} />
 
         <GridColumns>
-          <Column span={4}>
+          <Column span={[12, 6, 5]}>
             <Button
               // @ts-ignore
               as={RouterLink}
-              width={"100%"}
+              width="100%"
               variant="primaryBlack"
               to="/sell/submission"
               onClick={trackStartSellingClick}
@@ -81,9 +81,9 @@ export const HeaderSWA = () => {
               Start Selling
             </Button>
           </Column>
-          <Column span={4}>
+          <Column span={[12, 6, 5]}>
             <Button
-              width={"100%"}
+              width="100%"
               // @ts-ignore
               as={RouterLink}
               variant="secondaryBlack"
@@ -97,7 +97,7 @@ export const HeaderSWA = () => {
         </GridColumns>
       </Column>
 
-      <Column span={7}>
+      <Column span={7} ml={[-2, 0]} mr={[-2, -4]}>
         <ResponsiveBox aspectWidth={1104} aspectHeight={833} maxWidth="100%">
           <Image
             width="100%"

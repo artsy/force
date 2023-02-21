@@ -14,17 +14,17 @@ export type StepsWithImageBlackDataType = {
 const IMAGE_WIDTH = 600
 
 const waysWeSellImage1 = resized(
-  "https://files.artsy.net/images/auctions-swa-landing-page.jpg",
+  "https://files.artsy.net/images/ways-we-sell-auctions-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 392, quality: 100 }
 )
 
 const waysWeSellImage2 = resized(
-  "https://files.artsy.net/images/privat-sales-swa-landing-page.png",
+  "https://files.artsy.net/images/ways-we-sell-privat-sales-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 317, quality: 100 }
 )
 
 const waysWeSellImage3 = resized(
-  "https://files.artsy.net/images/online-storefront-swa-landing-page.png",
+  "https://files.artsy.net/images/ways-we-sell-online-storefront-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 358, quality: 100 }
 )
 
@@ -56,7 +56,7 @@ export const WaysWeSell = () => {
   return (
     <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]} backgroundColor="black100">
       <Text mb={[1, 2]} variant={["lg-display", "xl", "xxl"]} color="white100">
-        Ways we sell your work
+        Ways to sell with Artsy
       </Text>
 
       <Text mb={[2, 4, 6]} variant={["xs", "sm"]} color="white100">
@@ -106,7 +106,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
       />
     </Box>
     {title && (
-      <Text mb={[0.5, 1]} variant={["md", "xl"]} color="white100">
+      <Text mb={[0.5, 1]} variant={["md", "lg-display", "xl"]} color="white100">
         {title}
       </Text>
     )}
