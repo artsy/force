@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ed8af807b654216718a42f202b1ecb5>>
+ * @generated SignedSource<<201e3f9570ca65a3f4e3b91da7b625b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,11 +37,18 @@ var v0 = [
 v1 = [
   {
     "kind": "Variable",
+    "name": "artworkID",
+    "variableName": "artworkID"
+  }
+],
+v2 = [
+  {
+    "kind": "Variable",
     "name": "id",
     "variableName": "artworkID"
   }
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -65,7 +72,7 @@ v2 = {
   ],
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -88,7 +95,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "SelectListsForArtworkModal_me"
           }
@@ -97,7 +104,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -168,6 +175,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": (v1/*: any*/),
+                        "kind": "ScalarField",
+                        "name": "isSavedArtwork",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "name",
@@ -210,8 +224,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v2/*: any*/),
-                                  (v3/*: any*/)
+                                  (v3/*: any*/),
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -221,7 +235,7 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:1)"
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -231,13 +245,13 @@ return {
             ],
             "storageKey": "collectionsConnection(first:30)"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -257,24 +271,24 @@ return {
             "name": "date",
             "storageKey": null
           },
-          (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d53660abdac8e26ad2555cf8fc6d8825",
+    "cacheID": "313e501c1f699785277c117e9c03e58a",
     "id": null,
     "metadata": {},
     "name": "SelectListsForArtworkModalQuery",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me on Me {\n  collectionsConnection(first: 30) {\n    edges {\n      node {\n        internalID\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  collectionsConnection(first: 30) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d499a0cdd5335a828461464327151cc0";
+(node as any).hash = "60909341344f6400c8392a24678f26c2";
 
 export default node;

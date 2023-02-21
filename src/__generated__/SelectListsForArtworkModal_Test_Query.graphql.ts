@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a58d5ef8708a3691c528749ea9a6c14>>
+ * @generated SignedSource<<de6c5377c67c773eb290150f72a949e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,11 +28,18 @@ const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "kind": "Literal",
+    "name": "artworkID",
+    "value": "artworkID"
+  }
+],
+v1 = [
+  {
+    "kind": "Literal",
     "name": "id",
     "value": "artworkID"
   }
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -56,32 +63,32 @@ v1 = {
   ],
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Artwork"
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -103,7 +110,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": (v0/*: any*/),
             "kind": "FragmentSpread",
             "name": "SelectListsForArtworkModal_me"
           }
@@ -112,7 +119,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -183,6 +190,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": (v0/*: any*/),
+                        "kind": "ScalarField",
+                        "name": "isSavedArtwork",
+                        "storageKey": "isSavedArtwork(artworkID:\"artworkID\")"
+                      },
+                      {
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "name",
@@ -225,8 +239,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v1/*: any*/),
-                                  (v2/*: any*/)
+                                  (v2/*: any*/),
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -236,7 +250,7 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:1)"
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -246,13 +260,13 @@ return {
             ],
             "storageKey": "collectionsConnection(first:30)"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -272,24 +286,24 @@ return {
             "name": "date",
             "storageKey": null
           },
-          (v1/*: any*/),
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "storageKey": "artwork(id:\"artworkID\")"
       }
     ]
   },
   "params": {
-    "cacheID": "58fec514416a77dda2d50e5c607381f2",
+    "cacheID": "72366eecd206a5f87548021b81ef4b65",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artwork": (v3/*: any*/),
-        "artwork.date": (v4/*: any*/),
-        "artwork.id": (v5/*: any*/),
-        "artwork.image": (v6/*: any*/),
-        "artwork.image.url": (v4/*: any*/),
-        "artwork.title": (v4/*: any*/),
+        "artwork": (v4/*: any*/),
+        "artwork.date": (v5/*: any*/),
+        "artwork.id": (v6/*: any*/),
+        "artwork.image": (v7/*: any*/),
+        "artwork.image.url": (v5/*: any*/),
+        "artwork.title": (v5/*: any*/),
         "me": {
           "enumValues": null,
           "nullable": true,
@@ -326,34 +340,40 @@ return {
           "plural": true,
           "type": "ArtworkEdge"
         },
-        "me.collectionsConnection.edges.node.artworksConnection.edges.node": (v3/*: any*/),
-        "me.collectionsConnection.edges.node.artworksConnection.edges.node.id": (v5/*: any*/),
-        "me.collectionsConnection.edges.node.artworksConnection.edges.node.image": (v6/*: any*/),
-        "me.collectionsConnection.edges.node.artworksConnection.edges.node.image.url": (v4/*: any*/),
+        "me.collectionsConnection.edges.node.artworksConnection.edges.node": (v4/*: any*/),
+        "me.collectionsConnection.edges.node.artworksConnection.edges.node.id": (v6/*: any*/),
+        "me.collectionsConnection.edges.node.artworksConnection.edges.node.image": (v7/*: any*/),
+        "me.collectionsConnection.edges.node.artworksConnection.edges.node.image.url": (v5/*: any*/),
         "me.collectionsConnection.edges.node.artworksCount": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Int"
         },
-        "me.collectionsConnection.edges.node.id": (v5/*: any*/),
-        "me.collectionsConnection.edges.node.internalID": (v5/*: any*/),
+        "me.collectionsConnection.edges.node.id": (v6/*: any*/),
+        "me.collectionsConnection.edges.node.internalID": (v6/*: any*/),
+        "me.collectionsConnection.edges.node.isSavedArtwork": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.collectionsConnection.edges.node.name": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "String"
         },
-        "me.id": (v5/*: any*/)
+        "me.id": (v6/*: any*/)
       }
     },
     "name": "SelectListsForArtworkModal_Test_Query",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModal_Test_Query {\n  me {\n    ...SelectListsForArtworkModal_me\n    id\n  }\n  artwork(id: \"artworkID\") {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me on Me {\n  collectionsConnection(first: 30) {\n    edges {\n      node {\n        internalID\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectListsForArtworkModal_Test_Query {\n  me {\n    ...SelectListsForArtworkModal_me_42bAl0\n    id\n  }\n  artwork(id: \"artworkID\") {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me_42bAl0 on Me {\n  collectionsConnection(first: 30) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: \"artworkID\")\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "17e398bada5a3a6219de09265e8902d4";
+(node as any).hash = "52e6f1c0ed33b9a79a06d3e314dbe8f8";
 
 export default node;

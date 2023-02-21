@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1e7774329ed58320a28ad29293e994f>>
+ * @generated SignedSource<<ab2da3757a685c6f78ade3f94a259267>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type SelectListsForArtworkModal_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
+        readonly isSavedArtwork: boolean;
         readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
       } | null;
     } | null> | null;
@@ -27,7 +28,13 @@ export type SelectListsForArtworkModal_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artworkID"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "SelectListsForArtworkModal_me",
@@ -70,6 +77,19 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Variable",
+                      "name": "artworkID",
+                      "variableName": "artworkID"
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "isSavedArtwork",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "SelectListItem_item"
@@ -88,6 +108,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4dc6040009cc30dbeb8c67c7fb7d2058";
+(node as any).hash = "d1da83c3584eb344b1d1617fd97a73eb";
 
 export default node;

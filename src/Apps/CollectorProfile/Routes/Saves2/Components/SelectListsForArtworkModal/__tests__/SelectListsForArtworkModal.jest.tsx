@@ -13,7 +13,7 @@ const { renderWithRelay } = setupTestWrapperTL<
   query: graphql`
     query SelectListsForArtworkModal_Test_Query @relay_test_operation {
       me {
-        ...SelectListsForArtworkModal_me
+        ...SelectListsForArtworkModal_me @arguments(artworkID: "artworkID")
       }
       artwork(id: "artworkID") {
         ...SelectListsForArtworkModal_artwork

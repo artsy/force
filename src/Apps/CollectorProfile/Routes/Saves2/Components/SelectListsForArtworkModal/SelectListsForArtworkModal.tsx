@@ -37,7 +37,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   >([])
   const collections = extractNodes(me?.collectionsConnection)
   const selectedCollectionsByDefault = collections.filter(
-    // @ts-ignore
     collection => collection.isSavedArtwork
   )
   const selectedCollectionIdsByDefault = selectedCollectionsByDefault.map(
@@ -107,7 +106,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       return false
     }
 
-    // @ts-ignore
     return item.isSavedArtwork
   }
 
@@ -171,11 +169,13 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
   SelectListsForArtworkModal,
   {
     me: graphql`
-      fragment SelectListsForArtworkModal_me on Me {
+      fragment SelectListsForArtworkModal_me on Me
+        @argumentDefinitions(artworkID: { type: "String!" }) {
         collectionsConnection(first: 30) {
           edges {
             node {
               internalID
+              isSavedArtwork(artworkID: $artworkID)
               ...SelectListItem_item
             }
           }
@@ -219,7 +219,7 @@ export const SelectListsForArtworkModalQueryRender: FC<SelectListsForArtworkModa
 const query = graphql`
   query SelectListsForArtworkModalQuery($artworkID: String!) {
     me {
-      ...SelectListsForArtworkModal_me
+      ...SelectListsForArtworkModal_me @arguments(artworkID: $artworkID)
     }
     artwork(id: $artworkID) {
       ...SelectListsForArtworkModal_artwork
