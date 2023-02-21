@@ -8,15 +8,15 @@ import { SizeFilter } from "./SizeFilter"
 import { YearCreated } from "./YearCreated"
 
 export const AuctionFilters: React.FC<{
-  hideUpcomingAuctionResults: boolean
-}> = hideUpcomingAuctionResults => {
+  showUpcomingAuctionResults: boolean
+}> = ({ showUpcomingAuctionResults }) => {
   const enableUpcomingAuctionsFilter = useFeatureFlag(
     "cx-upcoming-auctions-filter"
   )
 
   return (
     <>
-      {enableUpcomingAuctionsFilter && !hideUpcomingAuctionResults && (
+      {enableUpcomingAuctionsFilter && showUpcomingAuctionResults && (
         <>
           <HideUpcomingFilter />
           <Spacer y={2} />
