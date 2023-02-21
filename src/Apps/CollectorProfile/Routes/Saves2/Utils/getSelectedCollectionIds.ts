@@ -18,7 +18,7 @@ export const getSelectedCollectionIds = <T extends CollectionNode>(
   const selectedByDefault = collections.filter(node => node.isSavedArtwork)
   const selectedIdsByDefault = selectedByDefault.map(node => node.internalID)
   const selectedCollectionIds = difference(
-    uniq([...addToCollectionIDs, ...selectedIdsByDefault]),
+    uniq([...selectedIdsByDefault, ...addToCollectionIDs]),
     removeFromCollectionIDs
   )
 
