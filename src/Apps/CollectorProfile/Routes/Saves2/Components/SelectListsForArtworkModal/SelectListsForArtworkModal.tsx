@@ -64,7 +64,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const handleItemPress = (item: typeof collections[0]) => {
     console.log("[debug] pressed", item)
 
-    // @ts-ignore
     if (item.isSavedArtwork) {
       const updatedIds = addOrRemoveCollectionIdFromIds(
         removeFromCollectionIDs,
