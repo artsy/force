@@ -84,7 +84,7 @@ describe("ViewingRoomWorksRoute", () => {
     })
 
     it("tracks clicks", () => {
-      wrapper.find("RouterLink").simulate("click")
+      wrapper.find("Button").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "clickedBuyViewingRoom",
         context_module: "viewingRoomArtworkRail",
