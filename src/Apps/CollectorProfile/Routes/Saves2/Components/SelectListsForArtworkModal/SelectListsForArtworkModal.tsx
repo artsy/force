@@ -35,7 +35,9 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const [removeFromCollectionIDs, setRemoveFromCollectionIDs] = useState<
     string[]
   >([])
-  const collections = extractNodes(me?.collectionsConnection)
+  const savedCollection = me?.defaultSaves
+  const nodes = extractNodes(me?.collectionsConnection)
+  const collections = savedCollection ? [savedCollection, ...nodes] : nodes
   const selectedCollectionsByDefault = collections.filter(
     collection => collection.isSavedArtwork
   )
@@ -171,7 +173,13 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
     me: graphql`
       fragment SelectListsForArtworkModal_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
-        collectionsConnection(first: 30) {
+        defaultSaves: collection(id: "saved-artwork") {
+          internalID
+          isSavedArtwork(artworkID: $artworkID)
+          ...SelectListItem_item
+        }
+
+        collectionsConnection(first: 30, default: false, saves: true) {
           edges {
             node {
               internalID

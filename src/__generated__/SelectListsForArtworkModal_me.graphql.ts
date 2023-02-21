@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab2da3757a685c6f78ade3f94a259267>>
+ * @generated SignedSource<<f5e82f403b228dfb873b0ff02a92d5c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,11 @@ export type SelectListsForArtworkModal_me$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly defaultSaves: {
+    readonly internalID: string;
+    readonly isSavedArtwork: boolean;
+    readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
+  } | null;
   readonly " $fragmentType": "SelectListsForArtworkModal_me";
 };
 export type SelectListsForArtworkModal_me$key = {
@@ -27,7 +32,35 @@ export type SelectListsForArtworkModal_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_me">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "artworkID",
+        "variableName": "artworkID"
+      }
+    ],
+    "kind": "ScalarField",
+    "name": "isSavedArtwork",
+    "storageKey": null
+  },
+  {
+    "args": null,
+    "kind": "FragmentSpread",
+    "name": "SelectListItem_item"
+  }
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -40,12 +73,38 @@ const node: ReaderFragment = {
   "name": "SelectListsForArtworkModal_me",
   "selections": [
     {
+      "alias": "defaultSaves",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "id",
+          "value": "saved-artwork"
+        }
+      ],
+      "concreteType": "Collection",
+      "kind": "LinkedField",
+      "name": "collection",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": "collection(id:\"saved-artwork\")"
+    },
+    {
       "alias": null,
       "args": [
         {
           "kind": "Literal",
+          "name": "default",
+          "value": false
+        },
+        {
+          "kind": "Literal",
           "name": "first",
           "value": 30
+        },
+        {
+          "kind": "Literal",
+          "name": "saves",
+          "value": true
         }
       ],
       "concreteType": "CollectionsConnection",
@@ -68,46 +127,21 @@ const node: ReaderFragment = {
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Variable",
-                      "name": "artworkID",
-                      "variableName": "artworkID"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "isSavedArtwork",
-                  "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "SelectListItem_item"
-                }
-              ],
+              "selections": (v0/*: any*/),
               "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(first:30)"
+      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "d1da83c3584eb344b1d1617fd97a73eb";
+(node as any).hash = "5fd627ecd243cf2680f1e6dbe901cded";
 
 export default node;
