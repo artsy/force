@@ -167,7 +167,12 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
           ...SelectListItem_item
         }
 
-        collectionsConnection(first: 30, default: false, saves: true) {
+        collectionsConnection(
+          first: 30
+          default: false
+          saves: true
+          sort: CREATED_AT_DESC
+        ) {
           edges {
             node {
               internalID
