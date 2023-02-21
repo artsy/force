@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SelectListsForArtworkModal_Test_Query } from "__generated__/SelectListsForArtworkModal_Test_Query.graphql"
 import { SelectListsForArtworkModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 
@@ -28,7 +28,9 @@ describe("SelectListsForArtworkModal", () => {
       Artwork: () => artwork,
     })
 
-    const entity = await screen.findByText("Artwork Title, 2023")
+    await waitForModalToBePresented()
+
+    const entity = screen.getByText("Artwork Title, 2023")
     expect(entity).toBeInTheDocument()
   })
 
@@ -37,9 +39,11 @@ describe("SelectListsForArtworkModal", () => {
       CollectionsConnection: () => collectionsConnection,
     })
 
-    const collectionEntityOne = await screen.findByText("Collection 1")
-    const collectionEntityTwo = await screen.findByText("Collection 2")
-    const collectionEntityThree = await screen.findByText("Collection 3")
+    await waitForModalToBePresented()
+
+    const collectionEntityOne = screen.getByText("Collection 1")
+    const collectionEntityTwo = screen.getByText("Collection 2")
+    const collectionEntityThree = screen.getByText("Collection 3")
 
     expect(collectionEntityOne).toBeInTheDocument()
     expect(collectionEntityTwo).toBeInTheDocument()
@@ -52,7 +56,9 @@ describe("SelectListsForArtworkModal", () => {
         CollectionsConnection: () => unselectedCollectionsConnection,
       })
 
-      const entity = await screen.findByText("0 lists selected")
+      await waitForModalToBePresented()
+
+      const entity = screen.getByText("0 lists selected")
       expect(entity).toBeInTheDocument()
     })
 
@@ -62,8 +68,10 @@ describe("SelectListsForArtworkModal", () => {
           CollectionsConnection: () => unselectedCollectionsConnection,
         })
 
+        await waitForModalToBePresented()
+
         // Select flow
-        fireEvent.click(await screen.findByText("Collection 1"))
+        fireEvent.click(screen.getByText("Collection 1"))
 
         const selectedOptionsBefore = screen.queryAllByRole("option", {
           selected: true,
@@ -74,7 +82,7 @@ describe("SelectListsForArtworkModal", () => {
         expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
 
         // Unselect flow
-        fireEvent.click(await screen.findByText("Collection 1"))
+        fireEvent.click(screen.getByText("Collection 1"))
 
         const selectedOptionsAfter = screen.queryAllByRole("option", {
           selected: true,
@@ -89,9 +97,11 @@ describe("SelectListsForArtworkModal", () => {
           CollectionsConnection: () => unselectedCollectionsConnection,
         })
 
+        await waitForModalToBePresented()
+
         // Select flow
-        fireEvent.click(await screen.findByText("Collection 1"))
-        fireEvent.click(await screen.findByText("Collection 2"))
+        fireEvent.click(screen.getByText("Collection 1"))
+        fireEvent.click(screen.getByText("Collection 2"))
 
         const selectedOptionsBefore = screen.queryAllByRole("option", {
           selected: true,
@@ -103,8 +113,8 @@ describe("SelectListsForArtworkModal", () => {
         expect(selectedOptionsBefore[1]).toHaveTextContent("Collection 2")
 
         // Unselect flow
-        fireEvent.click(await screen.findByText("Collection 1"))
-        fireEvent.click(await screen.findByText("Collection 2"))
+        fireEvent.click(screen.getByText("Collection 1"))
+        fireEvent.click(screen.getByText("Collection 2"))
 
         const selectedOptionsAfter = screen.queryAllByRole("option", {
           selected: true,
@@ -116,6 +126,10 @@ describe("SelectListsForArtworkModal", () => {
     })
   })
 })
+
+const waitForModalToBePresented = () => {
+  return waitFor(() => screen.getByText("Select lists for this artwork"))
+}
 
 const artwork = {
   title: "Artwork Title",
