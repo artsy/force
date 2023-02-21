@@ -1,34 +1,28 @@
-import { render, waitFor, screen } from "@testing-library/react"
-import { setCookies } from "Apps/Authentication/Legacy/Utils/helpers"
+import { render, screen } from "@testing-library/react"
 import { MockBoot, MockRouter } from "DevTools"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import qs from "qs"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
-import { checkForRedirect } from "Apps/Authentication/Legacy/Server/checkForRedirect"
-import { setReferer } from "Apps/Authentication/Legacy/Server/setReferer"
-import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
+import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Middleware/setReferer"
+import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 import { getENV } from "Utils/getENV"
 
-jest.mock("Apps/Authentication/Legacy/Server/checkForRedirect", () => ({
+jest.mock("Apps/Authentication/Middleware/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Legacy/Server/setReferer", () => ({
+jest.mock("Apps/Authentication/Middleware/setReferer", () => ({
   setReferer: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Legacy/Server/redirectIfLoggedIn", () => ({
+jest.mock("Apps/Authentication/Middleware/redirectIfLoggedIn", () => ({
   redirectIfLoggedIn: jest.fn(),
 }))
 
 jest.mock("Utils/EnableRecaptcha", () => ({
   EnableRecaptcha: () => "EnableRecaptcha",
-}))
-
-jest.mock("Apps/Authentication/Legacy/Utils/helpers", () => ({
-  ...jest.requireActual("Apps/Authentication/Legacy/Utils/helpers"),
-  setCookies: jest.fn(),
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
@@ -135,22 +129,6 @@ describe("authenticationRoutes", () => {
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
         expect((await screen.findAllByText("Log in to Artsy")).length).toBe(2)
       })
-
-      it("sets cookie with passed login params on mount", async () => {
-        const queryParams = {
-          action: "follow",
-          kind: "artist",
-          objectId: 123,
-          redirectTo: "/bar",
-          signupReferer: "referrer",
-        }
-
-        renderClientRoute(`/login?${qs.stringify(queryParams)}`)
-
-        await waitFor(() => {
-          expect(setCookies).toHaveBeenCalledWith(queryParams)
-        })
-      })
     })
 
     describe("/server", () => {
@@ -201,22 +179,6 @@ describe("authenticationRoutes", () => {
         renderClientRoute(`/signup`)
         expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
         expect((await screen.findAllByText("Sign up for Artsy")).length).toBe(2)
-      })
-
-      it("sets cookie with passed login params on mount", async () => {
-        const queryParams = {
-          action: "follow",
-          kind: "artist",
-          objectId: 123,
-          redirectTo: "/bar",
-          signupReferer: "referrer",
-        }
-
-        renderClientRoute(`/signup?${qs.stringify(queryParams)}`)
-
-        await waitFor(() => {
-          expect(setCookies).toHaveBeenCalledWith(queryParams)
-        })
       })
     })
 

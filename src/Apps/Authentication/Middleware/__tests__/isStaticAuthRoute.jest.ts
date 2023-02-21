@@ -1,4 +1,4 @@
-import { isStaticAuthRoute } from "Apps/Authentication/Legacy/Server/isStaticAuthRoute"
+import { isStaticAuthRoute } from "Apps/Authentication/Middleware/isStaticAuthRoute"
 
 describe("isStaticAuthRoute", () => {
   it("returns true if conditions met", () => {

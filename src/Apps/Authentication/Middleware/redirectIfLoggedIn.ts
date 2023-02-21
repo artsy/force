@@ -1,7 +1,14 @@
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { checkForRedirect } from "./checkForRedirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 
-export function redirectIfLoggedIn({ req, res }) {
+export const redirectIfLoggedIn = ({
+  req,
+  res,
+}: {
+  req: ArtsyRequest
+  res: ArtsyResponse
+}) => {
   if (!req.user) {
     return
   }

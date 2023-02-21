@@ -1,10 +1,20 @@
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import sanitizeRedirect from "Server/passport/sanitize-redirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 
-export const checkForRedirect = ({ req, res }) => {
+export const checkForRedirect = ({
+  req,
+  res,
+}: {
+  req: ArtsyRequest
+  res: ArtsyResponse
+}) => {
   const { parse } = require("url")
+
   let referrer = parse(req.get("Referrer") || "").path || "/"
+
   const isStaticAuth = isStaticAuthRoute({ req })
+
   const redirectTo =
     req.query["redirectTo"] ||
     req.body["redirect-to"] ||
@@ -12,7 +22,8 @@ export const checkForRedirect = ({ req, res }) => {
     req.query["redirect_uri"] ||
     (!isStaticAuth ? referrer : undefined)
 
-  let newRedirect
+  let newRedirect: string | undefined
+
   if (["/reset_password", "/user/delete"].includes(redirectTo)) {
     newRedirect = "/"
   } else if (!!redirectTo) {

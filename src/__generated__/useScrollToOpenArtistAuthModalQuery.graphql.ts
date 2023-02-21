@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<023450cc01c2f353b7e34f211b14ef99>>
+ * @generated SignedSource<<65d0674da4348623ef35b2ae4d2769f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,17 +14,6 @@ export type useScrollToOpenArtistAuthModalQuery$variables = {
 };
 export type useScrollToOpenArtistAuthModalQuery$data = {
   readonly artist: {
-    readonly filterArtworksConnection: {
-      readonly edges: ReadonlyArray<{
-        readonly node: {
-          readonly image: {
-            readonly cropped: {
-              readonly src: string;
-            } | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
     readonly name: string | null;
   } | null;
 };
@@ -54,70 +43,6 @@ v2 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  },
-  {
-    "kind": "Literal",
-    "name": "marketable",
-    "value": true
-  },
-  {
-    "kind": "Literal",
-    "name": "sort",
-    "value": "-decayed_merch"
-  }
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Image",
-  "kind": "LinkedField",
-  "name": "image",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "height",
-          "value": 1075
-        },
-        {
-          "kind": "Literal",
-          "name": "width",
-          "value": 450
-        }
-      ],
-      "concreteType": "CroppedImageUrl",
-      "kind": "LinkedField",
-      "name": "cropped",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "src",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "cropped(height:1075,width:450)"
-    }
-  ],
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -134,41 +59,7 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          {
-            "alias": null,
-            "args": (v3/*: any*/),
-            "concreteType": "FilterArtworksConnection",
-            "kind": "LinkedField",
-            "name": "filterArtworksConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FilterArtworksEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Artwork",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "filterArtworksConnection(first:1,marketable:true,sort:\"-decayed_merch\")"
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -193,57 +84,27 @@ return {
           (v2/*: any*/),
           {
             "alias": null,
-            "args": (v3/*: any*/),
-            "concreteType": "FilterArtworksConnection",
-            "kind": "LinkedField",
-            "name": "filterArtworksConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FilterArtworksEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Artwork",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v4/*: any*/),
-                      (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v5/*: any*/)
-            ],
-            "storageKey": "filterArtworksConnection(first:1,marketable:true,sort:\"-decayed_merch\")"
-          },
-          (v5/*: any*/)
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5a0e5fbc73ec48604184a399e3835df6",
+    "cacheID": "25f6e6ddcb4100a9bed0650f5fbc0a1e",
     "id": null,
     "metadata": {},
     "name": "useScrollToOpenArtistAuthModalQuery",
     "operationKind": "query",
-    "text": "query useScrollToOpenArtistAuthModalQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    name\n    filterArtworksConnection(first: 1, marketable: true, sort: \"-decayed_merch\") {\n      edges {\n        node {\n          image {\n            cropped(width: 450, height: 1075) {\n              src\n            }\n          }\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query useScrollToOpenArtistAuthModalQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c52b98d684e9d9bb5390e94822b63044";
+(node as any).hash = "6fbffdc701cb2ba2346023dfa44938a0";
 
 export default node;

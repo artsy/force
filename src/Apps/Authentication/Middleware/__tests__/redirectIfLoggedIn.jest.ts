@@ -1,4 +1,4 @@
-import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
+import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 
 describe("redirectIfLoggedIn", () => {
   const redirectSpy = jest.fn()

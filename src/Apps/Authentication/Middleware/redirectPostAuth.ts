@@ -1,6 +1,13 @@
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { getENV } from "Utils/getENV"
 
-export function redirectPostAuth({ req, res }) {
+export const redirectPostAuth = ({
+  req,
+  res,
+}: {
+  req: ArtsyRequest
+  res: ArtsyResponse
+}) => {
   const redirectTo = req.query["redirectTo"]
 
   const configuredAllowedHosts =

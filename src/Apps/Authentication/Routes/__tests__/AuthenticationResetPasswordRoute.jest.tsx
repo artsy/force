@@ -4,14 +4,14 @@ import { MockBoot } from "DevTools"
 import { mockLocation, resetMockLocation } from "DevTools/mockLocation"
 import { useRouter } from "System/Router/useRouter"
 import { resetPassword } from "Utils/auth"
-import { ResetPasswordRoute } from "Apps/Authentication/Legacy/Routes/ResetPasswordRoute"
+import { AuthenticationResetPasswordRoute } from "Apps/Authentication/Routes/AuthenticationResetPasswordRoute"
 import { getENV } from "Utils/getENV"
 
 jest.mock("System/Router/useRouter")
 jest.mock("Utils/auth")
 jest.mock("Utils/getENV")
 
-describe("ResetPasswordRoute", () => {
+describe("AuthenticationResetPasswordRoute", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockResetPassword = resetPassword as jest.Mock
   const mockGetENV = getENV as jest.Mock
@@ -31,7 +31,7 @@ describe("ResetPasswordRoute", () => {
 
     render(
       <MockBoot>
-        <ResetPasswordRoute />
+        <AuthenticationResetPasswordRoute />
       </MockBoot>
     )
   })
