@@ -46,10 +46,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
 
-  console.log("[debug] addToCollectionIDs", addToCollectionIDs)
-  console.log("[debug] removeFromCollectionIDs", removeFromCollectionIDs)
-  console.log("[debug] selectedCollectionIds", selectedCollectionIds)
-
   const addOrRemoveCollectionIdFromIds = (
     ids: string[],
     collectionId: string
@@ -62,8 +58,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   }
 
   const handleItemPress = (item: typeof collections[0]) => {
-    console.log("[debug] pressed", item)
-
     if (item.isSavedArtwork) {
       const updatedIds = addOrRemoveCollectionIdFromIds(
         removeFromCollectionIDs,
