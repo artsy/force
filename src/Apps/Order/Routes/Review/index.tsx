@@ -408,6 +408,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
   return (
     <Box data-test="orderReview">
       <OrderRouteContainer
+        order={order}
         currentStep="Review"
         steps={routeSteps}
         content={
@@ -531,6 +532,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...PaymentMethodSummaryItem_order
         ...ShippingArtaSummaryItem_order
         ...OfferSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

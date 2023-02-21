@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15c8aa851a0a445c14a394de73af25a2>>
+ * @generated SignedSource<<2e3d291efd1573d3b1f82596015a04e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,7 +63,7 @@ export type Offer_order$data = {
   readonly mode: CommerceOrderModeEnum | null;
   readonly state: CommerceOrderStateEnum;
   readonly totalListPriceCents: number;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "PriceOptions_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PriceOptions_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Offer_order";
 };
 export type Offer_order$key = {
@@ -320,6 +320,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "PriceOptions_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -327,6 +332,6 @@ return {
 };
 })();
 
-(node as any).hash = "a1867bbac372e425b11e65589e96fc5a";
+(node as any).hash = "f10ce1a42914cc2b5a5ad3456e77bf16";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a37d571d8e6381684bfcfc4ecf137a0>>
+ * @generated SignedSource<<0861b4422904affe9e2a8624597a92e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type Reject_order$data = {
     } | null> | null;
   } | null;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order">;
   readonly " $fragmentType": "Reject_order";
 };
 export type Reject_order$key = {
@@ -137,6 +137,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -144,6 +149,6 @@ return {
 };
 })();
 
-(node as any).hash = "def98f0fc0af3d3644b54bd8113de8c3";
+(node as any).hash = "255f829cc42e081da5d21f1a720856a1";
 
 export default node;

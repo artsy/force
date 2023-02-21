@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1586cf5e52a6dea82b200db7a33dc6c>>
+ * @generated SignedSource<<845954cb7e9ebe4e5af1a104ae9f77d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,7 +44,7 @@ export type Review_order$data = {
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
 export type Review_order$key = {
@@ -279,6 +279,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "OfferSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -286,6 +291,6 @@ return {
 };
 })();
 
-(node as any).hash = "8e57e03a900d4f0df50a6aa6fc427f90";
+(node as any).hash = "8a942ae1c0810a549f305790a2c1049b";
 
 export default node;

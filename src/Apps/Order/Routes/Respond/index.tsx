@@ -211,6 +211,7 @@ export const RespondRoute: FC<RespondProps> = ({
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Respond"
       steps={counterofferFlowSteps}
       content={
@@ -375,6 +376,7 @@ export const RespondFragmentContainer = createFragmentContainer(
         ...ShippingSummaryItem_order
         ...PaymentMethodSummaryItem_order
         ...OfferHistoryItem_order
+        ...OrderStepper_order
       }
     `,
   }
