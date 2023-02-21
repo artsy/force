@@ -13,7 +13,7 @@ import {
   SelectListsForArtworkHeaderPlaceholder,
   SelectListsPlaceholder,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
-import { difference, uniq } from "lodash"
+import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
@@ -38,16 +38,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const savedCollection = me?.defaultSaves
   const nodes = extractNodes(me?.collectionsConnection)
   const collections = savedCollection ? [savedCollection, ...nodes] : nodes
-  const selectedCollectionsByDefault = collections.filter(
-    collection => collection.isSavedArtwork
-  )
-  const selectedCollectionIdsByDefault = selectedCollectionsByDefault.map(
-    collection => collection.internalID
-  )
-  const selectedCollectionIds = difference(
-    uniq([...addToCollectionIDs, ...selectedCollectionIdsByDefault]),
-    removeFromCollectionIDs
-  )
+  const selectedCollectionIds = getSelectedCollectionIds({
+    collections,
+    addToCollectionIDs,
+    removeFromCollectionIDs,
+  })
   const hasChanges =
     addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
 
