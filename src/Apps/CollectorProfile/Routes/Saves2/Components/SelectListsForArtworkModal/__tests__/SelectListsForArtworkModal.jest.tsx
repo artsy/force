@@ -50,7 +50,7 @@ describe("SelectListsForArtworkModal", () => {
     expect(collectionEntityThree).toBeInTheDocument()
   })
 
-  describe("where no selected collections by default", () => {
+  describe("without selected collections by default", () => {
     it("default state", async () => {
       renderWithRelay({
         CollectionsConnection: () => unselectedCollectionsConnection,
@@ -62,80 +62,17 @@ describe("SelectListsForArtworkModal", () => {
       expect(entity).toBeInTheDocument()
     })
 
-    describe("when user selected collections", () => {
-      it("one collection", async () => {
-        renderWithRelay({
-          CollectionsConnection: () => unselectedCollectionsConnection,
-        })
-
-        await waitForModalToBePresented()
-
-        // Select flow
-        fireEvent.click(screen.getByText("Collection 1"))
-
-        const selectedOptionsBefore = screen.queryAllByRole("option", {
-          selected: true,
-        })
-
-        expect(screen.getByText("1 list selected")).toBeInTheDocument()
-        expect(selectedOptionsBefore.length).toBe(1)
-        expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
-
-        // Unselect flow
-        fireEvent.click(screen.getByText("Collection 1"))
-
-        const selectedOptionsAfter = screen.queryAllByRole("option", {
-          selected: true,
-        })
-
-        expect(screen.getByText("0 lists selected")).toBeInTheDocument()
-        expect(selectedOptionsAfter.length).toBe(0)
-      })
-
-      it("multiple collections", async () => {
-        renderWithRelay({
-          CollectionsConnection: () => unselectedCollectionsConnection,
-        })
-
-        await waitForModalToBePresented()
-
-        // Select flow
-        fireEvent.click(screen.getByText("Collection 1"))
-        fireEvent.click(screen.getByText("Collection 2"))
-
-        const selectedOptionsBefore = screen.queryAllByRole("option", {
-          selected: true,
-        })
-
-        expect(screen.getByText("2 lists selected")).toBeInTheDocument()
-        expect(selectedOptionsBefore.length).toBe(2)
-        expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
-        expect(selectedOptionsBefore[1]).toHaveTextContent("Collection 2")
-
-        // Unselect flow
-        fireEvent.click(screen.getByText("Collection 1"))
-        fireEvent.click(screen.getByText("Collection 2"))
-
-        const selectedOptionsAfter = screen.queryAllByRole("option", {
-          selected: true,
-        })
-
-        expect(screen.getByText("0 lists selected")).toBeInTheDocument()
-        expect(selectedOptionsAfter.length).toBe(0)
-      })
-    })
-  })
-
-  describe("selected collections by default", () => {
-    it("unselect the default selected collection", async () => {
+    it("select one collection", async () => {
       renderWithRelay({
-        CollectionsConnection: () => collectionsConnection,
+        CollectionsConnection: () => unselectedCollectionsConnection,
       })
 
       await waitForModalToBePresented()
 
-      // Before
-      const selectedOptionsBefore = screen.getAllByRole("option", {
+      // Select flow
+      fireEvent.click(screen.getByText("Collection 1"))
+
+      const selectedOptionsBefore = screen.queryAllByRole("option", {
         selected: true,
       })
 
@@ -143,7 +80,7 @@ describe("SelectListsForArtworkModal", () => {
       expect(selectedOptionsBefore.length).toBe(1)
       expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
 
-      // After
+      // Unselect flow
       fireEvent.click(screen.getByText("Collection 1"))
 
       const selectedOptionsAfter = screen.queryAllByRole("option", {
@@ -154,7 +91,74 @@ describe("SelectListsForArtworkModal", () => {
       expect(selectedOptionsAfter.length).toBe(0)
     })
 
-    it("select other collection", async () => {
+    it("select multiple collections", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => unselectedCollectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      // Select flow
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Collection 2"))
+
+      const selectedOptionsBefore = screen.queryAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("2 lists selected")).toBeInTheDocument()
+      expect(selectedOptionsBefore.length).toBe(2)
+      expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
+      expect(selectedOptionsBefore[1]).toHaveTextContent("Collection 2")
+
+      // Unselect flow
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Collection 2"))
+
+      const selectedOptionsAfter = screen.queryAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("0 lists selected")).toBeInTheDocument()
+      expect(selectedOptionsAfter.length).toBe(0)
+    })
+  })
+
+  describe("with selected collections by default", () => {
+    it("default state", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      const selectedOptions = screen.getAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("1 list selected")).toBeInTheDocument()
+      expect(selectedOptions.length).toBe(1)
+      expect(selectedOptions[0]).toHaveTextContent("Collection 1")
+    })
+
+    it("unselect the default selected collection", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      fireEvent.click(screen.getByText("Collection 1"))
+
+      const selectedOptionsAfter = screen.queryAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("0 lists selected")).toBeInTheDocument()
+      expect(selectedOptionsAfter.length).toBe(0)
+    })
+
+    it("select some other collection", async () => {
       renderWithRelay({
         CollectionsConnection: () => collectionsConnection,
       })
@@ -171,6 +175,25 @@ describe("SelectListsForArtworkModal", () => {
       expect(selectedOptions.length).toBe(2)
       expect(selectedOptions[0]).toHaveTextContent("Collection 1")
       expect(selectedOptions[1]).toHaveTextContent("Collection 2")
+    })
+
+    it("unselect the default selected collection, select some other collection", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Collection 2"))
+
+      const selectedOptions = screen.getAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("1 list selected")).toBeInTheDocument()
+      expect(selectedOptions.length).toBe(1)
+      expect(selectedOptions[0]).toHaveTextContent("Collection 2")
     })
   })
 })
