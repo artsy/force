@@ -93,6 +93,15 @@ export const MeetTheSpecialists: React.FC = () => {
                 SPECIALISTS.filter(i => i.specialty === pill.type)
               )
             }}
+            style={
+              selectedSpecialty === pill.type
+                ? {
+                    color: "white",
+                    backgroundColor: "black",
+                    borderColor: "black",
+                  }
+                : undefined
+            }
           >
             {pill.title}
           </Pill>
