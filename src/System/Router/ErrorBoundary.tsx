@@ -2,8 +2,9 @@ import * as React from "react"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
 import { ErrorPage } from "Components/ErrorPage"
-import { Button, ThemeProviderV3 } from "@artsy/palette"
+import { Button, Spacer, ThemeProviderV3 } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
+import { getENV } from "Utils/getENV"
 
 const logger = createLogger()
 
@@ -12,21 +13,19 @@ interface Props {
   onCatch?: () => void
 }
 
+type Kind = "Pending" | "AsyncChunkLoadError" | "GenericError"
+
 interface State {
-  asyncChunkLoadError: boolean
-  detail: string
-  genericError: boolean
-  isError: boolean
+  kind: Kind
+  detail?: string
   message: string
 }
 
 export class ErrorBoundary extends React.Component<Props, State> {
   state: State = {
-    asyncChunkLoadError: false,
     detail: "",
-    genericError: false,
-    isError: false,
     message: "",
+    kind: "Pending",
   }
 
   componentDidCatch(error: Error, errorInfo) {
@@ -38,8 +37,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error) {
-    const message = error?.message || "Internal Server Error"
-    const detail = error.stack
+    const displayStackTrace = getENV("NODE_ENV") === "development"
+    const message = `${error?.message || "Internal Server Error"}
+Current URL: ${window.location.href}
+Time: ${new Date().toUTCString()}`
+    const detail = displayStackTrace ? error.stack : undefined
 
     /**
      * Check to see if there's been a network error while asynchronously loading
@@ -50,75 +52,73 @@ export class ErrorBoundary extends React.Component<Props, State> {
      */
     if (error.message.match(/Loading chunk .* failed/)) {
       return {
-        isError: true,
-        asyncChunkLoadError: true,
+        kind: "AsyncChunkLoadError",
         detail,
         message,
       }
     }
 
     return {
-      isError: true,
-      genericError: true,
+      kind: "GenericError",
       detail,
       message,
     }
   }
 
   render() {
-    const {
-      asyncChunkLoadError,
-      detail,
-      genericError,
-      isError,
-      message,
-    } = this.state
+    const { kind, detail, message } = this.state
 
-    if (isError) {
-      return (
-        <ThemeProviderV3>
-          <LayoutLogoOnly>
-            {(() => {
-              switch (true) {
-                case asyncChunkLoadError: {
-                  return (
-                    <ErrorPage
-                      code={500}
-                      message="Please check your network connection and try again."
-                    >
-                      <Button
-                        mt={2}
-                        size="small"
-                        variant="secondaryBlack"
-                        onClick={() => window.location.reload()}
-                      >
-                        Reload
-                      </Button>
-                    </ErrorPage>
-                  )
-                }
-
-                case genericError: {
-                  return (
-                    <ErrorPage code={500} message={message} detail={detail}>
-                      <Button
-                        mt={2}
-                        size="small"
-                        variant="secondaryBlack"
-                        onClick={() => window.location.reload()}
-                      >
-                        Reload
-                      </Button>
-                    </ErrorPage>
-                  )
-                }
-              }
-            })()}
-          </LayoutLogoOnly>
-        </ThemeProviderV3>
-      )
+    const handleClick = () => {
+      window.location.reload()
     }
 
-    return this.props.children
+    switch (kind) {
+      case "AsyncChunkLoadError": {
+        return (
+          <ThemeProviderV3>
+            <LayoutLogoOnly>
+              <ErrorPage
+                code={500}
+                message="Please check your network connection and try again."
+              >
+                <Spacer y={2} />
+
+                <Button
+                  size="small"
+                  variant="secondaryBlack"
+                  onClick={handleClick}
+                >
+                  Reload
+                </Button>
+              </ErrorPage>
+            </LayoutLogoOnly>
+          </ThemeProviderV3>
+        )
+      }
+
+      case "GenericError": {
+        return (
+          <ThemeProviderV3>
+            <LayoutLogoOnly>
+              <ErrorPage code={500} message={message} detail={detail}>
+                <Spacer y={2} />
+
+                <Button
+                  size="small"
+                  variant="secondaryBlack"
+                  onClick={handleClick}
+                >
+                  Reload
+                </Button>
+              </ErrorPage>
+            </LayoutLogoOnly>
+          </ThemeProviderV3>
+        )
+      }
+
+      case "Pending": {
+        return this.props.children
+      }
+    }
   }
 }
