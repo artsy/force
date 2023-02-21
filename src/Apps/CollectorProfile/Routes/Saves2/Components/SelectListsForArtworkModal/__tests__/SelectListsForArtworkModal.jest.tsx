@@ -125,6 +125,54 @@ describe("SelectListsForArtworkModal", () => {
       })
     })
   })
+
+  describe("selected collections by default", () => {
+    it("unselect the default selected collection", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      // Before
+      const selectedOptionsBefore = screen.getAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("1 list selected")).toBeInTheDocument()
+      expect(selectedOptionsBefore.length).toBe(1)
+      expect(selectedOptionsBefore[0]).toHaveTextContent("Collection 1")
+
+      // After
+      fireEvent.click(screen.getByText("Collection 1"))
+
+      const selectedOptionsAfter = screen.queryAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("0 lists selected")).toBeInTheDocument()
+      expect(selectedOptionsAfter.length).toBe(0)
+    })
+
+    it("select other collection", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      fireEvent.click(screen.getByText("Collection 2"))
+
+      const selectedOptions = screen.getAllByRole("option", {
+        selected: true,
+      })
+
+      expect(screen.getByText("2 lists selected")).toBeInTheDocument()
+      expect(selectedOptions.length).toBe(2)
+      expect(selectedOptions[0]).toHaveTextContent("Collection 1")
+      expect(selectedOptions[1]).toHaveTextContent("Collection 2")
+    })
+  })
 })
 
 const waitForModalToBePresented = () => {
