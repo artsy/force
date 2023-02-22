@@ -579,6 +579,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   return (
     <Box data-test="orderShipping">
       <OrderRouteContainer
+        order={order}
         currentStep="Shipping"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
@@ -811,6 +812,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
+        ...OrderStepper_order
       }
     `,
     me: graphql`

@@ -6,11 +6,9 @@ import { ArtworkSidebarPartnerInfoFragmentContainer } from "Apps/Artwork/Compone
 import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
 
 const trackEvent = jest.fn()
@@ -29,14 +27,9 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebarPartnerInfo", () => {
-  const mockUseSystemContext = useSystemContext as jest.Mock
-
   beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
-    }))
-    mockUseSystemContext.mockImplementation(() => ({
-      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
     }))
   })
 

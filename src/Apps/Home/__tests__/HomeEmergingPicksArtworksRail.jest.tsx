@@ -29,62 +29,59 @@ describe("HomeEmergingPicksArtworksRail", () => {
 
   it("renders correctly", () => {
     const wrapper = getWrapper({
-      Viewer: () => ({
-        artworksConnection: {
-          edges: [
-            {
-              node: {
-                title: "Test Artwork",
-                href: "test-href",
-              },
-            },
-          ],
-        },
-      }),
+      Viewer: () => artworksConnection,
     })
 
     expect(wrapper.text()).toContain("Test Artwork")
     expect(wrapper.html()).toContain("test-href")
-  }),
-    it("tracks artwork click", () => {
-      const wrapper = getWrapper({
-        Viewer: () => ({
-          artworksConnection: {
-            edges: [
-              {
-                node: {
-                  title: "Test Artwork",
-                  href: "test-href",
-                },
-              },
-            ],
-          },
-        }),
-      })
+  })
 
-      wrapper.find("Shelf").find("RouterLink").first().simulate("click")
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArtworkGroup",
-        context_module: "troveArtworksRail",
-        context_page_owner_type: "home",
-        destination_page_owner_id: "<Artwork-mock-id-7>",
-        destination_page_owner_slug: "<Artwork-mock-id-8>",
-        destination_page_owner_type: "artwork",
-        type: "thumbnail",
-      })
-    }),
-    it("tracks view all", () => {
-      const wrapper = getWrapper()
-
-      wrapper.find("RouterLink").first().simulate("click")
-      expect(trackEvent).toBeCalledWith({
-        action: "clickedArtworkGroup",
-        context_module: "troveArtworksRail",
-        context_page_owner_type: "home",
-        destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-        destination_page_owner_slug: "curators-picks-emerging",
-        destination_page_owner_type: "collection",
-        type: "viewAll",
-      })
+  it("tracks artwork click", () => {
+    const wrapper = getWrapper({
+      Viewer: () => artworksConnection,
     })
+
+    wrapper.find("Shelf").find("RouterLink").first().simulate("click")
+    expect(trackEvent).toBeCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "troveArtworksRail",
+      context_page_owner_type: "home",
+      destination_page_owner_id: "artwork-id",
+      destination_page_owner_slug: "artwork-slug",
+      destination_page_owner_type: "artwork",
+      type: "thumbnail",
+    })
+  })
+
+  it("tracks view all", () => {
+    const wrapper = getWrapper({
+      Viewer: () => artworksConnection,
+    })
+
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toBeCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "troveArtworksRail",
+      context_page_owner_type: "home",
+      destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
+      destination_page_owner_slug: "curators-picks-emerging",
+      destination_page_owner_type: "collection",
+      type: "viewAll",
+    })
+  })
 })
+
+const artworksConnection = {
+  artworksConnection: {
+    edges: [
+      {
+        node: {
+          title: "Test Artwork",
+          href: "test-href",
+          internalID: "artwork-id",
+          slug: "artwork-slug",
+        },
+      },
+    ],
+  },
+}

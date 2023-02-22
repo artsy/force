@@ -21,45 +21,49 @@ import { compact } from "lodash"
 import { CellArtistFragmentContainer } from "Components/Cells/CellArtist"
 
 interface ArtistsIndexProps {
-  featuredArtists: ArtistsIndex_featuredArtists$data
-  featuredGenes: ArtistsIndex_featuredGenes$data
+  featuredArtists: ArtistsIndex_featuredArtists$data | null
+  featuredGenes: ArtistsIndex_featuredGenes$data | null
 }
 
 export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
   featuredArtists,
   featuredGenes,
 }) => {
-  const [{ name: headline, artists }] = featuredArtists
-  const [{ genes }] = featuredGenes
+  const [featuredArtistsSet] = featuredArtists ?? []
+  const [featuredGenesSet] = featuredGenes ?? []
+
+  const headline = featuredArtistsSet?.name ?? "Artists"
+  const artists = compact(featuredArtistsSet?.artists) ?? []
+  const genes = compact(featuredGenesSet?.genes) ?? []
 
   return (
     <>
       <ArtistsIndexMeta />
 
-      <GridColumns mt={4} gridRowGap={[2, 0]}>
-        <Column span={6}>
-          <Text as="h1" variant="xl" mb={1}>
-            {headline}
-          </Text>
+      <Spacer y={4} />
 
-          <Breadcrumbs>
-            <RouterLink to="">Browse over 100,000 artists</RouterLink>
-          </Breadcrumbs>
-        </Column>
+      <Join separator={<Spacer y={6} />}>
+        <GridColumns gridRowGap={[2, 0]}>
+          <Column span={6}>
+            <Text as="h1" variant="xl" mb={1}>
+              {headline}
+            </Text>
 
-        <Column span={6}>
-          <ArtistsLetterNav />
-        </Column>
-      </GridColumns>
+            <Breadcrumbs>
+              <RouterLink to="">Browse over 100,000 artists</RouterLink>
+            </Breadcrumbs>
+          </Column>
 
-      <Media greaterThan="xs">
-        <Spacer y={6} />
+          <Column span={6}>
+            <ArtistsLetterNav />
+          </Column>
+        </GridColumns>
 
-        {artists && (
-          <Shelf my={2}>
-            {compact(
-              artists.map((featuredLink, index) => {
-                if (!featuredLink?.internalID) return null
+        {artists.length > 0 && (
+          <Media greaterThan="xs">
+            <Shelf>
+              {artists.map((featuredLink, index) => {
+                if (!featuredLink?.internalID) return <></>
 
                 return (
                   <ArtistsCarouselCellFragmentContainer
@@ -68,59 +72,70 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                     index={index}
                   />
                 )
-              })
-            )}
-          </Shelf>
+              })}
+            </Shelf>
+          </Media>
         )}
-      </Media>
 
-      <Spacer y={6} />
+        {genes.length > 0 && (
+          <Join separator={<Spacer y={6} />}>
+            {genes.map((gene, i) => {
+              if (
+                !gene ||
+                !gene.trendingArtists ||
+                gene.trendingArtists.length === 0
+              ) {
+                return null
+              }
 
-      {genes && (
-        <Join separator={<Spacer y={6} />}>
-          {genes?.map((gene, i) => {
-            if (
-              !gene ||
-              !gene.trendingArtists ||
-              gene.trendingArtists.length === 0
-            )
-              return null
+              return (
+                <Box key={gene.name ?? i}>
+                  <Box display="flex" justifyContent="space-between">
+                    <RouterLink
+                      to={gene.href!}
+                      textDecoration="none"
+                      display="block"
+                    >
+                      <Text variant="lg-display" as="h2" lineClamp={2}>
+                        {gene.name}
+                      </Text>
+                    </RouterLink>
 
-            return (
-              <React.Fragment key={gene.name ?? i}>
-                <Box display="flex" justifyContent="space-between" mb={2}>
-                  <RouterLink to={gene.href!} noUnderline>
-                    <Text variant="lg-display" as="h2">
-                      {gene.name}
-                    </Text>
-                  </RouterLink>
+                    <Spacer x={2} />
 
-                  <RouterLink to={gene.href!} noUnderline>
-                    <Text variant="sm-display" color="black60">
-                      View
-                    </Text>
-                  </RouterLink>
+                    <RouterLink
+                      to={gene.href!}
+                      textDecoration="none"
+                      display="block"
+                    >
+                      <Text variant="sm-display" color="black60">
+                        View
+                      </Text>
+                    </RouterLink>
+                  </Box>
+
+                  <Spacer y={2} />
+
+                  <GridColumns gridRowGap={4}>
+                    {gene.trendingArtists.map(artist => {
+                      if (!artist) return null
+
+                      return (
+                        <Column key={artist.internalID} span={[12, 6, 3, 3]}>
+                          <CellArtistFragmentContainer
+                            mode="GRID"
+                            artist={artist}
+                          />
+                        </Column>
+                      )
+                    })}
+                  </GridColumns>
                 </Box>
-
-                <GridColumns>
-                  {gene.trendingArtists.map(artist => {
-                    if (!artist) return null
-
-                    return (
-                      <Column key={artist.internalID} span={[12, 6, 3, 3]}>
-                        <CellArtistFragmentContainer
-                          mode="GRID"
-                          artist={artist}
-                        />
-                      </Column>
-                    )
-                  })}
-                </GridColumns>
-              </React.Fragment>
-            )
-          })}
-        </Join>
-      )}
+              )
+            })}
+          </Join>
+        )}
+      </Join>
     </>
   )
 }

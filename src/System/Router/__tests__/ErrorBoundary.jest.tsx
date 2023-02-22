@@ -1,5 +1,9 @@
 import { mount } from "enzyme"
-import { ErrorBoundary } from "../ErrorBoundary"
+import { ErrorBoundary } from "System/Router/ErrorBoundary"
+
+jest.mock("Utils/getENV", () => ({
+  getENV: () => "development",
+}))
 
 describe("ErrorBoundary", () => {
   const errorLog = console.error
@@ -39,7 +43,7 @@ describe("ErrorBoundary", () => {
     expect(ErrorBoundary.prototype.componentDidCatch).toHaveBeenCalled()
   })
 
-  it("updates `errorStack` state with stack trace", () => {
+  it("updates `detail` state with stack trace", () => {
     const ErrorComponent = () => {
       throw new Error("throw error")
       return null
@@ -56,7 +60,7 @@ describe("ErrorBoundary", () => {
     expect(state.detail).toContain("Error: throw error")
   })
 
-  it("shows error page when genericError is true", () => {
+  it("shows error page when the error kind is GenericError", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
@@ -64,8 +68,7 @@ describe("ErrorBoundary", () => {
     )
 
     wrapper.setState({
-      isError: true,
-      genericError: true,
+      kind: "GenericError",
     })
 
     wrapper.update()
@@ -73,7 +76,7 @@ describe("ErrorBoundary", () => {
     expect(wrapper.find("ErrorPage").length).toEqual(1)
   })
 
-  it("shows error page when asyncChunkLoadError is true", () => {
+  it("shows error page when the error kind is AsyncChunkLoadError", () => {
     const wrapper = mount(
       <ErrorBoundary>
         <div>erroneous render</div>
@@ -81,8 +84,7 @@ describe("ErrorBoundary", () => {
     )
 
     wrapper.setState({
-      isError: true,
-      asyncChunkLoadError: true,
+      kind: "AsyncChunkLoadError",
     })
 
     wrapper.update()
@@ -90,27 +92,23 @@ describe("ErrorBoundary", () => {
     expect(wrapper.find("ErrorPage").length).toEqual(1)
   })
 
-  it("sets async chunk load error", () => {
-    expect(
-      ErrorBoundary.getDerivedStateFromError({
-        name: "error",
-        message: "generic error",
-      })
-    ).toEqual({
-      genericError: true,
-      isError: true,
+  it("derives state for a generic error", () => {
+    const state = ErrorBoundary.getDerivedStateFromError({
+      name: "error",
       message: "generic error",
     })
 
-    expect(
-      ErrorBoundary.getDerivedStateFromError({
-        name: "error",
-        message: "Loading chunk c3495.js failed",
-      })
-    ).toEqual({
-      asyncChunkLoadError: true,
-      isError: true,
+    expect(state.kind).toBe("GenericError")
+    expect(state.message).toContain("generic error")
+  })
+
+  it("derives state for an async chunk load error", () => {
+    const state = ErrorBoundary.getDerivedStateFromError({
+      name: "error",
       message: "Loading chunk c3495.js failed",
     })
+
+    expect(state.kind).toBe("AsyncChunkLoadError")
+    expect(state.message).toContain("Loading chunk c3495.js failed")
   })
 })

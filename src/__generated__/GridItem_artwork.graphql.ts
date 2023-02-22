@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a6b31277e7de58f7c9d7f1e96bc26a8c>>
+ * @generated SignedSource<<5a8cb950cf951a0f4bbcc5e201223665>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type GridItem_artwork$data = {
   readonly imageTitle: string | null;
   readonly internalID: string;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork" | "SaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "GridItem_artwork";
 };
 export type GridItem_artwork$key = {
@@ -143,11 +143,6 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SaveButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "Badge_artwork"
     }
   ],
@@ -156,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "cc706764048e427219ade8fc37fa131b";
+(node as any).hash = "4f2eeda7d15a4f217dca36ab130d55a6";
 
 export default node;

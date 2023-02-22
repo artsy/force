@@ -34,6 +34,7 @@ import { ServerStyleSheet } from "styled-components"
 import {
   ArtsyLogoBlackIcon,
   injectGlobalStyles,
+  Spacer,
   ThemeProviderV3,
 } from "@artsy/palette"
 import createLogger from "Utils/logger"
@@ -65,7 +66,10 @@ export const errorHandlerMiddleware = async (
     }
   })()
 
-  const message = err.message || err.text || "Internal Server Error"
+  const message = `${err.message || err.text || "Internal Server Error"}
+Current URL: ${`${req.protocol}://${req.get("host")}${req.originalUrl}`}
+Time: ${new Date().toUTCString()}`
+
   const detail = err.stack
 
   if (enableLogging && err.status !== 404) {
@@ -83,19 +87,24 @@ export const errorHandlerMiddleware = async (
         <ThemeProviderV3>
           <GlobalStyles />
 
-          <AppContainer my={4}>
+          <AppContainer>
+            <Spacer y={4} />
+
             <HorizontalPadding>
               <a href="/" style={{ display: "block" }}>
                 <ArtsyLogoBlackIcon />
               </a>
 
+              <Spacer y={4} />
+
               <ErrorPage
-                mt={4}
                 code={code}
-                message={displayStackTrace ? message : undefined}
+                message={message}
                 detail={displayStackTrace ? detail : undefined}
               />
             </HorizontalPadding>
+
+            <Spacer y={4} />
           </AppContainer>
         </ThemeProviderV3>
       )

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c43f81172a0528b3b580861d768c196d>>
+ * @generated SignedSource<<b4365ab23abe2c5467ce02624637cb3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -68,7 +68,7 @@ export type Shipping_order$data = {
     readonly __typename: "%other";
   } | null;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };
 export type Shipping_order$key = {
@@ -355,6 +355,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -362,6 +367,6 @@ return {
 };
 })();
 
-(node as any).hash = "5c1b57a0e809e02a3874e25d4bc51b0a";
+(node as any).hash = "3720bc2915f2de540a7e198c5122956d";
 
 export default node;

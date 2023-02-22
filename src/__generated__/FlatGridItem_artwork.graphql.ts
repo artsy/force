@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42055465ffd35cf1efd1939b7e7471b6>>
+ * @generated SignedSource<<fdac9f82ea91872760a6707a2e13b738>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type FlatGridItem_artwork$data = {
     readonly lotID: string | null;
   } | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"DeprecatedSaveButton_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "FlatGridItem_artwork";
 };
 export type FlatGridItem_artwork$key = {
@@ -63,7 +63,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SaveButton_artwork"
+      "name": "DeprecatedSaveButton_artwork"
     },
     {
       "alias": null,
@@ -246,6 +246,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e3da57474fe714d1046d43034cd5e3aa";
+(node as any).hash = "25984e7efdc2bf9753b9e063c7c13027";
 
 export default node;

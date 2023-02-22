@@ -364,6 +364,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   return (
     <Box data-test="orderPayment">
       <OrderRouteContainer
+        order={order}
         currentStep="Payment"
         steps={routeSteps}
         content={
@@ -499,6 +500,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

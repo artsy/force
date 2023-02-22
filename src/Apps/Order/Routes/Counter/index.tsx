@@ -121,6 +121,7 @@ export const CounterRoute: FC<CounterProps> = props => {
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Review"
       steps={counterofferFlowSteps}
       content={
@@ -219,6 +220,7 @@ export const CounterFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...OrderStepper_order
         ...TransactionDetailsSummaryItem_order
         ...ArtworkSummaryItem_order
         ...ShippingSummaryItem_order

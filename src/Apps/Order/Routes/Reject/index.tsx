@@ -91,6 +91,7 @@ export const Reject: FC<RejectProps> = ({
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Review"
       steps={counterofferFlowSteps}
       content={
@@ -187,6 +188,7 @@ export const RejectFragmentContainer = createFragmentContainer(
           }
         }
         ...ArtworkSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

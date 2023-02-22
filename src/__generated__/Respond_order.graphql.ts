@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c8126c147f55ffde07add8ad63da400>>
+ * @generated SignedSource<<89706e5c5d0a022daf3f0ce2f8103784>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ export type Respond_order$data = {
   } | null;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Respond_order";
 };
 export type Respond_order$key = {
@@ -253,6 +253,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "OfferHistoryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -260,6 +265,6 @@ return {
 };
 })();
 
-(node as any).hash = "2eade9e7c194416e1bd4a36281ac7597";
+(node as any).hash = "45e63b570eec8458e189de28d39d1292";
 
 export default node;

@@ -102,7 +102,6 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ShelfArtwork_artwork on Artwork {
         ...Metadata_artwork
-        ...SaveButton_artwork
         title
         href
         artistNames

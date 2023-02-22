@@ -81,6 +81,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const upcomingAuctionResultsCount =
     artist.upcomingAuctionResults?.totalCount || 0
   const pastAuctionResultsCount = artist.pastAuctionResults?.totalCount || 0
+  const showUpcomingAuctionResults = upcomingAuctionResultsCount > 0
 
   const { match } = useRouter()
 
@@ -253,7 +254,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         <AuctionFilterMobileActionSheet
           onClose={() => toggleMobileActionSheet(false)}
         >
-          <AuctionFilters />
+          <AuctionFilters
+            showUpcomingAuctionResults={showUpcomingAuctionResults}
+          />
         </AuctionFilterMobileActionSheet>
       )}
 
@@ -278,7 +281,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <GridColumns>
         <Column span={3}>
           <Media greaterThan="xs">
-            <TableSidebar />
+            <TableSidebar
+              showUpcomingAuctionResults={showUpcomingAuctionResults}
+            />
           </Media>
         </Column>
 

@@ -4,8 +4,6 @@ import {
   GridColumns,
   Column,
   Box,
-  Separator,
-  FullBleed,
   BoxProps,
 } from "@artsy/palette"
 import * as React from "react"
@@ -54,23 +52,15 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
 
       {code >= 500 && (detail || message) && (
         <>
-          <FullBleed>
-            <Separator my={4} />
-          </FullBleed>
+          <Spacer y={4} />
 
-          <Code
-            as="pre"
-            border="1px solid"
-            borderColor="black10"
-            color="black100"
-            px={1}
-            py={0.5}
-            mx={-1}
-            maxHeight={600}
-          >
-            {message}
-            {detail}
-          </Code>
+          {message && (
+            <Message color={detail ? "black100" : "black60"}>{message}</Message>
+          )}
+
+          {detail && (
+            <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>
+          )}
         </>
       )}
     </Box>
@@ -86,6 +76,27 @@ const Code = styled(Box)`
   text-align: left;
   word-break: break-word;
   overflow-x: auto;
+  white-space: pre;
+`
+
+const Message = styled(Code).attrs({
+  border: "1px solid",
+  borderColor: "black10",
+  px: 1,
+  py: 0.5,
+  mx: -1,
+})``
+
+const Detail = styled(Code).attrs({
+  border: "1px solid",
+  borderColor: "black10",
+  px: 1,
+  py: 0.5,
+  mx: -1,
+  maxHeight: 600,
+})`
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 `
 
 const ERROR_MESSAGES = {

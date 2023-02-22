@@ -1,5 +1,5 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Button, Text } from "@artsy/palette"
+import { Box, Button, Spacer, Text } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
@@ -11,13 +11,13 @@ import {
   uploadPhotosValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
   AUTOMATICALLY_ADDED_PHOTO_NAME,
   normalizePhoto,
   Photo,
 } from "Components/PhotoUpload/Utils/fileUtils"
+import { TopContextBar } from "Components/TopContextBar"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
 import { findLast } from "lodash"
@@ -206,7 +206,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
       : "/sell"
 
     let backTo = defaultBackLink
-    if (stepIndex === 0 && artworkId) {
+    if (isFirstStep && artworkId) {
       return backTo + `/artwork/${artworkId}`
     }
     let prevStep = ""
@@ -238,9 +238,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   return (
     <>
-      <BackLink py={2} mb={6} width="min-content" to={backTo}>
+      <TopContextBar displayBackArrow hideSeparator href={backTo}>
         Back
-      </BackLink>
+      </TopContextBar>
+
+      <Spacer y={6} />
 
       <SubmissionStepper currentStep="Upload Photos" />
 

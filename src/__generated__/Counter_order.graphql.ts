@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3fb48bb2be5c3155aa9c45dd67aee12>>
+ * @generated SignedSource<<406d964a4fe09e27c9e825efd9046da3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type Counter_order$data = {
   } | null;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Counter_order";
 };
 export type Counter_order$key = {
@@ -181,6 +181,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
     },
     {
@@ -209,6 +214,6 @@ return {
 };
 })();
 
-(node as any).hash = "c5a2659e86e09f7d2a9f2469f551f3b7";
+(node as any).hash = "fd5fc3e92532f2ab83a525dfce8ae213";
 
 export default node;

@@ -126,6 +126,10 @@
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
       "remainingCharactersCount_one": "{{count}} character remaining",
       "remainingCharactersCount_other": "{{count}} characters remaining"
+    },
+    "selectedListsForArtwork": {
+      "listsCount_one": "{{count}} list selected",
+      "listsCount_other": "{{count}} lists selected"
     }
   },
   "navbar": {

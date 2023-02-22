@@ -2,20 +2,70 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled, { css } from "styled-components"
-import { CloseIcon, Flex, HeartIcon, Clickable } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
-import { useState } from "react"
+import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
-
-export interface SaveTrackingProps {
-  context_page?: string
-}
+import { useState } from "react"
+import { isTouch } from "Utils/device"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
   contextModule: AuthContextModule
+}
+
+interface SaveButtonBaseProps {
+  isSaved: boolean
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
+
+const BTN_HEIGHT = 20
+const BTN_WIDTH = 20
+
+export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
+  isSaved,
+  onClick,
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+  const title = isSaved ? "Unsave" : "Save"
+
+  const handleMouseEnter = () => {
+    if (!isTouch) {
+      setIsHovered(true)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (!isTouch) {
+      setIsHovered(false)
+    }
+  }
+
+  return (
+    <Clickable
+      data-test="saveButton"
+      height={BTN_HEIGHT}
+      width={BTN_WIDTH}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      {isSaved || isHovered ? (
+        <HeartFillIcon
+          title={title}
+          fill="blue100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
+      ) : (
+        <HeartIcon
+          title={title}
+          fill="black100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
+      )}
+    </Clickable>
+  )
 }
 
 export const SaveButton: React.FC<SaveButtonProps> = ({
@@ -23,8 +73,6 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
-  const [isHovered, setIsHovered] = useState(false)
-
   const isSaved = !!artwork.is_saved
 
   const { handleSave } = useSaveArtwork({
@@ -48,58 +96,8 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
     handleSave()
   }
 
-  const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
-
-  return (
-    <Clickable
-      data-test="saveButton"
-      position="absolute"
-      right={10}
-      bottom={10}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Inner isSaved={isSaved}>
-        {isSaved && isHovered ? (
-          <CloseIcon fill="white100" width={24} height={24} />
-        ) : (
-          <HeartIcon fill="white100" width={24} height={24} />
-        )}
-      </Inner>
-    </Clickable>
-  )
+  return <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
 }
-
-const Inner = styled(Flex)<{ isSaved: boolean }>`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-
-  ${({ isSaved }) => {
-    return isSaved
-      ? css`
-          background-color: ${themeGet("colors.brand")};
-          &:hover {
-            background-color: ${themeGet("colors.red100")};
-          }
-        `
-      : css`
-          background-color: rgba(0, 0, 0, 0.4);
-          &:hover {
-            background-color: ${themeGet("colors.black100")};
-          }
-        `
-  }}
-`
 
 export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
   artwork: graphql`

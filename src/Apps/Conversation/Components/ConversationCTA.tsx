@@ -14,13 +14,11 @@ import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { PurchaseOnInquiryButtonFragmentContainer } from "./PurchaseOnInquiryButton"
 import { MakeOfferOnInquiryButtonFragmentContainer } from "./MakeOfferOnInquiryButton"
 import { ConversationCTA_conversation$data } from "__generated__/ConversationCTA_conversation.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation$data
-
-  openInquiryModal: ({ createsOfferOrder: boolean }) => void
+  openInquiryModal: (obj: { createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
 
@@ -41,7 +39,6 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   openInquiryModal,
   openOrderModal,
 }) => {
-  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   // Determine whether we have a conversation about an artwork
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
@@ -77,7 +74,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
             </Flex>
           </Flex>
           <Flex flexDirection="row">
-            {isCBNEnabled && isAcquireable && (
+            {isAcquireable && (
               <PurchaseOnInquiryButtonFragmentContainer
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: false })
@@ -85,7 +82,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
                 conversation={conversation}
               />
             )}
-            {(isOfferableFromInquiry || (isCBNEnabled && isOfferable)) && (
+            {(isOfferableFromInquiry || isOfferable) && (
               <MakeOfferOnInquiryButtonFragmentContainer
                 openInquiryModal={() =>
                   openInquiryModal({ createsOfferOrder: true })
