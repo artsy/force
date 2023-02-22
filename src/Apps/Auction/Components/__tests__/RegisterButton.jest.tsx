@@ -10,7 +10,6 @@ import { useAuthDialog } from "Components/AuthDialog"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
-jest.mock("Server/openAuthModal")
 jest.mock("System/Router/useRouter")
 jest.mock("Components/AuthDialog/useAuthDialog")
 

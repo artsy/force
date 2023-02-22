@@ -71,12 +71,6 @@ describe("AddressModal", () => {
         user: { lab_features: [] },
         isLoggedIn: true,
         relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
       }
     })
   })
@@ -318,12 +312,6 @@ describe("AddressModal feature flag", () => {
         user: { lab_features: ["Phone Number Validation"] },
         isLoggedIn: true,
         relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
       }
     })
   })

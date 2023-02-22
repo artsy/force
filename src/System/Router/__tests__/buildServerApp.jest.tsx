@@ -173,7 +173,6 @@ describe("buildServerApp", () => {
               "isEigen",
               "isFetching",
               "isLoggedIn",
-              "mediator",
               "relayEnvironment",
               "router",
               "routes",

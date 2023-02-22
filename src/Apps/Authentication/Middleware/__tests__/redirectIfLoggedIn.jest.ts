@@ -10,12 +10,12 @@ describe("redirectIfLoggedIn", () => {
         header: (() => "") as any,
         body: {},
         ...req,
-      },
+      } as any,
       res: {
         locals: { sd: {} },
         redirect: redirectSpy,
         ...res,
-      },
+      } as any,
     })
   }
 

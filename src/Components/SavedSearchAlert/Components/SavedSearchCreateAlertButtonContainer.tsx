@@ -3,7 +3,6 @@ import { useToasts } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { AuthModalOptions } from "Utils/openAuthModal"
 import { SavedSearchAlertModalContainer } from "Components/SavedSearchAlert/SavedSearchAlertModal"
 import {
   SavedSearchAlertMutationResult,
@@ -15,6 +14,7 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthDialog } from "Components/AuthDialog"
+import { ShowAuthDialogOptions } from "Components/AuthDialog/AuthDialogContext"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -25,7 +25,7 @@ export interface SavedSearchCreateAlertButtonContainerProps {
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations?: Aggregations
-  authModalOptions: AuthModalOptions
+  authDialogOptions: Omit<ShowAuthDialogOptions, "mode">
 }
 
 interface Props extends SavedSearchCreateAlertButtonContainerProps {
@@ -37,7 +37,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   criteria,
   metric,
   aggregations,
-  authModalOptions,
+  authDialogOptions,
   renderButton,
 }) => {
   const tracking = useTracking()
@@ -78,17 +78,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
       return
     }
 
-    showAuthDialog({
-      mode: "SignUp",
-      options: {
-        title: authModalOptions.copy,
-        afterAuthAction: authModalOptions.afterSignUpAction,
-      },
-      analytics: {
-        intent: authModalOptions.intent,
-        contextModule: authModalOptions.contextModule,
-      },
-    })
+    showAuthDialog({ mode: "SignUp", ...authDialogOptions })
   }
 
   const handleComplete = (result: SavedSearchAlertMutationResult) => {

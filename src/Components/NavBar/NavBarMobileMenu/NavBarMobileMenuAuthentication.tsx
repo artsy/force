@@ -1,19 +1,17 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { ModalType } from "Components/Authentication/Types"
 import { compact } from "lodash"
 import * as React from "react"
 import { useSystemContext } from "System"
-import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { Separator } from "@artsy/palette"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications"
 import { trackEvent } from "Server/analytics/helpers"
+import { logout } from "Utils/auth"
 
 export const NavBarMobileMenuLoggedIn: React.FC = () => {
-  const { mediator } = useSystemContext()
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const handleClick = (
@@ -81,7 +79,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
         href: "#logout",
         onClick: event => {
           event.preventDefault()
-          mediator?.trigger("auth:logout")
+          logout()
         },
       },
     ]),
@@ -115,20 +113,17 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
 }
 
 const NavBarMobileMenuLoggedOut: React.FC = () => {
-  const authLink = (type: ModalType) => {
-    return getMobileAuthLink(type, {
-      intent: Intent[type],
-      contextModule: ContextModule.header,
-    })
-  }
-
   return (
     <>
-      <NavBarMobileMenuItemLink to={authLink(ModalType.signup)}>
+      <NavBarMobileMenuItemLink
+        to={`/signup?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
+      >
         Sign Up
       </NavBarMobileMenuItemLink>
 
-      <NavBarMobileMenuItemLink to={authLink(ModalType.login)}>
+      <NavBarMobileMenuItemLink
+        to={`/login?intent=${Intent.login}&contextModule=${ContextModule.header}`}
+      >
         Log In
       </NavBarMobileMenuItemLink>
     </>

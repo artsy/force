@@ -44,7 +44,6 @@ describe("HomeApp", () => {
   describe.skip("logged out", () => {
     beforeAll(() => {
       mockuseSystemContext.mockImplementation(() => ({
-        mediator: { on: jest.fn() },
         isLoggedIn: false,
       }))
     })
@@ -77,7 +76,6 @@ describe("HomeApp", () => {
   describe("logged in", () => {
     beforeAll(() => {
       mockuseSystemContext.mockImplementation(() => ({
-        mediator: { on: jest.fn() },
         isLoggedIn: true,
       }))
     })

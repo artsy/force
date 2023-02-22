@@ -20,5 +20,9 @@ export const redirectIfLoggedIn = ({
 
   const { redirectTo } = checkForRedirect({ req, res })
 
+  if (!redirectTo) {
+    return
+  }
+
   res.redirect(redirectTo)
 }

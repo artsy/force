@@ -6,11 +6,11 @@ describe("isStaticAuthRoute", () => {
 
     staticRoutes.forEach(path => {
       const req = { path }
-      expect(isStaticAuthRoute({ req })).toBe(true)
+      expect(isStaticAuthRoute({ req } as any)).toBe(true)
     })
     staticRoutes.forEach(path => {
       const req = { url: path }
-      expect(isStaticAuthRoute({ req })).toBe(true)
+      expect(isStaticAuthRoute({ req } as any)).toBe(true)
     })
   })
 
@@ -19,11 +19,11 @@ describe("isStaticAuthRoute", () => {
 
     staticRoutes.forEach(path => {
       const req = { path }
-      expect(isStaticAuthRoute({ req })).toBe(false)
+      expect(isStaticAuthRoute({ req } as any)).toBe(false)
     })
     staticRoutes.forEach(path => {
       const req = { url: path }
-      expect(isStaticAuthRoute({ req })).toBe(false)
+      expect(isStaticAuthRoute({ req } as any)).toBe(false)
     })
   })
 })

@@ -4,12 +4,14 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { openAuthModal } from "Utils/openAuthModal"
 import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System"
+import { useRouter } from "System/Router/useRouter"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("Utils/openAuthModal")
 jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
@@ -21,16 +23,13 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
-import { MockPayloadGenerator } from "relay-test-utils"
-import { useSystemContext } from "System"
-import { useRouter } from "System/Router/useRouter"
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
+}))
 
 describe("AuctionResults", () => {
-  // @ts-ignore
   let breakpoint
   const trackEvent = jest.fn()
-  const mockOpenAuthModal = openAuthModal as jest.Mock
   const mockedResolver = {
     Artist: () => ({
       ...AuctionResultsFixture.artist,
@@ -55,10 +54,6 @@ describe("AuctionResults", () => {
         "cx-upcoming-auctions-filter": { flagEnabled: true },
       },
     }))
-
-    mockOpenAuthModal.mockImplementation(() => {
-      return
-    })
   })
 
   afterEach(() => {
@@ -89,23 +84,27 @@ describe("AuctionResults", () => {
   })
 
   describe("trigger auth modal for filtering and pagination", () => {
-    afterEach(() => {
-      mockOpenAuthModal.mockReset()
-    })
+    const mockUseAuthDialog = useAuthDialog as jest.Mock
 
     it("calls auth modal for 1st pagination but not for 2nd", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       renderWithRelay(mockedResolver)
       const navigation = screen.getByRole("navigation")
       const links = within(navigation).getAllByRole("link")
       expect(links).toHaveLength(6)
 
       fireEvent.click(links[2])
-      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
       fireEvent.click(links[3])
-      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
     })
 
     it("calls auth modal for 1st category selection but not for 2nd", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       let operationVariables
       const { env } = renderWithRelay(mockedResolver, true)
 
@@ -125,7 +124,7 @@ describe("AuctionResults", () => {
       })
 
       expect(operationVariables.categories).toContain("Work on Paper")
-      expect(openAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
 
       fireEvent.click(checkboxes[3])
       act(() => {
@@ -135,7 +134,7 @@ describe("AuctionResults", () => {
         })
       })
 
-      expect(openAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
       expect(operationVariables.categories).toContain("Sculpture")
     })
   })

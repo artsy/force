@@ -237,21 +237,20 @@ export const INITIAL_VALUES = {
   mode: "Pending",
 }
 
+export const passwordValidator = Yup.string()
+  .required("Password required")
+  .min(8, "Your password must be at least 8 characters.")
+  .max(128, "Your password must be less than 128 characters.")
+  .matches(/\d{1}/, "Your password must have at least 1 digit.")
+  .matches(/[a-z]{1}/, "Your password must have at least 1 lowercase letter.")
+  .matches(/[A-Z]{1}/, "Your password must have at least 1 uppercase letter.")
+
 const VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string().required("Name is required."),
   email: Yup.string()
     .email("Please enter a valid email.")
     .required("Please enter a valid email."),
-  password: Yup.string()
-    .required("Password required")
-    .min(8, "Your password must be at least 8 characters.")
-    .max(128, "Your password must be less than 128 characters.")
-    .matches(/\d{1}/, "Your password must have at least 1 digit.")
-    .matches(/[a-z]{1}/, "Your password must have at least 1 lowercase letter.")
-    .matches(
-      /[A-Z]{1}/,
-      "Your password must have at least 1 uppercase letter."
-    ),
+  password: passwordValidator,
 })
 
 const GDPR_COUNTRY_CODES = [

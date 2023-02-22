@@ -4,7 +4,6 @@ import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { getENV } from "Utils/getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -52,10 +51,6 @@ export const useScrollToOpenArtistAuthModal = () => {
       const artist = response?.artist
 
       if (!artist) return
-
-      const [artwork] = extractNodes(artist.filterArtworksConnection)
-
-      if (!artwork) return
 
       const handleScroll = () => {
         setTimeout(() => {

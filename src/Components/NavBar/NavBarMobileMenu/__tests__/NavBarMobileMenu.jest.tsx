@@ -2,18 +2,21 @@ import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBarMobileMenu } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenu"
-import { mediator } from "Server/mediator"
 import { NavBarMobileMenuTransition } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu"
 import { FeatureFlags } from "System/useFeatureFlag"
+import { logout } from "Utils/auth"
 
 jest.mock("react-tracking")
 jest.mock("Server/isServer", () => ({
   isServer: true,
 }))
 
+jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
+
 describe("NavBarMobileMenu", () => {
-  jest.spyOn(mediator, "trigger")
+  const mockLogout = logout as jest.Mock
+
   const trackEvent = jest.fn()
   const noop = () => {}
   const getWrapper = props => {
@@ -46,6 +49,10 @@ describe("NavBarMobileMenu", () => {
   })
 
   it("calls logout auth action on logout menu click", () => {
+    mockLogout.mockImplementationOnce(() =>
+      jest.fn().mockResolvedValue(Promise.resolve())
+    )
+
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
 
     const links = wrapper.find("a")
@@ -56,7 +63,7 @@ describe("NavBarMobileMenu", () => {
       .at(length - 3)
       .simulate("click")
 
-    expect(mediator.trigger).toBeCalledWith("auth:logout")
+    expect(mockLogout).toHaveBeenCalledTimes(1)
   })
 
   describe("nav structure", () => {

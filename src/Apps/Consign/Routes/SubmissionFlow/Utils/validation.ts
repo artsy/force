@@ -1,4 +1,3 @@
-import { email } from "Components/Authentication/Validators"
 import { FormikErrors, yupToFormErrors } from "formik"
 import * as yup from "yup"
 
@@ -60,7 +59,11 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 
 export const contactInformationValidationSchema = yup.object().shape({
   name: yup.string().label("Name").required().trim(),
-  email: email.trim(),
+  email: yup
+    .string()
+    .email("Please enter a valid email.")
+    .required("Please enter a valid email.")
+    .trim(),
   phoneNumber: yup.string().required("Phone Number is required"),
   phoneNumberCountryCode: yup
     .string()

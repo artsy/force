@@ -18,6 +18,7 @@ import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { useSystemContext } from "System"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "./NavBarMobileMenuNotifications"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { logout } from "Utils/auth"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
@@ -31,7 +32,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   onClose,
 }) => {
   const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const { isLoggedIn, mediator } = useSystemContext()
+  const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
   const { trackEvent } = useTracking()
@@ -50,6 +51,11 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
       subject: text,
       destination_path: href,
     })
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    window.location.reload()
   }
 
   return (
@@ -158,9 +164,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             {isLoggedIn && isCollectorProfileEnabled && (
               <NavBarMobileMenuItemButton
                 aria-label="Log out of your account"
-                onClick={() => {
-                  mediator?.trigger("auth:logout")
-                }}
+                onClick={handleLogout}
               >
                 Log out
               </NavBarMobileMenuItemButton>

@@ -66,16 +66,18 @@ export const INITIAL_STATE: State = {
   options: {},
 }
 
+export interface ShowAuthDialogOptions {
+  /** Values passed to analytics for tracking */
+  analytics: AuthDialogAnalytics
+  /** View mode to open dialog in */
+  mode: AuthDialogMode
+  options?: AuthDialogOptions
+}
+
 export const AuthDialogContext = createContext<{
   dispatch: React.Dispatch<Action>
   hideAuthDialog(): void
-  showAuthDialog(options: {
-    /** Values passed to analytics for tracking */
-    analytics: AuthDialogAnalytics
-    /** View mode to open dialog in */
-    mode: AuthDialogMode
-    options?: AuthDialogOptions
-  }): void
+  showAuthDialog(options: ShowAuthDialogOptions): void
   state: State
 }>({
   dispatch: () => null,

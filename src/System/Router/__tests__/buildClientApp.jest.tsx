@@ -114,7 +114,6 @@ describe("buildClientApp", () => {
               "isEigen",
               "isFetching",
               "isLoggedIn",
-              "mediator",
               "relayEnvironment",
               "router",
               "routes",

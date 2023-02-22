@@ -17,6 +17,7 @@ import { useContext } from "react"
 import { useTracking } from "react-tracking"
 import { SystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
@@ -28,7 +29,7 @@ export const NavBarUserMenu: React.FC = () => {
   )
 
   const { trackEvent } = useTracking()
-  const { mediator, user } = useContext(SystemContext)
+  const { user } = useContext(SystemContext)
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -50,6 +51,11 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
+
+  const handleLogout = async () => {
+    await logout()
+    window.location.reload()
+  }
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -132,9 +138,7 @@ export const NavBarUserMenu: React.FC = () => {
 
           <NavBarMenuItemButton
             aria-label="Log out of your account"
-            onClick={() => {
-              mediator?.trigger("auth:logout")
-            }}
+            onClick={handleLogout}
           >
             <PowerIcon mr={1} aria-hidden="true" /> Log out
           </NavBarMenuItemButton>
@@ -199,9 +203,7 @@ export const NavBarUserMenu: React.FC = () => {
 
           <NavBarMenuItemButton
             aria-label="Log out of your account"
-            onClick={() => {
-              mediator?.trigger("auth:logout")
-            }}
+            onClick={handleLogout}
           >
             <PowerIcon mr={1} aria-hidden="true" /> Log out
           </NavBarMenuItemButton>

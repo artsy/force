@@ -50,9 +50,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
       res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
         req.query.reset_password_redirect_to
 
-      // Used to customize reset copy/emails for partners etc
-      res.locals.sd.SET_PASSWORD = req.query.set_password
-
       runAuthMiddleware({ req, res })
     },
   },

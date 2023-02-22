@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import { MockBoot, MockRouter } from "DevTools"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
@@ -22,7 +22,7 @@ jest.mock("Apps/Authentication/Middleware/redirectIfLoggedIn", () => ({
 }))
 
 jest.mock("Utils/EnableRecaptcha", () => ({
-  EnableRecaptcha: () => "EnableRecaptcha",
+  useRecaptcha: jest.fn(),
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
@@ -86,31 +86,25 @@ describe("authenticationRoutes", () => {
     describe("client", () => {
       it("shows reset password title by default", async () => {
         renderClientRoute("/forgot")
-        expect((await screen.findAllByText("Reset your password")).length).toBe(
-          2
-        )
-      })
 
-      it("shows set password title if `set_password` param passed", async () => {
-        renderClientRoute("/forgot?set_password=true")
-        expect((await screen.findAllByText("Set your password")).length).toBe(2)
+        await waitFor(() => {
+          expect(screen.getByText("Reset your password")).toBeInTheDocument()
+        })
       })
     })
 
     describe("server", () => {
       describe("onServerSideRender", () => {
-        it("sets RESET_PASSWORD_REDIRECT_TO and SET_PASSWORD", () => {
+        it("sets RESET_PASSWORD_REDIRECT_TO", () => {
           const { onServerSideRender, req, res } = renderServerRoute("/forgot")
           req.query = {
             reset_password_redirect_to: "foo", // pragma: allowlist secret
-            set_password: "bar", // pragma: allowlist secret
           }
           onServerSideRender()
 
           expect(res.locals.sd.RESET_PASSWORD_REDIRECT_TO).toEqual(
             req.query.reset_password_redirect_to
           )
-          expect(res.locals.sd.SET_PASSWORD).toEqual(req.query.set_password)
         })
 
         it("runs middleware", () => {
@@ -126,8 +120,14 @@ describe("authenticationRoutes", () => {
     describe("client", () => {
       it("renders login by default", async () => {
         renderClientRoute("/login")
-        expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Log in to Artsy")).length).toBe(2)
+
+        await waitFor(() => {
+          expect(
+            screen.getByText(
+              "Log in to collect art by the world’s leading artists"
+            )
+          ).toBeInTheDocument()
+        })
       })
     })
 
@@ -177,8 +177,14 @@ describe("authenticationRoutes", () => {
     describe("client", () => {
       it("renders signup", async () => {
         renderClientRoute(`/signup`)
-        expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Sign up for Artsy")).length).toBe(2)
+
+        await waitFor(() => {
+          expect(
+            screen.getByText(
+              "Sign up to collect art by the world’s leading artists"
+            )
+          ).toBeInTheDocument()
+        })
       })
     })
 

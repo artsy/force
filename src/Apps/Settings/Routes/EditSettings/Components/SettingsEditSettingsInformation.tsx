@@ -9,7 +9,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { PRICE_BUCKETS } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
-import { email, name, password } from "Components/Authentication/Validators"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { Form, Formik } from "formik"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -45,9 +45,11 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             password: "",
           }}
           validationSchema={Yup.object().shape({
-            email,
+            email: Yup.string()
+              .email("Please enter a valid email.")
+              .required("Please enter a valid email."),
             // Requires password when email is changed
-            password: password.when("email", {
+            password: passwordValidator.when("email", {
               is: email => email !== me.email,
               otherwise: field => field.notRequired(),
             }),
@@ -216,10 +218,12 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             password: "",
           }}
           validationSchema={Yup.object().shape({
-            email,
-            name,
+            email: Yup.string()
+              .email("Please enter a valid email.")
+              .required("Please enter a valid email."),
+            name: Yup.string().trim().required("Name is required."),
             // Requires password when email is changed
-            password: password.when("email", {
+            password: passwordValidator.when("email", {
               is: email => email !== me.email,
               otherwise: field => field.notRequired(),
             }),

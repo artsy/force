@@ -5,7 +5,7 @@ describe("setReferer", () => {
     const url = "/foo"
     const req = { header: () => url }
     const res = { locals: { sd: { AUTHENTICATION_REFERER: null } } }
-    setReferer({ req, res })
+    setReferer({ req, res } as any)
     expect(res.locals.sd.AUTHENTICATION_REFERER).toBe(url)
   })
 
@@ -13,7 +13,7 @@ describe("setReferer", () => {
     const url = "/foo"
     const req = { header: () => null, hostname: url }
     const res = { locals: { sd: { AUTHENTICATION_REFERER: null } } }
-    setReferer({ req, res })
+    setReferer({ req, res } as any)
     expect(res.locals.sd.AUTHENTICATION_REFERER).toBe(url)
   })
 })

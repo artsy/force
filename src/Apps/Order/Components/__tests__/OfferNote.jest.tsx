@@ -1,8 +1,7 @@
 import { SystemContextProvider } from "System"
 import { ReactWrapper, mount } from "enzyme"
 import { ExtractProps } from "Utils/ExtractProps"
-import { OfferNote } from "../OfferNote"
-import { mediator } from "Server/mediator"
+import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {
@@ -19,7 +18,6 @@ describe("OfferNote", () => {
   const showInquiry = jest.fn()
 
   beforeEach(() => {
-    jest.spyOn(mediator, "trigger")
     ;(useInquiry as jest.Mock).mockImplementation(() => ({ showInquiry }))
   })
 

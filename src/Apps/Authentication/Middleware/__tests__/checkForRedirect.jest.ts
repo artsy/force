@@ -11,7 +11,7 @@ describe("checkForRedirect", () => {
   const setup = ({ query = {}, body = {}, get = () => "" }) => {
     const req = { query, body, get }
     const res = { locals: { sd: { AUTHENTICATION_REDIRECT_TO: null } } }
-    checkForRedirect({ req, res })
+    checkForRedirect({ req, res } as any)
     return { req, res }
   }
 

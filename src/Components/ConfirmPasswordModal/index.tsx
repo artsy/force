@@ -12,7 +12,7 @@ import { Form, Formik, FormikHelpers } from "formik"
 import { useSystemContext } from "System"
 import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 import { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
-import { loginPassword } from "Components/Authentication/Validators"
+import * as Yup from "yup"
 
 interface ConfirmPasswordModalProps {
   buttonText?: string
@@ -44,7 +44,7 @@ export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
     <ModalDialog title={title} width={440} onClose={onCancel}>
       <Formik
         initialValues={{ password: "" }}
-        validationSchema={loginPassword}
+        validationSchema={VALIDATION_SCHEMA}
         onSubmit={async ({ password }: ConfirmPasswordInput, formikHelpers) => {
           formikHelpers.setStatus({ error: undefined })
           try {
@@ -118,3 +118,7 @@ export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
     </ModalDialog>
   )
 }
+
+const VALIDATION_SCHEMA = Yup.object().shape({
+  password: Yup.string().required("Password is required"),
+})

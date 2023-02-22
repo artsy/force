@@ -45,19 +45,19 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
         criteria={criteria}
         metric={metric}
         aggregations={aggregations}
-        authModalOptions={{
-          entity: {
-            name: savedSearchEntity.owner.name,
-            slug: savedSearchEntity.owner.slug,
+        authDialogOptions={{
+          options: {
+            title: "Sign up to create your alert",
+            afterAuthAction: {
+              action: "createAlert",
+              kind: "artworks",
+              objectId: savedSearchEntity.owner.slug,
+            },
           },
-          afterSignUpAction: {
-            action: "createAlert",
-            kind: "artist",
-            objectId: savedSearchEntity.owner.slug,
+          analytics: {
+            contextModule: ContextModule.artworkGrid,
+            intent: Intent.createAlert,
           },
-          contextModule: ContextModule.artworkGrid,
-          copy: "Sign up to create an alert",
-          intent: Intent.createAlert,
         }}
       />
     </Flex>

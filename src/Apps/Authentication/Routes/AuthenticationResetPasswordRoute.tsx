@@ -16,7 +16,7 @@ import { resetPassword } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
 import * as Yup from "yup"
-import { password } from "Components/Authentication/Validators"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 
 interface AuthenticationResetPasswordRouteProps {}
 
@@ -48,12 +48,7 @@ export const AuthenticationResetPasswordRoute: React.FC<AuthenticationResetPassw
 
       <Formik
         validateOnMount
-        validationSchema={Yup.object({
-          password,
-          passwordConfirmation: Yup.string()
-            .required("Password confirmation required")
-            .oneOf([Yup.ref("password"), null], "Passwords must match"),
-        })}
+        validationSchema={VALIDATION_SCHEMA}
         initialValues={{
           password: "",
           passwordConfirmation: "",
@@ -164,3 +159,10 @@ export const AuthenticationResetPasswordRoute: React.FC<AuthenticationResetPassw
     </>
   )
 }
+
+const VALIDATION_SCHEMA = Yup.object({
+  password: passwordValidator,
+  passwordConfirmation: Yup.string()
+    .required("Password confirmation required")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+})

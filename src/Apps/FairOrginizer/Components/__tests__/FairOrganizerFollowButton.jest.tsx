@@ -7,7 +7,6 @@ import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOr
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("Utils/openAuthModal")
 jest.mock("System/useSystemContext")
 jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation")
 jest.mock("Components/AuthDialog/useAuthDialog")
@@ -34,7 +33,6 @@ describe("FairOrganizerFollowButton", () => {
 
   beforeAll(() => {
     mockUseSystemContext.mockImplementation(() => ({
-      mediator: jest.fn(),
       user: jest.fn(),
     }))
 
@@ -98,7 +96,6 @@ describe("FairOrganizerFollowButton", () => {
 
   it("authenticated users trigger follow mutation on click", () => {
     mockUseSystemContext.mockImplementation(() => ({
-      mediator: "mediator",
       relayEnvironment: "relayEnvironment",
       user: "user",
     }))

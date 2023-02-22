@@ -31,12 +31,12 @@ describe("redirectPostAuth", () => {
         header: (() => "") as any,
         body: {},
         ...req,
-      },
+      } as any,
       res: {
         locals: { sd: { APP_URL: "https://artsy.net" } },
         redirect: redirectSpy,
         ...res,
-      },
+      } as any,
     })
   }
 
