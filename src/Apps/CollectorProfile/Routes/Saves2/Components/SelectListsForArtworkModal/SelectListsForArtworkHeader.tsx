@@ -14,7 +14,11 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
   const imageURL = artwork.image?.url ?? null
 
   return (
-    <Flex flexDirection="row" alignItems="center">
+    <Flex
+      flexDirection={["column", "row"]}
+      alignItems={["stretch", "center"]}
+      mt={[-2, 0]}
+    >
       <Flex flex={1} flexDirection="row" alignItems="center">
         <SelectListsForArtworkImage size={50} url={imageURL} />
         <Spacer x={1} />
@@ -23,7 +27,7 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
         </Text>
       </Flex>
 
-      <Spacer x={1} />
+      <Spacer x={[0, 1]} y={[2, 0]} />
 
       <Button variant="secondaryBlack" size="small">
         Create New List
