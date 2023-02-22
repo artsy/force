@@ -116,6 +116,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         variant: "error",
         message: t("common.errors.somethingWentWrong"),
       })
+    } finally {
+      onClose()
     }
   }
 
