@@ -6,9 +6,7 @@ import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizRes
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Message, Spacer } from "@artsy/palette"
-import { uniqBy } from "lodash"
 import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
-import { extractNodes } from "Utils/extractNodes"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 
 interface ArtQuizResultsRecommendedArtworksProps {
@@ -18,16 +16,7 @@ interface ArtQuizResultsRecommendedArtworksProps {
 const ArtQuizResultsRecommendedArtworks: FC<ArtQuizResultsRecommendedArtworksProps> = ({
   me,
 }) => {
-  const artworks = useStableShuffle({
-    items: uniqBy(
-      me.quiz.savedArtworks.flatMap(artwork => {
-        if (!artwork.layer) return []
-
-        return extractNodes(artwork.layer.artworksConnection)
-      }),
-      "internalID"
-    ),
-  })
+  const artworks = useStableShuffle({ items: [...me.quiz.recommendedArtworks] })
 
   if (artworks.shuffled.length === 0) {
     return (
@@ -53,20 +42,11 @@ export const ArtQuizResultsRecommendedArtworksFragmentContainer = createFragment
   ArtQuizResultsRecommendedArtworks,
   {
     me: graphql`
-      fragment ArtQuizResultsRecommendedArtworks_me on Me
-        @argumentDefinitions(limit: { type: "Int" }) {
+      fragment ArtQuizResultsRecommendedArtworks_me on Me {
         quiz {
-          savedArtworks {
-            layer(id: "main") {
-              artworksConnection(first: $limit) {
-                edges {
-                  node {
-                    internalID
-                    ...GridItem_artwork
-                  }
-                }
-              }
-            }
+          recommendedArtworks {
+            internalID
+            ...GridItem_artwork
           }
         }
       }
@@ -78,13 +58,7 @@ const ArtQuizResultsRecommendedArtworksPlaceholder: FC = () => {
   return <ArtworkGridPlaceholder columnCount={[2, 3, 4]} amount={16} />
 }
 
-interface ArtQuizResultsRecommendedArtworksQueryRendererProps {
-  limit: number
-}
-
-export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<ArtQuizResultsRecommendedArtworksQueryRendererProps> = ({
-  limit,
-}) => {
+export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC = () => {
   return (
     <SystemQueryRenderer<ArtQuizResultsRecommendedArtworksQuery>
       query={graphql`
@@ -109,7 +83,6 @@ export const ArtQuizResultsRecommendedArtworksQueryRenderer: FC<ArtQuizResultsRe
           <ArtQuizResultsRecommendedArtworksFragmentContainer me={props.me} />
         )
       }}
-      variables={{ limit }}
     />
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8332f97032bb8bd5c5a0ee92afe375fc>>
+ * @generated SignedSource<<09a181fa25bb91394bcc04411105a221>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,17 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizResultsRecommendedArtworks_me$data = {
   readonly quiz: {
-    readonly savedArtworks: ReadonlyArray<{
-      readonly layer: {
-        readonly artworksConnection: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly internalID: string;
-              readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
+    readonly recommendedArtworks: ReadonlyArray<{
+      readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
     }>;
   };
   readonly " $fragmentType": "ArtQuizResultsRecommendedArtworks_me";
@@ -33,13 +25,7 @@ export type ArtQuizResultsRecommendedArtworks_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "limit"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtQuizResultsRecommendedArtworks_me",
@@ -57,76 +43,20 @@ const node: ReaderFragment = {
           "args": null,
           "concreteType": "Artwork",
           "kind": "LinkedField",
-          "name": "savedArtworks",
+          "name": "recommendedArtworks",
           "plural": true,
           "selections": [
             {
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "id",
-                  "value": "main"
-                }
-              ],
-              "concreteType": "ArtworkLayer",
-              "kind": "LinkedField",
-              "name": "layer",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Variable",
-                      "name": "first",
-                      "variableName": "limit"
-                    }
-                  ],
-                  "concreteType": "ArtworkConnection",
-                  "kind": "LinkedField",
-                  "name": "artworksConnection",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "ArtworkEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "Artwork",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "internalID",
-                              "storageKey": null
-                            },
-                            {
-                              "args": null,
-                              "kind": "FragmentSpread",
-                              "name": "GridItem_artwork"
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "layer(id:\"main\")"
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "GridItem_artwork"
             }
           ],
           "storageKey": null
@@ -139,6 +69,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "815a9dddd6359196c24dd275a23c5225";
+(node as any).hash = "836b58194b33ed410b2c98db3a8d5c66";
 
 export default node;
