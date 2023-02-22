@@ -7,8 +7,8 @@ describe("SavesHeader", () => {
 
     expect(screen.getByText("Saved Artworks")).toBeInTheDocument()
     expect(
-      screen.getAllByText("Curate your own lists of the works you love").length
-    ).toBe(2)
+      screen.getByText("Curate your own lists of the works you love")
+    ).toBeInTheDocument()
   })
 
   it("opens the 'Create a new list' modal", () => {

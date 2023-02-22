@@ -47,7 +47,7 @@ describe("CollectorProfileSaves2Route", () => {
       }),
     })
 
-    expect(screen.getAllByText("Saved Artworks").length).toBe(2)
+    expect(screen.getByText("Saved Artworks")).toBeInTheDocument()
     expect(screen.getByText("Collection One")).toBeInTheDocument()
     expect(screen.getByText("Collection Two")).toBeInTheDocument()
     expect(screen.getByText("Collection Three")).toBeInTheDocument()
@@ -63,7 +63,7 @@ describe("CollectorProfileSaves2Route", () => {
       })
 
       const selectedElement = getCurrentCollectionElement()
-      expect(selectedElement).toHaveTextContent("Saved Artworks")
+      expect(selectedElement).toHaveTextContent("Saved Artwork")
     })
 
     it("should render the corresponding collection as selected when collection id is passed in url", () => {
@@ -132,7 +132,7 @@ const getCurrentCollectionElement = () => {
 
 const savedArtworksCollection = {
   internalID: "saved-artwork",
-  name: "Saved Artworks",
+  name: "Saved Artwork",
 }
 
 const collectionsConnection = {

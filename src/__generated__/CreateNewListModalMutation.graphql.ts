@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33b28b1530e40dee0da008970cf7eb10>>
+ * @generated SignedSource<<946da672ad3c79578ae49ee71efd4963>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,24 +13,31 @@ export type createCollectionInput = {
   clientMutationId?: string | null;
   name: string;
 };
-export type createCollectionMutation$variables = {
+export type CreateNewListModalMutation$variables = {
   input: createCollectionInput;
 };
-export type createCollectionMutation$data = {
+export type CreateNewListModalMutation$data = {
   readonly createCollection: {
     readonly responseOrError: {
-      readonly collection?: {
-        readonly internalID: string;
-      } | null;
-      readonly mutationError?: {
+      readonly __typename: "CreateCollectionFailure";
+      readonly mutationError: {
         readonly message: string;
       } | null;
+    } | {
+      readonly __typename: "CreateCollectionSuccess";
+      readonly collection: {
+        readonly internalID: string;
+      } | null;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     } | null;
   } | null;
 };
-export type createCollectionMutation = {
-  response: createCollectionMutation$data;
-  variables: createCollectionMutation$variables;
+export type CreateNewListModalMutation = {
+  response: CreateNewListModalMutation$data;
+  variables: CreateNewListModalMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -52,10 +59,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v4 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -85,7 +99,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "createCollectionMutation",
+    "name": "CreateNewListModalMutation",
     "selections": [
       {
         "alias": null,
@@ -103,6 +117,7 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -114,7 +129,7 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -122,7 +137,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -137,7 +152,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "createCollectionMutation",
+    "name": "CreateNewListModalMutation",
     "selections": [
       {
         "alias": null,
@@ -155,13 +170,7 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              },
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -173,7 +182,7 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -188,7 +197,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -198,16 +207,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5a3040d4969c62120909998e2f0d36b4",
+    "cacheID": "8b155b46f2308204c5b557244230df34",
     "id": null,
     "metadata": {},
-    "name": "createCollectionMutation",
+    "name": "CreateNewListModalMutation",
     "operationKind": "mutation",
-    "text": "mutation createCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b5483caef3b9d5a84e923362a1e9e843";
+(node as any).hash = "f31426ba0417c76c4a00ec2b499a60b2";
 
 export default node;

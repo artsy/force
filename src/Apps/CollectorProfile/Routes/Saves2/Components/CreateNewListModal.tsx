@@ -1,6 +1,6 @@
 import React, { useState } from "react"
+import { graphql } from "react-relay"
 import { Formik } from "formik"
-import { createCollection } from "Apps/CollectorProfile/Routes/Saves2/Mutations/createCollection"
 import createLogger from "Utils/logger"
 import {
   Flex,
@@ -12,17 +12,19 @@ import {
   Text,
 } from "@artsy/palette"
 import { useSystemContext } from "System"
-import {
-  CreateNewListValues,
-  CreateCollectionMutationResult,
-} from "Apps/CollectorProfile/Routes/Saves2/types"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { CreateNewListModalMutation } from "__generated__/CreateNewListModalMutation.graphql"
+
+export interface CreateNewListValues {
+  name: string
+}
 
 interface CreateNewListModalProps {
   visible: boolean
   onClose: () => void
-  onComplete: (result: CreateCollectionMutationResult) => void
+  onComplete: () => void
 }
 
 const logger = createLogger(
@@ -38,33 +40,53 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { relayEnvironment } = useSystemContext()
   const [formFieldError, setFormFieldError] = useState("")
   const [remainingCharacters, setRemainingCharacters] = useState(maxNameLength)
+  const { submitMutation } = useMutation<CreateNewListModalMutation>({
+    mutation: graphql`
+      mutation CreateNewListModalMutation($input: createCollectionInput!) {
+        createCollection(input: $input) {
+          responseOrError {
+            __typename
+
+            ... on CreateCollectionSuccess {
+              collection {
+                internalID
+              }
+            }
+
+            ... on CreateCollectionFailure {
+              mutationError {
+                message
+              }
+            }
+          }
+        }
+      }
+    `,
+  })
 
   const handleSubmit = async (values: CreateNewListValues) => {
     if (!relayEnvironment) {
       return null
     }
 
-    const params: CreateNewListValues = {
-      name: values.name,
-    }
-
     try {
-      const response = await createCollection(relayEnvironment, params)
-      const responseOrError = response.createCollection?.responseOrError
+      await submitMutation({
+        variables: { input: { name: values.name } },
+        rejectIf: response => {
+          const result = response.createCollection?.responseOrError
+          return result?.__typename === "CreateCollectionFailure"
+            ? result.mutationError
+            : false
+        },
+      })
 
-      if (responseOrError?.collection) {
-        onComplete({ id: responseOrError?.collection?.internalID })
-      } else {
-        const error = (
-          responseOrError?.mutationError?.message ?? ""
-        ).toLowerCase()
-        setFormFieldError(
-          error ?? t("collectorSaves.createNewListModal.genericError")
-        )
-      }
+      onComplete()
     } catch (error) {
       logger.error(error)
-      setFormFieldError(t("collectorSaves.createNewListModal.genericError"))
+
+      setFormFieldError(
+        error.message ?? t("collectorSaves.createNewListModal.genericError")
+      )
     }
   }
 
@@ -149,7 +171,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             />
             <Spacer y={1} />
             <Text variant="xs">
-              {t("collectorSaves.createNewListModal.remainingCharacters", {
+              {t("collectorSaves.createNewListModal.remainingCharactersCount", {
                 count: remainingCharacters,
               })}
             </Text>
@@ -163,9 +185,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 export const CreateNewListModalContainer: React.FC<CreateNewListModalProps> = props => {
   const { visible } = props
 
-  if (visible) {
-    return <CreateNewListModal {...props} />
-  }
+  if (!visible) return null
 
-  return null
+  return <CreateNewListModal {...props} />
 }

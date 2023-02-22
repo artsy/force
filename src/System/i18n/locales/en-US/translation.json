@@ -124,7 +124,8 @@
       "back": "Back",
       "nameLabel": "Name your list",
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
-      "remainingCharacters": "{{count}} characters remaining"
+      "remainingCharactersCount_one": "{{count}} character remaining",
+      "remainingCharactersCount_other": "{{count}} characters remaining"
     }
   },
   "navbar": {
