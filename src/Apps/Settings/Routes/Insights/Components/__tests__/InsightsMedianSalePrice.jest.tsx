@@ -32,16 +32,6 @@ describe("InsightsMedianSalePrice", () => {
     `,
   })
 
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-7-median-sale-price-graph": {
-          flagEnabled: false,
-        },
-      },
-    }))
-  })
-
   describe("when there are market price insights data", () => {
     describe("Median auction price in the last 3 years", () => {
       it("renders the median auction price in the last 3 years", () => {

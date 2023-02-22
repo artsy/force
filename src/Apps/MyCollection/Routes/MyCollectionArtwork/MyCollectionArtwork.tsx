@@ -13,7 +13,6 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
@@ -42,36 +41,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
-    "my-collection-web-phase-4-articles-rail"
-  )
-  const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
-    "my-collection-web-phase-4-artist-market"
-  )
-  const enableMyCollectionPhase4Comparables = useFeatureFlag(
-    "my-collection-web-phase-4-comparables"
-  )
-  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
-    "my-collection-web-phase-4-demand-index"
-  )
-  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
-    "my-collection-web-phase-4-auction-results"
-  )
-
-  const isMyCollectionPhase5Enabled = useFeatureFlag(
-    "my-collection-web-phase-5"
-  )
-
-  const isMyCollectionPhase6Enabled = useFeatureFlag(
-    "my-collection-web-phase-6-request-price-estimate"
-  )
-
-  const isMyCollectionPhase8Enabled = useFeatureFlag(
-    "my-collection-web-phase-8-submission-status"
-  )
-
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const EditArtworkButton = () => (
     <Button
       // @ts-ignore
@@ -97,18 +66,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
 
-  const showComparables =
-    !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
+  const showComparables = !!artwork.comparables?.totalCount
 
-  const showAuctionResults =
-    !!artwork.artist?.auctionResults?.totalCount &&
-    enableMyCollectionPhase4AuctionResults
+  const showAuctionResults = !!artwork.artist?.auctionResults?.totalCount
 
-  const showDemandIndex =
-    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4DemandIndex
+  const showDemandIndex = !!artwork.hasMarketPriceInsights
 
-  const showArtistMarket =
-    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4ArtistMarket
+  const showArtistMarket = !!artwork.hasMarketPriceInsights
 
   const hasInsights =
     showComparables || showAuctionResults || showDemandIndex || showArtistMarket
@@ -140,14 +104,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {isMyCollectionPhase6Enabled && !displayText && (
+            {!displayText && (
               <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                 artwork={artwork}
               />
             )}
 
             {isP1Artist &&
-              isMyCollectionPhase5Enabled &&
               (!!displayText ? (
                 <>
                   <Separator my={2} />
@@ -174,29 +137,20 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {isMyCollectionPhase5Enabled &&
-              isP1Artist &&
-              !!displayText &&
-              isMyCollectionPhase8Enabled && (
-                <MyCollectionArtworkSWASectionSubmitted
-                  displayText={displayText}
-                />
-              )}
+            {isP1Artist && !!displayText && (
+              <MyCollectionArtworkSWASectionSubmitted
+                displayText={displayText}
+              />
+            )}
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                   />
-                  {isMyCollectionPhase5Enabled && isP1Artist && (
+                  {isP1Artist && (
                     <>
-                      {!!displayText ? (
-                        !isMyCollectionPhase8Enabled && (
-                          <MyCollectionArtworkSWASectionSubmitted
-                            displayText={displayText}
-                          />
-                        )
-                      ) : (
+                      {!displayText && (
                         <MyCollectionArtworkSWASectionMobileLayout
                           route={
                             isCollectorProfileEnabled
@@ -220,12 +174,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
                     <Spacer x={6} y={6} />
 
-                    {!!enableMyCollectionPhase4ArticlesRail && (
-                      <ArtistCurrentArticlesRailQueryRenderer
-                        slug={slug}
-                        artworkId={artwork.internalID}
-                      />
-                    )}
+                    <ArtistCurrentArticlesRailQueryRenderer
+                      slug={slug}
+                      artworkId={artwork.internalID}
+                    />
                   </>
                 </Tab>
               </Tabs>
@@ -237,12 +189,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
                 <Spacer x={6} y={6} />
 
-                {!!enableMyCollectionPhase4ArticlesRail && (
-                  <ArtistCurrentArticlesRailQueryRenderer
-                    slug={slug}
-                    artworkId={artwork.internalID}
-                  />
-                )}
+                <ArtistCurrentArticlesRailQueryRenderer
+                  slug={slug}
+                  artworkId={artwork.internalID}
+                />
               </>
             )}
           </Media>
@@ -256,12 +206,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             <Spacer x={[4, 6]} y={[4, 6]} />
 
-            {!!enableMyCollectionPhase4ArticlesRail && (
-              <ArtistCurrentArticlesRailQueryRenderer
-                slug={slug}
-                artworkId={artwork.internalID}
-              />
-            )}
+            <ArtistCurrentArticlesRailQueryRenderer
+              slug={slug}
+              artworkId={artwork.internalID}
+            />
           </>
         )}
       </Media>

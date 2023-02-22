@@ -4,7 +4,6 @@ import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/M
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 
 jest.mock("System/useSystemContext")
@@ -27,18 +26,6 @@ describe("MyCollectionArtwork", () => {
       `,
     })
   }
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-        "my-collection-web-phase-5": { flagEnabled: true },
-        "my-collection-web-phase-6-request-price-estimate": {
-          flagEnabled: true,
-        },
-      },
-    }))
-  })
 
   describe("In a mobile view", () => {
     describe("When the artwork has insights", () => {
@@ -106,25 +93,11 @@ describe("MyCollectionArtwork", () => {
       ).not.toBeInTheDocument()
     })
 
-    describe("when my-collection-web-phase-8-submission-status ff is enabled", () => {
-      it("with submission id: the section is rendered", () => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-            "my-collection-web-phase-5": { flagEnabled: true },
-            "my-collection-web-phase-6-request-price-estimate": {
-              flagEnabled: true,
-            },
-            "my-collection-web-phase-8-submission-status": {
-              flagEnabled: true,
-            },
-          },
-        }))
-        const { renderWithRelay } = getWrapper()
-        renderWithRelay(mockResolversWithInsights)
-        expect(screen.queryByText("Submission Status")).toBeInTheDocument()
-        expect(screen.queryByText("In Progress")).toBeInTheDocument()
-      })
+    it("with submission id: the section is rendered", () => {
+      const { renderWithRelay } = getWrapper()
+      renderWithRelay(mockResolversWithInsights)
+      expect(screen.queryByText("Submission Status")).toBeInTheDocument()
+      expect(screen.queryByText("In Progress")).toBeInTheDocument()
     })
   })
 
@@ -144,17 +117,7 @@ describe("MyCollectionArtwork", () => {
         )
       })
 
-      it("the section is rendered with cx-collector-profile ff enabled", () => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-            "my-collection-web-phase-5": { flagEnabled: true },
-            "my-collection-web-phase-6-request-price-estimate": {
-              flagEnabled: true,
-            },
-            "cx-collector-profile": { flagEnabled: true },
-          },
-        }))
+      it("the section is rendered", () => {
         const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(mockResolversWithInsightsWithoutSubmission)
 
