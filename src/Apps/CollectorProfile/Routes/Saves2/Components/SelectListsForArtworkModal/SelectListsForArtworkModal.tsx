@@ -32,13 +32,23 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     onClose()
   }
 
+  /**
+   * Workaround to solve this issue
+   * https://github.com/facebook/react/issues/11387
+   */
+  const stopPropagation = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+  }
+
   return (
     <ModalDialog
       title="Select lists for this artwork"
       onClose={onClose}
-      onClick={event => {
-        event.preventDefault()
-      }}
+      onClick={stopPropagation}
+      onMouseEnter={stopPropagation}
+      onMouseLeave={stopPropagation}
       dialogProps={{
         width: ["100%", 700],
         height: ["100%", "auto"],
