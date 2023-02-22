@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5e82f403b228dfb873b0ff02a92d5c0>>
+ * @generated SignedSource<<fa20c7b367cd6e460881092b04ad8bbb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -105,6 +105,11 @@ return {
           "kind": "Literal",
           "name": "saves",
           "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "CREATED_AT_DESC"
         }
       ],
       "concreteType": "CollectionsConnection",
@@ -134,7 +139,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
+      "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"CREATED_AT_DESC\")"
     }
   ],
   "type": "Me",
@@ -142,6 +147,6 @@ return {
 };
 })();
 
-(node as any).hash = "5fd627ecd243cf2680f1e6dbe901cded";
+(node as any).hash = "0a417c5fded1f7365a511ce16ed52af5";
 
 export default node;
