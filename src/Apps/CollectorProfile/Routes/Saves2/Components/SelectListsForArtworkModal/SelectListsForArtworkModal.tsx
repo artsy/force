@@ -37,6 +37,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   onClose,
 }) => {
   const { t } = useTranslation()
+  const [isSaving, setIsSaving] = useState(false)
   const [addToCollectionIDs, setAddToCollectionIDs] = useState<string[]>([])
   const [removeFromCollectionIDs, setRemoveFromCollectionIDs] = useState<
     string[]
@@ -86,6 +87,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 
   const handleSaveClicked = async () => {
     try {
+      setIsSaving(true)
+
       const { artworksCollectionsBatchUpdate } = await submitMutation({
         variables: {
           input: {
@@ -117,6 +120,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         message: t("common.errors.somethingWentWrong"),
       })
     } finally {
+      setIsSaving(false)
       onClose()
     }
   }
@@ -189,6 +193,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
           selectedListsCount={selectedCollectionIds.length}
           hasChanges={hasChanges}
           onSaveClick={handleSaveClicked}
+          isSaving={isSaving}
         />
       }
     >
