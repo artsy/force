@@ -18,7 +18,7 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
       <Flex flex={1} flexDirection="row" alignItems="center">
         <SelectListsForArtworkImage size={50} url={imageURL} />
         <Spacer x={1} />
-        <Text>
+        <Text lineClamp={2}>
           {artwork.title}, {artwork.date}
         </Text>
       </Flex>
