@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8698594dd63e1a39d26706ec05a31f0a>>
+ * @generated SignedSource<<ddb9bf934db1f3d3f00caf6654dadcc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectListsForArtworkModal_artwork$data = {
+  readonly internalID: string;
   readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkHeader_artwork">;
   readonly " $fragmentType": "SelectListsForArtworkModal_artwork";
 };
@@ -26,6 +27,13 @@ const node: ReaderFragment = {
   "name": "SelectListsForArtworkModal_artwork",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SelectListsForArtworkHeader_artwork"
@@ -35,6 +43,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ab60ad82ac3dfdc79737f09881626840";
+(node as any).hash = "2f0ba5020ca86a64f2f698f1dc35dc88";
 
 export default node;

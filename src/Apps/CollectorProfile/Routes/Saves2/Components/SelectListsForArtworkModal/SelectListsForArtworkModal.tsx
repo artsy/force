@@ -14,6 +14,10 @@ import {
   SelectListsPlaceholder,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
+import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("SelectListsForArtworkModal")
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
@@ -46,6 +50,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
 
+  const { submitMutation } = useUpdateCollectionsForArtwork()
+
   const addOrRemoveCollectionIdFromIds = (
     ids: string[],
     collectionId: string
@@ -75,8 +81,31 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     setAddToCollectionIDs(updatedIds)
   }
 
-  const handleSaveClicked = () => {
-    onClose()
+  const handleSaveClicked = async () => {
+    try {
+      const { artworksCollectionsBatchUpdate } = await submitMutation({
+        variables: {
+          input: {
+            artworkIDs: [artwork!.internalID],
+            addToCollectionIDs,
+            removeFromCollectionIDs,
+          },
+        },
+        rejectIf: res => {
+          const result = res.artworksCollectionsBatchUpdate
+          const error = result?.responseOrError
+
+          return !!error?.mutationError
+        },
+      })
+
+      const response = artworksCollectionsBatchUpdate?.responseOrError
+      const counts = response?.counts
+
+      console.log("[debug] counts", counts)
+    } catch (error) {
+      logger.error(error)
+    }
   }
 
   const checkIsItemSelected = (item: typeof collections[0]) => {
@@ -185,6 +214,7 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
     `,
     artwork: graphql`
       fragment SelectListsForArtworkModal_artwork on Artwork {
+        internalID
         ...SelectListsForArtworkHeader_artwork
       }
     `,
