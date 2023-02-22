@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog, Box } from "@artsy/palette"
+import { Spacer, Join, ModalDialog, Box, useToasts } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
@@ -16,6 +16,7 @@ import {
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
 import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
 import createLogger from "Utils/logger"
+import { useTranslation } from "react-i18next"
 
 const logger = createLogger("SelectListsForArtworkModal")
 
@@ -35,6 +36,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   artwork,
   onClose,
 }) => {
+  const { t } = useTranslation()
   const [addToCollectionIDs, setAddToCollectionIDs] = useState<string[]>([])
   const [removeFromCollectionIDs, setRemoveFromCollectionIDs] = useState<
     string[]
@@ -51,6 +53,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
 
   const { submitMutation } = useUpdateCollectionsForArtwork()
+  const { sendToast } = useToasts()
 
   const addOrRemoveCollectionIdFromIds = (
     ids: string[],
@@ -102,9 +105,17 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       const response = artworksCollectionsBatchUpdate?.responseOrError
       const counts = response?.counts
 
-      console.log("[debug] counts", counts)
+      sendToast({
+        variant: "success",
+        message: `added: ${counts?.addedToCollections}, removed: ${counts?.removedFromCollections}`,
+      })
     } catch (error) {
       logger.error(error)
+
+      sendToast({
+        variant: "error",
+        message: t("common.errors.somethingWentWrong"),
+      })
     }
   }
 

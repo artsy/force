@@ -144,6 +144,11 @@
       "success": "Changes saved"
     }
   },
+  "common": {
+    "errors": {
+      "somethingWentWrong": "Something went wrong. Please try again."
+    }
+  },
   "navbar": {
     "show": "Show",
     "shows": "Shows",
