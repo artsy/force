@@ -63,7 +63,7 @@ describe("CollectorProfileSaves2Route", () => {
       })
 
       const selectedElement = getCurrentCollectionElement()
-      expect(selectedElement).toHaveTextContent("Saved Artworks")
+      expect(selectedElement).toHaveTextContent("Saved Artwork")
     })
 
     it("should render the corresponding collection as selected when collection id is passed in url", () => {
@@ -132,7 +132,7 @@ const getCurrentCollectionElement = () => {
 
 const savedArtworksCollection = {
   internalID: "saved-artwork",
-  name: "Saved Artworks",
+  name: "Saved Artwork",
 }
 
 const collectionsConnection = {

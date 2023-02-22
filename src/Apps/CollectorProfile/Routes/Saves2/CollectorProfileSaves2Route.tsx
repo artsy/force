@@ -1,5 +1,6 @@
 import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
+import { SavesHeader } from "./Components/SavesHeader"
 import { SavesItemFragmentContainer } from "./Components/SavesItem"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -40,6 +41,10 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   return (
     <>
+      <SavesHeader />
+
+      <Spacer y={4} />
+
       <Shelf showProgress={false}>
         {savedCollections.map(collection => {
           const isDefaultCollection =
@@ -56,7 +61,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         })}
       </Shelf>
 
-      <Spacer y={2} />
+      <Spacer y={4} />
 
       <SavesArtworksQueryRenderer
         collectionID={selectedCollectionId}
