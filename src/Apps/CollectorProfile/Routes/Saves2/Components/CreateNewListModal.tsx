@@ -31,15 +31,15 @@ const logger = createLogger(
   "CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 )
 
+const MAX_NAME_LENGTH = 40
+
 const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onClose,
   onComplete,
 }) => {
   const { t } = useTranslation()
-  const maxNameLength = 40
   const { relayEnvironment } = useSystemContext()
   const [formFieldError, setFormFieldError] = useState("")
-  const [remainingCharacters, setRemainingCharacters] = useState(maxNameLength)
   const { submitMutation } = useMutation<CreateNewListModalMutation>({
     mutation: graphql`
       mutation CreateNewListModalMutation($input: createCollectionInput!) {
@@ -74,9 +74,12 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         variables: { input: { name: values.name } },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
-          return result?.__typename === "CreateCollectionFailure"
-            ? result.mutationError
-            : false
+
+          if (result?.__typename === "CreateCollectionFailure") {
+            return result.mutationError
+          }
+
+          return false
         },
       })
 
@@ -114,7 +117,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
                       loading={isSubmitting}
                       onClick={() => handleSubmit()}
                     >
-                      {t("collectorSaves.createNewListModal.createList")}
+                      {t("collectorSaves.createNewListModal.createListButton")}
                     </Button>
                   </Flex>
                 </Media>
@@ -127,7 +130,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
                     onClick={() => handleSubmit()}
                     width="100%"
                   >
-                    {t("collectorSaves.createNewListModal.createList")}
+                    {t("collectorSaves.createNewListModal.createListButton")}
                   </Button>
 
                   <Spacer y={1} />
@@ -152,14 +155,11 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
               value={values.name}
               onChange={e => {
                 handleChange("name")(e)
-                setRemainingCharacters(
-                  Math.max(maxNameLength - e.target.value.length, 0)
-                )
                 setFormFieldError("")
               }}
-              onBlur={handleBlur("name")}
+              onBlur={handleBlur}
               error={formFieldError}
-              maxLength={maxNameLength}
+              maxLength={MAX_NAME_LENGTH}
               label={
                 <>
                   {/* Desktop view */}
@@ -172,7 +172,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             <Spacer y={1} />
             <Text variant="xs">
               {t("collectorSaves.createNewListModal.remainingCharactersCount", {
-                count: remainingCharacters,
+                count: MAX_NAME_LENGTH - values.name.length,
               })}
             </Text>
           </ModalDialog>

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Flex, Text, Spacer, Button, Join } from "@artsy/palette"
+import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { CreateNewListModalContainer } from "./CreateNewListModal"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
@@ -35,7 +35,8 @@ export const SavesHeader: React.FC = () => {
           {t("collectorSaves.savesHeader.savedArtworks")}
         </Text>
 
-        <Flex
+        <Box
+          display={["block", "flex"]}
           flexDirection={["column", "row"]}
           justifyContent="space-between"
           alignItems={["stretch", "center"]}
@@ -49,11 +50,10 @@ export const SavesHeader: React.FC = () => {
             size="small"
             onClick={handleCreateNewListClick}
             mt={[2, 0]}
-            width={["135px", "auto"]}
           >
-            {t("collectorSaves.savesHeader.createNewList")}
+            {t("collectorSaves.savesHeader.createNewListButton")}
           </Button>
-        </Flex>
+        </Box>
       </Join>
     </>
   )

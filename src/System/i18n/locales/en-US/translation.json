@@ -115,12 +115,12 @@
       "listCreated": "List Created",
       "savedArtworks": "Saved Artworks",
       "curateYourList": "Curate your own lists of the works you love",
-      "createNewList": "Create New List"
+      "createNewListButton": "Create New List"
     },
     "createNewListModal": {
       "genericError": "Something went wrong.",
       "title": "Create a new list",
-      "createList": "Create List",
+      "createListButton": "Create List",
       "back": "Back",
       "nameLabel": "Name your list",
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
