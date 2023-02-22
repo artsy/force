@@ -660,7 +660,7 @@ describe("Review", () => {
   })
 
   describe("in-review offers", () => {
-    const testOffer = {
+    const OfferOrderInReview = {
       ...OfferOrderWithShippingDetails,
       // TODO: uncomment state & remove payment method once buyerStatus
       // is implemented in Exchange.
@@ -671,52 +671,103 @@ describe("Review", () => {
       impulseConversationId: null,
     }
 
-    it("enables the button and routes to the status page", async () => {
-      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOffer,
-      })
-      const page = new ReviewTestPage(wrapper)
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
-    })
-
-    describe("isEigen", () => {
-      const testOffer = {
-        ...OfferOrderWithShippingDetails,
-        // TODO: uncomment state & remove payment method once buyerStatus
-        // is implemented in Exchange.
-        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
-        // state: "IN_REVIEW",
-        paymentMethod: "WIRE_TRANSFER",
-        internalID: "offer-order-id",
-        impulseConversationId: null,
+    describe("from an artwork page", () => {
+      const OfferOrderInReviewFromArtworkPage = {
+        ...OfferOrderInReview,
+        source: "artwork_page",
       }
 
-      beforeEach(async () => {
-        isEigen = true
-      })
-
-      it("dispatches message and routes to status page", async () => {
+      it("routes to the status page", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
         const wrapper = getWrapper({
-          CommerceOrder: () => testOffer,
+          CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
         })
         const page = new ReviewTestPage(wrapper)
         await page.clickSubmit()
 
-        expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
-          JSON.stringify({
-            key: "orderSuccessful",
-            orderCode: "abcdefg",
-          })
-        )
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
+      })
+    })
 
-        await waitFor(() =>
-          expect(pushMock).toHaveBeenCalledWith("/orders/offer-order-id/status")
+    describe("from an inquiry", () => {
+      const OfferOrderInReviewFromInquiry = {
+        ...OfferOrderInReview,
+        source: "inquiry",
+        impulseConversationId: "impulse-conversation-id",
+      }
+
+      it("routes to the conversation", async () => {
+        mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+        const wrapper = getWrapper({
+          CommerceOrder: () => OfferOrderInReviewFromInquiry,
+        })
+        const page = new ReviewTestPage(wrapper)
+        await page.clickSubmit()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toBeCalledWith(
+          "/user/conversations/impulse-conversation-id"
         )
+      })
+    })
+
+    describe("isEigen", () => {
+      beforeEach(async () => {
+        isEigen = true
+      })
+
+      describe("from an artwork page", () => {
+        const OfferOrderInReviewFromArtworkPage = {
+          ...OfferOrderInReview,
+          source: "artwork_page",
+        }
+
+        it("dispatches message and routes to status page", async () => {
+          mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+          const wrapper = getWrapper({
+            CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
+          })
+          const page = new ReviewTestPage(wrapper)
+          await page.clickSubmit()
+
+          expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
+            JSON.stringify({
+              key: "orderSuccessful",
+              orderCode: "abcdefg",
+            })
+          )
+
+          await waitFor(() =>
+            expect(pushMock).toHaveBeenCalledWith(
+              "/orders/offer-order-id/status"
+            )
+          )
+        })
+      })
+
+      describe("from an inquiry", () => {
+        const OfferOrderInReviewFromInquiry = {
+          ...OfferOrderInReview,
+          source: "inquiry",
+        }
+
+        it("doesn't dispatch a message and routes to status page", async () => {
+          mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+          const wrapper = getWrapper({
+            CommerceOrder: () => OfferOrderInReviewFromInquiry,
+          })
+          const page = new ReviewTestPage(wrapper)
+          await page.clickSubmit()
+
+          expect(window.ReactNativeWebView?.postMessage).not.toHaveBeenCalled()
+
+          await waitFor(() =>
+            expect(pushMock).toHaveBeenCalledWith(
+              "/orders/offer-order-id/status"
+            )
+          )
+        })
       })
     })
   })
