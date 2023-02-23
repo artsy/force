@@ -50,9 +50,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const localImage = useLocalImage(artwork.image)
   const [artworkEntityId, setArtworkEntityId] = useState<string | null>(null)
-  const [isSavedToList, setIsSavedToList] = useState<boolean | null>(
-    savedListId ? !!savedListId : null
-  )
+  const [isSavedToList, setIsSavedToList] = useState(!!savedListId)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -99,6 +97,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     <ManageArtworkForCollections.Provider
       value={{
         artworkId: artworkEntityId,
+        savedListId: savedListId ?? null,
         isSavedToList,
         setArtworkId,
         clearArtworkId,

@@ -2,7 +2,8 @@ import { createContext, useContext } from "react"
 
 export interface ManageArtworkForCollectionsState {
   artworkId: string | null
-  isSavedToList: boolean | null
+  savedListId: string | null
+  isSavedToList: boolean
   setArtworkId: (artworkId: string) => void
   clearArtworkId: () => void
 }
