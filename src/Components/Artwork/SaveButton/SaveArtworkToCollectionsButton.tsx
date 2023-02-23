@@ -13,7 +13,7 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
 }) => {
   const {
     setArtworkId,
-    isSavedToCollection,
+    isSavedToList,
   } = useManageArtworkForCollectionsContext()
 
   const handleClick = (
@@ -26,7 +26,7 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
 
   return (
     <SaveButtonBase
-      isSaved={isSavedToCollection ?? !!artwork.isSaved}
+      isSaved={isSavedToList ?? !!artwork.isSaved}
       onClick={handleClick}
     />
   )

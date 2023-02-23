@@ -29,7 +29,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   to?: string | null
-  collectionId?: string
+  savedListId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -44,15 +44,15 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHoverDetails,
   showSaveButton = true,
   to,
-  collectionId,
+  savedListId,
   renderSaveButton,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
   const [artworkEntityId, setArtworkEntityId] = useState<string | null>(null)
-  const [isSavedToCollection, setIsSavedToCollection] = useState<
-    boolean | null
-  >(!!collectionId ?? null)
+  const [isSavedToList, setIsSavedToList] = useState<boolean | null>(
+    savedListId ? !!savedListId : null
+  )
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -89,9 +89,9 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     setArtworkEntityId(null)
   }
 
-  const handleSaveCollectionsForArtwork = (collectionIds: string[]) => {
-    if (collectionId) {
-      setIsSavedToCollection(collectionIds.includes(collectionId))
+  const handleSaveCollectionsForArtwork = (listIds: string[]) => {
+    if (savedListId) {
+      setIsSavedToList(listIds.includes(savedListId))
     }
   }
 
@@ -99,7 +99,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     <ManageArtworkForCollections.Provider
       value={{
         artworkId: artworkEntityId,
-        isSavedToCollection,
+        isSavedToList,
         setArtworkId,
         clearArtworkId,
       }}

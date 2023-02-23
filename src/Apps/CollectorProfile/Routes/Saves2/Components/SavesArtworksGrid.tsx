@@ -163,7 +163,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
-          collectionId={collection.internalID}
+          savedListId={collection.internalID}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
