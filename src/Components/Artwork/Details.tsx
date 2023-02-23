@@ -244,12 +244,12 @@ export const Details: React.FC<DetailsProps> = ({
       return null
     }
 
-    if (isArtworksListEnabled) {
-      return <SaveArtworkToCollectionsButton />
-    }
-
     if (isFunction(renderSaveButton)) {
       return renderSaveButton(rest.artwork.internalID)
+    }
+
+    if (isArtworksListEnabled) {
+      return <SaveArtworkToCollectionsButton />
     }
 
     return (
