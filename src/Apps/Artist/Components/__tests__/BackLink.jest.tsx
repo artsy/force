@@ -1,10 +1,9 @@
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BackLinkFragmentContainer } from "Apps/Artist/Components/BackLink"
-import { BackLink_Test_Query } from "__generated__/BackLink_Test_Query.graphql"
-import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools"
-import { useSystemContext } from "System/useSystemContext"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { BackLink_Test_Query } from "__generated__/BackLink_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -31,11 +30,6 @@ describe("BackLink when ff disabled", () => {
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
-    }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
     }))
   })
 
@@ -123,11 +117,6 @@ describe("BackLink when ff enabled", () => {
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
-    }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: true },
-      },
     }))
   })
 

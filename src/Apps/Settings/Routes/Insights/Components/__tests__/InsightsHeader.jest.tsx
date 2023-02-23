@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react"
-import { MockBoot } from "DevTools"
-import { useSystemContext } from "System"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
+import { MockBoot } from "DevTools"
 
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -21,11 +20,6 @@ describe("InsightsHeader", () => {
     )
 
   it("renders the Upload artwork CTA and the textual content", () => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
-    }))
     renderComponent()
 
     expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
@@ -37,11 +31,6 @@ describe("InsightsHeader", () => {
   })
 
   it("renders the Upload artwork CTA and the textual content with cx-collector-profile enabled", () => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: true },
-      },
-    }))
     renderComponent()
 
     expect(screen.getByText("Upload Artwork")).toBeInTheDocument()

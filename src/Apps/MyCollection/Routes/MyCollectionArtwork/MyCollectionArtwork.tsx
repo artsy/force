@@ -10,24 +10,24 @@ import {
 } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
-import { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "./Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
 import {
   MyCollectionArtworkSWASectionDesktopLayout,
   MyCollectionArtworkSWASectionMobileLayout,
 } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
+import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork$data
@@ -47,11 +47,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       as={RouterLink}
       variant="secondaryNeutral"
       size="small"
-      to={
-        isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artworks/${artwork.internalID}/edit`
-          : `/my-collection/artworks/${artwork.internalID}/edit`
-      }
+      to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
       onClick={() =>
         trackEditCollectedArtwork(artwork.internalID, artwork.slug)
       }

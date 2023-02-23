@@ -5,7 +5,6 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 
 interface CollectorProfileAppProps {
@@ -17,13 +16,6 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
-    "collector-profile-separating-saves-and-follows"
-  )
-  if (!isCollectorProfileEnabled) {
-    return null
-  }
 
   if (!isLoggedIn) {
     return (
@@ -39,10 +31,10 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     { name: "My Collection", url: "/collector-profile/my-collection" },
     { name: "Insights", url: "/collector-profile/insights" },
     {
-      name: isSeparateSavesAndFollowsEnabled ? "Saves" : "Saves & Follows",
+      name: "Saves",
       url: "/collector-profile/saves",
     },
-    isSeparateSavesAndFollowsEnabled && {
+    {
       name: "Follows",
       url: "/collector-profile/follows",
     },

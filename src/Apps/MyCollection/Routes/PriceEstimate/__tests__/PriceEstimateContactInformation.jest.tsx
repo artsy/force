@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider, useSystemContext } from "System"
+import { SystemContextProvider } from "System"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -104,11 +104,6 @@ describe("Price Estimate Contact Information", () => {
     mockTracking.mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
-    }))
   })
 
   describe("Initial render", () => {
@@ -146,11 +141,6 @@ describe("Price Estimate Contact Information", () => {
 
   describe("Initial render with ff enabled", () => {
     it("renders correctly", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-        },
-      }))
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         Artwork: () => mockArtwork,
@@ -224,11 +214,6 @@ describe("Price Estimate Contact Information", () => {
     })
 
     it("submitting a valid form with ff enabled", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-        },
-      }))
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         Artwork: () => mockArtwork,

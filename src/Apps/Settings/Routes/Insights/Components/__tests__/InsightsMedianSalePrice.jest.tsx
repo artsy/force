@@ -59,9 +59,6 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-          "cx-collector-profile": {
-            flagEnabled: false,
-          },
         },
       }))
 
@@ -80,9 +77,6 @@ describe("InsightsMedianSalePrice", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         featureFlags: {
           "my-collection-web-phase-7-median-sale-price-graph": {
-            flagEnabled: true,
-          },
-          "cx-collector-profile": {
             flagEnabled: true,
           },
         },

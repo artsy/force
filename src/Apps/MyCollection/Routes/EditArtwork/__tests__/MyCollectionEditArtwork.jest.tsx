@@ -88,11 +88,6 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
 describe("Edit artwork", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-my-collection-personal-artists-for-web": {
-          flagEnabled: true,
-        },
-      },
       relayEnvironment: createMockEnvironment(),
     }))
   })
@@ -469,12 +464,6 @@ describe("Edit artwork", () => {
 describe("Edit artwork when collector-profile ff is enabled", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-my-collection-personal-artists-for-web": {
-          flagEnabled: true,
-        },
-        "cx-collector-profile": { flagEnabled: true },
-      },
       relayEnvironment: createMockEnvironment(),
     }))
   })

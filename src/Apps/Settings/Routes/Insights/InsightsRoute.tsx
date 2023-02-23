@@ -2,9 +2,9 @@ import { Join, Spacer } from "@artsy/palette"
 import { InsightsCareerHighlightRailFragmentContainer } from "Apps/Settings/Routes/Insights/Components/CareerHighlights/InsightsCareerHighlightRail"
 import { InsightsMedianSalePriceFragmentContainer } from "Apps/Settings/Routes/Insights/Components/InsightsMedianSalePrice"
 import { MetaTags } from "Components/MetaTags"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { InsightsRoute_me$data } from "__generated__/InsightsRoute_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { InsightsAuctionResultsFragmentContainer } from "./Components/InsightsAuctionResults"
 import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsLandingPage } from "./Components/InsightsLandingPage"
@@ -23,9 +23,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
     <>
       <MetaTags
         title="My Collection Insights | Artsy"
-        pathname={
-          isCollectorProfileEnabled ? "collector-profile/insights" : "/insights"
-        }
+        pathname={"collector-profile/insights"}
       />
 
       <>

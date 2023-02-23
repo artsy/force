@@ -1,7 +1,7 @@
-import { mount } from "enzyme"
-import { SystemContextProvider, useSystemContext } from "System"
 import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
+import { SystemContextProvider } from "System"
 import { logout } from "Utils/auth"
+import { mount } from "enzyme"
 
 jest.mock("react-tracking", () => ({
   useTracking: () => ({
@@ -28,14 +28,6 @@ describe("NavBarUserMenu", () => {
         </SystemContextProvider>
       )
     }
-
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: false },
-        },
-      }))
-    })
 
     it("renders correct menu items", () => {
       const wrapper = getWrapper()
@@ -108,14 +100,6 @@ describe("NavBarUserMenu", () => {
       )
     }
 
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-        },
-      }))
-    })
-
     it("renders correct menu items", () => {
       const wrapper = getWrapper()
       const links = wrapper.find("a")
@@ -184,17 +168,6 @@ describe("NavBarUserMenu", () => {
         </SystemContextProvider>
       )
     }
-
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-          "collector-profile-separating-saves-and-follows": {
-            flagEnabled: true,
-          },
-        },
-      }))
-    })
 
     it("renders correct menu items", () => {
       const wrapper = getWrapper()

@@ -1,8 +1,7 @@
-import { screen, fireEvent } from "@testing-library/react"
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
-import { useSystemContext } from "System"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
@@ -19,12 +18,6 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("SettingsEditSettingsInformation with cx-collector-profile ff enabled", () => {
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: { "cx-collector-profile": { flagEnabled: true } },
-    }))
-  })
-
   it("renders the form", () => {
     renderWithRelay()
 
@@ -52,12 +45,6 @@ describe("SettingsEditSettingsInformation with cx-collector-profile ff enabled",
 })
 
 describe("SettingsEditSettingsInformation with cx-collector-profile ff disabled", () => {
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: { "cx-collector-profile": { flagEnabled: false } },
-    }))
-  })
-
   it("renders the form", () => {
     renderWithRelay()
 

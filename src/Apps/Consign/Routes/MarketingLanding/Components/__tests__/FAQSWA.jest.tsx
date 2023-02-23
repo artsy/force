@@ -10,9 +10,6 @@ describe("FAQSWA", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 

@@ -49,11 +49,6 @@ describe("AuctionResults", () => {
         trackEvent,
       }
     })
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-upcoming-auctions-filter": { flagEnabled: true },
-      },
-    }))
   })
 
   afterEach(() => {
@@ -164,9 +159,6 @@ describe("AuctionResults", () => {
     describe("For Logged in users", () => {
       beforeEach(() => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "cx-upcoming-auctions-filter": { flagEnabled: true },
-          },
           user: { name: "Logged In", email: "loggedin@example.com" },
         }))
       })
@@ -194,9 +186,6 @@ describe("AuctionResults", () => {
     describe("For Logged Out users", () => {
       beforeEach(() => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "cx-upcoming-auctions-filter": { flagEnabled: true },
-          },
           user: null,
         }))
       })
