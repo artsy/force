@@ -22,19 +22,25 @@ const logger = createLogger("SelectListsForArtworkModal")
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
+  collectionId: string
   onClose: () => void
+  onSavedStatusChanged: (isSaved: boolean) => void
 }
 
 export interface SelectListsForArtworkModalProps {
   me: SelectListsForArtworkModal_me$data | null
   artwork: SelectListsForArtworkModal_artwork$data | null
+  collectionId: string
   onClose: () => void
+  onSavedStatusChanged: (isSaved: boolean) => void
 }
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
   artwork,
+  collectionId,
   onClose,
+  onSavedStatusChanged,
 }) => {
   const { t } = useTranslation()
   const [isSaving, setIsSaving] = useState(false)
@@ -87,12 +93,14 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 
   const handleSaveClicked = async () => {
     try {
+      const artworkId = artwork!.internalID
+
       setIsSaving(true)
 
       await submitMutation({
         variables: {
           input: {
-            artworkIDs: [artwork!.internalID],
+            artworkIDs: [artworkId],
             addToCollectionIDs,
             removeFromCollectionIDs,
           },
@@ -104,6 +112,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
           return !!error?.mutationError
         },
       })
+
+      const isArtworkSavedForCollection = selectedCollectionIds.includes(
+        collectionId
+      )
+      onSavedStatusChanged(isArtworkSavedForCollection)
 
       sendToast({
         variant: "success",

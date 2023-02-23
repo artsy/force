@@ -12,6 +12,7 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
   collectionId,
 }) => {
   const [visible, setVisible] = useState(false)
+  const [isSaved, setIsSaved] = useState(true)
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -26,14 +27,20 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
     setVisible(false)
   }
 
+  const handleSavedStatusChanged = (isSaved: boolean) => {
+    setIsSaved(isSaved)
+  }
+
   return (
     <>
-      <SaveButtonBase isSaved onClick={handleClick} />
+      <SaveButtonBase isSaved={isSaved} onClick={handleClick} />
 
       {visible && (
         <SelectListsForArtworkModalQueryRender
           artworkID={artworkId}
+          collectionId={collectionId}
           onClose={handleCloseModal}
+          onSavedStatusChanged={handleSavedStatusChanged}
         />
       )}
     </>
