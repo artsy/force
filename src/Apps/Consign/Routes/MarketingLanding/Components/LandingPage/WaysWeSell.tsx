@@ -60,7 +60,7 @@ export const WaysWeSell = () => {
         Ways to sell with Artsy
       </Text>
 
-      <Text mb={[2, 4, 6]} variant={["xs", "sm"]} color="white100">
+      <Text mb={[4, 4, 6]} variant={["xs", "sm"]} color="white100">
         We create a tailored strategy to find the optimal sales method for your
         artwork.
       </Text>

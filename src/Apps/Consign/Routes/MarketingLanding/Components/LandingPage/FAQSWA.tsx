@@ -15,7 +15,7 @@ export const FAQSWA: React.FC = () => {
     <TextAndImageLayout
       text={
         <>
-          <Text variant={["md", "xl", "xxl"]} mb={4} textColor="white100">
+          <Text variant={["lg", "xl", "xxl"]} mb={4} textColor="white100">
             No upfront fees, clear pricing estimates and commission structures.
           </Text>
           <Text variant={["xs", "sm", "sm"]} mb={[2, 4]} textColor="white100">
