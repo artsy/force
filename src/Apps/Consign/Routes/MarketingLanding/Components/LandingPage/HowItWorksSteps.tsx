@@ -48,7 +48,7 @@ export const HowItWorksSteps: React.FC = () => {
 
   return (
     <>
-      <Text mb={[2, 6]} variant={["lg-display", "xl", "xxl"]}>
+      <Text mb={[2, 4, 6]} variant={["lg-display", "xl", "xxl"]}>
         How it works
       </Text>
       <GridColumns gridColumnGap={[0, 2]} alignItems="flex-start">
@@ -80,7 +80,7 @@ interface RowItemProps {
 const RowItem: React.FC<RowItemProps> = ({ index, title, text }) => {
   return (
     <Column span={3} mb={[2, 0]}>
-      <Text mt={[0.5, 2]} variant={["lg-display", "xl", "xxl"]}>
+      <Text mt={[0.5, 0]} variant={["lg-display", "xl", "xxl"]}>
         {index}
       </Text>
       <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>

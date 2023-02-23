@@ -41,54 +41,65 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
   }
 
   return (
-    <Rail
-      title="Previously sold on Artsy"
-      showProgress={false}
-      getItems={() => {
-        return artworks.map(
-          (
-            { artwork, lowEstimate, highEstimate, priceRealized, performance },
-            i
-          ) => {
-            if (!artwork) return <></>
+    <>
+      <Text mb={[0, 0, 2]} variant={["lg-display", "xl", "xxl"]}>
+        Previously sold on Artsy
+      </Text>
+      <Rail
+        title=""
+        showProgress={false}
+        getItems={() => {
+          return artworks.map(
+            (
+              {
+                artwork,
+                lowEstimate,
+                highEstimate,
+                priceRealized,
+                performance,
+              },
+              i
+            ) => {
+              if (!artwork) return <></>
 
-            return (
-              <SoldArtworkFragmentContainer
-                key={artwork.internalID}
-                artwork={artwork}
-                lazyLoad
-                data-testid="previouslySoldItem"
-                onClick={trackArtworkItemClick(artwork, i)}
-                // FIXME:
-                contextModule={ContextModule.artworkRecentlySoldGrid as any}
-              >
-                <Flex justifyContent="space-between" mb={[0.5, 1.5]}>
-                  <Text variant={["lg-display", "xl"]} overflowEllipsis>
-                    {priceRealized?.display}
-                  </Text>
-                  <Text
-                    variant={["lg-display", "xl"]}
-                    color="green100"
-                    overflowEllipsis
-                  >
-                    {performance?.mid}
-                  </Text>
-                </Flex>
-
-                <Text
-                  variant={["xs", "sm-display"]}
-                  color="black60"
-                  overflowEllipsis
-                  data-testid="previouslySoldItem-estimate"
+              return (
+                <SoldArtworkFragmentContainer
+                  key={artwork.internalID}
+                  artwork={artwork}
+                  lazyLoad
+                  data-testid="previouslySoldItem"
+                  onClick={trackArtworkItemClick(artwork, i)}
+                  // FIXME:
+                  contextModule={ContextModule.artworkRecentlySoldGrid as any}
                 >
-                  Estimate {lowEstimate?.display} - {highEstimate?.display}
-                </Text>
-              </SoldArtworkFragmentContainer>
-            )
-          }
-        )
-      }}
-    />
+                  <Flex justifyContent="space-between" mb={[0.5, 1.5]}>
+                    <Text variant={["lg-display", "xl"]} overflowEllipsis>
+                      {priceRealized?.display}
+                    </Text>
+                    <Text
+                      variant={["lg-display", "xl"]}
+                      color="green100"
+                      overflowEllipsis
+                    >
+                      {performance?.mid}
+                    </Text>
+                  </Flex>
+
+                  <Text
+                    variant={["xs", "sm-display"]}
+                    color="black60"
+                    overflowEllipsis
+                    data-testid="previouslySoldItem-estimate"
+                  >
+                    Estimate {lowEstimate?.display} - {highEstimate?.display}
+                  </Text>
+                </SoldArtworkFragmentContainer>
+              )
+            }
+          )
+        }}
+      />
+    </>
   )
 }
 
@@ -125,8 +136,11 @@ export const PreviouslySoldOnArtsyRailFragmentContainer = createFragmentContaine
 
 const PLACEHOLDER = (
   <Skeleton>
+    <Text mb={[0, 0, 2]} variant={["lg-display", "xl", "xxl"]}>
+      Previously sold on Artsy
+    </Text>
     <Rail
-      title="Previously sold on Artsy"
+      title=""
       showProgress={false}
       getItems={() => {
         return [...new Array(20)].map((_, i) => {
