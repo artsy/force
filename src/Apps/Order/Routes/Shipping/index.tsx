@@ -531,6 +531,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
+  const isSaveAndContinueAllowed = (): boolean => {
+    if (shippingOption === "PICKUP") {
+      return !phoneNumber || !!phoneNumberError
+    }
+
+    return false
+  }
+
   const renderArtaErrorMessage = () => {
     return (
       <Text
@@ -715,6 +723,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 loading={isCommittingMutation}
                 variant="primaryBlack"
                 width="50%"
+                disabled={isSaveAndContinueAllowed()}
               >
                 Save and Continue
               </Button>
@@ -741,6 +750,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 loading={isCommittingMutation}
                 variant="primaryBlack"
                 width="100%"
+                disabled={isSaveAndContinueAllowed()}
               >
                 Save and Continue
               </Button>

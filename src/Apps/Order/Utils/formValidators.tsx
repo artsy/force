@@ -50,7 +50,19 @@ export const validateAddress = (address: Address) => {
 }
 
 export const validatePhoneNumber = (phoneNumber: string) => {
-  const error = validatePresence(phoneNumber)
+  let error: string | null = null
+
+  if (phoneNumber == undefined || isEmpty(phoneNumber.trim())) {
+    error = "This field is required"
+  }
+
+  // allow only 0-9 and '+'
+  const numberRegex = /^[+\-\d]*$/g
+
+  if (!error && !numberRegex.test(phoneNumber)) {
+    error = "Please add a valid phone number"
+  }
+
   const hasError = error !== null
 
   return {
