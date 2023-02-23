@@ -83,7 +83,7 @@ export const MeetTheSpecialists: React.FC = () => {
       <Flex overflowY="scroll">
         {pills.map(pill => (
           <Pill
-            mr={[1, 2]}
+            mr={1}
             hover={false}
             selected={selectedSpecialty === pill.type}
             variant="default"
