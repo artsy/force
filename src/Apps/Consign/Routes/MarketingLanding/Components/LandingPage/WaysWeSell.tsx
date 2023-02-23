@@ -1,6 +1,7 @@
 import React from "react"
-import { Text, Image, Box, Shelf } from "@artsy/palette"
+import { Text, Image, Box, Shelf, GridColumns, Column } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Media } from "Utils/Responsive"
 
 export type StepsWithImageBlackDataType = {
   src: string
@@ -63,18 +64,8 @@ export const WaysWeSell = () => {
         We create a tailored strategy to find the optimal sales method for your
         artwork.
       </Text>
-      <Shelf showProgress={false}>
-        {data.map(step => {
-          return (
-            <ShelfItem
-              src={step.src}
-              srcSet={step.srcSet}
-              text={step.text}
-              title={step.title}
-            />
-          )
-        })}
-      </Shelf>
+      <DesctopLayout />
+      <MobileLayout />
     </Box>
   )
 }
@@ -85,13 +76,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
   text,
   srcSet,
 }) => (
-  <Box
-    display="flex"
-    flexDirection="column"
-    justifyContent="flex-end"
-    data-test="artworkShelfArtwork"
-    minWidth={250}
-  >
+  <>
     <Box maxWidth="100%" bg="black10" mb={[1, 2]}>
       <Image
         src={src}
@@ -116,5 +101,53 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
         {text}
       </Text>
     )}
-  </Box>
+  </>
 )
+
+const DesctopLayout: React.FC = () => {
+  return (
+    <Media greaterThan="xs">
+      <GridColumns gridColumnGap={[0, 2, 4]}>
+        {data.map(step => {
+          return (
+            <Column span={4} mb={[2, 0]} data-test="artworkShelfArtwork">
+              <ShelfItem
+                src={step.src}
+                srcSet={step.srcSet}
+                text={step.text}
+                title={step.title}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </Media>
+  )
+}
+
+const MobileLayout: React.FC = () => {
+  return (
+    <Media at="xs">
+      <Shelf showProgress={false}>
+        {data.map(step => {
+          return (
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-end"
+              data-test="artworkShelfArtwork"
+              minWidth={250}
+            >
+              <ShelfItem
+                src={step.src}
+                srcSet={step.srcSet}
+                text={step.text}
+                title={step.title}
+              />
+            </Box>
+          )
+        })}
+      </Shelf>
+    </Media>
+  )
+}
