@@ -1,6 +1,11 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
+import {
+  ArtworkEntity,
+  ManagerArtworkForCollections,
+} from "Components/Artwork/ManagerArtworkForCollections"
 import { MagnifyImage } from "Components/MagnifyImage"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System/useSystemContext"
@@ -12,6 +17,7 @@ import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
+import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -44,7 +50,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
-
+  const [artworkEntity, setArtworkEntity] = useState<ArtworkEntity | null>(null)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -73,51 +79,72 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     (artwork?.image?.url && artwork.image?.placeholder) ||
     undefined
 
+  const setArtwork = (data: ArtworkEntity) => {
+    setArtworkEntity(data)
+  }
+
+  const clearArtwork = () => {
+    setArtworkEntity(null)
+  }
+
   return (
-    <div
-      data-id={artwork.internalID}
-      data-test="artworkGridItem"
-      {...rest}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Box
-        position="relative"
-        width="100%"
-        bg="black10"
-        style={{
-          paddingBottom: imagePlaceholder,
-        }}
+    <>
+      <ManagerArtworkForCollections.Provider
+        value={{ artwork: null, setArtwork, clearArtwork }}
       >
-        <LinkContainer
-          artwork={artwork}
-          disableRouterLinking={disableRouterLinking}
-          localImage={localImage}
-          onClick={handleClick}
-          to={to}
+        <div
+          data-id={artwork.internalID}
+          data-test="artworkGridItem"
+          {...rest}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          <ArtworkGridItemImage
+          <Box
+            position="relative"
+            width="100%"
+            bg="black10"
+            style={{
+              paddingBottom: imagePlaceholder,
+            }}
+          >
+            <LinkContainer
+              artwork={artwork}
+              disableRouterLinking={disableRouterLinking}
+              localImage={localImage}
+              onClick={handleClick}
+              to={to}
+            >
+              <ArtworkGridItemImage
+                artwork={artwork}
+                lazyLoad={lazyLoad}
+                localImage={localImage}
+              />
+            </LinkContainer>
+            <Badge artwork={artwork} />
+          </Box>
+          <Metadata
             artwork={artwork}
-            lazyLoad={lazyLoad}
-            localImage={localImage}
+            isHovered={isHovered}
+            contextModule={contextModule ?? ContextModule.artworkGrid}
+            showSaveButton={showSaveButton}
+            hideSaleInfo={hideSaleInfo}
+            onClick={handleClick}
+            showHighDemandIcon={showHighDemandIcon}
+            showHoverDetails={showHoverDetails}
+            disableRouterLinking={disableRouterLinking}
+            to={to}
+            renderSaveButton={renderSaveButton}
           />
-        </LinkContainer>
-        <Badge artwork={artwork} />
-      </Box>
-      <Metadata
-        artwork={artwork}
-        isHovered={isHovered}
-        contextModule={contextModule ?? ContextModule.artworkGrid}
-        showSaveButton={showSaveButton}
-        hideSaleInfo={hideSaleInfo}
-        onClick={handleClick}
-        showHighDemandIcon={showHighDemandIcon}
-        showHoverDetails={showHoverDetails}
-        disableRouterLinking={disableRouterLinking}
-        to={to}
-        renderSaveButton={renderSaveButton}
-      />
-    </div>
+        </div>
+      </ManagerArtworkForCollections.Provider>
+
+      {!!artworkEntity && (
+        <SelectListsForArtworkModalQueryRender
+          artworkID={artworkEntity.id}
+          onClose={clearArtwork}
+        />
+      )}
+    </>
   )
 }
 
