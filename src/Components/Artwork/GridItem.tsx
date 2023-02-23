@@ -142,6 +142,9 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         <SelectListsForArtworkModalQueryRender
           artworkID={artworkEntity.id}
           onClose={clearArtwork}
+          onSave={collectionIds => {
+            console.log("[debug] collectionIds", collectionIds)
+          }}
         />
       )}
     </>
