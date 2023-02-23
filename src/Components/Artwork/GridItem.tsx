@@ -2,8 +2,8 @@ import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
 import {
   ArtworkEntity,
-  ManagerArtworkForCollections,
-} from "Components/Artwork/ManagerArtworkForCollections"
+  ManageArtworkForCollections,
+} from "Components/Artwork/ManageArtworkForCollections"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -89,7 +89,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 
   return (
     <>
-      <ManagerArtworkForCollections.Provider
+      <ManageArtworkForCollections.Provider
         value={{ artwork: null, setArtwork, clearArtwork }}
       >
         <div
@@ -136,7 +136,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             renderSaveButton={renderSaveButton}
           />
         </div>
-      </ManagerArtworkForCollections.Provider>
+      </ManageArtworkForCollections.Provider>
 
       {!!artworkEntity && (
         <SelectListsForArtworkModalQueryRender
