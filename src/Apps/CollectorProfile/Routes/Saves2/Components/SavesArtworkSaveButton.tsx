@@ -19,7 +19,6 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
   ) => {
     event.preventDefault()
 
-    console.log("[debug]", artworkId, collectionId)
     setVisible(true)
   }
 
