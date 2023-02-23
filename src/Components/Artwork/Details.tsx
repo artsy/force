@@ -2,6 +2,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { SaveArtworkToCollectionsButton } from "Components/Artwork/SaveButton/SaveArtworkToCollectionsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { isFunction } from "lodash"
@@ -233,6 +234,7 @@ export const Details: React.FC<DetailsProps> = ({
   const showDemandIndexHints = useFeatureFlag(
     "show-my-collection-demand-index-hints"
   )
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
 
   const showHighDemandInfo =
     !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
@@ -240,6 +242,10 @@ export const Details: React.FC<DetailsProps> = ({
   const renderSaveButtonComponent = () => {
     if (!showSaveButton) {
       return null
+    }
+
+    if (isArtworksListEnabled) {
+      return <SaveArtworkToCollectionsButton />
     }
 
     if (isFunction(renderSaveButton)) {
