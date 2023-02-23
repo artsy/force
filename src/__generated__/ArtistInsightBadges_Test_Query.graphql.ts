@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a012976aa6fe7957e1b87812b6037015>>
+ * @generated SignedSource<<a9158a776736a4e4f5b3fda36d24d927>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -158,11 +158,14 @@ return {
           "enumValues": [
             "ACTIVE_SECONDARY_MARKET",
             "ARTSY_VANGUARD_YEAR",
+            "AWARDS",
             "BIENNIAL",
             "COLLECTED",
             "CRITICALLY_ACCLAIMED",
             "GROUP_SHOW",
             "HIGH_AUCTION_RECORD",
+            "PRIVATE_COLLECTIONS",
+            "RESIDENCIES",
             "REVIEWED",
             "SOLO_SHOW"
           ],
