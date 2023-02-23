@@ -11,11 +11,7 @@ export const useUpdateCollectionsForArtwork = () => {
         artworksCollectionsBatchUpdate(input: $input) {
           responseOrError {
             ... on ArtworksCollectionsBatchUpdateSuccess {
-              counts {
-                addedToCollections
-                removedFromCollections
-                artworks
-              }
+              __typename
             }
             ... on ArtworksCollectionsBatchUpdateFailure {
               mutationError {

@@ -89,7 +89,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     try {
       setIsSaving(true)
 
-      const { artworksCollectionsBatchUpdate } = await submitMutation({
+      await submitMutation({
         variables: {
           input: {
             artworkIDs: [artwork!.internalID],
@@ -105,12 +105,9 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         },
       })
 
-      const response = artworksCollectionsBatchUpdate?.responseOrError
-      const counts = response?.counts
-
       sendToast({
         variant: "success",
-        message: `added: ${counts?.addedToCollections}, removed: ${counts?.removedFromCollections}`,
+        message: t("collectorSaves.selectedListsForArtwork.changesSaved"),
       })
     } catch (error) {
       logger.error(error)

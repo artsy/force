@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d0930c524679f4937f5e9f69c9303c2>>
+ * @generated SignedSource<<3c322683f900bcbe6604a424402d5d82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,11 +21,7 @@ export type useUpdateCollectionsForArtworkMutation$variables = {
 export type useUpdateCollectionsForArtworkMutation$data = {
   readonly artworksCollectionsBatchUpdate: {
     readonly responseOrError: {
-      readonly counts?: {
-        readonly addedToCollections: number | null;
-        readonly artworks: number | null;
-        readonly removedFromCollections: number | null;
-      } | null;
+      readonly __typename: "ArtworksCollectionsBatchUpdateSuccess";
       readonly mutationError?: {
         readonly statusCode: number | null;
       } | null;
@@ -53,43 +49,11 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworksCollectionsBatchUpdateCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "addedToCollections",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "removedFromCollections",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworks",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    }
-  ],
-  "type": "ArtworksCollectionsBatchUpdateSuccess",
-  "abstractKey": null
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
@@ -139,7 +103,14 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/)
+                ],
+                "type": "ArtworksCollectionsBatchUpdateSuccess",
+                "abstractKey": null
+              },
               (v3/*: any*/)
             ],
             "storageKey": null
@@ -173,13 +144,6 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              },
               (v2/*: any*/),
               (v3/*: any*/)
             ],
@@ -191,16 +155,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "150f386885166bbbfc28af0521e37d81",
+    "cacheID": "c1d82037d1224e542c84dfab01bad1c7",
     "id": null,
     "metadata": {},
     "name": "useUpdateCollectionsForArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        counts {\n          addedToCollections\n          removedFromCollections\n          artworks\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        __typename\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a4c2b6bd3645bfa35252c8f92fccb156";
+(node as any).hash = "bb7f26c34020bb78b8a2f16ed8d72889";
 
 export default node;
