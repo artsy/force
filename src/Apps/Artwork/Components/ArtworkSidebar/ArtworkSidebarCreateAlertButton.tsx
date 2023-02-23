@@ -74,19 +74,19 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
-      authModalOptions={{
-        entity: {
-          name: artwork.title!,
-          slug: artwork.slug,
+      authDialogOptions={{
+        options: {
+          title: "Sign up to create your alert",
+          afterAuthAction: {
+            action: "createAlert",
+            kind: "artworks",
+            objectId: artwork.internalID,
+          },
         },
-        afterSignUpAction: {
-          action: "createAlert",
-          kind: "artworks",
-          objectId: artwork.internalID,
+        analytics: {
+          contextModule: ContextModule.artworkSidebar,
+          intent: Intent.createAlert,
         },
-        contextModule: ContextModule.artworkSidebar,
-        intent: Intent.createAlert,
-        copy: "Sign up to create your alert",
       }}
       renderButton={({ onClick }) => (
         <Button width="100%" size="large" onClick={onClick}>

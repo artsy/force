@@ -131,29 +131,15 @@ describe("Deprecated Save artwork", () => {
     await page.clickSaveButton()
 
     expect(showAuthDialog).toBeCalledWith({
-      current: {
-        analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
-        mode: "SignUp",
-        options: {
-          afterAuthAction: {
-            action: "save",
-            kind: "artworks",
-            objectId: "abcd1234",
-          },
-          title: expect.any(Function),
-        },
-      },
-      legacy: {
-        afterSignUpAction: {
+      analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
+      mode: "SignUp",
+      options: {
+        afterAuthAction: {
           action: "save",
           kind: "artworks",
-          objectId: "andy-warhol-skull",
+          objectId: "abcd1234",
         },
-        contextModule: "worksForSaleRail",
-        copy: "Sign up to save artworks",
-        intent: "saveArtwork",
-        mode: "signup",
-        redirectTo: undefined,
+        title: expect.any(Function),
       },
     })
   })

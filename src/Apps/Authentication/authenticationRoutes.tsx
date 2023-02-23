@@ -1,12 +1,11 @@
+import { flow } from "lodash"
+import { stringify } from "qs"
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "System/Router/Route"
-import { checkForRedirect } from "Apps/Authentication/Legacy/Server/checkForRedirect"
-import { setReferer } from "Apps/Authentication/Legacy/Server/setReferer"
-import { flow } from "lodash"
-import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
-import { setCookies } from "Apps/Authentication/Legacy/Utils/helpers"
-import { redirectPostAuth } from "Apps/Authentication/Legacy/Server/redirectPostAuth"
-import { stringify } from "qs"
+import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Middleware/setReferer"
+import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
+import { redirectPostAuth } from "Apps/Authentication/Middleware/redirectPostAuth"
 
 const ForgotPasswordRoute = loadable(
   () =>
@@ -51,9 +50,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
       res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
         req.query.reset_password_redirect_to
 
-      // Used to customize reset copy/emails for partners etc
-      res.locals.sd.SET_PASSWORD = req.query.set_password
-
       runAuthMiddleware({ req, res })
     },
   },
@@ -71,8 +67,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
 
       runAuthMiddleware(props)
     },
-    onClientSideRender: ({ match }) => {
-      setCookies(match.location.query)
+    onClientSideRender: () => {
       LoginRoute.preload()
     },
   },
@@ -107,8 +102,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
 
       runAuthMiddleware({ req, res })
     },
-    onClientSideRender: ({ match }) => {
-      setCookies(match.location.query)
+    onClientSideRender: () => {
       ResetPasswordRoute.preload()
     },
   },
@@ -126,8 +120,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
 
       runAuthMiddleware(props)
     },
-    onClientSideRender: ({ match }) => {
-      setCookies(match.location.query)
+    onClientSideRender: () => {
       SignupRoute.preload()
     },
   },

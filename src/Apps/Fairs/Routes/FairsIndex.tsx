@@ -15,7 +15,6 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { ModalType } from "Components/Authentication/Types"
 import { Media } from "Utils/Responsive"
 import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
@@ -194,17 +193,10 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                     variant="secondaryBlack"
                     onClick={() => {
                       showAuthDialog({
-                        current: {
-                          mode: "SignUp",
-                          analytics: {
-                            contextModule: ContextModule.fairsHeader,
-                            intent: Intent.signup,
-                          },
-                        },
-                        legacy: {
-                          mode: ModalType.signup,
-                          intent: Intent.signup,
+                        mode: "SignUp",
+                        analytics: {
                           contextModule: ContextModule.fairsHeader,
+                          intent: Intent.signup,
                         },
                       })
                     }}

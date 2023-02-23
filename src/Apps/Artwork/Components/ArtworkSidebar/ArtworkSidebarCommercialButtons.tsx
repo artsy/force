@@ -23,7 +23,6 @@ import { ArtworkSidebarCommercialButtons_artwork$data } from "__generated__/Artw
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
-import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
@@ -172,25 +171,16 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       )
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to buy art with ease`
-            },
-          },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.buyNow,
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to buy art with ease`
           },
         },
-        legacy: {
-          mode: ModalType.signup,
-          redirectTo: location.href,
+        analytics: {
           contextModule: ContextModule.artworkSidebar,
           intent: Intent.buyNow,
-          copy: "Sign up to buy art with ease",
         },
       })
     }
@@ -264,25 +254,16 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       )
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to make an offer`
-            },
-          },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.makeOffer,
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to make an offer`
           },
         },
-        legacy: {
-          mode: ModalType.signup,
-          redirectTo: location.href,
+        analytics: {
           contextModule: ContextModule.artworkSidebar,
           intent: Intent.makeOffer,
-          copy: "Sign up to make an offer",
         },
       })
     }

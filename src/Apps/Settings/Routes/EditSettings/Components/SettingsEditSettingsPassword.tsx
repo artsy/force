@@ -8,7 +8,6 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { password } from "Components/Authentication/Validators"
 import { Form, Formik } from "formik"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,7 +15,8 @@ import { logout } from "Utils/auth"
 import { useMode } from "Utils/Hooks/useMode"
 import * as Yup from "yup"
 import { SettingsEditSettingsPassword_me$data } from "__generated__/SettingsEditSettingsPassword_me.graphql"
-import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
+import { useUpdateSettingsPassword } from "Apps/Settings/Routes/EditSettings/useUpdateSettingsPassword"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 
 interface SettingsEditSettingsPasswordProps {
   me: SettingsEditSettingsPassword_me$data
@@ -76,7 +76,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                 is: () => hasPassword,
                 otherwise: field => field.notRequired(),
               }),
-            newPassword: password,
+            newPassword: passwordValidator,
             passwordConfirmation: Yup.string()
               .required("Password confirmation required")
               .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),

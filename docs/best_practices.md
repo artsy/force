@@ -271,7 +271,7 @@ Some top-level notes:
 Here are some great examples of what tests and test coverage should look like.
 
 - [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
-- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Authentication/Legacy/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
+- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 - [SettingsPaymentsRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Settings/Routes/__tests__/SettingsPaymentsRoute.jest.tsx)
 
 #### Manipulating time in unit tests

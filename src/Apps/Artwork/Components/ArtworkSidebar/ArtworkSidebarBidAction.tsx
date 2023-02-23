@@ -22,7 +22,6 @@ import { bidderQualifications } from "Utils/identityVerificationRequirements"
 import { compact } from "lodash"
 import { Router } from "found"
 import { useRouter } from "System/Router/useRouter"
-import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
@@ -111,26 +110,17 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     if (!this.props.me) {
       this.props.showAuthDialog({
-        current: {
-          mode: "Login",
-          options: {
-            redirectTo,
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to bid on artworks`
-            },
-          },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.bid,
+        mode: "Login",
+        options: {
+          redirectTo,
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to bid on artworks`
           },
         },
-        legacy: {
-          mode: ModalType.login,
-          redirectTo,
-          intent: Intent.bid,
-          copy: "Log in to bid on artworks",
+        analytics: {
           contextModule: ContextModule.artworkSidebar,
+          intent: Intent.bid,
         },
       })
     } else {

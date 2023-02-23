@@ -14,7 +14,11 @@ import { FC } from "react"
 import { getENV } from "Utils/getENV"
 
 export const AuthDialogSocial: FC = () => {
-  const { applePath, facebookPath, googlePath } = getENV("AP")
+  const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
+    applePath: "/users/auth/apple",
+    facebookPath: "/users/auth/facebook",
+    googlePath: "/users/auth/google",
+  }
 
   const {
     state: { options, analytics, mode },

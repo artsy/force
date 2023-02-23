@@ -8,7 +8,6 @@ import { useSystemContext } from "System"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("Utils/openAuthModal")
 jest.mock("System/useSystemContext")
 jest.mock("Utils/getCurrentTimeAsIsoString")
 jest.mock("Components/AuthDialog/useAuthDialog")
@@ -58,7 +57,6 @@ describe("Details", () => {
     mockUseSystemContext.mockImplementation(() => {
       return {
         isLoggedIn: false,
-        mediator: jest.fn(),
       }
     })
 
@@ -439,39 +437,20 @@ describe("Details", () => {
 
     wrapper.find("button[data-test='saveButton']").simulate("click")
 
-    expect(showAuthDialog.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "current": Object {
-            "analytics": Object {
-              "contextModule": "artworkGrid",
-              "intent": "saveArtwork",
-            },
-            "mode": "SignUp",
-            "options": Object {
-              "afterAuthAction": Object {
-                "action": "save",
-                "kind": "artworks",
-                "objectId": "opaque-internal-id",
-              },
-              "title": [Function],
-            },
+    expect(showAuthDialog.mock.calls[0]).toEqual([
+      {
+        analytics: { contextModule: "artworkGrid", intent: "saveArtwork" },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
+            action: "save",
+            kind: "artworks",
+            objectId: "opaque-internal-id",
           },
-          "legacy": Object {
-            "afterSignUpAction": Object {
-              "action": "save",
-              "kind": "artworks",
-              "objectId": "gerhard-richter-tulips-p17-14",
-            },
-            "contextModule": "artworkGrid",
-            "copy": "Sign up to save artworks",
-            "intent": "saveArtwork",
-            "mode": "signup",
-            "redirectTo": "http://localhost/",
-          },
+          title: expect.any(Function),
         },
-      ]
-    `)
+      },
+    ])
   })
 
   describe("alternate metadata when hovering", () => {

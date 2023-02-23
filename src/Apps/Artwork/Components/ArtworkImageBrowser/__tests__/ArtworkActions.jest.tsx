@@ -23,7 +23,7 @@ jest.mock("System", () => ({
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))
 jest.mock("System/useSystemContext", () => ({
-  useSystemContext: jest.fn().mockReturnValue({ mediator: { on: jest.fn() } }),
+  useSystemContext: jest.fn().mockReturnValue({}),
 }))
 jest.mock("System/Analytics", () => ({
   AnalyticsSchema: {},

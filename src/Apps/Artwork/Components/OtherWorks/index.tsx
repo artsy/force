@@ -12,7 +12,6 @@ import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
-import { Mediator } from "Server/mediator"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { useSystemContext } from "System"
@@ -21,7 +20,6 @@ import track, { useTracking } from "react-tracking"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork$data
-  mediator?: Mediator
 }
 
 /**

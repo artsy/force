@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "Components/NavBar/NavBar"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
-import { mediator } from "Server/mediator"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.mock("Components/Search/SearchBar", () => {
   return {
@@ -29,6 +29,10 @@ jest.mock("react-dom", () => ({
   createPortal: children => children,
 }))
 
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
+}))
+
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 
@@ -41,11 +45,6 @@ describe("NavBar", () => {
   }
 
   beforeAll(() => {
-    mediator.on("open:auth", () => {})
-  })
-
-  beforeAll(() => {
-    jest.spyOn(mediator, "trigger")
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -99,27 +98,40 @@ describe("NavBar", () => {
     })
   })
 
-  describe("mediator actions", () => {
+  describe("logged out actions", () => {
+    const mockUseAuthDialog = useAuthDialog as jest.Mock
+
     it("calls login auth action on login button click", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       const wrapper = getWrapper()
+
       wrapper.find("button").at(0).simulate("click")
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        contextModule: "header",
-        copy: "Log in to collect art by the world’s leading artists",
-        intent: "login",
-        mode: "login",
+
+      expect(showAuthDialog).toBeCalledWith({
+        mode: "Login",
+        analytics: {
+          contextModule: "header",
+          intent: "login",
+        },
       })
     })
 
     it("calls signup auth action on signup button click", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       const wrapper = getWrapper()
+
       wrapper.find("button").at(1).simulate("click")
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        contextModule: "header",
-        copy: "Sign up to collect art by the world’s leading artists",
-        intent: "signup",
-        mode: "signup",
-        redirectTo: "http://localhost/",
+
+      expect(showAuthDialog).toBeCalledWith({
+        mode: "SignUp",
+        analytics: {
+          contextModule: "header",
+          intent: "signup",
+        },
       })
     })
   })

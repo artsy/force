@@ -2,14 +2,13 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import { Button } from "@artsy/palette"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
-jest.mock("Utils/openAuthModal")
 jest.mock("Components/AuthDialog/useAuthDialog")
 
 const savedSearchEntity: SavedSearchEntity = {
@@ -38,22 +37,19 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
       <SavedSearchCreateAlertButtonContainer
         entity={savedSearchEntity}
         criteria={{}}
-        authModalOptions={{
-          entity: {
-            name: "Owner Name",
-            slug: "owner-slug",
+        authDialogOptions={{
+          options: {
+            title: "Sign up to create an alert",
+            afterAuthAction: {
+              action: "createAlert",
+              kind: "artist",
+              objectId: "owner-slug",
+            },
           },
-          afterSignUpAction: {
-            action: "createAlert",
-            kind: "artist",
-            objectId: "owner-slug",
+          analytics: {
+            contextModule: ContextModule.artworkGrid,
+            intent: Intent.createAlert,
           },
-          // @ts-ignore
-          contextModule: "artworkGrid",
-          copy: "Sign up to create an alert",
-          // @ts-ignore
-          intent: "createAlert",
-          redirectTo: "http://localhost/",
         }}
         renderButton={({ onClick }) => (
           <Button onClick={onClick}>Create Alert</Button>
@@ -145,36 +141,18 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toHaveBeenCalledWith({
-        current: {
-          analytics: {
-            contextModule: "artworkGrid",
-            intent: "createAlert",
-          },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "createAlert",
-              kind: "artist",
-              objectId: "owner-slug",
-            },
-            title: "Sign up to create an alert",
-          },
+        analytics: {
+          contextModule: "artworkGrid",
+          intent: "createAlert",
         },
-        legacy: {
-          afterSignUpAction: {
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "createAlert",
             kind: "artist",
             objectId: "owner-slug",
           },
-          contextModule: "artworkGrid",
-          copy: "Sign up to create an alert",
-          entity: {
-            name: "Owner Name",
-            slug: "owner-slug",
-          },
-          intent: "createAlert",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: "Sign up to create an alert",
         },
       })
     })

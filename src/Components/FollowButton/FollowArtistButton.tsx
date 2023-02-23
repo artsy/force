@@ -17,7 +17,6 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
   artist: FollowArtistButton_artist$data
@@ -101,35 +100,21 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to follow ${artist.name}`
-            },
-            afterAuthAction: {
-              action: "follow",
-              kind: "artist",
-              objectId: artist.slug,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to follow ${artist.name}`
           },
-          analytics: {
-            intent: Intent.followArtist,
-            contextModule,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+          afterAuthAction: {
             action: "follow",
             kind: "artist",
             objectId: artist.slug,
           },
-          contextModule,
-          copy: `Sign up to follow ${artist.name}`,
+        },
+        analytics: {
           intent: Intent.followArtist,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
+          contextModule,
         },
       })
 

@@ -83,29 +83,15 @@ describe("FollowArtistButton", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toBeCalledWith({
-        current: {
-          analytics: { contextModule: "artistHeader", intent: "followArtist" },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "follow",
-              kind: "artist",
-              objectId: "example",
-            },
-            title: expect.any(Function),
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+        analytics: { contextModule: "artistHeader", intent: "followArtist" },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "follow",
             kind: "artist",
             objectId: "example",
           },
-          contextModule: "artistHeader",
-          copy: "Sign up to follow Example",
-          intent: "followArtist",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: expect.any(Function),
         },
       })
     })

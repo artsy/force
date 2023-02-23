@@ -4,9 +4,6 @@ import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { getENV } from "Utils/getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { mediator } from "Server/mediator"
-import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
 
@@ -20,21 +17,6 @@ export const USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY = graphql`
   query useScrollToOpenArtistAuthModalQuery($id: String!) {
     artist(id: $id) {
       name
-      filterArtworksConnection(
-        first: 1
-        marketable: true
-        sort: "-decayed_merch"
-      ) {
-        edges {
-          node {
-            image {
-              cropped(width: 450, height: 1075) {
-                src
-              }
-            }
-          }
-        }
-      }
     }
   }
 `
@@ -70,53 +52,32 @@ export const useScrollToOpenArtistAuthModal = () => {
 
       if (!artist) return
 
-      const [artwork] = extractNodes(artist.filterArtworksConnection)
-
-      if (!artwork) return
-
-      const image = artwork.image?.cropped?.src
-
       const handleScroll = () => {
         setTimeout(() => {
           showAuthDialog({
-            current: {
-              mode: "SignUp",
-              options: {
-                image: true,
-                onClose: dismiss,
-                onSuccess: dismiss,
-                title: mode => {
-                  const action = mode === "SignUp" ? "Sign up" : "Log in"
-                  return `${action} to discover new works by ${artist.name} and more artists you love`
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.popUpModal,
-                intent: Intent.viewArtist,
-                trigger: "scroll",
+            mode: "SignUp",
+            options: {
+              image: true,
+              onClose: dismiss,
+              onSuccess: dismiss,
+              title: mode => {
+                const action = mode === "SignUp" ? "Sign up" : "Log in"
+                return `${action} to discover new works by ${artist.name} and more artists you love`
               },
             },
-            legacy: {
+            analytics: {
               contextModule: ContextModule.popUpModal,
-              copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
-              redirectTo: location.href,
-              image,
               intent: Intent.viewArtist,
-              mode: ModalType.signup,
-              triggerSeconds: 4,
+              trigger: "scroll",
             },
           })
         }, 2000)
       }
 
       window.addEventListener("scroll", handleScroll, { once: true })
-      mediator.once("modal:closed", dismiss)
-      mediator.once("auth:sign_up:success", dismiss)
 
       return () => {
         window.removeEventListener("scroll", handleScroll)
-        mediator.off("modal:closed", dismiss)
-        mediator.off("auth:sign_up:success", dismiss)
       }
     }
 

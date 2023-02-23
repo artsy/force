@@ -159,14 +159,7 @@ describe("Payment", () => {
 
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
+      return {}
     })
   })
 
