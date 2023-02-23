@@ -1,6 +1,8 @@
+import { useToasts } from "@artsy/palette"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 
 interface SavesArtworkSaveButtonProps {
   artworkId: string
@@ -14,6 +16,9 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
   const [visible, setVisible] = useState(false)
   const [isSaved, setIsSaved] = useState(true)
 
+  const { sendToast } = useToasts()
+  const { t } = useTranslation()
+
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -26,8 +31,16 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
     setVisible(false)
   }
 
-  const handleSavedStatusChanged = (isSaved: boolean) => {
-    setIsSaved(isSaved)
+  const handleSave = (selectedCollectionIds: string[]) => {
+    const isSavedForCurrentCollection = selectedCollectionIds.includes(
+      collectionId
+    )
+
+    setIsSaved(isSavedForCurrentCollection)
+    sendToast({
+      variant: "success",
+      message: t("collectorSaves.saveArtworkToListsButton.changesSaved"),
+    })
   }
 
   return (
@@ -37,9 +50,8 @@ export const SavesArtworkSaveButton: React.FC<SavesArtworkSaveButtonProps> = ({
       {visible && (
         <SelectListsForArtworkModalQueryRender
           artworkID={artworkId}
-          collectionId={collectionId}
           onClose={handleCloseModal}
-          onSavedStatusChanged={handleSavedStatusChanged}
+          onSave={handleSave}
         />
       )}
     </>

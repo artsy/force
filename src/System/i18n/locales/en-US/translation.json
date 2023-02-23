@@ -127,11 +127,13 @@
       "remainingCharactersCount_one": "{{count}} character remaining",
       "remainingCharactersCount_other": "{{count}} characters remaining"
     },
+    "saveArtworkToListsButton": {
+      "changesSaved": "Changes saved"
+    },
     "selectedListsForArtwork": {
       "listsCount_one": "{{count}} list selected",
       "listsCount_other": "{{count}} lists selected",
-      "saveButton": "Save",
-      "changesSaved": "Changes saved"
+      "saveButton": "Save"
     },
     "contextualMenu": {
       "edit": "Edit List",
