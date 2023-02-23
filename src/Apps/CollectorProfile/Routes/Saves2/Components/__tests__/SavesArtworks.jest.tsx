@@ -72,4 +72,24 @@ describe("SavesArtworks", () => {
       expect(screen.getByText(description)).toBeInTheDocument()
     })
   })
+
+  describe("Actions contextual menu", () => {
+    it("should not render for default collection", () => {
+      renderWithRelay({
+        Collection: () => ({ default: true }),
+      })
+
+      const menuTriggerButton = screen.queryByLabelText("Open contextual menu")
+      expect(menuTriggerButton).not.toBeInTheDocument()
+    })
+
+    it("should render for non-default collection", () => {
+      renderWithRelay({
+        Collection: () => ({ default: false }),
+      })
+
+      const menuTriggerButton = screen.queryByLabelText("Open contextual menu")
+      expect(menuTriggerButton).toBeInTheDocument()
+    })
+  })
 })
