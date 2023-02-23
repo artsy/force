@@ -1,8 +1,7 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
-import { ManageArtworkForCollections } from "Components/Artwork/ManageArtworkForCollections"
+import { ManageArtworkForCollectionsProvider } from "Components/Artwork/ManageArtworkForCollections"
 import { MagnifyImage } from "Components/MagnifyImage"
-import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
@@ -14,7 +13,6 @@ import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -49,8 +47,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
-  const [artworkEntityId, setArtworkEntityId] = useState<string | null>(null)
-  const [isSavedToList, setIsSavedToList] = useState(!!savedListId)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -79,30 +75,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     (artwork?.image?.url && artwork.image?.placeholder) ||
     undefined
 
-  const setArtworkId = (artworkId: string) => {
-    setArtworkEntityId(artworkId)
-  }
-
-  const clearArtworkId = () => {
-    setArtworkEntityId(null)
-  }
-
-  const handleSaveCollectionsForArtwork = (listIds: string[]) => {
-    if (savedListId) {
-      setIsSavedToList(listIds.includes(savedListId))
-    }
-  }
-
   return (
-    <ManageArtworkForCollections.Provider
-      value={{
-        artworkId: artworkEntityId,
-        savedListId: savedListId ?? null,
-        isSavedToList,
-        setArtworkId,
-        clearArtworkId,
-      }}
-    >
+    <ManageArtworkForCollectionsProvider savedListId={savedListId}>
       <div
         data-id={artwork.internalID}
         data-test="artworkGridItem"
@@ -147,15 +121,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           renderSaveButton={renderSaveButton}
         />
       </div>
-
-      {!!artworkEntityId && (
-        <SelectListsForArtworkModalQueryRender
-          artworkID={artworkEntityId}
-          onClose={clearArtworkId}
-          onSave={handleSaveCollectionsForArtwork}
-        />
-      )}
-    </ManageArtworkForCollections.Provider>
+    </ManageArtworkForCollectionsProvider>
   )
 }
 

@@ -21,7 +21,6 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-
     setArtworkId(artwork.internalID)
   }
 
