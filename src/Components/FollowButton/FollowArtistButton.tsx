@@ -9,6 +9,7 @@ import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMuta
 import { FollowArtistPopoverQueryRenderer } from "Components/FollowArtistPopover"
 import * as React from "react"
 import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
+import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
 import { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -19,6 +20,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
+  me: FollowArtistButton_me$data | null
   artist: FollowArtistButton_artist$data
   contextModule?: AuthContextModule
   triggerSuggestions?: boolean
@@ -26,6 +28,7 @@ interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
 }
 
 const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
+  me,
   artist,
   contextModule = ContextModule.artistHeader,
   triggerSuggestions = false,
@@ -41,12 +44,19 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
     contextModule,
   })
 
-  const count = artist.counts?.follows ?? 0
+  const artistCount = artist.counts?.follows ?? 0
+  const meCount = me?.counts?.followedArtists ?? 0
 
   const { submitMutation } = useMutation<FollowArtistButtonMutation>({
     mutation: graphql`
       mutation FollowArtistButtonMutation($input: FollowArtistInput!) {
         followArtist(input: $input) {
+          me {
+            id
+            counts {
+              followedArtists
+            }
+          }
           artist {
             id
             isFollowed
@@ -59,35 +69,53 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
     `,
     optimisticResponse: {
       followArtist: {
+        me: {
+          id: me?.id ?? "logged-out",
+          counts: {
+            followedArtists: artist.isFollowed // Not yet followed
+              ? meCount - 1
+              : meCount + 1,
+          },
+        },
         artist: {
           id: artist.id,
           isFollowed: !artist.isFollowed,
           counts: {
             follows: artist.isFollowed // Not yet followed
-              ? count - 1
-              : count + 1,
+              ? artistCount - 1
+              : artistCount + 1,
           },
         },
       },
     },
     updater: (store, data) => {
-      if (!data.followArtist?.artist) return
+      if (!data.followArtist?.artist || !data.followArtist.me) return
 
-      const { artist } = data.followArtist
+      const { artist, me } = data.followArtist
 
-      const proxy = store.get(artist.id)
+      const artistProxy = store.get(artist.id)
+      const meProxy = store.get(me.id)
 
-      if (!proxy) return
+      if (!artistProxy || !meProxy) return
 
-      const record = proxy.getLinkedRecord("counts")
+      const artistCountsProxy = artistProxy.getLinkedRecord("counts")
+      const meCountsProxy = meProxy.getLinkedRecord("counts")
 
-      if (!record) return
+      if (!artistCountsProxy || !meCountsProxy) return
 
-      const nextCount = artist.isFollowed // Is followed now
-        ? count + 1
-        : count - 1
+      artistCountsProxy.setValue(
+        artist.isFollowed // Is followed now
+          ? artistCount + 1
+          : artistCount - 1,
+        "follows"
+      )
 
-      record.setValue(nextCount, "follows")
+      meCountsProxy.setValue(
+        artist.isFollowed // Is followed now
+          ? meCount + 1
+          : meCount - 1,
+        "followedArtists"
+      )
     },
   })
 
@@ -175,6 +203,14 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
 export const FollowArtistButtonFragmentContainer = createFragmentContainer(
   FollowArtistButton,
   {
+    me: graphql`
+      fragment FollowArtistButton_me on Me {
+        id
+        counts {
+          followedArtists
+        }
+      }
+    `,
     artist: graphql`
       fragment FollowArtistButton_artist on Artist {
         id
@@ -191,7 +227,7 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
 )
 
 interface FollowArtistButtonQueryRendererProps
-  extends Omit<FollowArtistButtonProps, "artist"> {
+  extends Omit<FollowArtistButtonProps, "artist" | "me"> {
   id: string
 }
 
@@ -204,6 +240,9 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
       lazyLoad
       query={graphql`
         query FollowArtistButtonQuery($id: String!) {
+          me {
+            ...FollowArtistButton_me
+          }
           artist(id: $id) {
             ...FollowArtistButton_artist
           }
@@ -219,6 +258,7 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
         return (
           <FollowArtistButtonFragmentContainer
             {...rest}
+            me={props.me}
             artist={props.artist}
           />
         )

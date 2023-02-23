@@ -22,6 +22,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   Component: props => {
     return (
       <FollowArtistButtonFragmentContainer
+        me={props.me!}
         artist={props.artist!}
         onFollow={onFollow}
       />
@@ -29,6 +30,9 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   },
   query: graphql`
     query FollowArtistButton_Test_Query @relay_test_operation {
+      me {
+        ...FollowArtistButton_me
+      }
       artist(id: "example") {
         ...FollowArtistButton_artist
       }
