@@ -7,7 +7,7 @@ import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 jest.unmock("react-relay")
 jest.mock("System/Router/Utils/findCurrentRoute")
 
-jest.mock("../Components/ArtistMeta", () => ({
+jest.mock("Apps/Artist/Components/ArtistMeta/ArtistMeta", () => ({
   ArtistMetaFragmentContainer: () => null,
 }))
 jest.mock("../Components/ArtistHeader/ArtistHeader", () => ({

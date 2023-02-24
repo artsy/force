@@ -16,10 +16,12 @@ import { MockBoot } from "DevTools"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 
 jest.unmock("react-relay")
-jest.mock("System", () => ({
+jest.mock("System/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
-  track: jest.fn().mockReturnValue(jest.fn),
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
+}))
+jest.mock("System/Analytics/AnalyticsContext", () => ({
+  track: jest.fn().mockReturnValue(jest.fn),
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))
 jest.mock("System/useSystemContext", () => ({
