@@ -5,7 +5,7 @@ import { resized } from "Utils/resized"
 
 export const FAQSWA: React.FC = () => {
   const image = resized(
-    "https://files.artsy.net/images/SWA-landing-FAQ-section.png",
+    "https://files.artsy.net/images/SWA-landing-FAQ-section-x2.jpg",
     { width: 950, height: 419 }
   )
   const supportUrl =
@@ -15,7 +15,7 @@ export const FAQSWA: React.FC = () => {
     <TextAndImageLayout
       text={
         <>
-          <Text variant={["md", "xl", "xxl"]} mb={4} textColor="white100">
+          <Text variant={["lg", "xl", "xxl"]} mb={4} textColor="white100">
             No upfront fees, clear pricing estimates and commission structures.
           </Text>
           <Text variant={["xs", "sm", "sm"]} mb={[2, 4]} textColor="white100">
@@ -46,6 +46,7 @@ export const FAQSWA: React.FC = () => {
           alt="Collage of five artworks on a black background"
         />
       }
+      references="Andy Warhol, Cow, II.12A, 1976. Alex Katz, Yellow Tulips, 2014. Hunt Slonem, Abraham Lincoln, 2020. Julian Opie, Walking in Melbourne, 1, 2018  "
     />
   )
 }

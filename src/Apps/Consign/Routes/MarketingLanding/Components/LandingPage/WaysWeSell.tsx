@@ -1,6 +1,17 @@
 import React from "react"
-import { Text, Image, Box, Shelf } from "@artsy/palette"
+import {
+  Text,
+  Image,
+  Box,
+  Shelf,
+  GridColumns,
+  Column,
+  FullBleed,
+} from "@artsy/palette"
 import { resized } from "Utils/resized"
+import { Media } from "Utils/Responsive"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 export type StepsWithImageBlackDataType = {
   src: string
@@ -54,28 +65,28 @@ const data: StepsWithImageBlackDataType[] = [
 
 export const WaysWeSell = () => {
   return (
-    <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]} backgroundColor="black100">
-      <Text mb={[1, 2]} variant={["lg-display", "xl", "xxl"]} color="white100">
-        Ways to sell with Artsy
-      </Text>
+    <FullBleed background="black" position="relative">
+      <AppContainer>
+        <HorizontalPadding>
+          <Box mx={[-2, -4]} px={[2, 4]} py={[4, 12]}>
+            <Text
+              mb={[1, 2]}
+              variant={["lg-display", "xl", "xxl"]}
+              color="white100"
+            >
+              Ways to sell with Artsy
+            </Text>
 
-      <Text mb={[2, 4, 6]} variant={["xs", "sm"]} color="white100">
-        We create a tailored strategy to find the optimal sales method for your
-        artwork.
-      </Text>
-      <Shelf showProgress={false}>
-        {data.map(step => {
-          return (
-            <ShelfItem
-              src={step.src}
-              srcSet={step.srcSet}
-              text={step.text}
-              title={step.title}
-            />
-          )
-        })}
-      </Shelf>
-    </Box>
+            <Text mb={[4, 4, 6]} variant={["xs", "sm"]} color="white100">
+              We create a tailored strategy to find the optimal sales method for
+              your artwork.
+            </Text>
+            <DesctopLayout />
+            <MobileLayout />
+          </Box>
+        </HorizontalPadding>
+      </AppContainer>
+    </FullBleed>
   )
 }
 
@@ -85,13 +96,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
   text,
   srcSet,
 }) => (
-  <Box
-    display="flex"
-    flexDirection="column"
-    justifyContent="flex-end"
-    data-test="artworkShelfArtwork"
-    minWidth={250}
-  >
+  <>
     <Box maxWidth="100%" bg="black10" mb={[1, 2]}>
       <Image
         src={src}
@@ -116,5 +121,60 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
         {text}
       </Text>
     )}
-  </Box>
+  </>
 )
+
+const DesctopLayout: React.FC = () => {
+  return (
+    <Media greaterThan="xs">
+      <GridColumns gridColumnGap={[0, 2, 4]}>
+        {data.map(step => {
+          return (
+            <Column
+              span={4}
+              mb={[2, 0]}
+              data-test="artworkShelfArtwork"
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-end"
+            >
+              <ShelfItem
+                src={step.src}
+                srcSet={step.srcSet}
+                text={step.text}
+                title={step.title}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </Media>
+  )
+}
+
+const MobileLayout: React.FC = () => {
+  return (
+    <Media at="xs">
+      <Shelf showProgress={false}>
+        {data.map(step => {
+          return (
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-end"
+              data-test="artworkShelfArtwork"
+              minWidth={250}
+            >
+              <ShelfItem
+                src={step.src}
+                srcSet={step.srcSet}
+                text={step.text}
+                title={step.title}
+              />
+            </Box>
+          )
+        })}
+      </Shelf>
+    </Media>
+  )
+}

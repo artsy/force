@@ -12,6 +12,7 @@ import { resized } from "Utils/resized"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAnalyticsContext, useSystemContext } from "System"
 import { useTracking } from "react-tracking"
+import { Media } from "Utils/Responsive"
 
 export const HeaderSWA = () => {
   const { user } = useSystemContext()
@@ -51,20 +52,20 @@ export const HeaderSWA = () => {
   )
 
   return (
-    <GridColumns gridRowGap={4} alignItems="center">
+    <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
         <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
 
-        <Spacer y={[0.5, 2]} />
+        <Spacer y={[0.5, 2, 4]} />
 
         <Text variant={["xs", "sm", "lg"]}>
           Our experts find the best sales opportunity for your work, through our
           vast global network of buyers.
         </Text>
 
-        <Spacer y={[4, 6]} />
+        <Spacer y={[2, 4]} />
 
         <GridColumns>
           <Column span={[12, 6, 5]}>
@@ -99,6 +100,20 @@ export const HeaderSWA = () => {
 
       <Column span={7} ml={[-2, 0]} mr={[-2, -4]}>
         <ResponsiveBox aspectWidth={1104} aspectHeight={833} maxWidth="100%">
+          <Media greaterThan="xs">
+            <Text
+              position="absolute"
+              bottom={0}
+              ml={1}
+              variant="xs"
+              color="black15"
+            >
+              <i>
+                Hunt Slonem, Lily White, 2020. Alex Katz, Large Birch, 2005.
+                Andy Warhol, Queen Margrethe II of Denmark (FS II.345), 1985
+              </i>
+            </Text>
+          </Media>
           <Image
             width="100%"
             height="100%"

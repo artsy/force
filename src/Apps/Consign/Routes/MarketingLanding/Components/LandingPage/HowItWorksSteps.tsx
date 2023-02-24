@@ -48,10 +48,10 @@ export const HowItWorksSteps: React.FC = () => {
 
   return (
     <>
-      <Text mb={[2, 6]} variant={["lg-display", "xl", "xxl"]}>
+      <Text mb={[2, 4, 6]} variant={["lg-display", "xl", "xxl"]}>
         How it works
       </Text>
-      <GridColumns gridColumnGap={[0, 6]} alignItems="flex-start">
+      <GridColumns gridColumnGap={[0, 2]} alignItems="flex-start">
         {reasons.map(i => (
           <RowItem index={i.index} title={i.title} text={i.text} />
         ))}
@@ -59,7 +59,7 @@ export const HowItWorksSteps: React.FC = () => {
       <Button
         // @ts-ignore
         as={RouterLink}
-        mt={[2, 6]}
+        mt={[2, 4]}
         width={["100%", 300]}
         variant="primaryBlack"
         to="/sell/submission"
@@ -80,7 +80,7 @@ interface RowItemProps {
 const RowItem: React.FC<RowItemProps> = ({ index, title, text }) => {
   return (
     <Column span={3} mb={[2, 0]}>
-      <Text mt={[0.5, 2]} variant={["lg-display", "xl", "xxl"]}>
+      <Text mt={[0.5, 0]} variant={["lg-display", "xl", "xxl"]}>
         {index}
       </Text>
       <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>

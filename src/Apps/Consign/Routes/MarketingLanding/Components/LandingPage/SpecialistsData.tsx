@@ -1,4 +1,4 @@
-import { cropped } from "Utils/resized"
+import { resized } from "Utils/resized"
 
 export type Specialty =
   | "auctions"
@@ -15,22 +15,27 @@ export interface SpecialistsData {
   email: string
 }
 
+export const CARD_WIDTH = 445
+export const CARD_HEIGHT = 610
+export const CARD_HEIGHT_MD = 557
+export const CARD_HEIGHT_MOBILE = 461
+
 const imageOptions = {
-  width: 644,
-  height: 445,
+  width: CARD_WIDTH,
+  height: CARD_HEIGHT,
 }
 
-const TEST_imageAuctions = cropped(
+const TEST_imageAuctions = resized(
   "https://files.artsy.net/images/08_CVP_About_Follow (2).png",
   imageOptions
 )
 
-const TEST_imagePriveteSalesAndAdvisory = cropped(
+const TEST_imagePriveteSalesAndAdvisory = resized(
   "https://files.artsy.net/images/06_CVP_About_Sell.png",
   imageOptions
 )
 
-const TEST_CollectorServices = cropped(
+const TEST_CollectorServices = resized(
   "https://files.artsy.net/images/07_CVP_About_Discover.png",
   imageOptions
 )

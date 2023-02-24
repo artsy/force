@@ -13,7 +13,7 @@ export const SpeakToTheTeam: React.FC = () => {
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
   const image = resized(
-    "https://files.artsy.net/images/SWA-landing-FAQ-section-speak-to-the-team.jpg",
+    "https://files.artsy.net/images/SWA-landing-FAQ-section-speak-to-the-team-image-x2.jpg",
     { width: 949, height: 420 }
   )
   const getInTouchRoute = enableSWAInquiryFlow
@@ -67,6 +67,7 @@ export const SpeakToTheTeam: React.FC = () => {
           alt="Collage of five artworks on a black background"
         />
       }
+      references="Janet Fish, Daffodils, 1995. Malik Roberts, Untitled | Blue, 2022. Robert Colescott, Les Demoiselles d’Alabama: Vestidas, 1985. Hunt Slonem, Peacock St Mary’s, 2010-2020. Vik Muniz, Metachrome (Interior with Egyptian Curtain, after Matisse), 2016."
     />
   )
 }
