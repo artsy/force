@@ -69,7 +69,7 @@ export const SelectListItemFragmentContainer = createFragmentContainer(
       fragment SelectListItem_item on Collection {
         name
         artworksCount
-        artworksConnection(first: 1) {
+        artworksConnection(first: 1, sort: SAVED_AT_DESC) {
           edges {
             node {
               image {

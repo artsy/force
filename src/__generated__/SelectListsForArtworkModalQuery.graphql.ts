@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d519790fe8ebd0af41a6d9230f1f54fb>>
+ * @generated SignedSource<<11a8eaec12136f8c3f5f671de527c916>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -115,6 +115,11 @@ v5 = [
         "kind": "Literal",
         "name": "first",
         "value": 1
+      },
+      {
+        "kind": "Literal",
+        "name": "sort",
+        "value": "SAVED_AT_DESC"
       }
     ],
     "concreteType": "ArtworkConnection",
@@ -147,7 +152,7 @@ v5 = [
         "storageKey": null
       }
     ],
-    "storageKey": "artworksConnection(first:1)"
+    "storageKey": "artworksConnection(first:1,sort:\"SAVED_AT_DESC\")"
   },
   (v4/*: any*/)
 ];
@@ -311,12 +316,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f098219df974f7413efbf733f4ee8102",
+    "cacheID": "84318eeecffd480b9c47b44d9c35111f",
     "id": null,
     "metadata": {},
     "name": "SelectListsForArtworkModalQuery",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    ...SelectListItem_item\n    id\n  }\n  collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    ...SelectListItem_item\n    id\n  }\n  collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
