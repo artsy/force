@@ -3,7 +3,11 @@ import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
-import { SystemContext, SystemContextProps, withSystemContext } from "System"
+import {
+  SystemContext,
+  SystemContextProps,
+  withSystemContext,
+} from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {

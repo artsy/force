@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider, useSystemContext } from "System"
+import { SystemContextProvider, useSystemContext } from "System/SystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

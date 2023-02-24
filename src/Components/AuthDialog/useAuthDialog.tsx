@@ -11,7 +11,7 @@ export const useAuthDialog = () => {
 
 export type ShowAuthDialog = ReturnType<typeof useAuthDialog>["showAuthDialog"]
 
-export interface InjectedAuthDialogProps {
+interface InjectedAuthDialogProps {
   showAuthDialog: ShowAuthDialog
 }
 

@@ -13,7 +13,7 @@ import {
   artworkDetailsValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,

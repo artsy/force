@@ -9,9 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRailQuery } from "__generated__/ArtistRailQuery.graphql"
 import { ArtistRail_artist$data } from "__generated__/ArtistRail_artist.graphql"
 import {
   ShelfArtworkFragmentContainer,
@@ -88,37 +86,3 @@ export const ArtistRailFragmentContainer = createFragmentContainer(ArtistRail, {
     }
   `,
 })
-
-interface ArtistRailQueryRendererProps {
-  id: string
-}
-
-export const ArtistRailQueryRenderer: FC<ArtistRailQueryRendererProps> = ({
-  id,
-}) => {
-  return (
-    <SystemQueryRenderer<ArtistRailQuery>
-      placeholder={ARTIST_RAIL_PLACEHOLDER}
-      variables={{ id }}
-      query={graphql`
-        query ArtistRailQuery($id: String!) {
-          artist(id: $id) {
-            ...ArtistRail_artist
-          }
-        }
-      `}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props?.artist) {
-          return ARTIST_RAIL_PLACEHOLDER
-        }
-
-        return <ArtistRailFragmentContainer artist={props.artist} />
-      }}
-    />
-  )
-}

@@ -3,7 +3,8 @@ import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Compone
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { useTracking } from "react-tracking"
 
 export const SpeakToTheTeam: React.FC = () => {

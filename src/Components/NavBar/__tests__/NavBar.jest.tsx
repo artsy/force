@@ -1,5 +1,5 @@
 import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "Components/NavBar/NavBar"

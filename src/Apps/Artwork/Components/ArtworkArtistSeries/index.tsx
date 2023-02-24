@@ -1,5 +1,5 @@
 import * as React from "react"
-import { withSystemContext } from "System"
+import { withSystemContext } from "System/SystemContext"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
@@ -8,7 +8,7 @@ import { ArtworkArtistSeries_artwork$data } from "__generated__/ArtworkArtistSer
 import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Rail } from "Components/Rail"
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data

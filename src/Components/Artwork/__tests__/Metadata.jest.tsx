@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import Metadata from "Components/Artwork/Metadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
 
 jest.unmock("react-relay")

@@ -1,7 +1,7 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
 import { OtherAuctions_salesConnection$data } from "__generated__/OtherAuctions_salesConnection.graphql"
 import { OtherAuctionsQuery } from "__generated__/OtherAuctionsQuery.graphql"
-import { SystemContext } from "System"
+import { SystemContext } from "System/SystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AuctionCardFragmentContainer } from "Components/AuctionCard"

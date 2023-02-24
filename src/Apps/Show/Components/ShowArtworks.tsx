@@ -12,7 +12,7 @@ import { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 import { omit } from "lodash"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show$data

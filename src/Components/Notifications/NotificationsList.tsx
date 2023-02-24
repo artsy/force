@@ -13,7 +13,7 @@ import {
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext, useState } from "react"
-import { SystemContext } from "System"
+import { SystemContext } from "System/SystemContext"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"

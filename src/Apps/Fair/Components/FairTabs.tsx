@@ -9,7 +9,7 @@ import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useJump } from "Utils/Hooks/useJump"
 import { FairTabs_fair$data } from "__generated__/FairTabs_fair.graphql"
 

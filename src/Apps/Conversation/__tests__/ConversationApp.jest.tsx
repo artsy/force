@@ -5,11 +5,11 @@ import {
 import { screen } from "@testing-library/react"
 import { MockedConversation } from "Apps/__tests__/Fixtures/Conversation"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { MockBoot } from "DevTools"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
-import { ConversationAppFragmentContainer } from "../ConversationApp"
+import { ConversationAppFragmentContainer } from "Apps/Conversation/ConversationApp"
 
 jest.unmock("react-relay")
 

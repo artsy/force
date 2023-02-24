@@ -77,29 +77,6 @@ export const urlsAreOnSameOrigin = (origin, destination) =>
   /* a.host includes both hostname and port in the expected format host:port */
   origin.host === destination.host
 
-export const pathIsNotHandledByApp = (destination, pathStartRegEx) => {
-  const pathFileExtensionRegEx = /^.*\.((?!htm)[a-z0-9]{1,5})$/i
-
-  return (
-    /**
-     * For when pathPrefix is used in an app and there happens to be a link
-     * pointing to the same domain but outside of the app's pathPrefix. For
-     * example, a Gatsby app lives at https://example.com/myapp/, with the
-     * pathPrefix set to `/myapp`. When adding an absolute link to the same
-     * domain but outside of the /myapp path, for example, `<a
-     * href="https://example.com/not-my-app">` the plugin won't catch it and
-     * will navigate to an external link instead of doing a pushState resulting
-     * in `https://example.com/myapp/https://example.com/not-my-app`
-     */
-    pathStartRegEx.test(slashedPathname(destination.pathname)) === false ||
-    /**
-     * Don't catch links pointed at what look like file extensions (other than
-     * .htm/html extensions).
-     */
-    destination.pathname.search(pathFileExtensionRegEx) !== -1
-  )
-}
-
 export const hashShouldBeFollowed = (origin, destination) =>
   destination.hash !== `` &&
   /**

@@ -4,7 +4,7 @@ import {
   themeProps,
   ToastsProvider,
 } from "@artsy/palette"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { useEffect } from "react"
 import * as React from "react"

@@ -7,7 +7,7 @@ import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomApp_viewingRoom$data } from "__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
-import { SystemContext } from "System"
+import { SystemContext } from "System/SystemContext"
 import { userHasAccessToPartner } from "Utils/user"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 

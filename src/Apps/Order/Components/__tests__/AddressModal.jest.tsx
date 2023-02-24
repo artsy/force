@@ -6,12 +6,12 @@ import {
 } from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
-import {
-  updateAddressSuccess,
-  updateAddressFailure,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
+import {
+  updateAddressFailure,
+  updateAddressSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

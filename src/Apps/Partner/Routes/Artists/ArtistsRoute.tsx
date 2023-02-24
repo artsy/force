@@ -1,16 +1,14 @@
 import { useEffect } from "react"
 import { Box, Join, Separator, Spacer, Text, themeProps } from "@artsy/palette"
 import { Match } from "found"
-import {
-  PartnerArtistDetailsListRenderer,
-  PartnerArtistDetailsRenderer,
-  PartnerArtistsFragmentContainer,
-} from "Apps/Partner/Components/PartnerArtists"
 import { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { usePartnerArtistsLoadingContext } from "Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import { PartnerArtistsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
+import { PartnerArtistDetailsRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetails"
+import { PartnerArtistDetailsListRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetailsList/PartnerArtistDetailsList"
 
 export interface ArtistsRouteProps {
   partner: ArtistsRoute_partner$data

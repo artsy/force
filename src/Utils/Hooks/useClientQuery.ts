@@ -5,7 +5,7 @@ import {
   FetchQueryFetchPolicy,
   OperationType,
 } from "relay-runtime"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 export const useClientQuery = <T extends OperationType>({
   environment,

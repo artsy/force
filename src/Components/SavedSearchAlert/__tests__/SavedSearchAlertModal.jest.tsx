@@ -1,17 +1,17 @@
 import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { ArtworkFiltersState } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { useSystemContext } from "System"
-import { DEFAULT_FREQUENCY } from "../constants"
+import { useSystemContext } from "System/useSystemContext"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import {
   SavedSearchAlertModalContainer,
   SavedSearchAlertFormContainerProps,
-} from "../SavedSearchAlertModal"
+} from "Components/SavedSearchAlert/SavedSearchAlertModal"
 import {
   SavedSearchAleftFormValues,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "../types"
+} from "Components/SavedSearchAlert/types"
 
 const formInitialValues: SavedSearchAleftFormValues = {
   name: "",

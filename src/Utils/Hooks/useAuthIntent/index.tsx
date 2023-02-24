@@ -1,7 +1,7 @@
 import * as Yup from "yup"
 import Cookies from "cookies-js"
 import { createContext, FC, useContext, useEffect, useState } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"

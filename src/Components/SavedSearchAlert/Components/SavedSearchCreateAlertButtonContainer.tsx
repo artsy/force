@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useToasts } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { SavedSearchAlertModalContainer } from "Components/SavedSearchAlert/SavedSearchAlertModal"

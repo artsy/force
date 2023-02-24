@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
 import { buildClientApp } from "System/Router/buildClientApp"
 import { render, screen } from "@testing-library/react"

@@ -30,7 +30,7 @@ import {
 } from "react-relay"
 import { trackEvent } from "Server/analytics/helpers"
 import { isServer } from "Server/isServer"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"

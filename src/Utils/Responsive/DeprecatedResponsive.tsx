@@ -4,7 +4,7 @@ import {
   createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
 import { themeProps } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import * as sharify from "sharify"
 
 type MediaQuery = keyof typeof themeProps["mediaQueries"]
@@ -48,18 +48,18 @@ export class Responsive extends React.Component<
 
 export type Breakpoint = keyof typeof themeProps["grid"]["breakpoints"]
 
-export interface DeprecatedResponsiveProviderProps {
+interface DeprecatedResponsiveProviderProps {
   initialBreakpoint?: Breakpoint
   breakpoints: { [K in Breakpoint]: string }
   children: React.ReactNode
 }
 
-export type NewResponsiveProviderProps = _ResponsiveProviderProps<MediaQuery>
+type NewResponsiveProviderProps = _ResponsiveProviderProps<MediaQuery>
 export type MatchingMediaQueries = NewResponsiveProviderProps["initialMatchingMediaQueries"]
 
 // Using a union here means that the component can either be used using the new
 // API or the deprecated one.
-export type ResponsiveProviderProps =
+type ResponsiveProviderProps =
   | NewResponsiveProviderProps
   | DeprecatedResponsiveProviderProps
 

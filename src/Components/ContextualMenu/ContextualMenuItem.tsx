@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { Clickable, ClickableProps, Separator } from "@artsy/palette"
 
-export interface ContextualMenuItemProps extends ClickableProps {
+interface ContextualMenuItemProps extends ClickableProps {
   children: React.ReactNode
   onClick?: () => void
 }

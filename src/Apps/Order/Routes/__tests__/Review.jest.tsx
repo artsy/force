@@ -12,23 +12,6 @@ import {
 import { OfferSummaryItemFragmentContainer } from "Apps/Order/Components/OfferSummaryItem"
 import { expectOne } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
-import {
-  submitOfferOrderFailedConfirmation,
-  submitOfferOrderSuccess,
-  submitOfferOrderSuccessInReview,
-  submitOfferOrderWithActionRequired,
-  submitOfferOrderWithFailure,
-  submitOfferOrderWithNoInventoryFailure,
-  submitOfferOrderWithVersionMismatchFailure,
-  submitOrderSuccess,
-  submitOrderWithActionRequired,
-  submitOrderWithFailure,
-  submitOrderWithFailureCardDeclined,
-  submitOrderWithFailureInsufficientFunds,
-  submitOrderWithMissingInfo,
-  submitOrderWithNoInventoryFailure,
-  submitOrderWithVersionMismatchFailure,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
@@ -40,6 +23,25 @@ import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
+import {
+  submitOfferOrderSuccess,
+  submitOfferOrderWithFailure,
+  submitOfferOrderWithVersionMismatchFailure,
+  submitOfferOrderFailedConfirmation,
+  submitOfferOrderWithNoInventoryFailure,
+  submitOfferOrderWithActionRequired,
+  submitOfferOrderSuccessInReview,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOfferOrder"
+import {
+  submitOrderSuccess,
+  submitOrderWithFailure,
+  submitOrderWithVersionMismatchFailure,
+  submitOrderWithMissingInfo,
+  submitOrderWithFailureCardDeclined,
+  submitOrderWithFailureInsufficientFunds,
+  submitOrderWithNoInventoryFailure,
+  submitOrderWithActionRequired,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
 
 jest.unmock("react-relay")
 

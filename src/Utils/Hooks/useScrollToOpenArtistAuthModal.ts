@@ -1,7 +1,7 @@
 import Cookies from "cookies-js"
 import { useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { getENV } from "Utils/getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
 import { ContextModule, Intent } from "@artsy/cohesion"

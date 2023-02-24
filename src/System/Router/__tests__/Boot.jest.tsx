@@ -1,4 +1,4 @@
-import { SystemContextConsumer } from "System"
+import { SystemContextConsumer } from "System/SystemContext"
 import { Boot } from "System/Router"
 import { mount } from "enzyme"
 

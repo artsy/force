@@ -2,17 +2,6 @@ import { useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
-import {
-  SellMeta,
-  CtaBanner,
-  CtaSection,
-  FAQ,
-  Header,
-  HowItWorks,
-  PromoSpace,
-  SoldRecentlyOnArtsyQueryRenderer,
-  WhySellWithArtsy,
-} from "./Components"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
@@ -26,6 +15,15 @@ import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Compone
 import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
+import { CtaBanner } from "Apps/Consign/Routes/MarketingLanding/Components/CtaBanner"
+import { CtaSection } from "Apps/Consign/Routes/MarketingLanding/Components/CtaSection"
+import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
+import { HowItWorks } from "Apps/Consign/Routes/MarketingLanding/Components/HowItWorks"
+import { PromoSpace } from "Apps/Consign/Routes/MarketingLanding/Components/PromoSpace"
+import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
+import { WhySellWithArtsy } from "Apps/Consign/Routes/MarketingLanding/Components/WhySellWithArtsy"
+import { Header } from "Apps/Consign/Routes/MarketingLanding/Components/Header"
 
 export const MarketingLandingApp = () => {
   const enableNewSWALandingPage = useFeatureFlag(

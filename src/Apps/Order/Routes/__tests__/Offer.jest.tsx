@@ -8,15 +8,15 @@ import {
   UntouchedOfferOrderSingleEditionSetNoPrice,
   UntouchedOfferOrderPriceHidden,
 } from "Apps/__tests__/Fixtures/Order"
-import {
-  initialOfferFailedAmountIsInvalid,
-  initialOfferFailedCannotOffer,
-  initialOfferSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
+import {
+  initialOfferFailedAmountIsInvalid,
+  initialOfferFailedCannotOffer,
+  initialOfferSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/initialOffer"
 
 // Need to mock Utils/Events instead of using mockTracking because
 // Boot's `dispatch` tracking prop overrides the one injected by

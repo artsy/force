@@ -7,8 +7,6 @@ export type PhoneNumberError = Partial<PhoneNumber>
 export type PhoneNumberTouched = boolean
 export type PhoneNumberChangeHandler = (phoneNumber: string) => void
 
-export const emptyPhoneNumber: string = ""
-
 export interface PhoneNumberFormProps {
   onChange: PhoneNumberChangeHandler
   value?: string

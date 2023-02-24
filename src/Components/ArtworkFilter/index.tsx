@@ -2,17 +2,14 @@ import React, { useEffect, useRef, useState } from "react"
 import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
-import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
-import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "__generated__/ArtworkQueryFilterQuery.graphql"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
-  initialArtworkFilterState,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
@@ -29,7 +26,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
@@ -362,34 +358,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
   },
   ArtworkQueryFilter
 )
-
-/**
- * This QueryRenderer can be used to instantiate stand-alone embedded ArtworkFilters
- * that are not dependent on URLBar state.
- */
-export const ArtworkFilterQueryRenderer = ({ keyword = "andy warhol" }) => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <ArtworkFilterContextProvider
-      filters={{
-        ...initialArtworkFilterState,
-        keyword,
-      }}
-    >
-      <SystemQueryRenderer<ArtworkFilterQueryType>
-        environment={relayEnvironment}
-        // FIXME: Passing a variable to `query` shouldn't error out in linter
-        /* tslint:disable:relay-operation-generics */
-        query={ArtworkQueryFilter}
-        variables={{
-          keyword,
-        }}
-        render={renderWithLoadProgress(ArtworkFilterRefetchContainer as any)} // FIXME: Find way to support union types here
-      />
-    </ArtworkFilterContextProvider>
-  )
-}
 
 const FiltersWithScrollIntoView: React.FC<{
   Filters?: JSX.Element

@@ -7,7 +7,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"

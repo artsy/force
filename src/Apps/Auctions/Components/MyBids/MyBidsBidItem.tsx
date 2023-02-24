@@ -13,9 +13,9 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number

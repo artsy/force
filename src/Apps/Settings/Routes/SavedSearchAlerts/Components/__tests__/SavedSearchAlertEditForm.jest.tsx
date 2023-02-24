@@ -6,7 +6,7 @@ import { SavedSearchAlertEditForm_Test_Query } from "__generated__/SavedSearchAl
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditFormFragmentContainer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 const mockEditSavedSearchAlert = jest.fn()
 

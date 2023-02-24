@@ -1,7 +1,7 @@
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks$data } from "__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"

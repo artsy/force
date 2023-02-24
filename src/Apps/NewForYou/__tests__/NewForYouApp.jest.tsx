@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { NewForYouAppFragmentContainer } from "Apps/NewForYou/NewForYouApp"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("Components/ArtworkGrid", () => "ArtworkGrid")

@@ -5,7 +5,7 @@ import { NotificationPaginationType } from "./types"
 import { useEffect } from "react"
 import { DateTime } from "luxon"
 import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 
 const logger = createLogger("Notifications")

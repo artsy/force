@@ -2,11 +2,9 @@ import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsRail_partner$data } from "__generated__/ArtistsRail_partner.graphql"
-import {
-  PartnerArtistsCarouselRenderer,
-  PartnerArtistsQueryRenderer,
-} from "Apps/Partner/Components/PartnerArtists"
 import { ViewAllButton } from "./ViewAllButton"
+import { PartnerArtistsCarouselRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistsCarousel/PartnerArtistsCarousel"
+import { PartnerArtistsQueryRenderer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistList/PartnerArtists"
 
 interface ArtistsRailProps extends BoxProps {
   partner: ArtistsRail_partner$data

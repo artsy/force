@@ -11,7 +11,7 @@ import { useFormikContext } from "formik"
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]

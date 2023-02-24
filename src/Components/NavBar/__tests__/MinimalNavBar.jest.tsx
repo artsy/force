@@ -1,7 +1,7 @@
 import { ArtsyLogoBlackIcon } from "@artsy/palette"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "System"
-import { MinimalNavBar } from "../MinimalNavBar"
+import { SystemContextProvider } from "System/SystemContext"
+import { MinimalNavBar } from "Components/NavBar/MinimalNavBar"
 
 const getWrapper = ({ isEigen }: { isEigen?: boolean } = {}) => {
   return mount(

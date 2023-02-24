@@ -15,7 +15,7 @@ import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Component
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"

@@ -1,9 +1,9 @@
-import { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 import {
   getContactAddressLines,
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
-} from "../../PartnerContacts"
+} from "Apps/Partner/Components/PartnerContacts/partnerContactUtils"
+import { PartnerContactMap_location$data } from "__generated__/PartnerContactMap_location.graphql"
 
 describe("PartnerContactUtils", () => {
   it.each([

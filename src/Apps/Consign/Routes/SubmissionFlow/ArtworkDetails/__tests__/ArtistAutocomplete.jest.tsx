@@ -2,7 +2,7 @@ import { Input } from "@artsy/palette"
 import { flushPromiseQueue } from "DevTools"
 import { mount, ReactWrapper } from "enzyme"
 import { Form, Formik } from "formik"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import {
   ArtworkDetailsFormModel,

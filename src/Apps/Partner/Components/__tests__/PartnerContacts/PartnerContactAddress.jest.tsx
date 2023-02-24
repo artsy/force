@@ -1,6 +1,6 @@
+import { PartnerContactAddress } from "Apps/Partner/Components/PartnerContacts/PartnerContactAddress"
 import { mount } from "enzyme"
 import { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
-import { PartnerContactAddress } from "../../PartnerContacts"
 
 describe("PartnerContactAddress", () => {
   it("displays partner contact address", () => {

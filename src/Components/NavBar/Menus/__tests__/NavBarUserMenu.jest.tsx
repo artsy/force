@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { SystemContextProvider, useSystemContext } from "System"
+import { SystemContextProvider, useSystemContext } from "System/SystemContext"
 import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
 import { logout } from "Utils/auth"
 

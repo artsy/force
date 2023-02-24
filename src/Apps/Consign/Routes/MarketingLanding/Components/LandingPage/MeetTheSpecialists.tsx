@@ -19,7 +19,8 @@ import { Rail } from "Components/Rail"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 
 interface PillData {
   type: Specialty

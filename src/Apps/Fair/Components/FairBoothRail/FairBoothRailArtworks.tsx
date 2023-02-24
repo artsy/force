@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
 import { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
 import {

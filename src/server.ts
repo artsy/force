@@ -1,4 +1,4 @@
-import { buildServerApp } from "System/Router/server"
+import { buildServerApp } from "System/Router/buildServerApp"
 import { getRouteConfig } from "System/Router/getRouteConfig"
 import { renderServerApp } from "System/Router/renderServerApp"
 import express from "express"

@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
-import { useSystemContext } from "System"
-import { FAQ } from "./Components"
+import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
+import { useSystemContext } from "System/useSystemContext"
 
 export const FAQApp = () => {
   const { isEigen } = useSystemContext()

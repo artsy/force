@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { RecentlyViewed_me$data } from "__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "__generated__/RecentlyViewedQuery.graphql"
-import { SystemContext } from "System"
+import { SystemContext } from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext } from "react"

@@ -1,6 +1,6 @@
 import { MockBoot, renderRelayTree } from "DevTools"
-import { SystemContextProvider } from "System"
-import { ViewingRoomAppFragmentContainer } from "../ViewingRoomApp"
+import { SystemContextProvider } from "System/SystemContext"
+import { ViewingRoomAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_DraftTest_Query$rawResponse } from "__generated__/ViewingRoomApp_DraftTest_Query.graphql"
 import { ViewingRoomApp_ScheduledTest_Query$rawResponse } from "__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"

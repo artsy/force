@@ -2,7 +2,7 @@ import * as Yup from "yup"
 import Cookies from "cookies-js"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { useEffect } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"

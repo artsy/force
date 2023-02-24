@@ -8,14 +8,12 @@ import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/IdentityVerificationWarning"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { Form, Formik } from "formik"
-import {
-  formatError,
-  AuctionFormValues,
-  confirmRegistrationValidationSchemas,
-} from "Apps/Auction/Components/Form/Utils"
 import { useEffect } from "react"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
+import { confirmRegistrationValidationSchemas } from "Apps/Auction/Components/Form/Utils/validationSchemas"
+import { AuctionFormValues } from "Apps/Auction/Components/Form/Utils/initialValues"
+import { formatError } from "Apps/Auction/Components/Form/Utils/formatError"
 
 interface AuctionConfirmRegistrationRouteProps {
   me: AuctionConfirmRegistrationRoute_me$data

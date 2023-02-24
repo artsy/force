@@ -5,18 +5,18 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
-import {
-  fixFailedPaymentFailure,
-  fixFailedPaymentInsufficientInventoryFailure,
-  fixFailedPaymentSuccess,
-  fixFailedPaymentWithActionRequired,
-} from "../__fixtures__/MutationResults"
-import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
+import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
+import {
+  fixFailedPaymentSuccess,
+  fixFailedPaymentInsufficientInventoryFailure,
+  fixFailedPaymentFailure,
+  fixFailedPaymentWithActionRequired,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/fixFailedPayment"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")

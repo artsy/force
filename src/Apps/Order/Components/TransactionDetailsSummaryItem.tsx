@@ -13,7 +13,7 @@ import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadge
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
-import { withSystemContext } from "System"
+import { withSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 
 export interface TransactionDetailsSummaryItemProps

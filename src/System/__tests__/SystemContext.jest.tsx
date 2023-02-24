@@ -1,5 +1,5 @@
-import { SystemContextProps } from "System"
-import * as Artsy from "System"
+import { SystemContextProps } from "System/SystemContext"
+import * as Artsy from "System/SystemContext"
 import { render } from "enzyme"
 import * as React from "react"
 

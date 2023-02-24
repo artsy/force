@@ -1,37 +1,3 @@
-export const mockResolver = (
-  orderDetails: any = BuyOrderWithShippingDetails
-) => ({
-  CommerceBuyOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-    }
-  },
-  CommerceOfferOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-    }
-  },
-  CommerceOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-      __resolveType(obj, _context, _info) {
-        return obj.mode === "BUY" ? "CommerceBuyOrder" : "CommerceOfferOrder"
-      },
-    }
-  },
-  Query: () => ({
-    me: {
-      name: "Alice Jane",
-    },
-  }),
-})
-
 const OrderArtworkNodeWithoutShipping = {
   artistNames: "Lisa Breslow",
   artists: [
@@ -1089,12 +1055,6 @@ export const Buyer = {
   __typename: "User",
   id: "buyer-node-id",
   internalID: "buyer",
-} as const
-
-export const Seller = {
-  __typename: "Partner",
-  id: "seller-node-id",
-  internalID: "seller",
 } as const
 
 export const Offers = [

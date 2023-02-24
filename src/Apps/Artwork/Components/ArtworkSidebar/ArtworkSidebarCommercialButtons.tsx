@@ -18,7 +18,7 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSideb
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ArtworkSidebarCommercialButtons_artwork$data } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"

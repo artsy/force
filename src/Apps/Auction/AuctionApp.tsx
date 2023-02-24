@@ -1,7 +1,10 @@
 import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader"
-import { AnalyticsContext, useAnalyticsContext } from "System"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
 import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"

@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
 import {

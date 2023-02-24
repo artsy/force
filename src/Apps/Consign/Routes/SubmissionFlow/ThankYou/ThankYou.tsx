@@ -1,16 +1,14 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Box, Text, Spacer, Column, GridColumns } from "@artsy/palette"
 import { DownloadApp } from "./Components/DownloadApp"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
-import {
-  SoldRecentlyOnArtsyQueryRenderer,
-  FAQ,
-} from "Apps/Consign/Routes/MarketingLanding/Components"
 import { useTracking } from "react-tracking"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
+import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()

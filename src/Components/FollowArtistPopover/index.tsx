@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { FollowArtistPopover_artist$data } from "__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "__generated__/FollowArtistPopoverQuery.graphql"
-import { SystemContext, SystemContextProps } from "System"
+import { SystemContext, SystemContextProps } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext } from "react"
 import * as React from "react"

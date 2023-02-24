@@ -1,9 +1,7 @@
-import { Children } from "react";
-import * as React from "react";
+import { Children } from "react"
+import * as React from "react"
 import { Box, Swiper as TouchCarousel } from "@artsy/palette"
-import { CarouselProps } from "./Carousel"
-
-const CAROUSEL_MARGIN_SIZE = 2
+import { CarouselProps, CAROUSEL_MARGIN_SIZE } from "./Carousel"
 
 export const SmallCarousel: React.FC<CarouselProps> = ({
   children,

@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { MockBoot } from "DevTools"
 import { SearchApp_Test_Query } from "__generated__/SearchApp_Test_Query.graphql"
 import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { InsightsHeader } from "Apps/Settings/Routes/Insights/Components/InsightsHeader"
 
 jest.mock("System/useSystemContext")

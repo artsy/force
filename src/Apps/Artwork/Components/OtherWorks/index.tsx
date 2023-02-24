@@ -6,7 +6,7 @@ import {
   Header,
   HeaderPlaceholder,
 } from "Apps/Artwork/Components/OtherWorks/Header"
-import { SystemContextProps, withSystemContext } from "System"
+import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
 import * as React from "react"
@@ -14,13 +14,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { compact } from "lodash"
 import track, { useTracking } from "react-tracking"
-
-export interface OtherWorksContextProps {
-  artwork: OtherWorks_artwork$data
-}
 
 /**
  * Check to see if a connection's edges have a length; if false hide the grid.

@@ -23,7 +23,7 @@ import { useContext, useState } from "react"
 import { Title } from "react-head"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContext, useSystemContext } from "System"
+import { SystemContext, useSystemContext } from "System/SystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -518,9 +518,3 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     }
   `
 )
-
-export enum AuctionResultsState {
-  PAST = "PAST",
-  UPCOMING = "UPCOMING",
-  ALL = "ALL",
-}

@@ -18,7 +18,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
 import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
 
 export interface OrderAppProps extends RouterState {

@@ -4,7 +4,7 @@ import { FairEditorialRailArticles_fair$data } from "__generated__/FairEditorial
 import { Flex, Shelf, Spacer, Text } from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
 import { CellArticleFragmentContainer } from "Components/Cells/CellArticle"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useTracking } from "react-tracking"
 import {
   ActionType,

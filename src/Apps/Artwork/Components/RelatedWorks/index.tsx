@@ -6,7 +6,7 @@ import { ContextModule } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Skeleton, Spacer } from "@artsy/palette"
 
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Header,

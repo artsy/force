@@ -72,7 +72,10 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
   homePage: graphql`
     fragment HomeApp_homePage on HomePage {
-      ...HomeHeroUnits_homePage
+      heroUnits(platform: DESKTOP) {
+        internalID
+        ...HomeHeroUnit_heroUnit
+      }
     }
   `,
   featuredEventsOrderedSet: graphql`
