@@ -22,7 +22,7 @@ import {
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
 
-import { FC, useCallback, useMemo, useRef, useState } from "react"
+import { FC, useCallback, useRef, useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { FullscreenBox } from "Components/FullscreenBox"
@@ -47,25 +47,15 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { t } = useTranslation()
   const [showLoader, setShowLoader] = useState(false)
 
-  // clone to make the array writable for sorting
-  const edges = me.quiz.quizArtworkConnection?.edges
-    ? [...me.quiz.quizArtworkConnection?.edges]
-    : []
-
-  // sort the artworks by position, ascending
-  const sortedEdges = useMemo(() => {
-    return edges.sort((a, b) => {
-      return a && b ? a.position - b.position : 0
-    })
-  }, [edges])
+  const edges = me.quiz?.quizArtworkConnection?.edges || []
 
   // check to see if the user has already started the quiz
-  const startingIndex = sortedEdges.findIndex(edge => {
+  const startingIndex = edges.findIndex(edge => {
     return edge?.interactedAt === null
   })
 
   const { cards, activeIndex, dispatch } = useArtQuizCards({
-    cards: sortedEdges.map(edge => ({
+    cards: edges.map(edge => ({
       ...edge?.node,
       interactedAt: edge?.interactedAt,
     })),
@@ -74,7 +64,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
 
   const handlePrevious = useCallback(() => {
     const previousArtwork =
-      activeIndex > 0 ? sortedEdges[activeIndex - 1]?.node : null
+      activeIndex > 0 ? edges[activeIndex - 1]?.node : null
 
     if (previousArtwork) {
       const { isSaved, isDisliked } = previousArtwork
@@ -122,7 +112,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     dispatch,
     me.id,
     router,
-    sortedEdges,
+    edges,
     submitDislike,
     submitSave,
     submitUpdate,
@@ -131,7 +121,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const handleNext = useCallback(
     (action: "Like" | "Dislike") => () => {
       const currentArtwork =
-        activeIndex < sortedEdges.length ? sortedEdges[activeIndex]?.node : null
+        activeIndex < edges.length ? edges[activeIndex]?.node : null
 
       if (currentArtwork) {
         if (action === "Like") {
@@ -179,7 +169,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     },
     [
       activeIndex,
-      sortedEdges,
+      edges,
       dispatch,
       cards.length,
       submitUpdate,
