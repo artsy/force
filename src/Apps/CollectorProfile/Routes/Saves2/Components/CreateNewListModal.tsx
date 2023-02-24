@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { graphql } from "react-relay"
 import { Formik } from "formik"
 import createLogger from "Utils/logger"
@@ -39,7 +39,6 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const { relayEnvironment } = useSystemContext()
-  const [formFieldError, setFormFieldError] = useState("")
   const { submitMutation } = useMutation<CreateNewListModalMutation>({
     mutation: graphql`
       mutation CreateNewListModalMutation($input: createCollectionInput!) {
@@ -64,7 +63,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     `,
   })
 
-  const handleSubmit = async (values: CreateNewListValues) => {
+  const handleSubmit = async (values: CreateNewListValues, helpers) => {
     if (!relayEnvironment) {
       return null
     }
@@ -86,10 +85,11 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       onComplete()
     } catch (error) {
       logger.error(error)
-
-      setFormFieldError(
-        error.message ?? t("collectorSaves.createNewListModal.genericError")
-      )
+      helpers.setSubmitting(false)
+      helpers.setErrors({
+        name:
+          error.message ?? t("collectorSaves.createNewListModal.genericError"),
+      })
     }
   }
 
@@ -98,7 +98,15 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       initialValues={{ name: "" }}
       onSubmit={handleSubmit}
     >
-      {({ values, isSubmitting, handleSubmit, handleChange, handleBlur }) => {
+      {({
+        values,
+        isSubmitting,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        errors,
+        touched,
+      }) => {
         const isCreateButtonDisabled = !values.name
 
         return (
@@ -153,12 +161,9 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
                 "collectorSaves.createNewListModal.namePlaceholder"
               )}
               value={values.name}
-              onChange={e => {
-                handleChange("name")(e)
-                setFormFieldError("")
-              }}
+              onChange={handleChange}
               onBlur={handleBlur}
-              error={formFieldError}
+              error={touched.name && errors.name}
               maxLength={MAX_NAME_LENGTH}
               label={
                 <>
