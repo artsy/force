@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "react-relay"
-import { Formik } from "formik"
+import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import {
   Flex,
@@ -63,7 +63,10 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     `,
   })
 
-  const handleSubmit = async (values: CreateNewListValues, helpers) => {
+  const handleSubmit = async (
+    values: CreateNewListValues,
+    helpers: FormikHelpers<CreateNewListValues>
+  ) => {
     if (!relayEnvironment) {
       return null
     }
@@ -85,11 +88,10 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       onComplete()
     } catch (error) {
       logger.error(error)
-      helpers.setSubmitting(false)
-      helpers.setErrors({
-        name:
-          error.message ?? t("collectorSaves.createNewListModal.genericError"),
-      })
+      helpers.setFieldError(
+        "name",
+        error.message ?? t("collectorSaves.createNewListModal.genericError")
+      )
     }
   }
 
