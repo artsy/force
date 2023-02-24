@@ -80,7 +80,7 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
         Meet the specialists
       </Text>
-      <Text mb={[2, 4]} variant={["xs", "sm"]}>
+      <Text mb={2} variant={["xs", "sm"]}>
         Our in-house experts cover Post-War and Contemporary Art, Prints and
         Multiples, Street Art and Photographs.
       </Text>
