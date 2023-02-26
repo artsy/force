@@ -2,7 +2,7 @@ import {
   SystemContextProps,
   SystemContextProvider,
   withSystemContext,
-} from "System"
+} from "System/SystemContext"
 import { Component } from "react"
 import { OperationType } from "relay-runtime"
 import {

@@ -1,6 +1,6 @@
 import { ActionType } from "@artsy/cohesion"
 import { formatOwnerTypes } from "Server/getContextPage"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Variant } from "unleash-client"
 import { getENV } from "Utils/getENV"
 import { useRouter } from "./Router/useRouter"

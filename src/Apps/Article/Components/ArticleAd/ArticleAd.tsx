@@ -3,7 +3,7 @@ import { AdSlot, DFPSlotsProvider } from "react-dfp"
 import { Box, BoxProps, ResponsiveBox, Text } from "@artsy/palette"
 import { AdUnit, AdSize } from "./types"
 import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { useArticleTracking } from "../../useArticleTracking"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
 
 export interface ArticleAdProps extends BoxProps {
   unit: AdUnit

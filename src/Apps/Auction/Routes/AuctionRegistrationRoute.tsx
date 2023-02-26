@@ -5,11 +5,6 @@ import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistr
 import { Form, Formik } from "formik"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { useRouter } from "System/Router/useRouter"
-import {
-  AuctionFormValues,
-  initialValuesForRegistration,
-  registrationValidationSchema,
-} from "Apps/Auction/Components/Form/Utils"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useEffect } from "react"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
@@ -18,6 +13,11 @@ import { IdentityVerificationWarning } from "Apps/Auction/Components/Form/Identi
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 import { AuctionConfirmRegistrationRoute_sale$data } from "__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+import {
+  AuctionFormValues,
+  initialValuesForRegistration,
+} from "Apps/Auction/Components/Form/Utils/initialValues"
+import { registrationValidationSchema } from "Apps/Auction/Components/Form/Utils/validationSchemas"
 
 export interface AuctionRegistrationRouteProps {
   me: AuctionRegistrationRoute_me$data

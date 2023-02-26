@@ -13,7 +13,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

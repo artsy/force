@@ -2,7 +2,7 @@ import { captureException } from "@sentry/browser"
 import { verifyEmail } from "./verifyEmail"
 import { verifyID } from "./verifyID"
 import { useCallback, useState } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Environment } from "relay-runtime"
 
 type verificationType = "ID" | "Email"

@@ -6,7 +6,7 @@ import { ShowsRailFragmentContainer } from "Apps/Partner/Components/Overview/Sho
 import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
 import { SubscriberBannerFragmentContainer } from "Apps/Partner/Components/Overview/SubscriberBanner"
 import { ArtworksRailRenderer } from "Apps/Partner/Components/Overview/ArtworksRail"
-import { ShowBannersRailRenderer } from "Apps/Partner/Components/Overview/ShowBannersRail"
+import { ShowBannersRailRenderer } from "Apps/Partner/Components/Overview/ShowBannersRail/ShowBannersRail"
 import { NearbyGalleriesRailRenderer } from "Apps/Partner/Components/Overview/NearbyGalleriesRail"
 
 interface OverviewProps {

@@ -12,8 +12,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
-import { useSystemContext } from "System"
-import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
+import { useSystemContext } from "System/useSystemContext"
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import createLogger from "Utils/logger"
 import {
   SavedSearchAlertContextProvider,

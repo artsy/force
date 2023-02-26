@@ -6,7 +6,7 @@ import {
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fetchQuery, graphql } from "react-relay"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 
 jest.unmock("react-relay")
 

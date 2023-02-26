@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { FC } from "react"
 import { Form, Formik, FormikHelpers } from "formik"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 import { ConfirmPasswordInput } from "__generated__/ConfirmPasswordMutation.graphql"
 import * as Yup from "yup"

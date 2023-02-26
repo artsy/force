@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react"
 import * as React from "react"
 import { commitMutation, graphql } from "relay-runtime"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
 

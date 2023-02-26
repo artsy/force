@@ -13,7 +13,7 @@ import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 
 interface ArtworkActionsSaveButtonProps {

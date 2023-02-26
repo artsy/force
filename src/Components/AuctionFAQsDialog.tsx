@@ -4,18 +4,13 @@ import {
   CloseIcon,
   DROP_SHADOW,
   HTML,
-  ModalBase,
-  Spinner,
   Tab,
   Tabs,
   Text,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
-import { AuctionFAQsDialogQuery } from "__generated__/AuctionFAQsDialogQuery.graphql"
 
 interface AuctionFAQsDialogProps {
   onClose(): void
@@ -113,46 +108,3 @@ export const AuctionFAQsDialogFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-interface AuctionFAQsDialogQueryRendererProps {
-  onClose(): void
-}
-
-export const AuctionFAQsDialogQueryRenderer: React.FC<AuctionFAQsDialogQueryRendererProps> = ({
-  onClose,
-}) => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <ModalBase bg="rgba(0,0,0,0.8)" onClose={onClose}>
-      <SystemQueryRenderer<AuctionFAQsDialogQuery>
-        environment={relayEnvironment}
-        placeholder={<Spinner color="white100" />}
-        query={graphql`
-          query AuctionFAQsDialogQuery {
-            viewer {
-              ...AuctionFAQsDialog_viewer
-            }
-          }
-        `}
-        render={({ props, error }) => {
-          if (!props) {
-            return <Spinner color="white100" />
-          }
-
-          if (error ?? !props.viewer) {
-            onClose()
-            return
-          }
-
-          return (
-            <AuctionFAQsDialogFragmentContainer
-              onClose={onClose}
-              viewer={props.viewer}
-            />
-          )
-        }}
-      />
-    </ModalBase>
-  )
-}

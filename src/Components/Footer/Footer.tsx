@@ -27,7 +27,7 @@ import WeChatIcon from "@artsy/icons/WeChatIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface FooterProps extends BoxProps {}

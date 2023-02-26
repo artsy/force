@@ -8,7 +8,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
 import { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"

@@ -1,4 +1,3 @@
-import { FormikErrors, yupToFormErrors } from "formik"
 import { trim } from "lodash"
 import * as yup from "yup"
 
@@ -48,20 +47,3 @@ export const MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist = y
       .transform(fields => fields.filter(c => !c.errorMessage))
       .of(yup.object().test("newPhotos", value => value.url)),
   })
-
-export const validateArtwork = <T>(
-  values: T,
-  validationSchema: yup.AnySchema
-) => {
-  let errors: FormikErrors<T> = {}
-
-  try {
-    validationSchema.validateSync(values, {
-      abortEarly: false,
-    })
-  } catch (error) {
-    errors = yupToFormErrors(error)
-  }
-
-  return errors
-}

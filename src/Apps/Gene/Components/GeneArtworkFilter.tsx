@@ -10,7 +10,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene$data

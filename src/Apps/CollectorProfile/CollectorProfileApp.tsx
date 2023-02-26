@@ -4,7 +4,7 @@ import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 

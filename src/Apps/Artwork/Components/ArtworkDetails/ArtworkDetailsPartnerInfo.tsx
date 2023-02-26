@@ -5,7 +5,7 @@ import { ArtworkDetailsPartnerInfo_artwork$data } from "__generated__/ArtworkDet
 import { ContextModule } from "@artsy/cohesion"
 import { Skeleton, SkeletonBox, StackableBorderBox } from "@artsy/palette"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 export interface PartnerInfoProps {

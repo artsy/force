@@ -13,7 +13,7 @@ import {
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface MyCollectionArtworkFormImagesProps {
   isEditing?: boolean

@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System"
+import { SystemContext } from "System/SystemContext"
 import { BellIcon, Dropdown, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"

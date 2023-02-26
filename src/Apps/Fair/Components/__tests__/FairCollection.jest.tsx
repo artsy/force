@@ -1,6 +1,6 @@
 import { renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
-import { FairCollectionFragmentContainer } from "../FairCollections"
+import { FairCollectionFragmentContainer } from "Apps/Fair/Components/FairCollections/FairCollection"
 import { FairCollection_Query$rawResponse } from "__generated__/FairCollection_Query.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"

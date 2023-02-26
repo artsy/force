@@ -10,7 +10,8 @@ import {
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { useTracking } from "react-tracking"
 import { Media } from "Utils/Responsive"
 

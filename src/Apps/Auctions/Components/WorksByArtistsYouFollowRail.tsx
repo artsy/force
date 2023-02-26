@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { WorksByArtistsYouFollowRail_viewer$data } from "__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"

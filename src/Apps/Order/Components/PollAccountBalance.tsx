@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"

@@ -15,7 +15,7 @@ import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation
 import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "./NavBarMobileMenuNotifications"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { logout } from "Utils/auth"

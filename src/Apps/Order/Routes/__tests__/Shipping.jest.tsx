@@ -19,14 +19,6 @@ import {
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
-import {
-  selectShippingQuoteSuccess,
-  settingOrderArtaShipmentSuccess,
-  settingOrderShipmentFailure,
-  settingOrderShipmentMissingCountryFailure,
-  settingOrderShipmentMissingRegionFailure,
-  settingOrderShipmentSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
@@ -38,6 +30,14 @@ import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
+import {
+  settingOrderShipmentSuccess,
+  settingOrderShipmentFailure,
+  settingOrderShipmentMissingCountryFailure,
+  settingOrderShipmentMissingRegionFailure,
+  settingOrderArtaShipmentSuccess,
+  selectShippingQuoteSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

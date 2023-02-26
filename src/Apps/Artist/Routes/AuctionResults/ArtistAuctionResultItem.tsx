@@ -13,7 +13,7 @@ import {
   TimerIcon,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { SystemContextProps, useSystemContext } from "System"
+import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"

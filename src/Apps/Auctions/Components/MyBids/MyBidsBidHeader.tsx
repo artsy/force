@@ -5,7 +5,7 @@ import { Box, Image, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale$data

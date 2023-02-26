@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<362764fa3ec90a1a7d6dbd2976ae1a0d>>
+ * @generated SignedSource<<fb0f5fcf6f47b3b1847239b39801b3e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -365,7 +365,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "332b298d5f32a9bb1d41f1c3cdb7d084",
+    "cacheID": "18976196b0b86e0e196ae508b0905fa0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -428,7 +428,7 @@ return {
     },
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n"
   }
 };
 })();

@@ -1,7 +1,10 @@
 import { Box, Flex, Image, Text, Title } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsContext, useAnalyticsContext } from "System"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 

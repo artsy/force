@@ -11,7 +11,7 @@ import {
   EditIcon,
   Text,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
 import { useMutation } from "Utils/Hooks/useMutation"

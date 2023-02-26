@@ -4,7 +4,7 @@ import { Clickable, Message, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NewForYouApp_viewer$data } from "__generated__/NewForYouApp_viewer.graphql"
 import { NewForYouArtworksGridFragmentContainer } from "Apps/NewForYou/Components/NewForYouArtworksGrid"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 

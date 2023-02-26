@@ -1,5 +1,4 @@
 import { ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarAuctionPartnerInfo_Test_Query.graphql"
-import { ArtworkWithEstimateAndPremium } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionPartnerInfo"
 import { renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
@@ -80,3 +79,20 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     })
   })
 })
+
+const ArtworkWithEstimateAndPremium: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse["artwork"] = {
+  id: "auction_artwork_estimate_premium",
+  partner: {
+    id: "5a84a434275b247345983eac",
+    name: "Bruun Rasmussen",
+  },
+  sale_artwork: {
+    id: "sdfsdf",
+    estimate: "DKK 100,000–DKK 125,000",
+  },
+  sale: {
+    internalID: "5bedc643023c175c11b9ee9c",
+    id: "sdf",
+    is_closed: false,
+  },
+}

@@ -6,7 +6,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
 import { MockPayloadGenerator } from "relay-test-utils"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useAuthDialog } from "Components/AuthDialog"
 

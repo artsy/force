@@ -5,7 +5,7 @@ import { validatePhoneNumberQuery } from "__generated__/validatePhoneNumberQuery
 
 const relayEnvironment = createRelaySSREnvironment()
 
-export type PhoneNumber = {
+type PhoneNumber = {
   national: string
   regionCode: string
 }

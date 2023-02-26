@@ -1,13 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
-import {
-  AuctionFormHelpers,
-  AuctionFormValues,
-  errorMessageForCard,
-  stripeCardElementNotFound,
-  stripeNotLoadedErrorMessage,
-} from "Apps/Auction/Components/Form/Utils"
 import createLogger from "Utils/logger"
 import { useAuctionTracking } from "./useAuctionTracking"
 import { AuctionRegistrationRoute_me$data } from "__generated__/AuctionRegistrationRoute_me.graphql"
@@ -15,7 +8,16 @@ import { AuctionRegistrationRoute_sale$data } from "__generated__/AuctionRegistr
 import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
 import { toStripeAddress } from "Components/AddressForm"
-import { useRefreshUserData } from "../Queries/useRefreshUserData"
+import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
+import {
+  errorMessageForCard,
+  stripeCardElementNotFound,
+  stripeNotLoadedErrorMessage,
+} from "Apps/Auction/Components/Form/Utils/errorMessages"
+import {
+  AuctionFormValues,
+  AuctionFormHelpers,
+} from "Apps/Auction/Components/Form/Utils/initialValues"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 

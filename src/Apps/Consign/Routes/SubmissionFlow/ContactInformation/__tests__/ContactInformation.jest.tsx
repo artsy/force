@@ -7,7 +7,7 @@ import { flushPromiseQueue } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")

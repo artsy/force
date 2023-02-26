@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
-import { SettingsEditSettingsTwoFactorFragmentContainer } from "../SettingsEditSettingsTwoFactor"
+import { SettingsEditSettingsTwoFactorFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/SettingsEditSettingsTwoFactor"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { useCreateSettingsBackupSecondFactors } from "../SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
+import { useCreateSettingsBackupSecondFactors } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
 import { flushPromiseQueue } from "DevTools"
 import { ConfirmPassword } from "Components/ConfirmPasswordModal/Mutations/ConfirmPassword"
 

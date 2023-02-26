@@ -6,7 +6,7 @@ import {
   useReducer,
   useEffect,
 } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useConfig } from "Components/Onboarding/config"

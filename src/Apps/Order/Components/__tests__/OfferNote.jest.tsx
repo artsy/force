@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { ReactWrapper, mount } from "enzyme"
 import { ExtractProps } from "Utils/ExtractProps"
 import { OfferNote } from "Apps/Order/Components/OfferNote"

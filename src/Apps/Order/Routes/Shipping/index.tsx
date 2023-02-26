@@ -9,7 +9,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"

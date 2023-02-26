@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 
 jest.mock("react-tracking")

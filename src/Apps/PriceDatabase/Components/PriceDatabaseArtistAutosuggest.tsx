@@ -16,7 +16,7 @@ import {
   PriceDatabaseArtistAutosuggest_SearchConnection_Query,
   PriceDatabaseArtistAutosuggest_SearchConnection_Query$data,
 } from "__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 const MAX_SUGGESTIONS = 10
 

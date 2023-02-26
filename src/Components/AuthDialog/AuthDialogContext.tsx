@@ -10,7 +10,7 @@ import { useToasts } from "@artsy/palette"
 import { AuthDialog, AuthDialogProps } from "Components/AuthDialog/AuthDialog"
 import { merge } from "lodash"
 import { createContext, FC, useContext, useReducer } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export const AUTH_DIALOG_MODES = ["Login", "SignUp", "ForgotPassword"] as const

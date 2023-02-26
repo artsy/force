@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import {
   AnalyticsContext,
   useAnalyticsContext,

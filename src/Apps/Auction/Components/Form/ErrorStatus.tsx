@@ -1,5 +1,5 @@
 import { Banner, BannerProps, Flex, Text } from "@artsy/palette"
-import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils"
+import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 
 export const ErrorStatus = () => {

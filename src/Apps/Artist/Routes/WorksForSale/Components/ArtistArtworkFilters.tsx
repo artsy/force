@@ -13,7 +13,7 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 
 interface ArtistArtworkFiltersProps {

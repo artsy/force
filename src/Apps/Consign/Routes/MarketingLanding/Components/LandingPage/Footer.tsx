@@ -1,6 +1,7 @@
 import { Button, Text, Box } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 
 export const Footer: React.FC = () => {

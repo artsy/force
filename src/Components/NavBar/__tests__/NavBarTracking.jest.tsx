@@ -1,9 +1,9 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { useTracking } from "react-tracking"
-import { NavBarUserMenu } from "../Menus"
-import { NavBar } from "../NavBar"
+import { NavBarUserMenu } from "Components/NavBar/Menus"
+import { NavBar } from "Components/NavBar/NavBar"
 
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

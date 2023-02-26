@@ -10,7 +10,7 @@ import {
   Message,
   useToasts,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { FC, useState } from "react"
 import createLogger from "Utils/logger"
 import { Form, Formik } from "formik"

@@ -8,7 +8,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
 import { useState } from "react"

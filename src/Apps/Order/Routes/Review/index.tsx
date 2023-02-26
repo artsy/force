@@ -30,7 +30,7 @@ import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "Apps/Orde
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
-import { SystemContextProps, withSystemContext } from "System"
+import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"

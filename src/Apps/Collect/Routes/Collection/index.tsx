@@ -6,7 +6,7 @@ import { CollectionFilterFragmentContainer as CollectionHeader } from "Apps/Coll
 import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
-import { BreadCrumbList } from "Components/Seo"
+import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"

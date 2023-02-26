@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistIconicCollectionsRail_marketingCollections$data } from "__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
 import currency from "currency.js"

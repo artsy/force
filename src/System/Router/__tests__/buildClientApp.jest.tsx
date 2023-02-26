@@ -1,4 +1,4 @@
-import { SystemContextConsumer } from "System"
+import { SystemContextConsumer } from "System/SystemContext"
 import { buildClientApp } from "System/Router/buildClientApp"
 import { createMockNetworkLayer } from "DevTools"
 import { render, screen } from "@testing-library/react"

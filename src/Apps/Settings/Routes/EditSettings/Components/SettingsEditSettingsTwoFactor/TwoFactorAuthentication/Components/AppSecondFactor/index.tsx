@@ -13,7 +13,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"

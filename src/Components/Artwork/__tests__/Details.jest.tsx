@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")

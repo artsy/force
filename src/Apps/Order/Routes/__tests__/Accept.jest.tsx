@@ -6,15 +6,7 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { DateTime } from "luxon"
 import { graphql, commitMutation as _commitMutation } from "react-relay"
-import {
-  acceptOfferFailed,
-  acceptOfferInsufficientInventoryFailure,
-  acceptOfferPaymentFailed,
-  acceptOfferPaymentFailedInsufficientFunds,
-  acceptOfferPaymentRequiresAction,
-  acceptOfferSuccess,
-} from "../__fixtures__/MutationResults"
-import { AcceptFragmentContainer } from "../Accept"
+import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { useTracking } from "react-tracking"
@@ -23,6 +15,14 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { Router } from "found"
 import { MockBoot } from "DevTools"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import {
+  acceptOfferSuccess,
+  acceptOfferFailed,
+  acceptOfferPaymentRequiresAction,
+  acceptOfferPaymentFailed,
+  acceptOfferPaymentFailedInsufficientFunds,
+  acceptOfferInsufficientInventoryFailure,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
 
 jest.unmock("react-relay")
 

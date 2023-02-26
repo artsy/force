@@ -5,7 +5,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"

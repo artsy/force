@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { PreviouslySoldOnArtsyRailFragmentContainer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 
 jest.unmock("react-relay")

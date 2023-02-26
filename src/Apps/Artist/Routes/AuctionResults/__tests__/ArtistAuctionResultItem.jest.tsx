@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
 import { screen } from "@testing-library/react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 

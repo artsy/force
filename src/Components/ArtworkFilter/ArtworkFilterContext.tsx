@@ -2,7 +2,7 @@ import { isArray, omit } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { SortOptions } from "../SortFilter"
+import { SortOptions } from "Components/SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
@@ -456,13 +456,6 @@ type ArtworkFiltersAction =
       type: "RESET"
       payload: ArtworkFilters
     }
-
-export type ArrayArtworkFilter =
-  | "artistIDs"
-  | "partnerIDs"
-  | "locationCities"
-  | "artistNationalities"
-  | "materialsTerms"
 
 const artworkFilterReducer = (
   state: ArtworkFiltersState,

@@ -7,7 +7,6 @@ import {
   OfferOrderWithShippingDetails,
   ShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults"
 import {
   fillCountrySelect,
   fillIn,
@@ -24,6 +23,7 @@ import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "DevTools/mockStripe"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
 
 jest.mock("sharify", () => ({
   data: {

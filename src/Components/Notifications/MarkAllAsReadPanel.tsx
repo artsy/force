@@ -1,6 +1,6 @@
 import { Clickable, Flex, Text } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { markAllNotificationsAsRead } from "./Mutations/markAllNotificationsAsRead"
 

@@ -9,9 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
-import { CategoryRailQuery } from "__generated__/CategoryRailQuery.graphql"
 import { CategoryRail_category$data } from "__generated__/CategoryRail_category.graphql"
 import {
   ShelfArtworkFragmentContainer,
@@ -91,37 +89,3 @@ export const CategoryRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-interface CategoryRailQueryRendererProps {
-  id: string
-}
-
-export const CategoryRailQueryRenderer: FC<CategoryRailQueryRendererProps> = ({
-  id,
-}) => {
-  return (
-    <SystemQueryRenderer<CategoryRailQuery>
-      placeholder={CATEGORY_RAIL_PLACEHOLDER}
-      variables={{ id }}
-      query={graphql`
-        query CategoryRailQuery($id: String!) {
-          category: gene(id: $id) {
-            ...CategoryRail_category
-          }
-        }
-      `}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props?.category) {
-          return CATEGORY_RAIL_PLACEHOLDER
-        }
-
-        return <CategoryRailFragmentContainer category={props.category} />
-      }}
-    />
-  )
-}

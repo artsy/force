@@ -1,4 +1,4 @@
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"

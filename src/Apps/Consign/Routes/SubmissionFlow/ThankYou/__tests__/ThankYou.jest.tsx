@@ -1,7 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
 import { ThankYou } from "Apps/Consign/Routes/SubmissionFlow/ThankYou/ThankYou"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"

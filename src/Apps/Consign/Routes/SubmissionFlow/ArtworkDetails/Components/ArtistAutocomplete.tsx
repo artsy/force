@@ -10,7 +10,7 @@ import { useFormikContext } from "formik"
 import { debounce } from "lodash"
 import { useEffect, useMemo, useState } from "react"
 import { Environment, fetchQuery, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ArtistAutocomplete_SearchConnection_Query,

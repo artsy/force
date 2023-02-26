@@ -2,7 +2,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Contact_partner$data } from "__generated__/Contact_partner.graphql"
 import { Box, Text } from "@artsy/palette"
-import { PartnerContactsFragmentContainer as PartnerContacts } from "../../Components/PartnerContacts"
+import { PartnerContactsFragmentContainer } from "Apps/Partner/Components/PartnerContacts/PartnerContacts"
 
 export interface ContactRouteProps {
   partner: Contact_partner$data
@@ -12,8 +12,9 @@ export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {
   return (
     <Box mt={[4, 6]}>
       <Text variant="lg-display">Locations</Text>
-      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-      <PartnerContacts edges={partner.locations.edges} />
+      <PartnerContactsFragmentContainer
+        edges={partner.locations?.edges as any}
+      />
     </Box>
   )
 }

@@ -1,5 +1,3 @@
-/** Remove the special relay properties from an interface */
-export type DeFraged<T> = Omit<T, " $refType" | " $fragmentRefs">
 
 /** Utility Types (credit: https://github.com/krzkaczor/ts-essentials) */
 
@@ -33,8 +31,6 @@ interface DeepPartialSet<ItemType> extends Set<DeepPartial<ItemType>> {}
 interface DeepPartialMap<KeyType, ValueType>
   extends Map<DeepPartial<KeyType>, DeepPartial<ValueType>> {}
 // tslint:enable
-
-export type Writable<T> = { -readonly [P in keyof T]: T[P] }
 
 /**
  * Returns a type with the properties of T that are not in U

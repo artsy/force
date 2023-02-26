@@ -8,7 +8,7 @@ import {
 import { compact } from "lodash"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"

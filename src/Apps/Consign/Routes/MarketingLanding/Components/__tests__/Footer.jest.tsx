@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 
 jest.mock("react-tracking")

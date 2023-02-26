@@ -5,7 +5,7 @@ import {
   PricingTransparencyQuery$data,
   PricingTransparencyQuery$variables,
 } from "__generated__/PricingTransparencyQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
 

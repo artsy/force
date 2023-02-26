@@ -2,7 +2,7 @@ import { Button, useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import { FC, useState } from "react"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 // This button can be used for any email campaign that is triggered by a button click.

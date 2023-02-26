@@ -2,7 +2,7 @@ import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SettingsEditSettingsInformationFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsInformation"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")

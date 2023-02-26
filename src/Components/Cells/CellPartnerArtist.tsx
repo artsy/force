@@ -1,18 +1,10 @@
-import {
-  Box,
-  Image,
-  ResponsiveBox,
-  SkeletonBox,
-  SkeletonText,
-  Text,
-} from "@artsy/palette"
+import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { CellPartnerArtist_partnerArtist$data } from "__generated__/CellPartnerArtist_partnerArtist.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { FC } from "react"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface CellPartnerArtistProps extends Partial<RouterLinkProps> {
@@ -82,32 +74,6 @@ const CellPartnerArtist: FC<CellPartnerArtistProps> = ({
         mt={1}
       />
     </RouterLink>
-  )
-}
-
-type CellPartnerArtistPlaceholderProps = Pick<
-  CellPartnerArtistProps,
-  "mode" | "displayCounts"
->
-
-export const CellPartnerArtistPlaceholder: FC<CellPartnerArtistPlaceholderProps> = ({
-  mode = "RAIL",
-  displayCounts,
-}) => {
-  const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
-
-  return (
-    <Box width={width}>
-      <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
-        <SkeletonBox width="100%" height="100%" />
-      </ResponsiveBox>
-
-      <EntityHeaderPlaceholder displayAvatar={false} mt={1} />
-
-      {displayCounts && (
-        <SkeletonText variant="xs">00 works, 0 for sale</SkeletonText>
-      )}
-    </Box>
   )
 }
 

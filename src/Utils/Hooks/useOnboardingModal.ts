@@ -1,7 +1,7 @@
 import { omit } from "lodash"
 import { useEffect, useRef } from "react"
 import { useOnboarding } from "Components/Onboarding"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 
 export const useOnboardingModal = () => {

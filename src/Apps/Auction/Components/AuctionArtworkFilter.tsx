@@ -9,7 +9,7 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"

@@ -1,7 +1,7 @@
 import { AutocompleteInput, Box, Text } from "@artsy/palette"
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PartnersLocationAutocomplete_viewer$data } from "__generated__/PartnersLocationAutocomplete_viewer.graphql"
 import { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"

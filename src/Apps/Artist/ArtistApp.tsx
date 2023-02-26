@@ -3,14 +3,18 @@ import { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
-import { AnalyticsContext, useAnalyticsContext, useSystemContext } from "System"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
+import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { hasOverviewContent } from "./Routes/Overview/Utils/hasOverviewContent"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
 import { Jump } from "Utils/Hooks/useJump"
+import { useSystemContext } from "System/SystemContext"
 
 /**
  * For logged-out users, the sign-up modal is triggered via a global listener.

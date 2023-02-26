@@ -12,7 +12,7 @@ import {
   ImageSetIcon,
   Flex,
 } from "@artsy/palette"
-import { useArticleZoomGallery } from "../ArticleZoomGallery"
+import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
 
 interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section$data
