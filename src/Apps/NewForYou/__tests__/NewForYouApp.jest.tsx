@@ -12,7 +12,7 @@ jest.mock("Components/MetaTags", () => ({
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn().mockReturnValue({ route: { path: "/new-for-you" } }),
 }))
-jest.mock("System/SystemContext", () => ({
+jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn(),
 }))
 
