@@ -12,7 +12,7 @@ import {
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { userIsAdmin, userIsTeam } from "Utils/user"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 
 jest.unmock("react-relay")
@@ -27,10 +27,6 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
 }))
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({}),
-}))
-jest.mock("System/Analytics", () => ({
-  AnalyticsSchema: {},
-  useTracking: () => ({}),
 }))
 jest.mock("Utils/user", () => ({
   userIsAdmin: jest.fn(),

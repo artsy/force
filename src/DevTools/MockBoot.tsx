@@ -1,4 +1,4 @@
-import { Boot } from "System/Router"
+import { Boot } from "System/Router/Boot"
 import * as React from "react"
 import { Breakpoint } from "Utils/Responsive"
 import { buildClientAppContext } from "System/Router/buildClientAppContext"

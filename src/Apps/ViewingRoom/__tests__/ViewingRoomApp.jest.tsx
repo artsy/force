@@ -1,4 +1,5 @@
-import { MockBoot, renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
 import { SystemContextProvider } from "System/SystemContext"
 import { ViewingRoomAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomApp"
 import { graphql } from "react-relay"

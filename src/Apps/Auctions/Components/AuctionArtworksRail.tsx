@@ -14,7 +14,7 @@ import {
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,

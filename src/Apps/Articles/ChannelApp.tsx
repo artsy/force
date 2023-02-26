@@ -3,11 +3,11 @@ import { Box, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { ChannelApp_channel$data } from "__generated__/ChannelApp_channel.graphql"
-import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd"
+import { ArticleAdProvider } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
+} from "Components/FullBleedHeader/FullBleedHeader"
 import { RouterLink } from "System/Router/RouterLink"
 import { ChannelArticlesPaginationContainer } from "./Components/ChannelArticles"
 

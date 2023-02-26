@@ -1,6 +1,6 @@
 import { Shelf, ShelfProps, Spacer } from "@artsy/palette"
 import * as React from "react"
-import { RailHeaderProps } from "."
+import { RailHeaderProps } from "./RailHeader"
 import { RailHeader } from "./RailHeader"
 
 interface RailProps extends RailHeaderProps {

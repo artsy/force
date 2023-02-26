@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { GeneFamiliesFragmentContainer } from "../GeneFamilies"
+import { GeneFamiliesFragmentContainer } from "Apps/Categories/Components/GeneFamilies"
 import { GeneFamilies_Test_Query } from "__generated__/GeneFamilies_Test_Query.graphql"
 
 jest.unmock("react-relay")

@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeAppFragmentContainer } from "Apps/Home/HomeApp"
 import { HomeApp_Test_Query } from "__generated__/HomeApp_Test_Query.graphql"

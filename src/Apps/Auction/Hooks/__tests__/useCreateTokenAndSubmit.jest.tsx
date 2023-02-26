@@ -6,9 +6,9 @@ import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import {
   useCreateTokenAndSubmit,
   UseCreateTokenAndSubmitProps,
-} from "../useCreateTokenAndSubmit"
-import { flushPromiseQueue } from "DevTools"
-import { useAuctionTracking } from "../useAuctionTracking"
+} from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 
 jest.mock("Components/AddressForm", () => ({

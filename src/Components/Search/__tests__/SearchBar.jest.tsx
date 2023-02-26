@@ -7,7 +7,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")

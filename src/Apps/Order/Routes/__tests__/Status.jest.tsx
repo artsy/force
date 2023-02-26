@@ -17,7 +17,7 @@ import { graphql } from "react-relay"
 import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { Title } from "react-head"
 
 jest.unmock("react-relay")

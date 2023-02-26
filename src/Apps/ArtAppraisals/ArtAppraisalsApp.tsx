@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FullBleedHeader } from "Components/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { cropped, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 

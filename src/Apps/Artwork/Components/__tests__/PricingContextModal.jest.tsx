@@ -2,7 +2,7 @@ import { Button, QuestionCircleIcon } from "@artsy/palette"
 import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "enzyme"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")

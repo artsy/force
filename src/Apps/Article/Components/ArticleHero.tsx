@@ -4,7 +4,7 @@ import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
   useFullBleedHeaderHeight,
-} from "Components/FullBleedHeader"
+} from "Components/FullBleedHeader/FullBleedHeader"
 import {
   Box,
   Column,

@@ -1,7 +1,7 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"

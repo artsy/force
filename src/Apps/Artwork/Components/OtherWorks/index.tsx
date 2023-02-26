@@ -8,7 +8,9 @@ import {
 } from "Apps/Artwork/Components/OtherWorks/Header"
 import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"

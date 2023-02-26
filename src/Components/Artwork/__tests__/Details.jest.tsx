@@ -1,5 +1,5 @@
 import { Details_Test_Query$rawResponse } from "__generated__/Details_Test_Query.graphql"
-import { renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"

@@ -17,7 +17,7 @@ import {
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
+} from "Components/FullBleedHeader/FullBleedHeader"
 import {
   ChatIcon,
   MoneyBackIcon,

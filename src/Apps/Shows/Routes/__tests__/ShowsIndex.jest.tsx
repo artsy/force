@@ -2,7 +2,7 @@ import { ShowsIndexFragmentContainer } from "Apps/Shows/Routes/ShowsIndex"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ShowsIndex_Test_Query } from "__generated__/ShowsIndex_Test_Query.graphql"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 

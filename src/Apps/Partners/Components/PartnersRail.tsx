@@ -6,7 +6,7 @@ import {
   CellPartnerFragmentContainer,
   CellPartnerPlaceholder,
 } from "Components/Cells/CellPartner"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { PartnersRail_partnerCategory$data } from "__generated__/PartnersRail_partnerCategory.graphql"
 import { PartnersRailQuery } from "__generated__/PartnersRailQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"

@@ -11,7 +11,7 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistFeaturedWorksRail_artist$data } from "__generated__/ArtistFeaturedWorksRail_artist.graphql"
 import { ArtistFeaturedWorksRailQuery } from "__generated__/ArtistFeaturedWorksRailQuery.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Skeleton } from "@artsy/palette"
 import { useJump } from "Utils/Hooks/useJump"

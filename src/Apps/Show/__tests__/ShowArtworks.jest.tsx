@@ -2,7 +2,7 @@ import { ShowArtworksRefetchContainer } from "Apps/Show/Components/ShowArtworks"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { useTracking } from "react-tracking"
 import {
   artistAggregation,

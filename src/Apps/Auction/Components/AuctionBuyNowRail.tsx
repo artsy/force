@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionBuyNowRail_sale$data } from "__generated__/AuctionBuyNowRail_sale.graphql"
 

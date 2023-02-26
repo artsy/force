@@ -1,5 +1,6 @@
-import { MockBoot, renderRelayTree } from "DevTools"
-import { ArtistSeriesMetaFragmentContainer } from "../Components/ArtistSeriesMeta"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
+import { ArtistSeriesMetaFragmentContainer } from "Apps/ArtistSeries/Components/ArtistSeriesMeta"
 import { graphql } from "react-relay"
 import { ArtistSeriesMeta_TestQuery$rawResponse } from "__generated__/ArtistSeriesMeta_TestQuery.graphql"
 

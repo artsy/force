@@ -10,7 +10,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork$data

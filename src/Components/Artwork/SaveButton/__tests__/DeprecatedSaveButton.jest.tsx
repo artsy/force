@@ -7,7 +7,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")

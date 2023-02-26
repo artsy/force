@@ -6,7 +6,7 @@ import { ArtQuizResultsRecommendedArtworksQuery } from "__generated__/ArtQuizRes
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Message, Spacer } from "@artsy/palette"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
 
 interface ArtQuizResultsRecommendedArtworksProps {

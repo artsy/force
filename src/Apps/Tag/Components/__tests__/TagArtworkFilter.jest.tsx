@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { TagArtworkFilterRefetchContainer } from "Apps/Tag/Components/TagArtworkFilter"
 import { graphql } from "react-relay"
 import { TagArtworkFilter_Query } from "__generated__/TagArtworkFilter_Query.graphql"

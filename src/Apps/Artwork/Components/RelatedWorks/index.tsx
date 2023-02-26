@@ -12,7 +12,9 @@ import {
   Header,
   HeaderPlaceholder,
 } from "Apps/Artwork/Components/OtherWorks/Header"
-import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
 import { RelatedWorks_artwork$data } from "__generated__/RelatedWorks_artwork.graphql"
 

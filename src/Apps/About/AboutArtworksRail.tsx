@@ -2,7 +2,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
 import { AboutArtworksRail_viewer$data } from "__generated__/AboutArtworksRail_viewer.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ShelfArtworkFragmentContainer,

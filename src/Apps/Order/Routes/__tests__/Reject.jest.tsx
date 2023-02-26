@@ -6,11 +6,11 @@ import { graphql } from "react-relay"
 import {
   rejectOfferFailed,
   rejectOfferSuccess,
-} from "../__fixtures__/MutationResults/rejectOffer"
-import { RejectFragmentContainer } from "../Reject"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/rejectOffer"
+import { RejectFragmentContainer } from "Apps/Order/Routes/Reject"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"

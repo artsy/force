@@ -1,10 +1,6 @@
-import { ShowInstallShotsFragmentContainer } from "../Components/ShowInstallShots"
+import { ShowInstallShotsFragmentContainer } from "Apps/Show/Components/ShowInstallShots"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-
-jest.mock("Components/Carousel", () => ({
-  Carousel: ({ children }) => children,
-}))
 
 jest.mock("@artsy/palette", () => {
   return {

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { SendFeedback } from "../SendFeedback"
+import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("Utils/Hooks/useMutation")
 

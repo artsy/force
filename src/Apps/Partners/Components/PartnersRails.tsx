@@ -7,7 +7,7 @@ import { compact, shuffle } from "lodash"
 import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { CellPartnerPlaceholder } from "Components/Cells/CellPartner"
 
 interface PartnersRailsProps {

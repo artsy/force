@@ -4,8 +4,9 @@ import path from "path"
 import TerserPlugin from "terser-webpack-plugin"
 import { basePath } from "./webpackEnv"
 
-export const devtool = process.env.WEBPACK_DEVTOOL || "eval"
+// ts-prune-ignore-next
 export const productionDevtool = "source-map"
+export const devtool = process.env.WEBPACK_DEVTOOL || "eval"
 export const mode = process.env.NODE_ENV
 export const stats = process.env.WEBPACK_STATS || "errors-only"
 
@@ -22,6 +23,7 @@ export const cache = {
   type: "filesystem", // or 'memory'
 }
 
+// ts-prune-ignore-next
 export const minimizer = [
   new TerserPlugin({
     // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM

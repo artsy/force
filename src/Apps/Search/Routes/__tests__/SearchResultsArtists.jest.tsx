@@ -1,7 +1,7 @@
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { SystemContextProvider } from "System/SystemContext"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import { SearchResultsArtistsRoute as SearchResultsArtists } from "Apps/Search/Routes/SearchResultsArtists"
 

@@ -1,8 +1,8 @@
-import { MockRouter } from "DevTools"
+import { MockRouter } from "DevTools/MockRouter"
 import { mount } from "enzyme"
 import { render, screen } from "@testing-library/react"
 import { Link } from "found"
-import { RouterLink } from "../RouterLink"
+import { RouterLink } from "System/Router/RouterLink"
 
 jest.mock("../Utils/shouldUpdateScroll", () => ({
   shouldUpdateScroll: () => true,

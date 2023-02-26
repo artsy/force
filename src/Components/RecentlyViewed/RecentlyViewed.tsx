@@ -10,7 +10,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
 
 export interface RecentlyViewedProps {

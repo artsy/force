@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import React from "react"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { mockLocation, resetMockLocation } from "DevTools/mockLocation"
 import { useRouter } from "System/Router/useRouter"
 import { resetPassword } from "Utils/auth"

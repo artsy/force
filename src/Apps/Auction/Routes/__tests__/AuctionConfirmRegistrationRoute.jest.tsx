@@ -1,5 +1,5 @@
 import { Formik } from "formik"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRouter } from "System/Router/useRouter"
 import { AuctionConfirmRegistrationRouteFragmentContainer } from "Apps/Auction/Routes/AuctionConfirmRegistrationRoute"

@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
-import { CategoriesAppFragmentContainer } from "../CategoriesApp"
+import { CategoriesAppFragmentContainer } from "Apps/Categories/CategoriesApp"
 import { CategoriesApp_Test_Query } from "__generated__/CategoriesApp_Test_Query.graphql"
 
 jest.unmock("react-relay")

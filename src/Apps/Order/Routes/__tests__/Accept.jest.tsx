@@ -13,7 +13,7 @@ import { useTracking } from "react-tracking"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { Router } from "found"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import {
   acceptOfferSuccess,

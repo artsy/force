@@ -1,9 +1,9 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionAppFragmentContainer } from "../AuctionApp"
+import { AuctionAppFragmentContainer } from "Apps/Auction/AuctionApp"
 import { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
-import { useAuctionTracking } from "../Hooks/useAuctionTracking"
-import { flushPromiseQueue } from "DevTools"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -16,7 +16,7 @@ jest.mock("Components/ZendeskWrapper", () => ({
   ZendeskWrapper: () => null,
 }))
 
-jest.mock("Components/FullBleedHeader", () => ({
+jest.mock("Components/FullBleedHeader/FullBleedHeader", () => ({
   FullBleedHeader: () => null,
 }))
 

@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
-import { MockBoot, MockRouter } from "DevTools"
+import { MockRouter } from "DevTools/MockRouter"
+import { MockBoot } from "DevTools/MockBoot"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import qs from "qs"

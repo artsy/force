@@ -9,7 +9,7 @@ import { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_vie
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 export interface TrendingLotsRailProps {
   viewer: TrendingLotsRail_viewer$data
 }

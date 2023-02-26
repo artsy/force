@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "Apps/Search/Routes/SearchResultsArtworks"
 import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "__generated__/SearchResultsArtworks_Query.graphql"

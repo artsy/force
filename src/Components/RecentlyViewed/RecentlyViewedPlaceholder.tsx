@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ShelfArtworkPlaceholder } from "Components/Artwork/ShelfArtwork"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 export const RecentlyViewedPlaceholder: React.FC = () => {
   return (

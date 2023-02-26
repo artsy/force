@@ -2,7 +2,7 @@ import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SavesArtworksGrid_artworks$data } from "__generated__/SavesArtworksGrid_artworks.graphql"
 import { SavesArtworksGrid_collection$data } from "__generated__/SavesArtworksGrid_collection.graphql"
 import { useTracking } from "react-tracking"
-import ArtworkGrid from "Components/ArtworkGrid"
+import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
 import {
   ContextModule,

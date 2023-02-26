@@ -1,7 +1,7 @@
 import * as React from "react"
 import { BoxProps, HorizontalOverflow, Pill } from "@artsy/palette"
 import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
-import { useAnalyticsContext } from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { useIsRouteActive } from "System/Router/useRouter"

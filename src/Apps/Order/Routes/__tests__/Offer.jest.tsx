@@ -11,7 +11,7 @@ import {
 import { OfferFragmentContainer } from "Apps/Order/Routes/Offer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import {
   initialOfferFailedAmountIsInvalid,
   initialOfferFailedCannotOffer,

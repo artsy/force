@@ -19,7 +19,7 @@ import styled from "styled-components"
 import { ResponsiveValue, variant } from "styled-system"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { ArticleAd } from "./ArticleAd"
+import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleShare } from "Components/ArticleShare"
 import { useMode } from "Utils/Hooks/useMode"
 import { ArticleVideo_article$data } from "__generated__/ArticleVideo_article.graphql"
@@ -28,7 +28,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 import { ArticleHTML } from "./ArticleHTML"
 import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { useFullBleedHeaderHeight } from "Components/FullBleedHeader"
+import { useFullBleedHeaderHeight } from "Components/FullBleedHeader/FullBleedHeader"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article$data

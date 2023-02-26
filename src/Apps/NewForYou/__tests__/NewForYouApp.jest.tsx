@@ -5,7 +5,7 @@ import { NewForYouAppFragmentContainer } from "Apps/NewForYou/NewForYouApp"
 import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
-jest.mock("Components/ArtworkGrid", () => "ArtworkGrid")
+jest.mock("Components/ArtworkGrid/ArtworkGrid", () => "ArtworkGrid")
 jest.mock("Components/MetaTags", () => ({
   MetaTags: () => "MetaTags",
 }))

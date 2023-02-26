@@ -7,7 +7,7 @@ import {
 import { expectOne, RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"

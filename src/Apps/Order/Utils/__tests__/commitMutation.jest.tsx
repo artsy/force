@@ -1,10 +1,10 @@
 import { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
 import { SystemContextProvider } from "System/SystemContext"
-import { createMockNetworkLayer2 } from "DevTools"
+import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import {
   CommitMutation,
   injectCommitMutation,

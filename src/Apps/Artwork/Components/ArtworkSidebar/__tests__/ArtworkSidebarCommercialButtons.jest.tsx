@@ -4,7 +4,7 @@ import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { createMockEnvironment } from "relay-test-utils"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkSidebarCommercialButtonsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
 import { useAuthDialog } from "Components/AuthDialog"
 
