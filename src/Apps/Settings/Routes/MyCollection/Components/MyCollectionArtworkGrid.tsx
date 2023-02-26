@@ -1,4 +1,4 @@
-import ArtworkGrid from "Components/ArtworkGrid"
+import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export const MyCollectionArtworkGrid = createFragmentContainer(ArtworkGrid, {

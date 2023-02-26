@@ -26,7 +26,8 @@ import {
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
-import { flushPromiseQueue, MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"

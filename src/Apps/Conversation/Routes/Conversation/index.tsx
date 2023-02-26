@@ -12,7 +12,7 @@ import { DetailsSidebarFragmentContainer } from "Apps/Conversation/Components/De
 import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
-} from "Components/NavBar"
+} from "Components/NavBar/constants"
 const LARGE_SCREEN_CONVERSATION_LIST_WIDTH = "375px"
 
 interface ConversationRouteProps {

@@ -1,7 +1,7 @@
 import { BorderedRadio } from "@artsy/palette"
 import { ShippingQuotes_Test_Query$data } from "__generated__/ShippingQuotes_Test_Query.graphql"
 import { BuyOrderWithArtaShippingDetails } from "Apps/__tests__/Fixtures/Order"
-import { renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 import {
   shippingQuoteDescriptions,

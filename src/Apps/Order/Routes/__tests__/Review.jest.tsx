@@ -22,7 +22,7 @@ import { cloneDeep } from "lodash"
 import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import {
   submitOfferOrderSuccess,
   submitOfferOrderWithFailure,

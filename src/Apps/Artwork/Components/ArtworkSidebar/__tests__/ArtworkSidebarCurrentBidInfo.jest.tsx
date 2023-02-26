@@ -16,7 +16,7 @@ import {
   OpenAuctionReserveNotMetWithBids,
 } from "Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
-import { renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 import { mockTracking } from "DevTools/mockTracking"
 

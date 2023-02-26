@@ -15,7 +15,7 @@ import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
-} from "Components/NavBar"
+} from "Components/NavBar/constants"
 import { ConversationList_me$data } from "__generated__/ConversationList_me.graphql"
 
 const ScrollContainer = styled(Box)`

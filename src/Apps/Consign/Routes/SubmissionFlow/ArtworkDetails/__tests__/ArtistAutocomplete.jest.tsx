@@ -1,5 +1,5 @@
 import { Input } from "@artsy/palette"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount, ReactWrapper } from "enzyme"
 import { Form, Formik } from "formik"
 import { SystemContextProvider } from "System/SystemContext"

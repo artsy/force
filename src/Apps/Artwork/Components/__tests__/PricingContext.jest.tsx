@@ -5,7 +5,7 @@ import {
   PricingContextTestQuery$data,
 } from "__generated__/PricingContextTestQuery.graphql"
 import { mockTracking } from "DevTools/mockTracking"
-import { renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
@@ -14,7 +14,7 @@ import {
   PricingContext,
   PricingContextFragmentContainer,
 } from "Apps/Artwork/Components/PricingContext"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")

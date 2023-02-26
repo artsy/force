@@ -2,7 +2,7 @@ import { ArtistSeriesRail_collectionGroup$data } from "__generated__/ArtistSerie
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup$data

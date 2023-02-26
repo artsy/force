@@ -1,5 +1,5 @@
 import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

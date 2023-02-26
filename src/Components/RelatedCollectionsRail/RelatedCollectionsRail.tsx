@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
 
 interface RelatedCollectionsRailProps {

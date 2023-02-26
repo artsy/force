@@ -1,5 +1,5 @@
 import { IdentityVerificationAppQueryResponseFixture } from "Apps/IdentityVerification/__fixtures__/routes_IdentityVerificationAppQuery"
-import { createMockNetworkLayer2 } from "DevTools"
+import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { Resolver } from "found-relay"
 import {
   FarceElementResult,

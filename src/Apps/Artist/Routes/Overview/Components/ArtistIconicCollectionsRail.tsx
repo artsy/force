@@ -20,7 +20,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
 import { ArtistIconicCollectionsRailQuery } from "__generated__/ArtistIconicCollectionsRailQuery.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface ArtistIconicCollectionsRailProps {
   marketingCollections: ArtistIconicCollectionsRail_marketingCollections$data

@@ -8,15 +8,15 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import { DateTime } from "luxon"
-import { RespondFragmentContainer } from "../Respond"
+import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
 import { expectOne } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import {
   buyerCounterOfferFailed,
   buyerCounterOfferSuccess,
-} from "../__fixtures__/MutationResults/buyerCounterOffer"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 // Need to mock Utils/Events instead of using mockTracking because

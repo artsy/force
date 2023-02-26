@@ -5,11 +5,11 @@ import {
   BaseArtworkFilter,
   getTotalCountLabel,
 } from "Components/ArtworkFilter"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { renderToString } from "DevTools/__tests__/MockRelayRendererFixtures"
-import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
+import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
-import { initialArtworkFilterState } from "../ArtworkFilterContext"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { omit } from "lodash"
 import { Text } from "@artsy/palette"

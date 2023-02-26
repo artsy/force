@@ -9,7 +9,7 @@ import { Skeleton, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
 import { useSystemContext } from "System/useSystemContext"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data
 }

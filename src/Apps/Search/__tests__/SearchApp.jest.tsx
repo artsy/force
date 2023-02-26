@@ -1,5 +1,5 @@
 import { SystemContextProvider } from "System/SystemContext"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { SearchApp_Test_Query } from "__generated__/SearchApp_Test_Query.graphql"
 import { SearchAppFragmentContainer as SearchApp } from "Apps/Search/SearchApp"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"

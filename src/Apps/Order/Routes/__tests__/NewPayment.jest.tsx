@@ -9,7 +9,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { NewPaymentFragmentContainer } from "Apps/Order/Routes/NewPayment"
 import {
   fixFailedPaymentSuccess,

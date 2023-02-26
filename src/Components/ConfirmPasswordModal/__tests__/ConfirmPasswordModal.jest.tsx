@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { SystemContextProvider } from "System/SystemContext"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 
 jest.mock("Components/ConfirmPasswordModal/Mutations/ConfirmPassword", () => ({

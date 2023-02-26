@@ -1,5 +1,5 @@
 import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
 import GridItem, { ArtworkGridItem } from "Components/Artwork/GridItem"
 import { ArtworkGridFixture } from "./ArtworkGridFixture"

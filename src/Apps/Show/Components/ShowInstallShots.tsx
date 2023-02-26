@@ -1,6 +1,7 @@
 import { useState } from "react"
 import * as React from "react"
 import {
+  BoxProps,
   Clickable,
   Image,
   ModalBase,
@@ -9,9 +10,15 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CarouselProps } from "Components/Carousel"
 import { ShowInstallShots_show$data } from "__generated__/ShowInstallShots_show.graphql"
 import { compact } from "lodash"
+
+export interface CarouselProps extends BoxProps {
+  children: JSX.Element | JSX.Element[]
+  arrowHeight?: number
+  onChange?(index: number): void
+  onPageCountChange?(count: number): void
+}
 
 type InstallShot = NonNullable<ShowInstallShots_show$data["images"]>[number]
 

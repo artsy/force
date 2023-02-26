@@ -10,12 +10,12 @@ import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,
   submitPendingOfferSuccess,
-} from "../__fixtures__/MutationResults/submitPendingOffer"
-import { CounterFragmentContainer } from "../Counter"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitPendingOffer"
+import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"

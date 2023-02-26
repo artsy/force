@@ -17,7 +17,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data

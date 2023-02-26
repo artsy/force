@@ -13,7 +13,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import {
   CellArtistFragmentContainer,
   CellArtistPlaceholder,

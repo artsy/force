@@ -1,8 +1,8 @@
 import { mount } from "enzyme"
-import { useInquiryAffiliated, Mode } from "../../Hooks/useInquiryAffiliated"
-import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"
-import { useInquiryContext } from "../../Hooks/useInquiryContext"
-import { flushPromiseQueue } from "DevTools"
+import { useInquiryAffiliated, Mode } from "Components/Inquiry/Hooks/useInquiryAffiliated"
+import { useUpdateCollectorProfile } from "Components/Inquiry/Hooks/useUpdateCollectorProfile"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("../../Hooks/useUpdateCollectorProfile")
 jest.mock("../../Hooks/useInquiryContext")

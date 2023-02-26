@@ -8,7 +8,7 @@ import {
   useTabs,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import styled from "styled-components"
 import {

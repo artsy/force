@@ -1,5 +1,5 @@
 import { ReactWrapper } from "enzyme"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 export function expectOne<T>(component: ReactWrapper<T>): ReactWrapper<T> {
   if (component.length !== 1) {

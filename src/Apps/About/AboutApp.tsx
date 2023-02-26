@@ -17,7 +17,7 @@ import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
+} from "Components/FullBleedHeader/FullBleedHeader"
 import { useJump } from "Utils/Hooks/useJump"
 
 export const AboutApp: React.FC = () => {

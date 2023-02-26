@@ -1,6 +1,7 @@
 import { act, fireEvent, screen } from "@testing-library/react"
 import { MyCollectionCreateArtworkFragmentContainer } from "Apps/MyCollection/Routes/EditArtwork/MyCollectionCreateArtwork"
-import { flushPromiseQueue, MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { MockPayloadGenerator } from "relay-test-utils"

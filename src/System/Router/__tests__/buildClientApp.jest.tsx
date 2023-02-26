@@ -1,11 +1,11 @@
 import { SystemContextConsumer } from "System/SystemContext"
 import { buildClientApp } from "System/Router/buildClientApp"
-import { createMockNetworkLayer } from "DevTools"
+import { createMockNetworkLayer } from "DevTools/createMockNetworkLayer"
 import { render, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import * as relaySystem from "System/Relay/createRelaySSREnvironment"
 
-jest.mock("Components/NavBar", () => ({
+jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 

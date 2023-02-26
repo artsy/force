@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { AuctionsAppFragmentContainer } from "Apps/Auctions/AuctionsApp"
 import { graphql } from "react-relay"
 import { AuctionsApp_Test_Query } from "__generated__/AuctionsApp_Test_Query.graphql"

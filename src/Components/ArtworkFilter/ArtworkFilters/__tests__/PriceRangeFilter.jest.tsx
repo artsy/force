@@ -1,12 +1,12 @@
 import { Input } from "@artsy/palette"
 import { mount } from "enzyme"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
-} from "../../ArtworkFilterContext"
-import { PriceRangeFilter, PriceRangeFilterProps } from "../PriceRangeFilter"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { PriceRangeFilter, PriceRangeFilterProps } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

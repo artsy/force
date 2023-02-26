@@ -15,7 +15,7 @@ import {
   SPECIALISTS,
   Specialty,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
