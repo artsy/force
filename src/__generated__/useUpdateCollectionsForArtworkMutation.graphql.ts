@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c322683f900bcbe6604a424402d5d82>>
+ * @generated SignedSource<<bb5550dd1de1cdd9aa257e61ca221f88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,17 @@ export type useUpdateCollectionsForArtworkMutation$variables = {
 export type useUpdateCollectionsForArtworkMutation$data = {
   readonly artworksCollectionsBatchUpdate: {
     readonly responseOrError: {
-      readonly __typename: "ArtworksCollectionsBatchUpdateSuccess";
+      readonly addedToCollections?: ReadonlyArray<{
+        readonly artworksCount: number;
+        readonly internalID: string;
+      } | null> | null;
       readonly mutationError?: {
         readonly statusCode: number | null;
       } | null;
+      readonly removedFromCollections?: ReadonlyArray<{
+        readonly artworksCount: number;
+        readonly internalID: string;
+      } | null> | null;
     } | null;
   } | null;
 };
@@ -52,10 +59,21 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artworksCount",
+  "storageKey": null
+},
+v4 = [
+  (v2/*: any*/),
+  (v3/*: any*/)
+],
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -79,7 +97,18 @@ v3 = {
   ],
   "type": "ArtworksCollectionsBatchUpdateFailure",
   "abstractKey": null
-};
+},
+v6 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "id",
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -106,12 +135,31 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "addedToCollections",
+                    "plural": true,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "removedFromCollections",
+                    "plural": true,
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
+                  }
                 ],
                 "type": "ArtworksCollectionsBatchUpdateSuccess",
                 "abstractKey": null
               },
-              (v3/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -144,8 +192,41 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "addedToCollections",
+                    "plural": true,
+                    "selections": (v6/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Collection",
+                    "kind": "LinkedField",
+                    "name": "removedFromCollections",
+                    "plural": true,
+                    "selections": (v6/*: any*/),
+                    "storageKey": null
+                  }
+                ],
+                "type": "ArtworksCollectionsBatchUpdateSuccess",
+                "abstractKey": null
+              },
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -155,16 +236,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c1d82037d1224e542c84dfab01bad1c7",
+    "cacheID": "4087a5ab425c05aca991344b8cc6c756",
     "id": null,
     "metadata": {},
     "name": "useUpdateCollectionsForArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        __typename\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          artworksCount\n          id\n        }\n        removedFromCollections {\n          internalID\n          artworksCount\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bb7f26c34020bb78b8a2f16ed8d72889";
+(node as any).hash = "2c126fc4eb04d00d985143b4301bf564";
 
 export default node;
