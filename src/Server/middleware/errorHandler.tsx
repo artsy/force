@@ -27,17 +27,11 @@ import { IpDeniedError } from "express-ipfilter"
 import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { ErrorPage } from "Components/ErrorPage"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
-import {
-  ArtsyLogoBlackIcon,
-  injectGlobalStyles,
-  Spacer,
-  ThemeProviderV3,
-} from "@artsy/palette"
+import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
 import createLogger from "Utils/logger"
+import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")
@@ -87,25 +81,13 @@ Time: ${new Date().toUTCString()}`
         <ThemeProviderV3>
           <GlobalStyles />
 
-          <AppContainer>
-            <Spacer y={4} />
-
-            <HorizontalPadding>
-              <a href="/" style={{ display: "block" }}>
-                <ArtsyLogoBlackIcon />
-              </a>
-
-              <Spacer y={4} />
-
-              <ErrorPage
-                code={code}
-                message={message}
-                detail={displayStackTrace ? detail : undefined}
-              />
-            </HorizontalPadding>
-
-            <Spacer y={4} />
-          </AppContainer>
+          <LayoutLogoOnly>
+            <ErrorPage
+              code={code}
+              message={message}
+              detail={displayStackTrace ? detail : undefined}
+            />
+          </LayoutLogoOnly>
         </ThemeProviderV3>
       )
     )
