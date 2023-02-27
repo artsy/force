@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e963247a3ea6ef619f7b3f33b70d5845>>
+ * @generated SignedSource<<2ebf88d88f4d7a552be5a33c77abb6bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -81,7 +81,10 @@ return {
             "GROUP_SHOW",
             "COLLECTED",
             "REVIEWED",
-            "BIENNIAL"
+            "BIENNIAL",
+            "AWARDS",
+            "PRIVATE_COLLECTIONS",
+            "RESIDENCIES"
           ]
         }
       ],
@@ -90,7 +93,7 @@ return {
       "name": "insights",
       "plural": true,
       "selections": (v0/*: any*/),
-      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
+      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\",\"AWARDS\",\"PRIVATE_COLLECTIONS\",\"RESIDENCIES\"])"
     },
     {
       "alias": "insightBadges",
@@ -247,6 +250,6 @@ return {
 };
 })();
 
-(node as any).hash = "1f04de8c288e1ae6f30a173581a797f5";
+(node as any).hash = "23e632a6817c4b064e58849e5a754d26";
 
 export default node;
