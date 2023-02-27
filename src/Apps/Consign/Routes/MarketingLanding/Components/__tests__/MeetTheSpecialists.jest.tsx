@@ -30,6 +30,7 @@ describe("MeetTheSpecialists", () => {
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
+        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -38,34 +39,53 @@ describe("MeetTheSpecialists", () => {
     render(<MeetTheSpecialists />)
 
     expect(screen.getByText("Meet the specialists")).toBeInTheDocument()
-    expect(screen.getByText("Start Selling")).toBeInTheDocument()
+    expect(screen.getByText("Get in Touch")).toBeInTheDocument()
   })
 
-  describe("Start Selling button", () => {
+  describe("Get in Touch button", () => {
     it("links out to submission flow", () => {
       render(<MeetTheSpecialists />)
 
-      const link = screen.getByTestId("start-selling-button")
+      const link = screen.getByTestId("get-in-touch-button")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Start Selling")
-      expect(link).toHaveAttribute("href", "/sell/submission")
+      expect(link).toHaveTextContent("Get in Touch")
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
     })
 
     it("tracks click", () => {
       render(<MeetTheSpecialists />)
 
-      fireEvent.click(screen.getByTestId("start-selling-button"))
+      fireEvent.click(screen.getByTestId("get-in-touch-button"))
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
+        action: "clickedGetInTouch",
         context_module: "MeetTheSpecialists",
         context_page_owner_type: "sell",
-        label: "Start Selling",
-        destination_path: "/sell/submission",
+        label: "Get in Touch",
         user_id: "user-id",
+        user_email: "user-email@artsy.net",
       })
+    })
+
+    it("links out to email provider", () => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: {
+          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
+          "swa-inquiry-flow": { flagEnabled: false },
+        },
+      }))
+      render(<MeetTheSpecialists />)
+
+      const link = screen.getByTestId("get-in-touch-button")
+
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveTextContent("Get in Touch")
+      expect(link).toHaveAttribute(
+        "href",
+        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+      )
     })
   })
 
