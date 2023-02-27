@@ -81,7 +81,7 @@ export const PreviouslySoldOnArtsyRail: React.FC<PreviouslySoldOnArtsyRailProps>
                       color="green100"
                       overflowEllipsis
                     >
-                      {performance?.mid}
+                      +{performance?.mid}
                     </Text>
                   </Flex>
 
