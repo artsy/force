@@ -31,7 +31,7 @@ import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEn
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
-import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
+// import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 
 export interface Props {
@@ -230,7 +230,8 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <Spacer y={6} />
 
-      <RelatedWorksQueryRenderer slug={artwork.slug} />
+      {/* Temporarily suppressed while we investigate performance. See PLATFORM-4980  */}
+      {/* <RelatedWorksQueryRenderer slug={artwork.slug} /> */}
 
       {artwork.artist && (
         <>
