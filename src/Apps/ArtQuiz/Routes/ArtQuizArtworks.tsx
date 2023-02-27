@@ -234,6 +234,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
+            data-testid="artworks-count"
           >
             {positionDisplay} / {cards.length}
           </Text>
