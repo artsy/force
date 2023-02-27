@@ -2,27 +2,27 @@ import { CheckCircleIcon, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { createFragmentContainer, graphql } from "react-relay"
+import { SelectListItem_item$data } from "__generated__/SelectListItem_item.graphql"
+import { SelectListsForArtworkImage } from "./SelectListsForArtworkImage"
+import { extractNodes } from "Utils/extractNodes"
 
 const ICON_SIZE = 24
 
-export interface ListItemEntity {
-  id: string
-  title: string
-  count: number
-}
-
 interface SelectListItemProps {
-  item: ListItemEntity
+  item: SelectListItem_item$data
   isSelected: boolean
-  onClick: (id: string) => void
+  onClick: () => void
 }
 
-export const SelectListItem: FC<SelectListItemProps> = ({
+const SelectListItem: FC<SelectListItemProps> = ({
   isSelected,
   item,
   onClick,
 }) => {
   const { t } = useTranslation()
+  const nodes = extractNodes(item.artworksConnection)
+  const imageURL = nodes[0]?.image?.url ?? null
 
   return (
     <Clickable
@@ -34,17 +34,19 @@ export const SelectListItem: FC<SelectListItemProps> = ({
       p={1}
       border="1px solid"
       borderColor={isSelected ? "brand" : "transparent"}
-      onClick={() => onClick(item.id)}
+      onClick={onClick}
+      role="option"
+      aria-selected={!!isSelected}
     >
-      <Flex width={60} height={60} bg="black10" flexShrink={0} />
+      <SelectListsForArtworkImage url={imageURL} />
 
       <Spacer x={1} />
 
       <Flex flexDirection="column" flex={1}>
-        <Text variant="sm-display">{item.title}</Text>
+        <Text variant="sm-display">{item.name}</Text>
         <Text variant="sm-display" color="black60">
           {t("collectorSaves.artworkLists.artworkWithCount", {
-            count: item.count,
+            count: item.artworksCount,
           })}
         </Text>
       </Flex>
@@ -59,3 +61,24 @@ export const SelectListItem: FC<SelectListItemProps> = ({
     </Clickable>
   )
 }
+
+export const SelectListItemFragmentContainer = createFragmentContainer(
+  SelectListItem,
+  {
+    item: graphql`
+      fragment SelectListItem_item on Collection {
+        name
+        artworksCount
+        artworksConnection(first: 1, sort: SAVED_AT_DESC) {
+          edges {
+            node {
+              image {
+                url(version: "square")
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)

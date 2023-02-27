@@ -1,4 +1,5 @@
-import { Box, Flex, Image, NoArtworkIcon } from "@artsy/palette"
+import { Box, Image } from "@artsy/palette"
+import { SavesNoImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
@@ -45,22 +46,13 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
 
   if (url === null) {
     return (
-      <Flex
+      <SavesNoImage
         width={SIZE}
         height={SIZE}
-        bg="black5"
         position="absolute"
         top={OFFSET_BY_INDEX}
         left={OFFSET_BY_INDEX}
-        border="1px solid"
-        borderColor="black15"
-        aria-label="Image placeholder"
-        justifyContent="center"
-        alignItems="center"
-        flexShrink={0}
-      >
-        <NoArtworkIcon width="18px" height="18px" fill="black60" />
-      </Flex>
+      />
     )
   }
 
