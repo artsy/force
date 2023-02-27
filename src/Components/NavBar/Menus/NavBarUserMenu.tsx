@@ -12,6 +12,7 @@ import {
   SoloIcon,
   Text,
 } from "@artsy/palette"
+import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
 import * as React from "react"
 import { useContext } from "react"
 import { useTracking } from "react-tracking"
@@ -102,13 +103,15 @@ export const NavBarUserMenu: React.FC = () => {
           </NavBarMenuItemLink>
 
           {!isSeparateSavesAndFollowsEnabled ? (
-            <NavBarMenuItemLink
-              aria-label="View your Saves &amp; Follows"
-              to="/collector-profile/saves"
-              onClick={trackClick}
-            >
-              <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-            </NavBarMenuItemLink>
+            <ProgressiveOnboardingFollowsHighlight>
+              <NavBarMenuItemLink
+                aria-label="View your Saves &amp; Follows"
+                to="/collector-profile/saves"
+                onClick={trackClick}
+              >
+                <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
+              </NavBarMenuItemLink>
+            </ProgressiveOnboardingFollowsHighlight>
           ) : (
             <>
               <NavBarMenuItemLink

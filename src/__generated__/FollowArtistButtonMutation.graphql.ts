@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02c794ce8a08b2d4dd7c2e58d02a0feb>>
+ * @generated SignedSource<<e31959ebe6a0cb738d1199e7492e605e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,6 +26,12 @@ export type FollowArtistButtonMutation$data = {
       readonly id: string;
       readonly isFollowed: boolean | null;
     } | null;
+    readonly me: {
+      readonly counts: {
+        readonly followedArtists: number;
+      } | null;
+      readonly id: string;
+    };
   } | null;
 };
 export type FollowArtistButtonMutation = {
@@ -41,7 +47,14 @@ var v0 = [
     "name": "input"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": [
@@ -59,18 +72,42 @@ v1 = [
       {
         "alias": null,
         "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MeCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "followedArtists",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -109,7 +146,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "FollowArtistButtonMutation",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -118,19 +155,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "FollowArtistButtonMutation",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "8a079d849d99e95b9c139637e91fc53a",
+    "cacheID": "3507348c4ca20298ccf24ea1dff65c12",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowArtistButtonMutation(\n  $input: FollowArtistInput!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      isFollowed\n      counts {\n        follows\n      }\n    }\n  }\n}\n"
+    "text": "mutation FollowArtistButtonMutation(\n  $input: FollowArtistInput!\n) {\n  followArtist(input: $input) {\n    me {\n      id\n      counts {\n        followedArtists\n      }\n    }\n    artist {\n      id\n      isFollowed\n      counts {\n        follows\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "72cf91568c776907df7dea0194809515";
+(node as any).hash = "b11107325e43afd22ac88edc130754ea";
 
 export default node;
