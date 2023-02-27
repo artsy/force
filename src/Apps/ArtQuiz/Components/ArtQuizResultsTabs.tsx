@@ -42,6 +42,8 @@ export const ArtQuizResultsTabs: FC = ({}) => {
           <ArtQuizRecommendedArtistsQueryRenderer />
         </Tab>
       </Tabs>
+
+      <Spacer y={[4, 6]} />
     </>
   )
 }
