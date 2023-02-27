@@ -649,7 +649,7 @@ describe("Review", () => {
         "Artsy Private Sales LLC Conditions of Sale"
       )
       expect(page.text()).toContain(
-        "and any Additional Terms specified on this page and in the order confirmation email."
+        "and any Additional Conditions of Sale specified on this page and in the order confirmation email."
       )
     })
 

@@ -65,7 +65,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
         {privateSaleConditions?.length && (
           <>
             <Text fontWeight="bold" variant="xs">
-              Additional conditions of sale
+              Additional Conditions of Sale
             </Text>
             <Spacer y={2} />
             <Text variant="xs" color="black60">

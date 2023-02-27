@@ -81,7 +81,7 @@ describe("with private sale orders", () => {
 
   it("renders extra conditions of sale title", () => {
     expect(
-      screen.getByText("Additional conditions of sale")
+      screen.getByText("Additional Conditions of Sale")
     ).toBeInTheDocument()
   })
 

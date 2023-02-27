@@ -22,8 +22,8 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
         >
           Artsy Private Sales LLC Conditions of Sale
         </a>{" "}
-        and any Additional Terms specified on this page and in the order
-        confirmation email.
+        and any Additional Conditions of Sale specified on this page and in the
+        order confirmation email.
       </Text>
     )
   }
