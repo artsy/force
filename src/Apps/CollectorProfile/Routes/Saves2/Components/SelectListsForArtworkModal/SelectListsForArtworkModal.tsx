@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useReducer, useState } from "react"
 import { Spacer, Join, ModalDialog, Box, useToasts } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
@@ -17,6 +17,11 @@ import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Ut
 import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
+import {
+  INITIAL_STATE,
+  ListKey,
+  reducer,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/reducer"
 
 const logger = createLogger("SelectListsForArtworkModal")
 
@@ -41,55 +46,47 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 }) => {
   const { t } = useTranslation()
   const [isSaving, setIsSaving] = useState(false)
-  const [addToCollectionIDs, setAddToCollectionIDs] = useState<string[]>([])
-  const [removeFromCollectionIDs, setRemoveFromCollectionIDs] = useState<
-    string[]
-  >([])
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+
   const savedCollection = me?.defaultSaves
   const nodes = extractNodes(me?.collectionsConnection)
   const collections = savedCollection ? [savedCollection, ...nodes] : nodes
-  const preselectedByDefault = collections.filter(node => node.isSavedArtwork)
-  const preselectedCollectionIDs = preselectedByDefault.map(
-    node => node.internalID
-  )
   const selectedCollectionIds = getSelectedCollectionIds({
-    preselectedCollectionIDs,
-    addToCollectionIDs,
-    removeFromCollectionIDs,
+    preselectedCollectionIDs: state.preselectedListIDs,
+    addToCollectionIDs: state.addingListIDs,
+    removeFromCollectionIDs: state.removingListIDs,
   })
   const hasChanges =
-    addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
+    state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
   const { submitMutation } = useUpdateCollectionsForArtwork()
   const { sendToast } = useToasts()
 
-  const addOrRemoveCollectionIdFromIds = (
-    ids: string[],
-    collectionId: string
-  ) => {
-    if (ids.includes(collectionId)) {
-      return ids.filter(id => id !== collectionId)
-    }
+  useEffect(() => {
+    const preselectedByDefault = collections.filter(node => node.isSavedArtwork)
+    const preselectedListIDs = preselectedByDefault.map(node => node.internalID)
 
-    return [...ids, collectionId]
-  }
+    dispatch({
+      type: "SET_PRESELECTED_LIST_IDS",
+      payload: {
+        ids: preselectedListIDs,
+      },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodes.length])
 
   const handleItemPress = (item: typeof collections[0]) => {
-    if (item.isSavedArtwork) {
-      const updatedIds = addOrRemoveCollectionIdFromIds(
-        removeFromCollectionIDs,
-        item.internalID
-      )
+    const listKey = item.isSavedArtwork
+      ? ListKey.RemovingListIDs
+      : ListKey.AddingListIDs
 
-      setRemoveFromCollectionIDs(updatedIds)
-      return
-    }
-
-    const updatedIds = addOrRemoveCollectionIdFromIds(
-      addToCollectionIDs,
-      item.internalID
-    )
-    setAddToCollectionIDs(updatedIds)
+    dispatch({
+      type: "ADD_OR_REMOVE_LIST_ID",
+      payload: {
+        listID: item.internalID,
+        listKey,
+      },
+    })
   }
 
   const handleSaveClicked = async () => {
@@ -102,8 +99,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         variables: {
           input: {
             artworkIDs: [artworkId],
-            addToCollectionIDs,
-            removeFromCollectionIDs,
+            addToCollectionIDs: state.addingListIDs,
+            removeFromCollectionIDs: state.removingListIDs,
           },
         },
         rejectIf: res => {
@@ -133,7 +130,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
      * User added artwork to the previously unselected collection
      * So we have to display the collection as *selected*
      */
-    if (addToCollectionIDs.includes(item.internalID)) {
+    if (state.addingListIDs.includes(item.internalID)) {
       return true
     }
 
@@ -141,7 +138,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
      * User deleted artwork from the previously selected collection
      * So we have to display the collection as *unselected*
      */
-    if (removeFromCollectionIDs.includes(item.internalID)) {
+    if (state.removingListIDs.includes(item.internalID)) {
       return false
     }
 
