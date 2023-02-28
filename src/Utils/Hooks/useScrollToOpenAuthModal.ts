@@ -29,11 +29,9 @@ export const useScrollToOpenAuthModal = ({
       setTimeout(() => {
         const payload = merge(
           {
-            current: {
-              options: {
-                onClose: dismiss,
-                onSuccess: dismiss,
-              },
+            options: {
+              onClose: dismiss,
+              onSuccess: dismiss,
             },
           },
           options
