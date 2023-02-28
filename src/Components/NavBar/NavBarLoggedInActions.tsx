@@ -23,6 +23,7 @@ import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { ProgressiveOnboardingFindFollows } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
+import { ProgressiveOnboardingFindSaves } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -110,15 +111,17 @@ export const NavBarLoggedInActions: React.FC<Partial<
         {({ anchorRef, anchorProps, visible }) => (
           // Offset to accomodate hit area padding on right side of icon
           <Flex mr={-1}>
-            <ProgressiveOnboardingFindFollows>
-              <NavBarItemButton
-                ref={anchorRef as any}
-                active={visible}
-                {...anchorProps}
-              >
-                <SoloIcon title="Your account" fill="currentColor" />
-              </NavBarItemButton>
-            </ProgressiveOnboardingFindFollows>
+            <ProgressiveOnboardingFindSaves>
+              <ProgressiveOnboardingFindFollows>
+                <NavBarItemButton
+                  ref={anchorRef as any}
+                  active={visible}
+                  {...anchorProps}
+                >
+                  <SoloIcon title="Your account" fill="currentColor" />
+                </NavBarItemButton>
+              </ProgressiveOnboardingFindFollows>
+            </ProgressiveOnboardingFindSaves>
           </Flex>
         )}
       </Dropdown>

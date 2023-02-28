@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fe74658dabd068ccc1bc7dae5d58043>>
+ * @generated SignedSource<<d0d7ade0dca0cf774ee86636bbf5afcf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,12 @@ export type SaveArtworkMutation$data = {
       readonly is_saved: boolean | null;
       readonly slug: string;
     } | null;
+    readonly me: {
+      readonly counts: {
+        readonly savedArtworks: number;
+      } | null;
+      readonly id: string;
+    };
   } | null;
 };
 export type SaveArtworkMutation$rawResponse = {
@@ -33,6 +39,12 @@ export type SaveArtworkMutation$rawResponse = {
       readonly is_saved: boolean | null;
       readonly slug: string;
     } | null;
+    readonly me: {
+      readonly counts: {
+        readonly savedArtworks: number;
+      } | null;
+      readonly id: string;
+    };
   } | null;
 };
 export type SaveArtworkMutation = {
@@ -49,7 +61,14 @@ var v0 = [
     "name": "input"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": [
@@ -72,13 +91,7 @@ v1 = [
         "name": "artwork",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -95,6 +108,36 @@ v1 = [
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MeCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "savedArtworks",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -106,7 +149,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "SaveArtworkMutation",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -115,19 +158,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SaveArtworkMutation",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "8c2b0539cae87f8ea3d4d7b5fdadab16",
+    "cacheID": "e1c161c2bef6461948969789def573e6",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_saved: isSaved\n    }\n  }\n}\n"
+    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_saved: isSaved\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "baa8fea7bf140f998bd1d54038de283e";
+(node as any).hash = "aded6f26298073e6ff6829afbd8d2593";
 
 export default node;

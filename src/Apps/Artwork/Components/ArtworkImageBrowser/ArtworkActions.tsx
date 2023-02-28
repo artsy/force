@@ -1,6 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
+import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
@@ -107,7 +108,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   )
 
   const SaveButton = (
-    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+    <ProgressiveOnboardingSaveArtworkQueryRenderer>
+      <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+    </ProgressiveOnboardingSaveArtworkQueryRenderer>
   )
 
   const actions = [

@@ -1,10 +1,13 @@
 import { useDidMount } from "@artsy/palette"
 import { createContext, FC, useContext, useEffect, useState } from "react"
 import { PROGRESSIVE_ONBOARDING_FIND_FOLLOWS } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
-import { PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
 import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { uniq } from "lodash"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { PROGRESSIVE_ONBOARDING_SAVE_ARTWORK } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
+import { PROGRESSIVE_ONBOARDING_FIND_SAVES } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
+import { PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 
 const ProgressiveOnboardingContext = createContext<{
   dismissed: ProgressiveOnboardingKey[]
@@ -55,8 +58,8 @@ export const useProgressiveOnboarding = () => {
   return {
     dismiss,
     dismissed,
-    isDismissed,
     enabled,
+    isDismissed,
   }
 }
 
@@ -66,6 +69,9 @@ const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
   PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
   PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
+  PROGRESSIVE_ONBOARDING_FIND_SAVES,
+  PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
 ] as const
 
 type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
