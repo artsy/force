@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useReducer, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { Spacer, Join, ModalDialog, Box, useToasts } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
@@ -18,35 +18,25 @@ import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Sav
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
 import {
-  INITIAL_STATE,
   ListKey,
-  reducer,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/reducer"
+  useManageListsForArtworkContext,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/ManageListsForArtwork/ManageListsForArtworkProvider"
+import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 
 const logger = createLogger("SelectListsForArtworkModal")
-
-interface SelectListsForArtworkModalQueryRenderProps {
-  artworkID: string
-  onClose: () => void
-  onSave: (collectionIds: string[]) => void
-}
 
 export interface SelectListsForArtworkModalProps {
   me: SelectListsForArtworkModal_me$data | null
   artwork: SelectListsForArtworkModal_artwork$data | null
-  onClose: () => void
-  onSave: (collectionIds: string[]) => void
 }
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
   artwork,
-  onClose,
-  onSave,
 }) => {
   const { t } = useTranslation()
   const [isSaving, setIsSaving] = useState(false)
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+  const { state, dispatch, onClose, onSave } = useManageListsForArtworkContext()
 
   const savedCollection = me?.defaultSaves
   const nodes = extractNodes(me?.collectionsConnection)
@@ -239,14 +229,13 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
   }
 )
 
-export const SelectListsForArtworkModalQueryRender: FC<SelectListsForArtworkModalQueryRenderProps> = ({
-  artworkID,
-  ...rest
-}) => {
+export const SelectListsForArtworkModalQueryRender: FC = () => {
+  const { artworkId } = useManageArtworkForSavesContext()
+
   return (
     <SystemQueryRenderer<SelectListsForArtworkModalQuery>
       query={query}
-      variables={{ artworkID }}
+      variables={{ artworkID: artworkId }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
@@ -257,7 +246,6 @@ export const SelectListsForArtworkModalQueryRender: FC<SelectListsForArtworkModa
           <SelectListsForArtworkModalFragmentContainer
             me={props?.me ?? null}
             artwork={props?.artwork ?? null}
-            {...rest}
           />
         )
       }}

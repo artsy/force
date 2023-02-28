@@ -1,4 +1,4 @@
-import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+import { ManageListsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/ManageListsForArtwork/ManageListsForArtwork"
 import { createContext, FC, useContext, useMemo, useState } from "react"
 
 export interface ManageArtworkForSavesState {
@@ -43,6 +43,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     setArtworkEntityId(null)
   }
 
+  // TODO: Pass onClose, onSave
   const value: ManageArtworkForSavesState = useMemo(
     () => ({
       artworkId: artworkEntityId,
@@ -61,18 +62,15 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   }
 
   return (
-    <>
-      <ManageArtworkForSaves.Provider value={value}>
-        {children}
-      </ManageArtworkForSaves.Provider>
+    <ManageArtworkForSaves.Provider value={value}>
+      {children}
 
       {!!artworkEntityId && (
-        <SelectListsForArtworkModalQueryRender
-          artworkID={artworkEntityId}
+        <ManageListsForArtwork
           onClose={clearArtworkId}
           onSave={handleSaveListsForArtwork}
         />
       )}
-    </>
+    </ManageArtworkForSaves.Provider>
   )
 }

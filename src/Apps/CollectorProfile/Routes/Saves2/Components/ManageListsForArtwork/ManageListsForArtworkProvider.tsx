@@ -1,4 +1,6 @@
-enum ModalKey {
+import { createContext, Dispatch, FC, useContext, useReducer } from "react"
+
+export enum ModalKey {
   SelectListsForArtwork,
   CreateNewList,
 }
@@ -8,7 +10,7 @@ export enum ListKey {
   RemovingListIDs = "removingListIDs",
 }
 
-type State = {
+export type State = {
   currentModalKey: ModalKey
   addingListIDs: string[]
   removingListIDs: string[]
@@ -56,4 +58,40 @@ export const reducer = (state: State, action: Action): State => {
     default:
       return state
   }
+}
+
+interface ManageListsForArtworkProviderProps {
+  onClose: () => void
+  onSave: (collectionIds: string[]) => void
+}
+
+interface ManageListsForArtworkContextState {
+  state: State
+  dispatch: Dispatch<Action>
+  onClose: () => void
+  onSave: (collectionIds: string[]) => void
+}
+
+const ManageListsForArtworkContext = createContext(
+  (null as unknown) as ManageListsForArtworkContextState
+)
+
+export const useManageListsForArtworkContext = () => {
+  return useContext(ManageListsForArtworkContext)
+}
+
+export const ManageListsForArtworkProvider: FC<ManageListsForArtworkProviderProps> = ({
+  children,
+  onClose,
+  onSave,
+}) => {
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+
+  return (
+    <ManageListsForArtworkContext.Provider
+      value={{ state, dispatch, onClose, onSave }}
+    >
+      {children}
+    </ManageListsForArtworkContext.Provider>
+  )
 }

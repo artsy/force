@@ -1,4 +1,8 @@
 import { Button, Flex, Spacer, Text } from "@artsy/palette"
+import {
+  ModalKey,
+  useManageListsForArtworkContext,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/ManageListsForArtwork/ManageListsForArtworkProvider"
 import { SelectListsForArtworkImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkImage"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,7 +15,17 @@ interface SelectListsForArtworkHeaderProps {
 const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
   artwork,
 }) => {
+  const { dispatch } = useManageListsForArtworkContext()
   const imageURL = artwork.image?.url ?? null
+
+  const handleOpenCreateListModal = () => {
+    dispatch({
+      type: "SET_MODAL_KEY",
+      payload: {
+        key: ModalKey.CreateNewList,
+      },
+    })
+  }
 
   return (
     <Flex
@@ -29,7 +43,11 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
 
       <Spacer x={[0, 1]} y={[2, 0]} />
 
-      <Button variant="secondaryBlack" size="small">
+      <Button
+        variant="secondaryBlack"
+        size="small"
+        onClick={handleOpenCreateListModal}
+      >
         Create New List
       </Button>
     </Flex>
