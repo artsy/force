@@ -1376,7 +1376,6 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     # State of the returned auction results (can be past, upcoming, or all)
     state: AuctionResultsState
   ): AuctionResultConnection
-  awards: String
 
   # In applicable contexts, this is what the artist (as a suggestion) is based on.
   basedOn: Artist
@@ -1559,9 +1558,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     partnerCategory: [String]
     representedBy: Boolean
   ): PartnerArtistConnection
-  privateCollections: String
   related: ArtistRelatedData
-  residencies: String
   sales(
     isAuction: Boolean
     live: Boolean
