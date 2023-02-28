@@ -1,15 +1,9 @@
 import { createContext, useContext } from "react"
 
-export interface ArtworkEntity {
-  id: string
-  title: string
-  image: string | null
-}
-
 export interface ManageArtworkForCollectionsState {
-  artwork: ArtworkEntity | null
-  setArtwork: (artworkEntity: ArtworkEntity) => void
-  clearArtwork: () => void
+  artworkId: string | null
+  setArtworkId: (artworkId: string) => void
+  clearArtworkId: () => void
 }
 
 export const ManageArtworkForCollections = createContext<

@@ -1,14 +1,11 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
-import {
-  ArtworkEntity,
-  ManageArtworkForCollections,
-} from "Components/Artwork/ManageArtworkForCollections"
+import { ManageArtworkForCollections } from "Components/Artwork/ManageArtworkForCollections"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { LocalImage, useLocalImage } from "Utils/localImageHelpers"
 import { cropped, resized } from "Utils/resized"
@@ -50,7 +47,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
-  const [artworkEntity, setArtworkEntity] = useState<ArtworkEntity | null>(null)
+  const [artworkEntityId, setArtworkEntityId] = useState<string | null>(null)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -79,18 +76,18 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     (artwork?.image?.url && artwork.image?.placeholder) ||
     undefined
 
-  const setArtwork = (data: ArtworkEntity) => {
-    setArtworkEntity(data)
+  const setArtworkId = (artworkId: string) => {
+    setArtworkEntityId(artworkId)
   }
 
-  const clearArtwork = () => {
-    setArtworkEntity(null)
+  const clearArtworkId = () => {
+    setArtworkEntityId(null)
   }
 
   return (
     <>
       <ManageArtworkForCollections.Provider
-        value={{ artwork: null, setArtwork, clearArtwork }}
+        value={{ artworkId: artworkEntityId, setArtworkId, clearArtworkId }}
       >
         <div
           data-id={artwork.internalID}
@@ -138,10 +135,10 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </div>
       </ManageArtworkForCollections.Provider>
 
-      {!!artworkEntity && (
+      {!!artworkEntityId && (
         <SelectListsForArtworkModalQueryRender
-          artworkID={artworkEntity.id}
-          onClose={clearArtwork}
+          artworkID={artworkEntityId}
+          onClose={clearArtworkId}
           onSave={collectionIds => {
             console.log("[debug] collectionIds", collectionIds)
           }}
