@@ -1,6 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
-import { ManageArtworkForCollectionsProvider } from "Components/Artwork/ManageArtworkForCollections"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -76,7 +76,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     undefined
 
   return (
-    <ManageArtworkForCollectionsProvider savedListId={savedListId}>
+    <ManageArtworkForSavesProvider savedListId={savedListId}>
       <div
         data-id={artwork.internalID}
         data-test="artworkGridItem"
@@ -121,7 +121,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           renderSaveButton={renderSaveButton}
         />
       </div>
-    </ManageArtworkForCollectionsProvider>
+    </ManageArtworkForSavesProvider>
   )
 }
 

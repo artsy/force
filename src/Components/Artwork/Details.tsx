@@ -2,7 +2,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
-import { SaveArtworkToCollectionsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToCollectionsButton"
+import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { isFunction } from "lodash"
@@ -250,7 +250,7 @@ export const Details: React.FC<DetailsProps> = ({
 
     if (isArtworksListEnabled) {
       return (
-        <SaveArtworkToCollectionsButtonFragmentContainer
+        <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}
           artwork={rest.artwork}
         />
@@ -436,7 +436,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         }
       }
       ...SaveButton_artwork
-      ...SaveArtworkToCollectionsButton_artwork
+      ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
     }
   `,

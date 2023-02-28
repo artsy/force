@@ -1,19 +1,19 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
-import { useManageArtworkForCollectionsContext } from "Components/Artwork/ManageArtworkForCollections"
+import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SaveArtworkToCollectionsButton_artwork$data } from "__generated__/SaveArtworkToCollectionsButton_artwork.graphql"
+import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
 
-interface SaveArtworkToCollectionsButtonProps {
-  artwork: SaveArtworkToCollectionsButton_artwork$data
+interface SaveArtworkToListsButtonProps {
+  artwork: SaveArtworkToListsButton_artwork$data
   contextModule: AuthContextModule
 }
 
-const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = ({
+const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   artwork,
   contextModule,
 }) => {
@@ -23,11 +23,11 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
     setArtworkId,
     savedListId,
     isSavedToList,
-  } = useManageArtworkForCollectionsContext()
+  } = useManageArtworkForSavesContext()
 
   const isSaved = !!artwork.is_saved
 
-  const opeManageArtworkForCollectionsModal = () => {
+  const openManageArtworkForSavesModal = () => {
     setArtworkId(artwork.internalID)
   }
 
@@ -38,7 +38,7 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
         message: "Artwork saved",
         action: {
           label: "Add to a List",
-          onClick: opeManageArtworkForCollectionsModal,
+          onClick: openManageArtworkForSavesModal,
         },
       })
 
@@ -72,7 +72,7 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
     event.preventDefault()
 
     if (savedListId) {
-      opeManageArtworkForCollectionsModal()
+      openManageArtworkForSavesModal()
       return
     }
 
@@ -87,11 +87,11 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
   )
 }
 
-export const SaveArtworkToCollectionsButtonFragmentContainer = createFragmentContainer(
-  SaveArtworkToCollectionsButton,
+export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer(
+  SaveArtworkToListsButton,
   {
     artwork: graphql`
-      fragment SaveArtworkToCollectionsButton_artwork on Artwork {
+      fragment SaveArtworkToListsButton_artwork on Artwork {
         id
         internalID
         is_saved: isSaved
