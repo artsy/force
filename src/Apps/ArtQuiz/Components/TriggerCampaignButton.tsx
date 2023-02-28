@@ -41,7 +41,7 @@ export const TriggerCampaignButton: FC = () => {
     } catch (error) {
       sendToast({
         variant: "error",
-        message: t("artQuizPage.results.emailError"),
+        message: t("common.errors.somethingWentWrong"),
       })
 
       setIsLoading(false)

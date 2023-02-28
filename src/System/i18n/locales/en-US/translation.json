@@ -27,7 +27,6 @@
     "results": {
       "emailButton": "Email My Results",
       "emailSuccess": "Results sent to {{email}}",
-      "emailError": "Something went wrong. Please try again.",
       "empty": {
         "title": "Explore Trending Collections and Artists",
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
@@ -118,7 +117,6 @@
       "createNewListButton": "Create New List"
     },
     "createNewListModal": {
-      "genericError": "Something went wrong.",
       "title": "Create a new list",
       "createListButton": "Create List",
       "back": "Back",
@@ -126,6 +124,9 @@
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
       "remainingCharactersCount_one": "{{count}} character remaining",
       "remainingCharactersCount_other": "{{count}} characters remaining"
+    },
+    "saveArtworkToListsButton": {
+      "changesSaved": "Changes saved"
     },
     "selectedListsForArtwork": {
       "listsCount_one": "{{count}} list selected",
@@ -142,6 +143,11 @@
       "cancel": "Cancel",
       "delete": "Yes, Delete List",
       "success": "Changes saved"
+    }
+  },
+  "common": {
+    "errors": {
+      "somethingWentWrong": "Something went wrong. Please try again."
     }
   },
   "navbar": {

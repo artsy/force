@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog, Box } from "@artsy/palette"
+import { Spacer, Join, ModalDialog, Box, useToasts } from "@artsy/palette"
 import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
@@ -14,23 +14,33 @@ import {
   SelectListsPlaceholder,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
+import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
+import createLogger from "Utils/logger"
+import { useTranslation } from "react-i18next"
+
+const logger = createLogger("SelectListsForArtworkModal")
 
 interface SelectListsForArtworkModalQueryRenderProps {
   artworkID: string
   onClose: () => void
+  onSave: (collectionIds: string[]) => void
 }
 
 export interface SelectListsForArtworkModalProps {
   me: SelectListsForArtworkModal_me$data | null
   artwork: SelectListsForArtworkModal_artwork$data | null
   onClose: () => void
+  onSave: (collectionIds: string[]) => void
 }
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
   artwork,
   onClose,
+  onSave,
 }) => {
+  const { t } = useTranslation()
+  const [isSaving, setIsSaving] = useState(false)
   const [addToCollectionIDs, setAddToCollectionIDs] = useState<string[]>([])
   const [removeFromCollectionIDs, setRemoveFromCollectionIDs] = useState<
     string[]
@@ -45,6 +55,9 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   })
   const hasChanges =
     addToCollectionIDs.length !== 0 || removeFromCollectionIDs.length !== 0
+
+  const { submitMutation } = useUpdateCollectionsForArtwork()
+  const { sendToast } = useToasts()
 
   const addOrRemoveCollectionIdFromIds = (
     ids: string[],
@@ -75,8 +88,40 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     setAddToCollectionIDs(updatedIds)
   }
 
-  const handleSaveClicked = () => {
-    onClose()
+  const handleSaveClicked = async () => {
+    try {
+      const artworkId = artwork!.internalID
+
+      setIsSaving(true)
+
+      await submitMutation({
+        variables: {
+          input: {
+            artworkIDs: [artworkId],
+            addToCollectionIDs,
+            removeFromCollectionIDs,
+          },
+        },
+        rejectIf: res => {
+          const result = res.artworksCollectionsBatchUpdate
+          const error = result?.responseOrError
+
+          return !!error?.mutationError
+        },
+      })
+
+      onSave(selectedCollectionIds)
+    } catch (error) {
+      logger.error(error)
+
+      sendToast({
+        variant: "error",
+        message: t("common.errors.somethingWentWrong"),
+      })
+    } finally {
+      setIsSaving(false)
+      onClose()
+    }
   }
 
   const checkIsItemSelected = (item: typeof collections[0]) => {
@@ -147,6 +192,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
           selectedListsCount={selectedCollectionIds.length}
           hasChanges={hasChanges}
           onSaveClick={handleSaveClicked}
+          isSaving={isSaving}
         />
       }
     >
@@ -185,6 +231,7 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
     `,
     artwork: graphql`
       fragment SelectListsForArtworkModal_artwork on Artwork {
+        internalID
         ...SelectListsForArtworkHeader_artwork
       }
     `,

@@ -90,7 +90,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       logger.error(error)
       helpers.setFieldError(
         "name",
-        error.message ?? t("collectorSaves.createNewListModal.genericError")
+        error.message ?? t("common.errors.somethingWentWrong")
       )
     }
   }

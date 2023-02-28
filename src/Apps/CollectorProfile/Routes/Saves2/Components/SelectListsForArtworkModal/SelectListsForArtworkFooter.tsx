@@ -5,12 +5,14 @@ import { useTranslation } from "react-i18next"
 interface SelectListsForArtworkFooterProps {
   selectedListsCount: number
   hasChanges?: boolean
+  isSaving?: boolean
   onSaveClick: () => void
 }
 
 export const SelectListsForArtworkFooter: FC<SelectListsForArtworkFooterProps> = ({
   selectedListsCount,
   hasChanges,
+  isSaving,
   onSaveClick,
 }) => {
   const { t } = useTranslation()
@@ -26,7 +28,7 @@ export const SelectListsForArtworkFooter: FC<SelectListsForArtworkFooterProps> =
           count: selectedListsCount,
         })}
       </Text>
-      <Button onClick={onSaveClick} disabled={!hasChanges}>
+      <Button onClick={onSaveClick} loading={isSaving} disabled={!hasChanges}>
         {t("collectorSaves.selectedListsForArtwork.saveButton")}
       </Button>
     </Flex>
