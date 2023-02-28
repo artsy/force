@@ -11,7 +11,10 @@ interface SaveArtworkToCollectionsButtonProps {
 const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = ({
   artwork,
 }) => {
-  const { setArtworkId } = useManageArtworkForCollectionsContext()
+  const {
+    setArtworkId,
+    isSavedToCollection,
+  } = useManageArtworkForCollectionsContext()
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -21,7 +24,12 @@ const SaveArtworkToCollectionsButton: FC<SaveArtworkToCollectionsButtonProps> = 
     setArtworkId(artwork.internalID)
   }
 
-  return <SaveButtonBase isSaved={true} onClick={handleClick} />
+  return (
+    <SaveButtonBase
+      isSaved={isSavedToCollection ?? !!artwork.isSaved}
+      onClick={handleClick}
+    />
+  )
 }
 
 export const SaveArtworkToCollectionsButtonFragmentContainer = createFragmentContainer(
@@ -30,6 +38,7 @@ export const SaveArtworkToCollectionsButtonFragmentContainer = createFragmentCon
     artwork: graphql`
       fragment SaveArtworkToCollectionsButton_artwork on Artwork {
         internalID
+        isSaved
       }
     `,
   }

@@ -29,6 +29,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   to?: string | null
+  collectionId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -43,11 +44,15 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHoverDetails,
   showSaveButton = true,
   to,
+  collectionId,
   renderSaveButton,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
   const [artworkEntityId, setArtworkEntityId] = useState<string | null>(null)
+  const [isSavedToCollection, setIsSavedToCollection] = useState<
+    boolean | null
+  >(!!collectionId ?? null)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -84,67 +89,74 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     setArtworkEntityId(null)
   }
 
+  const handleSaveCollectionsForArtwork = (collectionIds: string[]) => {
+    if (collectionId) {
+      setIsSavedToCollection(collectionIds.includes(collectionId))
+    }
+  }
+
   return (
-    <>
-      <ManageArtworkForCollections.Provider
-        value={{ artworkId: artworkEntityId, setArtworkId, clearArtworkId }}
+    <ManageArtworkForCollections.Provider
+      value={{
+        artworkId: artworkEntityId,
+        isSavedToCollection,
+        setArtworkId,
+        clearArtworkId,
+      }}
+    >
+      <div
+        data-id={artwork.internalID}
+        data-test="artworkGridItem"
+        {...rest}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        <div
-          data-id={artwork.internalID}
-          data-test="artworkGridItem"
-          {...rest}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+        <Box
+          position="relative"
+          width="100%"
+          bg="black10"
+          style={{
+            paddingBottom: imagePlaceholder,
+          }}
         >
-          <Box
-            position="relative"
-            width="100%"
-            bg="black10"
-            style={{
-              paddingBottom: imagePlaceholder,
-            }}
-          >
-            <LinkContainer
-              artwork={artwork}
-              disableRouterLinking={disableRouterLinking}
-              localImage={localImage}
-              onClick={handleClick}
-              to={to}
-            >
-              <ArtworkGridItemImage
-                artwork={artwork}
-                lazyLoad={lazyLoad}
-                localImage={localImage}
-              />
-            </LinkContainer>
-            <Badge artwork={artwork} />
-          </Box>
-          <Metadata
+          <LinkContainer
             artwork={artwork}
-            isHovered={isHovered}
-            contextModule={contextModule ?? ContextModule.artworkGrid}
-            showSaveButton={showSaveButton}
-            hideSaleInfo={hideSaleInfo}
-            onClick={handleClick}
-            showHighDemandIcon={showHighDemandIcon}
-            showHoverDetails={showHoverDetails}
             disableRouterLinking={disableRouterLinking}
+            localImage={localImage}
+            onClick={handleClick}
             to={to}
-            renderSaveButton={renderSaveButton}
-          />
-        </div>
-      </ManageArtworkForCollections.Provider>
+          >
+            <ArtworkGridItemImage
+              artwork={artwork}
+              lazyLoad={lazyLoad}
+              localImage={localImage}
+            />
+          </LinkContainer>
+          <Badge artwork={artwork} />
+        </Box>
+        <Metadata
+          artwork={artwork}
+          isHovered={isHovered}
+          contextModule={contextModule ?? ContextModule.artworkGrid}
+          showSaveButton={showSaveButton}
+          hideSaleInfo={hideSaleInfo}
+          onClick={handleClick}
+          showHighDemandIcon={showHighDemandIcon}
+          showHoverDetails={showHoverDetails}
+          disableRouterLinking={disableRouterLinking}
+          to={to}
+          renderSaveButton={renderSaveButton}
+        />
+      </div>
 
       {!!artworkEntityId && (
         <SelectListsForArtworkModalQueryRender
           artworkID={artworkEntityId}
           onClose={clearArtworkId}
-          onSave={collectionIds => {
-            console.log("[debug] collectionIds", collectionIds)
-          }}
+          onSave={handleSaveCollectionsForArtwork}
         />
       )}
-    </>
+    </ManageArtworkForCollections.Provider>
   )
 }
 

@@ -34,7 +34,7 @@ type Artworks =
 type Artwork = ExtractNodeType<Artworks>
 type SectionedArtworks = Array<Array<Artwork>>
 
-interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
+export interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   artworks: Artworks
   contextModule?: AuthContextModule
   columnCount?: number | number[]
@@ -53,6 +53,7 @@ interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   user?: User
   emptyStateComponent?: ReactNode | boolean
   to?: (artwork: Artwork) => string | null
+  collectionId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -184,6 +185,7 @@ export class ArtworkGridContainer extends React.Component<
               showSaveButton === undefined ? true : showSaveButton
             }
             to={to?.(artwork)}
+            collectionId={this.props.collectionId}
             renderSaveButton={this.props.renderSaveButton}
           />
         )
@@ -331,7 +333,7 @@ export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
 /**
  * Performs a shallow equal of artworks.
  */
-function areSectionedArtworksEqual(current: any, previous: any) {
+export function areSectionedArtworksEqual(current: any, previous: any) {
   if (Array.isArray(current)) {
     return isEqual(current, previous)
   } else {
