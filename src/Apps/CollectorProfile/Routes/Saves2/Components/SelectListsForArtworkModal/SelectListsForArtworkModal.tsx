@@ -48,8 +48,12 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const savedCollection = me?.defaultSaves
   const nodes = extractNodes(me?.collectionsConnection)
   const collections = savedCollection ? [savedCollection, ...nodes] : nodes
+  const preselectedByDefault = collections.filter(node => node.isSavedArtwork)
+  const preselectedCollectionIDs = preselectedByDefault.map(
+    node => node.internalID
+  )
   const selectedCollectionIds = getSelectedCollectionIds({
-    collections,
+    preselectedCollectionIDs,
     addToCollectionIDs,
     removeFromCollectionIDs,
   })

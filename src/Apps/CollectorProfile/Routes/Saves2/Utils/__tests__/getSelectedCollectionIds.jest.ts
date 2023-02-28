@@ -3,7 +3,7 @@ import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Ut
 describe("getSelectedCollectionIds", () => {
   it("empty array", () => {
     const result = getSelectedCollectionIds({
-      collections: [],
+      preselectedCollectionIDs: [],
       addToCollectionIDs: [],
       removeFromCollectionIDs: [],
     })
@@ -13,7 +13,7 @@ describe("getSelectedCollectionIds", () => {
 
   it("only selected ids", () => {
     const result = getSelectedCollectionIds({
-      collections,
+      preselectedCollectionIDs,
       addToCollectionIDs: [],
       removeFromCollectionIDs: [],
     })
@@ -24,7 +24,7 @@ describe("getSelectedCollectionIds", () => {
 
   it("with `addToCollectionIDs`", () => {
     const result = getSelectedCollectionIds({
-      collections,
+      preselectedCollectionIDs,
       addToCollectionIDs: ["aaa", "eee"],
       removeFromCollectionIDs: [],
     })
@@ -34,7 +34,7 @@ describe("getSelectedCollectionIds", () => {
 
   it("without `removeFromCollectionIDs`", () => {
     const result = getSelectedCollectionIds({
-      collections,
+      preselectedCollectionIDs,
       addToCollectionIDs: [],
       removeFromCollectionIDs: ["aaa", "ddd"],
     })
@@ -44,7 +44,7 @@ describe("getSelectedCollectionIds", () => {
 
   it("with `addToCollectionIDs` and without `removeFromCollectionIDs`", () => {
     const result = getSelectedCollectionIds({
-      collections,
+      preselectedCollectionIDs,
       addToCollectionIDs: ["aaa", "eee"],
       removeFromCollectionIDs: ["ccc", "ddd"],
     })
@@ -53,21 +53,4 @@ describe("getSelectedCollectionIds", () => {
   })
 })
 
-const collections = [
-  {
-    isSavedArtwork: true,
-    internalID: "aaa",
-  },
-  {
-    isSavedArtwork: false,
-    internalID: "bbb",
-  },
-  {
-    isSavedArtwork: true,
-    internalID: "ccc",
-  },
-  {
-    isSavedArtwork: true,
-    internalID: "ddd",
-  },
-]
+const preselectedCollectionIDs = ["aaa", "ccc", "ddd"]
