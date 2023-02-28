@@ -21,6 +21,13 @@ export const useManageArtworkForSavesContext = () => {
   return useContext(ManageArtworkForSaves)
 }
 
+/**
+ *
+ * If `savedListId` was passed, it means the user is on the saves page
+ * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
+ *
+ * https://artsy.net/collector-profile/saves2
+ */
 export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   children,
   savedListId,
