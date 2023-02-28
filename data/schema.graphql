@@ -17445,6 +17445,7 @@ input UpdateOrderedSetMutationInput {
   ownerId: String
   ownerType: String
   published: Boolean
+  unsetOwner: Boolean
 }
 
 type UpdateOrderedSetMutationPayload {
