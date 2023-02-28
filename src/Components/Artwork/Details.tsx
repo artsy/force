@@ -251,6 +251,7 @@ export const Details: React.FC<DetailsProps> = ({
     if (isArtworksListEnabled) {
       return (
         <SaveArtworkToCollectionsButtonFragmentContainer
+          contextModule={contextModule!}
           artwork={rest.artwork}
         />
       )

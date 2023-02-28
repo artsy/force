@@ -1,13 +1,13 @@
-import { useSystemContext } from "System/useSystemContext"
+import { useSystemContext } from "System"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
+import { ModalType } from "Components/Authentication/Types"
 
 type Artwork = {
   internalID: string
   id: string | null
   slug: string | null
-  title: string | null
 }
 
 interface UseSaveArtwork {
@@ -45,6 +45,7 @@ export const useSaveArtwork = ({
         )
 
         onSave?.({
+          // TODO: Pass "saved" or "removed" value
           action: !!saveArtwork?.artwork?.is_saved
             ? "Saved Artwork"
             : "Removed Artwork",
@@ -55,21 +56,35 @@ export const useSaveArtwork = ({
       }
     } else {
       showAuthDialog({
-        mode: "SignUp",
-        options: {
-          title: mode => {
-            const action = mode === "SignUp" ? "Sign up" : "Log in"
-            return `${action} to save artworks`
+        current: {
+          mode: "SignUp",
+          options: {
+            title: mode => {
+              const action = mode === "SignUp" ? "Sign up" : "Log in"
+              return `${action} to save artworks`
+            },
+            afterAuthAction: {
+              action: "save",
+              kind: "artworks",
+              objectId: artwork.internalID,
+            },
           },
-          afterAuthAction: {
-            action: "save",
-            kind: "artworks",
-            objectId: artwork.internalID,
+          analytics: {
+            intent: Intent.saveArtwork,
+            contextModule,
           },
         },
-        analytics: {
-          intent: Intent.saveArtwork,
+        legacy: {
+          afterSignUpAction: {
+            action: "save",
+            kind: "artworks",
+            objectId: artwork.slug!,
+          },
           contextModule,
+          copy: `Sign up to save artworks`,
+          intent: Intent.saveArtwork,
+          mode: ModalType.signup,
+          redirectTo: window.location.href,
         },
       })
     }
