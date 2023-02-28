@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Environment, fetchQuery, GraphQLTaggedNode } from "react-relay"
 import {
   CacheConfig,
   FetchQueryFetchPolicy,
   OperationType,
 } from "relay-runtime"
-import { useSystemContext } from "System/useSystemContext"
+import { useUpdateEffect } from "@artsy/palette"
+import { useSystemContext } from "System/SystemContext"
 
 export const useClientQuery = <T extends OperationType>({
   environment,
@@ -29,10 +30,27 @@ export const useClientQuery = <T extends OperationType>({
   const [error, setError] = useState<Error | null>(null)
   const [loading, setLoading] = useState(true)
 
+  const key = useRef(JSON.stringify(variables))
+  const prevKey = useRef(key.current)
+
+  useUpdateEffect(() => {
+    key.current = JSON.stringify(variables)
+  }, [variables])
+
   useEffect(() => {
+    if (key.current !== prevKey.current) {
+      setData(null)
+      setError(null)
+      setLoading(true)
+
+      prevKey.current = key.current
+    }
+
     if (skip || data || error) return
 
     const exec = async () => {
+      setLoading(true)
+
       try {
         const res = await fetchQuery<T>(
           (environment || relayEnvironment)!,
@@ -54,7 +72,16 @@ export const useClientQuery = <T extends OperationType>({
     // https://github.com/facebook/react/issues/25149
     // Excludes `T`
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, query, relayEnvironment, variables])
+  }, [
+    cacheConfig,
+    data,
+    environment,
+    error,
+    query,
+    relayEnvironment,
+    skip,
+    variables,
+  ])
 
   return { data, error, loading: skip ? false : loading }
 }
