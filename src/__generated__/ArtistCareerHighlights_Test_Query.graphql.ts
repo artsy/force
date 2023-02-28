@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0550157387db808b6221dca0676eaa4c>>
+ * @generated SignedSource<<24b3be7108ad402d6fb6f5174caf392f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -177,7 +177,10 @@ return {
                   "GROUP_SHOW",
                   "COLLECTED",
                   "REVIEWED",
-                  "BIENNIAL"
+                  "BIENNIAL",
+                  "AWARDS",
+                  "PRIVATE_COLLECTIONS",
+                  "RESIDENCIES"
                 ]
               }
             ],
@@ -196,7 +199,7 @@ return {
               },
               (v2/*: any*/)
             ],
-            "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
+            "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\",\"AWARDS\",\"PRIVATE_COLLECTIONS\",\"RESIDENCIES\"])"
           },
           {
             "alias": "artistHighlights",
@@ -332,7 +335,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5a9e72e258ec94bb6ddc211adf08d2d1",
+    "cacheID": "fa53894fbdc9b5ccbd8da2dfc02ed3ea",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,7 +423,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    __typename\n  }\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    __typename\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          __typename\n          id\n        }\n        id\n      }\n    }\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  slug\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n    description\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL, AWARDS, PRIVATE_COLLECTIONS, RESIDENCIES]) {\n    __typename\n  }\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    __typename\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          __typename\n          id\n        }\n        id\n      }\n    }\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  slug\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL, AWARDS, PRIVATE_COLLECTIONS, RESIDENCIES]) {\n    label\n    entities\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n    description\n  }\n}\n"
   }
 };
 })();

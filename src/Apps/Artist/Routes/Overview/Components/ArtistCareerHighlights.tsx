@@ -88,7 +88,16 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ...ArtistInsightBadges_artist
         ...ArtistInsightAchievements_artist
         insightAchievements: insights(
-          kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
+          kind: [
+            SOLO_SHOW
+            GROUP_SHOW
+            COLLECTED
+            REVIEWED
+            BIENNIAL
+            AWARDS
+            PRIVATE_COLLECTIONS
+            RESIDENCIES
+          ]
         ) {
           __typename
         }
