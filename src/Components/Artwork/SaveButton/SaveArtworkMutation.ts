@@ -21,6 +21,12 @@ export const SaveArtwork = (
               slug
               is_saved: isSaved
             }
+            me {
+              id
+              counts {
+                savedArtworks
+              }
+            }
           }
         }
       `,
