@@ -26,7 +26,6 @@ import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
-import { SavesArtworkSaveButton } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesArtworkSaveButton"
 
 interface SavesArtworksGridProps {
   artworks: SavesArtworksGrid_artworks$data
@@ -164,6 +163,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
+          savedListId={collection.internalID}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
@@ -176,14 +176,6 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
                 position: artworkIndex,
                 sort: context?.filters?.sort,
               })
-            )
-          }}
-          renderSaveButton={artworkId => {
-            return (
-              <SavesArtworkSaveButton
-                artworkId={artworkId}
-                collectionId={collection.internalID}
-              />
             )
           }}
         />

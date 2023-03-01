@@ -1,5 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -26,6 +27,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   to?: string | null
+  savedListId?: string
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -40,11 +42,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showHoverDetails,
   showSaveButton = true,
   to,
+  savedListId,
   renderSaveButton,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
-
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const handleClick = () => {
@@ -74,50 +76,53 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     undefined
 
   return (
-    <div
-      data-id={artwork.internalID}
-      data-test="artworkGridItem"
-      {...rest}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Box
-        position="relative"
-        width="100%"
-        bg="black10"
-        style={{
-          paddingBottom: imagePlaceholder,
-        }}
+    <ManageArtworkForSavesProvider savedListId={savedListId}>
+      <div
+        data-id={artwork.internalID}
+        data-test="artworkGridItem"
+        {...rest}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        <LinkContainer
-          artwork={artwork}
-          disableRouterLinking={disableRouterLinking}
-          localImage={localImage}
-          onClick={handleClick}
-          to={to}
+        <Box
+          position="relative"
+          width="100%"
+          bg="black10"
+          style={{
+            paddingBottom: imagePlaceholder,
+          }}
         >
-          <ArtworkGridItemImage
+          <LinkContainer
             artwork={artwork}
-            lazyLoad={lazyLoad}
+            disableRouterLinking={disableRouterLinking}
             localImage={localImage}
-          />
-        </LinkContainer>
-        <Badge artwork={artwork} />
-      </Box>
-      <Metadata
-        artwork={artwork}
-        isHovered={isHovered}
-        contextModule={contextModule ?? ContextModule.artworkGrid}
-        showSaveButton={showSaveButton}
-        hideSaleInfo={hideSaleInfo}
-        onClick={handleClick}
-        showHighDemandIcon={showHighDemandIcon}
-        showHoverDetails={showHoverDetails}
-        disableRouterLinking={disableRouterLinking}
-        to={to}
-        renderSaveButton={renderSaveButton}
-      />
-    </div>
+            onClick={handleClick}
+            to={to}
+          >
+            <ArtworkGridItemImage
+              artwork={artwork}
+              lazyLoad={lazyLoad}
+              localImage={localImage}
+            />
+          </LinkContainer>
+          <Badge artwork={artwork} />
+        </Box>
+        <Metadata
+          artwork={artwork}
+          isHovered={isHovered}
+          contextModule={contextModule ?? ContextModule.artworkGrid}
+          showSaveButton={showSaveButton}
+          hideSaleInfo={hideSaleInfo}
+          onClick={handleClick}
+          showHighDemandIcon={showHighDemandIcon}
+          showHoverDetails={showHoverDetails}
+          disableRouterLinking={disableRouterLinking}
+          to={to}
+          enableSaveButtonForLists
+          renderSaveButton={renderSaveButton}
+        />
+      </div>
+    </ManageArtworkForSavesProvider>
   )
 }
 

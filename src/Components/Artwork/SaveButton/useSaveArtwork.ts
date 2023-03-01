@@ -7,7 +7,6 @@ type Artwork = {
   internalID: string
   id: string | null
   slug: string | null
-  title: string | null
 }
 
 interface UseSaveArtwork {
@@ -45,6 +44,7 @@ export const useSaveArtwork = ({
         )
 
         onSave?.({
+          // TODO: Pass "saved" or "removed" value
           action: !!saveArtwork?.artwork?.is_saved
             ? "Saved Artwork"
             : "Removed Artwork",

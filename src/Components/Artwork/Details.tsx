@@ -2,6 +2,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { isFunction } from "lodash"
@@ -29,6 +30,7 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  enableSaveButtonForLists?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -221,6 +223,7 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
+  enableSaveButtonForLists,
   renderSaveButton,
   ...rest
 }) => {
@@ -233,6 +236,7 @@ export const Details: React.FC<DetailsProps> = ({
   const showDemandIndexHints = useFeatureFlag(
     "show-my-collection-demand-index-hints"
   )
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
 
   const showHighDemandInfo =
     !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
@@ -244,6 +248,15 @@ export const Details: React.FC<DetailsProps> = ({
 
     if (isFunction(renderSaveButton)) {
       return renderSaveButton(rest.artwork.internalID)
+    }
+
+    if (isArtworksListEnabled && enableSaveButtonForLists) {
+      return (
+        <SaveArtworkToListsButtonFragmentContainer
+          contextModule={contextModule!}
+          artwork={rest.artwork}
+        />
+      )
     }
 
     return (
@@ -425,6 +438,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         }
       }
       ...SaveButton_artwork
+      ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
     }
   `,
