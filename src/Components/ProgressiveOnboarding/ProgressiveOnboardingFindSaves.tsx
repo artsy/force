@@ -23,6 +23,7 @@ export const ProgressiveOnboardingFindSaves: FC = ({ children }) => {
 
   return (
     <ProgressiveOnboardingPopover
+      name={PROGRESSIVE_ONBOARDING_FIND_SAVES}
       placement="bottom-end"
       onClose={handleClose}
       ignoreClickOutside={false}

@@ -7,6 +7,8 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ProgressiveOnboardingFollowArtistQuery } from "__generated__/ProgressiveOnboardingFollowArtistQuery.graphql"
 import { ProgressiveOnboardingFollowArtist_me$data } from "__generated__/ProgressiveOnboardingFollowArtist_me.graphql"
 import { useSystemContext } from "System/SystemContext"
+import { PROGRESSIVE_ONBOARDING_FIND_FOLLOWS } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
+import { PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
 
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
 
@@ -22,23 +24,41 @@ export const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowAr
 
   const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
 
+  const isDisplayable =
+    enabled &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST) &&
+    counts.followedArtists === 0
+
   const handleClose = useCallback(() => {
+    // If you dismiss the follow artist  onboarding,
+    // we also want to dismiss any related onboarding tips.
     dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    dismiss(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)
   }, [dismiss])
 
   useEffect(() => {
-    if (counts.followedArtists === 0) return
-    if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)) return
+    // Dismiss the follow artist onboarding once you follow an artist.
+    if (
+      // Ignore 0 counts (which display the onboarding) and 1+ counts (which
+      // already know how to follow artists).
+      counts.followedArtists !== 1 ||
+      // Ignore if the onboarding is already dismissed.
+      isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    ) {
+      return
+    }
 
-    handleClose()
-  }, [handleClose, counts.followedArtists, isDismissed])
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+  }, [counts.followedArtists, dismiss, isDismissed])
 
-  if (!enabled || isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)) {
+  if (!isDisplayable) {
     return <>{children}</>
   }
 
   return (
     <ProgressiveOnboardingPopover
+      name={PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST}
       placement="bottom"
       onClose={handleClose}
       popover={
