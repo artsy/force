@@ -2,7 +2,7 @@ import * as React from "react"
 import { ErrorWithMetadata } from "Utils/errors"
 import createLogger from "Utils/logger"
 import { ErrorPage } from "Components/ErrorPage"
-import { Button, Spacer, ThemeProviderV3 } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { getENV } from "Utils/getENV"
 
@@ -75,44 +75,44 @@ Time: ${new Date().toUTCString()}`
     switch (kind) {
       case "AsyncChunkLoadError": {
         return (
-          <ThemeProviderV3>
-            <LayoutLogoOnly>
-              <ErrorPage
-                code={500}
-                message="Please check your network connection and try again."
-              >
-                <Spacer y={2} />
+          <LayoutLogoOnly>
+            <ErrorPage
+              code="Error Loading Script"
+              message="Please check your network connection and try again."
+            >
+              <Spacer y={2} />
 
-                <Button
-                  size="small"
-                  variant="secondaryBlack"
-                  onClick={handleClick}
-                >
-                  Reload
-                </Button>
-              </ErrorPage>
-            </LayoutLogoOnly>
-          </ThemeProviderV3>
+              <Button
+                size="small"
+                variant="secondaryBlack"
+                onClick={handleClick}
+              >
+                Reload
+              </Button>
+            </ErrorPage>
+          </LayoutLogoOnly>
         )
       }
 
       case "GenericError": {
         return (
-          <ThemeProviderV3>
-            <LayoutLogoOnly>
-              <ErrorPage code={500} message={message} detail={detail}>
-                <Spacer y={2} />
+          <LayoutLogoOnly>
+            <ErrorPage
+              code="Something Went Wrong"
+              message={message}
+              detail={detail}
+            >
+              <Spacer y={2} />
 
-                <Button
-                  size="small"
-                  variant="secondaryBlack"
-                  onClick={handleClick}
-                >
-                  Reload
-                </Button>
-              </ErrorPage>
-            </LayoutLogoOnly>
-          </ThemeProviderV3>
+              <Button
+                size="small"
+                variant="secondaryBlack"
+                onClick={handleClick}
+              >
+                Reload
+              </Button>
+            </ErrorPage>
+          </LayoutLogoOnly>
         )
       }
 
