@@ -10,7 +10,7 @@ import * as React from "react"
 import styled from "styled-components"
 
 interface ErrorPageProps extends BoxProps {
-  code: number
+  code: number | string
   message?: string
   detail?: string
 }
@@ -22,7 +22,9 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
   children,
   ...rest
 }) => {
-  const headline = ERROR_MESSAGES[code] || "Internal Server Error"
+  // We assume string codes are client exceptions
+  const headline =
+    typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
   return (
     <Box {...rest}>
@@ -50,7 +52,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
         </Column>
       </GridColumns>
 
-      {code >= 500 && (detail || message) && (
+      {(code >= 500 || typeof code === "string") && (detail || message) && (
         <>
           <Spacer y={4} />
 
@@ -99,7 +101,7 @@ const Detail = styled(Code).attrs({
   -webkit-overflow-scrolling: touch;
 `
 
-const ERROR_MESSAGES = {
+const ERROR_MESSAGES: Record<number, string> = {
   // 4×× Client Error
   400: "Bad Request",
   401: "Unauthorized",
@@ -119,7 +121,6 @@ const ERROR_MESSAGES = {
   415: "Unsupported Media Type",
   416: "Requested Range Not Satisfiable",
   417: "Expectation Failed",
-  418: "I'm a teapot",
   421: "Misdirected Request",
   422: "Unprocessable Entity",
   423: "Locked",
