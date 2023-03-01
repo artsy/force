@@ -23,7 +23,7 @@ export const useManageArtworkForSavesContext = () => {
 
 /**
  *
- * If `savedListId` was passed, it means the user is on the saves page
+ * If `savedListId` was passed, it means the user is on a saved artwork list page
  * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
  *
  * https://artsy.net/collector-profile/saves2
