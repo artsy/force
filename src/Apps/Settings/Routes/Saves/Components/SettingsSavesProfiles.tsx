@@ -52,7 +52,8 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
   return (
     <>
       <Text variant={["md", "lg"]} mb={4}>
-        Followed Profiles {total > 0 && <Sup color="brand">{total}</Sup>}
+        Followed Galleries & Institutions{" "}
+        {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
       {followedProfiles.length > 0 ? (
