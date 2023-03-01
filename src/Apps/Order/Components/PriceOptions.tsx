@@ -37,7 +37,16 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
+    if (listPrice?.major && !toggle && !customValue) {
+      onChange(listPrice?.major)
+      setSelectedRadio("price-option-0")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listPrice, toggle, customValue])
+
+  useEffect(() => {
     if (!!customValue) onChange(customValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customValue])
 
   useEffect(() => {
@@ -49,6 +58,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle])
 
   const trackClick = (offer: string, amount: number) => {
@@ -143,7 +153,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             label="Different amount"
             error={showError}
             onSelect={() => {
-              customValue && onChange(customValue)
+              onChange(customValue || 0)
               !toggle && setToggle(true)
             }}
           >

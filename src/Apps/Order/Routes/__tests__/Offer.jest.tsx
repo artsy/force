@@ -261,37 +261,13 @@ describe("Offer InitialMutation", () => {
   })
 
   describe("mutation", () => {
-    it("doesn't let the user continue if they haven't clicked any option", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => testOffer,
-      })
-      let page = new OrderAppTestPage(wrapper)
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).not.toHaveBeenCalled()
-      expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
-    })
-
-    it("doesn't let the user continue if they haven't typed anything in", async () => {
+    it("doesn't let the user continue if custom amount is invalid", async () => {
       let wrapper = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
       page.selectCustomAmount()
 
-      expect(page.offerInput.text()).not.toMatch(
-        "Offer amount missing or invalid."
-      )
-      await page.clickSubmit()
-      expect(mockCommitMutation).not.toHaveBeenCalled()
-      expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
-    })
-
-    it("doesn't let the user continue if the offer value is not positive", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => testOffer,
-      })
-      let page = new OrderAppTestPage(wrapper)
       await page.setOfferAmount(0)
 
       expect(page.offerInput.text()).not.toMatch(
@@ -300,6 +276,17 @@ describe("Offer InitialMutation", () => {
       await page.clickSubmit()
       expect(mockCommitMutation).not.toHaveBeenCalled()
       expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
+    })
+
+    it("lets the user continue with list price as offer if they haven't clicked any option", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+      await page.setOfferAmount(16000)
+      await page.clickSubmit()
+
+      expect(mockCommitMutation).toHaveBeenCalled()
     })
 
     it("routes to shipping screen after mutation completes - option", async () => {
