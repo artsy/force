@@ -105,6 +105,15 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "celine.cunha@artsymail.com",
   },
   {
+    specialty: "auctions",
+    name: "Christine Aschwald",
+    firstName: "Christine",
+    jobTitle: "Head of Advisory and Senior Private Sales Director",
+    bio: "SOME BIO",
+    image: TEST_imageAuctions,
+    email: "christine.aschwald@artsy.net",
+  },
+  {
     specialty: "priveteSalesAndAdvisory",
     name: "Alexander Forbes",
     firstName: "Alexander",
@@ -112,15 +121,6 @@ export const SPECIALISTS: SpecialistsData[] = [
     bio: "SOME BIO",
     image: TEST_imagePriveteSalesAndAdvisory,
     email: "alexander.forbes@artsy.net",
-  },
-  {
-    specialty: "priveteSalesAndAdvisory",
-    name: "Christine Aschwald",
-    firstName: "Christine",
-    jobTitle: "Head of Advisory and Senior Private Sales Director",
-    bio: "SOME BIO",
-    image: TEST_imagePriveteSalesAndAdvisory,
-    email: "christine.aschwald@artsy.net",
   },
   {
     specialty: "priveteSalesAndAdvisory",
