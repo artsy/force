@@ -23,6 +23,7 @@ export const ProgressiveOnboardingFindFollows: FC = ({ children }) => {
 
   return (
     <ProgressiveOnboardingPopover
+      name={PROGRESSIVE_ONBOARDING_FIND_FOLLOWS}
       placement="bottom-end"
       onClose={handleClose}
       ignoreClickOutside={false}

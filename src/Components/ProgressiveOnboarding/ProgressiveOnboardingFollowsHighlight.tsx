@@ -8,9 +8,16 @@ export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
 export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
   const { isDismissed, dismiss, enabled } = useProgressiveOnboarding()
 
+  const isDisplayable =
+    // If the feature is enabled
+    enabled &&
+    // And you haven't already dismissed this
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT) &&
+    // And you've previously dismissed the follow artist onboarding
+    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+
   useEffect(() => {
-    if (!enabled) return
-    if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)) return
+    if (!isDisplayable) return
 
     const handleClick = () => {
       dismiss(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)
@@ -21,19 +28,17 @@ export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
     return () => {
       document.removeEventListener("click", handleClick)
     }
-  }, [dismiss, enabled, isDismissed])
+  }, [dismiss, isDisplayable])
 
-  if (
-    !enabled ||
-    // If you've already dismissed this
-    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT) ||
-    // Or you haven't yet dismissed the follow artist step
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
-  ) {
+  if (!isDisplayable) {
     return <>{children}</>
   }
 
   return (
-    <ProgressiveOnboardingHighlight>{children}</ProgressiveOnboardingHighlight>
+    <ProgressiveOnboardingHighlight
+      name={PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT}
+    >
+      {children}
+    </ProgressiveOnboardingHighlight>
   )
 }

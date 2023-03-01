@@ -1,5 +1,12 @@
 import { useDidMount } from "@artsy/palette"
-import { createContext, FC, useContext, useEffect, useState } from "react"
+import {
+  createContext,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { PROGRESSIVE_ONBOARDING_FIND_FOLLOWS } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
 import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { uniq } from "lodash"
@@ -22,10 +29,13 @@ const ProgressiveOnboardingContext = createContext<{
 export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const [dismissed, setDismissed] = useState<ProgressiveOnboardingKey[]>([])
 
-  const dismiss = (key: ProgressiveOnboardingKey) => {
-    __dismiss__(key)
-    setDismissed([...dismissed, key])
-  }
+  const dismiss = useCallback(
+    (key: ProgressiveOnboardingKey) => {
+      __dismiss__(key)
+      setDismissed([...dismissed, key])
+    },
+    [dismissed]
+  )
 
   useEffect(() => {
     setDismissed(get())
@@ -33,9 +43,12 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
 
   const mounted = useDidMount()
 
-  const isDismissed = (key: ProgressiveOnboardingKey) => {
-    return !mounted || dismissed.includes(key)
-  }
+  const isDismissed = useCallback(
+    (key: ProgressiveOnboardingKey) => {
+      return !mounted || dismissed.includes(key)
+    },
+    [dismissed, mounted]
+  )
 
   return (
     <ProgressiveOnboardingContext.Provider

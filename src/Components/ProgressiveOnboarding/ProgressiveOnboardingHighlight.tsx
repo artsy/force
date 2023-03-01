@@ -1,9 +1,19 @@
 import { Box } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboarding/useProgressiveOnboardingTracking"
 import { FC } from "react"
 import styled, { keyframes } from "styled-components"
 
-export const ProgressiveOnboardingHighlight: FC = ({ children }) => {
+interface ProgressiveOnboardingHighlightProps {
+  name: string
+}
+
+export const ProgressiveOnboardingHighlight: FC<ProgressiveOnboardingHighlightProps> = ({
+  children,
+  name,
+}) => {
+  useProgressiveOnboardingTracking({ name })
+
   return (
     <Box position="relative">
       <Highlight />
