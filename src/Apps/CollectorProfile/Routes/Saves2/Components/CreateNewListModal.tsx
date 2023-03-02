@@ -21,9 +21,14 @@ export interface CreateNewListValues {
   name: string
 }
 
+export interface NewAddedList {
+  id: string
+  name: string
+}
+
 interface CreateNewListModalProps {
   onClose: () => void
-  onComplete: () => void
+  onComplete: (data: NewAddedList) => void
 }
 
 interface CreateNewListModalContainerProps extends CreateNewListModalProps {
@@ -47,8 +52,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       mutation CreateNewListModalMutation($input: createCollectionInput!) {
         createCollection(input: $input) {
           responseOrError {
-            __typename
-
             ... on CreateCollectionSuccess {
               collection {
                 internalID
@@ -75,20 +78,20 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     }
 
     try {
-      await submitMutation({
+      const { createCollection } = await submitMutation({
         variables: { input: { name: values.name } },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
+          const errorMessage = result?.mutationError?.message
 
-          if (result?.__typename === "CreateCollectionFailure") {
-            return result.mutationError
-          }
-
-          return false
+          return !!errorMessage
         },
       })
 
-      onComplete()
+      onComplete({
+        id: createCollection?.responseOrError?.collection?.internalID!,
+        name: values.name,
+      })
     } catch (error) {
       logger.error(error)
       helpers.setFieldError(
