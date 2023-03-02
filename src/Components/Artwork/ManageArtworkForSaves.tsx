@@ -1,3 +1,4 @@
+import { CreateNewListModal } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { createContext, Dispatch, FC, useContext, useReducer } from "react"
 
@@ -93,10 +94,31 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     onSave,
   }
 
+  const closeCreateNewListModal = () => {
+    dispatch({
+      type: "SET_MODAL_KEY",
+      payload: ModalKey.SelectListsForArtwork,
+    })
+  }
+
+  const renderModalByKey = () => {
+    if (state.currentModalKey === ModalKey.CreateNewList) {
+      return (
+        <CreateNewListModal
+          onClose={closeCreateNewListModal}
+          // TODO: Save created list data in local state
+          onComplete={closeCreateNewListModal}
+        />
+      )
+    }
+
+    return <SelectListsForArtworkModalQueryRender />
+  }
+
   return (
     <ManageArtworkForSaves.Provider value={value}>
       {children}
-      {!!state.artworkId && <SelectListsForArtworkModalQueryRender />}
+      {!!state.artworkId && renderModalByKey()}
     </ManageArtworkForSaves.Provider>
   )
 }
