@@ -7,14 +7,8 @@ import {
   useEffect,
   useState,
 } from "react"
-import { PROGRESSIVE_ONBOARDING_FIND_FOLLOWS } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
-import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { uniq } from "lodash"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { PROGRESSIVE_ONBOARDING_SAVE_ARTWORK } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
-import { PROGRESSIVE_ONBOARDING_FIND_SAVES } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
-import { PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
-import { PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 
 const ProgressiveOnboardingContext = createContext<{
   dismissed: ProgressiveOnboardingKey[]
@@ -77,6 +71,13 @@ export const useProgressiveOnboarding = () => {
 }
 
 const LOCAL_STORAGE_KEY = "progressive-onboarding-dismissed"
+
+export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
+export const PROGRESSIVE_ONBOARDING_FIND_FOLLOWS = "find-follows"
+export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
+export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
+export const PROGRESSIVE_ONBOARDING_FIND_SAVES = "find-saves"
+export const PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT = "saves-highlight"
 
 const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,

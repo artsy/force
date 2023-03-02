@@ -1,9 +1,10 @@
-import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import {
+  PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
+  useProgressiveOnboarding,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { FC, useEffect } from "react"
-
-export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
 
 export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
   const { isDismissed, dismiss, enabled } = useProgressiveOnboarding()

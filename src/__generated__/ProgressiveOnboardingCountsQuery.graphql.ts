@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b82c1eeaa3b47737ffd4b11a8e326b31>>
+ * @generated SignedSource<<f79a79ac570dae1644ffda27c9429262>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ProgressiveOnboardingSaveArtworkQuery$variables = {};
-export type ProgressiveOnboardingSaveArtworkQuery$data = {
+export type ProgressiveOnboardingCountsQuery$variables = {};
+export type ProgressiveOnboardingCountsQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"ProgressiveOnboardingSaveArtwork_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"ProgressiveOnboardingCounts_me">;
   } | null;
 };
-export type ProgressiveOnboardingSaveArtworkQuery = {
-  response: ProgressiveOnboardingSaveArtworkQuery$data;
-  variables: ProgressiveOnboardingSaveArtworkQuery$variables;
+export type ProgressiveOnboardingCountsQuery = {
+  response: ProgressiveOnboardingCountsQuery$data;
+  variables: ProgressiveOnboardingCountsQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ProgressiveOnboardingSaveArtworkQuery",
+    "name": "ProgressiveOnboardingCountsQuery",
     "selections": [
       {
         "alias": null,
@@ -39,7 +39,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ProgressiveOnboardingSaveArtwork_me"
+            "name": "ProgressiveOnboardingCounts_me"
           }
         ],
         "storageKey": null
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ProgressiveOnboardingSaveArtworkQuery",
+    "name": "ProgressiveOnboardingCountsQuery",
     "selections": [
       {
         "alias": null,
@@ -70,6 +70,13 @@ const node: ConcreteRequest = {
             "name": "counts",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "followedArtists",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -93,15 +100,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "1786a7a4823be2f01bd460132c83e81f",
+    "cacheID": "ba45a08339fdfd30acfa652b7362818f",
     "id": null,
     "metadata": {},
-    "name": "ProgressiveOnboardingSaveArtworkQuery",
+    "name": "ProgressiveOnboardingCountsQuery",
     "operationKind": "query",
-    "text": "query ProgressiveOnboardingSaveArtworkQuery {\n  me {\n    ...ProgressiveOnboardingSaveArtwork_me\n    id\n  }\n}\n\nfragment ProgressiveOnboardingSaveArtwork_me on Me {\n  counts {\n    savedArtworks\n  }\n}\n"
+    "text": "query ProgressiveOnboardingCountsQuery {\n  me {\n    ...ProgressiveOnboardingCounts_me\n    id\n  }\n}\n\nfragment ProgressiveOnboardingCounts_me on Me {\n  counts {\n    followedArtists\n    savedArtworks\n  }\n}\n"
   }
 };
 
-(node as any).hash = "ab50bc14b2d66c95bbecb1497681671a";
+(node as any).hash = "030f410defdea35307c0f1ace885f9b8";
 
 export default node;

@@ -1,23 +1,41 @@
 import { Text } from "@artsy/palette"
-import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import {
+  PROGRESSIVE_ONBOARDING_FIND_SAVES,
+  PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
+  useProgressiveOnboarding,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import {
+  ProgressiveOnboardingCountsQueryRenderer,
+  WithProgressiveOnboardingCountsProps,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { PROGRESSIVE_ONBOARDING_SAVE_ARTWORK } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { FC } from "react"
 
-export const PROGRESSIVE_ONBOARDING_FIND_SAVES = "find-saves"
+interface ProgressiveOnboardingFindSavesProps
+  extends WithProgressiveOnboardingCountsProps {}
 
-export const ProgressiveOnboardingFindSaves: FC = ({ children }) => {
+const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = ({
+  children,
+  counts,
+}) => {
   const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+
+  const isDisplayable =
+    enabled &&
+    counts.initialSavedArtworks === 0 &&
+    counts.savedArtworks > 0 &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
 
   const handleClose = () => {
     dismiss(PROGRESSIVE_ONBOARDING_FIND_SAVES)
   }
 
-  if (
-    !enabled ||
-    isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES) ||
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
-  ) {
+  const handleDismiss = () => {
+    handleClose()
+    dismiss(PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT)
+  }
+
+  if (!isDisplayable) {
     return <>{children}</>
   }
 
@@ -26,10 +44,23 @@ export const ProgressiveOnboardingFindSaves: FC = ({ children }) => {
       name={PROGRESSIVE_ONBOARDING_FIND_SAVES}
       placement="bottom-end"
       onClose={handleClose}
+      onDismiss={handleDismiss}
       ignoreClickOutside={false}
       popover={<Text variant="xs">Find and edit all your Saves here.</Text>}
     >
       {children}
     </ProgressiveOnboardingPopover>
+  )
+}
+
+export const ProgressiveOnboardingFindSavesQueryRenderer: FC = ({
+  children,
+}) => {
+  return (
+    <ProgressiveOnboardingCountsQueryRenderer
+      Component={ProgressiveOnboardingFindSaves}
+    >
+      {children}
+    </ProgressiveOnboardingCountsQueryRenderer>
   )
 }

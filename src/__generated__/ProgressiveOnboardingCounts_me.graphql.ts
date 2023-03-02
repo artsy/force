@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03b27a7c54e88a6dc7e3277fb2808603>>
+ * @generated SignedSource<<07d1a7d32a9fe0e7b58f9408f7d53074>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,22 +10,23 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ProgressiveOnboardingSaveArtwork_me$data = {
+export type ProgressiveOnboardingCounts_me$data = {
   readonly counts: {
+    readonly followedArtists: number;
     readonly savedArtworks: number;
   } | null;
-  readonly " $fragmentType": "ProgressiveOnboardingSaveArtwork_me";
+  readonly " $fragmentType": "ProgressiveOnboardingCounts_me";
 };
-export type ProgressiveOnboardingSaveArtwork_me$key = {
-  readonly " $data"?: ProgressiveOnboardingSaveArtwork_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ProgressiveOnboardingSaveArtwork_me">;
+export type ProgressiveOnboardingCounts_me$key = {
+  readonly " $data"?: ProgressiveOnboardingCounts_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ProgressiveOnboardingCounts_me">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ProgressiveOnboardingSaveArtwork_me",
+  "name": "ProgressiveOnboardingCounts_me",
   "selections": [
     {
       "alias": null,
@@ -35,6 +36,13 @@ const node: ReaderFragment = {
       "name": "counts",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "followedArtists",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -50,6 +58,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "36595ca25ac4f19164a046e664f0e50f";
+(node as any).hash = "ca9be3da6ba2b08cd8e2d31bbd57f171";
 
 export default node;
