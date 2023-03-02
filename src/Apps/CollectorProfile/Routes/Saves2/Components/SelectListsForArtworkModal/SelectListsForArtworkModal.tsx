@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react"
-import { Spacer, Join, ModalDialog, Box, useToasts } from "@artsy/palette"
-import { SelectListItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListItem"
+import { ModalDialog, useToasts } from "@artsy/palette"
 import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -9,14 +8,12 @@ import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsFor
 import { SelectListsForArtworkModal_artwork$data } from "__generated__/SelectListsForArtworkModal_artwork.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  SelectListsForArtworkHeaderPlaceholder,
-  SelectListsPlaceholder,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
+import { SelectListsForArtworkHeaderPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
 import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
+import { SelectListsForArtworkContent } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkContent"
 
 const logger = createLogger("SelectListsForArtworkModal")
 
@@ -144,29 +141,6 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     return item.isSavedArtwork
   }
 
-  const renderContent = () => {
-    // Query is in progress
-    if (me === null) {
-      return <SelectListsPlaceholder />
-    }
-
-    return (
-      <Box role="listbox">
-        <Join separator={<Spacer y={1} />}>
-          {collections.map(item => {
-            return (
-              <SelectListItemFragmentContainer
-                item={item}
-                isSelected={checkIsItemSelected(item)}
-                onClick={() => handleItemPress(item)}
-              />
-            )
-          })}
-        </Join>
-      </Box>
-    )
-  }
-
   return (
     <ModalDialog
       title="Select lists for this artwork"
@@ -196,7 +170,12 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         />
       }
     >
-      {renderContent()}
+      <SelectListsForArtworkContent
+        isFetching={me === null}
+        collections={collections}
+        checkIsItemSelected={checkIsItemSelected}
+        onItemPress={handleItemPress}
+      />
     </ModalDialog>
   )
 }
