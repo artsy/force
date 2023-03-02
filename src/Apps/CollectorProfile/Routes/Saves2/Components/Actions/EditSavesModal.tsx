@@ -5,6 +5,7 @@ import {
   ModalDialog,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
@@ -12,6 +13,8 @@ import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_colle
 import { Form, Formik, FormikHelpers } from "formik"
 import * as Yup from "yup"
 import { pick } from "lodash"
+import { useUpdateCollection } from "./Mutations/useUpdateCollection"
+import createLogger from "Utils/logger"
 
 interface EditSavesModalProps {
   collection: SavesArtworks_collection$data
@@ -23,6 +26,8 @@ interface FormikValues {
 }
 
 const MAX_NAME_LENGTH = 40
+
+const logger = createLogger("EditSavesModal")
 
 export const EditSavesModal: React.FC<EditSavesModalProps> = ({
   collection,
@@ -38,16 +43,45 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
       .max(MAX_NAME_LENGTH),
   })
 
-  const handleSubmit = (
-    values: FormikValues,
-    helpers: FormikHelpers<FormikValues>
+  const { submitMutation } = useUpdateCollection()
+
+  const { sendToast } = useToasts()
+
+  const handleSubmit = async (
+    formikValues: FormikValues,
+    formikHelpers: FormikHelpers<FormikValues>
   ) => {
-    // TODO: replace placeholder with real mutation
-    setTimeout(() => {
-      alert("TK " + JSON.stringify(values))
-      helpers.setSubmitting(false)
+    try {
+      await submitMutation({
+        variables: {
+          input: {
+            id: collection.internalID,
+            name: formikValues.name,
+          },
+        },
+        rejectIf: res => {
+          const result = res.updateCollection?.responseOrError
+
+          return result?.__typename === "UpdateCollectionFailure"
+            ? result.mutationError
+            : false
+        },
+      })
+
+      sendToast({
+        variant: "success",
+        message: t("collectorSaves.editListModal.success"),
+      })
+    } catch (error) {
+      logger.error(error)
+      sendToast({
+        variant: "error",
+        message: error.message ?? t("common.errors.somethingWentWrong"),
+      })
+    } finally {
+      formikHelpers.setSubmitting(false)
       setIsEditModalOpen(false)
-    }, 500)
+    }
   }
 
   return (
