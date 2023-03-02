@@ -19,16 +19,15 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 }) => {
   const tracking = useTracking()
   const { sendToast } = useToasts()
-  const {
-    setArtworkId,
-    savedListId,
-    isSavedToList,
-  } = useManageArtworkForSavesContext()
+  const { state, savedListId, dispatch } = useManageArtworkForSavesContext()
 
   const isSaved = !!artwork.is_saved
 
   const openManageArtworkForSavesModal = () => {
-    setArtworkId(artwork.internalID)
+    dispatch({
+      type: "SET_ARTWORK_ID",
+      payload: artwork.internalID,
+    })
   }
 
   const showToastByAction = (action: string) => {
@@ -81,7 +80,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 
   return (
     <SaveButtonBase
-      isSaved={savedListId ? isSavedToList : isSaved}
+      isSaved={savedListId ? state.isSavedToList : isSaved}
       onClick={handleClick}
     />
   )
