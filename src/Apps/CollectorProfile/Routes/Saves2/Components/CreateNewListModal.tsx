@@ -22,9 +22,12 @@ export interface CreateNewListValues {
 }
 
 interface CreateNewListModalProps {
-  visible: boolean
   onClose: () => void
   onComplete: () => void
+}
+
+interface CreateNewListModalContainerProps extends CreateNewListModalProps {
+  visible: boolean
 }
 
 const logger = createLogger(
@@ -33,7 +36,7 @@ const logger = createLogger(
 
 const MAX_NAME_LENGTH = 40
 
-const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
+export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onClose,
   onComplete,
 }) => {
@@ -189,7 +192,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<CreateNewListModalProps> = props => {
+export const CreateNewListModalContainer: React.FC<CreateNewListModalContainerProps> = props => {
   const { visible } = props
 
   if (!visible) return null
