@@ -1,4 +1,7 @@
-import { CreateNewListModal } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
+import {
+  CreateNewListModal,
+  NewAddedList,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { createContext, Dispatch, FC, useContext, useReducer } from "react"
 
@@ -15,6 +18,7 @@ type State = {
   removingListIDs: string[]
   preselectedListIDs: string[]
   selectedIds: string[]
+  recentlyAddedList: NewAddedList | null
 }
 
 export enum ListKey {
@@ -27,6 +31,7 @@ type Action =
   | { type: "SET_ARTWORK_ID"; payload: string | null }
   | { type: "SET_PRESELECTED_LIST_IDS"; payload: string[] }
   | { type: "SET_IS_SAVED_TO_LIST"; payload: boolean }
+  | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
   | {
       type: "ADD_OR_REMOVE_LIST_ID"
       payload: { listKey: ListKey; listID: string }
@@ -52,6 +57,7 @@ export const INITIAL_STATE: State = {
   removingListIDs: [],
   preselectedListIDs: [],
   selectedIds: [],
+  recentlyAddedList: null,
 }
 
 export const ManageArtworkForSaves = createContext<
@@ -94,20 +100,34 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     onSave,
   }
 
-  const closeCreateNewListModal = () => {
+  const openSelectListsForArtworkModal = () => {
     dispatch({
       type: "SET_MODAL_KEY",
       payload: ModalKey.SelectListsForArtwork,
     })
   }
 
+  const onNewListCreated = (payload: NewAddedList) => {
+    dispatch({
+      type: "SET_RECENTLY_ADDED_LIST",
+      payload,
+    })
+    dispatch({
+      type: "ADD_OR_REMOVE_LIST_ID",
+      payload: {
+        listKey: ListKey.AddingListIDs,
+        listID: payload.id,
+      },
+    })
+    openSelectListsForArtworkModal()
+  }
+
   const renderModalByKey = () => {
     if (state.currentModalKey === ModalKey.CreateNewList) {
       return (
         <CreateNewListModal
-          onClose={closeCreateNewListModal}
-          // TODO: Save created list data in local state
-          onComplete={closeCreateNewListModal}
+          onClose={openSelectListsForArtworkModal}
+          onComplete={onNewListCreated}
         />
       )
     }
@@ -159,6 +179,11 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         artworkId: action.payload,
+      }
+    case "SET_RECENTLY_ADDED_LIST":
+      return {
+        ...state,
+        recentlyAddedList: action.payload,
       }
     default:
       return state

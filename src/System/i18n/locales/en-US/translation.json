@@ -129,6 +129,13 @@
       "changesSaved": "Changes saved"
     },
     "selectedListsForArtwork": {
+      "header": {
+        "createNewListButton": "Create New List",
+        "recentlyAddedList": {
+          "title": "List created",
+          "message": "Artwork has been added to \"{{name}}\""
+        }
+      },
       "listsCount_one": "{{count}} list selected",
       "listsCount_other": "{{count}} lists selected",
       "saveButton": "Save"
