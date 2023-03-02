@@ -143,6 +143,17 @@
       "cancel": "Cancel",
       "delete": "Yes, Delete List",
       "success": "Changes saved"
+    },
+    "editListModal": {
+      "title": "Edit your list",
+      "fields": {
+        "name": {
+          "label": "List Name",
+          "required": "Name is required"
+        }
+      },
+      "back": "Back",
+      "save": "Save Changes"
     }
   },
   "common": {

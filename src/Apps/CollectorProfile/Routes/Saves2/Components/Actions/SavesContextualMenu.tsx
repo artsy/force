@@ -7,6 +7,7 @@ import {
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 import { DeleteSavesModal } from "./DeleteSavesModal"
 import { useTranslation } from "react-i18next"
+import { EditSavesModal } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
 
 interface Props {
   collection: SavesArtworks_collection$data
@@ -16,9 +17,10 @@ export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
   const { t } = useTranslation()
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
   const handleEditList = () => {
-    alert("Unimplemented — see FX-4552")
+    setIsEditModalOpen(true)
   }
 
   const handleDeleteList = () => {
@@ -31,6 +33,13 @@ export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
         <DeleteSavesModal
           collection={collection}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
+
+      {isEditModalOpen && (
+        <EditSavesModal
+          collection={collection}
+          setIsEditModalOpen={setIsEditModalOpen}
         />
       )}
 
