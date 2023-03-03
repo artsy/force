@@ -3,13 +3,27 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { SelectListsForArtworkModal_Test_Query } from "__generated__/SelectListsForArtworkModal_Test_Query.graphql"
 import { SelectListsForArtworkModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL<
   SelectListsForArtworkModal_Test_Query
 >({
-  Component: SelectListsForArtworkModalFragmentContainer,
+  Component: props => {
+    if (!props.artwork || !props.me) {
+      return null
+    }
+
+    return (
+      <ManageArtworkForSavesProvider>
+        <SelectListsForArtworkModalFragmentContainer
+          me={props.me}
+          artwork={props.artwork}
+        />
+      </ManageArtworkForSavesProvider>
+    )
+  },
   query: graphql`
     query SelectListsForArtworkModal_Test_Query @relay_test_operation {
       me {
