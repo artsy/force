@@ -29,6 +29,7 @@ export interface NewAddedList {
 interface CreateNewListModalProps {
   onClose: () => void
   onComplete: (data: NewAddedList) => void
+  onBackClick?: () => void
 }
 
 interface CreateNewListModalContainerProps extends CreateNewListModalProps {
@@ -44,6 +45,7 @@ const MAX_NAME_LENGTH = 40
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onClose,
   onComplete,
+  onBackClick,
 }) => {
   const { t } = useTranslation()
   const { relayEnvironment } = useSystemContext()
@@ -127,11 +129,20 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
               <>
                 {/* Desktop view */}
                 <Media greaterThanOrEqual="sm">
-                  <Flex justifyContent="flex-end">
+                  <Flex
+                    justifyContent={onBackClick ? "space-between" : "flex-end"}
+                  >
+                    {!!onBackClick && (
+                      <Button variant="secondaryBlack" onClick={onBackClick}>
+                        {t("collectorSaves.createNewListModal.back")}
+                      </Button>
+                    )}
+
                     <Button
                       disabled={isCreateButtonDisabled}
                       loading={isSubmitting}
                       onClick={() => handleSubmit()}
+                      alignSelf="flex-end"
                     >
                       {t("collectorSaves.createNewListModal.createListButton")}
                     </Button>
