@@ -1,7 +1,5 @@
-import {
-  CreateNewListModal,
-  NewAddedList,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
+import { NewAddedList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
+import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { createContext, Dispatch, FC, useContext, useReducer } from "react"
 
@@ -109,37 +107,9 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     onSave,
   }
 
-  const openSelectListsForArtworkModal = () => {
-    dispatch({
-      type: "SET_MODAL_KEY",
-      payload: ModalKey.SelectListsForArtwork,
-    })
-  }
-
-  const onNewListCreated = (payload: NewAddedList) => {
-    dispatch({
-      type: "SET_RECENTLY_ADDED_LIST",
-      payload,
-    })
-    dispatch({
-      type: "ADD_OR_REMOVE_LIST_ID",
-      payload: {
-        listKey: ListKey.AddingListIDs,
-        listID: payload.id,
-      },
-    })
-    openSelectListsForArtworkModal()
-  }
-
   const renderModalByKey = () => {
     if (state.currentModalKey === ModalKey.CreateNewList) {
-      return (
-        <CreateNewListModal
-          onClose={openSelectListsForArtworkModal}
-          onBackClick={openSelectListsForArtworkModal}
-          onComplete={onNewListCreated}
-        />
-      )
+      return <CreateNewListModalForManageArtwork />
     }
 
     return <SelectListsForArtworkModalQueryRender />
