@@ -6,21 +6,13 @@ import {
 } from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SelectListsForArtworkHeader_artwork$data } from "__generated__/SelectListsForArtworkHeader_artwork.graphql"
 
-interface SelectListsForArtworkHeaderProps {
-  artwork: SelectListsForArtworkHeader_artwork$data
-}
-
-const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
-  artwork,
-}) => {
+export const SelectListsForArtworkHeader: FC = () => {
   const { t } = useTranslation("translation", {
     keyPrefix: "collectorSaves.selectedListsForArtwork.header",
   })
   const { state, dispatch } = useManageArtworkForSavesContext()
-  const imageURL = artwork.image?.url ?? null
+  const artwork = state.artwork!
 
   const openCreateListModal = () => {
     dispatch({
@@ -37,11 +29,9 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
         mt={[-2, 0]}
       >
         <Flex flex={1} flexDirection="row" alignItems="center">
-          <SelectListsForArtworkImage size={50} url={imageURL} />
+          <SelectListsForArtworkImage size={50} url={artwork.imageURL} />
           <Spacer x={1} />
-          <Text lineClamp={2}>
-            {artwork.title}, {artwork.date}
-          </Text>
+          <Text lineClamp={2}>{artwork.title}</Text>
         </Flex>
 
         <Spacer x={[0, 1]} y={[2, 0]} />
@@ -65,18 +55,3 @@ const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
     </>
   )
 }
-
-export const SelectListsForArtworkHeaderFragmentContainer = createFragmentContainer(
-  SelectListsForArtworkHeader,
-  {
-    artwork: graphql`
-      fragment SelectListsForArtworkHeader_artwork on Artwork {
-        title
-        date
-        image {
-          url(version: "square")
-        }
-      }
-    `,
-  }
-)

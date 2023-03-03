@@ -25,8 +25,12 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 
   const openManageArtworkForSavesModal = () => {
     dispatch({
-      type: "SET_ARTWORK_ID",
-      payload: artwork.internalID,
+      type: "SET_ARTWORK",
+      payload: {
+        id: artwork.internalID,
+        title: `${artwork.title}, ${artwork.date}`,
+        imageURL: artwork.preview?.url ?? null,
+      },
     })
   }
 
@@ -95,6 +99,11 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         internalID
         is_saved: isSaved
         slug
+        title
+        date
+        preview: image {
+          url(version: "square")
+        }
       }
     `,
   }

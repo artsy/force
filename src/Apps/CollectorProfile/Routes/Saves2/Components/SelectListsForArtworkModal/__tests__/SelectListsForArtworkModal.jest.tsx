@@ -11,16 +11,13 @@ const { renderWithRelay } = setupTestWrapperTL<
   SelectListsForArtworkModal_Test_Query
 >({
   Component: props => {
-    if (!props.artwork || !props.me) {
+    if (!props.me) {
       return null
     }
 
     return (
-      <ManageArtworkForSavesProvider>
-        <SelectListsForArtworkModalFragmentContainer
-          me={props.me}
-          artwork={props.artwork}
-        />
+      <ManageArtworkForSavesProvider artwork={artwork}>
+        <SelectListsForArtworkModalFragmentContainer me={props.me} />
       </ManageArtworkForSavesProvider>
     )
   },
@@ -28,9 +25,6 @@ const { renderWithRelay } = setupTestWrapperTL<
     query SelectListsForArtworkModal_Test_Query @relay_test_operation {
       me {
         ...SelectListsForArtworkModal_me @arguments(artworkID: "artworkID")
-      }
-      artwork(id: "artworkID") {
-        ...SelectListsForArtworkModal_artwork
       }
     }
   `,
@@ -217,8 +211,9 @@ const waitForModalToBePresented = () => {
 }
 
 const artwork = {
-  title: "Artwork Title",
-  date: "2023",
+  id: "artwork-id",
+  title: "Artwork Title, 2023",
+  imageURL: null,
 }
 
 const collectionOne = {

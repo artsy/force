@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87c8db9312f784f0eed072adcd9e99d7>>
+ * @generated SignedSource<<12a192a517cb8043d0b1cbe71ec9c36e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,6 +101,12 @@ v11 = {
   "type": "String"
 },
 v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -479,6 +485,30 @@ return {
                         "storageKey": null
                       },
                       {
+                        "alias": "preview",
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": "square"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:\"square\")"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
                         "alias": null,
                         "args": null,
                         "concreteType": "AttributionClass",
@@ -573,7 +603,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c9e24bea9eacd5a59ce6e9c9b7094f08",
+    "cacheID": "43c6331a7f0dad60fb0f8d797982185a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -641,15 +671,10 @@ return {
         "viewer.trendingLotsConnection.edges.node.date": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.href": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.id": (v9/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "viewer.trendingLotsConnection.edges.node.image.height": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.height": (v13/*: any*/),
         "viewer.trendingLotsConnection.edges.node.image.src": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.image.width": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.image.width": (v13/*: any*/),
         "viewer.trendingLotsConnection.edges.node.internalID": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.is_saved": (v10/*: any*/),
         "viewer.trendingLotsConnection.edges.node.marketPriceInsights": {
@@ -687,15 +712,17 @@ return {
         "viewer.trendingLotsConnection.edges.node.partner.href": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.partner.id": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.partner.name": (v11/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.preview": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.preview.url": (v11/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "viewer.trendingLotsConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v13/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale.endAt": (v11/*: any*/),
-        "viewer.trendingLotsConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v12/*: any*/),
+        "viewer.trendingLotsConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v13/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale.id": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale.isClosed": (v10/*: any*/),
         "viewer.trendingLotsConnection.edges.node.sale.is_auction": (v10/*: any*/),
@@ -736,7 +763,7 @@ return {
     },
     "name": "TrendingLotsRail_Test_Query",
     "operationKind": "query",
-    "text": "query TrendingLotsRail_Test_Query {\n  viewer {\n    ...TrendingLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        sale {\n          isClosed\n          id\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query TrendingLotsRail_Test_Query {\n  viewer {\n    ...TrendingLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        sale {\n          isClosed\n          id\n        }\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -12,7 +12,7 @@ export enum ModalKey {
 
 type State = {
   currentModalKey: ModalKey
-  artworkId: string | null
+  artwork: ArtworkEntity | null
   isSavedToList: boolean
   addingListIDs: string[]
   removingListIDs: string[]
@@ -28,14 +28,20 @@ export enum ListKey {
 
 type Action =
   | { type: "SET_MODAL_KEY"; payload: ModalKey }
-  | { type: "SET_ARTWORK_ID"; payload: string | null }
   | { type: "SET_PRESELECTED_LIST_IDS"; payload: string[] }
   | { type: "SET_IS_SAVED_TO_LIST"; payload: boolean }
   | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
+  | { type: "SET_ARTWORK"; payload: ArtworkEntity | null }
   | {
       type: "ADD_OR_REMOVE_LIST_ID"
       payload: { listKey: ListKey; listID: string }
     }
+
+interface ArtworkEntity {
+  id: string
+  title: string
+  imageURL: string | null
+}
 
 export interface ManageArtworkForSavesContextState {
   state: State
@@ -46,11 +52,12 @@ export interface ManageArtworkForSavesContextState {
 
 interface ProviderProps {
   savedListId?: string
+  artwork?: ArtworkEntity
 }
 
 export const INITIAL_STATE: State = {
   currentModalKey: ModalKey.SelectListsForArtwork,
-  artworkId: null,
+  artwork: null,
   // TODO: Dynamicaly pass it
   isSavedToList: false,
   addingListIDs: [],
@@ -78,9 +85,11 @@ export const useManageArtworkForSavesContext = () => {
 export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   children,
   savedListId,
+  artwork,
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
+    artwork: artwork ?? null,
     isSavedToList: !!savedListId,
   })
 
@@ -138,7 +147,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   return (
     <ManageArtworkForSaves.Provider value={value}>
       {children}
-      {!!state.artworkId && renderModalByKey()}
+      {!!state.artwork && renderModalByKey()}
     </ManageArtworkForSaves.Provider>
   )
 }
@@ -175,15 +184,15 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         isSavedToList: action.payload,
       }
-    case "SET_ARTWORK_ID":
-      return {
-        ...state,
-        artworkId: action.payload,
-      }
     case "SET_RECENTLY_ADDED_LIST":
       return {
         ...state,
         recentlyAddedList: action.payload,
+      }
+    case "SET_ARTWORK":
+      return {
+        ...state,
+        artwork: action.payload,
       }
     default:
       return state
