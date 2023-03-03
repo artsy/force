@@ -56,7 +56,6 @@ interface ProviderProps {
 export const INITIAL_STATE: State = {
   currentModalKey: ModalKey.SelectListsForArtwork,
   artwork: null,
-  // TODO: Dynamicaly pass it
   isSavedToList: false,
   addingListIDs: [],
   removingListIDs: [],
