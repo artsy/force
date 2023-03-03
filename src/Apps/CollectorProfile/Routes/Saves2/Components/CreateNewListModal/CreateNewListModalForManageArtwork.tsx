@@ -10,7 +10,8 @@ import {
 import { FC } from "react"
 
 export const CreateNewListModalForManageArtwork: FC = () => {
-  const { dispatch } = useManageArtworkForSavesContext()
+  const { state, dispatch } = useManageArtworkForSavesContext()
+  const artwork = state.artwork!
 
   const openSelectListsForArtworkModal = () => {
     dispatch({
@@ -39,6 +40,10 @@ export const CreateNewListModalForManageArtwork: FC = () => {
       onClose={openSelectListsForArtworkModal}
       onBackClick={openSelectListsForArtworkModal}
       onComplete={onNewListCreated}
+      artwork={{
+        title: artwork.title,
+        imageURL: artwork.imageURL,
+      }}
     />
   )
 }
