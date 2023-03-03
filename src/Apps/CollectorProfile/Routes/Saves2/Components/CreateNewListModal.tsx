@@ -24,7 +24,7 @@ export interface CreateNewListValues {
 interface CreateNewListModalProps {
   visible: boolean
   onClose: () => void
-  onComplete: () => void
+  onComplete: (listName: string) => void
 }
 
 const logger = createLogger(
@@ -49,6 +49,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             ... on CreateCollectionSuccess {
               collection {
                 internalID
+                name
               }
             }
 
@@ -72,10 +73,12 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     }
 
     try {
+      let result
+
       await submitMutation({
         variables: { input: { name: values.name } },
         rejectIf: response => {
-          const result = response.createCollection?.responseOrError
+          result = response.createCollection?.responseOrError
 
           if (result?.__typename === "CreateCollectionFailure") {
             return result.mutationError
@@ -85,7 +88,7 @@ const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         },
       })
 
-      onComplete()
+      onComplete(result?.collection?.name)
     } catch (error) {
       logger.error(error)
       helpers.setFieldError(
