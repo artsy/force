@@ -3,6 +3,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { ActionType } from "@artsy/cohesion"
 
 export const Footer: React.FC = () => {
   const { user } = useSystemContext()
@@ -11,8 +12,10 @@ export const Footer: React.FC = () => {
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "Footer",
+      action: ActionType.tappedConsign,
+      context_module: "Footer", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "footer"
+      // we use "Footer" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",

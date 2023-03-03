@@ -58,7 +58,7 @@ describe("Footer", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
+        action: "tappedConsign",
         context_module: "Footer",
         context_page_owner_type: "sell",
         label: "Start Selling",

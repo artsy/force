@@ -22,6 +22,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 
 interface PillData {
   type: Specialty
@@ -62,8 +63,8 @@ export const MeetTheSpecialists: React.FC = () => {
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "MeetTheSpecialists",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: ContextModule.sellMeetTheSpecialists,
       context_page_owner_type: contextPageOwnerType,
       label: "Contact specialist_name",
       user_id: user?.id,
@@ -73,8 +74,8 @@ export const MeetTheSpecialists: React.FC = () => {
 
   const trackGetInTouchClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "MeetTheSpecialists",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: ContextModule.sellMeetTheSpecialists,
       context_page_owner_type: contextPageOwnerType,
       label: "Get in Touch",
       user_id: user?.id,
