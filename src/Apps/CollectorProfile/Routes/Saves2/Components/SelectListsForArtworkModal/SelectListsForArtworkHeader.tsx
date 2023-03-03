@@ -1,5 +1,5 @@
 import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { SelectListsForArtworkImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkImage"
+import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesEntityImage"
 import {
   ModalKey,
   useManageArtworkForSavesContext,
@@ -27,7 +27,7 @@ export const SelectListsForArtworkHeader: FC = () => {
         mt={[-2, 0]}
       >
         <Flex flex={1} flexDirection="row" alignItems="center">
-          <SelectListsForArtworkImage size={50} url={artwork.imageURL} />
+          <SavesEntityImage size={50} url={artwork.imageURL} />
           <Spacer x={1} />
           <Text lineClamp={2}>{artwork.title}</Text>
         </Flex>
