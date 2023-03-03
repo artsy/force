@@ -30,6 +30,7 @@ type Action =
   | { type: "SET_IS_SAVED_TO_LIST"; payload: boolean }
   | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
   | { type: "SET_ARTWORK"; payload: ArtworkEntity | null }
+  | { type: "RESET"; payload: Partial<State> }
   | {
       type: "ADD_OR_REMOVE_LIST_ID"
       payload: { listKey: ListKey; listID: string }
@@ -45,6 +46,7 @@ export interface ManageArtworkForSavesContextState {
   state: State
   savedListId?: string
   dispatch: Dispatch<Action>
+  reset: () => void
   onSave: (collectionIds: string[]) => void
 }
 
@@ -84,11 +86,11 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   savedListId,
   artwork,
 }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    ...INITIAL_STATE,
+  const initialStateForReducer: Partial<State> = {
     artwork: artwork ?? null,
     isSavedToList: !!savedListId,
-  })
+  }
+  const [state, dispatch] = useReducer(reducer, initialStateForReducer, init)
 
   const onSave = (listIds: string[]) => {
     if (savedListId) {
@@ -99,10 +101,18 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
     }
   }
 
+  const reset = () => {
+    dispatch({
+      type: "RESET",
+      payload: initialStateForReducer,
+    })
+  }
+
   const value: ManageArtworkForSavesContextState = {
     state,
     savedListId,
     dispatch,
+    reset,
     onSave,
   }
 
@@ -164,7 +174,16 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         artwork: action.payload,
       }
+    case "RESET":
+      return init(action.payload)
     default:
       return state
+  }
+}
+
+const init = (dynamicState?: Partial<State>) => {
+  return {
+    ...INITIAL_STATE,
+    ...dynamicState,
   }
 }
