@@ -8,9 +8,7 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 export const SelectListsForArtworkHeader: FC = () => {
-  const { t } = useTranslation("translation", {
-    keyPrefix: "collectorSaves.selectedListsForArtwork.header",
-  })
+  const { t } = useTranslation()
   const { state, dispatch } = useManageArtworkForSavesContext()
   const artwork = state.artwork!
 
@@ -41,15 +39,24 @@ export const SelectListsForArtworkHeader: FC = () => {
           size="small"
           onClick={openCreateListModal}
         >
-          {t("createNewListButton")}
+          {t("collectorSaves.selectedListsForArtwork.createNewListButton")}
         </Button>
       </Flex>
 
       {state.recentlyAddedList && (
-        <Message variant="success" title={t("recentlyAddedList.title")} mt={2}>
-          {t("recentlyAddedList.message", {
-            name: state.recentlyAddedList.name,
-          })}
+        <Message
+          variant="success"
+          title={t(
+            "collectorSaves.selectedListsForArtwork.recentlyAddedList.title"
+          )}
+          mt={2}
+        >
+          {t(
+            "collectorSaves.selectedListsForArtwork.recentlyAddedList.message",
+            {
+              name: state.recentlyAddedList.name,
+            }
+          )}
         </Message>
       )}
     </>

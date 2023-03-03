@@ -37,7 +37,8 @@ interface CreateNewListModalProps {
   onBackClick?: () => void
 }
 
-interface CreateNewListModalContainerProps extends CreateNewListModalProps {
+export interface CreateNewListModalContainerProps
+  extends CreateNewListModalProps {
   visible: boolean
 }
 
