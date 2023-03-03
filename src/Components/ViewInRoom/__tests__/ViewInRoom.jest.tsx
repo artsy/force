@@ -4,6 +4,13 @@ import { ViewInRoomFragmentContainer } from "Components/ViewInRoom/ViewInRoom"
 
 jest.unmock("react-relay")
 
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalBase: ({ children }) => children,
+  }
+})
+
 const { getWrapper } = setupTestWrapper({
   Component: ViewInRoomFragmentContainer,
   query: graphql`
