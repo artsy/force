@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { CreateNewListModalContainer } from "./CreateNewListModal"
-import { AddArtworksModalContainer } from "./AddArtworksModal"
+import { AddArtworksModalContainer } from "./CreateNewList/AddArtworksModal"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 
@@ -26,6 +26,7 @@ export const SavesHeader: React.FC = () => {
 
   const handleCreateListComplete = listName => {
     setListName(listName)
+    // TODO: if user has no saved artworks => end flow
     setViewKey("AddArtworks")
   }
 

@@ -1,26 +1,10 @@
 import React from "react"
-import {
-  Flex,
-  Text,
-  ModalDialog,
-  SkeletonBox,
-  SkeletonText,
-  GridColumns,
-  Column,
-  Spacer,
-  Button,
-} from "@artsy/palette"
-import { SortFilter } from "Components/SortFilter"
+import { GridColumns } from "@artsy/palette"
+import { ArtworkItem } from "./ArtworkItem"
 
-interface AddArtworksModalProps {
-  visible: boolean
-  onClose: () => void
-  onComplete: () => void
-  listName: string
-}
-
-const TEMP_ARTWORKS = [
+export const TEMP_ARTWORKS = [
   {
+    internalID: "5bd0db6e8477262b48aeab8b",
     title: "Yacht Life",
     artist: {
       name: "Nelson De La Nuez",
@@ -31,6 +15,7 @@ const TEMP_ARTWORKS = [
     price: "$8,000",
   },
   {
+    internalID: "5cf0b597e004320012274c0c",
     title: "From Paris with Love",
     artist: {
       name: "Nelson De La Nuez",
@@ -41,6 +26,7 @@ const TEMP_ARTWORKS = [
     price: "$7,000",
   },
   {
+    internalID: "63f3becfe3a2c9000c6075bb",
     title: "Meital, Ziv, Mika & Shimshon",
     artist: {
       name: "Navot Miller",
@@ -51,6 +37,7 @@ const TEMP_ARTWORKS = [
     price: "$14,000",
   },
   {
+    internalID: "5bc4e65420f56355c6db9862",
     title: "espacio derrotado",
     artist: {
       name: "Alexandre Arrechea",
@@ -61,6 +48,7 @@ const TEMP_ARTWORKS = [
     price: "$12,000",
   },
   {
+    internalID: "63dadb5cf70841000b7af667",
     title: "Pears, Clinton, Connecticut",
     artist: {
       name: "Rodney Smith",
@@ -71,6 +59,7 @@ const TEMP_ARTWORKS = [
     price: "$20,000 - 50,000",
   },
   {
+    internalID: "63dadbcba2b499000ea289e2",
     title: "Collin with Magnifying Glass, Alberta, Canada",
     artist: {
       name: "Rodney Smith",
@@ -81,6 +70,7 @@ const TEMP_ARTWORKS = [
     price: "$10,000 - 40,000",
   },
   {
+    internalID: "62b214a7a80d77000d868046",
     title: "Youth",
     artist: {
       name: "Luke Smalley",
@@ -91,6 +81,7 @@ const TEMP_ARTWORKS = [
     price: "$1,800",
   },
   {
+    internalID: "59c28e258b3b816480e9fb0e",
     title: "Tatiana in Black Slip 2",
     artist: {
       name: "Richard Learoyd",
@@ -101,6 +92,7 @@ const TEMP_ARTWORKS = [
     price: "",
   },
   {
+    internalID: "5b9806767606af002684f0b8",
     title: "Long Black",
     artist: {
       name: "Richard Learoyd",
@@ -111,6 +103,7 @@ const TEMP_ARTWORKS = [
     price: "",
   },
   {
+    internalID: "5f19fbf199ba690011470ffe",
     title: "Fragment",
     artist: {
       name: "Richard Learoyd",
@@ -121,6 +114,7 @@ const TEMP_ARTWORKS = [
     price: "",
   },
   {
+    internalID: "63dacd25feb14f000df4d272",
     title: "U.A. Walker, New York",
     artist: {
       name: "Hiroshi Sugimoto",
@@ -131,6 +125,7 @@ const TEMP_ARTWORKS = [
     price: "$2,250 - 3,250",
   },
   {
+    internalID: "6351bf3f835f69000eefbe55",
     title: "Obliteration after Modigliani",
     artist: {
       name: "Richard Learoyd",
@@ -141,6 +136,7 @@ const TEMP_ARTWORKS = [
     price: "",
   },
   {
+    internalID: "5b16e95b8b0c1413a6cdf588",
     title: "David Standing on Water No. 1, Sherwood Island, Connecticut",
     artist: {
       name: "Rodney Smith",
@@ -151,6 +147,7 @@ const TEMP_ARTWORKS = [
     price: "$15,000 - 45,000",
   },
   {
+    internalID: "63dadb64feb14f000bddaf3a",
     title: "Kiton Man, The Knole Estate, Long Island, New York",
     artist: {
       name: "Rodney Smith",
@@ -161,6 +158,7 @@ const TEMP_ARTWORKS = [
     price: "$10,000 - 40,000",
   },
   {
+    internalID: "58fb5c39cd530e4d3dbbbdb3",
     title: "Kate Moss, Nepal, British Vogue",
     artist: {
       name: "Arthur Elgort",
@@ -172,73 +170,16 @@ const TEMP_ARTWORKS = [
   },
 ]
 
-const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
-  listName,
-  onClose,
-}) => {
+export const ArtworksList: React.FC = () => {
+  const handleItemPress = () => {
+    console.log("[Debug] Item pressed")
+  }
+
   return (
-    <ModalDialog
-      width={["100%", 713]}
-      height={["100%", 800]}
-      onClose={onClose}
-      title={`${listName} created. Add saved works to the list.`}
-      data-testid="CreateNewList"
-      footer={
-        <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <Text variant={"sm"}>{0} artworks selected</Text>
-
-          <Button onClick={() => {}}>Save</Button>
-        </Flex>
-      }
-    >
-      <>
-        <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <Text variant="sm">{TEMP_ARTWORKS.length} Artworks:</Text>
-
-          <SortFilter
-            sortOptions={[{ text: "Recently Saved", value: "-position" }]}
-            selected={"-position"}
-            onSort={() => {}}
-          />
-        </Flex>
-
-        <Spacer y={1} />
-
-        <GridColumns>
-          {TEMP_ARTWORKS.map((artwork, index) => {
-            const randomHeight = Math.floor(Math.random() * 100) + 100
-
-            return (
-              <Column span={4}>
-                <Flex flexDirection={"column"}>
-                  <SkeletonBox
-                    key={index}
-                    width={197}
-                    height={randomHeight}
-                    mb={1}
-                  />
-                  <SkeletonText variant="sm">${artwork.title}</SkeletonText>
-                  <SkeletonText variant="sm">
-                    ${artwork.artist.name}
-                  </SkeletonText>
-                  <SkeletonText variant="sm">
-                    ${artwork.partner.name}
-                  </SkeletonText>
-                  <SkeletonText variant="sm">${artwork.price}</SkeletonText>
-                </Flex>
-              </Column>
-            )
-          })}
-        </GridColumns>
-      </>
-    </ModalDialog>
+    <GridColumns>
+      {TEMP_ARTWORKS.map((artwork, _) => {
+        return <ArtworkItem item={artwork} onItemPress={handleItemPress} />
+      })}
+    </GridColumns>
   )
-}
-
-export const AddArtworksModalContainer: React.FC<AddArtworksModalProps> = props => {
-  const { visible } = props
-
-  if (!visible) return null
-
-  return <AddArtworksModal {...props} />
 }
