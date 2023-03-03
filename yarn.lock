@@ -99,7 +99,25 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
   integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@29.6.0", "@artsy/palette@^29.6.0":
+"@artsy/palette@29.7.0":
+  version "29.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-29.7.0.tgz#d28431f27f33ec6501b1757df3614eae6ad878f3"
+  integrity sha512-m8I7oQgqf0tUDnHeVXIp1U6xIqvOTWsclH0c7Z/tL21P3akFTLaAhkaAweMJp0smLN6kc+fAWZtSUD73P/IJBQ==
+  dependencies:
+    "@artsy/palette-tokens" "^4.0.1"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    lodash "^4.17.21"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.5"
+    react-remove-scroll "2.5.5"
+    styled-system "^5.1.5"
+    tabbable "^6.1.1"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.2"
+
+"@artsy/palette@^29.6.0":
   version "29.6.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-29.6.0.tgz#bfe7b3529b17fb2fb6739a1de4008f74e639822f"
   integrity sha512-Z4Co0lHqqLMDm8nPohPTDRiDmf0VWRGXx+wN+jcdaHtDKBNDjPc9ryXf3qEInjJ48sc3zhlGVzo1mMCka5GxvQ==
@@ -20275,6 +20293,11 @@ synchronous-promise@^2.0.15:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.16.tgz#669b75e86b4295fdcc1bb0498de9ac1af6fd51a9"
   integrity sha512-qImOD23aDfnIDNqlG1NOehdB9IYsn1V9oByPjKY1nakv2MQYCEMyX033/q+aEtYCpmYK1cv2+NTmlH+ra6GA5A==
+
+tabbable@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.1.1.tgz#40cfead5ed11be49043f04436ef924c8890186a0"
+  integrity sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==
 
 table@^5.2.3:
   version "5.4.6"
