@@ -18,7 +18,7 @@ import createLogger from "Utils/logger"
 
 interface EditSavesModalProps {
   collection: SavesArtworks_collection$data
-  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onClose: () => void
 }
 
 interface FormikValues {
@@ -31,7 +31,7 @@ const logger = createLogger("EditSavesModal")
 
 export const EditSavesModal: React.FC<EditSavesModalProps> = ({
   collection,
-  setIsEditModalOpen,
+  onClose,
 }) => {
   const { t } = useTranslation()
 
@@ -80,7 +80,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
       })
     } finally {
       formikHelpers.setSubmitting(false)
-      setIsEditModalOpen(false)
+      onClose()
     }
   }
 
@@ -101,9 +101,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
         return (
           <ModalDialog
             title={t("collectorSaves.editListModal.title")}
-            onClose={() => {
-              setIsEditModalOpen(false)
-            }}
+            onClose={onClose}
             width={["100%", 700]}
           >
             <Form /* TODO: confirm implicit form submission */>
@@ -136,7 +134,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
 
                 <Button
                   variant="secondaryBlack"
-                  onClick={() => setIsEditModalOpen(false)}
+                  onClick={onClose}
                   display={["block", "none"]} // TODO: intentionally hidden on desktop?
                 >
                   {

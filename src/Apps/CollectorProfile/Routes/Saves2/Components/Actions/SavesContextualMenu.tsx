@@ -19,38 +19,40 @@ export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
-  const handleEditList = () => {
+  const openEditModal = () => {
     setIsEditModalOpen(true)
   }
 
-  const handleDeleteList = () => {
+  const closeEditModal = () => {
+    setIsEditModalOpen(false)
+  }
+
+  const openDeleteModal = () => {
     setIsDeleteModalOpen(true)
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
   }
 
   return (
     <>
-      {isDeleteModalOpen && (
-        <DeleteSavesModal
-          collection={collection}
-          setIsDeleteModalOpen={setIsDeleteModalOpen}
-        />
+      {isEditModalOpen && (
+        <EditSavesModal collection={collection} onClose={closeEditModal} />
       )}
 
-      {isEditModalOpen && (
-        <EditSavesModal
-          collection={collection}
-          setIsEditModalOpen={setIsEditModalOpen}
-        />
+      {isDeleteModalOpen && (
+        <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
       )}
 
       <ContextualMenu>
-        <ContextualMenuItem onClick={handleEditList}>
+        <ContextualMenuItem onClick={openEditModal}>
           {t("collectorSaves.contextualMenu.edit")}
         </ContextualMenuItem>
 
         <ContextualMenuDivider />
 
-        <ContextualMenuItem onClick={handleDeleteList}>
+        <ContextualMenuItem onClick={openDeleteModal}>
           {t("collectorSaves.contextualMenu.delete")}
         </ContextualMenuItem>
       </ContextualMenu>

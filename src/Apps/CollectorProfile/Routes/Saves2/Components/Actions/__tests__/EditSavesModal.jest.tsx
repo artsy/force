@@ -12,11 +12,11 @@ const collection = {
 } as SavesArtworks_collection$data
 
 describe("EditSavesModal", () => {
-  let setIsEditModalOpen: jest.Mock
+  let closeEditModal: jest.Mock
   let submitMutation: jest.Mock
 
   beforeEach(() => {
-    setIsEditModalOpen = jest.fn()
+    closeEditModal = jest.fn()
     submitMutation = jest.fn()
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
@@ -24,12 +24,7 @@ describe("EditSavesModal", () => {
   })
 
   it("renders the modal content", async () => {
-    render(
-      <EditSavesModal
-        collection={collection}
-        setIsEditModalOpen={setIsEditModalOpen}
-      />
-    )
+    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Back/ })).toBeInTheDocument()
@@ -37,25 +32,15 @@ describe("EditSavesModal", () => {
   })
 
   it("dismisses when the Cancel button is clicked", async () => {
-    render(
-      <EditSavesModal
-        collection={collection}
-        setIsEditModalOpen={setIsEditModalOpen}
-      />
-    )
+    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
 
     fireEvent.click(screen.getByRole("button", { name: /Back/ }))
 
-    expect(setIsEditModalOpen).toHaveBeenCalledWith(false)
+    expect(closeEditModal).toHaveBeenCalled()
   })
 
   it("calls the mutation when the Save button is clicked", async () => {
-    render(
-      <EditSavesModal
-        collection={collection}
-        setIsEditModalOpen={setIsEditModalOpen}
-      />
-    )
+    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
 
     fireEvent.click(
       screen.getByRole("button", {
