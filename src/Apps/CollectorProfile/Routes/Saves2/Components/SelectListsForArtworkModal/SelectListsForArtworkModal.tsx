@@ -27,7 +27,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   me,
 }) => {
   const { t } = useTranslation()
-  const { state, dispatch, onSave } = useManageArtworkForSavesContext()
+  const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const [isSaving, setIsSaving] = useState(false)
   const savedCollection = me?.defaultSaves
   const nodes = extractNodes(me?.collectionsConnection)
@@ -44,10 +44,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const { sendToast } = useToasts()
 
   const onClose = () => {
-    dispatch({
-      type: "SET_ARTWORK",
-      payload: null,
-    })
+    reset()
   }
 
   const handleItemPress = (item: typeof collections[0]) => {
