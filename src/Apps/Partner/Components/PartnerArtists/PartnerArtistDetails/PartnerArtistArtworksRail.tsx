@@ -1,9 +1,5 @@
 import * as React from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  RelayPaginationProp,
-} from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Shelf } from "@artsy/palette"
@@ -13,12 +9,10 @@ export interface PartnerArtistArtworksRailProps {
   partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
   partnerId: string
   artistId: string
-  relay: RelayPaginationProp
 }
 
 export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps> = ({
   partnerArtist,
-  relay,
 }) => {
   if (!partnerArtist.artworksConnection) return null
 
@@ -39,34 +33,12 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
   )
 }
 
-export const ARTISTS_ARTWORKS_QUERY = graphql`
-  query PartnerArtistArtworksRailQuery(
-    $partnerId: String!
-    $artistId: String!
-    $first: Int
-    $after: String
-  ) {
-    partner(id: $partnerId) {
-      artistsConnection(artistIDs: [$artistId], first: 1) {
-        edges {
-          ...PartnerArtistArtworksRail_partnerArtist
-            @arguments(first: $first, after: $after)
-        }
-      }
-    }
-  }
-`
-
-export const PartnerArtistArtworksRailPaginationContainer = createPaginationContainer(
+export const PartnerArtistArtworksFragmentContainer = createFragmentContainer(
   PartnerArtistArtworksRail,
   {
     partnerArtist: graphql`
-      fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 12 }
-          after: { type: "String" }
-        ) {
-        artworksConnection(first: $first, after: $after)
+      fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
+        artworksConnection(first: 99)
           @connection(key: "PartnerArtistArtworksRail_artworksConnection") {
           totalCount
           edges {
@@ -78,12 +50,5 @@ export const PartnerArtistArtworksRailPaginationContainer = createPaginationCont
         }
       }
     `,
-  },
-  {
-    query: ARTISTS_ARTWORKS_QUERY,
-    direction: "forward",
-    getVariables({ partnerId, artistId }, { cursor: after }, { first }) {
-      return { partnerId, artistId, after, first }
-    },
   }
 )
