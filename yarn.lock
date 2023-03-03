@@ -82,12 +82,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@28.7.2":
-  version "28.7.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-28.7.2.tgz#2eed26a19d3265434a8351c2dedf64e901e7eeb4"
-  integrity sha512-lAVTA+Tkv4MMhGQk0Rk25959qYE8I1HHoSw0YLnyUU8aPdVov2h4r9tD4ksfMnsL9dIeJucvzdK2AtIca76kIA==
+"@artsy/palette-charts@28.7.3":
+  version "28.7.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-28.7.3.tgz#6e26ea3fb64e7fba38be5568ac6dea28e6cbbcef"
+  integrity sha512-RYIQfXDvZlOXxj8brEoAExiYHRQgAy6EHN9jyhkDxUozilkvN+Atd4WfWkZgXlJTA+a8ie9yDOvHsK7teO1GwQ==
   dependencies:
-    "@artsy/palette" "^29.7.2"
+    "@artsy/palette" "^29.7.3"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -99,10 +99,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
   integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@29.7.2", "@artsy/palette@^29.7.2":
-  version "29.7.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-29.7.2.tgz#b0237f17d694da29839afb872c5f2d76dff126b7"
-  integrity sha512-OQfnMCBcTKnyi5enFbed3t1+MvOb9C5vkvzkza30cYgiY3A8grSXBMWOpWq0fgtrAoI4ZgrCF4hsp9qQ+WneDA==
+"@artsy/palette@29.7.3", "@artsy/palette@^29.7.3":
+  version "29.7.3"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-29.7.3.tgz#f95b5c45f2ff1d5cf9941071f136e349e38569bb"
+  integrity sha512-Zc0dP+lEGwLrNaOdIfDZa+DxITcypInVGe+AJ2AgyswfkXdpu7hXgDiaXdw8ukH4CU4xoC/PsAxTv9aLWI2KVg==
   dependencies:
     "@artsy/palette-tokens" "^4.0.1"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -112,7 +112,6 @@
     react-lazy-load-image-component "1.5.5"
     react-remove-scroll "2.5.5"
     styled-system "^5.1.5"
-    tabbable "^6.1.1"
     trunc-html "^1.1.2"
     use-cursor "^1.2.3"
     use-keyboard-list-navigation "2.4.2"
@@ -20276,11 +20275,6 @@ synchronous-promise@^2.0.15:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.16.tgz#669b75e86b4295fdcc1bb0498de9ac1af6fd51a9"
   integrity sha512-qImOD23aDfnIDNqlG1NOehdB9IYsn1V9oByPjKY1nakv2MQYCEMyX033/q+aEtYCpmYK1cv2+NTmlH+ra6GA5A==
-
-tabbable@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.1.1.tgz#40cfead5ed11be49043f04436ef924c8890186a0"
-  integrity sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==
 
 table@^5.2.3:
   version "5.4.6"
