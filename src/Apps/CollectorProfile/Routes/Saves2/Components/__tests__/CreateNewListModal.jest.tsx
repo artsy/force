@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { CreateNewListModalContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
+import { CreateNewListModalContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
