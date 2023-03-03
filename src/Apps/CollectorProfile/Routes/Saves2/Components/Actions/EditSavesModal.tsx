@@ -10,7 +10,7 @@ import {
 import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
-import { Form, Formik, FormikHelpers } from "formik"
+import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { pick } from "lodash"
 import { useUpdateCollection } from "./Mutations/useUpdateCollection"
@@ -47,10 +47,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
 
   const { sendToast } = useToasts()
 
-  const handleSubmit = async (
-    formikValues: FormikValues,
-    formikHelpers: FormikHelpers<FormikValues>
-  ) => {
+  const handleSubmit = async (formikValues: FormikValues) => {
     try {
       await submitMutation({
         variables: {
@@ -79,7 +76,6 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
         message: error.message ?? t("common.errors.somethingWentWrong"),
       })
     } finally {
-      formikHelpers.setSubmitting(false)
       onClose()
     }
   }
