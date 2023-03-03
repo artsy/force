@@ -16,6 +16,10 @@ import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { CreateNewListModalMutation } from "__generated__/CreateNewListModalMutation.graphql"
+import {
+  ArtworkEntity,
+  CreateNewListModalHeader,
+} from "./CreateNewListModalHeader"
 
 export interface CreateNewListValues {
   name: string
@@ -27,6 +31,7 @@ export interface NewAddedList {
 }
 
 interface CreateNewListModalProps {
+  artwork?: ArtworkEntity
   onClose: () => void
   onComplete: (data: NewAddedList) => void
   onBackClick?: () => void
@@ -43,6 +48,7 @@ const logger = createLogger(
 const MAX_NAME_LENGTH = 40
 
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
+  artwork,
   onClose,
   onComplete,
   onBackClick,
@@ -125,6 +131,9 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             onClose={onClose}
             title={t("collectorSaves.createNewListModal.title")}
             data-testid="CreateNewList"
+            header={
+              artwork ? <CreateNewListModalHeader artwork={artwork} /> : null
+            }
             footer={
               <>
                 {/* Desktop view */}
