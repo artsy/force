@@ -53,7 +53,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
         variables: {
           input: {
             id: collection.internalID,
-            name: formikValues.name,
+            name: formikValues.name.trim(),
           },
         },
         rejectIf: res => {

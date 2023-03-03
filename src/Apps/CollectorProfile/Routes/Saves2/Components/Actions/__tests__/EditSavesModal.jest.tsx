@@ -61,4 +61,31 @@ describe("EditSavesModal", () => {
       })
     )
   })
+
+  it("trims extra whitespace", async () => {
+    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "  Foo Bar  " },
+    })
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /Save/,
+      })
+    )
+
+    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
+
+    expect(submitMutation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          input: {
+            id: "foobar",
+            name: "Foo Bar",
+          },
+        },
+      })
+    )
+  })
 })
