@@ -1,7 +1,7 @@
 import {
   CreateNewListModal,
   NewAddedList,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
+} from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
 import { createContext, Dispatch, FC, useContext, useReducer } from "react"
 
