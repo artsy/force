@@ -12,11 +12,11 @@ const collection = {
 } as SavesArtworks_collection$data
 
 describe("DeleteSavesModal", () => {
-  let setIsDeleteModalOpen: jest.Mock
+  let closeDeleteModal: jest.Mock
   let submitMutation: jest.Mock
 
   beforeEach(() => {
-    setIsDeleteModalOpen = jest.fn()
+    closeDeleteModal = jest.fn()
     submitMutation = jest.fn()
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
@@ -25,10 +25,7 @@ describe("DeleteSavesModal", () => {
 
   it("renders the modal content", async () => {
     render(
-      <DeleteSavesModal
-        collection={collection}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
-      />
+      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
     )
 
     expect(screen.getByText("Delete Foo Bar list?")).toBeInTheDocument()
@@ -38,23 +35,17 @@ describe("DeleteSavesModal", () => {
 
   it("dismisses when the Cancel button is clicked", async () => {
     render(
-      <DeleteSavesModal
-        collection={collection}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
-      />
+      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Cancel/ }))
 
-    expect(setIsDeleteModalOpen).toHaveBeenCalledWith(false)
+    expect(closeDeleteModal).toHaveBeenCalled()
   })
 
   it("calls the mutation when the Delete button is clicked", async () => {
     render(
-      <DeleteSavesModal
-        collection={collection}
-        setIsDeleteModalOpen={setIsDeleteModalOpen}
-      />
+      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))

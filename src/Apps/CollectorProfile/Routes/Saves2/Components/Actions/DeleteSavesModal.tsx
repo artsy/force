@@ -7,13 +7,10 @@ import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_colle
 
 interface Props {
   collection: SavesArtworks_collection$data
-  setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  onClose: () => void
 }
 
-export const DeleteSavesModal: React.FC<Props> = ({
-  collection,
-  setIsDeleteModalOpen,
-}) => {
+export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
   const { t } = useTranslation()
 
   const { submitMutation } = useMutation<DeleteSavesModalMutation>({
@@ -64,7 +61,7 @@ export const DeleteSavesModal: React.FC<Props> = ({
         message: err.message ?? "Something went wrong",
       })
     } finally {
-      setIsDeleteModalOpen(false)
+      onClose()
     }
   }
 
@@ -73,18 +70,13 @@ export const DeleteSavesModal: React.FC<Props> = ({
       title={t("collectorSaves.deleteListModal.title", {
         name: collection.name,
       })}
-      onClose={() => {
-        setIsDeleteModalOpen(false)
-      }}
+      onClose={onClose}
       footer={
         <Flex
           justifyContent={"space-between"}
           flexDirection={["column-reverse", "row"]}
         >
-          <Button
-            variant="secondaryBlack"
-            onClick={() => setIsDeleteModalOpen(false)}
-          >
+          <Button variant="secondaryBlack" onClick={onClose}>
             {t("collectorSaves.deleteListModal.cancel")}
           </Button>
 
