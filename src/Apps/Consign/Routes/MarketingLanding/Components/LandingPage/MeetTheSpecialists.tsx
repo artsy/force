@@ -161,6 +161,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     // @ts-ignore
                     as={RouterLink}
                     variant="secondaryWhite"
+                    size="small"
                     mb={2}
                     onClick={trackContactTheSpecialistClick}
                     data-testid={`get-in-touch-button-${i.firstName}`}
