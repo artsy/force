@@ -1,14 +1,12 @@
 import React, { FC, useState } from "react"
 import { ModalDialog, useToasts } from "@artsy/palette"
-import { SelectListsForArtworkHeaderFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
+import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsForArtworkModal_me.graphql"
-import { SelectListsForArtworkModal_artwork$data } from "__generated__/SelectListsForArtworkModal_artwork.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { SelectListsForArtworkHeaderPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkPlaceholders"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
 import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
 import createLogger from "Utils/logger"
@@ -23,12 +21,10 @@ const logger = createLogger("SelectListsForArtworkModal")
 
 export interface SelectListsForArtworkModalProps {
   me: SelectListsForArtworkModal_me$data | null
-  artwork: SelectListsForArtworkModal_artwork$data | null
 }
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
-  artwork,
 }) => {
   const { t } = useTranslation()
   const { state, dispatch, onSave } = useManageArtworkForSavesContext()
@@ -49,7 +45,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 
   const onClose = () => {
     dispatch({
-      type: "SET_ARTWORK_ID",
+      type: "SET_ARTWORK",
       payload: null,
     })
   }
@@ -68,14 +64,12 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 
   const handleSaveClicked = async () => {
     try {
-      const artworkId = artwork!.internalID
-
       setIsSaving(true)
 
       await submitMutation({
         variables: {
           input: {
-            artworkIDs: [artworkId],
+            artworkIDs: [state.artwork!.id],
             addToCollectionIDs: state.addingListIDs,
             removeFromCollectionIDs: state.removingListIDs,
           },
@@ -135,13 +129,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         maxHeight: [null, 800],
       }}
       m={0}
-      header={
-        artwork === null ? (
-          <SelectListsForArtworkHeaderPlaceholder />
-        ) : (
-          <SelectListsForArtworkHeaderFragmentContainer artwork={artwork} />
-        )
-      }
+      header={<SelectListsForArtworkHeader />}
       footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedCollectionIds.length}
@@ -189,12 +177,6 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
         }
       }
     `,
-    artwork: graphql`
-      fragment SelectListsForArtworkModal_artwork on Artwork {
-        internalID
-        ...SelectListsForArtworkHeader_artwork
-      }
-    `,
   }
 )
 
@@ -204,7 +186,7 @@ export const SelectListsForArtworkModalQueryRender: FC = () => {
   return (
     <SystemQueryRenderer<SelectListsForArtworkModalQuery>
       query={query}
-      variables={{ artworkID: state.artworkId! }}
+      variables={{ artworkID: state.artwork!.id }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
@@ -212,10 +194,7 @@ export const SelectListsForArtworkModalQueryRender: FC = () => {
         }
 
         return (
-          <SelectListsForArtworkModalFragmentContainer
-            me={props?.me ?? null}
-            artwork={props?.artwork ?? null}
-          />
+          <SelectListsForArtworkModalFragmentContainer me={props?.me ?? null} />
         )
       }}
     />
@@ -226,9 +205,6 @@ const query = graphql`
   query SelectListsForArtworkModalQuery($artworkID: String!) {
     me {
       ...SelectListsForArtworkModal_me @arguments(artworkID: $artworkID)
-    }
-    artwork(id: $artworkID) {
-      ...SelectListsForArtworkModal_artwork
     }
   }
 `
