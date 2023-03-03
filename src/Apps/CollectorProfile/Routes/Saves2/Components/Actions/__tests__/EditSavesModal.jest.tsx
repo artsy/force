@@ -11,6 +11,14 @@ const collection = {
   name: "Foo Bar",
 } as SavesArtworks_collection$data
 
+const setup = () => {
+  const nameInputField = screen.getByRole("textbox")
+  const saveButton = screen.getByRole("button", { name: /Save/ })
+  const backButton = screen.getByRole("button", { name: /Back/ })
+
+  return { nameInputField, saveButton, backButton }
+}
+
 describe("EditSavesModal", () => {
   let closeEditModal: jest.Mock
   let submitMutation: jest.Mock
@@ -33,24 +41,22 @@ describe("EditSavesModal", () => {
 
   it("dismisses when the Cancel button is clicked", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    const { backButton } = setup()
 
-    fireEvent.click(screen.getByRole("button", { name: /Back/ }))
+    fireEvent.click(backButton)
 
     expect(closeEditModal).toHaveBeenCalled()
   })
 
   it("calls the mutation when the Save button is clicked", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    const { nameInputField, saveButton } = setup()
 
-    fireEvent.change(screen.getByRole("textbox"), {
+    fireEvent.change(nameInputField, {
       target: { value: "Foo Bar!" },
     })
 
-    fireEvent.click(
-      screen.getByRole("button", {
-        name: /Save/,
-      })
-    )
+    fireEvent.click(saveButton)
 
     await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
 
@@ -68,16 +74,13 @@ describe("EditSavesModal", () => {
 
   it("trims extra whitespace", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    const { nameInputField, saveButton } = setup()
 
-    fireEvent.change(screen.getByRole("textbox"), {
+    fireEvent.change(nameInputField, {
       target: { value: "  Foo Bar  " },
     })
 
-    fireEvent.click(
-      screen.getByRole("button", {
-        name: /Save/,
-      })
-    )
+    fireEvent.click(saveButton)
 
     await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
 
@@ -95,21 +98,14 @@ describe("EditSavesModal", () => {
 
   it("disables Save button until form is dirty", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    const { nameInputField, saveButton } = setup()
 
-    expect(
-      screen.getByRole("button", {
-        name: /Save/,
-      })
-    ).toBeDisabled()
+    expect(saveButton).toBeDisabled()
 
-    fireEvent.change(screen.getByRole("textbox"), {
+    fireEvent.change(nameInputField, {
       target: { value: "Foo Bar!" },
     })
 
-    expect(
-      screen.getByRole("button", {
-        name: /Save/,
-      })
-    ).toBeEnabled()
+    expect(saveButton).toBeEnabled()
   })
 })
