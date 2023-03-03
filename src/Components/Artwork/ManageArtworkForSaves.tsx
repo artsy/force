@@ -136,6 +136,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
       return (
         <CreateNewListModal
           onClose={openSelectListsForArtworkModal}
+          onBackClick={openSelectListsForArtworkModal}
           onComplete={onNewListCreated}
         />
       )
