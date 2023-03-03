@@ -42,6 +42,10 @@ describe("EditSavesModal", () => {
   it("calls the mutation when the Save button is clicked", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
 
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Foo Bar!" },
+    })
+
     fireEvent.click(
       screen.getByRole("button", {
         name: /Save/,
@@ -55,7 +59,7 @@ describe("EditSavesModal", () => {
         variables: {
           input: {
             id: "foobar",
-            name: "Foo Bar",
+            name: "Foo Bar!",
           },
         },
       })
@@ -87,5 +91,25 @@ describe("EditSavesModal", () => {
         },
       })
     )
+  })
+
+  it("disables Save button until form is dirty", async () => {
+    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+
+    expect(
+      screen.getByRole("button", {
+        name: /Save/,
+      })
+    ).toBeDisabled()
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: { value: "Foo Bar!" },
+    })
+
+    expect(
+      screen.getByRole("button", {
+        name: /Save/,
+      })
+    ).toBeEnabled()
   })
 })

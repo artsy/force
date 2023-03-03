@@ -90,9 +90,11 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
         values,
         errors,
         touched,
+        dirty,
         handleBlur,
         handleChange,
         isSubmitting,
+        isValid,
       }) => {
         return (
           <ModalDialog
@@ -124,7 +126,12 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
                 justifyContent={["space-between"]}
                 flexDirection={["column", "row-reverse"]}
               >
-                <Button type="submit" mb={[1, 0]} loading={!!isSubmitting}>
+                <Button
+                  type="submit"
+                  mb={[1, 0]}
+                  loading={!!isSubmitting}
+                  disabled={!dirty || !isValid}
+                >
                   {t("collectorSaves.editListModal.save")}
                 </Button>
 
