@@ -86,6 +86,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
+import { AddressAutoComplete } from "Apps/Order/Components/AddressAutoComplete"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -654,7 +655,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingQuotes &&
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
-              <AddressForm
+
+              <AddressAutoComplete />
+              {/* TODO */}
+              {/* <AddressForm
                 value={address}
                 errors={addressErrors}
                 touched={addressTouched}
@@ -671,14 +675,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 touched={phoneNumberTouched}
                 onChange={onPhoneNumberChange}
                 label="Required for shipping logistics"
-              />
-              <Checkbox
+              /> */}
+              {/* <Checkbox
                 onSelect={selected => setSaveAddress(selected)}
                 selected={saveAddress}
                 data-test="save-address-checkbox"
               >
                 Save shipping address for later use
-              </Checkbox>
+              </Checkbox> */}
               <Spacer y={4} />
             </Collapse>
 
@@ -696,8 +700,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={4} />
             </Collapse>
-
-            <Collapse
+            {/* TODO */}
+            {/* <Collapse
               open={
                 isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
               }
@@ -715,7 +719,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onSelect={handleShippingQuoteSelected}
               />
               <Spacer y={4} />
-            </Collapse>
+            </Collapse> */}
 
             <Media greaterThan="xs">
               <Button
