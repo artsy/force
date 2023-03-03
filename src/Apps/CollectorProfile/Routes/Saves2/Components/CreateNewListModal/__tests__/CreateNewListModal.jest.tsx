@@ -1,20 +1,20 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { CreateNewListModalContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
+import {
+  CreateNewListModalContainer,
+  CreateNewListModalContainerProps,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
 
-interface Props {
-  visible?: boolean
-}
-
 describe("CreateNewListModal", () => {
-  const TestComponent = (props: Props) => {
+  const TestComponent = (props: Partial<CreateNewListModalContainerProps>) => {
     return (
       <CreateNewListModalContainer
+        {...props}
         visible={props.visible ?? true}
-        onClose={onCloseMock}
-        onComplete={onCompleteMock}
+        onClose={props.onClose ?? onCloseMock}
+        onComplete={props.onComplete ?? onCompleteMock}
       />
     )
   }
@@ -76,5 +76,15 @@ describe("CreateNewListModal", () => {
     rerender(<TestComponent visible={true} />)
 
     expect(screen.getByRole("textbox")).toHaveValue("")
+  })
+
+  it("displays artwork info", () => {
+    render(
+      <TestComponent
+        artwork={{ title: "Artwork Title, 2023", imageURL: null }}
+      />
+    )
+
+    expect(screen.getByText("Artwork Title, 2023")).toBeInTheDocument()
   })
 })
