@@ -63,7 +63,7 @@ export const PartnerArtistArtworksRailPaginationContainer = createPaginationCont
     partnerArtist: graphql`
       fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 12 }
+          first: { type: "Int", defaultValue: 13 }
           after: { type: "String" }
         ) {
         artworksConnection(first: $first, after: $after)
