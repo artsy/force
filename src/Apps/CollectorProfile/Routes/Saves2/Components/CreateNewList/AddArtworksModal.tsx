@@ -33,7 +33,7 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
       title={t("collectorSaves.addArtworksModal.modalTitle", {
         value: listName,
       })}
-      data-testid="CreateNewList"
+      data-testid="AddArtworksModal"
       footer={
         <Flex justifyContent={"space-between"} alignItems={"baseline"}>
           <Text variant={"sm"}>

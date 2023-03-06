@@ -14,7 +14,7 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
   onClose,
 }) => {
   const [displayModal, setDisplayModal] = useState(modalIsOpened)
-  const [listName, setListName] = useState<string | null>(null)
+  const [listName, setListName] = useState<string>("")
   const [viewKey, setViewKey] = useState<
     "CreateListModal" | "AddArtworksModal"
   >("CreateListModal")
@@ -53,7 +53,7 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
           visible={displayModal}
           onClose={handleCloseModal}
           onComplete={handleAddArtworksComplete}
-          listName={listName ?? "Outdoor Sculptures"}
+          listName={listName}
         />
       )}
     </>

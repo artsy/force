@@ -171,13 +171,13 @@ export const TEMP_ARTWORKS = [
 ]
 
 export const ArtworksList: React.FC = () => {
-  const handleItemPress = () => {
-    console.log("[Debug] Item pressed")
+  const handleItemPress = item => {
+    console.log("[Debug] Item pressed", item)
   }
 
   return (
     <GridColumns>
-      {TEMP_ARTWORKS.map((artwork, _) => {
+      {TEMP_ARTWORKS.map(artwork => {
         return <ArtworkItem item={artwork} onItemPress={handleItemPress} />
       })}
     </GridColumns>
