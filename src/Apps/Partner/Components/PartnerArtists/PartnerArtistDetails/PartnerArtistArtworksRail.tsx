@@ -2,8 +2,8 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtistArtworksRail_partnerArtist$data } from "__generated__/PartnerArtistArtworksRail_partnerArtist.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { Shelf } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
+import { Rail } from "Components/Rail/Rail"
 
 export interface PartnerArtistArtworksRailProps {
   partnerArtist: PartnerArtistArtworksRail_partnerArtist$data
@@ -13,23 +13,28 @@ export interface PartnerArtistArtworksRailProps {
 
 export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps> = ({
   partnerArtist,
+  partnerId,
+  artistId,
 }) => {
   if (!partnerArtist.artworksConnection) return null
 
   const artworks = extractNodes(partnerArtist.artworksConnection)
 
   return (
-    <Shelf>
-      {artworks.map(artwork => {
-        return (
+    <Rail
+      title=""
+      viewAllLabel="View All"
+      viewAllHref={`/collect?artist_ids%5B0%5D=${artistId}&partner_ids%5B0%5D=${partnerId}`}
+      getItems={() => {
+        return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
             key={artwork.internalID}
             artwork={artwork}
             lazyLoad
           />
-        )
-      })}
-    </Shelf>
+        ))
+      }}
+    />
   )
 }
 
@@ -38,7 +43,7 @@ export const PartnerArtistArtworksFragmentContainer = createFragmentContainer(
   {
     partnerArtist: graphql`
       fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-        artworksConnection(first: 99)
+        artworksConnection(first: 12)
           @connection(key: "PartnerArtistArtworksRail_artworksConnection") {
           totalCount
           edges {
