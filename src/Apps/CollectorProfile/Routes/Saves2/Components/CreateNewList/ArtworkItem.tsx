@@ -1,21 +1,11 @@
 import React from "react"
-import {
-  Text,
-  CheckCircleIcon,
-  Clickable,
-  Column,
-  Flex,
-  SkeletonBox,
-  Box,
-} from "@artsy/palette"
-import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
+import { Text, Clickable, Column, Flex, SkeletonBox } from "@artsy/palette"
+import { SelectArtworkItem } from "./SelectArtworkItem"
 
 interface ArtworkItemProps {
   item: any
   onItemPress: (item: any) => void
 }
-
-const ICON_SIZE = 24
 
 export const ArtworkItem: React.FC<ArtworkItemProps> = ({
   item,
@@ -46,13 +36,7 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
               <Text variant="sm">{item.price}</Text>
             </Flex>
 
-            <Box width={ICON_SIZE} height={ICON_SIZE} ml={10}>
-              {isSelected ? (
-                <CheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
-              ) : (
-                <EmptyCheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
-              )}
-            </Box>
+            <SelectArtworkItem isSelected={isSelected} />
           </Flex>
         </Flex>
       </Clickable>

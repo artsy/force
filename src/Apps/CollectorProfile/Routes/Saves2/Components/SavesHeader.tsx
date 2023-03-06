@@ -1,37 +1,20 @@
 import React, { useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
-import { CreateNewListModalContainer } from "./CreateNewListModal"
-import { AddArtworksModalContainer } from "./CreateNewList/AddArtworksModal"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
+import { CreateNewListModalWizard } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewList/CreateNewListModalWizard"
 
 export const SavesHeader: React.FC = () => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)
-  const [viewKey, setViewKey] = useState<
-    "ClosedState" | "CreateList" | "AddArtworks"
-  >("ClosedState")
-  const [listName, setListName] = useState<string | null>(null)
-
-  const handleCloseModal = () => {
-    setViewKey("ClosedState")
-    setModalIsOpened(false)
-  }
 
   const handleCreateNewListClick = () => {
-    setViewKey("CreateList")
+    console.log("[Debug] handleCreateNewListClick")
     setModalIsOpened(true)
   }
 
-  const handleCreateListComplete = listName => {
-    setListName(listName)
-    // TODO: if user has no saved artworks => end flow
-    setViewKey("AddArtworks")
-  }
-
-  const handleAddArtworksComplete = () => {
-    setViewKey("ClosedState")
+  const handleComplete = () => {
     setModalIsOpened(false)
 
     sendToast({
@@ -40,24 +23,14 @@ export const SavesHeader: React.FC = () => {
     })
   }
 
+  console.log("[Debug] SavesHeader")
+
   return (
     <>
-      {viewKey == "CreateList" && (
-        <CreateNewListModalContainer
-          visible={modalIsOpened}
-          onClose={handleCloseModal}
-          onComplete={handleCreateListComplete}
-        />
-      )}
-
-      {(true || viewKey == "AddArtworks") && (
-        <AddArtworksModalContainer
-          visible={true || modalIsOpened}
-          onClose={handleCloseModal}
-          onComplete={handleAddArtworksComplete}
-          listName={listName ?? "Outdoor Sculptures"}
-        />
-      )}
+      <CreateNewListModalWizard
+        modalIsOpened={modalIsOpened}
+        onComplete={handleComplete}
+      />
 
       <Join separator={<Spacer y={0.5} />}>
         <Text variant="lg-display">

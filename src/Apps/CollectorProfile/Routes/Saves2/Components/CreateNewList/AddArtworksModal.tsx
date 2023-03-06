@@ -14,6 +14,10 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
   listName,
   onClose,
 }) => {
+  const handleSave = () => {
+    onClose()
+  }
+
   return (
     <ModalDialog
       width={["100%", 713]}
@@ -25,7 +29,7 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
         <Flex justifyContent={"space-between"} alignItems={"baseline"}>
           <Text variant={"sm"}>{0} artworks selected</Text>
 
-          <Button onClick={() => {}}>Save</Button>
+          <Button onClick={handleSave}>Save</Button>
         </Flex>
       }
     >
