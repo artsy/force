@@ -61,7 +61,7 @@ describe("MeetTheSpecialists", () => {
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedConsignmentInquiry",
-        context_module: "MeetTheSpecialists",
+        context_module: "sellMeetTheSpecialists",
         context_page_owner_type: "sell",
         label: "Get in Touch",
         user_id: "user-id",

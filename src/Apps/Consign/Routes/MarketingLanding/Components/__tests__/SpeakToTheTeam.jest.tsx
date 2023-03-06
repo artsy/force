@@ -48,7 +48,7 @@ describe("SpeakToTheTeam", () => {
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
         action: "tappedConsignmentInquiry",
-        context_module: "SpeakToTheTeam",
+        context_module: "sellSpeakToTheTeam",
         context_page_owner_type: "sell",
         label: "Get in Touch",
         user_id: "user-id",
