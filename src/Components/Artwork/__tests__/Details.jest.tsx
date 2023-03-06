@@ -585,4 +585,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
     },
   },
   preview: null,
+  customCollections: {
+    totalCount: 0,
+  },
 }

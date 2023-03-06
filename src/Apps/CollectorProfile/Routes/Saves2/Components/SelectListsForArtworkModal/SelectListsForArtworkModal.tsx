@@ -40,7 +40,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useUpdateCollectionsForArtwork()
+  const { submitMutation } = useUpdateCollectionsForArtwork(state.artwork!._id)
   const { sendToast } = useToasts()
 
   const onClose = () => {
