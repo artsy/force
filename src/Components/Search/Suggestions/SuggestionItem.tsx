@@ -126,7 +126,7 @@ const QuickNavigation: React.FC<{
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
         <QuickNavigationItem
-          handleClick={() => {
+          onClick={() => {
             const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
               context_module: ContextModule.header,
               destination_path: `${href}/works-for-sale`,
@@ -144,7 +144,7 @@ const QuickNavigation: React.FC<{
       )}
       {!!showAuctionResultsButton && (
         <QuickNavigationItem
-          handleClick={() => {
+          onClick={() => {
             const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
               context_module: ContextModule.header,
               destination_path: `${href}/auction-results`,
@@ -166,23 +166,23 @@ const QuickNavigation: React.FC<{
 
 interface QuickNavigationItemProps {
   to: string
-  handleClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 const QuickNavigationItem: React.FC<QuickNavigationItemProps & PillProps> = ({
   to,
-  handleClick,
+  onClick,
   ...rest
 }) => {
-  const onClick = event => {
+  const handleClick = event => {
     // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
     event.stopPropagation()
     event.preventDefault()
-    handleClick?.(event)
+    onClick?.(event)
 
     // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
     window.location.assign(to)
   }
 
-  return <Pill onClick={onClick} mt={1} mr={1} {...rest} />
+  return <Pill onClick={handleClick} mt={1} mr={1} {...rest} />
 }
