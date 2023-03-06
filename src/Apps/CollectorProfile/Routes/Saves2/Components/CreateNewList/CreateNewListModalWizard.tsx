@@ -6,11 +6,13 @@ import { AddArtworksModalContainer } from "./AddArtworksModal"
 interface CreateNewListModalWizardProps {
   modalIsOpened: boolean
   onComplete: () => void
+  onClose: () => void
 }
 
 export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> = ({
   modalIsOpened,
   onComplete,
+  onClose,
 }) => {
   const [displayModal, setDisplayModal] = useState(modalIsOpened)
   const [listName, setListName] = useState<string | null>(null)
@@ -23,6 +25,7 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
   }, [modalIsOpened])
 
   const handleCloseModal = () => {
+    setViewKey("CreateListModal")
     setDisplayModal(false)
     onComplete()
   }
@@ -33,9 +36,7 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
   }
 
   const handleAddArtworksComplete = () => {
-    setDisplayModal(false)
-    setViewKey("CreateListModal")
-    onComplete()
+    handleCloseModal()
   }
 
   return (
@@ -43,7 +44,7 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
       {viewKey == "CreateListModal" && (
         <CreateNewListModalContainer
           visible={displayModal}
-          onClose={handleCloseModal}
+          onClose={onClose}
           onComplete={handleCreateListComplete}
         />
       )}

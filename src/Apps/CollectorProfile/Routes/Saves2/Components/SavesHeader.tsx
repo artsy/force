@@ -10,7 +10,6 @@ export const SavesHeader: React.FC = () => {
   const [modalIsOpened, setModalIsOpened] = useState(false)
 
   const handleCreateNewListClick = () => {
-    console.log("[Debug] handleCreateNewListClick")
     setModalIsOpened(true)
   }
 
@@ -19,8 +18,12 @@ export const SavesHeader: React.FC = () => {
 
     sendToast({
       variant: "success",
-      message: t("collectorSaves.savesHeader.artworksAdded"),
+      message: t("collectorSaves.savesHeader.listCreated"),
     })
+  }
+
+  const handleClose = () => {
+    setModalIsOpened(false)
   }
 
   return (
@@ -28,6 +31,7 @@ export const SavesHeader: React.FC = () => {
       <CreateNewListModalWizard
         modalIsOpened={modalIsOpened}
         onComplete={handleComplete}
+        onClose={handleClose}
       />
 
       <Join separator={<Spacer y={0.5} />}>
