@@ -14,6 +14,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { useTracking } from "react-tracking"
 import { Media } from "Utils/Responsive"
+import { ActionType } from "@artsy/cohesion"
 
 export const HeaderSWA = () => {
   const { user } = useSystemContext()
@@ -27,8 +28,10 @@ export const HeaderSWA = () => {
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "Header",
+      action: ActionType.tappedConsign,
+      context_module: "Header", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "header"
+      // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",
@@ -38,8 +41,10 @@ export const HeaderSWA = () => {
 
   const trackGetInTouchClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "Header",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: "Header", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "header"
+      // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Get in Touch",
       user_id: user?.id,

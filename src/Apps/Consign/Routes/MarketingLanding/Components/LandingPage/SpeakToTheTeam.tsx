@@ -6,6 +6,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { useTracking } from "react-tracking"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 
 export const SpeakToTheTeam: React.FC = () => {
   const { user } = useSystemContext()
@@ -23,8 +24,8 @@ export const SpeakToTheTeam: React.FC = () => {
 
   const trackGetInTouchClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "SpeakToTheTeam",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: ContextModule.sellSpeakToTheTeam,
       context_page_owner_type: contextPageOwnerType,
       label: "Get in Touch",
       user_id: user?.id,

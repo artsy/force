@@ -3,6 +3,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 
 const reasons = [
   {
@@ -38,8 +39,8 @@ export const HowItWorksSteps: React.FC = () => {
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "HowItWorks",
+      action: ActionType.tappedConsign,
+      context_module: ContextModule.sellHowItWorks,
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",
