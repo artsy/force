@@ -37,6 +37,7 @@ export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
 
   return (
     <Dropdown
+      minWidth={["calc(100% - 40px)", 300]}
       openDropdownByClick
       placement="bottom-end"
       offset={0}
@@ -66,8 +67,7 @@ export const ContextualMenu: React.FC<ContextualMenuProps> = ({ children }) => {
             // @ts-expect-error TODO: fix this ref type error
             ref={anchorRef}
             {...anchorProps}
-            px={2}
-            pt={1}
+            p={1}
             aria-label="Open contextual menu"
           >
             <MoreIcon width={MORE_ICON_SIZE} height={MORE_ICON_SIZE} />
