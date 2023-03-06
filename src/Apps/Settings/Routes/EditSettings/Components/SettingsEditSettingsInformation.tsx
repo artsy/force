@@ -178,7 +178,6 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                     title="Bidder Number"
                     value={me.paddleNumber}
                     readOnly
-                    disabled
                   />
                 )}
 
