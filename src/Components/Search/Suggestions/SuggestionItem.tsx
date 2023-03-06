@@ -120,22 +120,29 @@ const QuickNavigation: React.FC<{
   showAuctionResultsButton: boolean
 }> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
   const { trackEvent } = useTracking()
+
+  const handleQuickNavigationClick = (type: "artworks" | "auction-results") => {
+    const label = type === "artworks" ? "Artworks" : "Auction Results"
+    const destinationPath =
+      type === "artworks" ? "/works-for-sale" : "/auction-results"
+
+    const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
+      context_module: ContextModule.header,
+      destination_path: href + destinationPath,
+      action: ActionType.searchSuggestionQuickNavigationItemSelected,
+      label,
+    }
+
+    trackEvent(trackingEvent)
+  }
+
   if (!showArtworksButton && !showAuctionResultsButton) return null
 
   return (
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
         <QuickNavigationItem
-          onClick={() => {
-            const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
-              context_module: ContextModule.header,
-              destination_path: `${href}/works-for-sale`,
-              action: ActionType.searchSuggestionQuickNavigationItemSelected,
-              label: "Artworks",
-            }
-
-            trackEvent(trackingEvent)
-          }}
+          onClick={() => handleQuickNavigationClick("artworks")}
           to={`${href}/works-for-sale`}
           Icon={ArtworkIcon}
         >
@@ -144,16 +151,7 @@ const QuickNavigation: React.FC<{
       )}
       {!!showAuctionResultsButton && (
         <QuickNavigationItem
-          onClick={() => {
-            const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
-              context_module: ContextModule.header,
-              destination_path: `${href}/auction-results`,
-              action: ActionType.searchSuggestionQuickNavigationItemSelected,
-              label: "Auction Results",
-            }
-
-            trackEvent(trackingEvent)
-          }}
+          onClick={() => handleQuickNavigationClick("auction-results")}
           to={`${href}/auction-results`}
           Icon={AuctionIcon}
         >
