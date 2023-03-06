@@ -21,7 +21,9 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const { sendToast } = useToasts()
   const { state, savedListId, dispatch } = useManageArtworkForSavesContext()
 
-  const isSaved = !!artwork.is_saved
+  const customListsCount = artwork.customCollections?.totalCount ?? 0
+  const hasCustomLists = customListsCount > 0
+  const isSaved = !!artwork.is_saved || hasCustomLists
 
   const openManageArtworkForSavesModal = () => {
     dispatch({
@@ -74,9 +76,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-    const isCustomListsCount = artwork.customCollections?.totalCount ?? 0
 
-    if (savedListId || isCustomListsCount > 0) {
+    if (savedListId || hasCustomLists) {
       openManageArtworkForSavesModal()
       return
     }

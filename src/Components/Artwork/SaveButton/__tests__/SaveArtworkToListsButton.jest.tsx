@@ -58,20 +58,51 @@ describe("SaveArtworkToListsButton", () => {
     renderWithRelay({
       Artwork: () => ({
         is_saved: false,
+        customCollections: {
+          totalCount: 0,
+        },
       }),
     })
 
     expect(screen.getByText("Save")).toBeInTheDocument()
   })
 
-  it("should display `Unsave` label if artwork was previously saved", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        is_saved: true,
-      }),
+  describe("should display `Unsave` label", () => {
+    it("if artwork was previously saved in `All Saves` list", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          is_saved: true,
+        }),
+      })
+
+      expect(screen.getByText("Unsave")).toBeInTheDocument()
     })
 
-    expect(screen.getByText("Unsave")).toBeInTheDocument()
+    it("if artwork was previously saved in custom lists", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          is_saved: false,
+          customCollections: {
+            totalCount: 2,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Unsave")).toBeInTheDocument()
+    })
+
+    it("if artwork was previously saved in `All Saves` and custom lists", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          is_saved: false,
+          customCollections: {
+            totalCount: 2,
+          },
+        }),
+      })
+
+      expect(screen.getByText("Unsave")).toBeInTheDocument()
+    })
   })
 
   describe("Unsave flow", () => {
