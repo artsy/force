@@ -22,8 +22,7 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
 
   const isDisplayable =
     enabled &&
-    counts.initialSavedArtworks === 0 &&
-    counts.savedArtworks > 0 &&
+    counts.savedArtworks === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
 
   const handleClose = () => {

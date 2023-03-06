@@ -31,7 +31,6 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
   useEffect(() => {
     // Dismiss the save artwork onboarding once you save an artwork.
     if (
-      counts.initialSavedArtworks === 0 &&
       counts.savedArtworks > 0 &&
       !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
     ) {

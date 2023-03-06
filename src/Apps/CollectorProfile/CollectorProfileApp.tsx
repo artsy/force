@@ -6,6 +6,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -48,6 +49,16 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
 
       <RouteTabs fill my={[2, 4]}>
         {tabs.map(tab => {
+          if (tab.name === "Saves & Follows") {
+            return (
+              <ProgressiveOnboardingSavesHighlight>
+                <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
+                  {tab.name}
+                </RouteTab>
+              </ProgressiveOnboardingSavesHighlight>
+            )
+          }
+
           return (
             <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
               {tab.name}

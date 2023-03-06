@@ -22,8 +22,7 @@ const ProgressiveOnboardingFindFollows: FC<ProgressiveOnboardingFindFollowsProps
 
   const isDisplayable =
     enabled &&
-    counts.initialFollowedArtists === 0 &&
-    counts.followedArtists > 0 &&
+    counts.followedArtists === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
 
   const handleClose = () => {

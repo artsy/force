@@ -94,7 +94,7 @@ const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
 ] as const
 
-type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
+export type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
 
 export const parse = (
   id: string,

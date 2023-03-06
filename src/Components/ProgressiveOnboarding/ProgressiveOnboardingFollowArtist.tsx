@@ -31,8 +31,7 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
   useEffect(() => {
     // Dismiss the follow artist onboarding once you follow an artist.
     if (
-      counts.initialFollowedArtists === 0 &&
-      counts.followedArtists === 1 &&
+      counts.followedArtists > 0 &&
       !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)

@@ -15,7 +15,7 @@ export const ProgressiveOnboardingHighlight: FC<ProgressiveOnboardingHighlightPr
   useProgressiveOnboardingTracking({ name })
 
   return (
-    <Box position="relative">
+    <Box position="relative" width="100%">
       <Highlight />
 
       {children}

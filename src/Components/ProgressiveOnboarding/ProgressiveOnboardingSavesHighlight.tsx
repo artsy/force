@@ -1,6 +1,6 @@
 import {
   PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
+  PROGRESSIVE_ONBOARDING_FIND_SAVES,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
@@ -14,8 +14,8 @@ export const ProgressiveOnboardingSavesHighlight: FC = ({ children }) => {
     enabled &&
     // And you haven't already dismissed this
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT) &&
-    // And you've previously dismissed the save artwork onboarding
-    isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
+    // And you've previously dismissed the previous onboarding tip
+    isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
 
   useEffect(() => {
     if (!isDisplayable) return

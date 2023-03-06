@@ -1,6 +1,6 @@
 import {
   PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
+  PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
@@ -14,8 +14,8 @@ export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
     enabled &&
     // And you haven't already dismissed this
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT) &&
-    // And you've previously dismissed the follow artist onboarding
-    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    // And you've previously dismissed the previous onboarding tip
+    isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
 
   useEffect(() => {
     if (!isDisplayable) return
