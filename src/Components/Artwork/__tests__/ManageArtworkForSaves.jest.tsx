@@ -160,6 +160,7 @@ const TestButton = () => {
       type: "SET_ARTWORK",
       payload: {
         id: "artwork-id",
+        internalID: "artwork-internal-id",
         title: "Artwork Title, 2023",
         imageURL: null,
       },
