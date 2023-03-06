@@ -23,8 +23,6 @@ export const SavesHeader: React.FC = () => {
     })
   }
 
-  console.log("[Debug] SavesHeader")
-
   return (
     <>
       <CreateNewListModalWizard

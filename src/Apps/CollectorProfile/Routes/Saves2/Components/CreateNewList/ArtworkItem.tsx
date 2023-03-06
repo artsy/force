@@ -18,11 +18,18 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
     setIsSelected(!isSelected)
   }
 
+  // TODO: metadata markup
+
   return (
-    <Column span={4}>
+    <Column span={[6, 4]}>
       <Clickable width="100%" onClick={onClick} role="option">
         <Flex flexDirection={"column"}>
-          <SkeletonBox key={item.internalID} width={197} height={200} mb={1} />
+          <SkeletonBox
+            key={item.internalID}
+            width={["100%", 197]}
+            height={200}
+            mb={1}
+          />
 
           <Flex justifyContent={"space-between"}>
             <Flex flexDirection={"column"}>

@@ -18,10 +18,16 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
     onClose()
   }
 
+  // TODO: title - next line after "XXX" created.
+
   return (
     <ModalDialog
-      width={["100%", 713]}
-      height={["100%", 800]}
+      m={["0", "auto"]}
+      dialogProps={{
+        width: ["100%", 700],
+        height: ["100%", "auto"],
+        maxHeight: [null, 800],
+      }}
       onClose={onClose}
       title={`${listName} created. Add saved works to the list.`}
       data-testid="CreateNewList"
@@ -35,7 +41,9 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
     >
       <>
         <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <Text variant="sm">{TEMP_ARTWORKS.length} Artworks:</Text>
+          <b>
+            <Text variant={["xs", "sm"]}>{TEMP_ARTWORKS.length} Artworks:</Text>
+          </b>
 
           <SortFilter
             sortOptions={[{ text: "Recently Saved", value: "-position" }]}
@@ -44,7 +52,7 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
           />
         </Flex>
 
-        <Spacer y={1} />
+        <Spacer y={2} />
 
         <ArtworksList />
       </>
