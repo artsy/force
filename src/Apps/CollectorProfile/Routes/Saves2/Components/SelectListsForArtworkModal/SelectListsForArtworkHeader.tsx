@@ -24,7 +24,6 @@ export const SelectListsForArtworkHeader: FC = () => {
       <Flex
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
-        mt={[-2, 0]}
       >
         <Flex flex={1} flexDirection="row" alignItems="center">
           <SavesEntityImage size={50} url={artwork.imageURL} />
@@ -43,13 +42,15 @@ export const SelectListsForArtworkHeader: FC = () => {
         </Button>
       </Flex>
 
+      <Spacer y={2} />
+
       {state.recentlyAddedList && (
         <Message
           variant="success"
           title={t(
             "collectorSaves.selectedListsForArtwork.recentlyAddedList.title"
           )}
-          mt={2}
+          mx={-2}
         >
           {t(
             "collectorSaves.selectedListsForArtwork.recentlyAddedList.message",
