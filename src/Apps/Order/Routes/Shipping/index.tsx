@@ -212,12 +212,43 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
-  const onContinueButtonPressed = async () => {
+  const onContinueButtonPressed = async (address?: any) => {
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
-      selectShipping()
+      const orderOrError = (
+        await setShipping(props.commitMutation, {
+          input: {
+            id: props.order.internalID,
+            fulfillmentType: "SHIP_ARTA",
+            shipping: {
+              addressLine1: address.street,
+              city: address.city,
+              country: address.country,
+              name: address.name,
+              phoneNumber: address.phoneNumber,
+              postalCode: address.postalCode,
+              region: address.state,
+            },
+            phoneNumber: address.phoneNumber,
+          },
+        })
+      ).commerceSetShipping?.orderOrError
+
+      if (orderOrError?.error) {
+        handleSubmitError(orderOrError?.error)
+        return
+      }
+
+      props.router.push(`/orders/${orderOrError?.order?.internalID}/payment`)
     }
+
+    // TODO: the original:
+    // if (checkIfArtsyShipping() && !!shippingQuoteId) {
+    //   selectShippingQuote()
+    // } else {
+    //   selectShipping()
+    // }
   }
 
   const selectShipping = async (editedAddress?: MutationAddressResponse) => {
@@ -656,7 +687,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
 
-              <AddressAutoComplete />
+              <AddressAutoComplete
+                onContinueButtonPressed={onContinueButtonPressed}
+              />
               {/* TODO */}
               {/* <AddressForm
                 value={address}
@@ -721,7 +754,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Spacer y={4} />
             </Collapse> */}
 
-            <Media greaterThan="xs">
+            {/* <Media greaterThan="xs">
               <Button
                 onClick={onContinueButtonPressed}
                 loading={isCommittingMutation}
@@ -729,9 +762,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 width="50%"
                 disabled={isSaveAndContinueAllowed()}
               >
-                Save and Continue
+                Save and Continuee
               </Button>
-            </Media>
+            </Media> */}
           </Flex>
         }
         sidebar={

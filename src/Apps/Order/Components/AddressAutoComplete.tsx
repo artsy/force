@@ -1,14 +1,18 @@
 import { FC, useState, useEffect } from "react"
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService"
-import { Text, Input, Spacer } from "@artsy/palette"
+import { Text, Input, Spacer, Button } from "@artsy/palette"
+import { Media } from "Utils/Responsive"
+import { validatePhoneNumber } from "Apps/Order/Utils/formValidators"
 
-export const AddressAutoComplete: FC = () => {
+export const AddressAutoComplete: FC<{
+  onContinueButtonPressed: (arg: any) => void
+}> = ({ onContinueButtonPressed }) => {
   const {
     placesService,
     placePredictions,
     getPlacePredictions,
   } = usePlacesService({
-    // apiKey: "API_KEY_PLACEHOLDER",
+    apiKey: "nope",
   })
 
   // TODO: better to model these into a single state property
@@ -18,10 +22,14 @@ export const AddressAutoComplete: FC = () => {
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
   const [country, setCountry] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [phoneNumberError, setPhoneNumberError] = useState("")
 
   // the address user selects from predictions
   const [selectedAddress, setSelectedAddress] = useState<any>()
   const [showAddressPredictions, setShowAddressPredictions] = useState(false)
+
+  const [isFormComplete, setIsFormComplete] = useState(false)
 
   useEffect(() => {
     // when address is selected, find relevant sections to populate inputs values
@@ -29,9 +37,9 @@ export const AddressAutoComplete: FC = () => {
       for (const addressSection of selectedAddress) {
         if (
           addressSection.types.includes("country") &&
-          addressSection?.long_name
+          addressSection?.short_name
         ) {
-          setCountry(addressSection.long_name)
+          setCountry(addressSection.short_name)
         }
 
         if (
@@ -41,17 +49,18 @@ export const AddressAutoComplete: FC = () => {
           setPostalCode(addressSection.long_name)
         }
         if (
-          addressSection.types.includes("administrative_area_level_1") &&
+          addressSection.types.includes("locality") &&
+          addressSection.types.includes("political") &&
           addressSection?.long_name
         ) {
           setCity(addressSection.long_name)
         }
         if (
-          addressSection.types.includes("locality") &&
+          addressSection.types.includes("administrative_area_level_1") &&
           addressSection.types.includes("political") &&
-          addressSection?.long_name
+          addressSection?.short_name
         ) {
-          setState(addressSection.long_name)
+          setState(addressSection.short_name)
         }
         if (
           addressSection.types.includes("route") &&
@@ -61,12 +70,40 @@ export const AddressAutoComplete: FC = () => {
             component =>
               component?.types.includes("street_number") && component?.long_name
           )
-          setStreet(addressSection.long_name + " " + streetNumber.long_name)
+
+          if (streetNumber && streetNumber?.long_name) {
+            setStreet(addressSection.long_name + " " + streetNumber.long_name)
+          }
+          setStreet(addressSection.long_name)
         }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAddress])
+
+  useEffect(() => {
+    if (
+      name &&
+      street &&
+      postalCode &&
+      city &&
+      state &&
+      country &&
+      phoneNumber &&
+      !phoneNumberError
+    ) {
+      setIsFormComplete(true)
+    }
+  }, [
+    name,
+    street,
+    postalCode,
+    city,
+    state,
+    country,
+    phoneNumber,
+    phoneNumberError,
+  ])
 
   const handleAddressSelect = address => {
     setShowAddressPredictions(false)
@@ -79,6 +116,7 @@ export const AddressAutoComplete: FC = () => {
         },
         placeDetails => {
           if (placeDetails?.address_components) {
+            console.log({ XXXXX: placeDetails })
             setSelectedAddress(placeDetails.address_components)
           }
         }
@@ -163,6 +201,40 @@ export const AddressAutoComplete: FC = () => {
         onChange={evt => setCountry(evt.target.value)}
       />
       <Spacer y={1} />
+      <CustomInput
+        title="Phone number"
+        value={phoneNumber}
+        error={phoneNumberError || ""}
+        onChange={evt => {
+          const { error } = validatePhoneNumber(evt.target.value)
+
+          setPhoneNumberError(error!)
+          setPhoneNumber(evt.target.value)
+        }}
+      />
+      <Spacer y={4} />
+      <Media greaterThan="xs">
+        <Button
+          onClick={() => {
+            const address = {
+              name,
+              street,
+              postalCode,
+              city,
+              state,
+              country,
+              phoneNumber,
+            }
+
+            onContinueButtonPressed(address)
+          }}
+          variant="primaryBlack"
+          width="50%"
+          disabled={!isFormComplete}
+        >
+          Save and Continue
+        </Button>
+      </Media>
     </>
   )
 }
@@ -170,13 +242,15 @@ export const AddressAutoComplete: FC = () => {
 const CustomInput: FC<{
   title: string
   value: string
+  error?: string
   onChange: (arg: any) => void
-}> = ({ title, value, onChange }) => {
+}> = ({ title, value, error, onChange }) => {
   return (
     <Input
       required
       title={title}
       value={value}
+      error={error}
       onChange={onChange}
       style={{
         backgroundColor: "#F9FBFB",
