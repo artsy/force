@@ -2,6 +2,7 @@ import React from "react"
 import { Flex, Text, ModalDialog, Spacer, Button } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
 import { ArtworksList, TEMP_ARTWORKS } from "./ArtworksList"
+import { useTranslation } from "react-i18next"
 
 interface AddArtworksModalProps {
   visible: boolean
@@ -14,11 +15,11 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
   listName,
   onClose,
 }) => {
+  const { t } = useTranslation()
+
   const handleSave = () => {
     onClose()
   }
-
-  // TODO: title - next line after "XXX" created.
 
   return (
     <ModalDialog
@@ -29,20 +30,30 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
         maxHeight: [null, 800],
       }}
       onClose={onClose}
-      title={`${listName} created. Add saved works to the list.`}
+      title={t("collectorSaves.addArtworksModal.modalTitle", {
+        value: listName,
+      })}
       data-testid="CreateNewList"
       footer={
         <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <Text variant={"sm"}>{0} artworks selected</Text>
+          <Text variant={"sm"}>
+            {t("collectorSaves.addArtworksModal.artworksSelected", {
+              count: 0,
+            })}
+          </Text>
 
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave}>{t("general.buttons.save")}</Button>
         </Flex>
       }
     >
       <>
         <Flex justifyContent={"space-between"} alignItems={"baseline"}>
           <b>
-            <Text variant={["xs", "sm"]}>{TEMP_ARTWORKS.length} Artworks:</Text>
+            <Text variant={["xs", "sm"]}>
+              {t("collectorSaves.addArtworksModal.artworksCount", {
+                count: TEMP_ARTWORKS.length,
+              })}
+            </Text>
           </b>
 
           <SortFilter

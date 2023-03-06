@@ -18,8 +18,6 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
     setIsSelected(!isSelected)
   }
 
-  // TODO: metadata markup
-
   return (
     <Column span={[6, 4]}>
       <Clickable width="100%" onClick={onClick} role="option">

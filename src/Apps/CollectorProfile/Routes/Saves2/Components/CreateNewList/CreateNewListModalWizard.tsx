@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-// TODO: move directory up one level
 import { CreateNewListModalContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 import { AddArtworksModalContainer } from "./AddArtworksModal"
 
