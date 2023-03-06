@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6aab6f3f9e67d7ae0e694b7f0f2862f>>
+ * @generated SignedSource<<14f6098c7bb943476ecd87052ac0ebc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -223,6 +223,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "editionOf",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Money",
             "kind": "LinkedField",
             "name": "pricePaid",
@@ -252,7 +259,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "281504524de44be91be1948b3c3e1108",
+    "cacheID": "0ad78f5cba07e0d797e668229769e466",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -297,6 +304,7 @@ return {
         },
         "artwork.dimensions.cm": (v2/*: any*/),
         "artwork.dimensions.in": (v2/*: any*/),
+        "artwork.editionOf": (v2/*: any*/),
         "artwork.id": (v3/*: any*/),
         "artwork.medium": (v2/*: any*/),
         "artwork.metric": (v2/*: any*/),
@@ -313,7 +321,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
   }
 };
 })();
