@@ -27,8 +27,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     dispatch({
       type: "SET_ARTWORK",
       payload: {
-        _id: artwork.id,
-        id: artwork.internalID,
+        id: artwork.id,
+        internalID: artwork.internalID,
         title: `${artwork.title}, ${artwork.date}`,
         imageURL: artwork.preview?.url ?? null,
       },
