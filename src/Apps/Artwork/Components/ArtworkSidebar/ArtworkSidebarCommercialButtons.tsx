@@ -170,12 +170,18 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
         }
       )
     } else {
+      console.log({ XXXXX: "here in else" })
       showAuthDialog({
         mode: "SignUp",
         options: {
           title: mode => {
             const action = mode === "SignUp" ? "Sign up" : "Log in"
             return `${action} to buy art with ease`
+          },
+          afterAuthAction: {
+            action: "buyNow",
+            kind: "artworks",
+            objectId: artwork.internalID,
           },
         },
         analytics: {
