@@ -584,4 +584,5 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
       name: "Prints",
     },
   },
+  preview: null,
 }

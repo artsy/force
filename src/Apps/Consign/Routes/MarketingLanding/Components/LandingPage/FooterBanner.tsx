@@ -9,7 +9,7 @@ export const FooterBanner: React.FC = () => {
   return (
     <>
       {width > parseInt(breakpoints.sm, 10) && (
-        <FullBleedBanner dismissable={false} variant="defaultLight">
+        <FullBleedBanner dismissable={false} variant="defaultLight" mb={-4}>
           Gallery or art dealer?
           <RouterLink to="https://partners.artsy.net">
             Become a partner

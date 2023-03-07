@@ -216,7 +216,7 @@ describe("AuctionResults", () => {
                 hide_upcoming: true,
                 categories: ["Painting"],
                 sizes: ["SMALL", "LARGE"],
-                organizations: ["Phillips", "Bonhams"],
+                organizations: ["Phillips", "Bonhams", "Artsy Auction"],
               },
             },
           },
@@ -240,7 +240,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(7)
+        expect(checkedCheckboxes).toHaveLength(8)
         expect(checkedCheckboxes[0]).toHaveTextContent(
           "CheckHide upcoming auctions"
         )
@@ -256,6 +256,7 @@ describe("AuctionResults", () => {
         )
         expect(checkedCheckboxes[5]).toHaveTextContent("CheckPhillips")
         expect(checkedCheckboxes[6]).toHaveTextContent("CheckBonhams")
+        expect(checkedCheckboxes[7]).toHaveTextContent("CheckArtsy Auction")
       })
     })
 

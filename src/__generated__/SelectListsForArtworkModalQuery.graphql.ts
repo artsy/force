@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20a6844894000de1c66c3d8f42411eb3>>
+ * @generated SignedSource<<61c2371874c95afc8b26113aa835ac88>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,6 @@ export type SelectListsForArtworkModalQuery$variables = {
   artworkID: string;
 };
 export type SelectListsForArtworkModalQuery$data = {
-  readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_artwork">;
-  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_me">;
   } | null;
@@ -41,53 +38,21 @@ v1 = [
     "variableName": "artworkID"
   }
 ],
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "artworkID"
-  }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Image",
-  "kind": "LinkedField",
-  "name": "image",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "version",
-          "value": "square"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "url",
-      "storageKey": "url(version:\"square\")"
-    }
-  ],
-  "storageKey": null
-},
-v5 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
-  (v3/*: any*/),
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
+    "storageKey": null
+  },
   {
     "alias": null,
     "args": (v1/*: any*/),
@@ -144,8 +109,31 @@ v6 = [
             "name": "node",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square"
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"square\")"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
@@ -155,7 +143,7 @@ v6 = [
     ],
     "storageKey": "artworksConnection(first:1,sort:\"SAVED_AT_DESC\")"
   },
-  (v5/*: any*/)
+  (v2/*: any*/)
 ];
 return {
   "fragment": {
@@ -176,22 +164,6 @@ return {
             "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "SelectListsForArtworkModal_me"
-          }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "SelectListsForArtworkModal_artwork"
           }
         ],
         "storageKey": null
@@ -227,7 +199,7 @@ return {
             "kind": "LinkedField",
             "name": "collection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v3/*: any*/),
             "storageKey": "collection(id:\"saved-artwork\")"
           },
           {
@@ -274,7 +246,7 @@ return {
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -283,51 +255,23 @@ return {
             ],
             "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"CREATED_AT_DESC\")"
           },
-          (v5/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          (v3/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "date",
-            "storageKey": null
-          },
-          (v4/*: any*/),
-          (v5/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "341288c3f04c2439e9d1dfbe56598262",
+    "cacheID": "3baa84763064b316b27e37dd4e7007d8",
     "id": null,
     "metadata": {},
     "name": "SelectListsForArtworkModalQuery",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n  artwork(id: $artworkID) {\n    ...SelectListsForArtworkModal_artwork\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkHeader_artwork on Artwork {\n  title\n  date\n  image {\n    url(version: \"square\")\n  }\n}\n\nfragment SelectListsForArtworkModal_artwork on Artwork {\n  internalID\n  ...SelectListsForArtworkHeader_artwork\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    ...SelectListItem_item\n    id\n  }\n  collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    ...SelectListItem_item\n    id\n  }\n  collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        ...SelectListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "60909341344f6400c8392a24678f26c2";
+(node as any).hash = "28cf328fddb31d1f4e1e97491bde3b98";
 
 export default node;

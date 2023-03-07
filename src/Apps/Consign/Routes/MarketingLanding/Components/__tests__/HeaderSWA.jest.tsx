@@ -63,7 +63,7 @@ describe("HeaderSWA", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
+        action: "tappedConsign",
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Start Selling",
@@ -81,7 +81,7 @@ describe("HeaderSWA", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedGetInTouch",
+        action: "tappedConsignmentInquiry",
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Get in Touch",

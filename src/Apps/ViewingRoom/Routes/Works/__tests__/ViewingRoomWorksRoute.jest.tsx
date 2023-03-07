@@ -223,6 +223,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Prints",
               },
             },
+            preview: null,
           },
         },
         {
@@ -367,6 +368,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 name: "Prints",
               },
             },
+            preview: null,
           },
         },
       ],

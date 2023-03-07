@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6a7e1b61b08013d66cd41de26e63743>>
+ * @generated SignedSource<<d1ac09c86eed2b6b3c2985ef0cb29e39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -157,21 +157,27 @@ v18 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "Image"
 },
 v19 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "Int"
 },
 v20 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "Int"
+  "type": "Boolean"
 },
 v21 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -677,6 +683,30 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": "preview",
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "version",
+                                    "value": "square"
+                                  }
+                                ],
+                                "kind": "ScalarField",
+                                "name": "url",
+                                "storageKey": "url(version:\"square\")"
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          {
                             "alias": null,
                             "args": null,
                             "concreteType": "AttributionClass",
@@ -753,7 +783,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "401bb2e228df71d10200ab5d52dfbe38",
+    "cacheID": "b16a8afce0b363d49bcc02e00feb4ab5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -826,12 +856,7 @@ return {
         "me.followsAndSaves.artworksConnection.edges.node.date": (v17/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.href": (v17/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.id": (v15/*: any*/),
-        "me.followsAndSaves.artworksConnection.edges.node.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
+        "me.followsAndSaves.artworksConnection.edges.node.image": (v18/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.image.aspectRatio": {
           "enumValues": null,
           "nullable": false,
@@ -891,16 +916,18 @@ return {
         "me.followsAndSaves.artworksConnection.edges.node.partner.href": (v17/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.partner.id": (v15/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.partner.name": (v17/*: any*/),
+        "me.followsAndSaves.artworksConnection.edges.node.preview": (v18/*: any*/),
+        "me.followsAndSaves.artworksConnection.edges.node.preview.url": (v17/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "me.followsAndSaves.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v18/*: any*/),
+        "me.followsAndSaves.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v19/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale.display_timely_at": (v17/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale.endAt": (v17/*: any*/),
-        "me.followsAndSaves.artworksConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v18/*: any*/),
+        "me.followsAndSaves.artworksConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v19/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale.id": (v15/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale.is_auction": (v16/*: any*/),
         "me.followsAndSaves.artworksConnection.edges.node.sale.is_closed": (v16/*: any*/),
@@ -960,19 +987,19 @@ return {
           "type": "PageCursor"
         },
         "me.followsAndSaves.artworksConnection.pageCursors.around.cursor": (v14/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.around.isCurrent": (v19/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.around.page": (v20/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.first": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.around.isCurrent": (v20/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.around.page": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.first": (v22/*: any*/),
         "me.followsAndSaves.artworksConnection.pageCursors.first.cursor": (v14/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.first.isCurrent": (v19/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.first.page": (v20/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.last": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.first.isCurrent": (v20/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.first.page": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.last": (v22/*: any*/),
         "me.followsAndSaves.artworksConnection.pageCursors.last.cursor": (v14/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.last.isCurrent": (v19/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.last.page": (v20/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.previous": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.last.isCurrent": (v20/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.last.page": (v21/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.previous": (v22/*: any*/),
         "me.followsAndSaves.artworksConnection.pageCursors.previous.cursor": (v14/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageCursors.previous.page": (v20/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageCursors.previous.page": (v21/*: any*/),
         "me.followsAndSaves.artworksConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
@@ -980,14 +1007,14 @@ return {
           "type": "PageInfo"
         },
         "me.followsAndSaves.artworksConnection.pageInfo.endCursor": (v17/*: any*/),
-        "me.followsAndSaves.artworksConnection.pageInfo.hasNextPage": (v19/*: any*/),
-        "me.followsAndSaves.artworksConnection.totalCount": (v18/*: any*/),
+        "me.followsAndSaves.artworksConnection.pageInfo.hasNextPage": (v20/*: any*/),
+        "me.followsAndSaves.artworksConnection.totalCount": (v19/*: any*/),
         "me.id": (v15/*: any*/)
       }
     },
     "name": "SettingsSavesArtworks_test_Query",
     "operationKind": "query",
-    "text": "query SettingsSavesArtworks_test_Query(\n  $page: Int\n) {\n  me {\n    ...SettingsSavesArtworks_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SettingsSavesArtworks_me_2Pg8Wv on Me {\n  followsAndSaves {\n    artworksConnection(first: 10, private: true, page: $page) {\n      totalCount\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n      pageCursors {\n        ...Pagination_pageCursors\n      }\n      edges {\n        node {\n          internalID\n          ...GridItem_artwork\n          id\n          __typename\n        }\n        cursor\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsSavesArtworks_test_Query(\n  $page: Int\n) {\n  me {\n    ...SettingsSavesArtworks_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SettingsSavesArtworks_me_2Pg8Wv on Me {\n  followsAndSaves {\n    artworksConnection(first: 10, private: true, page: $page) {\n      totalCount\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n      pageCursors {\n        ...Pagination_pageCursors\n      }\n      edges {\n        node {\n          internalID\n          ...GridItem_artwork\n          id\n          __typename\n        }\n        cursor\n      }\n    }\n  }\n}\n"
   }
 };
 })();
