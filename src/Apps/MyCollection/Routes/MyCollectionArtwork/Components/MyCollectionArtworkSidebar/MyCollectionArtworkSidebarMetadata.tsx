@@ -18,20 +18,22 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
     category,
     confidentialNotes,
     dimensions,
+    editionOf,
     medium,
     metric,
     pricePaid,
     provenance,
   } = artwork
 
+  const rarityText = `${attributionClass?.shortDescription || ""}${
+    editionOf ? `\n ${editionOf}` : ""
+  }`
+
   return (
     <>
       <MetadataField label="Medium" value={category} />
       <MetadataField label="Materials" value={medium} />
-      <MetadataField
-        label="Rarity"
-        value={attributionClass?.shortDescription}
-      />
+      <MetadataField label="Rarity" value={rarityText} />
       <MetadataField
         label="Dimensions"
         value={metric === "in" ? dimensions?.in : dimensions?.cm}
@@ -68,6 +70,7 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
         attributionClass {
           shortDescription
         }
+        editionOf
         pricePaid {
           display
         }

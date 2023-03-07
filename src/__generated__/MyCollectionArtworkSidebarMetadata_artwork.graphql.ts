@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9dc16d84a063f28890998e8cbad2a51a>>
+ * @generated SignedSource<<1d589691dd639c9e439dc4bf9657c9af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type MyCollectionArtworkSidebarMetadata_artwork$data = {
     readonly cm: string | null;
     readonly in: string | null;
   } | null;
+  readonly editionOf: string | null;
   readonly medium: string | null;
   readonly metric: string | null;
   readonly pricePaid: {
@@ -121,6 +122,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "editionOf",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Money",
       "kind": "LinkedField",
       "name": "pricePaid",
@@ -148,6 +156,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "0a75b085f903fd7a9295ac1a7aaa0d8c";
+(node as any).hash = "87bf6119feaa4e15034713d8460079ab";
 
 export default node;
