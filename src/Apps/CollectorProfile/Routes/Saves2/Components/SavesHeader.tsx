@@ -28,11 +28,12 @@ export const SavesHeader: React.FC = () => {
 
   return (
     <>
-      <CreateNewListModalWizard
-        modalIsOpened={modalIsOpened}
-        onComplete={handleComplete}
-        onClose={handleClose}
-      />
+      {modalIsOpened && (
+        <CreateNewListModalWizard
+          onComplete={handleComplete}
+          onClose={handleClose}
+        />
+      )}
 
       <Join separator={<Spacer y={0.5} />}>
         <Text variant="lg-display">

@@ -11,6 +11,8 @@ interface AddArtworksModalProps {
   listName: string
 }
 
+const SORTS = [{ text: "Recently Saved", value: "-position" }]
+
 const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
   listName,
   onClose,
@@ -23,7 +25,7 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
 
   return (
     <ModalDialog
-      m={["0", "auto"]}
+      m="0"
       dialogProps={{
         width: ["100%", 700],
         height: ["100%", "auto"],
@@ -34,30 +36,28 @@ const AddArtworksModal: React.FC<AddArtworksModalProps> = ({
         value: listName,
       })}
       footer={
-        <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <Text variant={"sm"}>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text variant="sm-display">
             {t("collectorSaves.addArtworksModal.artworksSelected", {
               count: 0,
             })}
           </Text>
 
-          <Button onClick={handleSave}>{t("general.buttons.save")}</Button>
+          <Button onClick={handleSave}>{t("common.buttons.save")}</Button>
         </Flex>
       }
     >
       <>
-        <Flex justifyContent={"space-between"} alignItems={"baseline"}>
-          <b>
-            <Text variant={["xs", "sm"]}>
-              {t("collectorSaves.addArtworksModal.artworksCount", {
-                count: TEMP_ARTWORKS.length,
-              })}
-            </Text>
-          </b>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text variant={["xs", "sm"]} fontWeight="bold">
+            {t("collectorSaves.addArtworksModal.artworksCount", {
+              count: TEMP_ARTWORKS.length,
+            })}
+          </Text>
 
           <SortFilter
-            sortOptions={[{ text: "Recently Saved", value: "-position" }]}
-            selected={"-position"}
+            sortOptions={SORTS}
+            selected={SORTS[0].value}
             onSort={() => {}}
           />
         </Flex>

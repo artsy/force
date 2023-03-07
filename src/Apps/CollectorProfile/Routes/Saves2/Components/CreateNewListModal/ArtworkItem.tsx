@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, Clickable, Column, Flex, SkeletonBox } from "@artsy/palette"
+import { Text, Clickable, Column, Flex, SkeletonBox, Box } from "@artsy/palette"
 import { SelectArtworkItem } from "./SelectArtworkItem"
 
 interface ArtworkItemProps {
@@ -22,12 +22,7 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
     <Column span={[6, 4]}>
       <Clickable width="100%" onClick={onClick} role="option">
         <Flex flexDirection={"column"}>
-          <SkeletonBox
-            key={item.internalID}
-            width={["100%", 197]}
-            height={200}
-            mb={1}
-          />
+          <SkeletonBox key={item.internalID} width="100%" height={200} mb={1} />
 
           <Flex justifyContent={"space-between"}>
             <Flex flexDirection={"column"}>
@@ -41,7 +36,9 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
               <Text variant="sm">{item.price}</Text>
             </Flex>
 
-            <SelectArtworkItem isSelected={isSelected} />
+            <Box ml="1">
+              <SelectArtworkItem isSelected={isSelected} />
+            </Box>
           </Flex>
         </Flex>
       </Clickable>

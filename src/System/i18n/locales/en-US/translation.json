@@ -169,6 +169,7 @@
   },
   "common": {
     "buttons": {
+      "save": "Save",
       "back": "Back",
       "cancel": "Cancel"
     },
@@ -228,10 +229,5 @@
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",
     "resultsCount_other": "{{count}} results for"
-  },
-  "general": {
-    "buttons": {
-      "save": "Save"
-    }
   }
 }

@@ -12,7 +12,7 @@ export const SelectArtworkItem: React.FC<SelectArtworkItemProps> = ({
   isSelected,
 }) => {
   return (
-    <Box width={ICON_SIZE} height={ICON_SIZE} ml={10}>
+    <Box width={ICON_SIZE} height={ICON_SIZE}>
       {isSelected ? (
         <CheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
       ) : (
