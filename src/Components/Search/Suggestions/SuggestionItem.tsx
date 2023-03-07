@@ -1,7 +1,7 @@
 import {
   ActionType,
   ContextModule,
-  SearchSuggestionQuickNavigationItemSelected,
+  SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
 import {
   ArtworkIcon,
@@ -121,19 +121,37 @@ const QuickNavigation: React.FC<{
 }> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
   const { trackEvent } = useTracking()
 
-  const handleQuickNavigationClick = (type: "artworks" | "auction-results") => {
-    const label = type === "artworks" ? "Artworks" : "Auction Results"
-    const destinationPath =
-      type === "artworks" ? "/works-for-sale" : "/auction-results"
+  const handleArtworksItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: "works-for-sale",
+        label: "Artworks",
+      })
+    )
+  }
 
-    const trackingEvent: SearchSuggestionQuickNavigationItemSelected = {
-      context_module: ContextModule.header,
-      destination_path: href + destinationPath,
-      action: ActionType.searchSuggestionQuickNavigationItemSelected,
+  const handleAuctionResultsItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: "auction-results",
+        label: "Auction Results",
+      })
+    )
+  }
+
+  const tracks = {
+    quickNavigationItemClicked: ({
+      destinationPath,
       label,
-    }
-
-    trackEvent(trackingEvent)
+    }: {
+      destinationPath: string
+      label: "Auction Results" | "Artworks"
+    }): SelectedSearchSuggestionQuickNavigationItem => ({
+      context_module: ContextModule.header,
+      destination_path: `${href}/${destinationPath}`,
+      action: ActionType.selectedSearchSuggestionQuickNavigationItem,
+      label,
+    }),
   }
 
   if (!showArtworksButton && !showAuctionResultsButton) return null
@@ -142,7 +160,7 @@ const QuickNavigation: React.FC<{
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
         <QuickNavigationItem
-          onClick={() => handleQuickNavigationClick("artworks")}
+          onClick={handleArtworksItemClicked}
           to={`${href}/works-for-sale`}
           Icon={ArtworkIcon}
         >
@@ -151,7 +169,7 @@ const QuickNavigation: React.FC<{
       )}
       {!!showAuctionResultsButton && (
         <QuickNavigationItem
-          onClick={() => handleQuickNavigationClick("auction-results")}
+          onClick={handleAuctionResultsItemClicked}
           to={`${href}/auction-results`}
           Icon={AuctionIcon}
         >
