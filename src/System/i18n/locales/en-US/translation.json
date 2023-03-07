@@ -126,7 +126,6 @@
     "createNewListModal": {
       "title": "Create a new list",
       "createListButton": "Create List",
-      "back": "Back",
       "nameLabel": "Name your list",
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
       "remainingCharactersCount_one": "{{count}} character remaining",
@@ -136,6 +135,11 @@
       "changesSaved": "Changes saved"
     },
     "selectedListsForArtwork": {
+      "createNewListButton": "Create New List",
+      "recentlyAddedList": {
+        "title": "List created",
+        "message": "Artwork has been added to \"{{name}}\""
+      },
       "listsCount_one": "{{count}} list selected",
       "listsCount_other": "{{count}} lists selected",
       "saveButton": "Save"
@@ -147,12 +151,27 @@
     "deleteListModal": {
       "title": "Delete {{name}} list?",
       "message": "You’ll lose any works that are only saved on this list.",
-      "cancel": "Cancel",
       "delete": "Yes, Delete List",
+      "success": "Changes saved"
+    },
+    "editListModal": {
+      "title": "Edit your list",
+      "fields": {
+        "name": {
+          "label": "List Name",
+          "required": "Name is required"
+        }
+      },
+      "back": "Back",
+      "save": "Save Changes",
       "success": "Changes saved"
     }
   },
   "common": {
+    "buttons": {
+      "back": "Back",
+      "cancel": "Cancel"
+    },
     "errors": {
       "somethingWentWrong": "Something went wrong. Please try again."
     }

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { CreateNewListModalWizard } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewList/CreateNewListModalWizard"
+import { CreateNewListModalWizard } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalWizard"
 
 export const SavesHeader: React.FC = () => {
   const { t } = useTranslation()

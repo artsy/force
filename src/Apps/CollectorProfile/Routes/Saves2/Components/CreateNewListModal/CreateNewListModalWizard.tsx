@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { CreateNewListModalContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
+import { CreateNewListModalContainer, NewAddedList } from "./CreateNewListModal"
 import { AddArtworksModalContainer } from "./AddArtworksModal"
 
 interface CreateNewListModalWizardProps {
@@ -29,8 +29,8 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
     onComplete()
   }
 
-  const handleCreateListComplete = listName => {
-    setListName(listName)
+  const handleCreateListComplete = (list: NewAddedList) => {
+    setListName(list.name)
     setViewKey("AddArtworksModal")
   }
 

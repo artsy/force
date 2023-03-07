@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26729601b6fa649099912990110c3907>>
+ * @generated SignedSource<<ac008139a2dd606d3fe596d879f83ab1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,20 +19,13 @@ export type CreateNewListModalMutation$variables = {
 export type CreateNewListModalMutation$data = {
   readonly createCollection: {
     readonly responseOrError: {
-      readonly __typename: "CreateCollectionFailure";
-      readonly mutationError: {
-        readonly message: string;
-      } | null;
-    } | {
-      readonly __typename: "CreateCollectionSuccess";
-      readonly collection: {
+      readonly collection?: {
         readonly internalID: string;
         readonly name: string;
       } | null;
-    } | {
-      // This will never be '%other', but we need some
-      // value in case none of the concrete values match.
-      readonly __typename: "%other";
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -60,24 +53,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -125,7 +111,6 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -137,8 +122,8 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v2/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -146,7 +131,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -179,7 +164,13 @@ return {
             "name": "responseOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -191,8 +182,8 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -207,7 +198,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -227,6 +218,6 @@ return {
 };
 })();
 
-(node as any).hash = "873964f3d346d3d0410491a9694b50cc";
+(node as any).hash = "0aff09746bd0bfde046f4c0edecd2034";
 
 export default node;
