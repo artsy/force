@@ -32,13 +32,13 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
             ... on ArtworksCollectionsBatchUpdateSuccess {
               addedToCollections {
                 internalID
-                name
                 artworksCount
+                default
               }
               removedFromCollections {
                 internalID
-                name
                 artworksCount
+                default
               }
             }
             ... on ArtworksCollectionsBatchUpdateFailure {
@@ -106,8 +106,7 @@ const getCountsByLists = (lists: ListEntity) => {
       return acc
     }
 
-    const isDefault = list.name === "Saved Artwork"
-    const key: keyof Counts = isDefault ? "default" : "custom"
+    const key: keyof Counts = list.default ? "default" : "custom"
     const prevCount = acc[key]
 
     return {

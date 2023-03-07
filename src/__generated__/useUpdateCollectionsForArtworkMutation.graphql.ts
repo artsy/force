@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5590b6692e8bbb82bb58b58fb4867fa>>
+ * @generated SignedSource<<074f856703cf7c63276304f5c4f3cc62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,16 +23,16 @@ export type useUpdateCollectionsForArtworkMutation$data = {
     readonly responseOrError: {
       readonly addedToCollections?: ReadonlyArray<{
         readonly artworksCount: number;
+        readonly default: boolean;
         readonly internalID: string;
-        readonly name: string;
       } | null> | null;
       readonly mutationError?: {
         readonly statusCode: number | null;
       } | null;
       readonly removedFromCollections?: ReadonlyArray<{
         readonly artworksCount: number;
+        readonly default: boolean;
         readonly internalID: string;
-        readonly name: string;
       } | null> | null;
     } | null;
   } | null;
@@ -68,14 +68,14 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "artworksCount",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "artworksCount",
+  "name": "default",
   "storageKey": null
 },
 v5 = [
@@ -247,16 +247,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a1a696dee300fb8a564451f3e5352db",
+    "cacheID": "304ccbeebd42f449ff917e63c7c1293f",
     "id": null,
     "metadata": {},
     "name": "useUpdateCollectionsForArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          name\n          artworksCount\n          id\n        }\n        removedFromCollections {\n          internalID\n          name\n          artworksCount\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          artworksCount\n          default\n          id\n        }\n        removedFromCollections {\n          internalID\n          artworksCount\n          default\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "535957d065590734818620ee12dcb132";
+(node as any).hash = "ea592b4ba0a3a6c72461139a94aeaaf6";
 
 export default node;
