@@ -49,6 +49,7 @@
     "test": "scripts/jest.sh",
     "test:smoke": "scripts/smoke_test.sh",
     "test:smoke:spec": "./node_modules/.bin/cypress run -s",
+    "translations": "node scripts/list-translations",
     "type-check": "tsc",
     "stats:client": "WEBPACK_STATS=normal yarn build:client:prod --profile --json > stats-client.json",
     "stats:server": "WEBPACK_STATS=normal yarn build:server:prod --profile --json > stats-server.json",
