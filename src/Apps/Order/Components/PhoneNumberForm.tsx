@@ -13,6 +13,7 @@ export interface PhoneNumberFormProps {
   errors: PhoneNumberError
   touched: PhoneNumberTouched
   label: string
+  tabIndex?: number
 }
 
 export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
@@ -21,6 +22,7 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
   errors,
   label,
   value,
+  tabIndex,
 }) => {
   const changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
     onChange(ev.currentTarget.value)
@@ -33,6 +35,7 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
   return (
     <Flex flexDirection="column" mb={2}>
       <Input
+        tabIndex={tabIndex}
         id="PhoneNumberForm_phoneNumber"
         title="Phone number"
         type="tel"
