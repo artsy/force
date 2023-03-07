@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
-import { CreateNewListModalContainer } from "./CreateNewListModal"
+import { CreateNewListModalContainer } from "./CreateNewListModal/CreateNewListModal"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 

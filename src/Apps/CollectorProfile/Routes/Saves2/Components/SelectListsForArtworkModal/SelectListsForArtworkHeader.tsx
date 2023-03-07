@@ -1,52 +1,65 @@
-import { Button, Flex, Spacer, Text } from "@artsy/palette"
-import { SelectListsForArtworkImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkImage"
+import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
+import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesEntityImage"
+import {
+  ModalKey,
+  useManageArtworkForSavesContext,
+} from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { SelectListsForArtworkHeader_artwork$data } from "__generated__/SelectListsForArtworkHeader_artwork.graphql"
+import { useTranslation } from "react-i18next"
 
-interface SelectListsForArtworkHeaderProps {
-  artwork: SelectListsForArtworkHeader_artwork$data
-}
+export const SelectListsForArtworkHeader: FC = () => {
+  const { t } = useTranslation()
+  const { state, dispatch } = useManageArtworkForSavesContext()
+  const artwork = state.artwork!
 
-const SelectListsForArtworkHeader: FC<SelectListsForArtworkHeaderProps> = ({
-  artwork,
-}) => {
-  const imageURL = artwork.image?.url ?? null
+  const openCreateListModal = () => {
+    dispatch({
+      type: "SET_MODAL_KEY",
+      payload: ModalKey.CreateNewList,
+    })
+  }
 
   return (
-    <Flex
-      flexDirection={["column", "row"]}
-      alignItems={["stretch", "center"]}
-      mt={[-2, 0]}
-    >
-      <Flex flex={1} flexDirection="row" alignItems="center">
-        <SelectListsForArtworkImage size={50} url={imageURL} />
-        <Spacer x={1} />
-        <Text lineClamp={2}>
-          {artwork.title}, {artwork.date}
-        </Text>
+    <>
+      <Flex
+        flexDirection={["column", "row"]}
+        alignItems={["stretch", "center"]}
+      >
+        <Flex flex={1} flexDirection="row" alignItems="center">
+          <SavesEntityImage size={50} url={artwork.imageURL} />
+          <Spacer x={1} />
+          <Text lineClamp={2}>{artwork.title}</Text>
+        </Flex>
+
+        <Spacer x={[0, 1]} y={[2, 0]} />
+
+        <Button
+          variant="secondaryBlack"
+          size="small"
+          onClick={openCreateListModal}
+        >
+          {t("collectorSaves.selectedListsForArtwork.createNewListButton")}
+        </Button>
       </Flex>
 
-      <Spacer x={[0, 1]} y={[2, 0]} />
+      <Spacer y={2} />
 
-      <Button variant="secondaryBlack" size="small">
-        Create New List
-      </Button>
-    </Flex>
+      {state.recentlyAddedList && (
+        <Message
+          variant="success"
+          title={t(
+            "collectorSaves.selectedListsForArtwork.recentlyAddedList.title"
+          )}
+          mx={-2}
+        >
+          {t(
+            "collectorSaves.selectedListsForArtwork.recentlyAddedList.message",
+            {
+              name: state.recentlyAddedList.name,
+            }
+          )}
+        </Message>
+      )}
+    </>
   )
 }
-
-export const SelectListsForArtworkHeaderFragmentContainer = createFragmentContainer(
-  SelectListsForArtworkHeader,
-  {
-    artwork: graphql`
-      fragment SelectListsForArtworkHeader_artwork on Artwork {
-        title
-        date
-        image {
-          url(version: "square")
-        }
-      }
-    `,
-  }
-)

@@ -1,14 +1,14 @@
 import { Image } from "@artsy/palette"
-import { SavesNoImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesNoImage"
+import { SavesNoImage } from "./SavesNoImage"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
 
-interface SelectListsForArtworkImageProps {
+interface SavesEntityImageProps {
   url: string | null
   size?: number
 }
 
-export const SelectListsForArtworkImage: FC<SelectListsForArtworkImageProps> = ({
+export const SavesEntityImage: FC<SavesEntityImageProps> = ({
   url,
   size = 60,
 }) => {

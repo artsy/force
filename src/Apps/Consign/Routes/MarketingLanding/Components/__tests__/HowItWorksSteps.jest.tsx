@@ -19,7 +19,7 @@ jest.mock("System/Router/useRouter", () => ({
 
 const trackEvent = useTracking as jest.Mock
 
-describe("HeaderSWA", () => {
+describe("HowItWorksSteps", () => {
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -60,8 +60,8 @@ describe("HeaderSWA", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
-        context_module: "HowItWorks",
+        action: "tappedConsign",
+        context_module: "sellHowItWorks",
         context_page_owner_type: "sell",
         label: "Start Selling",
         destination_path: "/sell/submission",

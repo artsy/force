@@ -77,7 +77,7 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
           flexDirection={["column-reverse", "row"]}
         >
           <Button variant="secondaryBlack" onClick={onClose}>
-            {t("collectorSaves.deleteListModal.cancel")}
+            {t("common.buttons.cancel")}
           </Button>
 
           <Button mb={[1, 0]} onClick={handleDeletePress}>
