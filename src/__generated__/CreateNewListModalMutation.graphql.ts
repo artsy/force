@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac008139a2dd606d3fe596d879f83ab1>>
+ * @generated SignedSource<<5cd5bd30ebd70588ae8e6a505e6a07fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,6 @@ export type CreateNewListModalMutation$data = {
     readonly responseOrError: {
       readonly collection?: {
         readonly internalID: string;
-        readonly name: string;
       } | null;
       readonly mutationError?: {
         readonly message: string;
@@ -57,13 +56,6 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -122,8 +114,7 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -131,7 +122,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -183,7 +174,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -198,7 +188,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -208,16 +198,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "07c9951a4d48e03ac90215cee0529e91",
+    "cacheID": "8b155b46f2308204c5b557244230df34",
     "id": null,
     "metadata": {},
     "name": "CreateNewListModalMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0aff09746bd0bfde046f4c0edecd2034";
+(node as any).hash = "bbadf8a714e411b2f81f246c6bc85237";
 
 export default node;

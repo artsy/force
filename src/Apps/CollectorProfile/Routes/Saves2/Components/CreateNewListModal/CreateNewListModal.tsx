@@ -64,7 +64,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             ... on CreateCollectionSuccess {
               collection {
                 internalID
-                name
               }
             }
 
