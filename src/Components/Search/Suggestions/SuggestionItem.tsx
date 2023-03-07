@@ -124,7 +124,7 @@ const QuickNavigation: React.FC<{
   const handleArtworksItemClicked = () => {
     trackEvent(
       tracks.quickNavigationItemClicked({
-        destinationPath: "works-for-sale",
+        destinationPath: `${href}/works-for-sale`,
         label: "Artworks",
       })
     )
@@ -133,25 +133,10 @@ const QuickNavigation: React.FC<{
   const handleAuctionResultsItemClicked = () => {
     trackEvent(
       tracks.quickNavigationItemClicked({
-        destinationPath: "auction-results",
+        destinationPath: `${href}/auction-results`,
         label: "Auction Results",
       })
     )
-  }
-
-  const tracks = {
-    quickNavigationItemClicked: ({
-      destinationPath,
-      label,
-    }: {
-      destinationPath: string
-      label: "Auction Results" | "Artworks"
-    }): SelectedSearchSuggestionQuickNavigationItem => ({
-      context_module: ContextModule.header,
-      destination_path: `${href}/${destinationPath}`,
-      action: ActionType.selectedSearchSuggestionQuickNavigationItem,
-      label,
-    }),
   }
 
   if (!showArtworksButton && !showAuctionResultsButton) return null
@@ -201,4 +186,19 @@ const QuickNavigationItem: React.FC<QuickNavigationItemProps & PillProps> = ({
   }
 
   return <Pill onClick={handleClick} mt={1} mr={1} {...rest} />
+}
+
+const tracks = {
+  quickNavigationItemClicked: ({
+    destinationPath,
+    label,
+  }: {
+    destinationPath: string
+    label: "Auction Results" | "Artworks"
+  }): SelectedSearchSuggestionQuickNavigationItem => ({
+    context_module: ContextModule.header,
+    destination_path: destinationPath,
+    action: ActionType.selectedSearchSuggestionQuickNavigationItem,
+    label,
+  }),
 }
