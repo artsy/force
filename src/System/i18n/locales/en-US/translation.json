@@ -119,7 +119,6 @@
     "createNewListModal": {
       "title": "Create a new list",
       "createListButton": "Create List",
-      "back": "Back",
       "nameLabel": "Name your list",
       "namePlaceholder": "E.g. Photography, Warhol, etc.",
       "remainingCharactersCount_one": "{{count}} character remaining",
@@ -145,7 +144,6 @@
     "deleteListModal": {
       "title": "Delete {{name}} list?",
       "message": "You’ll lose any works that are only saved on this list.",
-      "cancel": "Cancel",
       "delete": "Yes, Delete List",
       "success": "Changes saved"
     },
@@ -163,6 +161,10 @@
     }
   },
   "common": {
+    "buttons": {
+      "back": "Back",
+      "cancel": "Cancel"
+    },
     "errors": {
       "somethingWentWrong": "Something went wrong. Please try again."
     }

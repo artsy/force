@@ -77,6 +77,10 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       }
     `,
   })
+  const handleBackOnCancelClick = onBackClick ?? onClose
+  const backOrCancelLabel = onBackClick
+    ? t("common.buttons.back")
+    : t("common.buttons.cancel")
 
   const handleSubmit = async (
     values: CreateNewListValues,
@@ -139,14 +143,13 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
               <>
                 {/* Desktop view */}
                 <Media greaterThanOrEqual="sm">
-                  <Flex
-                    justifyContent={onBackClick ? "space-between" : "flex-end"}
-                  >
-                    {!!onBackClick && (
-                      <Button variant="secondaryBlack" onClick={onBackClick}>
-                        {t("collectorSaves.createNewListModal.back")}
-                      </Button>
-                    )}
+                  <Flex justifyContent="space-between">
+                    <Button
+                      variant="secondaryBlack"
+                      onClick={handleBackOnCancelClick}
+                    >
+                      {backOrCancelLabel}
+                    </Button>
 
                     <Button
                       disabled={isCreateButtonDisabled}
@@ -175,9 +178,9 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
                   <Button
                     variant="secondaryBlack"
                     width="100%"
-                    onClick={onClose}
+                    onClick={handleBackOnCancelClick}
                   >
-                    {t("collectorSaves.createNewListModal.back")}
+                    {backOrCancelLabel}
                   </Button>
                 </Media>
               </>
