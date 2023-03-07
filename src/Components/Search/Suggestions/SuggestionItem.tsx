@@ -1,4 +1,9 @@
 import {
+  ActionType,
+  ContextModule,
+  SelectedSearchSuggestionQuickNavigationItem,
+} from "@artsy/cohesion"
+import {
   ArtworkIcon,
   AuctionIcon,
   Flex,
@@ -9,6 +14,7 @@ import {
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import * as React from "react"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 
@@ -113,17 +119,45 @@ const QuickNavigation: React.FC<{
   showArtworksButton: boolean
   showAuctionResultsButton: boolean
 }> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
+  const { trackEvent } = useTracking()
+
+  const handleArtworksItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: `${href}/works-for-sale`,
+        label: "Artworks",
+      })
+    )
+  }
+
+  const handleAuctionResultsItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: `${href}/auction-results`,
+        label: "Auction Results",
+      })
+    )
+  }
+
   if (!showArtworksButton && !showAuctionResultsButton) return null
 
   return (
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
-        <QuickNavigationItem to={`${href}/works-for-sale`} Icon={ArtworkIcon}>
+        <QuickNavigationItem
+          onClick={handleArtworksItemClicked}
+          to={`${href}/works-for-sale`}
+          Icon={ArtworkIcon}
+        >
           Artworks
         </QuickNavigationItem>
       )}
       {!!showAuctionResultsButton && (
-        <QuickNavigationItem to={`${href}/auction-results`} Icon={AuctionIcon}>
+        <QuickNavigationItem
+          onClick={handleAuctionResultsItemClicked}
+          to={`${href}/auction-results`}
+          Icon={AuctionIcon}
+        >
           Auction Results
         </QuickNavigationItem>
       )}
@@ -131,18 +165,40 @@ const QuickNavigation: React.FC<{
   )
 }
 
-const QuickNavigationItem: React.FC<{ to: string } & PillProps> = ({
+interface QuickNavigationItemProps {
+  to: string
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+}
+
+const QuickNavigationItem: React.FC<QuickNavigationItemProps & PillProps> = ({
   to,
+  onClick,
   ...rest
 }) => {
-  const onClick = event => {
+  const handleClick = event => {
     // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
     event.stopPropagation()
     event.preventDefault()
+    onClick?.(event)
 
     // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
     window.location.assign(to)
   }
 
-  return <Pill onClick={onClick} mt={1} mr={1} {...rest} />
+  return <Pill onClick={handleClick} mt={1} mr={1} {...rest} />
+}
+
+const tracks = {
+  quickNavigationItemClicked: ({
+    destinationPath,
+    label,
+  }: {
+    destinationPath: string
+    label: "Auction Results" | "Artworks"
+  }): SelectedSearchSuggestionQuickNavigationItem => ({
+    context_module: ContextModule.header,
+    destination_path: destinationPath,
+    action: ActionType.selectedSearchSuggestionQuickNavigationItem,
+    label,
+  }),
 }
