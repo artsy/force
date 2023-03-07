@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { ModalDialog, useToasts } from "@artsy/palette"
+import { Box, ModalDialog, useToasts } from "@artsy/palette"
 import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -126,7 +126,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         maxHeight: [null, 800],
       }}
       m={0}
-      header={<SelectListsForArtworkHeader />}
+      header={
+        <Box mt={[-2, 0]} mb={-2}>
+          <SelectListsForArtworkHeader />
+        </Box>
+      }
       footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedCollectionIds.length}
@@ -136,12 +140,14 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         />
       }
     >
-      <SelectListsForArtworkContent
-        isFetching={me === null}
-        collections={collections}
-        checkIsItemSelected={checkIsItemSelected}
-        onItemPress={handleItemPress}
-      />
+      <Box mt={1}>
+        <SelectListsForArtworkContent
+          isFetching={me === null}
+          collections={collections}
+          checkIsItemSelected={checkIsItemSelected}
+          onItemPress={handleItemPress}
+        />
+      </Box>
     </ModalDialog>
   )
 }
