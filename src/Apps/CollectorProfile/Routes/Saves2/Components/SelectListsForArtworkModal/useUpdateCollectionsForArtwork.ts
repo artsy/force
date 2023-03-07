@@ -49,10 +49,12 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
         response?.removedFromCollections as any
       )
 
+      // Set `isSaved` field to `true` if artwork was saved in "All Saves"
       if (addedCounts.default > 0) {
         artwork.setValue(true, "isSaved")
       }
 
+      // Set `isSaved` field to `false` if artwork was unsaved from "All Saves"
       if (removedCounts.default > 0) {
         artwork.setValue(false, "isSaved")
       }
@@ -67,6 +69,11 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
         return
       }
 
+      /**
+       * Update `totalCount` field, based on which we decide
+       * whether to display the manage lists for artwork modal or
+       * immediately remove artwork from "All Saves"
+       */
       const prevValue = (entity.getValue("totalCount") ?? 0) as number
       const newValue = prevValue + addedCounts.custom - removedCounts.custom
 
