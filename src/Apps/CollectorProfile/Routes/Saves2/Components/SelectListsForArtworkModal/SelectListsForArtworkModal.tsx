@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Box, ModalDialog, useToasts } from "@artsy/palette"
+import { ModalDialog, useToasts } from "@artsy/palette"
 import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
 import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -40,7 +40,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useUpdateCollectionsForArtwork()
+  const { submitMutation } = useUpdateCollectionsForArtwork(state.artwork!._id)
   const { sendToast } = useToasts()
 
   const onClose = () => {
@@ -126,11 +126,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         maxHeight: [null, 800],
       }}
       m={0}
-      header={
-        <Box mt={[-2, 0]} mb={-2}>
-          <SelectListsForArtworkHeader />
-        </Box>
-      }
+      header={<SelectListsForArtworkHeader />}
       footer={
         <SelectListsForArtworkFooter
           selectedListsCount={selectedCollectionIds.length}
@@ -140,14 +136,12 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
         />
       }
     >
-      <Box mt={1}>
-        <SelectListsForArtworkContent
-          isFetching={me === null}
-          collections={collections}
-          checkIsItemSelected={checkIsItemSelected}
-          onItemPress={handleItemPress}
-        />
-      </Box>
+      <SelectListsForArtworkContent
+        isFetching={me === null}
+        collections={collections}
+        checkIsItemSelected={checkIsItemSelected}
+        onItemPress={handleItemPress}
+      />
     </ModalDialog>
   )
 }

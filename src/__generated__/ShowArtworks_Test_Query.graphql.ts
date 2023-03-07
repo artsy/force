@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a8bccb672f00fcfc53e5c9cdd5a1879>>
+ * @generated SignedSource<<b11d04e3b59cdaafbba15001bc240b41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -168,13 +168,13 @@ v21 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Int"
 },
 v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "Image"
 },
 v23 = {
   "enumValues": null,
@@ -802,6 +802,40 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": "customCollections",
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "default",
+                                "value": false
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "first",
+                                "value": 0
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "saves",
+                                "value": true
+                              }
+                            ],
+                            "concreteType": "CollectionsConnection",
+                            "kind": "LinkedField",
+                            "name": "collectionsConnection",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "totalCount",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+                          },
+                          {
                             "alias": null,
                             "args": null,
                             "concreteType": "AttributionClass",
@@ -887,7 +921,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ece9fff62cf4bde074b30ac82955ebac",
+    "cacheID": "107dbafce3a3005a4c6e2a7ec75a7211",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -960,10 +994,17 @@ return {
         "show.filtered_artworks.edges.node.attributionClass.name": (v20/*: any*/),
         "show.filtered_artworks.edges.node.collecting_institution": (v20/*: any*/),
         "show.filtered_artworks.edges.node.cultural_maker": (v20/*: any*/),
+        "show.filtered_artworks.edges.node.customCollections": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectionsConnection"
+        },
+        "show.filtered_artworks.edges.node.customCollections.totalCount": (v21/*: any*/),
         "show.filtered_artworks.edges.node.date": (v20/*: any*/),
         "show.filtered_artworks.edges.node.href": (v20/*: any*/),
         "show.filtered_artworks.edges.node.id": (v18/*: any*/),
-        "show.filtered_artworks.edges.node.image": (v21/*: any*/),
+        "show.filtered_artworks.edges.node.image": (v22/*: any*/),
         "show.filtered_artworks.edges.node.image.aspectRatio": {
           "enumValues": null,
           "nullable": false,
@@ -983,10 +1024,10 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "show.filtered_artworks.edges.node.image.resized.height": (v22/*: any*/),
+        "show.filtered_artworks.edges.node.image.resized.height": (v21/*: any*/),
         "show.filtered_artworks.edges.node.image.resized.src": (v16/*: any*/),
         "show.filtered_artworks.edges.node.image.resized.srcSet": (v16/*: any*/),
-        "show.filtered_artworks.edges.node.image.resized.width": (v22/*: any*/),
+        "show.filtered_artworks.edges.node.image.resized.width": (v21/*: any*/),
         "show.filtered_artworks.edges.node.image.url": (v20/*: any*/),
         "show.filtered_artworks.edges.node.image.versions": {
           "enumValues": null,
@@ -1034,7 +1075,7 @@ return {
         "show.filtered_artworks.edges.node.partner.href": (v20/*: any*/),
         "show.filtered_artworks.edges.node.partner.id": (v18/*: any*/),
         "show.filtered_artworks.edges.node.partner.name": (v20/*: any*/),
-        "show.filtered_artworks.edges.node.preview": (v21/*: any*/),
+        "show.filtered_artworks.edges.node.preview": (v22/*: any*/),
         "show.filtered_artworks.edges.node.preview.url": (v20/*: any*/),
         "show.filtered_artworks.edges.node.sale": {
           "enumValues": null,
@@ -1042,11 +1083,11 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "show.filtered_artworks.edges.node.sale.cascadingEndTimeIntervalMinutes": (v22/*: any*/),
+        "show.filtered_artworks.edges.node.sale.cascadingEndTimeIntervalMinutes": (v21/*: any*/),
         "show.filtered_artworks.edges.node.sale.display_timely_at": (v20/*: any*/),
         "show.filtered_artworks.edges.node.sale.endAt": (v20/*: any*/),
-        "show.filtered_artworks.edges.node.sale.extendedBiddingIntervalMinutes": (v22/*: any*/),
-        "show.filtered_artworks.edges.node.sale.extendedBiddingPeriodMinutes": (v22/*: any*/),
+        "show.filtered_artworks.edges.node.sale.extendedBiddingIntervalMinutes": (v21/*: any*/),
+        "show.filtered_artworks.edges.node.sale.extendedBiddingPeriodMinutes": (v21/*: any*/),
         "show.filtered_artworks.edges.node.sale.id": (v18/*: any*/),
         "show.filtered_artworks.edges.node.sale.is_auction": (v19/*: any*/),
         "show.filtered_artworks.edges.node.sale.is_closed": (v19/*: any*/),
@@ -1128,7 +1169,7 @@ return {
     },
     "name": "ShowArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ShowArtworks_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowArtworks_show\n    id\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork\n      ...FlatGridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment FlatGridItem_artwork on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  artistNames\n  href\n  is_saved: isSaved\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShowArtworks_show on Show {\n  filtered_artworks: filterArtworksConnection(first: 30) {\n    id\n    counts {\n      total(format: \"0,0\")\n    }\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n"
+    "text": "query ShowArtworks_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowArtworks_show\n    id\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image(includeAll: false) {\n        aspectRatio\n      }\n      ...GridItem_artwork\n      ...FlatGridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment FlatGridItem_artwork on Artwork {\n  ...Metadata_artwork\n  ...DeprecatedSaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image(includeAll: false) {\n    resized(width: 445, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  artistNames\n  href\n  is_saved: isSaved\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShowArtworks_show on Show {\n  filtered_artworks: filterArtworksConnection(first: 30) {\n    id\n    counts {\n      total(format: \"0,0\")\n    }\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n"
   }
 };
 })();

@@ -14,6 +14,8 @@ type State = {
   isSavedToList: boolean
   addingListIDs: string[]
   removingListIDs: string[]
+  preselectedListIDs: string[]
+  selectedIds: string[]
   recentlyAddedList: NewAddedList | null
 }
 
@@ -24,6 +26,7 @@ export enum ListKey {
 
 type Action =
   | { type: "SET_MODAL_KEY"; payload: ModalKey }
+  | { type: "SET_PRESELECTED_LIST_IDS"; payload: string[] }
   | { type: "SET_IS_SAVED_TO_LIST"; payload: boolean }
   | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
   | { type: "SET_ARTWORK"; payload: ArtworkEntity | null }
@@ -34,6 +37,7 @@ type Action =
     }
 
 interface ArtworkEntity {
+  _id: string
   id: string
   title: string
   imageURL: string | null
@@ -58,6 +62,8 @@ export const INITIAL_STATE: State = {
   isSavedToList: false,
   addingListIDs: [],
   removingListIDs: [],
+  preselectedListIDs: [],
+  selectedIds: [],
   recentlyAddedList: null,
 }
 
@@ -148,6 +154,11 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         [listKey]: [...ids, listID],
+      }
+    case "SET_PRESELECTED_LIST_IDS":
+      return {
+        ...state,
+        preselectedListIDs: action.payload,
       }
     case "SET_IS_SAVED_TO_LIST":
       return {

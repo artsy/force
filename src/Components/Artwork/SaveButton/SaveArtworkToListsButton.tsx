@@ -27,6 +27,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     dispatch({
       type: "SET_ARTWORK",
       payload: {
+        _id: artwork.id,
         id: artwork.internalID,
         title: `${artwork.title}, ${artwork.date}`,
         imageURL: artwork.preview?.url ?? null,
@@ -73,8 +74,9 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
+    const isCustomListsCount = artwork.customCollections?.totalCount ?? 0
 
-    if (savedListId) {
+    if (savedListId || isCustomListsCount > 0) {
       openManageArtworkForSavesModal()
       return
     }
@@ -103,6 +105,14 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         date
         preview: image {
           url(version: "square")
+        }
+
+        customCollections: collectionsConnection(
+          first: 0
+          default: false
+          saves: true
+        ) {
+          totalCount
         }
       }
     `,

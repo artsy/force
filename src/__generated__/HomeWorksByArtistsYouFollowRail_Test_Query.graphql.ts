@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35f03f4e528f99cb22023d36ce33b309>>
+ * @generated SignedSource<<6a34df087e6eded1a80f171095cc5e67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,13 +92,13 @@ v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Int"
 },
 v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "Image"
 };
 return {
   "fragment": {
@@ -449,6 +449,40 @@ return {
                     "storageKey": null
                   },
                   {
+                    "alias": "customCollections",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "default",
+                        "value": false
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "first",
+                        "value": 0
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "saves",
+                        "value": true
+                      }
+                    ],
+                    "concreteType": "CollectionsConnection",
+                    "kind": "LinkedField",
+                    "name": "collectionsConnection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "totalCount",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+                  },
+                  {
                     "alias": null,
                     "args": null,
                     "concreteType": "AttributionClass",
@@ -540,7 +574,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d44abac56ced7dea6b8bb8f095225700",
+    "cacheID": "6bbf5f6be398ecd48a1d0a249c9d6382",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -597,13 +631,20 @@ return {
         "homePage.artworkModule.results.attributionClass.name": (v9/*: any*/),
         "homePage.artworkModule.results.collecting_institution": (v9/*: any*/),
         "homePage.artworkModule.results.cultural_maker": (v9/*: any*/),
+        "homePage.artworkModule.results.customCollections": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CollectionsConnection"
+        },
+        "homePage.artworkModule.results.customCollections.totalCount": (v10/*: any*/),
         "homePage.artworkModule.results.date": (v9/*: any*/),
         "homePage.artworkModule.results.href": (v9/*: any*/),
         "homePage.artworkModule.results.id": (v7/*: any*/),
-        "homePage.artworkModule.results.image": (v10/*: any*/),
-        "homePage.artworkModule.results.image.height": (v11/*: any*/),
+        "homePage.artworkModule.results.image": (v11/*: any*/),
+        "homePage.artworkModule.results.image.height": (v10/*: any*/),
         "homePage.artworkModule.results.image.src": (v9/*: any*/),
-        "homePage.artworkModule.results.image.width": (v11/*: any*/),
+        "homePage.artworkModule.results.image.width": (v10/*: any*/),
         "homePage.artworkModule.results.internalID": (v7/*: any*/),
         "homePage.artworkModule.results.is_saved": (v8/*: any*/),
         "homePage.artworkModule.results.marketPriceInsights": {
@@ -641,7 +682,7 @@ return {
         "homePage.artworkModule.results.partner.href": (v9/*: any*/),
         "homePage.artworkModule.results.partner.id": (v7/*: any*/),
         "homePage.artworkModule.results.partner.name": (v9/*: any*/),
-        "homePage.artworkModule.results.preview": (v10/*: any*/),
+        "homePage.artworkModule.results.preview": (v11/*: any*/),
         "homePage.artworkModule.results.preview.url": (v9/*: any*/),
         "homePage.artworkModule.results.sale": {
           "enumValues": null,
@@ -649,9 +690,9 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "homePage.artworkModule.results.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
+        "homePage.artworkModule.results.sale.cascadingEndTimeIntervalMinutes": (v10/*: any*/),
         "homePage.artworkModule.results.sale.endAt": (v9/*: any*/),
-        "homePage.artworkModule.results.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
+        "homePage.artworkModule.results.sale.extendedBiddingIntervalMinutes": (v10/*: any*/),
         "homePage.artworkModule.results.sale.id": (v7/*: any*/),
         "homePage.artworkModule.results.sale.is_auction": (v8/*: any*/),
         "homePage.artworkModule.results.sale.is_closed": (v8/*: any*/),
@@ -701,7 +742,7 @@ return {
     },
     "name": "HomeWorksByArtistsYouFollowRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeWorksByArtistsYouFollowRail_Test_Query {\n  homePage {\n    ...HomeWorksByArtistsYouFollowRail_homePage\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {\n  artworkModule(key: FOLLOWED_ARTISTS) {\n    results {\n      internalID\n      slug\n      ...ShelfArtwork_artwork\n      id\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": "query HomeWorksByArtistsYouFollowRail_Test_Query {\n  homePage {\n    ...HomeWorksByArtistsYouFollowRail_homePage\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {\n  artworkModule(key: FOLLOWED_ARTISTS) {\n    results {\n      internalID\n      slug\n      ...ShelfArtwork_artwork\n      id\n    }\n    id\n  }\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
   }
 };
 })();
