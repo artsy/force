@@ -1,11 +1,25 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { useUpdateCollectionsForArtworkMutation } from "__generated__/useUpdateCollectionsForArtworkMutation.graphql"
+import {
+  useUpdateCollectionsForArtworkMutation,
+  useUpdateCollectionsForArtworkMutation$data,
+} from "__generated__/useUpdateCollectionsForArtworkMutation.graphql"
 
 interface Counts {
   custom: number
   default: number
 }
+
+type Response = NonNullable<
+  NonNullable<
+    NonNullable<
+      useUpdateCollectionsForArtworkMutation$data
+    >["artworksCollectionsBatchUpdate"]
+  >["responseOrError"]
+>
+type ListEntity =
+  | Response["addedToCollections"]
+  | Response["removedFromCollections"]
 
 export const useUpdateCollectionsForArtwork = (artworkID: string) => {
   return useMutation<useUpdateCollectionsForArtworkMutation>({
@@ -44,10 +58,8 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
       }
 
       const response = data.artworksCollectionsBatchUpdate?.responseOrError
-      const addedCounts = getCountsByLists(response?.addedToCollections as any)
-      const removedCounts = getCountsByLists(
-        response?.removedFromCollections as any
-      )
+      const addedCounts = getCountsByLists(response?.addedToCollections)
+      const removedCounts = getCountsByLists(response?.removedFromCollections)
 
       // Set `isSaved` field to `true` if artwork was saved in "All Saves"
       if (addedCounts.default > 0) {
@@ -82,13 +94,18 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
   })
 }
 
-const getCountsByLists = <T extends { name: string }>(lists: T[]) => {
+const getCountsByLists = (lists: ListEntity) => {
+  const listEntities = lists ?? []
   const defaultCounts: Counts = {
     custom: 0,
     default: 0,
   }
 
-  return lists.reduce((acc, list) => {
+  return listEntities.reduce((acc, list) => {
+    if (!list) {
+      return acc
+    }
+
     const isDefault = list.name === "Saved Artwork"
     const key: keyof Counts = isDefault ? "default" : "custom"
     const prevCount = acc[key]
