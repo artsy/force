@@ -42,7 +42,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     removeLocalImage,
   } = useLocalImageState()
 
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const enableNewMyCUploadFlow = useFeatureFlag(
     "cx-my-collection-uploading-flow-steps"
   )
@@ -81,9 +80,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
 
     if (currentStep === "artist-select" || !enableNewMyCUploadFlow) {
       router.push({
-        pathname: isCollectorProfileEnabled
-          ? "/collector-profile/my-collection"
-          : "/settings/my-collection",
+        pathname: "/collector-profile/my-collection",
       })
     } else if (currentStep === "artwork-select") {
       setCurrentStep("artist-select")
@@ -130,14 +127,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       })
 
       router.replace({
-        pathname: isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artworks/${artwork?.internalID}/edit`
-          : `/my-collection/artworks/${artwork?.internalID}/edit`,
+        pathname: `/collector-profile/my-collection/artworks/${artwork?.internalID}/edit`,
       })
       router.push({
-        pathname: isCollectorProfileEnabled
-          ? "/collector-profile/my-collection/"
-          : "/settings/my-collection",
+        pathname: "/collector-profile/my-collection/",
       })
     } catch (error) {
       logger.error(`Artwork not created`, error)

@@ -86,7 +86,7 @@ describe("MyCollectionArtworkImageBrowser", () => {
         expect(screen.getByText("Upload Photos")).toBeInTheDocument()
         expect(screen.getByTestId("uploadPhotosButton")).toHaveAttribute(
           "href",
-          "/my-collection/artworks/artwork-x/edit?step=photos"
+          "/collector-profile/my-collection/artworks/artwork-x/edit?step=photos"
         )
       })
     })

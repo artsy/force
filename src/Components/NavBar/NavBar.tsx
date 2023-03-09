@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react"
-import * as React from "react"
 import {
-  Button,
-  Flex,
-  themeProps,
-  Text,
-  Dropdown,
-  Box,
   BellIcon,
-  SoloIcon,
+  Box,
+  Button,
   Clickable,
   CloseIcon,
+  Dropdown,
+  Flex,
+  SoloIcon,
   Spacer,
+  Text,
+  themeProps,
 } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
+import { useSystemContext } from "System/SystemContext"
+import * as React from "react"
+import { useEffect, useState } from "react"
 import { NavBarSubMenu } from "./Menus"
 import {
   NavBarMobileMenu,
@@ -26,31 +26,29 @@ import {
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
 
+import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { track } from "react-tracking"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { Z } from "Apps/Components/constants"
+import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
+import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import Events from "Utils/Events"
+import { useJump } from "Utils/Hooks/useJump"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
-import { NavBarSkipLink } from "./NavBarSkipLink"
-import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
+import { useTranslation } from "react-i18next"
+import { track, useTracking } from "react-tracking"
 import {
   NavBarItemButton,
   NavBarItemLink,
   NavBarItemUnfocusableAnchor,
 } from "./NavBarItem"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useNavBarHeight } from "./useNavBarHeight"
-import { RouterLink } from "System/Router/RouterLink"
-import { useTracking } from "react-tracking"
-import { Z } from "Apps/Components/constants"
-import { useTranslation } from "react-i18next"
+import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
-import { useJump } from "Utils/Hooks/useJump"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { useRouter } from "System/Router/useRouter"
-import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import { ActionType } from "@artsy/cohesion"
+import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
+import { NavBarSkipLink } from "./NavBarSkipLink"
+import { useNavBarHeight } from "./useNavBarHeight"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -67,7 +65,6 @@ export const NavBar: React.FC = track(
     dispatch: data => Events.postEvent(data),
   }
 )(() => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { user, isEigen } = useSystemContext()
 
   const { jumpTo } = useJump({ behavior: "smooth" })
@@ -280,7 +277,7 @@ export const NavBar: React.FC = track(
 
               {/* Mobile. Triggers at the `xs` breakpoint. */}
               <Flex display={["flex", "none"]}>
-                {isLoggedIn && isCollectorProfileEnabled && (
+                {isLoggedIn && (
                   <>
                     <NavBarItemButton
                       display="flex"
@@ -329,7 +326,6 @@ export const NavBar: React.FC = track(
                   }}
                 >
                   <NavBarMobileMenuIcon open={showMobileMenu} />
-                  {!isCollectorProfileEnabled && renderNotificationsIndicator()}
                 </NavBarItemButton>
               </Flex>
             </Flex>

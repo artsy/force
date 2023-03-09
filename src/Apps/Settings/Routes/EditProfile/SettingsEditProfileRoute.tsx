@@ -1,11 +1,8 @@
-import React from "react"
-import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
 import { Column, GridColumns, Join, Separator } from "@artsy/palette"
-import { SettingsEditProfileAboutYouFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileAboutYou"
-import { SettingsEditProfileArtistsYouCollectFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileArtistsYouCollect/SettingsEditProfileArtistsYouCollect"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { SettingsEditProfileRoute_me$data } from "__generated__/SettingsEditProfileRoute_me.graphql"
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface SettingsEditProfileRouteProps {
   me: SettingsEditProfileRoute_me$data
@@ -14,23 +11,11 @@ interface SettingsEditProfileRouteProps {
 const SettingsEditProfileRoute: React.FC<SettingsEditProfileRouteProps> = ({
   me,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   return (
     <GridColumns>
       <Column span={8}>
         <Join separator={<Separator my={4} />}>
-          {isCollectorProfileEnabled ? (
-            <>
-              <SettingsEditProfileFieldsFragmentContainer me={me} />
-            </>
-          ) : (
-            <>
-              <SettingsEditProfileAboutYouFragmentContainer me={me} />
-
-              <SettingsEditProfileArtistsYouCollectFragmentContainer me={me} />
-            </>
-          )}
+          <SettingsEditProfileFieldsFragmentContainer me={me} />
         </Join>
       </Column>
     </GridColumns>

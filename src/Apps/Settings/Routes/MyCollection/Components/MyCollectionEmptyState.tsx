@@ -14,12 +14,9 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 
 export const MyCollectionEmptyState: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { isLoggedIn } = useSystemContext()
 
   const {
@@ -56,11 +53,7 @@ export const MyCollectionEmptyState: React.FC = () => {
               // @ts-ignore
               as={RouterLink}
               variant="primaryBlack"
-              to={
-                isCollectorProfileEnabled
-                  ? "/collector-profile/my-collection/artworks/new"
-                  : "/my-collection/artworks/new"
-              }
+              to={"/collector-profile/my-collection/artworks/new"}
               onClick={event => {
                 if (!isLoggedIn) {
                   event.preventDefault()

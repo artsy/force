@@ -6,7 +6,6 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
 import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
 
@@ -14,12 +13,9 @@ export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { match, router } = useRouter()
   const { trackEvent } = useTracking()
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const goToMyCollection = () => {
-    const route = isCollectorProfileEnabled
-      ? "/collector-profile/my-collection"
-      : "/settings/my-collection"
+    const route = "/collector-profile/my-collection"
     router.replace(route)
   }
 

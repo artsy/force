@@ -4,10 +4,8 @@ import { ArtsyLogoBlackIcon, Flex } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const PriceEstimateConfirmation = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { match } = useRouter()
   const artworkId = match.params.artworkID
 
@@ -15,14 +13,7 @@ export const PriceEstimateConfirmation = () => {
     <>
       <MetaTags title="Request a Price Estimate | Artsy" />
       <Flex my={4}>
-        <RouterLink
-          to={
-            isCollectorProfileEnabled
-              ? "/collector-profile/my-collection"
-              : "/my-collection"
-          }
-          display="block"
-        >
+        <RouterLink to={"/collector-profile/my-collection"} display="block">
           <ArtsyLogoBlackIcon display="block" />
         </RouterLink>
       </Flex>
@@ -33,11 +24,7 @@ export const PriceEstimateConfirmation = () => {
           subtitle="An Artsy Specialist will evaluate your artwork and contact you with a
       free price estimate."
           buttonText="Back to My Collection"
-          routerLink={
-            isCollectorProfileEnabled
-              ? `/collector-profile/my-collection/artwork/${artworkId}`
-              : `/my-collection/artwork/${artworkId}`
-          }
+          routerLink={`/collector-profile/my-collection/artwork/${artworkId}`}
         />
       </AppContainer>
     </>

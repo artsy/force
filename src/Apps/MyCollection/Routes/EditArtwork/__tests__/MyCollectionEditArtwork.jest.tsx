@@ -183,7 +183,8 @@ describe("Edit artwork", () => {
       fireEvent.click(screen.getByText("Leave Without Saving"))
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+        pathname:
+          "/collector-profile/my-collection/artwork/62fc96c48d3ff8000b556c3a",
       })
     })
 
@@ -195,7 +196,8 @@ describe("Edit artwork", () => {
       fireEvent.click(screen.getByText("Back"))
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+        pathname:
+          "/collector-profile/my-collection/artwork/62fc96c48d3ff8000b556c3a",
       })
     })
   })
@@ -281,7 +283,7 @@ describe("Edit artwork", () => {
       )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/internal-id",
+        pathname: "/collector-profile/my-collection/artwork/internal-id",
       })
     })
   })
@@ -461,20 +463,19 @@ describe("Edit artwork", () => {
       `)
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/settings/my-collection",
+        pathname: "/collector-profile/my-collection/artwork/internal-id",
       })
     })
   })
 })
 
-describe("Edit artwork when collector-profile ff is enabled", () => {
+describe("Edit artwork", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: {
         "cx-my-collection-personal-artists-for-web": {
           flagEnabled: true,
         },
-        "cx-collector-profile": { flagEnabled: true },
       },
       relayEnvironment: createMockEnvironment(),
     }))
@@ -845,7 +846,7 @@ describe("Edit artwork when collector-profile ff is enabled", () => {
       `)
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/collector-profile/my-collection",
+        pathname: "/collector-profile/my-collection/artwork/internal-id",
       })
     })
   })
