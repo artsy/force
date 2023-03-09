@@ -106,6 +106,13 @@
     }
   },
   "collectorSaves": {
+    "addArtworksModal": {
+      "modalTitle": "{{value}} created.\nAdd saved works to the list.",
+      "artworksSelected_one": "{{count}} artwork selected",
+      "artworksSelected_other": "{{count}} artworks selected",
+      "artworksCount_one": "{{count}} Artwork:",
+      "artworksCount_other": "{{count}} Artworks"
+    },
     "artworkLists": {
       "artworkWithCount_one": "{{count}} Artwork",
       "artworkWithCount_other": "{{count}} Artworks"
@@ -162,6 +169,7 @@
   },
   "common": {
     "buttons": {
+      "save": "Save",
       "back": "Back",
       "cancel": "Cancel"
     },

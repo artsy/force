@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
@@ -48,7 +48,7 @@ const logger = createLogger(
 
 const MAX_NAME_LENGTH = 40
 
-export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
+export const CreateNewListModal: FC<CreateNewListModalProps> = ({
   artwork,
   onClose,
   onComplete,
@@ -64,6 +64,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             ... on CreateCollectionSuccess {
               collection {
                 internalID
+                name
               }
             }
 
@@ -219,7 +220,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<CreateNewListModalContainerProps> = props => {
+export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> = props => {
   const { visible } = props
 
   if (!visible) return null
