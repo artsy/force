@@ -15,6 +15,7 @@ import { UtilButton } from "./UtilButton"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { useSystemContext } from "System/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -111,13 +112,15 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     const FilledIcon = () => <HeartFillIcon fill="blue100" />
 
     return (
-      <UtilButton
-        name="heart"
-        Icon={isSaved ? FilledIcon : HeartIcon}
-        label={isSaved ? "Saved" : "Save"}
-        longestLabel="Saved"
-        onClick={handleSave}
-      />
+      <ProgressiveOnboardingSaveArtworkQueryRenderer>
+        <UtilButton
+          name="heart"
+          Icon={isSaved ? FilledIcon : HeartIcon}
+          label={isSaved ? "Saved" : "Save"}
+          longestLabel="Saved"
+          onClick={handleSave}
+        />
+      </ProgressiveOnboardingSaveArtworkQueryRenderer>
     )
   }
 }
