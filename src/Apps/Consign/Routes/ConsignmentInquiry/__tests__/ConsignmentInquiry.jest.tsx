@@ -14,8 +14,11 @@ const mockRouterReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush, replace: mockRouterReplace },
-    match: { params: { artworkId: undefined } },
+    router: {
+      push: mockRouterPush,
+      replace: mockRouterReplace,
+    },
+    match: { params: { artworkId: undefined, recipientEmail: null } },
   })),
 }))
 
@@ -132,6 +135,7 @@ describe("ConsignmentInquiry", () => {
               phoneNumber: mockMe.phone,
               message: "This is my message to you",
               userId: mockMe.internalID,
+              recipientEmail: null,
             },
           },
         })

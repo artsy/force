@@ -22,6 +22,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Router/useRouter"
 
 interface PillData {
   type: Specialty
@@ -45,6 +46,7 @@ const pills: PillData[] = [
 
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
+  const { router } = useRouter()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
   const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
@@ -82,6 +84,10 @@ export const MeetTheSpecialists: React.FC = () => {
     })
   }
 
+  const clickContactSpecialist = email => {
+    router.push(`/sell/inquiry/${email}`)
+    trackContactTheSpecialistClick()
+  }
   return (
     <>
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
@@ -158,13 +164,10 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.bio}
                   </Text>
                   <Button
-                    // @ts-ignore
-                    as={RouterLink}
                     variant="secondaryWhite"
                     mb={2}
-                    onClick={trackContactTheSpecialistClick}
+                    onClick={() => clickContactSpecialist(i.email)}
                     data-testid={`get-in-touch-button-${i.firstName}`}
-                    to={`mailto:${i.email}`}
                   >
                     Contact {i.firstName}
                   </Button>
