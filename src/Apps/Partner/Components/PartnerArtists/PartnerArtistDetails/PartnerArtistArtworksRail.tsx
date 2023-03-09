@@ -24,7 +24,7 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
     <Rail
       title=""
       viewAllLabel="View All"
-      viewAllHref={`/collect?artist_ids%5B0%5D=${artistId}&partner_ids%5B0%5D=${partnerId}`}
+      viewAllHref={`/partner/${partnerId}/works?artist_ids%5B0%5D=${artistId}`}
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
