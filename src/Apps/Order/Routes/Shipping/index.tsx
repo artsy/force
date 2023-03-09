@@ -213,35 +213,31 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onContinueButtonPressed = async (address?: any) => {
-    if (checkIfArtsyShipping() && !!shippingQuoteId) {
-      selectShippingQuote()
-    } else {
-      const orderOrError = (
-        await setShipping(props.commitMutation, {
-          input: {
-            id: props.order.internalID,
-            fulfillmentType: "SHIP_ARTA",
-            shipping: {
-              addressLine1: address.street,
-              city: address.city,
-              country: address.country,
-              name: address.name,
-              phoneNumber: address.phoneNumber,
-              postalCode: address.postalCode,
-              region: address.state,
-            },
+    const orderOrError = (
+      await setShipping(props.commitMutation, {
+        input: {
+          id: props.order.internalID,
+          fulfillmentType: "SHIP_ARTA",
+          shipping: {
+            addressLine1: address.street,
+            city: address.city,
+            country: address.country,
+            name: address.name,
             phoneNumber: address.phoneNumber,
+            postalCode: address.postalCode,
+            region: address.state,
           },
-        })
-      ).commerceSetShipping?.orderOrError
+          phoneNumber: address.phoneNumber,
+        },
+      })
+    ).commerceSetShipping?.orderOrError
 
-      if (orderOrError?.error) {
-        handleSubmitError(orderOrError?.error)
-        return
-      }
-
-      props.router.push(`/orders/${orderOrError?.order?.internalID}/payment`)
+    if (orderOrError?.error) {
+      handleSubmitError(orderOrError?.error)
+      return
     }
+
+    props.router.push(`/orders/${orderOrError?.order?.internalID}/payment`)
 
     // TODO: the original:
     // if (checkIfArtsyShipping() && !!shippingQuoteId) {

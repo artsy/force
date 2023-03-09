@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react"
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService"
-import { Text, Input, Spacer, Button } from "@artsy/palette"
+import { Text, Input, Spacer, Button, Flex } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { validatePhoneNumber } from "Apps/Order/Utils/formValidators"
 
@@ -12,7 +12,7 @@ export const AddressAutoComplete: FC<{
     placePredictions,
     getPlacePredictions,
   } = usePlacesService({
-    apiKey: "nope",
+    apiKey: "PLACEHOLDER",
   })
 
   // TODO: better to model these into a single state property
@@ -116,7 +116,7 @@ export const AddressAutoComplete: FC<{
         },
         placeDetails => {
           if (placeDetails?.address_components) {
-            console.log({ XXXXX: placeDetails })
+            console.log({ placeDetails: placeDetails })
             setSelectedAddress(placeDetails.address_components)
           }
         }
@@ -143,12 +143,9 @@ export const AddressAutoComplete: FC<{
           getPlacePredictions({ input: evt.target.value })
           setStreet(evt.target.value)
         }}
-        style={{
-          backgroundColor: "#F9FBFB",
-          border: "1px solid #cccdcf",
-          borderRadius: "3px",
-        }}
+        style={{ height: 35 }}
       />
+
       {showAddressPredictions &&
         placePredictions.map(item => (
           <ul
@@ -177,29 +174,35 @@ export const AddressAutoComplete: FC<{
           </ul>
         ))}
       <Spacer y={1} />
-      <CustomInput
-        title="Postal Code"
-        value={postalCode}
-        onChange={evt => setPostalCode(evt.target.value)}
-      />
+
+      <Flex>
+        <CustomInput
+          title="Postal Code"
+          value={postalCode}
+          onChange={evt => setPostalCode(evt.target.value)}
+        />
+        <Spacer x={2} />
+        <CustomInput
+          title="City"
+          value={city}
+          onChange={evt => setCity(evt.target.value)}
+        />
+      </Flex>
       <Spacer y={1} />
-      <CustomInput
-        title="City"
-        value={city}
-        onChange={evt => setCity(evt.target.value)}
-      />
-      <Spacer y={1} />
-      <CustomInput
-        title="State"
-        value={state}
-        onChange={evt => setState(evt.target.value)}
-      />
-      <Spacer y={1} />
-      <CustomInput
-        title="Country"
-        value={country}
-        onChange={evt => setCountry(evt.target.value)}
-      />
+      <Flex>
+        <CustomInput
+          title="State"
+          value={state}
+          onChange={evt => setState(evt.target.value)}
+        />
+        <Spacer x={2} />
+        <CustomInput
+          title="Country"
+          value={country}
+          onChange={evt => setCountry(evt.target.value)}
+        />
+      </Flex>
+
       <Spacer y={1} />
       <CustomInput
         title="Phone number"
@@ -247,16 +250,12 @@ const CustomInput: FC<{
 }> = ({ title, value, error, onChange }) => {
   return (
     <Input
+      style={{ height: 35 }}
       required
       title={title}
       value={value}
       error={error}
       onChange={onChange}
-      style={{
-        backgroundColor: "#F9FBFB",
-        border: "1px solid #cccdcf",
-        borderRadius: "3px",
-      }}
     />
   )
 }
