@@ -55,13 +55,7 @@ describe("NavBarMobileMenu", () => {
 
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
 
-    const links = wrapper.find("a")
-    const length = links.length
-
-    wrapper
-      .find("a")
-      .at(length - 3)
-      .simulate("click")
+    wrapper.find("button").last().simulate("click")
 
     expect(mockLogout).toHaveBeenCalledTimes(1)
   })
@@ -123,24 +117,6 @@ describe("NavBarMobileMenu", () => {
 
       expect(linkContainer.html()).toContain("Inbox")
     })
-
-    describe("Activity menu item", () => {
-      it("should NOT render activity menu option when logged out", () => {
-        const wrapper = getMobileMenuLinkContainer(null)
-        const menuLinks = wrapper.find("a").map(node => node.text())
-        const hasActivityMenuItem = menuLinks.includes("Activity")
-
-        expect(hasActivityMenuItem).toBe(false)
-      })
-
-      it("should render activity menu option", () => {
-        const wrapper = getMobileMenuLinkContainer("NotAdmin")
-        const menuLinks = wrapper.find("a").map(node => node.text())
-        const hasActivityMenuItem = menuLinks.includes("Activity")
-
-        expect(hasActivityMenuItem).toBe(true)
-      })
-    })
   })
 
   describe("Analytics tracking", () => {
@@ -161,10 +137,7 @@ describe("NavBarMobileMenu", () => {
     it("tracks link clicks", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
 
-      // at(0) - Activity link
-      // at(1) - Inbox link
-      // at(2) - Buy link
-      linkContainer.find("a").at(2).simulate("click")
+      linkContainer.find("a").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
