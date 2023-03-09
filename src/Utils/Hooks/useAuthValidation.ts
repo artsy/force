@@ -20,12 +20,31 @@ export const useAuthValidation = () => {
       ).toPromise()
 
       if (data?.authenticationStatus === "INVALID") {
-        await logout()
+        try {
+          await logout()
+        } catch (e) {
+          console.error(e)
+        }
+
         window.location.reload()
         return
       }
     }
 
+    // Check on mount
     exec()
+
+    const check = () => {
+      if (document.visibilityState === "visible") {
+        exec()
+      }
+    }
+
+    // Re-check on tab changes since you may have logged out in another tab
+    document.addEventListener("visibilitychange", check)
+
+    return () => {
+      document.removeEventListener("visibilitychange", check)
+    }
   }, [relayEnvironment])
 }
