@@ -171,20 +171,24 @@ export const TEMP_ARTWORKS = [
 ]
 
 interface ArtworksListProps {
-  onItemPress: (artworkID: string) => void
+  selectedIds: string[]
+  onItemClick: (artworkID: string) => void
 }
 
-export const ArtworksList: FC<ArtworksListProps> = ({ onItemPress }) => {
-  const handleItemPress = artworkID => {
-    onItemPress(artworkID)
-  }
-
+export const ArtworksList: FC<ArtworksListProps> = ({
+  selectedIds,
+  onItemClick,
+}) => {
   return (
     <GridColumns>
       {TEMP_ARTWORKS.map(artwork => {
         return (
           <Column span={[6, 4]}>
-            <ArtworkItem item={artwork} onItemPress={handleItemPress} />
+            <ArtworkItem
+              item={artwork}
+              selected={selectedIds.includes(artwork.internalID)}
+              onItemClick={onItemClick}
+            />
           </Column>
         )
       })}

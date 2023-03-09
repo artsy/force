@@ -23,7 +23,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
     onClose()
   }
 
-  const handleItemPress = artworkID => {
+  const handleItemClick = artworkID => {
     if (selectedArtworkIds.includes(artworkID)) {
       setSelectedArtworkIds(selectedArtworkIds.filter(id => id !== artworkID))
     } else {
@@ -33,7 +33,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
 
   return (
     <ModalDialog
-      m="0"
+      m={0}
       dialogProps={{
         width: ["100%", 700],
         height: ["100%", "auto"],
@@ -72,7 +72,10 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
 
         <Spacer y={2} />
 
-        <ArtworksList onItemPress={handleItemPress} />
+        <ArtworksList
+          selectedIds={selectedArtworkIds}
+          onItemClick={handleItemClick}
+        />
       </>
     </ModalDialog>
   )

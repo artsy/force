@@ -21,7 +21,7 @@ export const CreateNewListModalWizard: FC<CreateNewListModalWizardProps> = ({
     onComplete()
   }
 
-  if (listName != null) {
+  if (listName !== null) {
     return (
       <AddArtworksModal
         onClose={onComplete}

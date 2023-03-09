@@ -1,18 +1,20 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { Text, Clickable, Flex, SkeletonBox, Box } from "@artsy/palette"
 import { SelectArtworkItem } from "./SelectArtworkItem"
 
 interface ArtworkItemProps {
   item: any
-  onItemPress: (artworkID: string) => void
+  selected: boolean
+  onItemClick: (artworkID: string) => void
 }
 
-export const ArtworkItem: FC<ArtworkItemProps> = ({ item, onItemPress }) => {
-  const [isSelected, setIsSelected] = useState(false)
-
+export const ArtworkItem: FC<ArtworkItemProps> = ({
+  item,
+  selected,
+  onItemClick,
+}) => {
   const onClick = () => {
-    setIsSelected(!isSelected)
-    onItemPress(item.internalID)
+    onItemClick(item.internalID)
   }
 
   return (
@@ -32,8 +34,8 @@ export const ArtworkItem: FC<ArtworkItemProps> = ({ item, onItemPress }) => {
             <Text variant="sm">{item.price}</Text>
           </Flex>
 
-          <Box ml="1">
-            <SelectArtworkItem isSelected={isSelected} />
+          <Box ml={1}>
+            <SelectArtworkItem isSelected={selected} />
           </Box>
         </Flex>
       </Flex>
