@@ -12,7 +12,7 @@ export const AddressAutoComplete: FC<{
     placePredictions,
     getPlacePredictions,
   } = usePlacesService({
-    apiKey: "PLACEHOLDER",
+    apiKey: "PALCEHOLDER",
   })
 
   // TODO: better to model these into a single state property
@@ -49,7 +49,8 @@ export const AddressAutoComplete: FC<{
           setPostalCode(addressSection.long_name)
         }
         if (
-          addressSection.types.includes("locality") &&
+          (addressSection.types.includes("locality") ||
+            addressSection.types.includes("sublocality_level_1")) &&
           addressSection.types.includes("political") &&
           addressSection?.long_name
         ) {
