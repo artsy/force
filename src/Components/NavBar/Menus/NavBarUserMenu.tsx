@@ -9,10 +9,7 @@ import {
   SettingsIcon,
   Text,
 } from "@artsy/palette"
-import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
-import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 import { SystemContext } from "System/SystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
@@ -22,10 +19,6 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 
 export const NavBarUserMenu: React.FC = () => {
-  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
-    "collector-profile-separating-saves-and-follows"
-  )
-
   const { trackEvent } = useTracking()
   const { user } = useContext(SystemContext)
 
@@ -97,36 +90,20 @@ export const NavBarUserMenu: React.FC = () => {
         <GraphIcon mr={1} aria-hidden="true" /> Insights
       </NavBarMenuItemLink>
 
-      {!isSeparateSavesAndFollowsEnabled ? (
-        <ProgressiveOnboardingSavesHighlight>
-          <ProgressiveOnboardingFollowsHighlight>
-            <NavBarMenuItemLink
-              aria-label="View your Saves &amp; Follows"
-              to="/collector-profile/saves"
-              onClick={trackClick}
-            >
-              <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-            </NavBarMenuItemLink>
-          </ProgressiveOnboardingFollowsHighlight>
-        </ProgressiveOnboardingSavesHighlight>
-      ) : (
-        <>
-          <NavBarMenuItemLink
-            aria-label="View your Saves"
-            to="/collector-profile/saves"
-            onClick={trackClick}
-          >
-            <HeartIcon mr={1} aria-hidden="true" /> Saves
-          </NavBarMenuItemLink>
-          <NavBarMenuItemLink
-            aria-label="View your Follows"
-            to="/collector-profile/follows"
-            onClick={trackClick}
-          >
-            <GroupIcon mr={1} aria-hidden="true" /> Follows
-          </NavBarMenuItemLink>
-        </>
-      )}
+      <NavBarMenuItemLink
+        aria-label="View your Saves"
+        to="/collector-profile/saves"
+        onClick={trackClick}
+      >
+        <HeartIcon mr={1} aria-hidden="true" /> Saves
+      </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="View your Follows"
+        to="/collector-profile/follows"
+        onClick={trackClick}
+      >
+        <GroupIcon mr={1} aria-hidden="true" /> Follows
+      </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"

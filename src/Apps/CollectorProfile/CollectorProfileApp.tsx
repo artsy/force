@@ -2,11 +2,10 @@ import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/C
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
+import { useSystemContext } from "System/useSystemContext"
+import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -17,9 +16,6 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
-    "collector-profile-separating-saves-and-follows"
-  )
 
   if (!isLoggedIn) {
     return (
@@ -35,10 +31,10 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     { name: "My Collection", url: "/collector-profile/my-collection" },
     { name: "Insights", url: "/collector-profile/insights" },
     {
-      name: isSeparateSavesAndFollowsEnabled ? "Saves" : "Saves & Follows",
+      name: "Saves",
       url: "/collector-profile/saves",
     },
-    isSeparateSavesAndFollowsEnabled && {
+    {
       name: "Follows",
       url: "/collector-profile/follows",
     },
