@@ -2615,6 +2615,9 @@ type ArtworkVersion implements Node {
   # The Artwork Version attribution class
   attributionClass: AttributionClass
 
+  # Artwork condition description
+  condition_description: String
+
   # The Artwork Version formatted date
   date: String
 
@@ -2635,6 +2638,9 @@ type ArtworkVersion implements Node {
 
   # The Artwork Version medium
   medium: String
+
+  # Artwork provenance
+  provenance: String
 
   # Artwork title
   title: String
