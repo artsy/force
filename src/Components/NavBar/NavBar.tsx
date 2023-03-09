@@ -49,6 +49,8 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
+import { ProgressiveOnboardingFindFollowsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
+import { ProgressiveOnboardingFindSavesQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -284,21 +286,27 @@ export const NavBar: React.FC = track(
                       alignItems="center"
                       justifyContent="center"
                       onClick={handleNotificationsClick}
+                      aria-label="Notifications"
                     >
                       <BellIcon aria-hidden="true" height={22} width={22} />
                       {renderNotificationsIndicator()}
                     </NavBarItemButton>
 
-                    <NavBarItemButton
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      onClick={() =>
-                        router.push("/collector-profile/my-collection")
-                      }
-                    >
-                      <SoloIcon aria-hidden="true" height={22} width={22} />
-                    </NavBarItemButton>
+                    <ProgressiveOnboardingFindFollowsQueryRenderer>
+                      <ProgressiveOnboardingFindSavesQueryRenderer>
+                        <NavBarItemButton
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          aria-label="My Collection"
+                          onClick={() =>
+                            router.push("/collector-profile/my-collection")
+                          }
+                        >
+                          <SoloIcon aria-hidden="true" height={22} width={22} />
+                        </NavBarItemButton>
+                      </ProgressiveOnboardingFindSavesQueryRenderer>
+                    </ProgressiveOnboardingFindFollowsQueryRenderer>
                   </>
                 )}
                 <NavBarItemButton
@@ -308,21 +316,24 @@ export const NavBar: React.FC = track(
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
+                  aria-label="Menu"
+                  aria-expanded={showMobileMenu}
                   onClick={event => {
                     event.preventDefault()
 
-                    const showMenu = !showMobileMenu
+                    toggleMobileNav(prevShowMenu => {
+                      if (!prevShowMenu) {
+                        trackEvent({
+                          action_type:
+                            DeprecatedAnalyticsSchema.ActionType.Click,
+                          subject:
+                            DeprecatedAnalyticsSchema.Subject
+                              .SmallScreenMenuSandwichIcon,
+                        })
+                      }
 
-                    toggleMobileNav(showMenu)
-
-                    if (showMenu) {
-                      trackEvent({
-                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-                        subject:
-                          DeprecatedAnalyticsSchema.Subject
-                            .SmallScreenMenuSandwichIcon,
-                      })
-                    }
+                      return !prevShowMenu
+                    })
                   }}
                 >
                   <NavBarMobileMenuIcon open={showMobileMenu} />

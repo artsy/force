@@ -17,6 +17,8 @@ import * as React from "react"
 import { useContext } from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
+import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -90,20 +92,29 @@ export const NavBarUserMenu: React.FC = () => {
         <GraphIcon mr={1} aria-hidden="true" /> Insights
       </NavBarMenuItemLink>
 
-      <NavBarMenuItemLink
-        aria-label="View your Saves"
-        to="/collector-profile/saves"
-        onClick={trackClick}
+      <ProgressiveOnboardingSavesHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
       >
-        <HeartIcon mr={1} aria-hidden="true" /> Saves
-      </NavBarMenuItemLink>
-      <NavBarMenuItemLink
-        aria-label="View your Follows"
-        to="/collector-profile/follows"
-        onClick={trackClick}
+        <NavBarMenuItemLink
+          aria-label="View your Saves"
+          to="/collector-profile/saves"
+          onClick={trackClick}
+        >
+          <HeartIcon mr={1} aria-hidden="true" /> Saves
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingSavesHighlight>
+
+      <ProgressiveOnboardingFollowsHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
       >
-        <GroupIcon mr={1} aria-hidden="true" /> Follows
-      </NavBarMenuItemLink>
+        <NavBarMenuItemLink
+          aria-label="View your Follows"
+          to="/collector-profile/follows"
+          onClick={trackClick}
+        >
+          <GroupIcon mr={1} aria-hidden="true" /> Follows
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingFollowsHighlight>
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"
