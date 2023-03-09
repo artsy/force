@@ -3,10 +3,20 @@ import {
   PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { ProgressiveOnboardingHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
+import {
+  ProgressiveOnboardingHighlight,
+  ProgressiveOnboardingHighlightPosition,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { FC, useEffect } from "react"
 
-export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
+interface ProgressiveOnboardingFollowsHighlightProps {
+  position: ProgressiveOnboardingHighlightPosition
+}
+
+export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFollowsHighlightProps> = ({
+  children,
+  position,
+}) => {
   const { isDismissed, dismiss, enabled } = useProgressiveOnboarding()
 
   const isDisplayable =
@@ -37,6 +47,7 @@ export const ProgressiveOnboardingFollowsHighlight: FC = ({ children }) => {
 
   return (
     <ProgressiveOnboardingHighlight
+      position={position}
       name={PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT}
     >
       {children}

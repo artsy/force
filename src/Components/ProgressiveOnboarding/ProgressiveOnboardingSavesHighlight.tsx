@@ -3,10 +3,20 @@ import {
   PROGRESSIVE_ONBOARDING_FIND_SAVES,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { ProgressiveOnboardingHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
+import {
+  ProgressiveOnboardingHighlight,
+  ProgressiveOnboardingHighlightPosition,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { FC, useEffect } from "react"
 
-export const ProgressiveOnboardingSavesHighlight: FC = ({ children }) => {
+interface ProgressiveOnboardingSavesHighlightProps {
+  position: ProgressiveOnboardingHighlightPosition
+}
+
+export const ProgressiveOnboardingSavesHighlight: FC<ProgressiveOnboardingSavesHighlightProps> = ({
+  children,
+  position,
+}) => {
   const { isDismissed, dismiss, enabled } = useProgressiveOnboarding()
 
   const isDisplayable =
@@ -37,6 +47,7 @@ export const ProgressiveOnboardingSavesHighlight: FC = ({ children }) => {
 
   return (
     <ProgressiveOnboardingHighlight
+      position={position}
       name={PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT}
     >
       {children}
