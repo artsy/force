@@ -77,7 +77,7 @@ describe("MyCollectionCreateArtwork", () => {
           fireEvent.click(screen.getByText("Back"))
 
           expect(mockRouterPush).toHaveBeenCalledWith({
-            pathname: "/settings/my-collection",
+            pathname: "/collector-profile/my-collection",
           })
         })
       })
@@ -383,7 +383,7 @@ describe("MyCollectionCreateArtwork", () => {
           fireEvent.click(screen.getByText("Leave Without Saving"))
 
           expect(mockRouterPush).toHaveBeenCalledWith({
-            pathname: "/settings/my-collection",
+            pathname: "/collector-profile/my-collection",
           })
         })
       })
@@ -395,7 +395,7 @@ describe("MyCollectionCreateArtwork", () => {
           fireEvent.click(screen.getByText("Back"))
 
           expect(mockRouterPush).toHaveBeenCalledWith({
-            pathname: "/settings/my-collection",
+            pathname: "/collector-profile/my-collection",
           })
         })
       })

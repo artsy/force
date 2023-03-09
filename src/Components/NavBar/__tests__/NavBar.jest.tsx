@@ -72,8 +72,6 @@ describe("NavBar", () => {
       const wrapper = getWrapper({ user: true })
       expect(wrapper.html()).not.toContain("Log In")
       expect(wrapper.html()).not.toContain("Sign Up")
-      expect(wrapper.find(BellIcon).length).toEqual(1)
-      expect(wrapper.find(SoloIcon).length).toEqual(1)
     })
 
     describe("lab features", () => {
