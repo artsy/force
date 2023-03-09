@@ -16,7 +16,7 @@ const mockRouterPush = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     push: mockRouterPush,
-    match: { params: { id: "1", recipientEmail: "test@artsymail.com" } },
+    match: { params: { id: "1" } },
   })),
 }))
 
@@ -99,7 +99,10 @@ describe("MeetTheSpecialists", () => {
       const link = screen.getByTestId("get-in-touch-button-Shlomi")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "/sell/inquiry/test@artsymail.com")
+      expect(link).toHaveAttribute(
+        "href",
+        "/sell/inquiry/shlomi.rabi@artsy.net"
+      )
     })
   })
 })
