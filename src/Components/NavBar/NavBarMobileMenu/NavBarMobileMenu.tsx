@@ -1,24 +1,22 @@
-import { CloseIcon, MenuIcon, ModalBase, Separator, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useTracking } from "react-tracking"
+import { CloseIcon, MenuIcon, ModalBase, Separator, Text } from "@artsy/palette"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
+import { useSystemContext } from "System/useSystemContext"
+import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
+import { logout } from "Utils/auth"
 import * as React from "react"
+import { useTracking } from "react-tracking"
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import {
-  NavBarMobileMenuItemLink,
   NavBarMobileMenuItemButton,
+  NavBarMobileMenuItemLink,
 } from "./NavBarMobileMenuItem"
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
-import { useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { useSystemContext } from "System/useSystemContext"
-import { NavBarMobileMenuNotificationsQueryRenderer } from "./NavBarMobileMenuNotifications"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { logout } from "Utils/auth"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
@@ -31,7 +29,6 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
   onNavButtonClick,
   onClose,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { isLoggedIn } = useSystemContext()
 
   const { downloadAppUrl } = useDeviceDetection()
@@ -83,10 +80,6 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
           </NavBarMobileMenuItemButton>
 
           <NavBarMobileMenuTransition isOpen={isOpen} py={2}>
-            {isLoggedIn && !isCollectorProfileEnabled && (
-              <NavBarMobileMenuNotificationsQueryRenderer />
-            )}
-
             <NavBarMobileMenuItemLink
               to="/collect"
               color="black100"
@@ -161,7 +154,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
               Get the app
             </NavBarMobileMenuItemLink>
 
-            {isLoggedIn && isCollectorProfileEnabled && (
+            {isLoggedIn && (
               <NavBarMobileMenuItemButton
                 aria-label="Log out of your account"
                 onClick={handleLogout}

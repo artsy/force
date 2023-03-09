@@ -1,19 +1,12 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { compact } from "lodash"
-import * as React from "react"
-import { useSystemContext } from "System/useSystemContext"
-import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
-import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { Separator } from "@artsy/palette"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications"
 import { trackEvent } from "Server/analytics/helpers"
-import { logout } from "Utils/auth"
+import { useSystemContext } from "System/useSystemContext"
+import * as React from "react"
+import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 
 export const NavBarMobileMenuLoggedIn: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
   ) => {
@@ -30,80 +23,18 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
     })
   }
 
-  const menu = {
-    title: "Account",
-    links: compact([
-      {
-        text: "Order history",
-        href: "/settings/purchases",
-      },
-      {
-        text: "Alerts",
-        href: "/settings/alerts",
-      },
-      {
-        text: "Saves & Follows",
-        href: "/settings/saves",
-      },
-      {
-        text: "Auctions",
-        href: "/settings/auctions",
-      },
-      {
-        text: "Collector Profile",
-        href: "/settings/edit-profile",
-      },
-      {
-        text: "My Collection",
-        href: "/settings/my-collection",
-      },
-      {
-        text: "Insights",
-        href: "/settings/insights",
-      },
-      {
-        text: "Settings",
-        href: "/settings/edit-settings",
-      },
-      {
-        text: "Payments",
-        href: "/settings/payments",
-      },
-      {
-        text: "Shipping",
-        href: "/settings/shipping",
-      },
-      {
-        // TODO: Should be a button
-        text: "Log out",
-        href: "#logout",
-        onClick: event => {
-          event.preventDefault()
-          logout()
-        },
-      },
-    ]),
-  }
-
   return (
     <>
-      {isCollectorProfileEnabled ? (
-        <>
-          <NavBarMobileMenuNotificationsQueryRenderer />
-          <NavBarMobileMenuItemLink
-            to="/settings/edit-profile"
-            color="black60"
-            onClick={handleClick}
-          >
-            Settings
-          </NavBarMobileMenuItemLink>
-        </>
-      ) : (
-        <>
-          <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
-          <Separator my={1} />
-        </>
-      )}
+      <>
+        <NavBarMobileMenuNotificationsQueryRenderer />
+        <NavBarMobileMenuItemLink
+          to="/settings/edit-profile"
+          color="black60"
+          onClick={handleClick}
+        >
+          Settings
+        </NavBarMobileMenuItemLink>
+      </>
 
       <NavBarMobileMenuItemLink to="/works-for-you">
         Works for you

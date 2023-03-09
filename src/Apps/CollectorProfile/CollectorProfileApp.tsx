@@ -17,13 +17,9 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
     "collector-profile-separating-saves-and-follows"
   )
-  if (!isCollectorProfileEnabled) {
-    return null
-  }
 
   if (!isLoggedIn) {
     return (

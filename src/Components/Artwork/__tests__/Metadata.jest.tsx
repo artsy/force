@@ -2,11 +2,9 @@ import { screen } from "@testing-library/react"
 import Metadata from "Components/Artwork/Metadata"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { MetadataTestQuery } from "__generated__/MetadataTestQuery.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/useSystemContext")
 
 describe("Metadata", () => {
   const { renderWithRelay } = setupTestWrapperTL<MetadataTestQuery>({
@@ -23,14 +21,6 @@ describe("Metadata", () => {
         }
       }
     `,
-  })
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
-    }))
   })
 
   it("navigates to artwork page when clicking on a normal artwork", () => {
@@ -58,12 +48,6 @@ describe("Metadata", () => {
   })
 
   it("navigates to my collection artwork page when clicking on a my collection artwork when ff enabled", () => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: true },
-      },
-    }))
-
     renderWithRelay(mockResolver, false, {
       to: "/collector-profile/my-collection/artwork/artwork-id",
     })

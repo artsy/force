@@ -70,19 +70,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-8-submission-status"
   )
 
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const EditArtworkButton = () => (
     <Button
       // @ts-ignore
       as={RouterLink}
       variant="secondaryNeutral"
       size="small"
-      to={
-        isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artworks/${artwork.internalID}/edit`
-          : `/my-collection/artworks/${artwork.internalID}/edit`
-      }
+      to={`/collector-profile/my-collection/artworks/${artwork.internalID}/edit`}
       onClick={() =>
         trackEditCollectedArtwork(artwork.internalID, artwork.slug)
       }
@@ -158,11 +152,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </>
               ) : (
                 <MyCollectionArtworkSWASectionDesktopLayout
-                  route={
-                    isCollectorProfileEnabled
-                      ? `/collector-profile/my-collection/submission/contact-information/${id}`
-                      : `/my-collection/submission/contact-information/${id}`
-                  }
+                  route={`/collector-profile/my-collection/submission/contact-information/${id}`}
                   learnMore={() => setShowHowItWorksModal(true)}
                   slug={slug}
                   artworkId={artwork.internalID}
@@ -198,11 +188,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         )
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          route={
-                            isCollectorProfileEnabled
-                              ? `/collector-profile/my-collection/submission/contact-information/${id}`
-                              : `/my-collection/submission/contact-information/${id}`
-                          }
+                          route={`/collector-profile/my-collection/submission/contact-information/${id}`}
                           learnMore={() => setShowHowItWorksModal(true)}
                           slug={slug}
                           artworkId={artwork.internalID}

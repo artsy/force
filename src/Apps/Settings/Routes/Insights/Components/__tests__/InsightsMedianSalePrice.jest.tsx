@@ -69,9 +69,6 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-          "cx-collector-profile": {
-            flagEnabled: false,
-          },
         },
       }))
 
@@ -92,9 +89,6 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-          "cx-collector-profile": {
-            flagEnabled: true,
-          },
         },
       }))
 
@@ -105,7 +99,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
+        "/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
   })

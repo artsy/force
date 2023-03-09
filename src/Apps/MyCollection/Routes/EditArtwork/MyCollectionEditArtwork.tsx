@@ -11,7 +11,6 @@ import { Formik } from "formik"
 import { reverse } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { wait } from "Utils/wait"
@@ -31,7 +30,6 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
 }) => {
   const { localImages, addLocalImage, removeLocalImage } = useLocalImageState()
 
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
@@ -83,14 +81,10 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
       })
 
       router.replace({
-        pathname: isCollectorProfileEnabled
-          ? "/collector-profile/my-collection"
-          : "/settings/my-collection",
+        pathname: "/collector-profile/my-collection",
       })
       router.push({
-        pathname: isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artwork/${updatedArtwork?.internalID}`
-          : `/my-collection/artwork/${updatedArtwork?.internalID}`,
+        pathname: `/collector-profile/my-collection/artwork/${updatedArtwork?.internalID}`,
       })
     } catch (error) {
       logger.error(`Artwork not updated`, error)
@@ -105,9 +99,7 @@ export const MyCollectionEditArtwork: React.FC<MyCollectionEditArtworkProps> = (
 
   const handleBack = () => {
     router.push({
-      pathname: isCollectorProfileEnabled
-        ? `/collector-profile/my-collection/artwork/${artwork?.internalID}`
-        : `/my-collection/artwork/${artwork?.internalID}`,
+      pathname: `/collector-profile/my-collection/artwork/${artwork?.internalID}`,
     })
   }
 

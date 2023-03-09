@@ -4,11 +4,9 @@ import { BackLinkFragmentContainer } from "Apps/Artist/Components/BackLink"
 import { BackLink_Test_Query } from "__generated__/BackLink_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
-import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/useSystemContext")
 const mockRouterReplace = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
@@ -31,11 +29,6 @@ describe("BackLink when ff disabled", () => {
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
-    }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
     }))
   })
 
@@ -110,7 +103,7 @@ describe("BackLink when ff disabled", () => {
 
       wrapper.simulate("click")
       expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: `/my-collection/artwork/${artworkId}`,
+        pathname: `/collector-profile/my-collection/artwork/${artworkId}`,
       })
     })
   })
@@ -123,11 +116,6 @@ describe("BackLink when ff enabled", () => {
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
-    }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: true },
-      },
     }))
   })
 

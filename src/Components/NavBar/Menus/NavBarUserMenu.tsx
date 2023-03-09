@@ -1,31 +1,27 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   ArtworkIcon,
-  BellIcon,
   GraphIcon,
   GroupIcon,
   HeartIcon,
   PowerIcon,
-  ReceiptIcon,
   Separator,
   SettingsIcon,
-  SoloIcon,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
-import { useContext } from "react"
-import { useTracking } from "react-tracking"
+import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 import { SystemContext } from "System/SystemContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
+import * as React from "react"
+import { useContext } from "react"
+import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
-import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
-import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 
 export const NavBarUserMenu: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
     "collector-profile-separating-saves-and-follows"
   )
@@ -85,136 +81,67 @@ export const NavBarUserMenu: React.FC = () => {
         </>
       )}
 
-      {isCollectorProfileEnabled ? (
-        <>
-          <NavBarMenuItemLink
-            aria-label="View your Collection"
-            to="/collector-profile/my-collection"
-            onClick={trackClick}
-          >
-            <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
-          </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="View your Collection"
+        to="/collector-profile/my-collection"
+        onClick={trackClick}
+      >
+        <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
+      </NavBarMenuItemLink>
 
-          <NavBarMenuItemLink
-            aria-label="View your Collection's Insights"
-            to="/collector-profile/insights"
-            onClick={trackClick}
-          >
-            <GraphIcon mr={1} aria-hidden="true" /> Insights
-          </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="View your Collection's Insights"
+        to="/collector-profile/insights"
+        onClick={trackClick}
+      >
+        <GraphIcon mr={1} aria-hidden="true" /> Insights
+      </NavBarMenuItemLink>
 
-          {!isSeparateSavesAndFollowsEnabled ? (
-            <ProgressiveOnboardingSavesHighlight>
-              <ProgressiveOnboardingFollowsHighlight>
-                <NavBarMenuItemLink
-                  aria-label="View your Saves &amp; Follows"
-                  to="/collector-profile/saves"
-                  onClick={trackClick}
-                >
-                  <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-                </NavBarMenuItemLink>
-              </ProgressiveOnboardingFollowsHighlight>
-            </ProgressiveOnboardingSavesHighlight>
-          ) : (
-            <>
-              <NavBarMenuItemLink
-                aria-label="View your Saves"
-                to="/collector-profile/saves"
-                onClick={trackClick}
-              >
-                <HeartIcon mr={1} aria-hidden="true" /> Saves
-              </NavBarMenuItemLink>
-              <NavBarMenuItemLink
-                aria-label="View your Follows"
-                to="/collector-profile/follows"
-                onClick={trackClick}
-              >
-                <GroupIcon mr={1} aria-hidden="true" /> Follows
-              </NavBarMenuItemLink>
-            </>
-          )}
-
-          <NavBarMenuItemLink
-            aria-label="Edit your settings"
-            to="/settings/edit-profile"
-            onClick={trackClick}
-          >
-            <SettingsIcon mr={1} aria-hidden="true" /> Settings
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemButton
-            aria-label="Log out of your account"
-            onClick={handleLogout}
-          >
-            <PowerIcon mr={1} aria-hidden="true" /> Log out
-          </NavBarMenuItemButton>
-        </>
+      {!isSeparateSavesAndFollowsEnabled ? (
+        <ProgressiveOnboardingSavesHighlight>
+          <ProgressiveOnboardingFollowsHighlight>
+            <NavBarMenuItemLink
+              aria-label="View your Saves &amp; Follows"
+              to="/collector-profile/saves"
+              onClick={trackClick}
+            >
+              <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
+            </NavBarMenuItemLink>
+          </ProgressiveOnboardingFollowsHighlight>
+        </ProgressiveOnboardingSavesHighlight>
       ) : (
         <>
           <NavBarMenuItemLink
-            aria-label="View your purchases"
-            to="/settings/purchases"
+            aria-label="View your Saves"
+            to="/collector-profile/saves"
             onClick={trackClick}
           >
-            <ReceiptIcon mr={1} aria-hidden="true" /> Order History
+            <HeartIcon mr={1} aria-hidden="true" /> Saves
           </NavBarMenuItemLink>
-
           <NavBarMenuItemLink
-            aria-label="View your alerts"
-            to="/settings/alerts"
+            aria-label="View your Follows"
+            to="/collector-profile/follows"
             onClick={trackClick}
           >
-            <BellIcon mr={1} aria-hidden="true" /> Alerts
+            <GroupIcon mr={1} aria-hidden="true" /> Follows
           </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Saves &amp; Follows"
-            to="/settings/saves"
-            onClick={trackClick}
-          >
-            <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collector Profile"
-            to="/settings/edit-profile"
-            onClick={trackClick}
-          >
-            <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collection"
-            to="/settings/my-collection"
-            onClick={trackClick}
-          >
-            <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collection's Insights"
-            to="/settings/insights"
-            onClick={trackClick}
-          >
-            <GraphIcon mr={1} aria-hidden="true" /> Insights
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="Edit your settings"
-            to="/settings/edit-settings"
-            onClick={trackClick}
-          >
-            <SettingsIcon mr={1} aria-hidden="true" /> Settings
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemButton
-            aria-label="Log out of your account"
-            onClick={handleLogout}
-          >
-            <PowerIcon mr={1} aria-hidden="true" /> Log out
-          </NavBarMenuItemButton>
         </>
       )}
+
+      <NavBarMenuItemLink
+        aria-label="Edit your settings"
+        to="/settings/edit-profile"
+        onClick={trackClick}
+      >
+        <SettingsIcon mr={1} aria-hidden="true" /> Settings
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemButton
+        aria-label="Log out of your account"
+        onClick={handleLogout}
+      >
+        <PowerIcon mr={1} aria-hidden="true" /> Log out
+      </NavBarMenuItemButton>
     </Text>
   )
 }

@@ -32,7 +32,6 @@ import { trackEvent } from "Server/analytics/helpers"
 import { isServer } from "Server/isServer"
 import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
@@ -101,7 +100,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   submission,
   myCollectionArtwork,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
@@ -159,18 +157,10 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         user_email: submission.userEmail,
       })
 
-      router.replace(
-        artworkId
-          ? isCollectorProfileEnabled
-            ? "/collector-profile/my-collection"
-            : "/settings/my-collection"
-          : "/sell"
-      )
+      router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
 
       const consignPath = artworkId
-        ? isCollectorProfileEnabled
-          ? "/collector-profile/my-collection/submission"
-          : "/my-collection/submission"
+        ? "/collector-profile/my-collection/submission"
         : "/sell/submission"
 
       const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -200,9 +190,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   const deriveBackLinkTo = () => {
     const defaultBackLink = artworkId
-      ? isCollectorProfileEnabled
-        ? "/collector-profile/my-collection"
-        : "/my-collection"
+      ? "/collector-profile/my-collection"
       : "/sell"
 
     let backTo = defaultBackLink
