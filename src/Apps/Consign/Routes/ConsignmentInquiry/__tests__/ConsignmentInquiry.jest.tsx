@@ -135,7 +135,6 @@ describe("ConsignmentInquiry", () => {
               phoneNumber: mockMe.phone,
               message: "This is my message to you",
               userId: mockMe.internalID,
-              recipientEmail: null,
             },
           },
         })

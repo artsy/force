@@ -69,9 +69,7 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
 
-  const recipientEmail = match.params.recipientEmail
-    ? match.params.recipientEmail
-    : null
+  const recipientEmail = match.params.recipientEmail ?? null
 
   const recipientName = SPECIALISTS.find(i => i.email === recipientEmail)
     ?.firstName
@@ -120,20 +118,9 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
         },
       })
 
-      console.log(
-        "[LOGD] input,  response, match, recipientEmail, !!recipientEmail= ",
-        input,
-        response,
-        match,
-        recipientEmail,
-        !!recipientEmail ? true : false
-      )
-
       const consignmentInquiryId =
         response.createConsignmentInquiry?.consignmentInquiryOrError
           ?.consignmentInquiry?.internalID
-
-      console.log("[LOGD] consignmentInquiryId = ", consignmentInquiryId)
 
       if (consignmentInquiryId) {
         trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
@@ -146,8 +133,6 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
         )
       }
     } catch (error) {
-      console.log("[LOGD] error = ", error)
-
       logger.error(error)
       if (typeof error === "string") {
         sendToast({
