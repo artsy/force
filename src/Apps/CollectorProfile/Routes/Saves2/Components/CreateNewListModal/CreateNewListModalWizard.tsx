@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { CreateNewListModalContainer, NewAddedList } from "./CreateNewListModal"
-import { AddArtworksModalContainer } from "./AddArtworksModal"
+import { FC, useState } from "react"
+import { CreateNewListModal, NewAddedList } from "./CreateNewListModal"
+import { AddArtworksModal } from "./AddArtworksModal"
 
 interface CreateNewListModalWizardProps {
   onComplete: () => void
   onClose: () => void
 }
 
-export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> = ({
+export const CreateNewListModalWizard: FC<CreateNewListModalWizardProps> = ({
   onComplete,
   onClose,
 }) => {
@@ -21,24 +21,20 @@ export const CreateNewListModalWizard: React.FC<CreateNewListModalWizardProps> =
     onComplete()
   }
 
-  if (listName == null) {
+  if (listName != null) {
     return (
-      <CreateNewListModalContainer
-        visible
-        onClose={onClose}
-        onComplete={handleCreateListComplete}
+      <AddArtworksModal
+        onClose={onComplete}
+        onComplete={handleAddArtworksComplete}
+        listName={listName}
       />
     )
   }
 
   return (
-    <>
-      <AddArtworksModalContainer
-        visible
-        onClose={onComplete}
-        onComplete={handleAddArtworksComplete}
-        listName={listName}
-      />
-    </>
+    <CreateNewListModal
+      onClose={onClose}
+      onComplete={handleCreateListComplete}
+    />
   )
 }

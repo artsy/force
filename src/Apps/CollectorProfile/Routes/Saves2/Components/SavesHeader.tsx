@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import { FC, useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { CreateNewListModalWizard } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalWizard"
+import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 
-export const SavesHeader: React.FC = () => {
+export const SavesHeader: FC = () => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)

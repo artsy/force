@@ -1,5 +1,5 @@
-import React from "react"
-import { GridColumns } from "@artsy/palette"
+import { FC } from "react"
+import { Column, GridColumns } from "@artsy/palette"
 import { ArtworkItem } from "./ArtworkItem"
 
 export const TEMP_ARTWORKS = [
@@ -170,15 +170,23 @@ export const TEMP_ARTWORKS = [
   },
 ]
 
-export const ArtworksList: React.FC = () => {
-  const handleItemPress = item => {
-    console.log("[Debug] Item pressed", item)
+interface ArtworksListProps {
+  onItemPress: (artworkID: string) => void
+}
+
+export const ArtworksList: FC<ArtworksListProps> = ({ onItemPress }) => {
+  const handleItemPress = artworkID => {
+    onItemPress(artworkID)
   }
 
   return (
     <GridColumns>
       {TEMP_ARTWORKS.map(artwork => {
-        return <ArtworkItem item={artwork} onItemPress={handleItemPress} />
+        return (
+          <Column span={[6, 4]}>
+            <ArtworkItem item={artwork} onItemPress={handleItemPress} />
+          </Column>
+        )
       })}
     </GridColumns>
   )
