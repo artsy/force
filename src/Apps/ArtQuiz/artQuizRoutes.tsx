@@ -8,9 +8,6 @@ const LOGIN_COPY = "Log in to take the Art Quiz."
 const REDIRECT_URL = `/login?redirectTo=/art-quiz&copy=${LOGIN_COPY}`
 
 const artQuizServerSideRedirect = ({ res }: { res: ArtsyResponse }) => {
-  if (!res.locals.sd.FEATURE_FLAGS["art-quiz"].flagEnabled) {
-    res.redirect("/")
-  }
   if (!res.locals.sd.CURRENT_USER) {
     res.redirect(REDIRECT_URL)
   }
