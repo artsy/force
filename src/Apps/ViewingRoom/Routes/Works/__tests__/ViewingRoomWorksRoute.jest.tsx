@@ -224,6 +224,9 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             preview: null,
+            customCollections: {
+              totalCount: 0,
+            },
           },
         },
         {
@@ -369,6 +372,9 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             },
             preview: null,
+            customCollections: {
+              totalCount: 0,
+            },
           },
         },
       ],

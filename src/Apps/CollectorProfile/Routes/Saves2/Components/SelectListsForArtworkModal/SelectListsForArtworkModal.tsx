@@ -40,7 +40,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useUpdateCollectionsForArtwork()
+  const { submitMutation } = useUpdateCollectionsForArtwork(state.artwork!.id)
   const { sendToast } = useToasts()
 
   const onClose = () => {
@@ -66,7 +66,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       await submitMutation({
         variables: {
           input: {
-            artworkIDs: [state.artwork!.id],
+            artworkIDs: [state.artwork!.internalID],
             addToCollectionIDs: state.addingListIDs,
             removeFromCollectionIDs: state.removingListIDs,
           },
@@ -189,7 +189,7 @@ export const SelectListsForArtworkModalQueryRender: FC = () => {
   return (
     <SystemQueryRenderer<SelectListsForArtworkModalQuery>
       query={query}
-      variables={{ artworkID: state.artwork!.id }}
+      variables={{ artworkID: state.artwork!.internalID }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)

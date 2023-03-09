@@ -35,6 +35,7 @@ type Action =
 
 interface ArtworkEntity {
   id: string
+  internalID: string
   title: string
   imageURL: string | null
 }

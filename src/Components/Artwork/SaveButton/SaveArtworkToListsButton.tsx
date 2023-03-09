@@ -21,13 +21,16 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const { sendToast } = useToasts()
   const { state, savedListId, dispatch } = useManageArtworkForSavesContext()
 
-  const isSaved = !!artwork.is_saved
+  const customListsCount = artwork.customCollections?.totalCount ?? 0
+  const hasCustomLists = customListsCount > 0
+  const isSaved = !!artwork.is_saved || hasCustomLists
 
   const openManageArtworkForSavesModal = () => {
     dispatch({
       type: "SET_ARTWORK",
       payload: {
-        id: artwork.internalID,
+        id: artwork.id,
+        internalID: artwork.internalID,
         title: `${artwork.title}, ${artwork.date}`,
         imageURL: artwork.preview?.url ?? null,
       },
@@ -74,7 +77,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   ) => {
     event.preventDefault()
 
-    if (savedListId) {
+    if (savedListId || hasCustomLists) {
       openManageArtworkForSavesModal()
       return
     }
@@ -103,6 +106,14 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         date
         preview: image {
           url(version: "square")
+        }
+
+        customCollections: collectionsConnection(
+          first: 0
+          default: false
+          saves: true
+        ) {
+          totalCount
         }
       }
     `,
