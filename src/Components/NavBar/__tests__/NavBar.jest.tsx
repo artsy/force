@@ -33,6 +33,20 @@ jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
 }))
 
+jest.mock(
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows",
+  () => ({
+    ProgressiveOnboardingFindFollowsQueryRenderer: ({ children }) => children,
+  })
+)
+
+jest.mock(
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves",
+  () => ({
+    ProgressiveOnboardingFindSavesQueryRenderer: ({ children }) => children,
+  })
+)
+
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 
