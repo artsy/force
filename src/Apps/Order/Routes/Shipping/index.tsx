@@ -565,11 +565,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     !artwork?.pickup_available || shippingOption === "SHIP"
   const showAddressForm =
     shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
-
   const showSavedAddresses =
     shippingSelected && addressList && addressList.length > 0
-
   const isArtsyShipping = checkIfArtsyShipping()
+  const showArtsyShipping =
+    isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
 
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
@@ -609,7 +609,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     Delivery method
                   </Text>
                   <BorderedRadio value="SHIP" label="Shipping" />
-
                   <BorderedRadio
                     value="PICKUP"
                     label="Arrange for pickup (free)"
@@ -648,13 +647,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onAddressEdit={handleAddressEdit}
               />
             </Collapse>
-
             <Collapse data-test="addressFormCollapse" open={showAddressForm}>
               {isArtsyShipping &&
                 shippingQuotes &&
                 shippingQuotes.length === 0 &&
                 renderArtaErrorMessage()}
               <AddressForm
+                tabIndex={showAddressForm ? 0 : -1}
                 value={address}
                 errors={addressErrors}
                 touched={addressTouched}
@@ -666,6 +665,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={2} />
               <PhoneNumberForm
+                tabIndex={showAddressForm ? 0 : -1}
                 value={phoneNumber}
                 errors={phoneNumberError}
                 touched={phoneNumberTouched}
@@ -673,6 +673,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 label="Required for shipping logistics"
               />
               <Checkbox
+                tabIndex={showAddressForm ? 0 : -1}
                 onSelect={selected => setSaveAddress(selected)}
                 selected={saveAddress}
                 data-test="save-address-checkbox"
@@ -681,12 +682,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </Checkbox>
               <Spacer y={4} />
             </Collapse>
-
             <Collapse
               data-test="phoneNumberCollapse"
               open={shippingOption === "PICKUP"}
             >
               <PhoneNumberForm
+                tabIndex={shippingOption === "PICKUP" ? 0 : -1}
                 data-test="pickupPhoneNumberForm"
                 value={phoneNumber}
                 errors={phoneNumberError}
@@ -696,12 +697,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={4} />
             </Collapse>
-
-            <Collapse
-              open={
-                isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
-              }
-            >
+            <Collapse open={showArtsyShipping}>
               <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
                 All options are eligible for Artsy’s Buyer Protection policy,
@@ -716,7 +712,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={4} />
             </Collapse>
-
             <Media greaterThan="xs">
               <Button
                 onClick={onContinueButtonPressed}
