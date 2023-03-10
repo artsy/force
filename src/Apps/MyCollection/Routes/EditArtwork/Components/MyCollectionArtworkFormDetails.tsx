@@ -334,7 +334,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         </Column>
       </GridColumns>
 
-      <GridColumns mt={[4, 2]} mb={[2, 0]}>
+      <GridColumns mt={4} mb={[0, 2]}>
         <Column span={12}>
           <TextArea
             title="Notes"
