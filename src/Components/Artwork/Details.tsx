@@ -233,13 +233,9 @@ export const Details: React.FC<DetailsProps> = ({
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const showDemandIndexHints = useFeatureFlag(
-    "show-my-collection-demand-index-hints"
-  )
   const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
 
-  const showHighDemandInfo =
-    !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
+  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
     if (!showSaveButton) {
