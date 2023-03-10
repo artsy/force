@@ -42,9 +42,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
-    "my-collection-web-phase-4-articles-rail"
-  )
   const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
     "my-collection-web-phase-4-artist-market"
   )
@@ -206,12 +203,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
                     <Spacer x={6} y={6} />
 
-                    {!!enableMyCollectionPhase4ArticlesRail && (
-                      <ArtistCurrentArticlesRailQueryRenderer
-                        slug={slug}
-                        artworkId={artwork.internalID}
-                      />
-                    )}
+                    <ArtistCurrentArticlesRailQueryRenderer
+                      slug={slug}
+                      artworkId={artwork.internalID}
+                    />
                   </>
                 </Tab>
               </Tabs>
@@ -223,12 +218,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
                 <Spacer x={6} y={6} />
 
-                {!!enableMyCollectionPhase4ArticlesRail && (
-                  <ArtistCurrentArticlesRailQueryRenderer
-                    slug={slug}
-                    artworkId={artwork.internalID}
-                  />
-                )}
+                <ArtistCurrentArticlesRailQueryRenderer
+                  slug={slug}
+                  artworkId={artwork.internalID}
+                />
               </>
             )}
           </Media>
@@ -242,12 +235,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
             <Spacer x={[4, 6]} y={[4, 6]} />
 
-            {!!enableMyCollectionPhase4ArticlesRail && (
-              <ArtistCurrentArticlesRailQueryRenderer
-                slug={slug}
-                artworkId={artwork.internalID}
-              />
-            )}
+            <ArtistCurrentArticlesRailQueryRenderer
+              slug={slug}
+              artworkId={artwork.internalID}
+            />
           </>
         )}
       </Media>
