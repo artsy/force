@@ -122,7 +122,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
             >
               {query}
             </Text>
-            “ on Artsy. "You can add their name in the artwork details."
+            “ on Artsy. You can add their name in the artwork details.
           </Text>
 
           <Spacer y={4} />
