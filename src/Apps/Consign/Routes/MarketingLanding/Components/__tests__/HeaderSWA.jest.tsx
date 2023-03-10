@@ -103,10 +103,7 @@ describe("HeaderSWA", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute(
-        "href",
-        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-      )
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
     })
   })
 })
