@@ -1,30 +1,26 @@
+import { ActionType } from "@artsy/cohesion"
 import {
   Button,
   Column,
   GridColumns,
+  Image,
   ResponsiveBox,
   Spacer,
   Text,
-  Image,
 } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
-import { resized } from "Utils/resized"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
-import { useTracking } from "react-tracking"
 import { Media } from "Utils/Responsive"
-import { ActionType } from "@artsy/cohesion"
+import { resized } from "Utils/resized"
+import { useTracking } from "react-tracking"
 
 export const HeaderSWA = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
 
   const trackStartSellingClick = () => {
     trackEvent({
