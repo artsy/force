@@ -1,12 +1,11 @@
 import { ContextModule } from "@artsy/cohesion"
-import { HeartFillIcon, HeartIcon, useToasts } from "@artsy/palette"
-import { UtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/UtilButton"
+import { useToasts } from "@artsy/palette"
+import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkActionsSaveToListsButton_artwork$data } from "__generated__/ArtworkActionsSaveToListsButton_artwork.graphql"
 
 interface ArtworkActionsSaveToListsButtonProps {
@@ -16,26 +15,19 @@ interface ArtworkActionsSaveToListsButtonProps {
 export const ArtworkActionsSaveToListsButton: FC<ArtworkActionsSaveToListsButtonProps> = ({
   artwork,
 }) => {
-  let isSaved = !!artwork.isSaved
-  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
   const { dispatch } = useManageArtworkForSavesContext()
   const { sendToast } = useToasts()
   const { t } = useTranslation()
   const customListsCount = artwork.customCollections?.totalCount ?? 0
   const hasCustomLists = customListsCount > 0
-
-  if (isArtworksListEnabled) {
-    isSaved = !!artwork.isSaved || hasCustomLists
-  }
+  const isSaved = !!artwork.isSaved || hasCustomLists
 
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
     artwork,
     contextModule: ContextModule.artworkImage,
     onSave: ({ action }) => {
-      if (isArtworksListEnabled) {
-        showToastByAction(action)
-      }
+      showToastByAction(action)
     },
   })
 
@@ -78,7 +70,7 @@ export const ArtworkActionsSaveToListsButton: FC<ArtworkActionsSaveToListsButton
   }
 
   const onSaveClicked = () => {
-    if (isArtworksListEnabled && hasCustomLists) {
+    if (hasCustomLists) {
       openManageArtworkForSavesModal()
       return
     }
@@ -86,15 +78,7 @@ export const ArtworkActionsSaveToListsButton: FC<ArtworkActionsSaveToListsButton
     handleSave()
   }
 
-  return (
-    <UtilButton
-      name="heart"
-      Icon={isSaved ? FilledIcon : HeartIcon}
-      label={isSaved ? "Saved" : "Save"}
-      longestLabel="Saved"
-      onClick={onSaveClicked}
-    />
-  )
+  return <SaveUtilButton isSaved={isSaved} onClick={onSaveClicked} />
 }
 
 export const ArtworkActionsSaveToListsButtonFragmentContainer = createFragmentContainer(
@@ -122,5 +106,3 @@ export const ArtworkActionsSaveToListsButtonFragmentContainer = createFragmentCo
     `,
   }
 )
-
-const FilledIcon = () => <HeartFillIcon fill="blue100" />

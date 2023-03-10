@@ -1,12 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  BellFillIcon,
-  BellIcon,
-  HeartFillIcon,
-  HeartIcon,
-  Popover,
-  THEME,
-} from "@artsy/palette"
+import { BellFillIcon, BellIcon, Popover, THEME } from "@artsy/palette"
 import { useEffect, useCallback, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
@@ -16,6 +9,10 @@ import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/C
 import { useSystemContext } from "System/useSystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
+import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
+import { ArtworkActionsSaveToListsButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveToListsButton"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -30,6 +27,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     contextModule: ContextModule.artworkImage,
   })
   const [popoverVisible, setPopoverVisible] = useState(false)
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
 
   const {
     isAuction,
@@ -110,17 +108,19 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
     )
   }
 
-  const FilledIcon = () => <HeartFillIcon fill="blue100" />
+  if (isArtworksListEnabled) {
+    return (
+      <ProgressiveOnboardingSaveArtworkQueryRenderer>
+        <ManageArtworkForSavesProvider>
+          <ArtworkActionsSaveToListsButtonFragmentContainer artwork={artwork} />
+        </ManageArtworkForSavesProvider>
+      </ProgressiveOnboardingSaveArtworkQueryRenderer>
+    )
+  }
 
   return (
     <ProgressiveOnboardingSaveArtworkQueryRenderer>
-      <UtilButton
-        name="heart"
-        Icon={isSaved ? FilledIcon : HeartIcon}
-        label={isSaved ? "Saved" : "Save"}
-        longestLabel="Saved"
-        onClick={handleSave}
-      />
+      <SaveUtilButton isSaved={isSaved} onClick={handleSave} />
     </ProgressiveOnboardingSaveArtworkQueryRenderer>
   )
 }
