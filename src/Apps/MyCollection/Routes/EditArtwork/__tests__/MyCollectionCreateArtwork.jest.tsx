@@ -32,20 +32,12 @@ jest.unmock("react-relay")
 
 describe("MyCollectionCreateArtwork", () => {
   const getWrapper = (props: Record<string, any> = {}) => {
-    const {
-      breakpoint = "lg",
-      featureFlags = {
-        "cx-my-collection-uploading-flow-steps": { flagEnabled: false },
-        "cx-my-collection-personal-artists-for-web": {
-          flagEnabled: true,
-        },
-      },
-    } = props
+    const { breakpoint = "lg" } = props
 
     const { env } = setupTestWrapperTL({
       Component: (props: any) => {
         return (
-          <MockBoot breakpoint={breakpoint} context={{ featureFlags }}>
+          <MockBoot breakpoint={breakpoint}>
             <MyCollectionCreateArtworkFragmentContainer {...props} />
           </MockBoot>
         )
@@ -66,13 +58,7 @@ describe("MyCollectionCreateArtwork", () => {
     describe("Select Artist step", () => {
       describe("back button", () => {
         it("navigates back to the My Collection page", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           fireEvent.click(screen.getByText("Back"))
 
@@ -182,16 +168,7 @@ describe("MyCollectionCreateArtwork", () => {
 
     describe("when no artist has been selected", () => {
       it("shows the artist input", async () => {
-        getWrapper({
-          featureFlags: {
-            "cx-my-collection-uploading-flow-steps": {
-              flagEnabled: true,
-            },
-            "cx-my-collection-personal-artists-for-web": {
-              flagEnabled: true,
-            },
-          },
-        })
+        getWrapper()
 
         // Navigate to the detail step without selecting an artist
         fireEvent.click(screen.getByTestId("artist-select-skip-button"))
@@ -207,16 +184,7 @@ describe("MyCollectionCreateArtwork", () => {
 
     describe("when skipping the artist select step", () => {
       it("populates artwork name input with search query", async () => {
-        getWrapper({
-          featureFlags: {
-            "cx-my-collection-uploading-flow-steps": {
-              flagEnabled: true,
-            },
-            "cx-my-collection-personal-artists-for-web": {
-              flagEnabled: true,
-            },
-          },
-        })
+        getWrapper()
 
         fireEvent.change(
           screen.getByPlaceholderText("Search for artists on Artsy"),
@@ -240,16 +208,7 @@ describe("MyCollectionCreateArtwork", () => {
     describe("when selecting an artist", () => {
       describe("with an artist without artworks", () => {
         it("skips the Artwork step", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-              "cx-my-collection-personal-artists-for-web": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           // Selecting an artist without artworks
           fireEvent.click(screen.getByTestId("artist-4d8b927f4eb68a1b2c00017c"))
@@ -346,57 +305,6 @@ describe("MyCollectionCreateArtwork", () => {
           // ).toHaveValue("An Artwork")
 
           // TODO: Check photos
-        })
-      })
-    })
-  })
-
-  describe("when new upload flow is disabled", () => {
-    describe("Initial render", () => {
-      it("doesn't populate inputs", async () => {
-        getWrapper()
-
-        await flushPromiseQueue()
-
-        expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
-        expect(screen.getByTestId("save-button")).toBeDisabled()
-
-        expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
-
-        expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
-      })
-    })
-
-    describe("Back Link behavior", () => {
-      describe("when the form is dirty", () => {
-        it("opens modal before navigating to the previous screen", async () => {
-          getWrapper()
-
-          fireEvent.change(
-            screen.getByTestId("my-collection-artwork-details-title"),
-            {
-              target: { value: "Some new value" },
-            }
-          )
-
-          fireEvent.click(screen.getByText("Back"))
-          fireEvent.click(screen.getByText("Leave Without Saving"))
-
-          expect(mockRouterPush).toHaveBeenCalledWith({
-            pathname: "/collector-profile/my-collection",
-          })
-        })
-      })
-
-      describe("when the form is not dirty", () => {
-        it("navigates to the previous screen", async () => {
-          getWrapper()
-
-          fireEvent.click(screen.getByText("Back"))
-
-          expect(mockRouterPush).toHaveBeenCalledWith({
-            pathname: "/collector-profile/my-collection",
-          })
         })
       })
     })
