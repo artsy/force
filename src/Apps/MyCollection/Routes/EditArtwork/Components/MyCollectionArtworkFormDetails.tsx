@@ -315,7 +315,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           <Input
             name="provenance"
             placeholder="Describe how you acquired the work"
-            maxLength={256}
+            maxLength={500}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
@@ -326,7 +326,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             title="City"
             name="artworkLocation"
             placeholder="City where artwork is located"
-            maxLength={500}
+            maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.artworkLocation}
