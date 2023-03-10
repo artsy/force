@@ -83,6 +83,9 @@ export const MeetTheSpecialists: React.FC = () => {
     })
   }
 
+  const clickContactSpecialist = () => {
+    trackContactTheSpecialistClick()
+  }
   return (
     <>
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
@@ -164,9 +167,9 @@ export const MeetTheSpecialists: React.FC = () => {
                     variant="secondaryWhite"
                     size="small"
                     mb={2}
-                    onClick={trackContactTheSpecialistClick}
+                    onClick={clickContactSpecialist}
                     data-testid={`get-in-touch-button-${i.firstName}`}
-                    to={`mailto:${i.email}`}
+                    to={`/sell/inquiry/${i.email}`}
                   >
                     Contact {i.firstName}
                   </Button>

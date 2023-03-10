@@ -251,6 +251,36 @@ export const consignRoutes: AppRouteConfig[] = [
     ],
   },
   {
+    path: "/sell/inquiry/:recipientEmail?",
+    getComponent: () => ConsignmentInquiryContainer,
+    children: [
+      {
+        path: "/",
+        getComponent: () => ConsignmentInquiryApp,
+        layout: "ContainerOnly",
+        onClientSideRender: () => {
+          ConsignmentInquiryApp.preload()
+        },
+        query: graphql`
+          query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {
+            me {
+              ...ConsignmentInquiry_me
+            }
+          }
+        `,
+        render: renderConsignmentInquiry,
+      },
+      {
+        path: "sent",
+        layout: "ContainerOnly",
+        getComponent: () => ConsignmentInquiryConfirmationApp,
+        onClientSideRender: () => {
+          ConsignmentInquiryConfirmationApp.preload()
+        },
+      },
+    ],
+  },
+  {
     path: "/sell/submission",
     getComponent: () => SubmissionLayout,
     onServerSideRender: ({ res }) => {

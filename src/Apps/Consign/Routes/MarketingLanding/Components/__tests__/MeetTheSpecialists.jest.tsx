@@ -11,8 +11,11 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
     contextPageOwnerType: "sell",
   })),
 }))
+
+const mockRouterPush = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
+    push: mockRouterPush,
     match: { params: { id: "1" } },
   })),
 }))
@@ -96,7 +99,10 @@ describe("MeetTheSpecialists", () => {
       const link = screen.getByTestId("get-in-touch-button-Shlomi")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "mailto:shlomi.rabi@artsy.net")
+      expect(link).toHaveAttribute(
+        "href",
+        "/sell/inquiry/shlomi.rabi@artsy.net"
+      )
     })
   })
 })
