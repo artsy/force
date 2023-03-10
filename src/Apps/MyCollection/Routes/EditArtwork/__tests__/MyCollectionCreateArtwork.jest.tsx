@@ -72,13 +72,7 @@ describe("MyCollectionCreateArtwork", () => {
     describe("Select Artwork step", () => {
       describe("back button", () => {
         it("navigates back to the select artist step", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           await flushPromiseQueue()
 
@@ -95,13 +89,7 @@ describe("MyCollectionCreateArtwork", () => {
 
       describe("skip button", () => {
         it("navigates to the Detail step", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
@@ -118,13 +106,7 @@ describe("MyCollectionCreateArtwork", () => {
     describe("Detail step", () => {
       describe("back button", () => {
         it("opens modal before navigating to the previous screen", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           // Navigate to the detail step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
@@ -142,13 +124,7 @@ describe("MyCollectionCreateArtwork", () => {
 
       describe("when an artist has been selected", () => {
         it("shows the artist avatar", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           // Navigate to the detail step and select an artist
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
@@ -222,13 +198,7 @@ describe("MyCollectionCreateArtwork", () => {
       })
       describe("when skipping the artwork select step", () => {
         it("populates artist and artwork title in the form", async () => {
-          getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          getWrapper()
 
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
@@ -254,13 +224,7 @@ describe("MyCollectionCreateArtwork", () => {
 
       describe("when selecting an artwork", () => {
         it("populates the form with the artwork details", async () => {
-          const env = getWrapper({
-            featureFlags: {
-              "cx-my-collection-uploading-flow-steps": {
-                flagEnabled: true,
-              },
-            },
-          })
+          const env = getWrapper()
 
           // Navigate to the select artwork step
           fireEvent.click(screen.getByTestId("artist-4dd1584de0091e000100207c"))
