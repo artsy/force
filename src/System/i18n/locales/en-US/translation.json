@@ -131,8 +131,25 @@
       "remainingCharactersCount_one": "{{count}} character remaining",
       "remainingCharactersCount_other": "{{count}} characters remaining"
     },
+    "manageArtworkForSaves": {
+      "toasts": {
+        "addedArtworkToList": "Added to {{name}} list",
+        "addedArtworkToLists": "Added to {{count}} lists",
+        "removedArtworkFromList": "Removed from {{name}}",
+        "removedArtworkFromLists": "Removed from {{count}} lists",
+        "changesSaved": "Changes saved",
+        "viewListButton": "View List",
+        "viewSavesButton": "View Saves"
+      }
+    },
     "saveArtworkToListsButton": {
-      "changesSaved": "Changes saved"
+      "artworkSavedToast": {
+        "message": "Artwork saved",
+        "button": "Add to a List"
+      },
+      "artworkRemovedToast": {
+        "message": "Removed from All Saves"
+      }
     },
     "selectedListsForArtwork": {
       "createNewListButton": "Create New List",

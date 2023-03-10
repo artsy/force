@@ -4,6 +4,7 @@ import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtwor
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
@@ -18,6 +19,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
+  const { t } = useTranslation()
   const { sendToast } = useToasts()
   const { state, savedListId, dispatch } = useManageArtworkForSavesContext()
 
@@ -41,9 +43,13 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     if (action === "Saved Artwork") {
       sendToast({
         variant: "success",
-        message: "Artwork saved",
+        message: t(
+          "collectorSaves.saveArtworkToListsButton.artworkSavedToast.message"
+        ),
         action: {
-          label: "Add to a List",
+          label: t(
+            "collectorSaves.saveArtworkToListsButton.artworkSavedToast.button"
+          ),
           onClick: openManageArtworkForSavesModal,
         },
       })
@@ -53,7 +59,9 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 
     sendToast({
       variant: "message",
-      message: "Removed from All Saves",
+      message: t(
+        "collectorSaves.saveArtworkToListsButton.artworkRemovedToast.message"
+      ),
     })
   }
 
