@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<76f5fa78894127d1284df848daedc700>>
+ * @generated SignedSource<<52442561c145719e163dd6331034ce63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,18 +10,18 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AddArtworksModal_me$data = {
+export type AddArtworksModalContent_me$data = {
   readonly collection: {
     readonly artworksConnection: {
       readonly totalCount: number | null;
     } | null;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_me">;
-  readonly " $fragmentType": "AddArtworksModal_me";
+  readonly " $fragmentType": "AddArtworksModalContent_me";
 };
-export type AddArtworksModal_me$key = {
-  readonly " $data"?: AddArtworksModal_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModal_me">;
+export type AddArtworksModalContent_me$key = {
+  readonly " $data"?: AddArtworksModalContent_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModalContent_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -40,7 +40,7 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AddArtworksModal_me",
+  "name": "AddArtworksModalContent_me",
   "selections": [
     {
       "args": [
@@ -97,6 +97,6 @@ return {
 };
 })();
 
-(node as any).hash = "6259da09a42ed67958ed79f06cf8342e";
+(node as any).hash = "25cae15bd39a287103fdd8f1deb47349";
 
 export default node;
