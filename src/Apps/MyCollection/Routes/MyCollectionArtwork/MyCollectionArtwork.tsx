@@ -42,9 +42,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const enableMyCollectionPhase4Comparables = useFeatureFlag(
-    "my-collection-web-phase-4-comparables"
-  )
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
   )
@@ -85,8 +82,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const id = artwork.internalID
   const displayText = artwork.consignmentSubmission?.displayText
 
-  const showComparables =
-    !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
+  const showComparables = !!artwork.comparables?.totalCount
 
   const showAuctionResults =
     !!artwork.artist?.auctionResults?.totalCount &&

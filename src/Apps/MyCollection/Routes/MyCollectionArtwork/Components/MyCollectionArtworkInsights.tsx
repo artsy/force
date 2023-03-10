@@ -16,9 +16,6 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase4Comparables = useFeatureFlag(
-    "my-collection-web-phase-4-comparables"
-  )
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
   )
@@ -47,9 +44,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         marketPriceInsights={artwork.marketPriceInsights!}
       />
 
-      {!!enableMyCollectionPhase4Comparables && (
-        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
-      )}
+      <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
 
       {!!enableMyCollectionPhase4AuctionResults && (
         <MyCollectionArtworkAuctionResultsFragmentContainer
