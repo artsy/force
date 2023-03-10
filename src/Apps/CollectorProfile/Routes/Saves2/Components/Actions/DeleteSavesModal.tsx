@@ -1,6 +1,7 @@
 import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { graphql } from "react-relay"
+import { ConnectionHandler, graphql } from "react-relay"
+import { useRouter } from "System/Router/useRouter"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { DeleteSavesModalMutation } from "__generated__/DeleteSavesModalMutation.graphql"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
@@ -10,8 +11,25 @@ interface Props {
   onClose: () => void
 }
 
+const deleteCollectionUpdater = (store, collectionID) => {
+  const root = store.getRoot()
+  const me = root.getLinkedRecord("me")
+
+  const otherSavesConnection = ConnectionHandler.getConnection(
+    me,
+    "CollectorProfileSaves2Route_otherSaves"
+  )
+
+  if (!otherSavesConnection) {
+    return
+  }
+
+  ConnectionHandler.deleteNode(otherSavesConnection, collectionID)
+}
+
 export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
   const { t } = useTranslation()
+  const { router } = useRouter()
 
   const { submitMutation } = useMutation<DeleteSavesModalMutation>({
     mutation: graphql`
@@ -29,6 +47,7 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
         }
       }
     `,
+    updater: store => deleteCollectionUpdater(store, collection.internalID),
   })
 
   const { sendToast } = useToasts()
@@ -54,6 +73,8 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
         variant: "success",
         message: t("collectorSaves.deleteListModal.success"),
       })
+
+      router.replace("/collector-profile/saves2")
     } catch (err) {
       console.error(err)
       sendToast({

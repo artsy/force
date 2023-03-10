@@ -86,7 +86,11 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
           first: 30
           default: false
           saves: true
-        ) {
+        )
+          @connection(
+            key: "CollectorProfileSaves2Route_otherSaves"
+            filters: []
+          ) {
           edges {
             node {
               internalID
