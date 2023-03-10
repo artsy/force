@@ -108,6 +108,7 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...BuyOrderPickup,
         state: "SUBMITTED",
+        displayState: "SUBMITTED",
       })
     )
 
@@ -378,6 +379,7 @@ describe("OrderApp routing redirects", () => {
 
         awaitingResponseFrom: "BUYER",
         state: "PENDING",
+        displayState: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/status")
@@ -484,6 +486,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")
@@ -553,6 +556,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")

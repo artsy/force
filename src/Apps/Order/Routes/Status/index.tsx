@@ -48,7 +48,8 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
   const { isEigen } = useSystemContext()
 
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"
-  const isSubmittedOffer = order.mode === "OFFER" && order.state === "SUBMITTED"
+  const isSubmittedOffer =
+    order.mode === "OFFER" && order.displayState === "SUBMITTED"
   const isDeclined = declinedStatuses.includes(order.stateReason!)
   const isModal = !!match?.location.query.isModal
   const shouldButtonDisplay = isEigen && !isModal && !isDeclined
@@ -106,7 +107,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
                     useLastSubmittedOffer
                     showOfferNote={isSubmittedOffer}
                     showCongratulationMessage={
-                      order.state === "SUBMITTED" &&
+                      order.displayState === "SUBMITTED" &&
                       order.source !== "private_sale"
                     }
                   />
