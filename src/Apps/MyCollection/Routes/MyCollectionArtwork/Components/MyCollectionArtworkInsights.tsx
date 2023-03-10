@@ -1,9 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./MyCollectionArtworkComparables"
@@ -16,21 +15,15 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase6RequestPreiceEstimate = useFeatureFlag(
-    "my-collection-web-phase-6-request-price-estimate"
-  )
-
   return (
     <Join separator={<Spacer y={[4, 6]} />}>
       <MyCollectionArtworkDemandIndexFragmentContainer
         marketPriceInsights={artwork.marketPriceInsights!}
       />
       <Media lessThan="sm">
-        {!!enableMyCollectionPhase6RequestPreiceEstimate && (
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-          />
-        )}
+        <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+          artwork={artwork}
+        />
       </Media>
       <MyCollectionArtworkArtistMarketFragmentContainer
         marketPriceInsights={artwork.marketPriceInsights!}

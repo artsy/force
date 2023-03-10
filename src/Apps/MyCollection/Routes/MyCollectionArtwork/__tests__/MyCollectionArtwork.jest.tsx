@@ -4,10 +4,8 @@ import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/M
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 
-jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
 describe("MyCollectionArtwork", () => {
@@ -27,16 +25,6 @@ describe("MyCollectionArtwork", () => {
       `,
     })
   }
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-6-request-price-estimate": {
-          flagEnabled: true,
-        },
-      },
-    }))
-  })
 
   describe("In a mobile view", () => {
     describe("When the artwork has insights", () => {
@@ -98,13 +86,6 @@ describe("MyCollectionArtwork", () => {
     })
 
     it("with submission id: the section is rendered", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "my-collection-web-phase-6-request-price-estimate": {
-            flagEnabled: true,
-          },
-        },
-      }))
       const { renderWithRelay } = getWrapper()
       renderWithRelay(mockResolversWithInsights)
       expect(screen.queryByText("Submission Status")).toBeInTheDocument()
@@ -115,13 +96,6 @@ describe("MyCollectionArtwork", () => {
   describe("Request Price Estimate section", () => {
     describe("with P1 artist", () => {
       it("the section is rendered", () => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "my-collection-web-phase-6-request-price-estimate": {
-              flagEnabled: true,
-            },
-          },
-        }))
         const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(mockResolversWithInsightsWithoutSubmission)
 

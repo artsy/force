@@ -13,7 +13,6 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork$data } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkBackButton } from "./Components/MyCollectionArtworkBackButton"
@@ -41,10 +40,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     editCollectedArtwork: trackEditCollectedArtwork,
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
-
-  const isMyCollectionPhase6Enabled = useFeatureFlag(
-    "my-collection-web-phase-6-request-price-estimate"
-  )
 
   const EditArtworkButton = () => (
     <Button
@@ -104,7 +99,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media greaterThanOrEqual="sm">
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
 
-            {isMyCollectionPhase6Enabled && !displayText && (
+            {!displayText && (
               <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
                 artwork={artwork}
               />
