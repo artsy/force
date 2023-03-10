@@ -42,10 +42,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const isMyCollectionPhase5Enabled = useFeatureFlag(
-    "my-collection-web-phase-5"
-  )
-
   const isMyCollectionPhase6Enabled = useFeatureFlag(
     "my-collection-web-phase-6-request-price-estimate"
   )
@@ -119,7 +115,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             )}
 
             {isP1Artist &&
-              isMyCollectionPhase5Enabled &&
               (!!displayText ? (
                 <>
                   <Separator my={2} />
@@ -142,21 +137,18 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {isMyCollectionPhase5Enabled &&
-              isP1Artist &&
-              !!displayText &&
-              isMyCollectionPhase8Enabled && (
-                <MyCollectionArtworkSWASectionSubmitted
-                  displayText={displayText}
-                />
-              )}
+            {isP1Artist && !!displayText && isMyCollectionPhase8Enabled && (
+              <MyCollectionArtworkSWASectionSubmitted
+                displayText={displayText}
+              />
+            )}
             {hasInsights ? (
               <Tabs fill mt={2}>
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                   />
-                  {isMyCollectionPhase5Enabled && isP1Artist && (
+                  {isP1Artist && (
                     <>
                       {!!displayText ? (
                         !isMyCollectionPhase8Enabled && (
