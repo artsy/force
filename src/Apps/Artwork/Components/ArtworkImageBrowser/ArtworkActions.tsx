@@ -1,11 +1,6 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, Join, Popover, Spacer } from "@artsy/palette"
 import { ArtworkDownloadButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkDownloadButton"
-<<<<<<< HEAD
-=======
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
->>>>>>> 9a579266f5 (feat: add `ArtworkActionsSaveToListsButton` component)
 import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
