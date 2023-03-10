@@ -30,7 +30,6 @@ describe("HeaderSWA", () => {
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -95,7 +94,6 @@ describe("HeaderSWA", () => {
         user: { id: "user-id", email: "user-email@artsy.net" },
         featureFlags: {
           "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-          "swa-inquiry-flow": { flagEnabled: false },
         },
       }))
 

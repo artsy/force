@@ -28,9 +28,6 @@ describe("Header", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "swa-inquiry-flow": { flagEnabled: true },
-      },
     }))
   })
 
@@ -90,21 +87,13 @@ describe("Header", () => {
     })
 
     it("links out to email provider", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "swa-inquiry-flow": { flagEnabled: false },
-        },
-      }))
       render(<Header />)
 
       const link = screen.getByTestId("get-in-touch-button")
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute(
-        "href",
-        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-      )
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
     })
   })
 })

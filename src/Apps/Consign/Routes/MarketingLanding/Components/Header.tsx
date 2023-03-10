@@ -5,14 +5,10 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const Header: React.FC = () => {
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
 

@@ -1,26 +1,22 @@
-import { Button, Text, Image } from "@artsy/palette"
-import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
-import { RouterLink } from "System/Router/RouterLink"
-import { resized } from "Utils/resized"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/SystemContext"
-import { useTracking } from "react-tracking"
 import { ActionType, ContextModule } from "@artsy/cohesion"
+import { Button, Image, Text } from "@artsy/palette"
+import { TextAndImageLayout } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/TextAndImageLayout"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
+import { resized } from "Utils/resized"
+import { useTracking } from "react-tracking"
 
 export const SpeakToTheTeam: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
   const image = resized(
     "https://files.artsy.net/images/SWA-landing-FAQ-section-speak-to-the-team-image-x2.jpg",
     { width: 949, height: 420 }
   )
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
 
   const trackGetInTouchClick = () => {
     trackEvent({

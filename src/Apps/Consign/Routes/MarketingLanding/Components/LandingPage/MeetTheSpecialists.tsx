@@ -1,11 +1,12 @@
+import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
   Flex,
+  Image,
   Pill,
   ResponsiveBox,
   Text,
-  Image,
 } from "@artsy/palette"
 import {
   CARD_HEIGHT,
@@ -16,13 +17,11 @@ import {
   Specialty,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/SystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { ActionType, ContextModule } from "@artsy/cohesion"
 
 interface PillData {
   type: Specialty
@@ -48,7 +47,6 @@ export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
     "auctions"
@@ -57,9 +55,7 @@ export const MeetTheSpecialists: React.FC = () => {
     SPECIALISTS.filter(i => i.specialty === "auctions")
   )
 
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
