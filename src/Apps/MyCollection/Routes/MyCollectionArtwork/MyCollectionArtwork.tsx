@@ -46,10 +46,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     "my-collection-web-phase-6-request-price-estimate"
   )
 
-  const isMyCollectionPhase8Enabled = useFeatureFlag(
-    "my-collection-web-phase-8-submission-status"
-  )
-
   const EditArtworkButton = () => (
     <Button
       // @ts-ignore
@@ -137,7 +133,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarTitleInfoFragmentContainer
               artwork={artwork}
             />
-            {isP1Artist && !!displayText && isMyCollectionPhase8Enabled && (
+            {isP1Artist && !!displayText && (
               <MyCollectionArtworkSWASectionSubmitted
                 displayText={displayText}
               />
@@ -150,13 +146,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   />
                   {isP1Artist && (
                     <>
-                      {!!displayText ? (
-                        !isMyCollectionPhase8Enabled && (
-                          <MyCollectionArtworkSWASectionSubmitted
-                            displayText={displayText}
-                          />
-                        )
-                      ) : (
+                      {!displayText && (
                         <MyCollectionArtworkSWASectionMobileLayout
                           route={`/collector-profile/my-collection/submission/contact-information/${id}`}
                           learnMore={() => setShowHowItWorksModal(true)}
