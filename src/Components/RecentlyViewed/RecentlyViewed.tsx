@@ -12,7 +12,6 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
-import { compact } from "lodash"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me$data
@@ -33,20 +32,17 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
 
   const artworks = extractNodes(me.recentlyViewedArtworksConnection)
 
-  // FIXME: This field is sometimes returning null artworks; should locate root cause
-  const compactedArtworks = compact(artworks)
-
-  if (compactedArtworks.length === 0) return null
+  if (artworks.length === 0) return null
 
   return (
     <Rail
       title="Recently Viewed"
       getItems={() => {
-        return compactedArtworks.map(artwork => {
+        return artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
               key={artwork.id}
-              lazyLoad
+              lazyLoad={true}
               artwork={artwork}
               onClick={trackClick}
               contextModule={ContextModule.recentlyViewedRail}
