@@ -163,6 +163,11 @@ describe("Edit artwork", () => {
       expect(
         screen.getByPlaceholderText("City where artwork is located")
       ).toHaveValue("Berlin")
+      expect(
+        screen
+          .getAllByRole("textbox")
+          .find(c => c.getAttribute("name") == "confidentialNotes")
+      ).toHaveValue("Secret Notes here")
     })
   })
 
@@ -277,6 +282,7 @@ describe("Edit artwork", () => {
               provenance: "Fooo",
               title: "Some new value",
               width: "11",
+              confidentialNotes: "Secret Notes here",
             },
           },
         })
@@ -527,4 +533,5 @@ const mockArtwork = {
   slug: "62fc96c48d3ff8000b556c3a",
   title: "Untitled",
   width: "11",
+  confidentialNotes: "Secret Notes here",
 } as CleanRelayFragment<MyCollectionEditArtwork_artwork$data>
