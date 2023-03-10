@@ -31,7 +31,6 @@ describe("MyCollectionArtwork", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: {
-        "my-collection-web-phase-4-demand-index": { flagEnabled: true },
         "my-collection-web-phase-5": { flagEnabled: true },
         "my-collection-web-phase-6-request-price-estimate": {
           flagEnabled: true,
@@ -110,7 +109,6 @@ describe("MyCollectionArtwork", () => {
       it("with submission id: the section is rendered", () => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
           featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
             "my-collection-web-phase-5": { flagEnabled: true },
             "my-collection-web-phase-6-request-price-estimate": {
               flagEnabled: true,
@@ -133,7 +131,6 @@ describe("MyCollectionArtwork", () => {
       it("the section is rendered", () => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
           featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
             "my-collection-web-phase-5": { flagEnabled: true },
             "my-collection-web-phase-6-request-price-estimate": {
               flagEnabled: true,

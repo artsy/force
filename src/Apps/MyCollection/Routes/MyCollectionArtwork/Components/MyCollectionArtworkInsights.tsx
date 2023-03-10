@@ -16,9 +16,6 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
-    "my-collection-web-phase-4-demand-index"
-  )
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
     "my-collection-web-phase-4-auction-results"
   )
@@ -28,11 +25,9 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
   return (
     <Join separator={<Spacer y={[4, 6]} />}>
-      {!!enableMyCollectionPhase4DemandIndex && (
-        <MyCollectionArtworkDemandIndexFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights!}
-        />
-      )}
+      <MyCollectionArtworkDemandIndexFragmentContainer
+        marketPriceInsights={artwork.marketPriceInsights!}
+      />
       <Media lessThan="sm">
         {!!enableMyCollectionPhase6RequestPreiceEstimate && (
           <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
