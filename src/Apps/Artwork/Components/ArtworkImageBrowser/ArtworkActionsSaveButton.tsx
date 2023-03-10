@@ -108,21 +108,21 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
         }}
       </Popover>
     )
-  } else {
-    const FilledIcon = () => <HeartFillIcon fill="blue100" />
-
-    return (
-      <ProgressiveOnboardingSaveArtworkQueryRenderer>
-        <UtilButton
-          name="heart"
-          Icon={isSaved ? FilledIcon : HeartIcon}
-          label={isSaved ? "Saved" : "Save"}
-          longestLabel="Saved"
-          onClick={handleSave}
-        />
-      </ProgressiveOnboardingSaveArtworkQueryRenderer>
-    )
   }
+
+  const FilledIcon = () => <HeartFillIcon fill="blue100" />
+
+  return (
+    <ProgressiveOnboardingSaveArtworkQueryRenderer>
+      <UtilButton
+        name="heart"
+        Icon={isSaved ? FilledIcon : HeartIcon}
+        label={isSaved ? "Saved" : "Save"}
+        longestLabel="Saved"
+        onClick={handleSave}
+      />
+    </ProgressiveOnboardingSaveArtworkQueryRenderer>
+  )
 }
 
 export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer(
@@ -147,6 +147,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         }
         isSaved
         ...ArtworkAuctionRegistrationPanel_artwork
+        ...ArtworkActionsSaveToListsButton_artwork
       }
     `,
   }
