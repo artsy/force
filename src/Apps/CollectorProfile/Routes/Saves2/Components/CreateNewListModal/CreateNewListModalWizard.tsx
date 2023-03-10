@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 import { CreateNewListModal, NewAddedList } from "./CreateNewListModal"
-import { AddArtworksModal } from "./AddArtworksModal"
+import { AddArtworksModalQueryRender } from "./AddArtworksModal"
 
 interface CreateNewListModalWizardProps {
   onComplete: () => void
@@ -23,7 +23,7 @@ export const CreateNewListModalWizard: FC<CreateNewListModalWizardProps> = ({
 
   if (listName !== null) {
     return (
-      <AddArtworksModal
+      <AddArtworksModalQueryRender
         onClose={onComplete}
         onComplete={handleAddArtworksComplete}
         listName={listName}
