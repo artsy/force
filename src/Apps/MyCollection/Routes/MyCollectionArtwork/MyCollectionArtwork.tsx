@@ -42,10 +42,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   } = useMyCollectionTracking()
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
-  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
-    "my-collection-web-phase-4-auction-results"
-  )
-
   const isMyCollectionPhase5Enabled = useFeatureFlag(
     "my-collection-web-phase-5"
   )
@@ -81,10 +77,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const showComparables = !!artwork.comparables?.totalCount
 
-  const showAuctionResults =
-    !!artwork.artist?.auctionResults?.totalCount &&
-    enableMyCollectionPhase4AuctionResults
-
+  const showAuctionResults = !!artwork.artist?.auctionResults?.totalCount
   const showDemandIndex = !!artwork.hasMarketPriceInsights
 
   const showArtistMarket = !!artwork.hasMarketPriceInsights

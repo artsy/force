@@ -16,9 +16,6 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
-    "my-collection-web-phase-4-auction-results"
-  )
   const enableMyCollectionPhase6RequestPreiceEstimate = useFeatureFlag(
     "my-collection-web-phase-6-request-price-estimate"
   )
@@ -41,11 +38,9 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
 
       <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
 
-      {!!enableMyCollectionPhase4AuctionResults && (
-        <MyCollectionArtworkAuctionResultsFragmentContainer
-          artist={artwork?.artist!}
-        />
-      )}
+      <MyCollectionArtworkAuctionResultsFragmentContainer
+        artist={artwork?.artist!}
+      />
     </Join>
   )
 }
