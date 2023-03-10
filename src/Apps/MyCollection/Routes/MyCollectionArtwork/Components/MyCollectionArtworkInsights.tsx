@@ -1,9 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
 import { MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkRequestPriceEstimateSection"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork$data } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./MyCollectionArtworkComparables"
@@ -16,51 +15,25 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
-    "my-collection-web-phase-4-artist-market"
-  )
-  const enableMyCollectionPhase4Comparables = useFeatureFlag(
-    "my-collection-web-phase-4-comparables"
-  )
-  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
-    "my-collection-web-phase-4-demand-index"
-  )
-  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
-    "my-collection-web-phase-4-auction-results"
-  )
-  const enableMyCollectionPhase6RequestPreiceEstimate = useFeatureFlag(
-    "my-collection-web-phase-6-request-price-estimate"
-  )
-
   return (
     <Join separator={<Spacer y={[4, 6]} />}>
-      {!!enableMyCollectionPhase4DemandIndex && (
-        <MyCollectionArtworkDemandIndexFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights!}
-        />
-      )}
+      <MyCollectionArtworkDemandIndexFragmentContainer
+        marketPriceInsights={artwork.marketPriceInsights!}
+      />
       <Media lessThan="sm">
-        {!!enableMyCollectionPhase6RequestPreiceEstimate && (
-          <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
-            artwork={artwork}
-          />
-        )}
+        <MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer
+          artwork={artwork}
+        />
       </Media>
-      {!!enableMyCollectionPhase4ArtistMarket && (
-        <MyCollectionArtworkArtistMarketFragmentContainer
-          marketPriceInsights={artwork.marketPriceInsights!}
-        />
-      )}
+      <MyCollectionArtworkArtistMarketFragmentContainer
+        marketPriceInsights={artwork.marketPriceInsights!}
+      />
 
-      {!!enableMyCollectionPhase4Comparables && (
-        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
-      )}
+      <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
 
-      {!!enableMyCollectionPhase4AuctionResults && (
-        <MyCollectionArtworkAuctionResultsFragmentContainer
-          artist={artwork?.artist!}
-        />
-      )}
+      <MyCollectionArtworkAuctionResultsFragmentContainer
+        artist={artwork?.artist!}
+      />
     </Join>
   )
 }
