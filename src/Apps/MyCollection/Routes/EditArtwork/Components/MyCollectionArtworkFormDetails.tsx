@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Select,
   Text,
+  TextArea,
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -325,10 +326,25 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             title="City"
             name="artworkLocation"
             placeholder="City where artwork is located"
-            maxLength={256}
+            maxLength={500}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.artworkLocation}
+          />
+        </Column>
+      </GridColumns>
+
+      <GridColumns mt={[4, 2]} mb={[2, 0]}>
+        <Column span={12}>
+          <TextArea
+            title="Notes"
+            name="confidentialNotes"
+            maxLength={500}
+            onBlur={handleBlur}
+            onChange={({ value }) => {
+              setFieldValue("confidentialNotes", value)
+            }}
+            value={values.confidentialNotes}
           />
         </Column>
       </GridColumns>
