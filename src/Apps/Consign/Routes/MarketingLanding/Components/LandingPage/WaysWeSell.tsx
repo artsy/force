@@ -163,7 +163,7 @@ const MobileLayout: React.FC = () => {
               flexDirection="column"
               justifyContent="flex-end"
               data-test="artworkShelfArtwork"
-              minWidth={250}
+              minWidth={305}
             >
               <ShelfItem
                 src={step.src}
