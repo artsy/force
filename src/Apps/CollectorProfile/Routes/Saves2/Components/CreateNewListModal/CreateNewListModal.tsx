@@ -48,24 +48,36 @@ const logger = createLogger(
 
 const MAX_NAME_LENGTH = 40
 
-// const onListAdded = (store, data) => {
-//   const response = data.createCollection?.responseOrError
+const onListAdded = (store, data) => {
+  const response = data.createCollection?.responseOrError
+  const me = store.getRoot().getLinkedRecord("me")
 
-//   if (response) {
-//     const me = store.getRoot().getLinkedRecord("me")
-//     const otherSavesConnection = ConnectionHandler.getConnection(
-//       me,
-//       "CollectorProfileSaves2Route_otherSaves"
-//     )
+  if (!response || !me) {
+    return
+  }
 
-//     const mutationPayload = store.getRootField("createCollection")
+  const key = "CollectorProfileSaves2Route_otherSaves"
+  const otherSavesConnection = ConnectionHandler.getConnection(me, key)
+  const mutationPayload = store.getRootField("createCollection")
+  const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
+  const createdCollection = responseOrError.getLinkedRecord("collection")
 
-//     const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
+  if (!otherSavesConnection || !createdCollection) {
+    return
+  }
 
-//     ConnectionHandler.insertEdgeAfter(otherSavesConnection!, responseOrError)
+  const createdCollectionEdge = ConnectionHandler.createEdge(
+    store,
+    otherSavesConnection,
+    createdCollection,
+    "Collection"
+  )
 
-//   }
-// }
+  ConnectionHandler.insertEdgeBefore(
+    otherSavesConnection,
+    createdCollectionEdge
+  )
+}
 
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   artwork,
@@ -77,21 +89,14 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { submitMutation } = useMutation<CreateNewListModalMutation>({
     mutation: graphql`
-      mutation CreateNewListModalMutation(
-        $input: createCollectionInput!
-        $connections: [ID!]!
-      ) {
+      mutation CreateNewListModalMutation($input: createCollectionInput!) {
         createCollection(input: $input) {
           responseOrError {
             ... on CreateCollectionSuccess {
-              collection
-                @prependNode(
-                  connections: $connections
-                  edgeTypeName: "CollectionsEdge"
-                ) {
+              collection {
                 internalID
-                default
-                ...SavesItem_item
+                name
+                artworksCount
               }
             }
 
@@ -104,7 +109,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         }
       }
     `,
-    // updater: onListAdded,
+    updater: onListAdded,
   })
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
@@ -119,23 +124,10 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       return null
     }
 
-    // const store = relayEnvironment.getStore()
-
-    // console.log('store', store.__records)
-
-    // const connectionID = ConnectionHandler.getConnectionID(
-    //   "-hardcoded-Key-of-the me",
-    //   "CollectorProfileSaves2Route_otherSaves"
-    // )
-
-    // console.log("[connectionID]", connectionID)
-
     try {
       const { createCollection } = await submitMutation({
         variables: {
           input: { name: values.name },
-          // @ts-expect-error
-          connections: [connectionID],
         },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError

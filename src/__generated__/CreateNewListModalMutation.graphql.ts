@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ef2b19fcab0786dab9d821891d5ae76>>
+ * @generated SignedSource<<d218bca004dcf7767b20d0cd9698c6dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,22 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type createCollectionInput = {
   clientMutationId?: string | null;
   name: string;
 };
 export type CreateNewListModalMutation$variables = {
-  connections: ReadonlyArray<string>;
   input: createCollectionInput;
 };
 export type CreateNewListModalMutation$data = {
   readonly createCollection: {
     readonly responseOrError: {
       readonly collection?: {
-        readonly default: boolean;
+        readonly artworksCount: number;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly name: string;
       } | null;
       readonly mutationError?: {
         readonly message: string;
@@ -38,35 +36,39 @@ export type CreateNewListModalMutation = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "connections"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "input"
-},
-v2 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "input",
     "variableName": "input"
   }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "default",
+  "name": "artworksCount",
   "storageKey": null
 },
 v5 = {
@@ -93,27 +95,17 @@ v5 = {
   ],
   "type": "CreateCollectionFailure",
   "abstractKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "CreateNewListModalMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "createCollectionPayload",
         "kind": "LinkedField",
         "name": "createCollection",
@@ -138,13 +130,9 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v4/*: any*/),
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "SavesItem_item"
-                      }
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -165,16 +153,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateNewListModalMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "createCollectionPayload",
         "kind": "LinkedField",
         "name": "createCollection",
@@ -206,110 +191,18 @@ return {
                     "name": "collection",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "name",
+                        "name": "id",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "artworksCount",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "first",
-                            "value": 4
-                          }
-                        ],
-                        "concreteType": "ArtworkConnection",
-                        "kind": "LinkedField",
-                        "name": "artworksConnection",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "ArtworkEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Artwork",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "Image",
-                                    "kind": "LinkedField",
-                                    "name": "image",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": null,
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "version",
-                                            "value": "square"
-                                          }
-                                        ],
-                                        "kind": "ScalarField",
-                                        "name": "url",
-                                        "storageKey": "url(version:\"square\")"
-                                      }
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  (v6/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "artworksConnection(first:4)"
-                      },
-                      (v6/*: any*/)
+                      }
                     ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "filters": null,
-                    "handle": "prependNode",
-                    "key": "",
-                    "kind": "LinkedHandle",
-                    "name": "collection",
-                    "handleArgs": [
-                      {
-                        "kind": "Variable",
-                        "name": "connections",
-                        "variableName": "connections"
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "edgeTypeName",
-                        "value": "CollectionsEdge"
-                      }
-                    ]
                   }
                 ],
                 "type": "CreateCollectionSuccess",
@@ -325,16 +218,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "079a8969f9a8b2da257dded87b1e2e22",
+    "cacheID": "a1ec636592c28e47b874f24192bf04cc",
     "id": null,
     "metadata": {},
     "name": "CreateNewListModalMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          default\n          ...SavesItem_item\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e1d5ea6a6df403f71c09cd125be5e6c5";
+(node as any).hash = "123d00d460f1ca36506b540caad1ecd5";
 
 export default node;
