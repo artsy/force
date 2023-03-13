@@ -1,4 +1,3 @@
-import React from "react"
 import { ConnectionHandler, graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
