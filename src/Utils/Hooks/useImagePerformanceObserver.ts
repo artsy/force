@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { sendToVolley, VolleyMetric } from "Server/volley"
 import { getENV } from "Utils/getENV"
-import { getImageService } from "Utils/resizer"
+import { DEFAULT_IMAGE_SERVICE } from "Utils/resizer"
 
 const DEVICE_TYPE = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
@@ -10,11 +10,7 @@ type Entry = Pick<
   "initiatorType" | "transferSize" | "name" | "duration"
 >
 
-const TRACKING_URL_ALLOWLIST = [
-  getENV("GEMINI_CLOUDFRONT_URL"),
-  getENV("LAMBDA_IMAGE_RESIZING_URL"),
-  getENV("IMGIX_URL"),
-].filter(Boolean)
+const TRACKING_URL_ALLOWLIST = [getENV("GEMINI_CLOUDFRONT_URL")].filter(Boolean)
 
 export const useImagePerformanceObserver = () => {
   const queue = useRef<{ entry: Entry; rootPath: string }[]>([])
@@ -78,7 +74,7 @@ export const useImagePerformanceObserver = () => {
             `device-type:${DEVICE_TYPE}`,
             `pixel-ratio:${pixelRatio(window.devicePixelRatio)}`,
             `root-path:${rootPath}`,
-            `image-service:${getImageService()}`,
+            `image-service:${DEFAULT_IMAGE_SERVICE}`,
           ],
         }
 
