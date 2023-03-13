@@ -32,9 +32,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 
 describe("SelectListsForArtworkModal", () => {
   it("should render artwork data", async () => {
-    renderWithRelay({
-      Artwork: () => artwork,
-    })
+    renderWithRelay()
 
     await waitForModalToBePresented()
 

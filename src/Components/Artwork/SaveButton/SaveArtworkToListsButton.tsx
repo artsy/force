@@ -21,7 +21,11 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const tracking = useTracking()
   const { t } = useTranslation()
   const { sendToast } = useToasts()
-  const { state, savedListId, dispatch } = useManageArtworkForSavesContext()
+  const {
+    savedListId,
+    isSavedToList,
+    dispatch,
+  } = useManageArtworkForSavesContext()
 
   const customListsCount = artwork.customCollections?.totalCount ?? 0
   const hasCustomLists = customListsCount > 0
@@ -95,7 +99,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
 
   return (
     <SaveButtonBase
-      isSaved={savedListId ? state.isSavedToList : isSaved}
+      isSaved={savedListId ? isSavedToList : isSaved}
       onClick={handleClick}
     />
   )
