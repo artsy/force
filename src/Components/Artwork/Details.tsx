@@ -5,7 +5,6 @@ import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Com
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
-import { isFunction } from "lodash"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -31,7 +30,6 @@ interface DetailsProps {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   enableSaveButtonForLists?: boolean
-  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 const ConditionalLink: React.FC<
@@ -224,7 +222,6 @@ export const Details: React.FC<DetailsProps> = ({
   showHoverDetails = true,
   showSaveButton,
   enableSaveButtonForLists,
-  renderSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
@@ -240,10 +237,6 @@ export const Details: React.FC<DetailsProps> = ({
   const renderSaveButtonComponent = () => {
     if (!showSaveButton) {
       return null
-    }
-
-    if (isFunction(renderSaveButton)) {
-      return renderSaveButton(rest.artwork.internalID)
     }
 
     if (isArtworksListEnabled && enableSaveButtonForLists) {

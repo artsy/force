@@ -25,7 +25,6 @@ export interface MetadataProps
   showSaveButton?: boolean
   to?: string | null
   enableSaveButtonForLists?: boolean
-  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -41,7 +40,6 @@ export const Metadata: React.FC<MetadataProps> = ({
   showHoverDetails,
   showSaveButton,
   enableSaveButtonForLists,
-  renderSaveButton,
   ...rest
 }) => {
   return (
@@ -63,7 +61,6 @@ export const Metadata: React.FC<MetadataProps> = ({
         showSaveButton={showSaveButton}
         contextModule={contextModule}
         enableSaveButtonForLists={enableSaveButtonForLists}
-        renderSaveButton={renderSaveButton}
       />
     </LinkContainer>
   )

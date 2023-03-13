@@ -28,7 +28,6 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   showSaveButton?: boolean
   to?: string | null
   savedListId?: string
-  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -43,7 +42,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showSaveButton = true,
   to,
   savedListId,
-  renderSaveButton,
   ...rest
 }) => {
   const localImage = useLocalImage(artwork.image)
@@ -119,7 +117,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           disableRouterLinking={disableRouterLinking}
           to={to}
           enableSaveButtonForLists
-          renderSaveButton={renderSaveButton}
         />
       </div>
     </ManageArtworkForSavesProvider>

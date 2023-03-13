@@ -54,7 +54,6 @@ interface ArtworkGridProps extends React.HTMLProps<HTMLDivElement> {
   emptyStateComponent?: ReactNode | boolean
   to?: (artwork: Artwork) => string | null
   savedListId?: string
-  renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
 export interface ArtworkGridContainerState {
@@ -186,7 +185,6 @@ export class ArtworkGridContainer extends React.Component<
             }
             to={to?.(artwork)}
             savedListId={this.props.savedListId}
-            renderSaveButton={this.props.renderSaveButton}
           />
         )
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
