@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "react-relay"
+import { ConnectionHandler, graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import {
@@ -48,6 +48,25 @@ const logger = createLogger(
 
 const MAX_NAME_LENGTH = 40
 
+// const onListAdded = (store, data) => {
+//   const response = data.createCollection?.responseOrError
+
+//   if (response) {
+//     const me = store.getRoot().getLinkedRecord("me")
+//     const otherSavesConnection = ConnectionHandler.getConnection(
+//       me,
+//       "CollectorProfileSaves2Route_otherSaves"
+//     )
+
+//     const mutationPayload = store.getRootField("createCollection")
+
+//     const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
+
+//     ConnectionHandler.insertEdgeAfter(otherSavesConnection!, responseOrError)
+
+//   }
+// }
+
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   artwork,
   onClose,
@@ -58,12 +77,21 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { submitMutation } = useMutation<CreateNewListModalMutation>({
     mutation: graphql`
-      mutation CreateNewListModalMutation($input: createCollectionInput!) {
+      mutation CreateNewListModalMutation(
+        $input: createCollectionInput!
+        $connections: [ID!]!
+      ) {
         createCollection(input: $input) {
           responseOrError {
             ... on CreateCollectionSuccess {
-              collection {
+              collection
+                @prependNode(
+                  connections: $connections
+                  edgeTypeName: "CollectionsEdge"
+                ) {
                 internalID
+                default
+                ...SavesItem_item
               }
             }
 
@@ -76,6 +104,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         }
       }
     `,
+    // updater: onListAdded,
   })
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
@@ -90,9 +119,24 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       return null
     }
 
+    // const store = relayEnvironment.getStore()
+
+    // console.log('store', store.__records)
+
+    // const connectionID = ConnectionHandler.getConnectionID(
+    //   "-hardcoded-Key-of-the me",
+    //   "CollectorProfileSaves2Route_otherSaves"
+    // )
+
+    // console.log("[connectionID]", connectionID)
+
     try {
       const { createCollection } = await submitMutation({
-        variables: { input: { name: values.name } },
+        variables: {
+          input: { name: values.name },
+          // @ts-expect-error
+          connections: [connectionID],
+        },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
           const errorMessage = result?.mutationError?.message
