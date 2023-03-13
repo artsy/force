@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { graphql } from "react-relay"
+import { ConnectionHandler, graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import {
@@ -15,11 +15,15 @@ import { useSystemContext } from "System/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { CreateNewListModalMutation } from "__generated__/CreateNewListModalMutation.graphql"
+import {
+  CreateNewListModalMutation,
+  CreateNewListModalMutation$data,
+} from "__generated__/CreateNewListModalMutation.graphql"
 import {
   ArtworkEntity,
   CreateNewListModalHeader,
 } from "./CreateNewListModalHeader"
+import { RecordSourceSelectorProxy } from "relay-runtime"
 
 export interface CreateNewListValues {
   name: string
@@ -65,6 +69,9 @@ export const CreateNewListModal: FC<CreateNewListModalProps> = ({
               collection {
                 internalID
                 name
+                artworksCount
+                # we have to query SavesItem_item fragment here,
+                # but backend will return an error in this case (due to "artworksConnection" being requested)
               }
             }
 
@@ -77,6 +84,7 @@ export const CreateNewListModal: FC<CreateNewListModalProps> = ({
         }
       }
     `,
+    updater: onListAdded,
   })
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
@@ -226,4 +234,35 @@ export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> =
   if (!visible) return null
 
   return <CreateNewListModal {...props} />
+}
+
+const onListAdded = (
+  store: RecordSourceSelectorProxy<CreateNewListModalMutation$data>,
+  data
+) => {
+  const response = data.createCollection?.responseOrError
+  const me = store.getRoot().getLinkedRecord("me")
+
+  if (!response || !me) {
+    return
+  }
+
+  const key = "CollectorProfileSaves2Route_otherSaves"
+  const otherSavesConnection = ConnectionHandler.getConnection(me, key)
+  const mutationPayload = store.getRootField("createCollection")
+  const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
+  const createdCollection = responseOrError.getLinkedRecord("collection")
+
+  if (!otherSavesConnection || !createdCollection) {
+    return
+  }
+
+  const createdCollectionEdge = ConnectionHandler.createEdge(
+    store,
+    otherSavesConnection,
+    createdCollection,
+    "Collection"
+  )
+
+  ConnectionHandler.insertEdgeAfter(otherSavesConnection, createdCollectionEdge)
 }
