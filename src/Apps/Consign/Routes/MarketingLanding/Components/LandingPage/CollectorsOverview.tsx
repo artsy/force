@@ -4,15 +4,15 @@ import { resized } from "Utils/resized"
 const DATA: { value: string; title: string }[] = [
   {
     value: "3M+",
-    title: "Registered buyers worldwide",
+    title: "registered users worldwide",
   },
   {
-    value: "30,000",
-    title: "Artworks sold at auction",
+    value: "3,000",
+    title: "miles average transaction distance",
   },
   {
     value: "190",
-    title: "Countries in our network",
+    title: "countries in our network",
   },
 ]
 
@@ -25,7 +25,7 @@ export const CollectorsOverview: React.FC = () => {
   return (
     <>
       <Text mb={[2, 4, 6]} variant={["lg-display", "xl", "xxl"]}>
-        Reach a Global Network of Collectors
+        Reach a global network of Collectors
       </Text>
       <GridColumns gridColumnGap={[0, 2, 6]} gridRowGap={[0, 2, 6]}>
         <Column span={4}>

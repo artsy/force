@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9da3d7bb8efe83a6a8fe10ab3cadf78>>
+ * @generated SignedSource<<18874e2afde719811cb86cce8337fd5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 6
+        },
+        {
+          "kind": "Literal",
+          "name": "state",
+          "value": "PAST"
         }
       ],
       "concreteType": "AuctionResultConnection",
@@ -73,13 +78,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "myCollectionAuctionResults(first:6)"
+      "storageKey": "myCollectionAuctionResults(first:6,state:\"PAST\")"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "b483ead964ca2dfd7c04d73e25ec8637";
+(node as any).hash = "7f33f14a79cbbb96604ba4d0df7ba04d";
 
 export default node;
