@@ -21,7 +21,6 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
     <>
       <DetailsFragmentContainer
         includeLinks={true}
-        underlineOnHover={true}
         artwork={artwork}
         hideSaleInfo={false}
         hidePartnerName={true}
