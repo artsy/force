@@ -4,10 +4,8 @@ import { MyCollectionArtworkFragmentContainer } from "Apps/MyCollection/Routes/M
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 
-jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
 describe("MyCollectionArtwork", () => {
@@ -27,18 +25,6 @@ describe("MyCollectionArtwork", () => {
       `,
     })
   }
-
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-        "my-collection-web-phase-5": { flagEnabled: true },
-        "my-collection-web-phase-6-request-price-estimate": {
-          flagEnabled: true,
-        },
-      },
-    }))
-  })
 
   describe("In a mobile view", () => {
     describe("When the artwork has insights", () => {
@@ -80,13 +66,6 @@ describe("MyCollectionArtwork", () => {
   })
 
   describe("SWA section", () => {
-    it("P1 artist: renders correct component when artwork has submission id", () => {
-      const { renderWithRelay } = getWrapper("lg")
-      renderWithRelay(mockResolversWithInsights)
-
-      // eslint-disable-next-line jest/valid-expect
-      expect(screen.getByText("Artwork has been submitted for sale"))
-    })
     it("P1 artist: renders correct component when artwork does not have submission id", () => {
       const { renderWithRelay } = getWrapper("lg")
       renderWithRelay(mockResolversWithoutInsights)
@@ -106,55 +85,17 @@ describe("MyCollectionArtwork", () => {
       ).not.toBeInTheDocument()
     })
 
-    describe("when my-collection-web-phase-8-submission-status ff is enabled", () => {
-      it("with submission id: the section is rendered", () => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-            "my-collection-web-phase-5": { flagEnabled: true },
-            "my-collection-web-phase-6-request-price-estimate": {
-              flagEnabled: true,
-            },
-            "my-collection-web-phase-8-submission-status": {
-              flagEnabled: true,
-            },
-          },
-        }))
-        const { renderWithRelay } = getWrapper()
-        renderWithRelay(mockResolversWithInsights)
-        expect(screen.queryByText("Submission Status")).toBeInTheDocument()
-        expect(screen.queryByText("In Progress")).toBeInTheDocument()
-      })
+    it("with submission id: the section is rendered", () => {
+      const { renderWithRelay } = getWrapper()
+      renderWithRelay(mockResolversWithInsights)
+      expect(screen.queryByText("Submission Status")).toBeInTheDocument()
+      expect(screen.queryByText("In Progress")).toBeInTheDocument()
     })
   })
 
   describe("Request Price Estimate section", () => {
     describe("with P1 artist", () => {
       it("the section is rendered", () => {
-        const { renderWithRelay } = getWrapper("lg")
-        renderWithRelay(mockResolversWithInsightsWithoutSubmission)
-
-        expect(
-          screen
-            .getAllByRole("link")
-            .find(c => c.textContent?.includes("Request a Price Estimate"))
-        ).toHaveAttribute(
-          "href",
-          `/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
-        )
-      })
-
-      it("the section is rendered with cx-collector-profile ff enabled", () => {
-        ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "my-collection-web-phase-4-demand-index": { flagEnabled: true },
-            "my-collection-web-phase-5": { flagEnabled: true },
-            "my-collection-web-phase-6-request-price-estimate": {
-              flagEnabled: true,
-            },
-            "cx-collector-profile": { flagEnabled: true },
-          },
-        }))
         const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(mockResolversWithInsightsWithoutSubmission)
 

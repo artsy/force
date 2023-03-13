@@ -7,6 +7,7 @@ export const verifyID = async (relayEnvironment: Environment) => {
       onCompleted: (data, errors) =>
         errors && errors.length ? reject(errors) : done(data),
       onError: error => reject(error),
+      // we're not actually using any inputs atm, but pulling the user from the authenticated MP loader context
       mutation: graphql`
         mutation verifyIDMutation(
           $input: SendIdentityVerificationEmailMutationInput!

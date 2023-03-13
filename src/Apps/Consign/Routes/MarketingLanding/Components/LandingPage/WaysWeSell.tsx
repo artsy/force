@@ -44,22 +44,22 @@ const data: StepsWithImageBlackDataType[] = [
     src: waysWeSellImage1.src,
     srcSet: waysWeSellImage1.srcSet,
     text:
-      "We maximize your profitability by selecting the right auction partner for your work from our network in 190 countries.",
+      "Our curated auctions provide you with multiple opportunities to reach the widest audience and successfully achieve your artwork’s full potential.",
     title: "Auctions",
   },
   {
     src: waysWeSellImage2.src,
     srcSet: waysWeSellImage2.srcSet,
     text:
-      "Our bespoke process will match your work to potential buyers through an exclusive network of collectors.",
+      "​​We offer tailored and discreet sales arrangements for our collectors’ highest value and most sensitive artworks.",
     title: "Private Sales",
   },
   {
     src: waysWeSellImage3.src,
     srcSet: waysWeSellImage3.srcSet,
     text:
-      "We list your work directly on Artsy.net, the world’s largest online art marketplace, reaching over 3 million art lovers daily.",
-    title: "Online storefront",
+      "When your work is listed directly on Artsy.net—the world’s largest online art marketplace—it reaches over 3 million art lovers.",
+    title: "Online marketplace",
   },
 ]
 
@@ -74,12 +74,12 @@ export const WaysWeSell = () => {
               variant={["lg-display", "xl", "xxl"]}
               color="white100"
             >
-              Ways to sell with Artsy
+              A sales strategy tailored to your artwork
             </Text>
 
             <Text mb={[4, 4, 6]} variant={["xs", "sm"]} color="white100">
-              We create a tailored strategy to find the optimal sales method for
-              your artwork.
+              A dedicated specialist works with you to select the best sales
+              option for your artwork.
             </Text>
             <DesctopLayout />
             <MobileLayout />
@@ -163,7 +163,7 @@ const MobileLayout: React.FC = () => {
               flexDirection="column"
               justifyContent="flex-end"
               data-test="artworkShelfArtwork"
-              minWidth={250}
+              minWidth={305}
             >
               <ShelfItem
                 src={step.src}

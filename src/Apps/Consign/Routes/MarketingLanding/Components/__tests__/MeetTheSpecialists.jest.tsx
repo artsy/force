@@ -11,8 +11,11 @@ jest.mock("System/Analytics/AnalyticsContext", () => ({
     contextPageOwnerType: "sell",
   })),
 }))
+
+const mockRouterPush = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
+    push: mockRouterPush,
     match: { params: { id: "1" } },
   })),
 }))
@@ -30,7 +33,6 @@ describe("MeetTheSpecialists", () => {
       user: { id: "user-id", email: "user-email@artsy.net" },
       featureFlags: {
         "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        "swa-inquiry-flow": { flagEnabled: true },
       },
     }))
   })
@@ -73,7 +75,6 @@ describe("MeetTheSpecialists", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         featureFlags: {
           "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-          "swa-inquiry-flow": { flagEnabled: false },
         },
       }))
       render(<MeetTheSpecialists />)
@@ -82,10 +83,7 @@ describe("MeetTheSpecialists", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute(
-        "href",
-        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-      )
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
     })
   })
 
@@ -96,7 +94,10 @@ describe("MeetTheSpecialists", () => {
       const link = screen.getByTestId("get-in-touch-button-Shlomi")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "mailto:shlomi.rabi@artsy.net")
+      expect(link).toHaveAttribute(
+        "href",
+        "/sell/inquiry/shlomi.rabi@artsy.net"
+      )
     })
   })
 })

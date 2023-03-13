@@ -5,7 +5,6 @@ import { useTracking } from "react-tracking"
 import { BackLink_artist$data } from "__generated__/BackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface BackLinkProps {
   artist: BackLink_artist$data
@@ -13,13 +12,9 @@ interface BackLinkProps {
 }
 
 const BackLink: React.FC<BackLinkProps> = ({ artist, artworkId }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { trackEvent } = useTracking()
   const { router } = useRouter()
-  const redirectLink = isCollectorProfileEnabled
-    ? `/collector-profile/my-collection/artwork/${artworkId}`
-    : `/my-collection/artwork/${artworkId}`
+  const redirectLink = `/collector-profile/my-collection/artwork/${artworkId}`
 
   return (
     <TopContextBar

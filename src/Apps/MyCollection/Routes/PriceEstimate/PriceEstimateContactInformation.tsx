@@ -27,7 +27,6 @@ import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
@@ -56,7 +55,6 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
   artwork,
   me,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { sendToast } = useToasts()
   const { router } = useRouter()
   const { trackEvent } = useTracking()
@@ -99,14 +97,10 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
       })
 
       router.replace(
-        isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-          : `/my-collection/artwork/${artwork.internalID}`
+        `/collector-profile/my-collection/artwork/${artwork.internalID}`
       )
       router.push(
-        isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate/success`
-          : `/my-collection/artwork/${artwork.internalID}/price-estimate/success`
+        `/collector-profile/my-collection/artwork/${artwork.internalID}/price-estimate/success`
       )
     } catch (error) {
       console.error(error)
@@ -124,14 +118,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
       <MetaTags title="Request a Price Estimate | Artsy" />
 
       <Flex mt={4}>
-        <RouterLink
-          to={
-            isCollectorProfileEnabled
-              ? "/collector-profile/my-collection"
-              : "/my-collection"
-          }
-          display="block"
-        >
+        <RouterLink to={"/collector-profile/my-collection"} display="block">
           <ArtsyLogoBlackIcon display="block" />
         </RouterLink>
       </Flex>
@@ -141,11 +128,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
           py={2}
           mb={4}
           width="min-content"
-          to={
-            isCollectorProfileEnabled
-              ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-              : `/my-collection/artwork/${artwork.internalID}`
-          }
+          to={`/collector-profile/my-collection/artwork/${artwork.internalID}`}
         >
           Back
         </BackLink>

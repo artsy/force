@@ -378,21 +378,6 @@ describe("Details", () => {
   })
 
   describe("Show High Demand Icon", () => {
-    beforeEach(() => {
-      const mockFeatureFlags = {
-        featureFlags: {
-          "show-my-collection-demand-index-hints": {
-            flagEnabled: true,
-            variant: {
-              name: "enabled",
-              enabled: true,
-            },
-          },
-        },
-      }
-
-      mockUseSystemContext.mockImplementation(() => mockFeatureFlags)
-    })
     it("renders icon for MyCollectionArtwork in high demand", async () => {
       props = {
         showHighDemandIcon: true,

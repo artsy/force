@@ -55,6 +55,7 @@ export interface AddressFormProps {
   shippingCountry?: string
   errors: AddressErrors
   touched: AddressTouched
+  tabIndex?: number
 }
 
 export const AddressForm: React.FC<AddressFormProps> = ({
@@ -67,6 +68,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   shippingCountry,
   errors,
   touched,
+  tabIndex,
 }) => {
   const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
   const [key, setKey] = React.useState<keyof Address>()
@@ -117,6 +119,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     <Join separator={<Spacer y={2} />}>
       <Flex flexDirection="column">
         <Input
+          tabIndex={tabIndex}
           id="AddressForm_name"
           placeholder="Add full name"
           title={billing ? "Name on card" : "Full name"}
@@ -126,14 +129,13 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           error={getError("name")}
         />
       </Flex>
-
       <TwoColumnSplit>
         <Flex flexDirection="column" pb={1}>
           <Text mb={0.5} variant="xs" color="black100">
             Country
           </Text>
-
           <CountrySelect
+            tabIndex={tabIndex}
             selected={
               lockCountryToOrigin || (lockCountriesToEU && !address.country)
                 ? shippingCountry
@@ -143,7 +145,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             disabled={lockCountryToOrigin}
             euShippingOnly={lockCountriesToEU}
           />
-
           {(lockCountryToOrigin || lockCountriesToEU) && (
             <>
               <Spacer x={0.5} y={0.5} />
@@ -155,9 +156,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             </>
           )}
         </Flex>
-
         <Flex flexDirection="column">
           <Input
+            tabIndex={tabIndex}
             id="AddressForm_postalCode"
             placeholder="Add postal code"
             title="Postal code"
@@ -172,6 +173,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       <TwoColumnSplit>
         <Flex flexDirection="column">
           <Input
+            tabIndex={tabIndex}
             id="AddressForm_addressLine1"
             placeholder="Add street address"
             title="Address line 1"
@@ -180,9 +182,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             error={getError("addressLine1")}
           />
         </Flex>
-
         <Flex flexDirection="column">
           <Input
+            tabIndex={tabIndex}
             id="AddressForm_addressLine2"
             placeholder="Add apt, floor, suite, etc."
             title="Address line 2 (optional)"
@@ -195,6 +197,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       <TwoColumnSplit>
         <Flex flexDirection="column">
           <Input
+            tabIndex={tabIndex}
             id="AddressForm_city"
             placeholder="Add city"
             title="City"
@@ -203,9 +206,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             error={getError("city")}
           />
         </Flex>
-
         <Flex flexDirection="column">
           <Input
+            tabIndex={tabIndex}
             id="AddressForm_region"
             placeholder="Add State, province, or region"
             title="State, province, or region"
@@ -220,6 +223,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <>
           <Flex flexDirection="column">
             <Input
+              tabIndex={tabIndex}
               id="AddressForm_phoneNumber"
               title="Phone number"
               type="tel"

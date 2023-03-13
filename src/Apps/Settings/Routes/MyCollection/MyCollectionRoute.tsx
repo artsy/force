@@ -12,7 +12,6 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
@@ -27,8 +26,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
   const [isLoading, setLoading] = useState(false)
-
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   useEffect(() => {
     cleanLocalImages()
@@ -57,11 +54,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     <>
       <MetaTags
         title="My Collection | Artsy"
-        pathname={
-          isCollectorProfileEnabled
-            ? "/collector-profile/my-collection"
-            : "/my-collection"
-        }
+        pathname={"/collector-profile/my-collection"}
       />
 
       {total > 0 ? (
@@ -86,11 +79,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                             as={RouterLink}
                             size={["small", "large"]}
                             variant="primaryBlack"
-                            to={
-                              isCollectorProfileEnabled
-                                ? "/collector-profile/my-collection/artworks/new"
-                                : "/my-collection/artworks/new"
-                            }
+                            to={"/collector-profile/my-collection/artworks/new"}
                             onClick={() => trackAddCollectedArtwork()}
                           >
                             Upload Artwork
@@ -111,9 +100,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             showArtworksWithoutImages
             hideSaleInfo
             to={artwork =>
-              isCollectorProfileEnabled
-                ? `/collector-profile/my-collection/artwork/${artwork.internalID}`
-                : `/my-collection/artwork/${artwork.internalID}`
+              `/collector-profile/my-collection/artwork/${artwork.internalID}`
             }
             showHighDemandIcon
             showSaveButton={false}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9fda3afad7ad48da4eb147d6f06a267>>
+ * @generated SignedSource<<4a5ad7e4ad6c0c85e7683bbc1b12e22f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
@@ -21,6 +22,7 @@ export type redirects_order$data = {
   readonly creditCard: {
     readonly internalID: string;
   } | null;
+  readonly displayState: CommerceOrderDisplayStateEnum;
   readonly internalID: string;
   readonly lastOffer?: {
     readonly createdAt: string;
@@ -135,6 +137,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayState",
       "storageKey": null
     },
     {
@@ -351,6 +360,6 @@ return {
 };
 })();
 
-(node as any).hash = "a616aad2b563f681834bfeaf7460e6ba";
+(node as any).hash = "5df8266de6ffc2d842761fbd9ba26b75";
 
 export default node;

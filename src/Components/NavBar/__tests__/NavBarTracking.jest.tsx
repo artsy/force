@@ -47,7 +47,7 @@ describe("NavBarTracking", () => {
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,
         context_module:
           DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
-        destination_path: "/settings/purchases",
+        destination_path: "/collector-profile/my-collection",
       })
     })
   })

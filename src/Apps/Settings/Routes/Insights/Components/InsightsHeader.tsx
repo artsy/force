@@ -5,11 +5,8 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { Sticky } from "Components/Sticky"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const InsightsHeader: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const {
     addCollectedArtwork: trackAddCollectedArtwork,
   } = useMyCollectionTracking()
@@ -36,11 +33,7 @@ export const InsightsHeader: React.FC = () => {
                         as={RouterLink}
                         size={["small", "large"]}
                         variant="primaryBlack"
-                        to={
-                          isCollectorProfileEnabled
-                            ? "/collector-profile/my-collection/artworks/new"
-                            : "/my-collection/artworks/new"
-                        }
+                        to={"/collector-profile/my-collection/artworks/new"}
                         onClick={() =>
                           trackAddCollectedArtwork(
                             OwnerType.myCollectionInsights

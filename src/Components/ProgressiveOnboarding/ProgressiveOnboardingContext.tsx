@@ -7,14 +7,9 @@ import {
   useEffect,
   useState,
 } from "react"
-import { PROGRESSIVE_ONBOARDING_FIND_FOLLOWS } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
-import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { uniq } from "lodash"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { PROGRESSIVE_ONBOARDING_SAVE_ARTWORK } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
-import { PROGRESSIVE_ONBOARDING_FIND_SAVES } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
-import { PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
-import { PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
+import { useSystemContext } from "System/SystemContext"
 
 const ProgressiveOnboardingContext = createContext<{
   dismissed: ProgressiveOnboardingKey[]
@@ -27,19 +22,22 @@ const ProgressiveOnboardingContext = createContext<{
 })
 
 export const ProgressiveOnboardingProvider: FC = ({ children }) => {
+  const { user } = useSystemContext()
+  const id = user?.id ?? "user"
+
   const [dismissed, setDismissed] = useState<ProgressiveOnboardingKey[]>([])
 
   const dismiss = useCallback(
     (key: ProgressiveOnboardingKey) => {
-      __dismiss__(key)
+      __dismiss__(id, key)
       setDismissed([...dismissed, key])
     },
-    [dismissed]
+    [dismissed, id]
   )
 
   useEffect(() => {
-    setDismissed(get())
-  }, [])
+    setDismissed(get(id))
+  }, [id])
 
   const mounted = useDidMount()
 
@@ -76,7 +74,16 @@ export const useProgressiveOnboarding = () => {
   }
 }
 
-const LOCAL_STORAGE_KEY = "progressive-onboarding-dismissed"
+export const localStorageKey = (id: string) => {
+  return `progressive-onboarding.dismissed.${id}`
+}
+
+export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
+export const PROGRESSIVE_ONBOARDING_FIND_FOLLOWS = "find-follows"
+export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
+export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
+export const PROGRESSIVE_ONBOARDING_FIND_SAVES = "find-saves"
+export const PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT = "saves-highlight"
 
 const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
@@ -87,9 +94,12 @@ const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
 ] as const
 
-type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
+export type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
 
-export const parse = (value: string | null): ProgressiveOnboardingKey[] => {
+export const parse = (
+  id: string,
+  value: string | null
+): ProgressiveOnboardingKey[] => {
   if (!value) return []
 
   try {
@@ -103,22 +113,22 @@ export const parse = (value: string | null): ProgressiveOnboardingKey[] => {
   }
 }
 
-export const __dismiss__ = (key: ProgressiveOnboardingKey) => {
-  const item = localStorage.getItem(LOCAL_STORAGE_KEY)
-  const dismissed = parse(item)
+export const __dismiss__ = (id: string, key: ProgressiveOnboardingKey) => {
+  const item = localStorage.getItem(localStorageKey(id))
+  const dismissed = parse(id, item)
 
   localStorage.setItem(
-    LOCAL_STORAGE_KEY,
+    localStorageKey(id),
     JSON.stringify(uniq([...dismissed, key]))
   )
 }
 
-export const get = () => {
-  const item = localStorage.getItem(LOCAL_STORAGE_KEY)
+export const get = (id: string) => {
+  const item = localStorage.getItem(localStorageKey(id))
 
-  return parse(item)
+  return parse(id, item)
 }
 
-export const reset = () => {
-  localStorage.removeItem(LOCAL_STORAGE_KEY)
+export const reset = (id: string) => {
+  localStorage.removeItem(localStorageKey(id))
 }

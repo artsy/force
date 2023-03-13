@@ -254,7 +254,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<CreateNewListModalContainerProps> = props => {
+export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> = props => {
   const { visible } = props
 
   if (!visible) return null

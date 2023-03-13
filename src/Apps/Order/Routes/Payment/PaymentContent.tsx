@@ -93,16 +93,24 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
-        <CreditCardPickerFragmentContainer
-          commitMutation={commitMutation}
-          me={me}
-          order={order}
-          innerRef={CreditCardPicker}
-        />
+        <Flex
+          style={{
+            display:
+              selectedPaymentMethod === "CREDIT_CARD" ? "inline" : "none",
+          }}
+        >
+          <CreditCardPickerFragmentContainer
+            commitMutation={commitMutation}
+            me={me}
+            order={order}
+            innerRef={CreditCardPicker}
+          />
+        </Flex>
         <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
+          tabIndex={selectedPaymentMethod === "CREDIT_CARD" ? 0 : -1}
         />
         <Spacer y={2} />
       </Collapse>
@@ -112,11 +120,18 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onError={props.onError}
-          />
+          <Flex
+            style={{
+              display:
+                selectedPaymentMethod === "US_BANK_ACCOUNT" ? "inline" : "none",
+            }}
+          >
+            <BankAccountPickerFragmentContainer
+              me={me}
+              order={order}
+              onError={props.onError}
+            />
+          </Flex>
         )}
       </Collapse>
 
@@ -124,13 +139,19 @@ export const PaymentContent: FC<Props> = props => {
       <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer y={2} />
-        {selectedPaymentMethod === "SEPA_DEBIT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onError={props.onError}
-          />
-        )}
+        <Flex
+          style={{
+            display: selectedPaymentMethod === "SEPA_DEBIT" ? "inline" : "none",
+          }}
+        >
+          {selectedPaymentMethod === "SEPA_DEBIT" && (
+            <BankAccountPickerFragmentContainer
+              me={me}
+              order={order}
+              onError={props.onError}
+            />
+          )}
+        </Flex>
       </Collapse>
 
       {/* Wire transfer */}
@@ -144,6 +165,7 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
+          tabIndex={selectedPaymentMethod === "WIRE_TRANSFER" ? 0 : -1}
         />
         <Spacer y={2} />
       </Collapse>

@@ -4,19 +4,37 @@ import { useProgressiveOnboardingTracking } from "Components/ProgressiveOnboardi
 import { FC } from "react"
 import styled, { keyframes } from "styled-components"
 
+export type ProgressiveOnboardingHighlightPosition =
+  | "center"
+  | { top: string; left: string }
+
 interface ProgressiveOnboardingHighlightProps {
   name: string
+  position: ProgressiveOnboardingHighlightPosition
 }
 
 export const ProgressiveOnboardingHighlight: FC<ProgressiveOnboardingHighlightProps> = ({
   children,
   name,
+  position,
 }) => {
   useProgressiveOnboardingTracking({ name })
 
   return (
-    <Box position="relative">
-      <Highlight />
+    <Box position="relative" width="100%">
+      <Highlight
+        {...(position === "center"
+          ? {
+              top: "50%",
+              left: "50%",
+              marginTop: -SIZE / 2,
+              marginLeft: -SIZE / 2,
+            }
+          : {
+              top: position.top,
+              left: position.left,
+            })}
+      />
 
       {children}
     </Box>
@@ -29,15 +47,14 @@ const pulse = keyframes`
   100% { transform: scale(0.8); }
 `
 
+const SIZE = 38
+
 export const Highlight = styled(Box)`
   position: absolute;
   pointer-events: none;
   border: 3px solid ${themeGet("colors.blue10")};
   animation: ${pulse} 2s ease-in-out infinite;
   border-radius: 50%;
-  /* Apologies for the magic numbers: */
-  top: 4px;
-  left: 9.5px;
-  height: 38px;
-  width: 38px;
+  height: ${SIZE}px;
+  width: ${SIZE}px;
 `

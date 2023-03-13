@@ -339,6 +339,7 @@ export class CreditCardPicker extends React.Component<
             <Collapse open={this.needsAddress()}>
               <Spacer y={2} />
               <AddressForm
+                tabIndex={this.needsAddress() ? 0 : -1}
                 value={address}
                 errors={addressErrors}
                 touched={addressTouched}

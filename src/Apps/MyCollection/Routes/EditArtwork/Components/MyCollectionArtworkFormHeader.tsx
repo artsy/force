@@ -11,7 +11,6 @@ import { BackLink } from "Components/Links/BackLink"
 import { Sticky } from "Components/Sticky"
 import { ReactNode } from "react"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkFormHeaderProps {
   NextButton?: ReactNode
@@ -21,16 +20,10 @@ export const MyCollectionArtworkFormHeader: React.FC<MyCollectionArtworkFormHead
   NextButton,
   onBackClick,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   return (
     <>
       <RouterLink
-        to={
-          isCollectorProfileEnabled
-            ? "/collector-profile/my-collection"
-            : "/my-collection"
-        }
+        to={"/collector-profile/my-collection"}
         display="block"
         mt={4}
       >

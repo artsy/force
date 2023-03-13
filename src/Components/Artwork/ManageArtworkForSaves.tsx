@@ -1,7 +1,17 @@
+import { useToasts } from "@artsy/palette"
 import { NewAddedList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
 import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
-import { createContext, Dispatch, FC, useContext, useReducer } from "react"
+import {
+  createContext,
+  Dispatch,
+  FC,
+  useContext,
+  useReducer,
+  useState,
+} from "react"
+import { useTranslation } from "react-i18next"
+import { useRouter } from "System/Router/useRouter"
 
 export enum ModalKey {
   SelectListsForArtwork,
@@ -11,7 +21,6 @@ export enum ModalKey {
 type State = {
   currentModalKey: ModalKey
   artwork: ArtworkEntity | null
-  isSavedToList: boolean
   addingListIDs: string[]
   removingListIDs: string[]
   recentlyAddedList: NewAddedList | null
@@ -24,10 +33,9 @@ export enum ListKey {
 
 type Action =
   | { type: "SET_MODAL_KEY"; payload: ModalKey }
-  | { type: "SET_IS_SAVED_TO_LIST"; payload: boolean }
   | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
   | { type: "SET_ARTWORK"; payload: ArtworkEntity | null }
-  | { type: "RESET"; payload: Partial<State> }
+  | { type: "RESET" }
   | {
       type: "ADD_OR_REMOVE_LIST_ID"
       payload: { listKey: ListKey; listID: string }
@@ -40,23 +48,35 @@ interface ArtworkEntity {
   imageURL: string | null
 }
 
+export interface ResultListEntity {
+  id: string
+  name: string
+}
+
+export interface OnSaveResultData {
+  selectedLists: ResultListEntity[]
+  removedLists: ResultListEntity[]
+  addedLists: ResultListEntity[]
+}
+
 export interface ManageArtworkForSavesContextState {
   state: State
   savedListId?: string
+  isSavedToList: boolean
   dispatch: Dispatch<Action>
   reset: () => void
-  onSave: (collectionIds: string[]) => void
+  onSave: (result: OnSaveResultData) => void
 }
 
 interface ProviderProps {
   savedListId?: string
+  // Needed for testing purposes
   artwork?: ArtworkEntity
 }
 
 export const INITIAL_STATE: State = {
   currentModalKey: ModalKey.SelectListsForArtwork,
   artwork: null,
-  isSavedToList: false,
   addingListIDs: [],
   removingListIDs: [],
   recentlyAddedList: null,
@@ -82,31 +102,137 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   savedListId,
   artwork,
 }) => {
-  const initialStateForReducer: Partial<State> = {
+  const [isSavedToList, setIsSavedToList] = useState(!!savedListId)
+  const [state, dispatch] = useReducer(reducer, {
+    ...INITIAL_STATE,
     artwork: artwork ?? null,
-    isSavedToList: !!savedListId,
-  }
-  const [state, dispatch] = useReducer(reducer, initialStateForReducer, init)
+  })
 
-  const onSave = (listIds: string[]) => {
-    if (savedListId) {
-      dispatch({
-        type: "SET_IS_SAVED_TO_LIST",
-        payload: listIds.includes(savedListId),
+  const { t } = useTranslation()
+  const { sendToast } = useToasts()
+  const { router } = useRouter()
+
+  const navigateToSaveListById = (listId: string) => {
+    router.push(`/collector-profile/saves2/${listId}`)
+  }
+
+  const navigateToSaves = () => {
+    router.push(`/collector-profile/saves2`)
+  }
+
+  const showToastForAddedLists = (addedLists: ResultListEntity[]) => {
+    if (addedLists.length === 1) {
+      const list = addedLists[0]
+
+      sendToast({
+        variant: "success",
+        message: t(
+          "collectorSaves.manageArtworkForSaves.toasts.addedArtworkToList",
+          {
+            name: list.name,
+          }
+        ),
+        action: {
+          label: t(
+            "collectorSaves.manageArtworkForSaves.toasts.viewListButton"
+          ),
+          onClick: () => {
+            navigateToSaveListById(list.id)
+          },
+        },
       })
+
+      return
+    }
+
+    sendToast({
+      variant: "success",
+      message: t(
+        "collectorSaves.manageArtworkForSaves.toasts.addedArtworkToLists",
+        {
+          count: addedLists.length,
+        }
+      ),
+      action: {
+        label: t("collectorSaves.manageArtworkForSaves.toasts.viewSavesButton"),
+        onClick: () => {
+          navigateToSaves()
+        },
+      },
+    })
+  }
+
+  const showToastForRemovedLists = (removedLists: ResultListEntity[]) => {
+    if (removedLists.length === 1) {
+      const list = removedLists[0]
+
+      sendToast({
+        variant: "message",
+        message: t(
+          "collectorSaves.manageArtworkForSaves.toasts.removedArtworkFromList",
+          {
+            name: list.name,
+          }
+        ),
+      })
+
+      return
+    }
+
+    sendToast({
+      variant: "message",
+      message: t(
+        "collectorSaves.manageArtworkForSaves.toasts.removedArtworkFromLists",
+        {
+          count: removedLists.length,
+        }
+      ),
+    })
+  }
+
+  const showChangesSavedToast = () => {
+    sendToast({
+      variant: "success",
+      message: t("collectorSaves.manageArtworkForSaves.toasts.changesSaved"),
+    })
+  }
+
+  const onSave = (result: OnSaveResultData) => {
+    const { selectedLists, addedLists, removedLists } = result
+
+    if (savedListId) {
+      const isSaved = selectedLists.find(list => list.id === savedListId)
+
+      showChangesSavedToast()
+      setIsSavedToList(!!isSaved)
+
+      return
+    }
+
+    if (addedLists.length > 0 && removedLists.length > 0) {
+      showChangesSavedToast()
+      return
+    }
+
+    if (addedLists.length > 0) {
+      showToastForAddedLists(addedLists)
+    }
+
+    if (removedLists.length > 0) {
+      showToastForRemovedLists(removedLists)
     }
   }
 
   const reset = () => {
     dispatch({
       type: "RESET",
-      payload: initialStateForReducer,
     })
   }
 
   const value: ManageArtworkForSavesContextState = {
     state,
     savedListId,
+    isSavedToList,
     dispatch,
     reset,
     onSave,
@@ -150,11 +276,6 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         [listKey]: [...ids, listID],
       }
-    case "SET_IS_SAVED_TO_LIST":
-      return {
-        ...state,
-        isSavedToList: action.payload,
-      }
     case "SET_RECENTLY_ADDED_LIST":
       return {
         ...state,
@@ -166,15 +287,8 @@ const reducer = (state: State, action: Action): State => {
         artwork: action.payload,
       }
     case "RESET":
-      return init(action.payload)
+      return INITIAL_STATE
     default:
       return state
-  }
-}
-
-const init = (dynamicState?: Partial<State>) => {
-  return {
-    ...INITIAL_STATE,
-    ...dynamicState,
   }
 }

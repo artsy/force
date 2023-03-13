@@ -15,7 +15,6 @@ import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
@@ -26,8 +25,6 @@ interface SettingsAppProps {
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   const { isLoggedIn } = useSystemContext()
-
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   const { sendToast } = useToasts()
 
@@ -61,68 +58,37 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     return <MyCollectionRouteLoggedOutState />
   }
 
-  const tabs = compact([
-    { name: "Edit Settings", url: "/settings/edit-settings" },
-    {
-      name: isCollectorProfileEnabled ? "Edit Profile" : "Collector Profile",
-      url: "/settings/edit-profile",
-    },
-    { name: "My Collection", url: "/settings/my-collection" },
-    { name: "Insights", url: "/settings/insights" },
-    { name: "Saves & Follows", url: "/settings/saves" },
-    { name: "Alerts", url: "/settings/alerts" },
-    { name: "Order History", url: "/settings/purchases" },
-    { name: "Bids", url: "/settings/auctions" },
-    { name: "Payments", url: "/settings/payments" },
-    { name: "Shipping", url: "/settings/shipping" },
-  ])
-
   return (
     <>
       <MetaTags title="Settings | Artsy" />
 
-      {isCollectorProfileEnabled ? (
-        <>
-          <Breadcrumbs>
-            <Link to="/collector-profile/my-collection">
-              <Flex flexDirection="row" alignItems="center" py={2}>
-                <ChevronIcon
-                  direction="left"
-                  color="black100"
-                  height={14}
-                  width={14}
-                />
-                <Text variant="xs" pl={1}>
-                  Collector Profile
-                </Text>
-              </Flex>
-            </Link>
-          </Breadcrumbs>
-          <Spacer y={6} />
-        </>
-      ) : (
-        <Text
-          variant={["lg-display", "xl"]}
-          mt={[2, 4]}
-        >{`Hi, ${me.name}`}</Text>
-      )}
+      <>
+        <Breadcrumbs>
+          <Link to="/collector-profile/my-collection">
+            <Flex flexDirection="row" alignItems="center" py={2}>
+              <ChevronIcon
+                direction="left"
+                color="black100"
+                height={14}
+                width={14}
+              />
+              <Text variant="xs" pl={1}>
+                Collector Profile
+              </Text>
+            </Flex>
+          </Link>
+        </Breadcrumbs>
+        <Spacer y={6} />
+      </>
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
-        {isCollectorProfileEnabled
-          ? tabsWhenCollectorProfileEnabled.map(tab => {
-              return (
-                <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
-                  {tab.name}
-                </RouteTab>
-              )
-            })
-          : tabs.map(tab => {
-              return (
-                <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
-                  {tab.name}
-                </RouteTab>
-              )
-            })}
+        {tabsWhenCollectorProfileEnabled.map(tab => {
+          return (
+            <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
+              {tab.name}
+            </RouteTab>
+          )
+        })}
       </RouteTabs>
 
       {children}
