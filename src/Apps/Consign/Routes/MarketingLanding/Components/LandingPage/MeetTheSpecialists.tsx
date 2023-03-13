@@ -88,8 +88,7 @@ export const MeetTheSpecialists: React.FC = () => {
         Meet the specialists
       </Text>
       <Text mb={2} variant={["xs", "sm"]}>
-        Our in-house experts cover Post-War and Contemporary Art, Prints and
-        Multiples, Street Art and Photographs.
+        Our specialists span today’s most popular collecting categories.
       </Text>
       <Flex overflowY="scroll">
         {pills.map(pill => (
@@ -177,8 +176,8 @@ export const MeetTheSpecialists: React.FC = () => {
         showProgress={false}
       />
       <Text mb={[2, 4]} variant={["md", "lg-display"]}>
-        Not sure which of our experts is the right fit for your work? Get in
-        touch and we'll connect you.
+        Not sure who’s the right fit for your collection? Get in touch and we’ll
+        connect you.
       </Text>
       <Button
         width={["100%", 300]}
