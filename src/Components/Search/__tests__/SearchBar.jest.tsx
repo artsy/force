@@ -185,7 +185,9 @@ describe("SearchBar", () => {
     simulateTyping(wrapper, "perc") // Matching text w/ suggestion.
     await flushPromiseQueue()
 
-    expect(wrapper.html()).toContain("<strong>Perc</strong>y Z")
+    expect(wrapper.html()).toContain(
+      '<strong style="color: blue;">Perc</strong>y Z'
+    )
   })
 })
 
