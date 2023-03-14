@@ -7,7 +7,6 @@ import * as React from "react"
 import createLogger from "Utils/logger"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
-import { useImagePerformanceObserver } from "Utils/Hooks/useImagePerformanceObserver"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
 
@@ -18,7 +17,6 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
-  useImagePerformanceObserver()
   useSetupAuth()
 
   const { onboardingComponent } = useOnboardingModal()
