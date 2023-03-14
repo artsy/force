@@ -7,7 +7,6 @@ import {
   FacebookIcon,
   Flex,
   Input,
-  Link,
   PinterestIcon,
   Separator,
   Text,
@@ -20,6 +19,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data
@@ -125,13 +125,13 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
           url={`https://twitter.com/intent/tweet?original_referer=${url}&text=${share}&url=${url}&via=artsy`}
         />
 
-        <Link
+        <RouterLink
           display="flex"
           alignItems="center"
           flexBasis="50%"
-          underlineBehavior="none"
+          textDecoration="none"
           py={0.5}
-          href={`mailto:?subject=${share}&body=${share} on Artsy: ${url}`}
+          to={`mailto:?subject=${share}&body=${share} on Artsy: ${url}`}
         >
           <Flex
             width={20}
@@ -146,7 +146,7 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
           <Text variant="xs" lineHeight={1}>
             Mail
           </Text>
-        </Link>
+        </RouterLink>
 
         <ShareButton
           onClick={openShareModal}
