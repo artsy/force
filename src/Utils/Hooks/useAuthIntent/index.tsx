@@ -76,8 +76,6 @@ export const runAuthIntent = async ({
       }
     })()
 
-    console.log({ XXXXXX: "here?" })
-
     onSuccess(value)
 
     Cookies.expire(AFTER_AUTH_ACTION_KEY)
@@ -137,7 +135,7 @@ export const setAfterAuthAction = (afterAuthAction: AfterAuthAction) => {
 
 const schema = Yup.object({
   action: Yup.string()
-    .oneOf(["associateSubmission", "createAlert", "follow", "save"])
+    .oneOf(["associateSubmission", "createAlert", "follow", "save", "buyNow"])
     .required(),
   kind: Yup.string()
     .oneOf(["artist", "artworks", "gene", "profile", "submission"])

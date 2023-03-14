@@ -9,14 +9,15 @@ export const createOrderMutation: AuthIntentMutation = (
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOrderMutation>(relayEnvironment, {
       onCompleted: (res, errors) => {
-        console.log({ XXXXXX: res })
-        console.log({ XXXXXX: errors })
         if (errors !== null) {
           reject(errors)
           return
         }
+        const orderID =
+          res.commerceCreateOrderWithArtwork?.orderOrError.order?.internalID
 
         resolve(res)
+        window.location.assign(`/orders/${orderID}/shipping`)
       },
       mutation: graphql`
         mutation AuthIntentCreateOrderMutation(
@@ -42,6 +43,7 @@ export const createOrderMutation: AuthIntentMutation = (
           }
         }
       `,
+      // TODO
       // optimisticResponse: {
       //   saveArtwork: {
       //     artwork: {

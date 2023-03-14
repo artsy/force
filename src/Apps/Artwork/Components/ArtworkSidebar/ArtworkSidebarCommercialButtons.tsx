@@ -170,7 +170,6 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
         }
       )
     } else {
-      console.log({ XXXXX: "here in else" })
       showAuthDialog({
         mode: "SignUp",
         options: {
@@ -183,6 +182,8 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
             kind: "artworks",
             objectId: artwork.internalID,
           },
+          // try to use this
+          redirectTo: "/yoyo",
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
