@@ -2,12 +2,12 @@ import { ConnectionHandler, graphql } from "react-relay"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
-  CreateNewListModalMutation,
-  CreateNewListModalMutation$data,
-} from "__generated__/CreateNewListModalMutation.graphql"
+  useCreateCollectionMutation,
+  useCreateCollectionMutation$data,
+} from "__generated__/useCreateCollectionMutation.graphql"
 
 const onListAdded = (
-  store: RecordSourceSelectorProxy<CreateNewListModalMutation$data>,
+  store: RecordSourceSelectorProxy<useCreateCollectionMutation$data>,
   data
 ) => {
   const response = data.createCollection?.responseOrError
@@ -41,7 +41,7 @@ const onListAdded = (
 }
 
 export const useCreateCollection = () => {
-  return useMutation<CreateNewListModalMutation>({
+  return useMutation<useCreateCollectionMutation>({
     mutation: graphql`
       mutation useCreateCollectionMutation($input: createCollectionInput!) {
         createCollection(input: $input) {

@@ -17,6 +17,7 @@ import {
   CreateNewListModalHeader,
 } from "./CreateNewListModalHeader"
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
+import { FC } from "react"
 
 export interface CreateNewListValues {
   name: string
@@ -199,7 +200,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<CreateNewListModalContainerProps> = props => {
+export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> = props => {
   const { visible } = props
 
   if (!visible) return null
