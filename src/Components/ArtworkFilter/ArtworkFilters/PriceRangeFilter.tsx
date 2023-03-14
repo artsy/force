@@ -1,25 +1,166 @@
 import { FC, useEffect, useState } from "react"
-import {
-  Button,
-  Flex,
-  LabeledInput,
-  Message,
-  Radio,
-  RadioGroup,
-  Spacer,
-} from "@artsy/palette"
+import { Flex, LabeledInput, Spacer } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import styled from "styled-components"
-import { Media } from "Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { useMode } from "Utils/Hooks/useMode"
-import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
+import { useMemo, FormEvent } from "react"
+import { Box, Text, Range } from "@artsy/palette"
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { debounce, sortBy } from "lodash"
+import { Histogram, HistogramBarEntity } from "./Histogram"
+
+type CustomRange = (number | "*")[]
+
+// Constants
+const DEBOUNCE_DELAY = 300
+const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
+const DEFAULT_PRICE_RANGE = "*-*"
+const DEFAULT_RANGE = [0, 50000]
+
+export interface PriceRangeFilterProps {
+  expanded?: boolean
+}
+
+export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
+  const {
+    shouldStageFilterChanges,
+    aggregations,
+    setFilter,
+  } = useArtworkFilterContext()
+  const { priceRange, reset } = useCurrentlySelectedFilters()
+  const [range, setRange] = useState(parseRange(priceRange))
+  const sliderRange = parseSliderRange(range)
+  const [minValue, maxValue] = range
+  const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
+  const bars = getBarsFromAggregations(aggregations)
+  const isAllBarsEmpty = bars.every(bar => bar.count === 0)
+
+  const filtersCount = useFilterLabelCountByKey(
+    SelectedFiltersCountsLabels.priceRange
+  )
+  const label = `Price${filtersCount}`
+  const hasSelection = priceRange && isCustomValue(priceRange)
+
+  const setFilterDobounced = useMemo(
+    () => debounce(setFilter, DEBOUNCE_DELAY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [shouldStageFilterChanges]
+  )
+
+  useEffect(() => {
+    // if price filter or filters state is being reset, then also clear local input state
+    if (reset || priceRange === DEFAULT_PRICE_RANGE) {
+      setRange(DEFAULT_CUSTOM_RANGE)
+    }
+  }, [reset, priceRange])
+
+  const updateRange = (updatedRange: CustomRange) => {
+    setRange(updatedRange)
+    setFilterDobounced("priceRange", updatedRange.join("-"))
+  }
+
+  const handleSliderValueChange = (range: number[]) => {
+    const convertedRange = convertToFilterFormatRange(range)
+
+    updateRange(convertedRange)
+  }
+
+  const handleInputValueChange = (changedIndex: number) => (
+    event: FormEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.currentTarget
+    const updatedRange = range.map((rangeValue, index) => {
+      if (index === changedIndex) {
+        if (value === "" || value === "0") {
+          return "*"
+        }
+
+        return parseInt(value, 10)
+      }
+
+      return rangeValue
+    })
+
+    updateRange(updatedRange)
+  }
+
+  return (
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
+      <Flex>
+        <Box flex={1}>
+          <Text variant="xs" mb={0.5}>
+            Min
+          </Text>
+
+          <NumericInput
+            label="$USD"
+            name="price_min"
+            min="0"
+            step="100"
+            aria-label="Min price"
+            value={getValue(minValue)}
+            onChange={handleInputValueChange(0)}
+          />
+        </Box>
+
+        <Spacer x={2} />
+
+        <Box flex={1}>
+          <Text variant="xs" mb={0.5}>
+            Max
+          </Text>
+
+          <NumericInput
+            label="$USD"
+            name="price_max"
+            min="0"
+            step="100"
+            aria-label="Max price"
+            value={getValue(maxValue)}
+            onChange={handleInputValueChange(1)}
+          />
+        </Box>
+      </Flex>
+
+      <Spacer y={2} />
+
+      {bars.length > 0 && !isAllBarsEmpty ? (
+        <Histogram
+          bars={bars}
+          selectedRange={[sliderRange[0], sliderRange[1]]}
+          data-testid="PriceFilterHistogram"
+        />
+      ) : null}
+
+      <Spacer y={2} />
+
+      <Range
+        min={defaultMinValue}
+        max={defaultMaxValue}
+        value={sliderRange}
+        onChange={handleSliderValueChange}
+        step={100}
+        ariaLabels={["Min price", "Max price"]}
+      />
+
+      <Flex justifyContent="space-between" mt={1}>
+        <Text variant="xs" color="black60">
+          ${defaultMinValue}
+        </Text>
+
+        <Text variant="xs" color="black60">
+          ${defaultMaxValue}+
+        </Text>
+      </Flex>
+    </FilterExpandable>
+  )
+}
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -36,182 +177,47 @@ export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
   }
 `
 
-const PRICE_RANGES = [
-  { name: "$50K+", value: "50000-*" },
-  { name: "$25K – $50K", value: "25000-50000" },
-  { name: "$10K – $25K", value: "10000-25000" },
-  { name: "$5K – $10K", value: "5000-10000" },
-  { name: "$1K – $5K", value: "1000-5000" },
-  { name: "$0 – $1,000", value: "0-1000" },
-]
-
-type CustomRange = (number | "*")[]
-
-const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
-const DEFAULT_PRICE_RANGE = "*-*"
-
-const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
+export const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
   return range.split("-").map(s => {
     if (s === "*") return s
     return parseInt(s, 10)
   })
 }
 
-const getValue = (value: CustomRange[number]) => {
+const parseSliderRange = (range: CustomRange) => {
+  return range.map((value, index) => {
+    if (value === "*") {
+      return DEFAULT_RANGE[index]
+    }
+
+    return value as number
+  })
+}
+
+export const convertToFilterFormatRange = (range: number[]) => {
+  return range.map((value, index) => {
+    if (value === DEFAULT_RANGE[index]) {
+      return "*"
+    }
+
+    return value
+  })
+}
+
+export const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-export interface PriceRangeFilterProps {
-  expanded?: boolean
-}
+export const getBarsFromAggregations = (aggregations?: Aggregations) => {
+  const aggregation = aggregations?.find(aggregation => {
+    return aggregation.slice === "SIMPLE_PRICE_HISTOGRAM"
+  })
+  const counts = aggregation?.counts ?? []
+  const bars: HistogramBarEntity[] = counts.map(entity => ({
+    count: entity.count,
+    value: Number(entity.value),
+  }))
+  const sortedBars = sortBy(bars, "value")
 
-type Mode = "resting" | "done"
-
-export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
-  expanded,
-}) => {
-  const [mode, setMode] = useMode<Mode>("resting")
-
-  const { setFilter } = useArtworkFilterContext()
-  const { priceRange, reset } = useCurrentlySelectedFilters()
-
-  const numericRange = parseRange(priceRange)
-
-  const filtersCount = useFilterLabelCountByKey(
-    SelectedFiltersCountsLabels.priceRange
-  )
-  const label = `Price${filtersCount}`
-
-  const isCustomRange =
-    // Has some kind of price range set (isn't default)
-    isCustomValue(priceRange) &&
-    // And isn't a pre-defined price range option
-    PRICE_RANGES.find(range => range.value === priceRange) === undefined
-
-  const [showCustom, setShowCustom] = useState(isCustomRange)
-  const [customRange, setCustomRange] = useState<CustomRange>(
-    numericRange ?? DEFAULT_CUSTOM_RANGE
-  )
-
-  const handleClick = () => {
-    setFilter("priceRange", customRange.join("-"))
-    setMode("done")
-  }
-
-  const handleChange = (index: number) => ({
-    currentTarget: { value },
-  }: React.FormEvent<HTMLInputElement>) => {
-    const isOpenEnded = value === "" || value === "0"
-    setCustomRange(prevCustomRange => {
-      const nextCustomRange = [...prevCustomRange]
-
-      if (isOpenEnded) {
-        nextCustomRange[index] = "*"
-      } else {
-        nextCustomRange[index] = parseInt(value, 10)
-      }
-
-      return nextCustomRange
-    })
-  }
-
-  const handleSelect = (selectedOption: string) => {
-    if (selectedOption === "custom") {
-      setShowCustom(true)
-      return
-    }
-
-    if (selectedOption) {
-      setCustomRange(parseRange(selectedOption))
-      setFilter("priceRange", selectedOption)
-    } else {
-      setCustomRange(DEFAULT_CUSTOM_RANGE)
-      setFilter("priceRange", DEFAULT_PRICE_RANGE)
-    }
-
-    setShowCustom(false)
-  }
-
-  const hasSelection = priceRange && isCustomValue(priceRange)
-
-  useEffect(() => {
-    // if price filter or filters state is being reset, then also clear local input state
-    if (reset || !isCustomValue(priceRange)) {
-      setCustomRange(["*", "*"])
-    }
-  }, [reset, priceRange])
-
-  return (
-    <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      {mode === "done" && (
-        <Media lessThan="sm">
-          <Message variant="info" my={2}>
-            Price set, select apply to see full results
-          </Message>
-        </Media>
-      )}
-
-      <Flex flexDirection="column" alignItems="left">
-        <RadioGroup
-          deselectable
-          defaultValue={isCustomRange ? "custom" : priceRange}
-          onSelect={handleSelect}
-        >
-          {[
-            ...PRICE_RANGES.map((range, index) => (
-              <Radio
-                key={`${index}`}
-                my={1}
-                label={range.name}
-                value={range.value}
-              />
-            )),
-
-            <Radio key="custom" my={1} label="Custom Price" value="custom" />,
-          ]}
-        </RadioGroup>
-      </Flex>
-
-      {showCustom && (
-        <>
-          <Flex mt={1} alignItems="flex-end">
-            <NumericInput
-              label="$USD"
-              name="price_min"
-              placeholder="Min"
-              min="0"
-              step="1"
-              value={getValue(customRange[0])}
-              onChange={handleChange(0)}
-            />
-
-            <Spacer x={1} />
-
-            <NumericInput
-              label="$USD"
-              name="price_max"
-              placeholder="Max"
-              min="0"
-              step="1"
-              value={getValue(customRange[1])}
-              onChange={handleChange(1)}
-            />
-          </Flex>
-
-          <Button
-            mt={1}
-            variant="primaryGray"
-            onClick={handleClick}
-            width="100%"
-          >
-            Set price
-          </Button>
-        </>
-      )}
-    </FilterExpandable>
-  )
-}
-
-export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
-  return <PriceRangeFilterNew {...props} />
+  return sortedBars
 }
