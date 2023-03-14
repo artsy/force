@@ -12,15 +12,14 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useMode } from "Utils/Hooks/useMode"
 import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -214,11 +213,5 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 }
 
 export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
-  const isNewPriceFilterEnabled = useFeatureFlag("new_price_filter")
-
-  if (isNewPriceFilterEnabled) {
-    return <PriceRangeFilterNew {...props} />
-  }
-
-  return <PriceRangeFilterOld {...props} />
+  return <PriceRangeFilterNew {...props} />
 }
