@@ -182,8 +182,8 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
             kind: "artworks",
             objectId: artwork.internalID,
           },
-          // try to use this
-          redirectTo: "/yoyo",
+          // TODO
+          redirectTo: "/",
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
