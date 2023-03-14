@@ -18,10 +18,13 @@ import { Router } from "found"
 import { isEmpty } from "lodash"
 import { throttle } from "lodash"
 import qs from "qs"
+// eslint-disable-next-line no-restricted-imports
 import Autosuggest from "react-autosuggest"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import styled from "styled-components"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import Events from "Utils/Events"
 import { get } from "Utils/get"
@@ -410,7 +413,7 @@ export class SearchBar extends Component<Props, State> {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const suggestions = [firstSuggestionPlaceholder, ...edges]
+    const suggestions = [...edges, firstSuggestionPlaceholder]
 
     return (
       <Autosuggest

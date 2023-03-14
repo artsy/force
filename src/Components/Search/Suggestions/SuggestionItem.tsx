@@ -13,6 +13,7 @@ import {
 } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
+import { ChevronButton } from "Components/ChevronButton"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -40,12 +41,18 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
   return (
     <SuggestionItemLink
       bg={isHighlighted ? "black5" : "white100"}
-      borderBottom="1px solid"
-      borderBottomColor="black10"
+      mt={1}
+      borderTop="1px solid"
+      borderTopColor="black10"
       onClick={handleClick}
       to={href}
     >
-      <Text variant="sm">See full results for &ldquo;{query}&rdquo;</Text>
+      <Flex alignItems="center">
+        <Text variant="sm" mr={1}>
+          See full results for &ldquo;{query}&rdquo;
+        </Text>
+        <ChevronButton />
+      </Flex>
     </SuggestionItemLink>
   )
 }
@@ -98,7 +105,13 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   const matches = match(display, query)
   const parts = parse(display, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? <strong key={index}>{text}</strong> : text
+    highlight ? (
+      <strong key={index} style={{ color: "blue" }}>
+        {text}
+      </strong>
+    ) : (
+      text
+    )
   )
 
   return (
