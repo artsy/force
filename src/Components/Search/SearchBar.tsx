@@ -11,7 +11,7 @@ import {
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
-  FirstSuggestionItem,
+  SeeFullResultsSuggestionItem,
   SuggestionItem,
 } from "Components/Search/Suggestions/SuggestionItem"
 import { Router } from "found"
@@ -114,7 +114,7 @@ export class SearchBar extends Component<Props, State> {
       node: { displayType: entityType, id: entityID },
     } = suggestion
 
-    if (entityType === "FirstItem") return
+    if (entityType === "SeeFullResultsSuggestionItem") return
 
     this.setState({
       entityID,
@@ -331,20 +331,20 @@ export class SearchBar extends Component<Props, State> {
     displayType || (__typename === "Artist" ? "Artist" : null)
 
   renderSuggestion = (edge, rest) => {
-    const renderer = edge.node.isFirstItem
-      ? this.renderFirstSuggestion
+    const renderer = edge.node.isSeeFullResultsSuggestionItem
+      ? this.renderSeeFullResultsSuggestion
       : this.renderDefaultSuggestion
     const item = renderer(edge, rest)
     return item
   }
 
-  renderFirstSuggestion = (edge, { query, isHighlighted }) => {
+  renderSeeFullResultsSuggestion = (edge, { query, isHighlighted }) => {
     const { displayLabel, href } = edge.node
 
     const label = this.getLabel(edge.node)
 
     return (
-      <FirstSuggestionItem
+      <SeeFullResultsSuggestionItem
         display={displayLabel}
         href={href}
         isHighlighted={isHighlighted}
@@ -400,19 +400,19 @@ export class SearchBar extends Component<Props, State> {
       value: term,
     }
 
-    const firstSuggestionPlaceholder = {
+    const seeAllResultsPlaceholder = {
       node: {
         displayLabel: term,
-        displayType: "FirstItem",
+        displayType: "SeeFullResultsSuggestionItem",
         href: `/search?term=${encodeURIComponent(term)}`,
-        isFirstItem: true,
+        isSeeFullResultsSuggestionItem: true,
       },
     }
 
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const suggestions = [...edges, firstSuggestionPlaceholder]
+    const suggestions = [...edges, seeAllResultsPlaceholder]
 
     return (
       <Autosuggest

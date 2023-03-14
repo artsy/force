@@ -3,6 +3,7 @@ import {
   ContextModule,
   SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   ArtworkIcon,
   AuctionIcon,
@@ -11,9 +12,9 @@ import {
   PillProps,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import { ChevronButton } from "Components/ChevronButton"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -29,7 +30,7 @@ interface SuggestionItemProps {
   showAuctionResultsButton?: boolean
 }
 
-export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
+export const SeeFullResultsSuggestionItem: React.FC<SuggestionItemProps> = ({
   href,
   isHighlighted,
   query,
@@ -49,9 +50,9 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
     >
       <Flex alignItems="center">
         <Text variant="sm" mr={1}>
-          See full results for &ldquo;{query}&rdquo;
+          See full results for <Highlight>{query}</Highlight>
         </Text>
-        <ChevronButton />
+        <ChevronRightIcon />
       </Flex>
     </SuggestionItemLink>
   )
@@ -105,13 +106,7 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   const matches = match(display, query)
   const parts = parse(display, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? (
-      <strong key={index} style={{ color: "blue" }}>
-        {text}
-      </strong>
-    ) : (
-      text
-    )
+    highlight ? <Highlight key={index}>{text}</Highlight> : text
   )
 
   return (
@@ -215,3 +210,7 @@ const tracks = {
     label,
   }),
 }
+
+export const Highlight = styled.strong`
+  color: ${themeGet("colors.blue100")};
+`
