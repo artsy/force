@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20b3421e3c63d87cc07d73a8f40a1958>>
+ * @generated SignedSource<<288cf1882b1b7eff88b00e17bb615fc9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,13 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 12
+        },
+        {
+          "kind": "Literal",
+          "name": "input",
+          "value": {
+            "sort": "-decayed_merch"
+          }
         },
         {
           "kind": "Literal",
@@ -102,13 +109,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:12,marketingCollectionID:\"curators-picks-emerging\")"
+      "storageKey": "artworksConnection(first:12,input:{\"sort\":\"-decayed_merch\"},marketingCollectionID:\"curators-picks-emerging\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "22aa4f34b83e83ffbbda0f8d2a4c231d";
+(node as any).hash = "d5f48677e76f7b2c0ab12ada6f79bee2";
 
 export default node;
