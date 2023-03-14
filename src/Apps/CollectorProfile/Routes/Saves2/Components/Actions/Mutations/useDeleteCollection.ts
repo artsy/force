@@ -8,9 +8,15 @@ import {
 
 const deleteCollectionUpdater = (
   store: RecordSourceSelectorProxy<useDeleteCollectionMutation$data>,
-  data
+  data: useDeleteCollectionMutation$data
 ) => {
-  const collectionID = data.deleteCollection?.responseOrError?.collection?.id
+  const { responseOrError } = data.deleteCollection ?? {}
+
+  if (responseOrError?.__typename !== "DeleteCollectionSuccess") {
+    return
+  }
+
+  const collectionID = responseOrError.collection?.id
 
   const root = store.getRoot()
   const me = root.getLinkedRecord("me")

@@ -8,7 +8,7 @@ import {
 
 const onListAdded = (
   store: RecordSourceSelectorProxy<useCreateCollectionMutation$data>,
-  data
+  data: useCreateCollectionMutation$data
 ) => {
   const response = data.createCollection?.responseOrError
   const me = store.getRoot().getLinkedRecord("me")
