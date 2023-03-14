@@ -4,6 +4,8 @@ import { Text, Input, Spacer, Button, Flex } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { validatePhoneNumber } from "Apps/Order/Utils/formValidators"
 
+const google_key = "NOPE"
+
 export const AddressAutoComplete: FC<{
   onContinueButtonPressed: (arg: any) => void
 }> = ({ onContinueButtonPressed }) => {
@@ -12,7 +14,7 @@ export const AddressAutoComplete: FC<{
     placePredictions,
     getPlacePredictions,
   } = usePlacesService({
-    apiKey: "PALCEHOLDER",
+    apiKey: google_key,
   })
 
   // TODO: better to model these into a single state property
@@ -106,6 +108,56 @@ export const AddressAutoComplete: FC<{
     phoneNumberError,
   ])
 
+  const validateAddress = addressDetails => {
+    const regionCode =
+      addressDetails.find(detail => detail.types.includes("country"))
+        .short_name || ""
+
+    const postalCode =
+      addressDetails.find(detail => detail.types.includes("postal_code"))
+        .long_name || ""
+
+    const addressLines =
+      addressDetails.find(detail => detail.types.includes("route")).long_name ||
+      ""
+
+    const locality =
+      addressDetails.find(
+        detail =>
+          detail.types.includes("locality") &&
+          detail.types.includes("political")
+      ).long_name || ""
+
+    const address = {
+      regionCode,
+      locality,
+      addressLines,
+      postalCode,
+    }
+
+    console.log({ XXXXX_add: address })
+
+    fetch(
+      `https://addressvalidation.googleapis.com/v1:validateAddress?key=${google_key}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: address,
+        }),
+      }
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log("XXXXX_success:", data)
+      })
+      .catch(error => {
+        console.error("XXXXX_err:", error)
+      })
+  }
+
   const handleAddressSelect = address => {
     setShowAddressPredictions(false)
 
@@ -117,7 +169,8 @@ export const AddressAutoComplete: FC<{
         },
         placeDetails => {
           if (placeDetails?.address_components) {
-            console.log({ placeDetails: placeDetails })
+            console.log({ XXXXX: placeDetails })
+            validateAddress(placeDetails.address_components)
             setSelectedAddress(placeDetails.address_components)
           }
         }
