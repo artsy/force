@@ -1,4 +1,3 @@
-import { ConnectionHandler, graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import {
@@ -13,12 +12,11 @@ import {
 import { useSystemContext } from "System/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { CreateNewListModalMutation } from "__generated__/CreateNewListModalMutation.graphql"
 import {
   ArtworkEntity,
   CreateNewListModalHeader,
 } from "./CreateNewListModalHeader"
+import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
 
 export interface CreateNewListValues {
   name: string
@@ -47,37 +45,6 @@ const logger = createLogger(
 
 const MAX_NAME_LENGTH = 40
 
-const onListAdded = (store, data) => {
-  const response = data.createCollection?.responseOrError
-  const me = store.getRoot().getLinkedRecord("me")
-
-  if (!response || !me) {
-    return
-  }
-
-  const key = "CollectorProfileSaves2Route_otherSaves"
-  const otherSavesConnection = ConnectionHandler.getConnection(me, key)
-  const mutationPayload = store.getRootField("createCollection")
-  const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
-  const createdCollection = responseOrError.getLinkedRecord("collection")
-
-  if (!otherSavesConnection || !createdCollection) {
-    return
-  }
-
-  const createdCollectionEdge = ConnectionHandler.createEdge(
-    store,
-    otherSavesConnection,
-    createdCollection,
-    "Collection"
-  )
-
-  ConnectionHandler.insertEdgeBefore(
-    otherSavesConnection,
-    createdCollectionEdge
-  )
-}
-
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   artwork,
   onClose,
@@ -86,30 +53,8 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const { relayEnvironment } = useSystemContext()
-  const { submitMutation } = useMutation<CreateNewListModalMutation>({
-    mutation: graphql`
-      mutation CreateNewListModalMutation($input: createCollectionInput!) {
-        createCollection(input: $input) {
-          responseOrError {
-            ... on CreateCollectionSuccess {
-              collection {
-                internalID
-                name
-                artworksCount
-              }
-            }
+  const { submitMutation } = useCreateCollection()
 
-            ... on CreateCollectionFailure {
-              mutationError {
-                message
-              }
-            }
-          }
-        }
-      }
-    `,
-    updater: onListAdded,
-  })
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
     ? t("common.buttons.back")
