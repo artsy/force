@@ -141,50 +141,27 @@ export const CreateNewListModal: FC<CreateNewListModalProps> = ({
               artwork ? <CreateNewListModalHeader artwork={artwork} /> : null
             }
             footer={
-              <>
-                {/* Desktop view */}
-                <Media greaterThanOrEqual="sm">
-                  <Flex justifyContent="space-between">
-                    <Button
-                      variant="secondaryBlack"
-                      onClick={handleBackOnCancelClick}
-                    >
-                      {backOrCancelLabel}
-                    </Button>
+              <Flex
+                justifyContent={["flex-start", "space-between"]}
+                flexDirection={["column", "row-reverse"]}
+              >
+                <Button
+                  disabled={isCreateButtonDisabled}
+                  loading={isSubmitting}
+                  onClick={() => handleSubmit()}
+                >
+                  {t("collectorSaves.createNewListModal.createListButton")}
+                </Button>
 
-                    <Button
-                      disabled={isCreateButtonDisabled}
-                      loading={isSubmitting}
-                      onClick={() => handleSubmit()}
-                      alignSelf="flex-end"
-                    >
-                      {t("collectorSaves.createNewListModal.createListButton")}
-                    </Button>
-                  </Flex>
-                </Media>
+                <Spacer y={[1, 0]} />
 
-                {/* Mobile view */}
-                <Media lessThan="sm">
-                  <Button
-                    disabled={isCreateButtonDisabled}
-                    loading={isSubmitting}
-                    onClick={() => handleSubmit()}
-                    width="100%"
-                  >
-                    {t("collectorSaves.createNewListModal.createListButton")}
-                  </Button>
-
-                  <Spacer y={1} />
-
-                  <Button
-                    variant="secondaryBlack"
-                    width="100%"
-                    onClick={handleBackOnCancelClick}
-                  >
-                    {backOrCancelLabel}
-                  </Button>
-                </Media>
-              </>
+                <Button
+                  variant="secondaryBlack"
+                  onClick={handleBackOnCancelClick}
+                >
+                  {backOrCancelLabel}
+                </Button>
+              </Flex>
             }
           >
             <LabeledInput
