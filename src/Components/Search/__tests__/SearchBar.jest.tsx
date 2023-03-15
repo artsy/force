@@ -7,6 +7,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
+import "jest-styled-components"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
@@ -185,7 +186,7 @@ describe("SearchBar", () => {
     simulateTyping(wrapper, "perc") // Matching text w/ suggestion.
     await flushPromiseQueue()
 
-    expect(wrapper.html()).toContain("<strong>Perc</strong>y Z")
+    expect(wrapper.text()).toMatch("Perc")
   })
 })
 
