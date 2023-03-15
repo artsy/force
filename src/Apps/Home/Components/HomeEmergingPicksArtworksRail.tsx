@@ -86,7 +86,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
         artworksConnection(
           first: 12
           marketingCollectionID: "curators-picks-emerging"
-          input: { sort: "-decayed_merch" }
+          sort: "-decayed_merch"
         ) {
           edges {
             node {
