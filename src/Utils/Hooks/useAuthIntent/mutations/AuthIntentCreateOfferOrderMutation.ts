@@ -1,29 +1,30 @@
 import { commitMutation, Environment, graphql } from "relay-runtime"
 import { AuthIntentMutation } from "./types"
-import { AuthIntentCreateOrderMutation } from "__generated__/AuthIntentCreateOrderMutation.graphql"
+import { AuthIntentCreateOfferOrderMutation } from "__generated__/AuthIntentCreateOfferOrderMutation.graphql"
 
-export const createOrderMutation: AuthIntentMutation = (
+export const createOfferOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
   id: string
 ) => {
   return new Promise((resolve, reject) => {
-    commitMutation<AuthIntentCreateOrderMutation>(relayEnvironment, {
+    commitMutation<AuthIntentCreateOfferOrderMutation>(relayEnvironment, {
       onCompleted: (res, errors) => {
         if (errors !== null) {
           reject(errors)
           return
         }
         const orderID =
-          res.commerceCreateOrderWithArtwork?.orderOrError.order?.internalID
+          res.commerceCreateOfferOrderWithArtwork?.orderOrError.order
+            ?.internalID
 
         resolve(res)
-        window.location.assign(`/orders/${orderID}/shipping`)
+        window.location.assign(`/orders/${orderID}/offer`)
       },
       mutation: graphql`
-        mutation AuthIntentCreateOrderMutation(
-          $input: CommerceCreateOrderWithArtworkInput!
+        mutation AuthIntentCreateOfferOrderMutation(
+          $input: CommerceCreateOfferOrderWithArtworkInput!
         ) @raw_response_type {
-          commerceCreateOrderWithArtwork(input: $input) {
+          commerceCreateOfferOrderWithArtwork(input: $input) {
             orderOrError {
               ... on CommerceOrderWithMutationSuccess {
                 __typename

@@ -27,6 +27,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Router/useRouter"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -52,6 +53,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
   artwork,
 }) => {
   const { relayEnvironment, router, user } = useSystemContext()
+  const { match } = useRouter()
 
   const { t } = useTranslation()
 
@@ -182,8 +184,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
             kind: "artworks",
             objectId: artwork.internalID,
           },
-          // TODO
-          redirectTo: "/",
+          redirectTo: `${match?.location?.pathname}?creating_order=true`,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
@@ -267,6 +268,12 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
             const action = mode === "SignUp" ? "Sign up" : "Log in"
             return `${action} to make an offer`
           },
+          afterAuthAction: {
+            action: "makeOffer",
+            kind: "artworks",
+            objectId: artwork.internalID,
+          },
+          redirectTo: `${match?.location?.pathname}?creating_order=true`,
         },
         analytics: {
           contextModule: ContextModule.artworkSidebar,
