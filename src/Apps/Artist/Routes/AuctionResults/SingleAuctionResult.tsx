@@ -11,6 +11,7 @@ import {
   Image,
 } from "@artsy/palette"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
+import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
@@ -23,7 +24,19 @@ interface SingleAuctionResultProps {
 export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { artist, dateText, title, images } = auctionResult
+  const {
+    artist,
+    images,
+    title,
+    dateText,
+    mediumText,
+    dimensionText,
+    saleDate,
+    organization,
+    location,
+    saleTitle,
+    lotNumber,
+  } = auctionResult
   console.log("[LOGD] auctionResult = ", auctionResult)
 
   const artistSlug = artist?.slug || "banksy" // TODO: FOR TESTING
@@ -114,6 +127,16 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
             </Text>
 
             <Spacer x={[4, 2]} y={[4, 2]} />
+
+            <>
+              <MetadataField label="Medium" value={mediumText} />
+              <MetadataField label="Dimensions" value={dimensionText} />
+              <MetadataField label="Sale Date" value={saleDate} />
+              <MetadataField label="Auction house" value={organization} />
+              <MetadataField label="Sale location" value={location} />
+              <MetadataField label="Sale name" value={saleTitle} />
+              <MetadataField label="Lot" value={lotNumber} />
+            </>
           </>
         </Column>
       </GridColumns>
@@ -126,28 +149,14 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment SingleAuctionResult_auctionResult on AuctionResult {
+        internalID
+        artistID
         artist {
           slug
           name
           href
           isPersonalArtist
           birthday
-        }
-        internalID
-        artistID
-        boughtIn
-        currency
-        categoryText
-        dateText
-        dimensions {
-          height
-          width
-        }
-        dimensionText
-        estimate {
-          display
-          high
-          low
         }
         images {
           thumbnail {
@@ -157,22 +166,15 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
             aspectRatio
           }
         }
-        location
-        mediumText
-        organization
-        performance {
-          mid
-        }
-        currency
-        priceRealized {
-          cents
-          centsUSD
-          display
-          displayUSD
-        }
-        saleDate
-        saleTitle
         title
+        dateText
+        mediumText
+        dimensionText
+        saleDate(format: "MMM DD, YYYY")
+        organization
+        location
+        saleTitle
+        lotNumber
       }
     `,
   }
