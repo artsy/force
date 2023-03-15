@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd5edaeb479df0c81e8e434548940968>>
+ * @generated SignedSource<<7a9e012eaa6b519f64d6da7911c5f6fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,17 +42,24 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "height",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "width",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -103,8 +110,48 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "slug",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isPersonalArtist",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "birthday",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -157,8 +204,8 @@ return {
             "name": "dimensions",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -177,7 +224,7 @@ return {
             "name": "estimate",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -217,15 +264,15 @@ return {
                       {
                         "kind": "Literal",
                         "name": "version",
-                        "value": "square140"
+                        "value": "large"
                       }
                     ],
                     "kind": "ScalarField",
                     "name": "url",
-                    "storageKey": "url(version:\"square140\")"
+                    "storageKey": "url(version:\"large\")"
                   },
-                  (v2/*: any*/),
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -300,7 +347,7 @@ return {
                 "name": "centsUSD",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -331,19 +378,20 @@ return {
             "kind": "ScalarField",
             "name": "title",
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3cff83b4dc730ad38d3ee28d0d45e746",
+    "cacheID": "eae6f4ade31a647d3b5e7de2863aa428",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_SingleAuctionResultQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_SingleAuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...SingleAuctionResult_auctionResult\n    id\n  }\n}\n\nfragment SingleAuctionResult_auctionResult on AuctionResult {\n  id\n  internalID\n  artistID\n  boughtIn\n  currency\n  categoryText\n  dateText\n  dimensions {\n    height\n    width\n  }\n  dimensionText\n  estimate {\n    display\n    high\n    low\n  }\n  images {\n    thumbnail {\n      url(version: \"square140\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  location\n  mediumText\n  organization\n  performance {\n    mid\n  }\n  priceRealized {\n    cents\n    centsUSD\n    display\n    displayUSD\n  }\n  saleDate\n  saleTitle\n  title\n}\n"
+    "text": "query artistRoutes_SingleAuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...SingleAuctionResult_auctionResult\n    id\n  }\n}\n\nfragment SingleAuctionResult_auctionResult on AuctionResult {\n  artist {\n    slug\n    name\n    href\n    isPersonalArtist\n    birthday\n    id\n  }\n  internalID\n  artistID\n  boughtIn\n  currency\n  categoryText\n  dateText\n  dimensions {\n    height\n    width\n  }\n  dimensionText\n  estimate {\n    display\n    high\n    low\n  }\n  images {\n    thumbnail {\n      url(version: \"large\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  location\n  mediumText\n  organization\n  performance {\n    mid\n  }\n  priceRealized {\n    cents\n    centsUSD\n    display\n    displayUSD\n  }\n  saleDate\n  saleTitle\n  title\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9f7e11f8b0fb8b6d36a3fd81edd445c>>
+ * @generated SignedSource<<3e2ceac4249dac9b04621d18d88f199b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SingleAuctionResult_auctionResult$data = {
+  readonly artist: {
+    readonly birthday: string | null;
+    readonly href: string | null;
+    readonly isPersonalArtist: boolean | null;
+    readonly name: string | null;
+    readonly slug: string;
+  } | null;
   readonly artistID: string;
   readonly boughtIn: boolean | null;
   readonly categoryText: string | null;
@@ -26,7 +33,6 @@ export type SingleAuctionResult_auctionResult$data = {
     readonly high: number | null;
     readonly low: number | null;
   } | null;
-  readonly id: string;
   readonly images: {
     readonly thumbnail: {
       readonly aspectRatio: number;
@@ -89,8 +95,47 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "id",
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPersonalArtist",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "birthday",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -203,12 +248,12 @@ return {
                 {
                   "kind": "Literal",
                   "name": "version",
-                  "value": "square140"
+                  "value": "large"
                 }
               ],
               "kind": "ScalarField",
               "name": "url",
-              "storageKey": "url(version:\"square140\")"
+              "storageKey": "url(version:\"large\")"
             },
             (v0/*: any*/),
             (v1/*: any*/),
@@ -324,6 +369,6 @@ return {
 };
 })();
 
-(node as any).hash = "3d44e88f3aa1c3693fe2cb7b700e4004";
+(node as any).hash = "8c9bb18da8391d3ff7b664902856a397";
 
 export default node;
