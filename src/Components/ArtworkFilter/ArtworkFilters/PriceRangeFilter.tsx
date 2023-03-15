@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react"
-import { Flex, LabeledInput, Spacer } from "@artsy/palette"
+import { FC, useEffect, useState, useMemo, FormEvent } from "react"
+import { Flex, LabeledInput, Spacer, Box, Text, Range } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -9,8 +9,6 @@ import styled from "styled-components"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
-import { useMemo, FormEvent } from "react"
-import { Box, Text, Range } from "@artsy/palette"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { debounce, sortBy } from "lodash"
 import { Histogram, HistogramBarEntity } from "./Histogram"
