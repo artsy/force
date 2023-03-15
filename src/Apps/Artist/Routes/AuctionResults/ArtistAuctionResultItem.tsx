@@ -18,6 +18,7 @@ import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Router/useRouter"
 
 export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -26,9 +27,12 @@ export interface Props extends SystemContextProps {
 }
 
 export const ArtistAuctionResultItem: React.FC<Props> = props => {
+  const { router } = useRouter()
+
   const {
     showArtistName,
     auctionResult: {
+      internalID,
       images,
       date_text,
       organization,
@@ -47,8 +51,12 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
   const image = images?.thumbnail?.cropped
   const artistName = artist?.name
 
+  const onAuctionResultClick = () => {
+    router.push(`/auction-results/${internalID}`)
+  }
+
   return (
-    <Box width="100%">
+    <Box width="100%" onClick={onAuctionResultClick}>
       <GridColumns>
         <Column span={[4, 2]}>
           <ResponsiveBox
@@ -162,6 +170,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
+        internalID
         title
         dimension_text: dimensionText
         organization

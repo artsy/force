@@ -8,8 +8,15 @@ import { useSystemContext } from "System/useSystemContext"
 jest.unmock("react-relay")
 
 jest.mock("System/useSystemContext")
+
+const mockRouterPush = jest.fn()
 jest.mock("System/Router/useRouter", () => ({
-  useRouter: () => ({ match: { location: { pathname: "anything" } } }),
+  useRouter: jest.fn(() => ({
+    router: {
+      push: mockRouterPush,
+    },
+    match: { location: { pathname: "anything" } },
+  })),
 }))
 
 describe("ArtistAuctionResultItem", () => {
@@ -66,6 +73,12 @@ describe("ArtistAuctionResultItem", () => {
     expect(screen.queryByText("Andy Warhol")).not.toBeInTheDocument()
   })
 
+  /*   it("navigates to the single auction result page", () => {
+    renderWithRelay(mockResolver, false)
+
+
+  })
+ */
   describe("when showArtistName is true", () => {
     it("renders artist name with the auction result data", () => {
       renderWithRelay(mockResolver, false, { showArtistName: true })
@@ -116,6 +129,7 @@ describe("ArtistAuctionResultItem", () => {
 })
 
 const auctionResult = {
+  // internalID: "auction-result-id",
   title: "Neuschwanstein (Feldmann & Schellmann 372)",
   dimension_text: "62.0 x 91.0 cm",
   organization: "Bonhams",

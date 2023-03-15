@@ -82,6 +82,17 @@ const ConsignRoute = loadable(
   }
 )
 
+const SingleAuctionResultRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResult"
+    ),
+  {
+    resolveComponent: component =>
+      component.SingleAuctionResultFragmentContainer,
+  }
+)
+
 export const artistRoutes: AppRouteConfig[] = [
   {
     path: "/artist/:artistID",
@@ -274,5 +285,21 @@ export const artistRoutes: AppRouteConfig[] = [
         to: "/artist/:artistID",
       }) as any,
     ],
+  },
+  {
+    path: "/auction-results/:auctionResultId",
+    hideNavigationTabs: true,
+    getComponent: () => SingleAuctionResultRoute,
+    onServerSideRender: enableArtistPageCTA,
+    onClientSideRender: () => {
+      SingleAuctionResultRoute.preload()
+    },
+    query: graphql`
+      query artistRoutes_SingleAuctionResultQuery($auctionResultId: String!) {
+        auctionResult(id: $auctionResultId) {
+          ...SingleAuctionResult_auctionResult
+        }
+      }
+    `,
   },
 ]
