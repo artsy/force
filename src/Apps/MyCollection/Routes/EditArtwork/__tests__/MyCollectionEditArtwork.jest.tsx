@@ -89,11 +89,6 @@ const getWrapper = (breakpoint: Breakpoint = "lg") =>
 describe("Edit artwork", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-my-collection-personal-artists-for-web": {
-          flagEnabled: true,
-        },
-      },
       relayEnvironment: createMockEnvironment(),
     }))
   })

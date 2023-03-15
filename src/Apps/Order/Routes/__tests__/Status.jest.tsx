@@ -131,6 +131,59 @@ describe("Status", () => {
       })
     })
 
+    describe("in review", () => {
+      it("should say order submitted and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...testOrder,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
+        expect(page.text()).toContain(
+          "The seller will respond to your offer by Jan 15"
+        )
+        expect(page.text()).not.toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
+        expect(page.getMessageLength()).toBe(1)
+        expect(page.text()).toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).toContain("List price")
+        expect(page.text()).toContain("Your noteAnother note!")
+        expect(page.getMessageLength()).toBe(1)
+      })
+
+      it("should say order submitted and have message to continue to inbox on Eigen", async () => {
+        isEigen = true
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...testOrder,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
+        expect(page.text()).toContain(
+          "The seller will respond to your offer by Jan 15"
+        )
+        expect(page.text()).toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
+        expect(page.getMessageLength()).toBe(1)
+        expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).not.toContain("List price")
+      })
+    })
+
     describe("approved", () => {
       it("should say confirmed and have message box", async () => {
         const wrapper = getWrapper({

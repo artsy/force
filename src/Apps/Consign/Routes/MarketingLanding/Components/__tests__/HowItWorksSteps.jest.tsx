@@ -39,7 +39,7 @@ describe("HowItWorksSteps", () => {
 
     expect(screen.getByText("How it works")).toBeInTheDocument()
     expect(screen.getByText("Submit your artwork")).toBeInTheDocument()
-    expect(screen.getByText("Start Selling")).toBeInTheDocument()
+    expect(screen.getByText("Get Started")).toBeInTheDocument()
   })
 
   describe("Start Selling button", () => {
@@ -49,7 +49,7 @@ describe("HowItWorksSteps", () => {
       const link = screen.getByTestId("start-selling-button")
 
       expect(link).toBeInTheDocument()
-      expect(link).toHaveTextContent("Start Selling")
+      expect(link).toHaveTextContent("Get Started")
       expect(link).toHaveAttribute("href", "/sell/submission")
     })
 
@@ -63,7 +63,7 @@ describe("HowItWorksSteps", () => {
         action: "tappedConsign",
         context_module: "sellHowItWorks",
         context_page_owner_type: "sell",
-        label: "Start Selling",
+        label: "Get Started",
         destination_path: "/sell/submission",
         user_id: "user-id",
       })

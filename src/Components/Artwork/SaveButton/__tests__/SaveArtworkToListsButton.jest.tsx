@@ -56,52 +56,45 @@ describe("SaveArtworkToListsButton", () => {
 
   it("should display `Save` label", () => {
     renderWithRelay({
-      Artwork: () => ({
-        is_saved: false,
-        customCollections: {
-          totalCount: 0,
-        },
-      }),
+      Artwork: () => unsavedArtwork,
     })
 
     expect(screen.getByText("Save")).toBeInTheDocument()
   })
 
-  describe("should display `Unsave` label", () => {
-    it("if artwork was previously saved in `All Saves` list", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          is_saved: true,
-        }),
-      })
-
-      expect(screen.getByText("Unsave")).toBeInTheDocument()
+  describe("Save flow", () => {
+    beforeEach(() => {
+      mockUseSaveArtwork.mockImplementation(args => ({
+        handleSave: () => {
+          args.onSave({
+            action: "Saved Artwork",
+            artwork: actionResult,
+          })
+        },
+      }))
     })
 
-    it("if artwork was previously saved in custom lists", () => {
+    it("should display a toast message", () => {
       renderWithRelay({
-        Artwork: () => ({
-          is_saved: false,
-          customCollections: {
-            totalCount: 2,
-          },
-        }),
+        Artwork: () => unsavedArtwork,
       })
 
-      expect(screen.getByText("Unsave")).toBeInTheDocument()
+      fireEvent.click(screen.getByText("Save"))
+
+      expect(screen.getByText("Artwork saved")).toBeInTheDocument()
+      expect(screen.getByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("if artwork was previously saved in `All Saves` and custom lists", () => {
+    it("should open the modal when `Add to a List` button was pressed", () => {
       renderWithRelay({
-        Artwork: () => ({
-          is_saved: false,
-          customCollections: {
-            totalCount: 2,
-          },
-        }),
+        Artwork: () => unsavedArtwork,
       })
 
-      expect(screen.getByText("Unsave")).toBeInTheDocument()
+      fireEvent.click(screen.getByText("Save"))
+      fireEvent.click(screen.getByText("Add to a List"))
+
+      const modalTitle = "Select lists for this artwork"
+      expect(screen.getByText(modalTitle)).toBeInTheDocument()
     })
   })
 
@@ -111,10 +104,58 @@ describe("SaveArtworkToListsButton", () => {
         handleSave: () => {
           args.onSave({
             action: "Removed Artwork",
-            artwork: defaultArtwork,
+            artwork: actionResult,
           })
         },
       }))
+    })
+
+    describe("should display `Unsave` label", () => {
+      it("if artwork was previously saved in `All Saves` list", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            is_saved: true,
+          }),
+        })
+
+        expect(screen.getByText("Unsave")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            is_saved: false,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByText("Unsave")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            is_saved: false,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByText("Unsave")).toBeInTheDocument()
+      })
+    })
+
+    it("should display a toast message when artwork was unsaved", () => {
+      renderWithRelay({
+        Artwork: () => savedArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Unsave"))
+
+      expect(screen.getByText("Removed from All Saves")).toBeInTheDocument()
     })
 
     it("should unsave artwork from `All Saves` list by default", () => {
@@ -150,7 +191,21 @@ describe("SaveArtworkToListsButton", () => {
   })
 })
 
-const defaultArtwork = {
+const actionResult = {
   slug: "artwork-slug",
   internalID: "artwork-id",
+}
+
+const unsavedArtwork = {
+  is_saved: false,
+  customCollections: {
+    totalCount: 0,
+  },
+}
+
+const savedArtwork = {
+  is_saved: true,
+  customCollections: {
+    totalCount: 0,
+  },
 }

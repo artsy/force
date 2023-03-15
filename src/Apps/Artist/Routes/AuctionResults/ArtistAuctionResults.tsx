@@ -17,22 +17,21 @@ import {
 import { useAuthDialog } from "Components/AuthDialog"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
+import { useRouter } from "System/Router/useRouter"
+import { SystemContext, useSystemContext } from "System/SystemContext"
+import { Jump, useJump } from "Utils/Hooks/useJump"
+import { usePrevious } from "Utils/Hooks/usePrevious"
+import { Media } from "Utils/Responsive"
+import { extractNodes } from "Utils/extractNodes"
+import createLogger from "Utils/logger"
+import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { isEqual } from "lodash"
 import * as React from "react"
 import { useContext, useState } from "react"
 import { Title } from "react-head"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContext, useSystemContext } from "System/SystemContext"
-import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { extractNodes } from "Utils/extractNodes"
-import { Jump, useJump } from "Utils/Hooks/useJump"
-import { usePrevious } from "Utils/Hooks/usePrevious"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionResults_artist.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
@@ -63,9 +62,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 }) => {
   const { user } = useContext(SystemContext)
 
-  const enableUpcomingAuctionsFilter = useFeatureFlag(
-    "cx-upcoming-auctions-filter"
-  )
   const { filters, setFilter } = useAuctionResultsFilterContext()
 
   const selectedFilters = useCurrentlySelectedFiltersForAuctionResults()
@@ -287,7 +283,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           {results.length > 0 ? (
             <LoadingArea isLoading={isLoading}>
-              {enableUpcomingAuctionsFilter ? (
+              {
                 <>
                   {upcomingAuctionResults.length > 0 && (
                     <Box mb={4}>
@@ -335,25 +331,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                     </Box>
                   )}
                 </>
-              ) : (
-                <>
-                  {results.length > 0 && (
-                    <Box mb={2}>
-                      <Join separator={<Spacer y={2} />}>
-                        {results.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
-                </>
-              )}
+              }
             </LoadingArea>
           ) : (
             <Message>
