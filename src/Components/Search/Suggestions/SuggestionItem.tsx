@@ -30,7 +30,7 @@ interface SuggestionItemProps {
   showAuctionResultsButton?: boolean
 }
 
-export const SeeFullResultsSuggestionItem: React.FC<SuggestionItemProps> = ({
+export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
   href,
   isHighlighted,
   query,
