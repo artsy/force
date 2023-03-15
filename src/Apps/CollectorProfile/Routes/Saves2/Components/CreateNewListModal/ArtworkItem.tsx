@@ -18,16 +18,14 @@ export const ArtworkItem: FC<ArtworkItemProps> = ({
     onItemClick(item.internalID)
   }
 
-  const renderSelect = () => {
-    return <SelectArtworkItem isSelected={selected} />
-  }
-
   return (
     <Clickable width="100%" onClick={onClick}>
       <ArtworkGridItemFragmentContainer
         disableRouterLinking
         artwork={item}
-        renderSaveButton={renderSelect}
+        renderSaveButton={() => {
+          return <SelectArtworkItem isSelected={selected} />
+        }}
       />
     </Clickable>
   )

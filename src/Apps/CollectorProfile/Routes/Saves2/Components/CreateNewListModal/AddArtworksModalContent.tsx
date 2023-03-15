@@ -49,7 +49,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
 
   const artworksCount = me?.collection?.artworksConnection?.totalCount ?? 0
 
-  const handleSortChange = option => {
+  const handleSortChange = (option: string) => {
     setSort(option)
     setIsLoading(true)
 
@@ -62,7 +62,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
     })
   }
 
-  const handleItemClick = artworkID => {
+  const handleItemClick = (artworkID: string) => {
     onArtworkClick(artworkID)
   }
 

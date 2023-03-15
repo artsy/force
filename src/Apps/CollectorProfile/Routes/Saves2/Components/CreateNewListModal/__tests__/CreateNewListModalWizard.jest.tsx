@@ -14,28 +14,34 @@ const onCompleteMock = jest.fn()
 
 describe("CreateNewListModalWizard", () => {
   const mockUseSystemContext = useSystemContext as jest.Mock
+  const mockUseMutation = useMutation as jest.Mock
+  const submitMutation = jest.fn()
 
   beforeEach(() => {
+    submitMutation.mockImplementation(() => ({
+      createCollection: {
+        responseOrError: {
+          __typename: "CreateCollectionSuccess",
+          collection: {
+            internalID: "3ea42c63-9518-4716-bc32-2f34e2e711f5",
+            name: "Photography",
+          },
+        },
+      },
+    }))
+
     mockUseSystemContext.mockImplementation(() => {
       return { relayEnvironment: {} }
     })
-    ;(useMutation as jest.Mock).mockImplementation(() => {
+    mockUseMutation.mockImplementation(() => {
       return {
-        submitMutation: () => {
-          return Promise.resolve({
-            createCollection: {
-              responseOrError: {
-                __typename: "CreateCollectionSuccess",
-                collection: {
-                  internalID: "3ea42c63-9518-4716-bc32-2f34e2e711f5",
-                  name: "B&W Photography",
-                },
-              },
-            },
-          })
-        },
+        submitMutation,
       }
     })
+  })
+
+  afterEach(() => {
+    submitMutation.mockClear()
   })
 
   const TestComponent = (props: Partial<CreateNewListModalWizardProps>) => {
@@ -47,10 +53,10 @@ describe("CreateNewListModalWizard", () => {
     )
   }
 
-  it("renders CreateNewListModal if listName is empty", () => {
+  it("renders CreateNewListModal if listName is empty", async () => {
     render(<TestComponent />)
 
-    expect(screen.getByTestId("CreateNewList")).toBeInTheDocument()
+    await screen.findByText("Create a new list")
   })
 
   it("renders AddArtworksModal if listName is not empty", async () => {
@@ -58,7 +64,7 @@ describe("CreateNewListModalWizard", () => {
 
     fireEvent.change(screen.getByRole("textbox"), {
       target: {
-        value: "B&W photography",
+        value: "Photography",
       },
     })
 
@@ -67,6 +73,6 @@ describe("CreateNewListModalWizard", () => {
     })
     fireEvent.click(createButton)
 
-    expect(await screen.findByTestId("AddArtworksModal")).toBeInTheDocument()
+    await screen.findByText("Photography created. Add saved works to the list.")
   })
 })

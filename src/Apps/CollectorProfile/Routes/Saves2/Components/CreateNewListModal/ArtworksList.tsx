@@ -16,7 +16,7 @@ const ArtworksList: FC<ArtworksListProps> = ({
   selectedIds,
   me,
 }) => {
-  const handleItemClick = artworkID => {
+  const handleItemClick = (artworkID: string) => {
     onItemClick(artworkID)
   }
 

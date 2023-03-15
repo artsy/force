@@ -31,7 +31,6 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
   return (
     <ModalDialog
       m={0}
-      data-testid="AddArtworksModal"
       dialogProps={{
         width: ["100%", 700],
         height: ["100%", "auto"],
