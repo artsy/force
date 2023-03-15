@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac008139a2dd606d3fe596d879f83ab1>>
+ * @generated SignedSource<<67f538ee31f34d6a1364a352713f07fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,14 @@ export type createCollectionInput = {
   clientMutationId?: string | null;
   name: string;
 };
-export type CreateNewListModalMutation$variables = {
+export type useCreateCollectionMutation$variables = {
   input: createCollectionInput;
 };
-export type CreateNewListModalMutation$data = {
+export type useCreateCollectionMutation$data = {
   readonly createCollection: {
     readonly responseOrError: {
       readonly collection?: {
+        readonly artworksCount: number;
         readonly internalID: string;
         readonly name: string;
       } | null;
@@ -29,9 +30,9 @@ export type CreateNewListModalMutation$data = {
     } | null;
   } | null;
 };
-export type CreateNewListModalMutation = {
-  response: CreateNewListModalMutation$data;
-  variables: CreateNewListModalMutation$variables;
+export type useCreateCollectionMutation = {
+  response: useCreateCollectionMutation$data;
+  variables: useCreateCollectionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -64,6 +65,13 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artworksCount",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -93,7 +101,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreateNewListModalMutation",
+    "name": "useCreateCollectionMutation",
     "selections": [
       {
         "alias": null,
@@ -123,7 +131,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -131,7 +140,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -146,7 +155,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CreateNewListModalMutation",
+    "name": "useCreateCollectionMutation",
     "selections": [
       {
         "alias": null,
@@ -184,6 +193,7 @@ return {
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -198,7 +208,7 @@ return {
                 "type": "CreateCollectionSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -208,16 +218,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "07c9951a4d48e03ac90215cee0529e91",
+    "cacheID": "36c54d518b8cabce78fd0dbc275f7abd",
     "id": null,
     "metadata": {},
-    "name": "CreateNewListModalMutation",
+    "name": "useCreateCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateNewListModalMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0aff09746bd0bfde046f4c0edecd2034";
+(node as any).hash = "597ce93e5e4bd561fc2f21cf4e0e8de0";
 
 export default node;
