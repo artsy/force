@@ -43,16 +43,18 @@ To access the review app, you must create a DNS name for it. The name must match
 1. Under `Name` enter `awesome-feature`
 1. Under `Target` say `nginx-staging.artsy.net`
 1. Under `Proxy status` toggle to `Proxied`
+1. Under `Record Attributes > Comment` add the PR that created the review app, e.g. https://github.com/artsy/force/pull/123
+1. Under `Record Attributes > Tags` add the prefix of your team, e.g. `FX`
 1. Hit `Save`
 1. DNS will propagate and after a few minutes the review app will be available via `awesome-feature.artsy.net`
 
 ### Setting ENV variables on the review app
 
-To set an ENV variable, run: 
+To set an ENV variable, run:
 
 ```sh
 hokusai review_app env set <my-review-app-name> SOME_ENV_VAR=true
-hokusai review_app refresh <my-review-app-name> 
+hokusai review_app refresh <my-review-app-name>
 ```
 
 ### Updating the review app
