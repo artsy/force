@@ -10,7 +10,7 @@ import { BaseLayoutProps } from "Apps/Components/Layouts"
 export const LayoutDefault: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
-      <AppToasts accomodateNav />
+      <AppToasts />
 
       <Flex
         width="100%"

@@ -34,7 +34,7 @@ describe("SaveArtworkToListsButton", () => {
 
       return (
         <MockBoot>
-          <AppToasts accomodateNav={false} />
+          <AppToasts />
 
           <ManageArtworkForSavesProvider savedListId={savedListId}>
             <SaveArtworkToListsButtonFragmentContainer
