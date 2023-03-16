@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd858c05c5d9e3559b96b68be0059c70>>
+ * @generated SignedSource<<b48dffdcb98c3e2be808f3778abf36d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,6 @@ export type homeRoutes_HomeQuery$variables = {};
 export type homeRoutes_HomeQuery$data = {
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
-  } | null;
-  readonly homePage: {
-    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_homePage">;
   } | null;
 };
 export type homeRoutes_HomeQuery = {
@@ -33,41 +30,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "subtitle",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v6 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -76,22 +38,29 @@ v6 = {
     "large_rectangle"
   ]
 },
-v7 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v8 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v9 = [
-  (v5/*: any*/)
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = [
+  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -100,22 +69,6 @@ return {
     "metadata": null,
     "name": "homeRoutes_HomeQuery",
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "HomePage",
-        "kind": "LinkedField",
-        "name": "homePage",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "HomeApp_homePage"
-          }
-        ],
-        "storageKey": null
-      },
       {
         "alias": "featuredEventsOrderedSet",
         "args": (v0/*: any*/),
@@ -143,67 +96,6 @@ return {
     "name": "homeRoutes_HomeQuery",
     "selections": [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "HomePage",
-        "kind": "LinkedField",
-        "name": "homePage",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "platform",
-                "value": "DESKTOP"
-              }
-            ],
-            "concreteType": "HomePageHeroUnit",
-            "kind": "LinkedField",
-            "name": "heroUnits",
-            "plural": true,
-            "selections": [
-              (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "backgroundImageURL",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "heading",
-                "storageKey": null
-              },
-              (v2/*: any*/),
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "linkText",
-                "storageKey": null
-              },
-              (v4/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "creditLine",
-                "storageKey": null
-              },
-              (v5/*: any*/)
-            ],
-            "storageKey": "heroUnits(platform:\"DESKTOP\")"
-          }
-        ],
-        "storageKey": null
-      },
-      {
         "alias": "featuredEventsOrderedSet",
         "args": (v0/*: any*/),
         "concreteType": "OrderedSet",
@@ -229,10 +121,34 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "subtitle",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "href",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -249,7 +165,7 @@ return {
                             "name": "height",
                             "value": 63
                           },
-                          (v6/*: any*/),
+                          (v1/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -261,8 +177,8 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
-                          (v8/*: any*/),
+                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -288,7 +204,7 @@ return {
                             "name": "height",
                             "value": 297
                           },
-                          (v6/*: any*/),
+                          (v1/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -300,51 +216,51 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
-                          (v8/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": "cropped(height:297,version:[\"main\",\"wide\",\"large_rectangle\"],width:445)"
                       }
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
+                "selections": (v5/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
+                "selections": (v5/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"529939e2275b245e290004a0\")"
       }
     ]
   },
   "params": {
-    "cacheID": "3560a6bc20950eac6f4dd1eb08634725",
+    "cacheID": "e449ea0c795d2ed6121f6c97a9a21395",
     "id": null,
     "metadata": {},
     "name": "homeRoutes_HomeQuery",
     "operationKind": "query",
-    "text": "query homeRoutes_HomeQuery {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n"
+    "text": "query homeRoutes_HomeQuery {\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f030323f431f45ee405e86ffac831e6c";
+(node as any).hash = "2ab24d1aa89562327c8c61fed485bfc5";
 
 export default node;
