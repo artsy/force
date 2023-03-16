@@ -56,7 +56,8 @@ describe("CreateNewListModalWizard", () => {
   it("renders CreateNewListModal if listName is empty", async () => {
     render(<TestComponent />)
 
-    await screen.findByText("Create a new list")
+    const title = await screen.findByText("Create a new list")
+    expect(title).toBeInTheDocument()
   })
 
   it("renders AddArtworksModal if listName is not empty", async () => {
@@ -73,6 +74,9 @@ describe("CreateNewListModalWizard", () => {
     })
     fireEvent.click(createButton)
 
-    await screen.findByText("Photography created. Add saved works to the list.")
+    const title = await screen.findByText(
+      "Photography created. Add saved works to the list."
+    )
+    expect(title).toBeInTheDocument()
   })
 })

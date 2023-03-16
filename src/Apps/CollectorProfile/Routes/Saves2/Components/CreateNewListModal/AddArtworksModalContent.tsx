@@ -85,7 +85,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
       <Spacer y={2} />
 
       <ArtworksListFragmentContainer
-        me={me}
+        artworks={me.collection?.artworksConnection!}
         onItemClick={handleItemClick}
         selectedIds={selectedArtworkIds}
       />
@@ -101,11 +101,10 @@ const AddArtworksModalContentRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
         ) {
-        ...ArtworksList_me @arguments(sort: $sort)
-
         collection(id: "saved-artwork") {
           artworksConnection(first: 30, sort: $sort) {
             totalCount
+            ...ArtworksList_artworks
           }
         }
       }
@@ -120,7 +119,7 @@ const AddArtworksModalContentRefetchContainer = createRefetchContainer(
   `
 )
 
-export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQueryRenderProps> = containerProps => {
+export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQueryRenderProps> = props => {
   return (
     <SystemQueryRenderer<AddArtworksModalContentQuery>
       placeholder={<ContentPlaceholder />}
@@ -131,20 +130,20 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
           }
         }
       `}
-      render={({ props, error }) => {
+      render={({ props: relayProps, error }) => {
         if (error) {
           console.error(error)
           return null
         }
 
-        if (!props?.me) {
+        if (!relayProps?.me) {
           return <ContentPlaceholder />
         }
 
         return (
           <AddArtworksModalContentRefetchContainer
-            me={props.me}
-            {...containerProps}
+            me={relayProps.me}
+            {...props}
           />
         )
       }}
@@ -153,10 +152,16 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
 }
 
 const ContentPlaceholder: FC = () => {
+  const { t } = useTranslation()
+
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <SkeletonText variant={["xs", "sm"]}>87 Artworks</SkeletonText>
+        <SkeletonText variant={["xs", "sm"]}>
+          {t("collectorSaves.addArtworksModal.artworksCount", {
+            count: 127,
+          })}
+        </SkeletonText>
 
         <SortFilter
           sortOptions={SORTS}
@@ -168,7 +173,7 @@ const ContentPlaceholder: FC = () => {
       <Spacer y={2} />
 
       <GridColumns>
-        {[...Array(9)].map((el, index) => {
+        {[...Array(9)].map((_, index) => {
           return (
             <Column span={[6, 4]} key={index}>
               <SkeletonBox height={200} />

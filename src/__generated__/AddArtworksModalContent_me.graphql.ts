@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52442561c145719e163dd6331034ce63>>
+ * @generated SignedSource<<8112f4131d135125a154f91443d4a870>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,9 @@ export type AddArtworksModalContent_me$data = {
   readonly collection: {
     readonly artworksConnection: {
       readonly totalCount: number | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_artworks">;
     } | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_me">;
   readonly " $fragmentType": "AddArtworksModalContent_me";
 };
 export type AddArtworksModalContent_me$key = {
@@ -24,13 +24,7 @@ export type AddArtworksModalContent_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModalContent_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Variable",
-  "name": "sort",
-  "variableName": "sort"
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": "POSITION_DESC",
@@ -42,13 +36,6 @@ return {
   "metadata": null,
   "name": "AddArtworksModalContent_me",
   "selections": [
-    {
-      "args": [
-        (v0/*: any*/)
-      ],
-      "kind": "FragmentSpread",
-      "name": "ArtworksList_me"
-    },
     {
       "alias": null,
       "args": [
@@ -71,7 +58,11 @@ return {
               "name": "first",
               "value": 30
             },
-            (v0/*: any*/)
+            {
+              "kind": "Variable",
+              "name": "sort",
+              "variableName": "sort"
+            }
           ],
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
@@ -84,6 +75,11 @@ return {
               "kind": "ScalarField",
               "name": "totalCount",
               "storageKey": null
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ArtworksList_artworks"
             }
           ],
           "storageKey": null
@@ -95,8 +91,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "25cae15bd39a287103fdd8f1deb47349";
+(node as any).hash = "b6e1dd03a4d872a2dab27966ce8e3351";
 
 export default node;
