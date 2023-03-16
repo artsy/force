@@ -32,13 +32,13 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
             ... on ArtworksCollectionsBatchUpdateSuccess {
               addedToCollections {
                 internalID
-                artworksCount
                 default
+                ...SavesItem_item
               }
               removedFromCollections {
                 internalID
-                artworksCount
                 default
+                ...SavesItem_item
               }
             }
             ... on ArtworksCollectionsBatchUpdateFailure {
