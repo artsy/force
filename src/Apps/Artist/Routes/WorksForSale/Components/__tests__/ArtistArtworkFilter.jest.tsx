@@ -73,26 +73,4 @@ describe("ArtistArtworkFilter", () => {
     expect(option).toBeInTheDocument()
     expect(option).toHaveValue("-decayed_merch")
   })
-
-  it("should display trending sort for experiment variant", () => {
-    const { renderWithRelay } = getWrapper({
-      context: {
-        featureFlags: {
-          "trending-sort-for-artist-artwork-grids": {
-            flagEnabled: true,
-            variant: {
-              enabled: true,
-              name: "experiment",
-            },
-          },
-        },
-      },
-    })
-
-    renderWithRelay()
-    const option = screen.getByRole("option", { name: "Recommended" })
-
-    expect(option).toBeInTheDocument()
-    expect(option).toHaveValue("-decayed_merch")
-  })
 })
