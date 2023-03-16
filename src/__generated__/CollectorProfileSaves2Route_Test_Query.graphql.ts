@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7250a1bd98dc144947c1814275d33ab8>>
+ * @generated SignedSource<<8a312c6dd140a0051434f17d954a590b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -136,6 +136,11 @@ v6 = [
     "kind": "Literal",
     "name": "saves",
     "value": true
+  },
+  {
+    "kind": "Literal",
+    "name": "sort",
+    "value": "CREATED_AT_DESC"
   }
 ],
 v7 = {
@@ -338,7 +343,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
+            "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"CREATED_AT_DESC\")"
           },
           {
             "alias": "otherSaves",
@@ -356,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "861d0644216525cb3ab0d2cc19b1a095",
+    "cacheID": "f8a3843edf07ebce7836728b83c6e14e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -417,7 +422,7 @@ return {
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

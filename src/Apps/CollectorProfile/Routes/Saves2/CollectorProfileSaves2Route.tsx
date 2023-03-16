@@ -86,6 +86,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
           first: 30
           default: false
           saves: true
+          sort: CREATED_AT_DESC
         )
           @connection(
             key: "CollectorProfileSaves2Route_otherSaves"
