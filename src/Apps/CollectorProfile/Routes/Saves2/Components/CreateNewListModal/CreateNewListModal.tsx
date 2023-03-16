@@ -23,15 +23,15 @@ export interface CreateNewListValues {
   name: string
 }
 
-export interface NewAddedList {
-  id: string
+export interface ArtworkList {
+  internalID: string
   name: string
 }
 
 interface CreateNewListModalProps {
   artwork?: ArtworkEntity
   onClose: () => void
-  onComplete: (data: NewAddedList) => void
+  onComplete: (data: ArtworkList) => void
   onBackClick?: () => void
 }
 
@@ -83,7 +83,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       })
 
       onComplete({
-        id: createCollection?.responseOrError?.collection?.internalID!,
+        internalID: createCollection?.responseOrError?.collection?.internalID!,
         name: values.name,
       })
     } catch (error) {
