@@ -11,9 +11,6 @@ interface MyCollectionArtworkRequestPriceEstimateSectionProps {
 export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollectionArtworkRequestPriceEstimateSectionProps> = ({
   artwork,
 }) => {
-  const isP1Artist = artwork.artist?.targetSupply?.isP1
-  const isAlreadySubmitted = artwork.consignmentSubmission?.displayText
-
   if (artwork.hasPriceEstimateRequest) {
     return (
       <>
@@ -31,7 +28,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
     )
   }
 
-  if (!isP1Artist || isAlreadySubmitted) {
+  if (!artwork.isPriceEstimateRequestable) {
     return null
   }
 
@@ -65,16 +62,9 @@ export const MyCollectionArtworkRequestPriceEstimateSectionFragmentContainer = c
   {
     artwork: graphql`
       fragment MyCollectionArtworkRequestPriceEstimateSection_artwork on Artwork {
-        artist {
-          targetSupply {
-            isP1
-          }
-        }
         hasPriceEstimateRequest
+        isPriceEstimateRequestable
         internalID
-        consignmentSubmission {
-          displayText
-        }
       }
     `,
   }
