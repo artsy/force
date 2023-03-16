@@ -17,8 +17,8 @@ export const CreateNewListModalWizard: FC<CreateNewListModalWizardProps> = ({
     setArtworkList(list)
   }
 
-  const handleAddArtworksComplete = (list: ArtworkList) => {
-    onComplete(list)
+  const handleAddArtworksComplete = () => {
+    onComplete(artworkList!)
   }
 
   if (artworkList !== null) {

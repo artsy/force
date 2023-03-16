@@ -7,7 +7,7 @@ import createLogger from "Utils/logger"
 import { ArtworkList } from "./CreateNewListModal"
 
 interface AddArtworksModalProps {
-  onComplete: (artworkList: ArtworkList) => void
+  onComplete: () => void
   artworkList: ArtworkList
 }
 
@@ -42,7 +42,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
         },
       })
 
-      onComplete(artworkList)
+      onComplete()
     } catch (error) {
       logger.error(error)
 
@@ -71,7 +71,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
         height: ["100%", "auto"],
         maxHeight: [null, 800],
       }}
-      onClose={() => onComplete(artworkList)}
+      onClose={onComplete}
       title={t("collectorSaves.addArtworksModal.modalTitle", {
         value: artworkList.name,
       })}

@@ -24,9 +24,8 @@ const ArtworksList: FC<ArtworksListProps> = ({
     <GridColumns>
       {extractNodes(artworks).map(artwork => {
         return (
-          <Column span={[6, 4]}>
+          <Column span={[6, 4]} key={artwork.internalID}>
             <ArtworkItem
-              key={artwork.internalID}
               item={artwork}
               selected={selectedIds.includes(artwork.internalID)}
               onItemClick={handleItemClick}

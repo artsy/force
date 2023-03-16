@@ -24,9 +24,10 @@ describe("AddArtworksModal", () => {
     }
     render(<AddArtworksModal artworkList={list} onComplete={onComplete} />)
 
-    expect(
-      screen.getByText("Sculpture created. Add saved works to the list.")
-    ).toBeInTheDocument()
+    const title = screen.getByText(
+      "Sculpture created. Add saved works to the list."
+    )
+    expect(title).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
 

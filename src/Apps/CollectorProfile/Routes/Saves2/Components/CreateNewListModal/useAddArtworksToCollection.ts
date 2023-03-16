@@ -13,18 +13,8 @@ export const useAddArtworksToCollection = () => {
             ... on ArtworksCollectionsBatchUpdateSuccess {
               addedToCollections {
                 internalID
-                artworksCount
                 default
-
-                artworksConnection(first: 4) {
-                  edges {
-                    node {
-                      image {
-                        url(version: "square")
-                      }
-                    }
-                  }
-                }
+                ...SavesItem_item
               }
             }
             ... on ArtworksCollectionsBatchUpdateFailure {
