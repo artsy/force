@@ -107,7 +107,7 @@
   },
   "collectorSaves": {
     "addArtworksModal": {
-      "modalTitle": "{{value}} created.\nAdd saved works to the list.",
+      "modalTitle": "{{value}} created. Add saved works to the list.",
       "artworksSelected_one": "{{count}} artwork selected",
       "artworksSelected_other": "{{count}} artworks selected",
       "artworksCount_one": "{{count}} Artwork:",

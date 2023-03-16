@@ -2,7 +2,7 @@ import { FC, useState } from "react"
 import { CreateNewListModal, NewAddedList } from "./CreateNewListModal"
 import { AddArtworksModal } from "./AddArtworksModal"
 
-interface CreateNewListModalWizardProps {
+export interface CreateNewListModalWizardProps {
   onComplete: () => void
   onClose: () => void
 }

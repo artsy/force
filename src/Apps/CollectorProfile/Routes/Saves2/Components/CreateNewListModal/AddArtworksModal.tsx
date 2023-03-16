@@ -1,16 +1,13 @@
 import { FC, useState } from "react"
-import { Flex, Text, ModalDialog, Spacer, Button } from "@artsy/palette"
-import { SortFilter } from "Components/SortFilter"
-import { ArtworksList, TEMP_ARTWORKS } from "./ArtworksList"
+import { Flex, Text, ModalDialog, Button } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
+import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
 
 interface AddArtworksModalProps {
   onClose: () => void
   onComplete: () => void
   listName: string
 }
-
-const SORTS = [{ text: "Recently Saved", value: "-position" }]
 
 export const AddArtworksModal: FC<AddArtworksModalProps> = ({
   listName,
@@ -23,7 +20,7 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
     onClose()
   }
 
-  const handleItemClick = artworkID => {
+  const handleArtworkClick = (artworkID: string) => {
     if (selectedArtworkIds.includes(artworkID)) {
       setSelectedArtworkIds(selectedArtworkIds.filter(id => id !== artworkID))
     } else {
@@ -55,28 +52,10 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
         </Flex>
       }
     >
-      <>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text variant={["xs", "sm"]} fontWeight="bold">
-            {t("collectorSaves.addArtworksModal.artworksCount", {
-              count: TEMP_ARTWORKS.length,
-            })}
-          </Text>
-
-          <SortFilter
-            sortOptions={SORTS}
-            selected={SORTS[0].value}
-            onSort={() => {}}
-          />
-        </Flex>
-
-        <Spacer y={2} />
-
-        <ArtworksList
-          selectedIds={selectedArtworkIds}
-          onItemClick={handleItemClick}
-        />
-      </>
+      <AddArtworksModalContentQueryRender
+        selectedArtworkIds={selectedArtworkIds}
+        onArtworkClick={handleArtworkClick}
+      />
     </ModalDialog>
   )
 }
