@@ -35,7 +35,7 @@ const waysWeSellImage2 = resized(
 )
 
 const waysWeSellImage3 = resized(
-  "https://files.artsy.net/images/ways-we-sell-online-storefront-swa-landing-page.jpg",
+  "https://files.artsy.net/images/ways-we-sell-online-marketplace-swa-landing-page.jpg",
   { width: IMAGE_WIDTH, height: 358, quality: 100 }
 )
 
