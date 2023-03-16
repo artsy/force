@@ -1,7 +1,7 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { DollarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/DollarCircleIcon"
 import { StarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/StarCircleIcon"
-import { PlanetCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PlanetCircleIcon"
+import { GlobeNetworkCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/GlobeNetworkCircleIcon"
 
 import { ReactElement } from "react"
 import { Media } from "Utils/Responsive"
@@ -41,10 +41,10 @@ const reasons = [
     icon: (
       <>
         <Media greaterThan="xs">
-          <PlanetCircleIcon height={50} width={50} />
+          <GlobeNetworkCircleIcon height={50} width={50} />
         </Media>
         <Media at="xs">
-          <PlanetCircleIcon height={30} width={30} />
+          <GlobeNetworkCircleIcon height={30} width={30} />
         </Media>
       </>
     ),
