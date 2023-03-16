@@ -85,7 +85,7 @@ describe("with private sale orders", () => {
     )
     expect(conditionsPage).toHaveAttribute(
       "href",
-      "/page/private-sales-conditions-of-sale"
+      "/private-sales-conditions-of-sale"
     )
   })
 
