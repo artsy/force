@@ -43,7 +43,7 @@ const makeContentCard = ({
   }
 }
 
-const fallbackData = [
+const FALLBACK_DATA = [
   {
     credit:
       "Yuan Yuan, The Unstable Fibonacci Sequence, 2022. Molly Green, Unfix, 2022. Tidawhitney Lek, Broken Glasses, 2022. Jacopo Pagin, Hide Me! with Transparency, 2022.",
@@ -71,7 +71,7 @@ const fallbackData = [
 ]
 
 export const FallbackCards = () => {
-  const cards = fallbackData.map(data => makeContentCard(data))
+  const cards = FALLBACK_DATA.map(data => makeContentCard(data))
 
   return (
     <HeroCarousel>
