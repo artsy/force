@@ -4,7 +4,6 @@ import { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "Components/ErrorPage"
-import { MinimalNavBar } from "Components/NavBar/MinimalNavBar"
 import { RouterState } from "found"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,7 +12,6 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
 import { getENV } from "Utils/getENV"
@@ -101,35 +99,31 @@ const OrderApp: FC<OrderAppProps> = props => {
 
   return (
     <Box>
-      <MinimalNavBar to="/" isBlank={isModal}>
-        <Title>Checkout | Artsy</Title>
-        <Meta
-          name="viewport"
-          content={
-            isEigen
-              ? "width=device-width, user-scalable=no"
-              : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-          }
+      <Title>Checkout | Artsy</Title>
+      <Meta
+        name="viewport"
+        content={
+          isEigen
+            ? "width=device-width, user-scalable=no"
+            : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+        }
+      />
+      {!isEigen && !isModal && renderZendeskScript()}
+      <SafeAreaContainer>
+        <OrderPaymentContextProvider>
+          <Elements stripe={stripePromise}>
+            <AppContainer>{children}</AppContainer>
+          </Elements>
+        </OrderPaymentContextProvider>
+      </SafeAreaContainer>
+      {!isModal && (
+        <StickyFooterWithInquiry
+          orderType={order.mode}
+          orderSource={order.source}
+          artworkID={artwork?.slug!}
         />
-        {!isEigen && !isModal && renderZendeskScript()}
-        <SafeAreaContainer>
-          <OrderPaymentContextProvider>
-            <Elements stripe={stripePromise}>
-              <AppContainer>
-                <HorizontalPadding>{children}</HorizontalPadding>
-              </AppContainer>
-            </Elements>
-          </OrderPaymentContextProvider>
-        </SafeAreaContainer>
-        {!isModal && (
-          <StickyFooterWithInquiry
-            orderType={order.mode}
-            orderSource={order.source}
-            artworkID={artwork?.slug!}
-          />
-        )}
-        <ConnectedModalDialog />
-      </MinimalNavBar>
+      )}
+      <ConnectedModalDialog />
     </Box>
   )
 }

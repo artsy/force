@@ -668,19 +668,4 @@ describe("OrderApp", () => {
       "Sorry, the page you were looking for doesn’t exist at this URL."
     )
   })
-
-  it("redirects user to home page when Artsy logo is clicked", () => {
-    const props = getProps({
-      location: "/order/123/review",
-    })
-    const page = getWrapper({
-      context: { isEigen: false },
-      props: { ...props, order: UntouchedBuyOrder },
-    })
-
-    const logo = page.find(`[data-test="logoLink"]`).first()
-    logo.simulate("click")
-
-    expect(window.location.pathname).toBe("/")
-  })
 })
