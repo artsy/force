@@ -77,8 +77,7 @@ describe("SavedSearchAlertEditForm", () => {
           ...SavedSearchAlertEditForm_viewer
         }
         me {
-          ...SavedSearchAlertEditForm_me
-            @arguments(savedSearchId: "id", withAggregations: true)
+          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
         }
         artistsConnection(slugs: $artistIDs) {
           ...SavedSearchAlertEditForm_artistsConnection
