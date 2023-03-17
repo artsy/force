@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34e762414fec234b541fda52eba0012f>>
+ * @generated SignedSource<<10d48cb13c1f62a0287f148a25c3aad1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -357,13 +357,6 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "isInAuction",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
                                     "name": "imageTitle",
                                     "storageKey": null
                                   },
@@ -435,6 +428,13 @@ return {
                                     "args": null,
                                     "kind": "ScalarField",
                                     "name": "date",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "isInAuction",
                                     "storageKey": null
                                   },
                                   {
@@ -827,12 +827,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20ff8fc1a7ce372aefada2e8ab975430",
+    "cacheID": "5ecb809e319dc9869ca496e34e8206eb",
     "id": null,
     "metadata": {},
     "name": "ShowsCurrentShowsQuery",
     "operationKind": "query",
-    "text": "query ShowsCurrentShowsQuery(\n  $first: Int\n  $after: String\n) {\n  viewer {\n    ...ShowsCurrentShows_viewer_2HEEH6\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  isInAuction\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShowsCurrentShow_show on Show {\n  name\n  href\n  startAt(format: \"MMM D\")\n  endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  location {\n    city\n    id\n  }\n  artworksConnection(first: 15) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCurrentShows_viewer_2HEEH6 on Viewer {\n  showsConnection(first: $first, after: $after, displayable: true, atAFair: false, sort: END_AT_ASC, status: CURRENT) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        internalID\n        ...ShowsCurrentShow_show\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query ShowsCurrentShowsQuery(\n  $first: Int\n  $after: String\n) {\n  viewer {\n    ...ShowsCurrentShows_viewer_2HEEH6\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  isInAuction\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShowsCurrentShow_show on Show {\n  name\n  href\n  startAt(format: \"MMM D\")\n  endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  location {\n    city\n    id\n  }\n  artworksConnection(first: 15) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCurrentShows_viewer_2HEEH6 on Viewer {\n  showsConnection(first: $first, after: $after, displayable: true, atAFair: false, sort: END_AT_ASC, status: CURRENT) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        internalID\n        ...ShowsCurrentShow_show\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03b1027f51fc441dbcbbec33d58141a4>>
+ * @generated SignedSource<<5a8cb950cf951a0f4bbcc5e201223665>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,6 @@ export type GridItem_artwork$data = {
   } | null;
   readonly imageTitle: string | null;
   readonly internalID: string;
-  readonly isInAuction: boolean | null;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "GridItem_artwork";
@@ -58,13 +57,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
       "storageKey": null
     },
     {
@@ -159,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "33cd633accaf0d05bf16c31ac9567218";
+(node as any).hash = "4f2eeda7d15a4f217dca36ab130d55a6";
 
 export default node;

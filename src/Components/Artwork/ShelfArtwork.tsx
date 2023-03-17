@@ -18,7 +18,6 @@ export interface ShelfArtworkProps
   lazyLoad?: boolean
   onClick?: () => void
   width?: number[]
-  savedListId?: string
 }
 
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
@@ -29,7 +28,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   onClick,
   width = [150, 175, 200],
   children,
-  savedListId,
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
@@ -44,7 +42,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
 
   return (
-    <ManageArtworkForSavesProvider savedListId={savedListId}>
+    <ManageArtworkForSavesProvider>
       <RouterLink
         to={artwork?.href}
         onClick={onClick}
@@ -93,7 +91,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           showSaveButton
           disableRouterLinking
           maxWidth="100%"
-          enableSaveButtonForLists={!artwork.isInAuction}
         />
 
         {children}
