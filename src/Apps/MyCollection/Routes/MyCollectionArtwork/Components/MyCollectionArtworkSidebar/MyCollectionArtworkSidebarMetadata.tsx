@@ -106,8 +106,12 @@ export const MetadataField = ({
   }
 
   return (
-    <Box mb={[1, 0.5]} display="flex">
-      <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
+    <Box
+      mb={[1, 0.5]}
+      display="flex" /* display="flex"
+      justifyContent={"space-between"} */
+    >
+      <Text color="black60" variant="sm" minWidth={[105, 105, 190]} mr={2}>
         {label}
       </Text>
 

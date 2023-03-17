@@ -9,6 +9,7 @@ import {
   ResponsiveBox,
   NoImageIcon,
   Image,
+  Join,
 } from "@artsy/palette"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
 import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
@@ -42,7 +43,7 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
 
   console.log("[LOGD] auctionResult = ", auctionResult)
 
-  const artistSlug = artist?.slug || "banksy" // TODO: FOR TESTING
+  const artistSlug = artist?.slug
 
   return (
     <>
@@ -55,7 +56,7 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
             <ChevronIcon height={14} width={14} direction="left" />
             <Media greaterThanOrEqual="sm">
               <Text variant="xs" pl={1}>
-                Back to {artist?.name || "Banksy" /* TODO: FOR TESTING */}
+                Back to {artist?.name}
               </Text>
             </Media>
           </Flex>
@@ -63,7 +64,7 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
       </Flex>
 
       <GridColumns gridRowGap={[2, null]}>
-        <Column span={5} mr={[0, 4]}>
+        <Column span={4} mr={[0, 4]}>
           <Box position="relative" bg="white100">
             {images?.thumbnail?.url ? (
               <ResponsiveBox
@@ -125,52 +126,114 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
           </Box>
         </Column>
 
-        <Column span={7}>
+        <Column span={4}>
           <Box>
-            <Text as="h1" variant="lg-display">
-              {artist?.isPersonalArtist ? (
-                artist.name
-              ) : (
-                <RouterLink textDecoration="none" to={"artist!.href"}>
-                  {artist?.name}
-                </RouterLink>
-              )}
-            </Text>
-            <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
-              <i>{title?.trim()}</i>
-              {dateText &&
-                dateText.replace(/\s+/g, "").length > 0 &&
-                ", " + dateText}
-            </Text>
-            <Text variant="xs" color="black60">
-              /Auction date/ - {organization}
-            </Text>
+            <Join separator={<Spacer y={[2, 4]} />}>
+              <AuctionHeader
+                props={{
+                  isPersonalArtist: artist?.isPersonalArtist,
+                  artistName: artist?.name ?? "",
+                  href: artist?.href ?? "/",
+                  title,
+                  dateText,
+                  organization,
+                }}
+              />
 
-            <Spacer x={[4, 2]} y={[4, 2]} />
+              <AuctionPrices props={{ priceEstimate: estimate?.display }} />
 
-            <Text variant="xs">Pre-sale Estimate</Text>
-            <Text variant="lg-display">{estimate?.display}</Text>
-            <Text variant="xs" color="black60">
-              {estimate?.display}
-            </Text>
-
-            <Spacer x={[4, 2]} y={[4, 2]} />
-            <>
-              <MetadataField label="Medium" value={mediumText} />
-              <MetadataField label="Dimensions" value={dimensionText} />
-              <MetadataField label="Sale Date" value={saleDate} />
-              <MetadataField label="Auction house" value={organization} />
-              <MetadataField label="Sale location" value={location} />
-              <MetadataField label="Sale name" value={saleTitle} />
-              <MetadataField label="Lot" value={lotNumber} />
-            </>
+              <Box>
+                <AuctionMetaData
+                  props={{
+                    mediumText,
+                    dimensionText,
+                    saleDate,
+                    organization,
+                    location,
+                    saleTitle,
+                    lotNumber,
+                  }}
+                />
+              </Box>
+            </Join>
           </Box>
         </Column>
+
+        {/* this column is needed to make sure the right side of the pafe is always empty */}
+        <Column span={4}></Column>
       </GridColumns>
     </>
   )
 }
 
+const AuctionHeader = ({ props }) => {
+  const {
+    isPersonalArtist,
+    artistName,
+    href,
+    title,
+    dateText,
+    organization,
+  } = props
+  return (
+    <Box>
+      <Text as="h1" variant="lg-display">
+        {isPersonalArtist ? (
+          artistName
+        ) : (
+          <RouterLink textDecoration="none" to={href}>
+            {artistName}
+          </RouterLink>
+        )}
+      </Text>
+      <Text as="h1" variant="lg-display" mb={[0.5, 0]}>
+        {title?.trim()}
+        {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
+      </Text>
+
+      <Text variant="xs" color="black60" mb={4}>
+        /Auction date/ • {organization}
+      </Text>
+    </Box>
+  )
+}
+
+const AuctionPrices = ({ props }) => {
+  const { priceEstimate } = props
+  return (
+    <Box>
+      <Text variant="xs">Pre-sale Estimate</Text>
+      <Text variant="lg-display">{priceEstimate}</Text>
+      <Text variant="xs" color="black60">
+        {priceEstimate}
+      </Text>
+    </Box>
+  )
+}
+
+const AuctionMetaData = ({ props }) => {
+  const {
+    mediumText,
+    dimensionText,
+    saleDate,
+    organization,
+    location,
+    saleTitle,
+    lotNumber,
+  } = props
+
+  return (
+    <>
+      <MetadataField label="Medium" value={mediumText} />
+      <MetadataField label="Dimensions" value={dimensionText} />
+      <MetadataField label="Sale Date" value={saleDate} />
+      <MetadataField label="Auction house" value={organization} />
+      <MetadataField label="Sale location" value={location} />
+      <MetadataField label="Sale name" value={saleTitle} />
+      <MetadataField label="Lot" value={lotNumber} />
+    </>
+  )
+}
 export const SingleAuctionResultFragmentContainer = createFragmentContainer(
   SingleAuctionResult,
   {
@@ -207,8 +270,51 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
         location
         saleTitle
         lotNumber
-        comparableAuctionResults(first: 5) {
+        comparableAuctionResults(first: 3) @optionalField {
           totalCount
+          edges {
+            cursor
+            node {
+              currency
+              dateText
+              id
+              internalID
+              artistID
+              artist {
+                name
+              }
+              isUpcoming
+              images {
+                thumbnail {
+                  url(version: "square140")
+                  height
+                  width
+                  aspectRatio
+                }
+              }
+              estimate {
+                low
+                display
+              }
+              dimensionText
+              mediumText
+              organization
+              boughtIn
+              performance {
+                mid
+              }
+              priceRealized {
+                cents
+                display
+                displayUSD
+              }
+              saleDate
+              title
+
+              artistID
+              internalID
+            }
+          }
         }
       }
     `,
