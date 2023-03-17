@@ -72,11 +72,21 @@ describe("with private sale orders", () => {
     )
   })
 
-  it("renders correct conditions of sale", () => {
+  it("renders conditions of sale", () => {
     expect(screen.getByText("This purchase is subject to")).toBeInTheDocument()
     expect(
       screen.getByText("Artsy Private Sales LLC Conditions of Sale")
     ).toBeInTheDocument()
+  })
+
+  it("renders correct conditions of sale page", () => {
+    const conditionsPage = screen.getByText(
+      "Artsy Private Sales LLC Conditions of Sale"
+    )
+    expect(conditionsPage).toHaveAttribute(
+      "href",
+      "/private-sales-conditions-of-sale"
+    )
   })
 
   it("renders extra conditions of sale title", () => {
