@@ -6,6 +6,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork$data
@@ -18,7 +19,7 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
   const { trackEvent } = useTracking()
 
   return (
-    <>
+    <ManageArtworkForSavesProvider>
       <DetailsFragmentContainer
         includeLinks={true}
         artwork={artwork}
@@ -61,7 +62,7 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
           {additionalInformation}
         </Text>
       )}
-    </>
+    </ManageArtworkForSavesProvider>
   )
 }
 
