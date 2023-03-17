@@ -118,7 +118,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           showHoverDetails={showHoverDetails}
           disableRouterLinking={disableRouterLinking}
           to={to}
-          enableSaveButtonForLists
+          enableSaveButtonForLists={!artwork.isInAuction}
           renderSaveButton={renderSaveButton}
         />
       </div>
@@ -268,6 +268,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         ) {
         internalID
         title
+        isInAuction
         imageTitle
         image(includeAll: $includeAllImages) {
           internalID

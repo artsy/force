@@ -93,7 +93,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           showSaveButton
           disableRouterLinking
           maxWidth="100%"
-          enableSaveButtonForLists
+          enableSaveButtonForLists={!artwork.isInAuction}
         />
 
         {children}
@@ -111,6 +111,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         title
         href
         artistNames
+        isInAuction
         image {
           src: url(version: ["larger", "large"])
           width

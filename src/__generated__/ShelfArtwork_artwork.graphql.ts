@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<baa4663e528055ebbea96546f0ab783e>>
+ * @generated SignedSource<<2ce9c2d1bd055b753959c63a2b6eca0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,7 @@ export type ShelfArtwork_artwork$data = {
     readonly src: string | null;
     readonly width: number | null;
   } | null;
+  readonly isInAuction: boolean | null;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "ShelfArtwork_artwork";
@@ -57,6 +58,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInAuction",
       "storageKey": null
     },
     {
@@ -105,6 +113,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bcb114cb9cd930d06a9f14d5857f78de";
+(node as any).hash = "e19015eea12dc5b2e629c3a689f1e034";
 
 export default node;
