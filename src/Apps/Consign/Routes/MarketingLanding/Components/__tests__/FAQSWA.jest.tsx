@@ -21,7 +21,7 @@ describe("FAQSWA", () => {
 
     expect(
       screen.getByText(
-        "No upfront fees, clear pricing estimates and commission structures."
+        "No upfront fees, clear pricing estimates, and competitive commission structures."
       )
     ).toBeInTheDocument()
     expect(screen.getByText("Have more questions?")).toBeInTheDocument()

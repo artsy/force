@@ -16,7 +16,7 @@ const reasons = [
     index: "02",
     title: "Meet your expert",
     text:
-      "If your artwork is accepted, you’re  introduced to a specialist who’ll be your guide throughout the entire process.",
+      "One of our specialists will review your submission and determine the best sales option.",
   },
   {
     index: "03",
