@@ -3,6 +3,7 @@ import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
+import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
 export const SavesHeader: FC = () => {
   const { t } = useTranslation()
@@ -13,12 +14,14 @@ export const SavesHeader: FC = () => {
     setModalIsOpened(true)
   }
 
-  const handleComplete = () => {
+  const handleComplete = (artworkList: ArtworkList) => {
     setModalIsOpened(false)
 
     sendToast({
       variant: "success",
-      message: t("collectorSaves.savesHeader.listCreated"),
+      message: t("collectorSaves.savesHeader.listCreated", {
+        listName: artworkList.name,
+      }),
     })
   }
 

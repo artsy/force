@@ -2,7 +2,7 @@ import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import styled from "styled-components"
-import { Box, Flex, Link, Text, Separator } from "@artsy/palette"
+import { Box, Flex, Text, Separator } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import compact from "lodash/compact"
 
@@ -14,6 +14,7 @@ import { TimeSince } from "./TimeSince"
 import { Truncator } from "Components/Truncator"
 
 import { ConversationSnippet_conversation$data } from "__generated__/ConversationSnippet_conversation.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 const StyledImage = styled(ImageWithFallback)`
   object-fit: cover;
@@ -91,9 +92,9 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
 
   return (
     <Box bg={backgroundColor}>
-      <Link
-        href={`/user/conversations/${conversation.internalID}`}
-        underlineBehavior="none"
+      <RouterLink
+        to={`/user/conversations/${conversation.internalID}`}
+        textDecoration="none"
       >
         <Flex alignItems="center" px={0.5} width="100%" height="120px">
           <Flex alignItems="center" width={20} flexShrink={0} height="100%">
@@ -145,7 +146,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
             </TextContainer>
           </Flex>
         </Flex>
-      </Link>
+      </RouterLink>
       {props.hasDivider && <Separator mx={2} width="auto" />}
     </Box>
   )

@@ -1,6 +1,6 @@
 import {
   CreateNewListModal,
-  NewAddedList,
+  ArtworkList,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import {
   ListKey,
@@ -20,7 +20,7 @@ export const CreateNewListModalForManageArtwork: FC = () => {
     })
   }
 
-  const onNewListCreated = (payload: NewAddedList) => {
+  const onNewListCreated = (payload: ArtworkList) => {
     dispatch({
       type: "SET_RECENTLY_ADDED_LIST",
       payload,
@@ -29,7 +29,7 @@ export const CreateNewListModalForManageArtwork: FC = () => {
       type: "ADD_OR_REMOVE_LIST_ID",
       payload: {
         listKey: ListKey.AddingListIDs,
-        listID: payload.id,
+        listID: payload.internalID,
       },
     })
     openSelectListsForArtworkModal()

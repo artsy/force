@@ -18,6 +18,7 @@ export const TOP_LEVEL_PAGE_SLUG_ALLOWLIST = [
   "past-privacy",
   "security",
   "conditions-of-sale",
+  "private-sales-conditions-of-sale",
   "auction-info",
   "embed-terms",
   "past-terms-8-5-13",
@@ -27,6 +28,10 @@ export const TOP_LEVEL_PAGE_SLUG_ALLOWLIST = [
   "past-terms-9-26-13",
   "buy-now-feature-faq",
   "identity-verification-faq",
+]
+
+export const PAGE_SLUGS_WITH_AUTH_REQUIRED = [
+  "private-sales-conditions-of-sale",
 ]
 
 const PAGE_ROUTE_CONFIG = {

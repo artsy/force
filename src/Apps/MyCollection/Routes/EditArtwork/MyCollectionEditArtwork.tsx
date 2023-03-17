@@ -189,6 +189,7 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
         slug
         title
         width
+        confidentialNotes
         ...MyCollectionArtworkFormMain_artwork
       }
     `,

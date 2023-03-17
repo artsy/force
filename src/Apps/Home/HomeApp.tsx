@@ -1,7 +1,6 @@
 import { Spacer, Join } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeApp_homePage$data } from "__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
@@ -18,12 +17,10 @@ import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEme
 import { SafeHomeContentCards } from "./Components/HomeContentCards"
 
 interface HomeAppProps {
-  homePage: HomeApp_homePage$data | null
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
 }
 
 export const HomeApp: React.FC<HomeAppProps> = ({
-  homePage,
   featuredEventsOrderedSet,
 }) => {
   return (
@@ -70,14 +67,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 }
 
 export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
-  homePage: graphql`
-    fragment HomeApp_homePage on HomePage {
-      heroUnits(platform: DESKTOP) {
-        internalID
-        ...HomeHeroUnit_heroUnit
-      }
-    }
-  `,
   featuredEventsOrderedSet: graphql`
     fragment HomeApp_featuredEventsOrderedSet on OrderedSet {
       ...HomeFeaturedEventsRail_orderedSet

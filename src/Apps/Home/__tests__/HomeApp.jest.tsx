@@ -31,9 +31,6 @@ describe("HomeApp", () => {
     ),
     query: graphql`
       query HomeApp_Test_Query @relay_test_operation {
-        homePage {
-          ...HomeApp_homePage
-        }
         featuredEventsOrderedSet: orderedSet(id: "example") {
           ...HomeApp_featuredEventsOrderedSet
         }

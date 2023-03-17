@@ -16,7 +16,7 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
         By clicking Complete Purchase, I agree to the{" "}
         <a
           style={{ textDecoration: "underline", color: "#000" }}
-          href="https://www.artsy.net/partner/artsy-private-sales"
+          href="/private-sales-conditions-of-sale"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -14,9 +14,9 @@ const collection = {
 const setup = () => {
   const nameInputField = screen.getByRole("textbox")
   const saveButton = screen.getByRole("button", { name: /Save/ })
-  const backButton = screen.getByRole("button", { name: /Back/ })
+  const cancelButton = screen.getByRole("button", { name: /Cancel/ })
 
-  return { nameInputField, saveButton, backButton }
+  return { nameInputField, saveButton, cancelButton }
 }
 
 describe("EditSavesModal", () => {
@@ -35,15 +35,15 @@ describe("EditSavesModal", () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /Back/ })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /Cancel/ })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
 
   it("dismisses when the Cancel button is clicked", async () => {
     render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
-    const { backButton } = setup()
+    const { cancelButton } = setup()
 
-    fireEvent.click(backButton)
+    fireEvent.click(cancelButton)
 
     expect(closeEditModal).toHaveBeenCalled()
   })

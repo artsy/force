@@ -1,29 +1,61 @@
 import { FC, useState } from "react"
-import { Flex, Text, ModalDialog, Spacer, Button } from "@artsy/palette"
-import { SortFilter } from "Components/SortFilter"
-import { ArtworksList, TEMP_ARTWORKS } from "./ArtworksList"
+import { Flex, Text, ModalDialog, Button, useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
+import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
+import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/useAddArtworksToCollection"
+import createLogger from "Utils/logger"
+import { ArtworkList } from "./CreateNewListModal"
 
 interface AddArtworksModalProps {
-  onClose: () => void
   onComplete: () => void
-  listName: string
+  artworkList: ArtworkList
 }
 
-const SORTS = [{ text: "Recently Saved", value: "-position" }]
+const logger = createLogger("AddArtworksModal")
 
 export const AddArtworksModal: FC<AddArtworksModalProps> = ({
-  listName,
-  onClose,
+  artworkList,
+  onComplete,
 }) => {
   const [selectedArtworkIds, setSelectedArtworkIds] = useState<string[]>([])
   const { t } = useTranslation()
+  const { sendToast } = useToasts()
+  const { submitMutation } = useAddArtworksToCollection()
+  const [isSaving, setIsSaving] = useState(false)
 
-  const handleSave = () => {
-    onClose()
+  const handleSave = async () => {
+    try {
+      setIsSaving(true)
+
+      await submitMutation({
+        variables: {
+          input: {
+            artworkIDs: selectedArtworkIds,
+            addToCollectionIDs: [artworkList.internalID],
+          },
+        },
+        rejectIf: res => {
+          const result = res.artworksCollectionsBatchUpdate
+          const error = result?.responseOrError
+
+          return !!error?.mutationError
+        },
+      })
+
+      onComplete()
+    } catch (error) {
+      logger.error(error)
+
+      sendToast({
+        variant: "error",
+        message: t("common.errors.somethingWentWrong"),
+      })
+    } finally {
+      setIsSaving(false)
+    }
   }
 
-  const handleItemClick = artworkID => {
+  const handleArtworkClick = (artworkID: string) => {
     if (selectedArtworkIds.includes(artworkID)) {
       setSelectedArtworkIds(selectedArtworkIds.filter(id => id !== artworkID))
     } else {
@@ -39,9 +71,9 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
         height: ["100%", "auto"],
         maxHeight: [null, 800],
       }}
-      onClose={onClose}
+      onClose={onComplete}
       title={t("collectorSaves.addArtworksModal.modalTitle", {
-        value: listName,
+        value: artworkList.name,
       })}
       footer={
         <Flex justifyContent="space-between" alignItems="center">
@@ -51,32 +83,16 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
             })}
           </Text>
 
-          <Button onClick={handleSave}>{t("common.buttons.save")}</Button>
+          <Button onClick={handleSave} loading={isSaving}>
+            {t("common.buttons.save")}
+          </Button>
         </Flex>
       }
     >
-      <>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Text variant={["xs", "sm"]} fontWeight="bold">
-            {t("collectorSaves.addArtworksModal.artworksCount", {
-              count: TEMP_ARTWORKS.length,
-            })}
-          </Text>
-
-          <SortFilter
-            sortOptions={SORTS}
-            selected={SORTS[0].value}
-            onSort={() => {}}
-          />
-        </Flex>
-
-        <Spacer y={2} />
-
-        <ArtworksList
-          selectedIds={selectedArtworkIds}
-          onItemClick={handleItemClick}
-        />
-      </>
+      <AddArtworksModalContentQueryRender
+        selectedArtworkIds={selectedArtworkIds}
+        onArtworkClick={handleArtworkClick}
+      />
     </ModalDialog>
   )
 }

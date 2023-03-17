@@ -107,7 +107,7 @@
   },
   "collectorSaves": {
     "addArtworksModal": {
-      "modalTitle": "{{value}} created.\nAdd saved works to the list.",
+      "modalTitle": "{{value}} created. Add saved works to the list.",
       "artworksSelected_one": "{{count}} artwork selected",
       "artworksSelected_other": "{{count}} artworks selected",
       "artworksCount_one": "{{count}} Artwork:",
@@ -118,7 +118,7 @@
       "artworkWithCount_other": "{{count}} Artworks"
     },
     "savesHeader": {
-      "listCreated": "List Created",
+      "listCreated": "{{listName}} Created",
       "savedArtworks": "Saved Artworks",
       "curateYourList": "Curate your own lists of the works you love",
       "createNewListButton": "Create New List"

@@ -51,7 +51,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
             This purchase is subject to{" "}
             <a
               style={{ textDecoration: "underline", color: "#000" }}
-              href="https://www.artsy.net/partner/artsy-private-sales"
+              href="/private-sales-conditions-of-sale"
               target="_blank"
               rel="noopener noreferrer"
             >

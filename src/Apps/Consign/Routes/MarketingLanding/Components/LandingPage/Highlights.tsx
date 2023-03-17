@@ -1,7 +1,7 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import { DollarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/DollarCircleIcon"
 import { StarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/StarCircleIcon"
-import { PlanetCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PlanetCircleIcon"
+import { GlobeNetworkCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/GlobeNetworkCircleIcon"
 
 import { ReactElement } from "react"
 import { Media } from "Utils/Responsive"
@@ -20,7 +20,7 @@ const reasons = [
     ),
     title: "Earn more from your sale",
     text:
-      "With lower fees than traditional auction houses and dealers, and no listing fees, you take home more of the final sale price.",
+      "With lower fees than traditional auction houses and dealers, you take home more of the final sale price.",
   },
   {
     icon: (
@@ -41,16 +41,16 @@ const reasons = [
     icon: (
       <>
         <Media greaterThan="xs">
-          <PlanetCircleIcon height={50} width={50} />
+          <GlobeNetworkCircleIcon height={50} width={50} />
         </Media>
         <Media at="xs">
-          <PlanetCircleIcon height={30} width={30} />
+          <GlobeNetworkCircleIcon height={30} width={30} />
         </Media>
       </>
     ),
     title: "Reach a global network",
     text:
-      "We connect your work with the most interested buyers from over 3 million art lovers in 190 countries.",
+      "With the world’s largest network of collectors, we match your work with the most interested buyers in over 190 countries.",
   },
 ]
 

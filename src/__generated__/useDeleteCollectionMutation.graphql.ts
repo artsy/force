@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e213db694ab887324e37ad162705a8c7>>
+ * @generated SignedSource<<0ac3bffd511b56285bb7476d5b72c405>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ export type deleteCollectionInput = {
   clientMutationId?: string | null;
   id: string;
 };
-export type DeleteSavesModalMutation$variables = {
+export type useDeleteCollectionMutation$variables = {
   input: deleteCollectionInput;
 };
-export type DeleteSavesModalMutation$data = {
+export type useDeleteCollectionMutation$data = {
   readonly deleteCollection: {
     readonly responseOrError: {
       readonly __typename: "DeleteCollectionFailure";
@@ -25,15 +25,20 @@ export type DeleteSavesModalMutation$data = {
         readonly statusCode: number | null;
       } | null;
     } | {
+      readonly __typename: "DeleteCollectionSuccess";
+      readonly collection: {
+        readonly id: string;
+      } | null;
+    } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null;
   } | null;
 };
-export type DeleteSavesModalMutation = {
-  response: DeleteSavesModalMutation$data;
-  variables: DeleteSavesModalMutation$variables;
+export type useDeleteCollectionMutation = {
+  response: useDeleteCollectionMutation$data;
+  variables: useDeleteCollectionMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -80,6 +85,31 @@ v1 = [
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "Collection",
+                "kind": "LinkedField",
+                "name": "collection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "type": "DeleteCollectionSuccess",
+            "abstractKey": null
+          },
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "GravityMutationError",
                 "kind": "LinkedField",
                 "name": "mutationError",
@@ -118,7 +148,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DeleteSavesModalMutation",
+    "name": "useDeleteCollectionMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -127,20 +157,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DeleteSavesModalMutation",
+    "name": "useDeleteCollectionMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "06286b93b30c0730a9415d12329e4ba1",
+    "cacheID": "b55ee2de2db8af67f58443b58b6750ba",
     "id": null,
     "metadata": {},
-    "name": "DeleteSavesModalMutation",
+    "name": "useDeleteCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation DeleteSavesModalMutation(\n  $input: deleteCollectionInput!\n) {\n  deleteCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteCollectionMutation(\n  $input: deleteCollectionInput!\n) {\n  deleteCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteCollectionSuccess {\n        collection {\n          id\n        }\n      }\n      ... on DeleteCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "59f147ada3d219e3c9b95dd32c1e6bc9";
+(node as any).hash = "cd4660036df1dbb6578207830b0db6f5";
 
 export default node;

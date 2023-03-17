@@ -63,8 +63,8 @@ export const HeaderSWA = () => {
         <Spacer y={[0.5, 2, 4]} />
 
         <Text variant={["xs", "sm", "lg"]}>
-          Our experts find the best sales opportunity for your work, through our
-          vast global network of buyers.
+          With our global reach and art market expertise, our specialists will
+          find the right buyer for your work.
         </Text>
 
         <Spacer y={[2, 4]} />

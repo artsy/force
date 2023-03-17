@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c5f9f62fa6128bc259d7366bffa92d2>>
+ * @generated SignedSource<<4106f0b25b745d636a13752eba75182f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,7 +47,18 @@ v1 = {
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "otherSaves"
+        ]
+      }
+    ]
+  },
   "name": "CollectorProfileSaves2Route_me",
   "selections": [
     {
@@ -71,26 +82,10 @@ return {
     },
     {
       "alias": "otherSaves",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "default",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 30
-        },
-        {
-          "kind": "Literal",
-          "name": "saves",
-          "value": true
-        }
-      ],
+      "args": null,
       "concreteType": "CollectionsConnection",
       "kind": "LinkedField",
-      "name": "collectionsConnection",
+      "name": "__CollectorProfileSaves2Route_otherSaves_connection",
       "plural": false,
       "selections": [
         {
@@ -117,15 +112,54 @@ return {
                   "name": "default",
                   "storageKey": null
                 },
-                (v1/*: any*/)
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
+      "storageKey": null
     }
   ],
   "type": "Me",
@@ -133,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "5c3ef77024cb69947341378af7658e8e";
+(node as any).hash = "f49dfdbe88a36651445db15ce310923c";
 
 export default node;
