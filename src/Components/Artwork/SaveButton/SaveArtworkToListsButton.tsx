@@ -2,7 +2,10 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { useToasts } from "@artsy/palette"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
-import { useSaveArtworkToLists } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
+import {
+  ResultAction,
+  useSaveArtworkToLists,
+} from "Components/Artwork/SaveButton/useSaveArtworkToLists"
 import { FC, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,11 +16,6 @@ import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtwork
 interface SaveArtworkToListsButtonProps {
   artwork: SaveArtworkToListsButton_artwork$data
   contextModule: AuthContextModule
-}
-
-enum SaveAction {
-  SavedToDefaultList,
-  RemovedFromDefaultList,
 }
 
 const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
@@ -62,7 +60,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       openSelectListsForArtworkModal()
     } else if (isSavedToDefaultList) {
       // Display toast if artwork is already saved to the default list
-      showToastByAction(SaveAction.SavedToDefaultList)
+      showToastByAction(ResultAction.SavedToDefaultList)
     } else {
       // Save artwork to the default list
       handleSave()
@@ -72,8 +70,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clearValue])
 
-  const showToastByAction = (action: SaveAction) => {
-    if (action === SaveAction.SavedToDefaultList) {
+  const showToastByAction = (action: ResultAction) => {
+    if (action === ResultAction.SavedToDefaultList) {
       sendToast({
         variant: "success",
         message: t(
@@ -98,26 +96,29 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     })
   }
 
+  const getActionLabel = (action: ResultAction) => {
+    if (action === ResultAction.SavedToDefaultList) {
+      return "Saved Artwork"
+    }
+
+    return "Removed Artwork"
+  }
+
   const handleSave = async () => {
     try {
-      const response = await saveArtworkToLists()
+      const action = await saveArtworkToLists()
 
-      // "Select lists for artwork" or "Sign in/Sign up" modal opened
-      if (!response) {
-        return
+      if (
+        action === ResultAction.SavedToDefaultList ||
+        action === ResultAction.RemovedFromDefaultList
+      ) {
+        showToastByAction(action)
+        tracking.trackEvent({
+          action: getActionLabel(action),
+          entity_slug: artwork.slug,
+          entity_id: artwork.internalID,
+        })
       }
-
-      const action = !!response.saveArtwork?.artwork?.is_saved
-        ? SaveAction.SavedToDefaultList
-        : SaveAction.RemovedFromDefaultList
-
-      showToastByAction(action)
-
-      tracking.trackEvent({
-        action,
-        entity_slug: artwork.slug,
-        entity_id: artwork.internalID,
-      })
     } catch (error) {
       // TODO: Log error
       console.log("[debug] error", error)

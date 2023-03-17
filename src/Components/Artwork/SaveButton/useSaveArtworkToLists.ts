@@ -3,7 +3,6 @@ import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtwor
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useSystemContext } from "System/SystemContext"
-import { SaveArtworkMutation$data } from "__generated__/SaveArtworkMutation.graphql"
 
 type Artwork = {
   internalID: string
@@ -21,7 +20,12 @@ interface Options {
   contextModule: AuthContextModule
 }
 
-type SaveArtworkToListsResult = Promise<SaveArtworkMutation$data | void>
+export enum ResultAction {
+  SavedToDefaultList,
+  RemovedFromDefaultList,
+  SelectingListsForArtwork,
+  ShowingAuthDialog,
+}
 
 export const useSaveArtworkToLists = (options: Options) => {
   const { artwork, contextModule } = options
@@ -99,16 +103,23 @@ export const useSaveArtworkToLists = (options: Options) => {
     )
   }
 
-  const saveArtworkToLists = async (): SaveArtworkToListsResult => {
+  const saveArtworkToLists = async () => {
     if (!isLoggedIn) {
-      return showAuthDialog()
+      showAuthDialog()
+      return ResultAction.ShowingAuthDialog
     }
 
     if (savedListId || artwork.isSavedToCustomLists) {
-      return openSelectListsForArtworkModal()
+      openSelectListsForArtworkModal()
+      return ResultAction.SelectingListsForArtwork
     }
 
-    return saveToDefaultList()
+    const response = await saveToDefaultList()
+    const isSaved = response?.saveArtwork?.artwork?.is_saved
+
+    return isSaved
+      ? ResultAction.SavedToDefaultList
+      : ResultAction.RemovedFromDefaultList
   }
 
   return {
