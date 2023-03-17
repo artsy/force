@@ -11,7 +11,10 @@ import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
+import createLogger from "Utils/logger"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+
+const logger = createLogger("SaveArtworkToListsButton")
 
 interface SaveArtworkToListsButtonProps {
   artwork: SaveArtworkToListsButton_artwork$data
@@ -120,8 +123,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
         })
       }
     } catch (error) {
-      // TODO: Log error
-      console.log("[debug] error", error)
+      logger.error(error)
     }
   }
 
