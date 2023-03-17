@@ -15,6 +15,11 @@ interface SaveArtworkToListsButtonProps {
   contextModule: AuthContextModule
 }
 
+enum SaveAction {
+  SavedToDefaultList,
+  RemovedFromDefaultList,
+}
+
 const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   artwork,
   contextModule,
@@ -57,7 +62,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       openSelectListsForArtworkModal()
     } else if (isSavedToDefaultList) {
       // Display toast if artwork is already saved to the default list
-      showToastByAction("Saved Artwork")
+      showToastByAction(SaveAction.SavedToDefaultList)
     } else {
       // Save artwork to the default list
       handleSave()
@@ -67,8 +72,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, clearValue])
 
-  const showToastByAction = (action: string) => {
-    if (action === "Saved Artwork") {
+  const showToastByAction = (action: SaveAction) => {
+    if (action === SaveAction.SavedToDefaultList) {
       sendToast({
         variant: "success",
         message: t(
@@ -103,8 +108,8 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       }
 
       const action = !!response.saveArtwork?.artwork?.is_saved
-        ? "Saved Artwork"
-        : "Removed Artwork"
+        ? SaveAction.SavedToDefaultList
+        : SaveAction.RemovedFromDefaultList
 
       showToastByAction(action)
 
