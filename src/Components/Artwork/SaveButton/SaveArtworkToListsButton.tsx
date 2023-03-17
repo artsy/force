@@ -29,7 +29,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const {
     isSaved,
     saveArtworkToLists,
-    openManageArtworkForSavesModal,
+    openSelectListsForArtworkModal,
   } = useSaveArtworkToLists({
     contextModule,
     artwork: {
@@ -54,7 +54,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
           label: t(
             "collectorSaves.saveArtworkToListsButton.artworkSavedToast.button"
           ),
-          onClick: openManageArtworkForSavesModal,
+          onClick: openSelectListsForArtworkModal,
         },
       })
 

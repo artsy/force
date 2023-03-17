@@ -52,7 +52,7 @@ export const useSaveArtworkToLists = (options: Options) => {
     })
   }
 
-  const openManageArtworkForSavesModal = () => {
+  const openSelectListsForArtworkModal = () => {
     dispatch({
       type: "SET_ARTWORK",
       payload: {
@@ -105,7 +105,7 @@ export const useSaveArtworkToLists = (options: Options) => {
     }
 
     if (savedListId || artwork.isSavedToCustomLists) {
-      return openManageArtworkForSavesModal()
+      return openSelectListsForArtworkModal()
     }
 
     return saveToDefaultList()
@@ -113,7 +113,7 @@ export const useSaveArtworkToLists = (options: Options) => {
 
   return {
     isSaved,
-    openManageArtworkForSavesModal,
+    openSelectListsForArtworkModal,
     saveArtworkToLists,
   }
 }
