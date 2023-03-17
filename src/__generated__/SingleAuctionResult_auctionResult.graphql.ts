@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2905a2d10761e39ad72751cc19833d60>>
+ * @generated SignedSource<<0c1f8db4ca30b797d137f9cd72ad1e41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,8 +19,16 @@ export type SingleAuctionResult_auctionResult$data = {
     readonly slug: string;
   } | null;
   readonly artistID: string;
+  readonly comparableAuctionResults: {
+    readonly totalCount: number | null;
+  } | null;
   readonly dateText: string | null;
   readonly dimensionText: string | null;
+  readonly estimate: {
+    readonly display: string | null;
+    readonly high: number | null;
+    readonly low: number | null;
+  } | null;
   readonly images: {
     readonly thumbnail: {
       readonly aspectRatio: number;
@@ -183,6 +191,38 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "AuctionLotEstimate",
+      "kind": "LinkedField",
+      "name": "estimate",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "high",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "low",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "mediumText",
       "storageKey": null
@@ -234,12 +274,36 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "lotNumber",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 5
+        }
+      ],
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "comparableAuctionResults",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "comparableAuctionResults(first:5)"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "b19b12d141a5feda901ecd68ba2c7a8e";
+(node as any).hash = "529fae3f72cd26225b30e0fb16e201ae";
 
 export default node;

@@ -17,6 +17,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { SingleAuctionResult_auctionResult$data } from "__generated__/SingleAuctionResult_auctionResult.graphql"
 
+export const MAX_DIMENSION = 400
 interface SingleAuctionResultProps {
   auctionResult: SingleAuctionResult_auctionResult$data
 }
@@ -29,6 +30,7 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
     images,
     title,
     dateText,
+    estimate,
     mediumText,
     dimensionText,
     saleDate,
@@ -37,11 +39,13 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
     saleTitle,
     lotNumber,
   } = auctionResult
+
   console.log("[LOGD] auctionResult = ", auctionResult)
 
   const artistSlug = artist?.slug || "banksy" // TODO: FOR TESTING
+
   return (
-    <Box>
+    <>
       <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
         <RouterLink
           textDecoration="none"
@@ -58,58 +62,71 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
         </RouterLink>
       </Flex>
 
-      <GridColumns gridRowGap={[2, null]} gridColumnGap={[0, 4]}>
-        <Column span={8}>
-          {images?.thumbnail?.url ? (
-            <ResponsiveBox
-              data-testid="artwork-lightbox-box"
-              bg="black10"
-              mx={[0, 2, 4]}
-              // @ts-ignore
-              maxWidth={images.thumbnail?.width || "100%"}
-              aspectWidth={images.thumbnail?.width || 1}
-              aspectHeight={images.thumbnail?.height || 1}
-            >
-              <ArtworkLightboxPlaceholder
-                src={images.thumbnail?.url ?? ""}
-                preload={true}
-                lazyLoad={true}
-              />
-              <Image
-                data-testid="artwork-lightbox-image"
-                width="100%"
-                height="100%"
-                src={images.thumbnail?.url}
-                alt={title ?? ""}
-                lazyLoad={true}
-                style={{ position: "relative" }}
-              />
-            </ResponsiveBox>
-          ) : (
-            <ResponsiveBox
-              data-testid="artwork-browser-no-image-box"
-              bg="black10"
-              mx={[0, 2, 4]}
-              maxWidth="100%"
-              aspectWidth={1}
-              aspectHeight={1}
-            >
-              <Flex
-                position="absolute"
-                top={0}
-                left={0}
-                width="100%"
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
+      <GridColumns gridRowGap={[2, null]}>
+        <Column span={5} mr={[0, 4]}>
+          <Box position="relative" bg="white100">
+            {images?.thumbnail?.url ? (
+              <ResponsiveBox
+                data-testid="artwork-lightbox-box"
+                bg="black10"
+                mx={[0, 2, 4]}
+                maxHeight={MAX_DIMENSION}
+                aspectWidth={images.thumbnail?.width || 1}
+                aspectHeight={images.thumbnail?.height || 1}
               >
-                <NoImageIcon width="28px" height="28px" fill="black60" />
+                <ArtworkLightboxPlaceholder
+                  src={images.thumbnail?.url ?? ""}
+                  preload={true}
+                  lazyLoad={true}
+                />
+                <Image
+                  data-testid="artwork-lightbox-image"
+                  width="100%"
+                  height="100%"
+                  src={images.thumbnail?.url}
+                  alt={title ?? ""}
+                  lazyLoad={true}
+                  style={{ position: "relative" }}
+                />
+              </ResponsiveBox>
+            ) : (
+              <Flex maxWidth={["100%", MAX_DIMENSION]} mx="auto">
+                <ResponsiveBox
+                  data-testid="artwork-browser-no-image-box"
+                  bg="black10"
+                  mx={[0, 2, 4]}
+                  maxWidth="100%"
+                  aspectWidth={1}
+                  aspectHeight={1}
+                >
+                  <ResponsiveBox
+                    data-testid="artwork-browser-no-image-box"
+                    bg="black10"
+                    mx={[0, 2, 4]}
+                    maxHeight={MAX_DIMENSION}
+                    aspectWidth={1}
+                    aspectHeight={1}
+                  >
+                    <Flex
+                      position="absolute"
+                      top={0}
+                      left={0}
+                      width="100%"
+                      height="100%"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <NoImageIcon width="28px" height="28px" fill="black60" />
+                    </Flex>
+                  </ResponsiveBox>
+                </ResponsiveBox>
               </Flex>
-            </ResponsiveBox>
-          )}
+            )}
+          </Box>
         </Column>
-        <Column span={4}>
-          <>
+
+        <Column span={7}>
+          <Box>
             <Text as="h1" variant="lg-display">
               {artist?.isPersonalArtist ? (
                 artist.name
@@ -125,9 +142,19 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
                 dateText.replace(/\s+/g, "").length > 0 &&
                 ", " + dateText}
             </Text>
+            <Text variant="xs" color="black60">
+              /Auction date/ - {organization}
+            </Text>
 
             <Spacer x={[4, 2]} y={[4, 2]} />
 
+            <Text variant="xs">Pre-sale Estimate</Text>
+            <Text variant="lg-display">{estimate?.display}</Text>
+            <Text variant="xs" color="black60">
+              {estimate?.display}
+            </Text>
+
+            <Spacer x={[4, 2]} y={[4, 2]} />
             <>
               <MetadataField label="Medium" value={mediumText} />
               <MetadataField label="Dimensions" value={dimensionText} />
@@ -137,10 +164,10 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
               <MetadataField label="Sale name" value={saleTitle} />
               <MetadataField label="Lot" value={lotNumber} />
             </>
-          </>
+          </Box>
         </Column>
       </GridColumns>
-    </Box>
+    </>
   )
 }
 
@@ -168,6 +195,11 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
         }
         title
         dateText
+        estimate {
+          display
+          high
+          low
+        }
         mediumText
         dimensionText
         saleDate(format: "MMM DD, YYYY")
@@ -175,6 +207,9 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
         location
         saleTitle
         lotNumber
+        comparableAuctionResults(first: 5) {
+          totalCount
+        }
       }
     `,
   }

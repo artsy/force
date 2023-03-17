@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ed629d35c12f9fcdcb75f4a9624938b>>
+ * @generated SignedSource<<a07af2fc4635f813763a48d5bd98322a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -220,6 +220,38 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "AuctionLotEstimate",
+            "kind": "LinkedField",
+            "name": "estimate",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "high",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "low",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "mediumText",
             "storageKey": null
@@ -272,6 +304,30 @@ return {
             "name": "lotNumber",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 5
+              }
+            ],
+            "concreteType": "AuctionResultConnection",
+            "kind": "LinkedField",
+            "name": "comparableAuctionResults",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "comparableAuctionResults(first:5)"
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -279,12 +335,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6375e288602cc73e7b6259260561e160",
+    "cacheID": "fe901f382d8ddb492caf9313f355f9e5",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_SingleAuctionResultQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_SingleAuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...SingleAuctionResult_auctionResult\n    id\n  }\n}\n\nfragment SingleAuctionResult_auctionResult on AuctionResult {\n  internalID\n  artistID\n  artist {\n    slug\n    name\n    href\n    isPersonalArtist\n    birthday\n    id\n  }\n  images {\n    thumbnail {\n      url(version: \"large\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  title\n  dateText\n  mediumText\n  dimensionText\n  saleDate(format: \"MMM DD, YYYY\")\n  organization\n  location\n  saleTitle\n  lotNumber\n}\n"
+    "text": "query artistRoutes_SingleAuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...SingleAuctionResult_auctionResult\n    id\n  }\n}\n\nfragment SingleAuctionResult_auctionResult on AuctionResult {\n  internalID\n  artistID\n  artist {\n    slug\n    name\n    href\n    isPersonalArtist\n    birthday\n    id\n  }\n  images {\n    thumbnail {\n      url(version: \"large\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  title\n  dateText\n  estimate {\n    display\n    high\n    low\n  }\n  mediumText\n  dimensionText\n  saleDate(format: \"MMM DD, YYYY\")\n  organization\n  location\n  saleTitle\n  lotNumber\n  comparableAuctionResults(first: 5) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
