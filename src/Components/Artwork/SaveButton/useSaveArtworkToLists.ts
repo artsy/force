@@ -40,7 +40,7 @@ export const useSaveArtworkToLists = (options: Options) => {
           return `${action} to save artworks`
         },
         afterAuthAction: {
-          action: "save",
+          action: "saveArtworkToLists",
           kind: "artworks",
           objectId: artwork.internalID,
         },

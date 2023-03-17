@@ -21,6 +21,7 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "gene"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
+  | { action: "saveArtworkToLists"; kind: "artworks"; objectId: string }
   | {
       action: "buyNow"
       kind: "artworks"
@@ -62,6 +63,7 @@ export const runAuthIntent = async ({
     await (() => {
       switch (value.action) {
         case "createAlert":
+        case "saveArtworkToLists":
           // Do nothing. Value update triggers UI which handles mutation.
           break
 
@@ -163,6 +165,7 @@ const schema = Yup.object({
       "createAlert",
       "follow",
       "save",
+      "saveArtworkToLists",
       "buyNow",
       "makeOffer",
     ])
