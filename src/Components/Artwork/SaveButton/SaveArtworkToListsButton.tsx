@@ -77,7 +77,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     try {
       const response = await saveArtworkToLists()
 
-      // "Select lists for artwork" modal has been opened
+      // "Select lists for artwork" or "Sign in/Sign up" modal opened
       if (!response) {
         return
       }
@@ -94,7 +94,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
         entity_id: artwork.internalID,
       })
     } catch (error) {
-      // TOOD: Log error
+      // TODO: Log error
       console.log("[debug] error", error)
     }
   }
