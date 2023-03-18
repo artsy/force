@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<141f5ec1231b7c3ab14b97ae32312d40>>
+ * @generated SignedSource<<c7a8aef336677175ea21577f3dcea25e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SingleAuctionResult_auctionResult$data = {
+export type AuctionResult_auctionResult$data = {
   readonly artist: {
     readonly birthday: string | null;
     readonly href: string | null;
@@ -50,18 +50,18 @@ export type SingleAuctionResult_auctionResult$data = {
   readonly saleDate: string | null;
   readonly saleTitle: string | null;
   readonly title: string | null;
-  readonly " $fragmentType": "SingleAuctionResult_auctionResult";
+  readonly " $fragmentType": "AuctionResult_auctionResult";
 };
-export type SingleAuctionResult_auctionResult$key = {
-  readonly " $data"?: SingleAuctionResult_auctionResult$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SingleAuctionResult_auctionResult">;
+export type AuctionResult_auctionResult$key = {
+  readonly " $data"?: AuctionResult_auctionResult$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResult_auctionResult">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SingleAuctionResult_auctionResult",
+  "name": "AuctionResult_auctionResult",
   "selections": [
     {
       "alias": null,
@@ -286,7 +286,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 3
+          "value": 6
         }
       ],
       "concreteType": "AuctionResultConnection",
@@ -329,13 +329,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "comparableAuctionResults(first:3)"
+      "storageKey": "comparableAuctionResults(first:6)"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "f2c15ff76d82a47d6ae073689cc140bc";
+(node as any).hash = "6633812e2420d7cd6f61616771e5b5da";
 
 export default node;

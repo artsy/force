@@ -10,7 +10,6 @@ import {
   NoImageIcon,
   Image,
   Join,
-  Separator,
 } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
@@ -19,14 +18,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
-import { SingleAuctionResult_auctionResult$data } from "__generated__/SingleAuctionResult_auctionResult.graphql"
+import { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 
 export const MAX_DIMENSION = 400
-interface SingleAuctionResultProps {
-  auctionResult: SingleAuctionResult_auctionResult$data
+interface AuctionResultProps {
+  auctionResult: AuctionResult_auctionResult$data
 }
 
-export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
+export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
   const {
@@ -46,8 +45,6 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
   } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
-
-  console.log("[LOGD] results = ", results)
 
   const artistSlug = artist?.slug
 
@@ -259,11 +256,11 @@ const AuctionMetaData = ({ props }) => {
     </>
   )
 }
-export const SingleAuctionResultFragmentContainer = createFragmentContainer(
-  SingleAuctionResult,
+export const AuctionResultFragmentContainer = createFragmentContainer(
+  AuctionResult,
   {
     auctionResult: graphql`
-      fragment SingleAuctionResult_auctionResult on AuctionResult {
+      fragment AuctionResult_auctionResult on AuctionResult {
         internalID
         artistID
         artist {
@@ -295,7 +292,7 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
         location
         saleTitle
         lotNumber
-        comparableAuctionResults(first: 3) @optionalField {
+        comparableAuctionResults(first: 6) @optionalField {
           edges {
             cursor
             node {

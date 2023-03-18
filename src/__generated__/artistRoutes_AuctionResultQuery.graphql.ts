@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5778fa14bf9d1faa43161f4213f0141>>
+ * @generated SignedSource<<bee4736fec05eaeed7624689179b71d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_SingleAuctionResultQuery$variables = {
+export type artistRoutes_AuctionResultQuery$variables = {
   auctionResultId: string;
 };
-export type artistRoutes_SingleAuctionResultQuery$data = {
+export type artistRoutes_AuctionResultQuery$data = {
   readonly auctionResult: {
-    readonly " $fragmentSpreads": FragmentRefs<"SingleAuctionResult_auctionResult">;
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionResult_auctionResult">;
   } | null;
 };
-export type artistRoutes_SingleAuctionResultQuery = {
-  response: artistRoutes_SingleAuctionResultQuery$data;
-  variables: artistRoutes_SingleAuctionResultQuery$variables;
+export type artistRoutes_AuctionResultQuery = {
+  response: artistRoutes_AuctionResultQuery$data;
+  variables: artistRoutes_AuctionResultQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -127,7 +127,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "artistRoutes_SingleAuctionResultQuery",
+    "name": "artistRoutes_AuctionResultQuery",
     "selections": [
       {
         "alias": null,
@@ -140,7 +140,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SingleAuctionResult_auctionResult"
+            "name": "AuctionResult_auctionResult"
           }
         ],
         "storageKey": null
@@ -153,7 +153,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "artistRoutes_SingleAuctionResultQuery",
+    "name": "artistRoutes_AuctionResultQuery",
     "selections": [
       {
         "alias": null,
@@ -321,7 +321,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 3
+                "value": 6
               }
             ],
             "concreteType": "AuctionResultConnection",
@@ -552,7 +552,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "comparableAuctionResults(first:3)"
+            "storageKey": "comparableAuctionResults(first:6)"
           },
           (v4/*: any*/)
         ],
@@ -561,16 +561,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b6bee24b38137e932cb450ae82bbe1c8",
+    "cacheID": "1d1fe79f14b055e24674603bc2191537",
     "id": null,
     "metadata": {},
-    "name": "artistRoutes_SingleAuctionResultQuery",
+    "name": "artistRoutes_AuctionResultQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_SingleAuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...SingleAuctionResult_auctionResult\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment SingleAuctionResult_auctionResult on AuctionResult {\n  internalID\n  artistID\n  artist {\n    slug\n    name\n    href\n    isPersonalArtist\n    birthday\n    id\n  }\n  images {\n    thumbnail {\n      url(version: \"large\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  title\n  dateText\n  estimate {\n    display\n    high\n    low\n  }\n  mediumText\n  dimensionText\n  saleDate(format: \"MMM DD, YYYY\")\n  organization\n  location\n  saleTitle\n  lotNumber\n  comparableAuctionResults(first: 3) @optionalField {\n    edges {\n      cursor\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query artistRoutes_AuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...AuctionResult_auctionResult\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment AuctionResult_auctionResult on AuctionResult {\n  internalID\n  artistID\n  artist {\n    slug\n    name\n    href\n    isPersonalArtist\n    birthday\n    id\n  }\n  images {\n    thumbnail {\n      url(version: \"large\")\n      height\n      width\n      aspectRatio\n    }\n  }\n  title\n  dateText\n  estimate {\n    display\n    high\n    low\n  }\n  mediumText\n  dimensionText\n  saleDate(format: \"MMM DD, YYYY\")\n  organization\n  location\n  saleTitle\n  lotNumber\n  comparableAuctionResults(first: 6) @optionalField {\n    edges {\n      cursor\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "18a222a9b011e333bf16a2d1d11d7135";
+(node as any).hash = "257da406ab838dd5151e109364a61e9f";
 
 export default node;
