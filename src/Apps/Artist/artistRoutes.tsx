@@ -85,7 +85,7 @@ const ConsignRoute = loadable(
 const AuctionResultRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/AuctionResult"
+      /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
     ),
   {
     resolveComponent: component => component.AuctionResultFragmentContainer,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7a8aef336677175ea21577f3dcea25e>>
+ * @generated SignedSource<<f847084df8dfc2fc3a08755ee017c303>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
-    readonly birthday: string | null;
-    readonly href: string | null;
-    readonly isPersonalArtist: boolean | null;
     readonly name: string | null;
     readonly slug: string;
   } | null;
-  readonly artistID: string;
   readonly comparableAuctionResults: {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
@@ -27,7 +23,6 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly dateText: string | null;
   readonly dimensionText: string | null;
   readonly estimate: {
     readonly display: string | null;
@@ -42,7 +37,6 @@ export type AuctionResult_auctionResult$data = {
       readonly width: number | null;
     } | null;
   } | null;
-  readonly internalID: string;
   readonly location: string | null;
   readonly lotNumber: string | null;
   readonly mediumText: string | null;
@@ -50,6 +44,7 @@ export type AuctionResult_auctionResult$data = {
   readonly saleDate: string | null;
   readonly saleTitle: string | null;
   readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultMetaData_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
 };
 export type AuctionResult_auctionResult$key = {
@@ -64,18 +59,14 @@ const node: ReaderFragment = {
   "name": "AuctionResult_auctionResult",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "AuctionResultMetaData_auctionResult"
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "artistID",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "AuctionResultTitleInfo_auctionResult"
     },
     {
       "alias": null,
@@ -97,27 +88,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isPersonalArtist",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "birthday",
           "storageKey": null
         }
       ],
@@ -184,13 +154,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "dateText",
       "storageKey": null
     },
     {
@@ -336,6 +299,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6633812e2420d7cd6f61616771e5b5da";
+(node as any).hash = "7b672463dddaead5a34bd2dacf3504de";
 
 export default node;

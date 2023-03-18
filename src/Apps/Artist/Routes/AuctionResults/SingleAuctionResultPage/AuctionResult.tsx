@@ -12,8 +12,9 @@ import {
   Join,
 } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
+import { AuctionResultMetaDataFragmentContainer } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
+import { AuctionResultTitleInfoFragmentContainer } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
-import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -32,28 +33,18 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
     artist,
     images,
     title,
-    dateText,
     estimate,
-    mediumText,
-    dimensionText,
-    saleDate,
-    organization,
-    location,
-    saleTitle,
-    lotNumber,
     comparableAuctionResults,
   } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
-
-  const artistSlug = artist?.slug
 
   return (
     <>
       <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
         <RouterLink
           textDecoration="none"
-          to={`/artist/${artistSlug}/auction-results`}
+          to={`/artist/${artist?.slug}/auction-results`}
         >
           <Flex alignItems="center">
             <ChevronIcon height={14} width={14} direction="left" />
@@ -132,30 +123,21 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         <Column span={4}>
           <Box>
             <Join separator={<Spacer y={[2, 4]} />}>
-              <AuctionHeader
-                props={{
-                  isPersonalArtist: artist?.isPersonalArtist,
-                  artistName: artist?.name ?? "",
-                  href: artist?.href ?? "/",
-                  title,
-                  dateText,
-                  organization,
-                }}
+              <AuctionResultTitleInfoFragmentContainer
+                auctionResultTitleInfo={auctionResult}
               />
 
-              <AuctionPrices props={{ priceEstimate: estimate?.display }} />
-
               <Box>
-                <AuctionMetaData
-                  props={{
-                    mediumText,
-                    dimensionText,
-                    saleDate,
-                    organization,
-                    location,
-                    saleTitle,
-                    lotNumber,
-                  }}
+                <Text variant="xs">Pre-sale Estimate</Text>
+                <Text variant="lg-display">{estimate?.display}</Text>
+                <Text variant="xs" color="black60">
+                  {/* TODO: display USD price - check the design */}
+                  {estimate?.display}
+                </Text>
+              </Box>
+              <Box>
+                <AuctionResultMetaDataFragmentContainer
+                  auctionResultMetaData={auctionResult}
                 />
               </Box>
             </Join>
@@ -188,87 +170,16 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
   )
 }
 
-const AuctionHeader = ({ props }) => {
-  const {
-    isPersonalArtist,
-    artistName,
-    href,
-    title,
-    dateText,
-    organization,
-  } = props
-  return (
-    <Box>
-      <Text as="h1" variant="lg-display">
-        {isPersonalArtist ? (
-          artistName
-        ) : (
-          <RouterLink textDecoration="none" to={href}>
-            {artistName}
-          </RouterLink>
-        )}
-      </Text>
-      <Text as="h1" variant="lg-display" mb={[0.5, 0]}>
-        {title?.trim()}
-        {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
-      </Text>
-
-      <Text variant="xs" color="black60" mb={4}>
-        /Auction date/ • {organization}
-      </Text>
-    </Box>
-  )
-}
-
-const AuctionPrices = ({ props }) => {
-  const { priceEstimate } = props
-  return (
-    <Box>
-      <Text variant="xs">Pre-sale Estimate</Text>
-      <Text variant="lg-display">{priceEstimate}</Text>
-      <Text variant="xs" color="black60">
-        {priceEstimate}
-      </Text>
-    </Box>
-  )
-}
-
-const AuctionMetaData = ({ props }) => {
-  const {
-    mediumText,
-    dimensionText,
-    saleDate,
-    organization,
-    location,
-    saleTitle,
-    lotNumber,
-  } = props
-
-  return (
-    <>
-      <MetadataField label="Medium" value={mediumText} />
-      <MetadataField label="Dimensions" value={dimensionText} />
-      <MetadataField label="Sale Date" value={saleDate} />
-      <MetadataField label="Auction house" value={organization} />
-      <MetadataField label="Sale location" value={location} />
-      <MetadataField label="Sale name" value={saleTitle} />
-      <MetadataField label="Lot" value={lotNumber} />
-    </>
-  )
-}
 export const AuctionResultFragmentContainer = createFragmentContainer(
   AuctionResult,
   {
     auctionResult: graphql`
       fragment AuctionResult_auctionResult on AuctionResult {
-        internalID
-        artistID
+        ...AuctionResultMetaData_auctionResult
+        ...AuctionResultTitleInfo_auctionResult
         artist {
           slug
           name
-          href
-          isPersonalArtist
-          birthday
         }
         images {
           thumbnail {
@@ -279,7 +190,6 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
           }
         }
         title
-        dateText
         estimate {
           display
           high
