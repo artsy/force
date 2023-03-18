@@ -10,11 +10,14 @@ import {
   NoImageIcon,
   Image,
   Join,
+  Separator,
 } from "@artsy/palette"
+import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
 import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { SingleAuctionResult_auctionResult$data } from "__generated__/SingleAuctionResult_auctionResult.graphql"
 
@@ -39,9 +42,12 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
     location,
     saleTitle,
     lotNumber,
+    comparableAuctionResults,
   } = auctionResult
 
-  console.log("[LOGD] auctionResult = ", auctionResult)
+  const results = extractNodes(comparableAuctionResults)
+
+  console.log("[LOGD] results = ", results)
 
   const artistSlug = artist?.slug
 
@@ -162,6 +168,25 @@ export const SingleAuctionResult: React.FC<SingleAuctionResultProps> = ({
         {/* this column is needed to make sure the right side of the pafe is always empty */}
         <Column span={4}></Column>
       </GridColumns>
+
+      <Spacer y={[4, 6]} />
+
+      <Text variant={["sm-display", "md"]} textAlign="left">
+        Comparable Works
+      </Text>
+
+      <Spacer y={[2, 4]} />
+      <Join separator={<Spacer y={2} />}>
+        {results.map((result, index) => {
+          return (
+            <ArtistAuctionResultItemFragmentContainer
+              key={index}
+              auctionResult={result}
+              filtersAtDefault={false}
+            />
+          )
+        })}
+      </Join>
     </>
   )
 }
@@ -271,48 +296,10 @@ export const SingleAuctionResultFragmentContainer = createFragmentContainer(
         saleTitle
         lotNumber
         comparableAuctionResults(first: 3) @optionalField {
-          totalCount
           edges {
             cursor
             node {
-              currency
-              dateText
-              id
-              internalID
-              artistID
-              artist {
-                name
-              }
-              isUpcoming
-              images {
-                thumbnail {
-                  url(version: "square140")
-                  height
-                  width
-                  aspectRatio
-                }
-              }
-              estimate {
-                low
-                display
-              }
-              dimensionText
-              mediumText
-              organization
-              boughtIn
-              performance {
-                mid
-              }
-              priceRealized {
-                cents
-                display
-                displayUSD
-              }
-              saleDate
-              title
-
-              artistID
-              internalID
+              ...ArtistAuctionResultItem_auctionResult
             }
           }
         }
