@@ -15,7 +15,7 @@ type Artwork = {
   isSavedToCustomLists: boolean
 }
 
-interface Options {
+export interface SaveArtworkToListsOptions {
   artwork: Artwork
   contextModule: AuthContextModule
 }
@@ -27,7 +27,7 @@ export enum ResultAction {
   ShowingAuthDialog,
 }
 
-export const useSaveArtworkToLists = (options: Options) => {
+export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
   const { artwork, contextModule } = options
   const { showAuthDialog: _showAuthDialog } = useAuthDialog()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
