@@ -316,6 +316,22 @@ describe("SavedSearchAlertEditForm", () => {
       expect(saveAlertButton).toBeDisabled()
     })
 
+    it("should be enabled if pills are changed", () => {
+      renderWithRelay({
+        ArtistConnection: () => artistsConnectionMocked,
+        FilterArtworksConnection: () => filterArtworksConnectionMocked,
+        Me: () => meMocked,
+      })
+
+      fireEvent.click(screen.getByText("Purchase"))
+
+      const saveAlertButton = screen.getByRole("button", {
+        name: "Save Alert",
+      })
+
+      expect(saveAlertButton).toBeEnabled()
+    })
+
     it("should be enabled if notification checkboxes are changed", () => {
       renderWithRelay({
         ArtistConnection: () => artistsConnectionMocked,
@@ -392,49 +408,6 @@ const artistsConnectionMocked = {
   ],
 }
 
-const savedSearchAlertLabelsMocked = [
-  {
-    field: "artistIDs",
-    value: "artist-id",
-    displayValue: "Banksy",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-two-id",
-    displayValue: "KAWS",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-three-id",
-    displayValue: "David Shrigley",
-  },
-  {
-    field: "sizes",
-    value: "SMALL",
-    displayValue: "Small (under 40cm)",
-  },
-  {
-    field: "acquireable",
-    value: "true",
-    displayValue: "Purchase",
-  },
-  {
-    field: "atAuction",
-    value: "true",
-    displayValue: "Bid",
-  },
-  {
-    field: "inquireableOnly",
-    value: "true",
-    displayValue: "Contact Gallery",
-  },
-  {
-    field: "offerable",
-    value: "true",
-    displayValue: "Make Offer",
-  },
-]
-
 const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
@@ -460,7 +433,6 @@ const savedSearchAlertMocked = {
     frequency: "daily",
   },
   width: null,
-  labels: savedSearchAlertLabelsMocked,
 }
 
 const filterArtworksConnectionMocked = {
