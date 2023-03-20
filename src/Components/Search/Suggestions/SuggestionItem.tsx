@@ -7,16 +7,15 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   ArtworkIcon,
   AuctionIcon,
-  Box,
   Flex,
   Pill,
-  Image,
   PillProps,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
+import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -114,26 +113,9 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   )
 
   return (
-    <Flex>
-      <Box width={50} height={50} mr={1}>
-        {imageUrl ? (
-          <Image
-            lazyLoad
-            width={50}
-            height={50}
-            src={imageUrl}
-            borderRadius={label === "Artist" ? 50 : 0}
-          />
-        ) : (
-          <Box
-            width={50}
-            height={50}
-            bg="black5"
-            borderRadius={label === "Artist" ? 50 : 0}
-          />
-        )}
-      </Box>
-      <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
+    <Flex alignItems="center">
+      <SuggestionItemPreview imageUrl={imageUrl} label={label} />
+      <Flex flexDirection="column" mx={1} flex={1} overflow="hidden">
         <Text variant="sm-display" overflowEllipsis>
           {partTags}
         </Text>
