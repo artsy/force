@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa63d5038b59fae3a372c6666645ee98>>
+ * @generated SignedSource<<5087f4869369a6b026d84f8338733f93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,7 @@ export type SearchBarTestQuery$rawResponse = {
           readonly displayLabel: string | null;
           readonly href: string | null;
           readonly id: string;
+          readonly imageUrl: string | null;
           readonly statuses: {
             readonly artworks: boolean | null;
             readonly auctionLots: boolean | null;
@@ -40,6 +41,7 @@ export type SearchBarTestQuery$rawResponse = {
           readonly displayType: string | null;
           readonly href: string | null;
           readonly id: string;
+          readonly imageUrl: string | null;
           readonly slug: string;
         } | {
           readonly __typename: string;
@@ -47,6 +49,7 @@ export type SearchBarTestQuery$rawResponse = {
           readonly displayLabel: string | null;
           readonly href: string | null;
           readonly id: string;
+          readonly imageUrl: string | null;
         } | null;
       } | null> | null;
     } | null;
@@ -214,6 +217,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "imageUrl",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "__typename",
                             "storageKey": null
                           },
@@ -301,7 +311,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "087ca3eef11b9ccc476afc30872654bd",
+    "cacheID": "b871ca2c94cf0b625c5b6c7a8393b1a8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -335,6 +345,7 @@ return {
         "viewer.searchConnection.edges.node.displayType": (v3/*: any*/),
         "viewer.searchConnection.edges.node.href": (v3/*: any*/),
         "viewer.searchConnection.edges.node.id": (v4/*: any*/),
+        "viewer.searchConnection.edges.node.imageUrl": (v3/*: any*/),
         "viewer.searchConnection.edges.node.slug": (v4/*: any*/),
         "viewer.searchConnection.edges.node.statuses": {
           "enumValues": null,
@@ -348,7 +359,7 @@ return {
     },
     "name": "SearchBarTestQuery",
     "operationKind": "query",
-    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

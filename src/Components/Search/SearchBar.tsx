@@ -355,7 +355,7 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href, statuses } = edge.node
+    const { displayLabel, href, statuses, imageUrl } = edge.node
 
     const label = this.getLabel(edge.node)
 
@@ -368,6 +368,7 @@ export class SearchBar extends Component<Props, State> {
         href={href}
         isHighlighted={isHighlighted}
         label={label}
+        imageUrl={imageUrl}
         query={query}
         showArtworksButton={showArtworksButton}
         showAuctionResultsButton={showAuctionResultsButton}
@@ -491,6 +492,7 @@ export const SearchBarRefetchContainer = createRefetchContainer(
             node {
               displayLabel
               href
+              imageUrl
               __typename
               ... on SearchableItem {
                 displayType

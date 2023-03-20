@@ -10,11 +10,13 @@ import {
   Flex,
   Pill,
   PillProps,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
+import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -23,6 +25,7 @@ import { RouterLink } from "System/Router/RouterLink"
 interface SuggestionItemProps {
   display: string
   href: string
+  imageUrl?: string
   isHighlighted: boolean
   label: string
   query: string
@@ -102,6 +105,7 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   display,
   label,
   query,
+  imageUrl,
 }) => {
   const matches = match(display, query)
   const parts = parse(display, matches)
@@ -110,15 +114,19 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   )
 
   return (
-    <>
-      <Text variant="sm" overflowEllipsis>
-        {partTags}
-      </Text>
+    <Flex alignItems="center">
+      <SuggestionItemPreview imageUrl={imageUrl} label={label} />
+      <Spacer x={1} />
+      <Flex flexDirection="column" flex={1} overflow="hidden">
+        <Text variant="sm-display" overflowEllipsis>
+          {partTags}
+        </Text>
 
-      <Text color="black60" variant="xs" overflowEllipsis>
-        {label}
-      </Text>
-    </>
+        <Text color="black60" variant="xs" overflowEllipsis>
+          {label}
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
