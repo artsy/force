@@ -29,7 +29,6 @@ import {
   useSavedSearchAlertContext,
 } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
-  FilterPill,
   SavedSearchAleftFormValues,
   SavedSearchEntity,
   SavedSearchEntityCriteria,
@@ -100,10 +99,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
-
-  const handleRemovePill = (pill: FilterPill) => {
-    return removePill(pill)
-  }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
@@ -177,7 +172,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills
                     items={pills}
-                    onDeletePress={handleRemovePill}
+                    onDeletePress={removePill}
                   />
                 </Flex>
               </Box>
