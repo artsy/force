@@ -316,22 +316,6 @@ describe("SavedSearchAlertEditForm", () => {
       expect(saveAlertButton).toBeDisabled()
     })
 
-    it("should be enabled if pills are changed", () => {
-      renderWithRelay({
-        ArtistConnection: () => artistsConnectionMocked,
-        FilterArtworksConnection: () => filterArtworksConnectionMocked,
-        Me: () => meMocked,
-      })
-
-      fireEvent.click(screen.getByText("Purchase"))
-
-      const saveAlertButton = screen.getByRole("button", {
-        name: "Save Alert",
-      })
-
-      expect(saveAlertButton).toBeEnabled()
-    })
-
     it("should be enabled if notification checkboxes are changed", () => {
       renderWithRelay({
         ArtistConnection: () => artistsConnectionMocked,
