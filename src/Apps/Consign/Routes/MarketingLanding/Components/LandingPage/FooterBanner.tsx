@@ -1,4 +1,4 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { RouterLink } from "System/Router/RouterLink"
 
@@ -12,7 +12,6 @@ export const FooterBanner: React.FC = () => {
         </RouterLink>{" "}
         to access the world’s largest online marketplace.
       </FullBleedBanner>
-      <Spacer y={-4} />
     </Box>
   )
 }
