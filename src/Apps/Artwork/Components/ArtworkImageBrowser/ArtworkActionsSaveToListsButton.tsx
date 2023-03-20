@@ -26,7 +26,7 @@ export const ArtworkActionsSaveToListsButton: FC<ArtworkActionsSaveToListsButton
       slug: artwork.slug,
       title: `${artwork.title}, ${artwork.date}`,
       imageURL: artwork.preview?.url ?? null,
-      isSavedToDefaultList: !!artwork.isSaved,
+      isSavedToDefaultList: !!artwork.is_saved,
       isSavedToCustomLists: isSavedToCustomLists,
     },
   })
@@ -49,7 +49,7 @@ export const ArtworkActionsSaveToListsButtonFragmentContainer = createFragmentCo
       fragment ArtworkActionsSaveToListsButton_artwork on Artwork {
         id
         internalID
-        isSaved
+        is_saved: isSaved
         slug
         title
         date
