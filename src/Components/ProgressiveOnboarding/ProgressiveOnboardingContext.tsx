@@ -78,20 +78,34 @@ export const localStorageKey = (id: string) => {
   return `progressive-onboarding.dismissed.${id}`
 }
 
+// TODO: Update prefixing to nest actions SaveArtworkFind, FollowArtistFind, etc.
+
+// Follows
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
 export const PROGRESSIVE_ONBOARDING_FIND_FOLLOWS = "find-follows"
 export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
+// Saves
 export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
 export const PROGRESSIVE_ONBOARDING_FIND_SAVES = "find-saves"
 export const PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT = "saves-highlight"
 
-const PROGRESSIVE_ONBOARDING_KEYS = [
+// Alerts
+export const PROGRESSIVE_ONBOARDING_ALERT_CREATE = "alert-create"
+export const PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER = "alert-select-filter"
+export const PROGRESSIVE_ONBOARDING_ALERT_READY = "alert-ready"
+export const PROGRESSIVE_ONBOARDING_ALERT_FIND = "alert-find"
+
+export const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
   PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
   PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
   PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
   PROGRESSIVE_ONBOARDING_FIND_SAVES,
   PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_ALERT_CREATE,
+  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
+  PROGRESSIVE_ONBOARDING_ALERT_READY,
+  PROGRESSIVE_ONBOARDING_ALERT_FIND,
 ] as const
 
 export type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
