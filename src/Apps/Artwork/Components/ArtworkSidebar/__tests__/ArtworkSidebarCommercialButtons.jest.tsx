@@ -270,7 +270,12 @@ describe("ArtworkSidebarCommercialButtons", () => {
           isAcquireable: true,
           isInquireable: false,
           isOfferable: false,
-          editionSets: [],
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquireable: true,
+            },
+          ],
         }),
       })
 
@@ -284,6 +289,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             action: "buyNow",
             kind: "artworks",
             objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
           },
           redirectTo: `/artwork/artwork-1?creating_order=true`,
         },
@@ -302,6 +308,12 @@ describe("ArtworkSidebarCommercialButtons", () => {
         Artwork: () => ({
           internalID: "artwork-1",
           isOfferable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isOfferable: true,
+            },
+          ],
         }),
       })
 
@@ -315,6 +327,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
             action: "makeOffer",
             kind: "artworks",
             objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
           },
           redirectTo: `/artwork/artwork-1?creating_order=true`,
         },

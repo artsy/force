@@ -21,8 +21,18 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "gene"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
-  | { action: "buyNow"; kind: "artworks"; objectId: string }
-  | { action: "makeOffer"; kind: "artworks"; objectId: string }
+  | {
+      action: "buyNow"
+      kind: "artworks"
+      objectId: string
+      secondaryObjectId: string | null | undefined
+    }
+  | {
+      action: "makeOffer"
+      kind: "artworks"
+      objectId: string
+      secondaryObjectId: string | null | undefined
+    }
 
 export const runAuthIntent = async ({
   user,
@@ -71,10 +81,18 @@ export const runAuthIntent = async ({
           return saveArtworkMutation(relayEnvironment, value.objectId)
 
         case "buyNow":
-          return createOrderMutation(relayEnvironment, value.objectId)
+          return createOrderMutation(
+            relayEnvironment,
+            value.objectId,
+            value.secondaryObjectId
+          )
 
         case "makeOffer":
-          return createOfferOrderMutation(relayEnvironment, value.objectId)
+          return createOfferOrderMutation(
+            relayEnvironment,
+            value.objectId,
+            value.secondaryObjectId
+          )
 
         case "associateSubmission":
           return associateSubmissionMutation(relayEnvironment, value.objectId)
@@ -153,6 +171,7 @@ const schema = Yup.object({
     .oneOf(["artist", "artworks", "gene", "profile", "submission"])
     .required(),
   objectId: Yup.string().required(),
+  secondaryObjectId: Yup.string(),
 })
 
 export const isValid = (value: any): value is AfterAuthAction => {

@@ -4,7 +4,8 @@ import { AuthIntentCreateOfferOrderMutation } from "__generated__/AuthIntentCrea
 
 export const createOfferOrderMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
+  secondaryId: string | null | undefined
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentCreateOfferOrderMutation>(relayEnvironment, {
@@ -47,6 +48,7 @@ export const createOfferOrderMutation: AuthIntentMutation = (
       variables: {
         input: {
           artworkId: id,
+          editionSetId: secondaryId,
         },
       },
     })
