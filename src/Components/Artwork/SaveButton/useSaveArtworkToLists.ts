@@ -7,7 +7,6 @@ import { useSystemContext } from "System/SystemContext"
 type Artwork = {
   internalID: string
   id: string
-  // TODO: Can we remove it?
   slug: string
   title: string
   imageURL: string | null
