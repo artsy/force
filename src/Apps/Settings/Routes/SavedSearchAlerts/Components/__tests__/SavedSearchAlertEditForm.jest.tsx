@@ -77,8 +77,7 @@ describe("SavedSearchAlertEditForm", () => {
           ...SavedSearchAlertEditForm_viewer
         }
         me {
-          ...SavedSearchAlertEditForm_me
-            @arguments(savedSearchId: "id", withAggregations: true)
+          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
         }
         artistsConnection(slugs: $artistIDs) {
           ...SavedSearchAlertEditForm_artistsConnection
@@ -409,49 +408,6 @@ const artistsConnectionMocked = {
   ],
 }
 
-const savedSearchAlertLabelsMocked = [
-  {
-    field: "artistIDs",
-    value: "artist-id",
-    displayValue: "Banksy",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-two-id",
-    displayValue: "KAWS",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-three-id",
-    displayValue: "David Shrigley",
-  },
-  {
-    field: "sizes",
-    value: "SMALL",
-    displayValue: "Small (under 40cm)",
-  },
-  {
-    field: "acquireable",
-    value: "true",
-    displayValue: "Purchase",
-  },
-  {
-    field: "atAuction",
-    value: "true",
-    displayValue: "Bid",
-  },
-  {
-    field: "inquireableOnly",
-    value: "true",
-    displayValue: "Contact Gallery",
-  },
-  {
-    field: "offerable",
-    value: "true",
-    displayValue: "Make Offer",
-  },
-]
-
 const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
@@ -477,7 +433,6 @@ const savedSearchAlertMocked = {
     frequency: "daily",
   },
   width: null,
-  labels: savedSearchAlertLabelsMocked,
 }
 
 const filterArtworksConnectionMocked = {
