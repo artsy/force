@@ -10,6 +10,7 @@ import {
   Flex,
   Pill,
   PillProps,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -115,7 +116,8 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   return (
     <Flex alignItems="center">
       <SuggestionItemPreview imageUrl={imageUrl} label={label} />
-      <Flex flexDirection="column" mx={1} flex={1} overflow="hidden">
+      <Spacer x={1} />
+      <Flex flexDirection="column" flex={1} overflow="hidden">
         <Text variant="sm-display" overflowEllipsis>
           {partTags}
         </Text>
