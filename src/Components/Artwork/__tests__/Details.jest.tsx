@@ -508,6 +508,7 @@ describe("Details", () => {
 })
 
 const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
+  isInAuction: true,
   id: "opaque-artwork-id",
   internalID: "opaque-internal-id",
   artist: {

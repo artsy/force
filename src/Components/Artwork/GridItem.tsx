@@ -118,7 +118,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           showHoverDetails={showHoverDetails}
           disableRouterLinking={disableRouterLinking}
           to={to}
-          enableSaveButtonForLists
           renderSaveButton={renderSaveButton}
         />
       </div>

@@ -7,6 +7,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
 import { resized } from "Utils/resized"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 export interface ShelfArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
@@ -41,58 +42,60 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     (artwork.artistNames ? ` by ${artwork.artistNames}` : "")
 
   return (
-    <RouterLink
-      to={artwork?.href}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      display="flex"
-      flexDirection="column"
-      justifyContent="flex-end"
-      textDecoration="none"
-      data-test="artworkShelfArtwork"
-      data-testid="ShelfArtwork"
-      aria-label={label}
-      width={width}
-      {...rest}
-    >
-      {image ? (
-        <Box
-          maxHeight={[250, 320]}
+    <ManageArtworkForSavesProvider>
+      <RouterLink
+        to={artwork?.href}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        display="flex"
+        flexDirection="column"
+        justifyContent="flex-end"
+        textDecoration="none"
+        data-test="artworkShelfArtwork"
+        data-testid="ShelfArtwork"
+        aria-label={label}
+        width={width}
+        {...rest}
+      >
+        {image ? (
+          <Box
+            maxHeight={[250, 320]}
+            maxWidth="100%"
+            style={{
+              aspectRatio: `${artwork.image?.width ?? 1} / ${
+                artwork.image?.height ?? 1
+              }`,
+            }}
+            bg="black10"
+          >
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width="100%"
+              height="100%"
+              lazyLoad={lazyLoad}
+              style={{ objectFit: "contain" }}
+              alt=""
+            />
+          </Box>
+        ) : (
+          <Box style={{ aspectRatio: "1 / 1" }} maxWidth="100%" bg="black10" />
+        )}
+
+        <Metadata
+          artwork={artwork}
+          hideSaleInfo={hideSaleInfo}
+          isHovered={isHovered}
+          contextModule={contextModule}
+          showSaveButton
+          disableRouterLinking
           maxWidth="100%"
-          style={{
-            aspectRatio: `${artwork.image?.width ?? 1} / ${
-              artwork.image?.height ?? 1
-            }`,
-          }}
-          bg="black10"
-        >
-          <Image
-            src={image.src}
-            srcSet={image.srcSet}
-            width="100%"
-            height="100%"
-            lazyLoad={lazyLoad}
-            style={{ objectFit: "contain" }}
-            alt=""
-          />
-        </Box>
-      ) : (
-        <Box style={{ aspectRatio: "1 / 1" }} maxWidth="100%" bg="black10" />
-      )}
+        />
 
-      <Metadata
-        artwork={artwork}
-        hideSaleInfo={hideSaleInfo}
-        isHovered={isHovered}
-        contextModule={contextModule}
-        showSaveButton
-        disableRouterLinking
-        maxWidth="100%"
-      />
-
-      {children}
-    </RouterLink>
+        {children}
+      </RouterLink>
+    </ManageArtworkForSavesProvider>
   )
 }
 
@@ -105,6 +108,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         title
         href
         artistNames
+        isInAuction
         image {
           src: url(version: ["larger", "large"])
           width
