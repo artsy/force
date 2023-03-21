@@ -40,14 +40,6 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
     },
   })
 
-  const getActionLabel = (action: ResultAction) => {
-    if (action === ResultAction.SavedToDefaultList) {
-      return "Saved Artwork"
-    }
-
-    return "Removed Artwork"
-  }
-
   const handleSave = async () => {
     try {
       const action = await saveArtworkToLists()
@@ -56,8 +48,10 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
         action === ResultAction.SavedToDefaultList ||
         action === ResultAction.RemovedFromDefaultList
       ) {
+        const label = labelByResultAction[action]
+
         tracking.trackEvent({
-          action: getActionLabel(action),
+          action: label,
           entity_slug: artwork.slug,
           entity_id: artwork.internalID,
         })
@@ -108,3 +102,8 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
     `,
   }
 )
+
+const labelByResultAction = {
+  [ResultAction.SavedToDefaultList]: "Saved Artwork",
+  [ResultAction.RemovedFromDefaultList]: "Removed Artwork",
+}
