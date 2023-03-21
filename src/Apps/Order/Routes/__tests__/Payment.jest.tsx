@@ -666,6 +666,20 @@ describe("Payment", () => {
       )
     })
 
+    it("displays artwork provenance", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Provenance: Artwork acquired via an auction in 2000"
+      )
+    })
+
+    it("displays artwork condition description", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Condition: Artwork is in perfect condition"
+      )
+    })
+
     it("shows avaliable payment methods", () => {
       const paymentMethods = page.find("[data-test='payment-methods']").first()
       expect(paymentMethods.text()).toContain("Wire transfer")
