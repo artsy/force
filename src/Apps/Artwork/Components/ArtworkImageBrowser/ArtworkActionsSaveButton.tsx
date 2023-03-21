@@ -110,11 +110,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
 
   if (isArtworksListEnabled) {
     return (
-      <ProgressiveOnboardingSaveArtworkQueryRenderer>
-        <ManageArtworkForSavesProvider>
+      <ManageArtworkForSavesProvider>
+        <ProgressiveOnboardingSaveArtworkQueryRenderer>
           <ArtworkActionsSaveToListsButtonFragmentContainer artwork={artwork} />
-        </ManageArtworkForSavesProvider>
-      </ProgressiveOnboardingSaveArtworkQueryRenderer>
+        </ProgressiveOnboardingSaveArtworkQueryRenderer>
+      </ManageArtworkForSavesProvider>
     )
   }
 
