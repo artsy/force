@@ -20,7 +20,11 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
   } = useSaveArtworkToLists(options)
 
   useEffect(() => {
-    if (value?.objectId !== artwork.internalID) {
+    if (
+      !value ||
+      value.action !== "saveArtworkToLists" ||
+      value?.objectId !== artwork.internalID
+    ) {
       return
     }
 
