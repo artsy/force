@@ -1,6 +1,6 @@
 import { Component, useContext } from "react"
 import * as React from "react"
-import { Box, BoxProps } from "@artsy/palette"
+import { Box, BoxProps, Flex, Pill } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
 import {
@@ -37,6 +37,19 @@ import { getENV } from "Utils/getENV"
 
 const logger = createLogger("Components/Search/SearchBar")
 
+const SearchPills = [
+  "TOP",
+  "ARTWORK",
+  "ARTIST",
+  "ARTICLE",
+  "SALE",
+  "ARTIST_SERIES",
+  "COLLECTION",
+  "FAIR",
+  "SHOW",
+  "GALLERY",
+]
+
 export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
   router?: Router
@@ -62,6 +75,16 @@ const AutosuggestWrapper = styled(Box)`
   }
 `
 
+const Pills = () => {
+  return (
+    <Flex m={2}>
+      {SearchPills.map(pill => (
+        <Pill>{pill}</Pill>
+      ))}
+    </Flex>
+  )
+}
+
 const SuggestionContainer = ({ children, containerProps }) => {
   return (
     <AutosuggestWrapper {...containerProps}>
@@ -74,6 +97,7 @@ const SuggestionContainer = ({ children, containerProps }) => {
         position="absolute"
         zIndex={2}
       >
+        <Pills />
         {children}
       </Box>
     </AutosuggestWrapper>
