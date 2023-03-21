@@ -25,7 +25,7 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
     }
 
     if (artwork.isSavedToCustomLists) {
-      // Display select lists for artwork modal if arwork is saved to the custom lists
+      // Display select lists for artwork modal if artwork is saved to the custom lists
       openSelectListsForArtworkModal()
     } else if (artwork.isSavedToDefaultList) {
       // Display toast if artwork is already saved to the default list
