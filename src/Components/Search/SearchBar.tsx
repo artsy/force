@@ -127,7 +127,9 @@ export class SearchBar extends Component<Props, State> {
       node: { displayType: entityType, id: entityID },
     } = suggestion
 
-    if (entityType === "FirstItem") return
+    if (entityType === "FirstItem" || entityType === "PillsContainer") {
+      return
+    }
 
     this.setState({
       entityID,
@@ -344,14 +346,15 @@ export class SearchBar extends Component<Props, State> {
     displayType || (__typename === "Artist" ? "Artist" : null)
 
   renderSuggestion = (edge, rest) => {
-    if (React.isValidElement(edge)) {
-      return edge
+    if (edge.node.isPills) {
+      return this.renderPills()
     }
-    const renderer = edge.node.isFirstItem
-      ? this.renderFirstSuggestion
-      : this.renderDefaultSuggestion
-    const item = renderer(edge, rest)
-    return item
+
+    if (edge.node.isFirstItem) {
+      return this.renderFirstSuggestion(edge, rest)
+    }
+
+    return this.renderDefaultSuggestion(edge, rest)
   }
 
   renderFirstSuggestion = (edge, { query, isHighlighted }) => {
@@ -394,6 +397,16 @@ export class SearchBar extends Component<Props, State> {
 
   renderInputComponent = props => <SearchInputContainer {...props} />
 
+  renderPills = () => {
+    return (
+      <Box>
+        {SearchPills.map(pill => (
+          <Pill>{pill}</Pill>
+        ))}
+      </Box>
+    )
+  }
+
   renderAutosuggestComponent(t, { xs }) {
     const { term } = this.state
     const { viewer } = this.props
@@ -426,20 +439,22 @@ export class SearchBar extends Component<Props, State> {
       },
     }
 
-    const pillTest = () => {
-      return (
-        <Box>
-          {SearchPills.map(pill => (
-            <Pill>{pill}</Pill>
-          ))}
-        </Box>
-      )
+    const isPillsPlaceholder = {
+      node: {
+        displayLabel: term,
+        displayType: "PillsContainer",
+        isPills: true,
+      },
     }
 
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const suggestions = [pillTest, ...edges, firstSuggestionPlaceholder]
+    const suggestions = [
+      isPillsPlaceholder,
+      ...edges,
+      firstSuggestionPlaceholder,
+    ]
 
     return (
       <Autosuggest
