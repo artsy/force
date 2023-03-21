@@ -123,26 +123,21 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
               </Text>
               <Spacer y={2} />
               <Flex
-                justifyContent={["space-between"]}
+                justifyContent={["flex-start", "space-between"]}
                 flexDirection={["column", "row-reverse"]}
               >
                 <Button
                   type="submit"
-                  mb={[1, 0]}
                   loading={!!isSubmitting}
                   disabled={!dirty || !isValid}
                 >
                   {t("collectorSaves.editListModal.save")}
                 </Button>
 
-                <Button
-                  variant="secondaryBlack"
-                  onClick={onClose}
-                  display={["block", "none"]} // TODO: intentionally hidden on desktop?
-                >
-                  {
-                    t("collectorSaves.editListModal.back") // TODO: "back" vs "cancel"?
-                  }
+                <Spacer y={[1, 0]} />
+
+                <Button variant="secondaryBlack" onClick={onClose}>
+                  {t("common.buttons.cancel")}
                 </Button>
               </Flex>
             </Form>

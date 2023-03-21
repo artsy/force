@@ -16,13 +16,12 @@ import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Route
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { extractNodes } from "Utils/extractNodes"
+import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
 import { debounce, sortBy } from "lodash"
 import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 
 interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
@@ -39,9 +38,6 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     trackSelectArtist,
     trackSkipArtistSelection,
   } = useMyCollectionTracking()
-  const enablePersonalArtists = useFeatureFlag(
-    "cx-my-collection-personal-artists-for-web"
-  )
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -126,38 +122,32 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
             >
               {query}
             </Text>
-            “ on Artsy.{" "}
-            {!!enablePersonalArtists &&
-              "You can add their name in the artwork details."}
+            “ on Artsy. You can add their name in the artwork details.
           </Text>
 
           <Spacer y={4} />
 
-          {!!enablePersonalArtists && (
-            <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
-              Add Artist
-            </Button>
-          )}
+          <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
+            Add Artist
+          </Button>
         </Box>
       ) : (
         <>
-          {!!enablePersonalArtists && (
-            <Flex flexDirection="row">
-              <Text variant={["xs", "sm-display"]}>
-                Can't find the artist?&nbsp;
-                <Clickable
-                  onClick={handleSkip}
-                  textDecoration="underline"
-                  data-testid="artist-select-skip-button"
-                >
-                  <Text variant={["xs", "sm-display"]} color="black100">
-                    Add their name
-                  </Text>
-                </Clickable>
-                .
-              </Text>
-            </Flex>
-          )}
+          <Flex flexDirection="row">
+            <Text variant={["xs", "sm-display"]}>
+              Can't find the artist?&nbsp;
+              <Clickable
+                onClick={handleSkip}
+                textDecoration="underline"
+                data-testid="artist-select-skip-button"
+              >
+                <Text variant={["xs", "sm-display"]} color="black100">
+                  Add their name
+                </Text>
+              </Clickable>
+              .
+            </Text>
+          </Flex>
 
           <Spacer y={4} />
 

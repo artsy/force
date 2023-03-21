@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider, useSystemContext } from "System/SystemContext"
+import { SystemContextProvider } from "System/SystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -36,7 +36,6 @@ const mockArtwork = {
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
 
-jest.mock("System/useSystemContext")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
@@ -104,11 +103,6 @@ describe("Price Estimate Contact Information", () => {
     mockTracking.mockImplementation(() => ({
       trackEvent: mockTrackEvent,
     }))
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-collector-profile": { flagEnabled: false },
-      },
-    }))
   })
 
   describe("Initial render", () => {
@@ -126,7 +120,7 @@ describe("Price Estimate Contact Information", () => {
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
       ).toHaveAttribute(
         "href",
-        `/my-collection/artwork/${mockArtwork.internalID}`
+        `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
       )
 
       expect(screen.getByTestId("submit-button")).toBeInTheDocument()
@@ -146,11 +140,6 @@ describe("Price Estimate Contact Information", () => {
 
   describe("Initial render with ff enabled", () => {
     it("renders correctly", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-        },
-      }))
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         Artwork: () => mockArtwork,
@@ -215,20 +204,15 @@ describe("Price Estimate Contact Information", () => {
           },
         })
         expect(mockRouterReplace).toHaveBeenCalledWith(
-          `/my-collection/artwork/${mockArtwork.internalID}`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}`
         )
         expect(mockRouterPush).toHaveBeenCalledWith(
-          `/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
+          `/collector-profile/my-collection/artwork/${mockArtwork.internalID}/price-estimate/success`
         )
       })
     })
 
     it("submitting a valid form with ff enabled", async () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-collector-profile": { flagEnabled: true },
-        },
-      }))
       getWrapper().renderWithRelay({
         Me: () => mockMe,
         Artwork: () => mockArtwork,

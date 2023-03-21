@@ -2088,6 +2088,7 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Domestic shipping fee.
   domesticShippingFee: Money
+  dominantColors: [String!]!
   downloadableImageUrl: String
   editionNumber: String
   editionOf: String
@@ -2202,6 +2203,7 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether a user can make an offer on the work through inquiry
   isOfferableFromInquiry: Boolean
   isOnHold: String
+  isPriceEstimateRequestable: Boolean
   isPriceHidden: Boolean
   isPriceRange: Boolean
   isSaved: Boolean
@@ -3930,6 +3932,7 @@ type CommerceBuyOrder implements CommerceOrder {
   buyerDetails: OrderParty
   buyerPhoneNumber: String
   buyerPhoneNumberCountryCode: String
+  buyerProfile: CollectorProfileType
   buyerTotal(
     decimal: String = "."
 
@@ -4664,6 +4667,7 @@ type CommerceOfferOrder implements CommerceOrder {
   buyerDetails: OrderParty
   buyerPhoneNumber: String
   buyerPhoneNumberCountryCode: String
+  buyerProfile: CollectorProfileType
   buyerTotal(
     decimal: String = "."
 
@@ -4898,6 +4902,7 @@ interface CommerceOrder {
   buyerDetails: OrderParty
   buyerPhoneNumber: String
   buyerPhoneNumberCountryCode: String
+  buyerProfile: CollectorProfileType
   buyerTotal(
     decimal: String = "."
 
@@ -11079,7 +11084,7 @@ type Me implements Node {
   ): CollectionsConnection
   collectorLevel: Int
 
-  # A collector profile.
+  # Current user's collector profile.
   collectorProfile: CollectorProfileType
 
   # A conversation, usually between a user and a partner
@@ -14174,6 +14179,9 @@ type Query {
     slug: String
   ): City
 
+  # A collector profile.
+  collectorProfile(userID: String): CollectorProfileType
+
   # Find balance of an account associated with a setup intent
   commerceBankAccountBalance(
     bankAccountId: ID
@@ -16170,6 +16178,9 @@ input SendIdentityVerificationEmailMutationInput {
 
   # The name to be used for the user undergoing identity verification
   name: String
+
+  # Whether an automated identity verification is sent or not
+  sendEmail: Boolean
 
   # The user Id for the user undergoing identity verification
   userID: String
@@ -18557,6 +18568,9 @@ type Viewer {
     # A slug for the city, conforming to Gravity's city slug naming conventions
     slug: String
   ): City
+
+  # A collector profile.
+  collectorProfile(userID: String): CollectorProfileType
 
   # A conversation, usually between a user and a partner
   conversation(

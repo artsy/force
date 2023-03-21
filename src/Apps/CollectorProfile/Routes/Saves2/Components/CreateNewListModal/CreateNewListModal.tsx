@@ -1,5 +1,3 @@
-import React from "react"
-import { graphql } from "react-relay"
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import {
@@ -14,26 +12,26 @@ import {
 import { useSystemContext } from "System/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { CreateNewListModalMutation } from "__generated__/CreateNewListModalMutation.graphql"
 import {
   ArtworkEntity,
   CreateNewListModalHeader,
 } from "./CreateNewListModalHeader"
+import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
+import { FC } from "react"
 
 export interface CreateNewListValues {
   name: string
 }
 
-export interface NewAddedList {
-  id: string
+export interface ArtworkList {
+  internalID: string
   name: string
 }
 
 interface CreateNewListModalProps {
   artwork?: ArtworkEntity
   onClose: () => void
-  onComplete: (data: NewAddedList) => void
+  onComplete: (data: ArtworkList) => void
   onBackClick?: () => void
 }
 
@@ -56,27 +54,8 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const { relayEnvironment } = useSystemContext()
-  const { submitMutation } = useMutation<CreateNewListModalMutation>({
-    mutation: graphql`
-      mutation CreateNewListModalMutation($input: createCollectionInput!) {
-        createCollection(input: $input) {
-          responseOrError {
-            ... on CreateCollectionSuccess {
-              collection {
-                internalID
-              }
-            }
+  const { submitMutation } = useCreateCollection()
 
-            ... on CreateCollectionFailure {
-              mutationError {
-                message
-              }
-            }
-          }
-        }
-      }
-    `,
-  })
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
     ? t("common.buttons.back")
@@ -92,7 +71,9 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 
     try {
       const { createCollection } = await submitMutation({
-        variables: { input: { name: values.name } },
+        variables: {
+          input: { name: values.name },
+        },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
           const errorMessage = result?.mutationError?.message
@@ -102,7 +83,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       })
 
       onComplete({
-        id: createCollection?.responseOrError?.collection?.internalID!,
+        internalID: createCollection?.responseOrError?.collection?.internalID!,
         name: values.name,
       })
     } catch (error) {
@@ -140,50 +121,27 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
               artwork ? <CreateNewListModalHeader artwork={artwork} /> : null
             }
             footer={
-              <>
-                {/* Desktop view */}
-                <Media greaterThanOrEqual="sm">
-                  <Flex justifyContent="space-between">
-                    <Button
-                      variant="secondaryBlack"
-                      onClick={handleBackOnCancelClick}
-                    >
-                      {backOrCancelLabel}
-                    </Button>
+              <Flex
+                justifyContent={["flex-start", "space-between"]}
+                flexDirection={["column", "row-reverse"]}
+              >
+                <Button
+                  disabled={isCreateButtonDisabled}
+                  loading={isSubmitting}
+                  onClick={() => handleSubmit()}
+                >
+                  {t("collectorSaves.createNewListModal.createListButton")}
+                </Button>
 
-                    <Button
-                      disabled={isCreateButtonDisabled}
-                      loading={isSubmitting}
-                      onClick={() => handleSubmit()}
-                      alignSelf="flex-end"
-                    >
-                      {t("collectorSaves.createNewListModal.createListButton")}
-                    </Button>
-                  </Flex>
-                </Media>
+                <Spacer y={[1, 0]} />
 
-                {/* Mobile view */}
-                <Media lessThan="sm">
-                  <Button
-                    disabled={isCreateButtonDisabled}
-                    loading={isSubmitting}
-                    onClick={() => handleSubmit()}
-                    width="100%"
-                  >
-                    {t("collectorSaves.createNewListModal.createListButton")}
-                  </Button>
-
-                  <Spacer y={1} />
-
-                  <Button
-                    variant="secondaryBlack"
-                    width="100%"
-                    onClick={handleBackOnCancelClick}
-                  >
-                    {backOrCancelLabel}
-                  </Button>
-                </Media>
-              </>
+                <Button
+                  variant="secondaryBlack"
+                  onClick={handleBackOnCancelClick}
+                >
+                  {backOrCancelLabel}
+                </Button>
+              </Flex>
             }
           >
             <LabeledInput
@@ -219,7 +177,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   )
 }
 
-export const CreateNewListModalContainer: React.FC<CreateNewListModalContainerProps> = props => {
+export const CreateNewListModalContainer: FC<CreateNewListModalContainerProps> = props => {
   const { visible } = props
 
   if (!visible) return null

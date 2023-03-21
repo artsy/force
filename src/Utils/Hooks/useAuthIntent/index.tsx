@@ -6,6 +6,8 @@ import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
+import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
+import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
 import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
@@ -19,6 +21,18 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "gene"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
+  | {
+      action: "buyNow"
+      kind: "artworks"
+      objectId: string
+      secondaryObjectId: string | null | undefined
+    }
+  | {
+      action: "makeOffer"
+      kind: "artworks"
+      objectId: string
+      secondaryObjectId: string | null | undefined
+    }
 
 export const runAuthIntent = async ({
   user,
@@ -65,6 +79,20 @@ export const runAuthIntent = async ({
 
         case "save":
           return saveArtworkMutation(relayEnvironment, value.objectId)
+
+        case "buyNow":
+          return createOrderMutation(
+            relayEnvironment,
+            value.objectId,
+            value.secondaryObjectId
+          )
+
+        case "makeOffer":
+          return createOfferOrderMutation(
+            relayEnvironment,
+            value.objectId,
+            value.secondaryObjectId
+          )
 
         case "associateSubmission":
           return associateSubmissionMutation(relayEnvironment, value.objectId)
@@ -130,12 +158,20 @@ export const setAfterAuthAction = (afterAuthAction: AfterAuthAction) => {
 
 const schema = Yup.object({
   action: Yup.string()
-    .oneOf(["associateSubmission", "createAlert", "follow", "save"])
+    .oneOf([
+      "associateSubmission",
+      "createAlert",
+      "follow",
+      "save",
+      "buyNow",
+      "makeOffer",
+    ])
     .required(),
   kind: Yup.string()
     .oneOf(["artist", "artworks", "gene", "profile", "submission"])
     .required(),
   objectId: Yup.string().required(),
+  secondaryObjectId: Yup.string(),
 })
 
 export const isValid = (value: any): value is AfterAuthAction => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e1c02c01e60e79a9632e5f3bc95077b>>
+ * @generated SignedSource<<7190165febbd525f921feb449f85870f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ArtistApp_sharedMetadata$data = {
     readonly text: string | null;
   } | null;
   readonly counts: {
-    readonly auctionResults: number | null;
     readonly forSaleArtworks: any | null;
   } | null;
   readonly highlights: {
@@ -44,6 +43,7 @@ export type ArtistApp_sharedMetadata$data = {
   readonly slug: string;
   readonly statuses: {
     readonly articles: boolean | null;
+    readonly auctionLots: boolean | null;
     readonly cv: boolean | null;
     readonly shows: boolean | null;
   } | null;
@@ -106,6 +106,13 @@ return {
           "kind": "ScalarField",
           "name": "articles",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "auctionLots",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -123,13 +130,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "forSaleArtworks",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "auctionResults",
           "storageKey": null
         }
       ],
@@ -310,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "d8ed25b0f0386b0abc35b684cc1e72ec";
+(node as any).hash = "cbcf43546b894fa452d1fc26dfa4e6d1";
 
 export default node;

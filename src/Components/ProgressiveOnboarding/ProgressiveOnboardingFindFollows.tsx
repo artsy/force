@@ -1,23 +1,40 @@
 import { Text } from "@artsy/palette"
-import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import {
+  PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
+  PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
+  useProgressiveOnboarding,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import {
+  ProgressiveOnboardingCountsQueryRenderer,
+  WithProgressiveOnboardingCountsProps,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
-export const PROGRESSIVE_ONBOARDING_FIND_FOLLOWS = "find-follows"
+interface ProgressiveOnboardingFindFollowsProps
+  extends WithProgressiveOnboardingCountsProps {}
 
-export const ProgressiveOnboardingFindFollows: FC = ({ children }) => {
+const ProgressiveOnboardingFindFollows: FC<ProgressiveOnboardingFindFollowsProps> = ({
+  children,
+  counts,
+}) => {
   const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+
+  const isDisplayable =
+    enabled &&
+    counts.followedArtists === 1 &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
 
   const handleClose = () => {
     dismiss(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
   }
 
-  if (
-    !enabled ||
-    isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS) ||
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
-  ) {
+  const handleDismiss = () => {
+    handleClose()
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)
+  }
+
+  if (!isDisplayable) {
     return <>{children}</>
   }
 
@@ -26,10 +43,23 @@ export const ProgressiveOnboardingFindFollows: FC = ({ children }) => {
       name={PROGRESSIVE_ONBOARDING_FIND_FOLLOWS}
       placement="bottom-end"
       onClose={handleClose}
+      onDismiss={handleDismiss}
       ignoreClickOutside={false}
       popover={<Text variant="xs">Find and edit all your Follows here.</Text>}
     >
       {children}
     </ProgressiveOnboardingPopover>
+  )
+}
+
+export const ProgressiveOnboardingFindFollowsQueryRenderer: FC = ({
+  children,
+}) => {
+  return (
+    <ProgressiveOnboardingCountsQueryRenderer
+      Component={ProgressiveOnboardingFindFollows}
+    >
+      {children}
+    </ProgressiveOnboardingCountsQueryRenderer>
   )
 }

@@ -30,6 +30,7 @@ export const getMyCollectionArtworkFormInitialValues = (
   pricePaidCurrency: artwork?.pricePaid?.currencyCode ?? "USD",
   provenance: artwork?.provenance ?? "",
   artworkLocation: artwork?.artworkLocation ?? "",
+  confidentialNotes: artwork?.confidentialNotes ?? "",
 })
 
 export const MyCollectionPhotoToPhoto = (photo: MyCollectionPhoto): Photo => {

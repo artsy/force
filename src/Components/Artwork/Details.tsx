@@ -21,7 +21,6 @@ import { SaveButtonFragmentContainer } from "./SaveButton"
 interface DetailsProps {
   artwork: Details_artwork$data
   contextModule?: AuthContextModule
-  underlineOnHover?: boolean
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
@@ -30,23 +29,10 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
-  enableSaveButtonForLists?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
-const ConditionalLink: React.FC<
-  Pick<DetailsProps, "includeLinks"> &
-    RouterLinkProps &
-    React.AnchorHTMLAttributes<HTMLAnchorElement>
-> = ({ includeLinks, children, ...rest }) => {
-  return includeLinks ? (
-    <RouterLink {...rest}>{children}</RouterLink>
-  ) : (
-    <>{children}</>
-  )
-}
-
-const StyledConditionalLink = styled(ConditionalLink)`
+const StyledConditionalLink = styled(RouterLink)`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   color: ${themeGet("colors.black100")};
   text-decoration: none;
@@ -55,11 +41,19 @@ const StyledConditionalLink = styled(ConditionalLink)`
   }
 `
 
+const ConditionalLink: React.FC<
+  Pick<DetailsProps, "includeLinks"> &
+    RouterLinkProps &
+    React.AnchorHTMLAttributes<HTMLAnchorElement>
+> = ({ includeLinks, children, ...rest }) => {
+  const LinkComponent = includeLinks ? StyledConditionalLink : "span"
+  return <LinkComponent {...rest}>{children}</LinkComponent>
+}
+
 const ArtistLine: React.FC<DetailsProps> = ({
   artwork: { cultural_maker, artists },
   includeLinks,
   showSaveButton,
-  underlineOnHover,
 }) => {
   if (cultural_maker) {
     return (
@@ -86,19 +80,11 @@ const ArtistLine: React.FC<DetailsProps> = ({
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
-        const ArtistLinkComponent = underlineOnHover
-          ? StyledConditionalLink
-          : ConditionalLink
-
         return (
-          <ArtistLinkComponent
-            includeLinks={includeLinks}
-            to={artist.href}
-            key={i}
-          >
+          <ConditionalLink includeLinks={includeLinks} to={artist.href} key={i}>
             {artist.name}
             {i !== artists.length - 1 && ", "}
-          </ArtistLinkComponent>
+          </ConditionalLink>
         )
       })}
     </Text>
@@ -108,19 +94,14 @@ const ArtistLine: React.FC<DetailsProps> = ({
 const TitleLine: React.FC<DetailsProps> = ({
   includeLinks,
   artwork: { title, date, href },
-  underlineOnHover,
 }) => {
-  const TitleLinkComponent = underlineOnHover
-    ? StyledConditionalLink
-    : ConditionalLink
-
   return (
-    <TitleLinkComponent includeLinks={includeLinks} to={href!}>
+    <ConditionalLink includeLinks={includeLinks} to={href!}>
       <Text variant="sm-display" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
-    </TitleLinkComponent>
+    </ConditionalLink>
   )
 }
 
@@ -223,7 +204,6 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
-  enableSaveButtonForLists,
   renderSaveButton,
   ...rest
 }) => {
@@ -233,13 +213,9 @@ export const Details: React.FC<DetailsProps> = ({
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const showDemandIndexHints = useFeatureFlag(
-    "show-my-collection-demand-index-hints"
-  )
   const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
-
-  const showHighDemandInfo =
-    !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
+  const isInAuction = rest?.artwork.isInAuction
+  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
     if (!showSaveButton) {
@@ -250,7 +226,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled && enableSaveButtonForLists) {
+    if (isArtworksListEnabled && !isInAuction) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}
@@ -393,6 +369,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
+      isInAuction
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb0f5fcf6f47b3b1847239b39801b3e1>>
+ * @generated SignedSource<<8cd929810928163e140d9156151002bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,6 @@ export type HomeApp_Test_Query$variables = {};
 export type HomeApp_Test_Query$data = {
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
-  } | null;
-  readonly homePage: {
-    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_homePage">;
   } | null;
 };
 export type HomeApp_Test_Query = {
@@ -33,41 +30,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "subtitle",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v6 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -76,48 +38,55 @@ v6 = {
     "large_rectangle"
   ]
 },
-v7 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v8 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v9 = [
-  (v5/*: any*/)
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = [
+  (v4/*: any*/)
 ],
-v10 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v11 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v12 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v13 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v14 = {
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -130,22 +99,6 @@ return {
     "metadata": null,
     "name": "HomeApp_Test_Query",
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "HomePage",
-        "kind": "LinkedField",
-        "name": "homePage",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "HomeApp_homePage"
-          }
-        ],
-        "storageKey": null
-      },
       {
         "alias": "featuredEventsOrderedSet",
         "args": (v0/*: any*/),
@@ -173,67 +126,6 @@ return {
     "name": "HomeApp_Test_Query",
     "selections": [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "HomePage",
-        "kind": "LinkedField",
-        "name": "homePage",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "platform",
-                "value": "DESKTOP"
-              }
-            ],
-            "concreteType": "HomePageHeroUnit",
-            "kind": "LinkedField",
-            "name": "heroUnits",
-            "plural": true,
-            "selections": [
-              (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "backgroundImageURL",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "heading",
-                "storageKey": null
-              },
-              (v2/*: any*/),
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "linkText",
-                "storageKey": null
-              },
-              (v4/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "creditLine",
-                "storageKey": null
-              },
-              (v5/*: any*/)
-            ],
-            "storageKey": "heroUnits(platform:\"DESKTOP\")"
-          }
-        ],
-        "storageKey": null
-      },
-      {
         "alias": "featuredEventsOrderedSet",
         "args": (v0/*: any*/),
         "concreteType": "OrderedSet",
@@ -259,10 +151,34 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "subtitle",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "href",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -279,7 +195,7 @@ return {
                             "name": "height",
                             "value": 63
                           },
-                          (v6/*: any*/),
+                          (v1/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -291,8 +207,8 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
-                          (v8/*: any*/),
+                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -318,7 +234,7 @@ return {
                             "name": "height",
                             "value": 297
                           },
-                          (v6/*: any*/),
+                          (v1/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -330,42 +246,42 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
-                          (v8/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": "cropped(height:297,version:[\"main\",\"wide\",\"large_rectangle\"],width:445)"
                       }
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
+                "selections": (v5/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v9/*: any*/),
+                "selections": (v5/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "18976196b0b86e0e196ae508b0905fa0",
+    "cacheID": "9ce6e024b610bf8d52cdcdf08809fd23",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -375,64 +291,43 @@ return {
           "plural": false,
           "type": "OrderedSet"
         },
-        "featuredEventsOrderedSet.id": (v10/*: any*/),
+        "featuredEventsOrderedSet.id": (v6/*: any*/),
         "featuredEventsOrderedSet.items": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "OrderedSetItem"
         },
-        "featuredEventsOrderedSet.items.__isNode": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.__typename": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.href": (v12/*: any*/),
-        "featuredEventsOrderedSet.items.id": (v10/*: any*/),
+        "featuredEventsOrderedSet.items.__isNode": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.__typename": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.href": (v8/*: any*/),
+        "featuredEventsOrderedSet.items.id": (v6/*: any*/),
         "featuredEventsOrderedSet.items.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "featuredEventsOrderedSet.items.image.large": (v13/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.src": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.srcSet": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.image.small": (v13/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.height": (v14/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.src": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.srcSet": (v11/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.width": (v14/*: any*/),
-        "featuredEventsOrderedSet.items.internalID": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.subtitle": (v12/*: any*/),
-        "featuredEventsOrderedSet.items.title": (v12/*: any*/),
-        "homePage": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "HomePage"
-        },
-        "homePage.heroUnits": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "HomePageHeroUnit"
-        },
-        "homePage.heroUnits.backgroundImageURL": (v12/*: any*/),
-        "homePage.heroUnits.creditLine": (v12/*: any*/),
-        "homePage.heroUnits.heading": (v12/*: any*/),
-        "homePage.heroUnits.href": (v12/*: any*/),
-        "homePage.heroUnits.id": (v10/*: any*/),
-        "homePage.heroUnits.internalID": (v10/*: any*/),
-        "homePage.heroUnits.linkText": (v12/*: any*/),
-        "homePage.heroUnits.subtitle": (v12/*: any*/),
-        "homePage.heroUnits.title": (v12/*: any*/)
+        "featuredEventsOrderedSet.items.image.large": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.src": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.srcSet": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.image.small": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.height": (v10/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.src": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.srcSet": (v7/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.width": (v10/*: any*/),
+        "featuredEventsOrderedSet.items.internalID": (v6/*: any*/),
+        "featuredEventsOrderedSet.items.subtitle": (v8/*: any*/),
+        "featuredEventsOrderedSet.items.title": (v8/*: any*/)
       }
     },
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n"
+    "text": "query HomeApp_Test_Query {\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c68ccd47af7ec30810d0ca752960e251";
+(node as any).hash = "659b364266caf7b1a5df59d3b4d2033a";
 
 export default node;

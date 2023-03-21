@@ -1,20 +1,16 @@
 import { Button } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useSystemContext } from "System/SystemContext"
 import { Media } from "Utils/Responsive"
+import { useTracking } from "react-tracking"
 
 export const CtaSection: React.FC = () => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
 
   const trackSubmitClick = () => {
     trackEvent({

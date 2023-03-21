@@ -18,7 +18,7 @@ export interface SpecialistsData {
 export const CARD_WIDTH = 445
 export const CARD_HEIGHT = 610
 export const CARD_HEIGHT_MD = 557
-export const CARD_HEIGHT_MOBILE = 461
+export const CARD_HEIGHT_MOBILE = 418
 
 const imageOptions = {
   width: CARD_WIDTH,

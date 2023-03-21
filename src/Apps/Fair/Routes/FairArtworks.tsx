@@ -23,7 +23,6 @@ import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/A
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
 
@@ -36,7 +35,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
-  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
   const { filtered_artworks, sidebarAggregations } = fair
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -53,7 +51,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // in <ArtistsFilter />. So, pass as props for now.
   const Filters = (
     <Join separator={<Spacer y={4} />}>
-      {showKeywordFilter && <KeywordFilter />}
+      <KeywordFilter />
       <PartnersFilter label="Exhibitors" expanded />
       <ArtistsFilter fairID={fair.internalID} expanded />
       <AttributionClassFilter expanded />

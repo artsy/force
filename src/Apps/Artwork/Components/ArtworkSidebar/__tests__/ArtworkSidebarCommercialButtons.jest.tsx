@@ -7,8 +7,11 @@ import { createMockEnvironment } from "relay-test-utils"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkSidebarCommercialButtonsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")
+
+jest.mock("System/Router/useRouter")
 
 jest.mock("Components/AuthDialog/useAuthDialog", () => ({
   useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
@@ -242,8 +245,16 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   describe("authentication", () => {
+    const mockUseRouter = useRouter as jest.Mock
     const mockUseAuthDialog = useAuthDialog as jest.Mock
     mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog: jest.fn() }))
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/artwork/artwork-1",
+        },
+      },
+    }))
 
     beforeEach(() => {
       user = undefined
@@ -255,10 +266,16 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       renderWithRelay({
         Artwork: () => ({
+          internalID: "artwork-1",
           isAcquireable: true,
           isInquireable: false,
           isOfferable: false,
-          editionSets: [],
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquireable: true,
+            },
+          ],
         }),
       })
 
@@ -268,6 +285,13 @@ describe("ArtworkSidebarCommercialButtons", () => {
         mode: "SignUp",
         options: {
           title: expect.any(Function),
+          afterAuthAction: {
+            action: "buyNow",
+            kind: "artworks",
+            objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
+          },
+          redirectTo: `/artwork/artwork-1?creating_order=true`,
         },
         analytics: {
           contextModule: "artworkSidebar",
@@ -282,7 +306,14 @@ describe("ArtworkSidebarCommercialButtons", () => {
 
       renderWithRelay({
         Artwork: () => ({
+          internalID: "artwork-1",
           isOfferable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isOfferable: true,
+            },
+          ],
         }),
       })
 
@@ -292,6 +323,13 @@ describe("ArtworkSidebarCommercialButtons", () => {
         mode: "SignUp",
         options: {
           title: expect.any(Function),
+          afterAuthAction: {
+            action: "makeOffer",
+            kind: "artworks",
+            objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
+          },
+          redirectTo: `/artwork/artwork-1?creating_order=true`,
         },
         analytics: {
           contextModule: "artworkSidebar",

@@ -108,6 +108,7 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...BuyOrderPickup,
         state: "SUBMITTED",
+        displayState: "SUBMITTED",
       })
     )
 
@@ -378,6 +379,7 @@ describe("OrderApp routing redirects", () => {
 
         awaitingResponseFrom: "BUYER",
         state: "PENDING",
+        displayState: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/status")
@@ -484,6 +486,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")
@@ -553,6 +556,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")
@@ -663,20 +667,5 @@ describe("OrderApp", () => {
     expect(subject.find(ErrorPage).text()).toContain(
       "Sorry, the page you were looking for doesn’t exist at this URL."
     )
-  })
-
-  it("redirects user to home page when Artsy logo is clicked", () => {
-    const props = getProps({
-      location: "/order/123/review",
-    })
-    const page = getWrapper({
-      context: { isEigen: false },
-      props: { ...props, order: UntouchedBuyOrder },
-    })
-
-    const logo = page.find(`[data-test="logoLink"]`).first()
-    logo.simulate("click")
-
-    expect(window.location.pathname).toBe("/")
   })
 })

@@ -91,5 +91,6 @@ const formValuesToMutationInput = (
     pricePaidCurrency: values.pricePaidCurrency,
     provenance: values.provenance,
     artworkLocation: values.artworkLocation,
+    confidentialNotes: values.confidentialNotes,
   }
 }

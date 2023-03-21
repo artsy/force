@@ -1,8 +1,7 @@
 import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { useDeleteCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useDeleteCollection"
 import { useTranslation } from "react-i18next"
-import { graphql } from "react-relay"
-import { useMutation } from "Utils/Hooks/useMutation"
-import { DeleteSavesModalMutation } from "__generated__/DeleteSavesModalMutation.graphql"
+import { useRouter } from "System/Router/useRouter"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 
 interface Props {
@@ -12,24 +11,9 @@ interface Props {
 
 export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
   const { t } = useTranslation()
+  const { router } = useRouter()
 
-  const { submitMutation } = useMutation<DeleteSavesModalMutation>({
-    mutation: graphql`
-      mutation DeleteSavesModalMutation($input: deleteCollectionInput!) {
-        deleteCollection(input: $input) {
-          responseOrError {
-            __typename # DeleteCollectionSuccess or DeleteCollectionFailure
-            ... on DeleteCollectionFailure {
-              mutationError {
-                message
-                statusCode
-              }
-            }
-          }
-        }
-      }
-    `,
-  })
+  const { submitMutation } = useDeleteCollection()
 
   const { sendToast } = useToasts()
 
@@ -54,6 +38,8 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
         variant: "success",
         message: t("collectorSaves.deleteListModal.success"),
       })
+
+      router.replace("/collector-profile/saves2")
     } catch (err) {
       console.error(err)
       sendToast({

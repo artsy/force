@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9443e538516cf50793992ee582e88c10>>
+ * @generated SignedSource<<c129b262eb8f703c1bdf0e30d2e87fa3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type SendIdentityVerificationEmailMutationInput = {
   clientMutationId?: string | null;
   email?: string | null;
   name?: string | null;
+  sendEmail?: boolean | null;
   userID?: string | null;
 };
 export type verifyIDMutation$variables = {

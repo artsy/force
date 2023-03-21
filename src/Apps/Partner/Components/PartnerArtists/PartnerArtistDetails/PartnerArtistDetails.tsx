@@ -16,7 +16,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
-import { PartnerArtistArtworksRailPaginationContainer } from "./PartnerArtistArtworksRail"
+import { PartnerArtistArtworksFragmentContainer } from "./PartnerArtistArtworksRail"
 
 export interface PartnerArtistDetailsProps {
   partnerArtist: PartnerArtistDetails_partnerArtist$data
@@ -80,7 +80,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
       </Column>
 
       <Column span={12}>
-        <PartnerArtistArtworksRailPaginationContainer
+        <PartnerArtistArtworksFragmentContainer
           partnerId={partnerId}
           artistId={partnerArtist.node.slug}
           partnerArtist={partnerArtist}

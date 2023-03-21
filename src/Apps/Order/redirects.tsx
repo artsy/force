@@ -110,8 +110,10 @@ const goToStatusIfNotAwaitingBuyerResponse = goToStatusIf(
   "Not currently awaiting buyer response"
 )
 
+// displayState is used here since an order may be in_review, in which case
+// it is still "submitted" to the user and we shouldn't redirect
 const goToStatusIfOrderIsNotSubmitted = goToStatusIf(
-  order => order.state !== "SUBMITTED",
+  order => order.displayState !== "SUBMITTED",
   "Order was not yet submitted"
 )
 
@@ -258,6 +260,7 @@ graphql`
     internalID
     mode
     state
+    displayState
     source
     lastTransactionFailed
     ... on CommerceOfferOrder {

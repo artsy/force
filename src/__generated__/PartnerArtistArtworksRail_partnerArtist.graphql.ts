@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e211312e7c0edd756b30abb669545d2b>>
+ * @generated SignedSource<<542781aab27148260e16adbba2487bc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,24 +28,13 @@ export type PartnerArtistArtworksRail_partnerArtist$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": 12,
-      "kind": "LocalArgument",
-      "name": "first"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": "first",
-        "cursor": "after",
+        "count": null,
+        "cursor": null,
         "direction": "forward",
         "path": [
           "artworksConnection"
@@ -151,6 +140,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "60f6d7b38c7470b4b0618dc407c149e1";
+(node as any).hash = "869c8fb31712d7e04390398559ea8988";
 
 export default node;

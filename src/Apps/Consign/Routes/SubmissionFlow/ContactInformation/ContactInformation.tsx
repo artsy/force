@@ -23,7 +23,6 @@ import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { TopContextBar } from "Components/TopContextBar"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
@@ -55,7 +54,6 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   me,
   submission,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
@@ -129,18 +127,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: submissionEmail ?? me?.email,
         })
 
-        router.replace(
-          artworkId
-            ? isCollectorProfileEnabled
-              ? "/collector-profile/my-collection"
-              : "/settings/my-collection"
-            : "/sell"
-        )
+        router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
 
         const consignPath = artworkId
-          ? isCollectorProfileEnabled
-            ? "/collector-profile/my-collection/submission"
-            : "/my-collection/submission"
+          ? "/collector-profile/my-collection/submission"
           : "/sell/submission"
 
         const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -181,9 +171,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   const deriveBackLinkTo = () => {
     const defaultBackLink = artworkId
-      ? isCollectorProfileEnabled
-        ? "/collector-profile/my-collection"
-        : "/my-collection"
+      ? "/collector-profile/my-collection"
       : "/sell"
 
     let backTo = defaultBackLink

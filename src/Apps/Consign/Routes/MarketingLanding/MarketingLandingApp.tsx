@@ -7,10 +7,10 @@ import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/Landi
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
-import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
+// import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
-import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
+// import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
 import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
@@ -62,14 +62,15 @@ export const MarketingLandingApp = () => {
           <WaysWeSell />
           <HowItWorksSteps />
           <SpeakToTheTeam />
-          <MeetTheSpecialists />
-          <PreviouslySoldOnArtsyRailQueryRenderer />
+          {/* <MeetTheSpecialists /> */}
           <CollectorsOverview />
-          <Reviews />
+          <PreviouslySoldOnArtsyRailQueryRenderer />
+          {/* <Reviews /> */}
           <FAQSWA />
           <Footer />
           <FooterBanner />
         </Join>
+        <Spacer y={-4} />
       </>
     )
   }

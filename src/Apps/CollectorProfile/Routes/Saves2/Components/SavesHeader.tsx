@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import { FC, useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
-import { CreateNewListModalContainer } from "./CreateNewListModal/CreateNewListModal"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
+import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
+import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
-export const SavesHeader: React.FC = () => {
+export const SavesHeader: FC = () => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)
@@ -13,22 +14,29 @@ export const SavesHeader: React.FC = () => {
     setModalIsOpened(true)
   }
 
-  const handleComplete = () => {
+  const handleComplete = (artworkList: ArtworkList) => {
     setModalIsOpened(false)
 
     sendToast({
       variant: "success",
-      message: t("collectorSaves.savesHeader.listCreated"),
+      message: t("collectorSaves.savesHeader.listCreated", {
+        listName: artworkList.name,
+      }),
     })
+  }
+
+  const handleClose = () => {
+    setModalIsOpened(false)
   }
 
   return (
     <>
-      <CreateNewListModalContainer
-        visible={modalIsOpened}
-        onClose={() => setModalIsOpened(false)}
-        onComplete={handleComplete}
-      />
+      {modalIsOpened && (
+        <CreateNewListModalWizard
+          onComplete={handleComplete}
+          onClose={handleClose}
+        />
+      )}
 
       <Join separator={<Spacer y={0.5} />}>
         <Text variant="lg-display">

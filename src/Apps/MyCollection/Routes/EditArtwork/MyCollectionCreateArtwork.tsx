@@ -9,20 +9,16 @@ import { MyCollectionArtworkFormMain } from "Apps/MyCollection/Routes/EditArtwor
 import { useCreateOrUpdateArtwork } from "Apps/MyCollection/Routes/EditArtwork/Utils/useCreateOrUpdateArtwork"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { MetaTags } from "Components/MetaTags"
-import { Formik } from "formik"
-import { useEffect, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { storeLocalImage } from "Utils/localImageHelpers"
 import createLogger from "Utils/logger"
 import { MyCollectionCreateArtwork_me$data } from "__generated__/MyCollectionCreateArtwork_me.graphql"
+import { Formik } from "formik"
+import { useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
-import {
-  MyCollectionArtworkDetailsValidationSchema,
-  MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist,
-} from "./Utils/artworkValidation"
+import { MyCollectionArtworkDetailsValidationSchema } from "./Utils/artworkValidation"
 
 const logger = createLogger("MyCollectionCreateArtwork.tsx")
 
@@ -42,14 +38,6 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     removeLocalImage,
   } = useLocalImageState()
 
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const enableNewMyCUploadFlow = useFeatureFlag(
-    "cx-my-collection-uploading-flow-steps"
-  )
-  const enablePersonalArtists = useFeatureFlag(
-    "cx-my-collection-personal-artists-for-web"
-  )
-
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
@@ -57,15 +45,11 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
 
-  const initialStep = enableNewMyCUploadFlow ? "artist-select" : "details"
+  const initialStep = "artist-select"
 
   const [currentStep, setCurrentStep] = useState<Step>(initialStep)
 
   const getCurrentStep = () => {
-    if (!enableNewMyCUploadFlow) {
-      return <MyCollectionArtworkFormMain />
-    }
-
     switch (currentStep) {
       case "artist-select":
         return <MyCollectionArtworkFormArtistStep me={me} />
@@ -79,11 +63,9 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
   const handleBack = () => {
     clearLocalImages()
 
-    if (currentStep === "artist-select" || !enableNewMyCUploadFlow) {
+    if (currentStep === "artist-select") {
       router.push({
-        pathname: isCollectorProfileEnabled
-          ? "/collector-profile/my-collection"
-          : "/settings/my-collection",
+        pathname: "/collector-profile/my-collection",
       })
     } else if (currentStep === "artwork-select") {
       setCurrentStep("artist-select")
@@ -130,14 +112,10 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
       })
 
       router.replace({
-        pathname: isCollectorProfileEnabled
-          ? `/collector-profile/my-collection/artworks/${artwork?.internalID}/edit`
-          : `/my-collection/artworks/${artwork?.internalID}/edit`,
+        pathname: `/collector-profile/my-collection/artworks/${artwork?.internalID}/edit`,
       })
       router.push({
-        pathname: isCollectorProfileEnabled
-          ? "/collector-profile/my-collection/"
-          : "/settings/my-collection",
+        pathname: "/collector-profile/my-collection/",
       })
     } catch (error) {
       logger.error(`Artwork not created`, error)
@@ -164,11 +142,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
           validateOnMount
           onSubmit={handleSubmit}
           initialValues={getMyCollectionArtworkFormInitialValues()}
-          validationSchema={
-            enablePersonalArtists && enableNewMyCUploadFlow
-              ? MyCollectionArtworkDetailsValidationSchema
-              : MyCollectionArtworkDetailsValidationSchemaWithoutPersonalArtist
-          }
+          validationSchema={MyCollectionArtworkDetailsValidationSchema}
         >
           {getCurrentStep()}
         </Formik>

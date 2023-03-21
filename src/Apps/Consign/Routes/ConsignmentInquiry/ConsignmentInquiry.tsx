@@ -22,6 +22,7 @@ import { CreateConsignmentInquiryMutationInput } from "__generated__/useCreateCo
 import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/ConsignmentInquiry/Components/ConsignmentInquiryFormAbandonEdit"
 import { useState } from "react"
 import { TopContextBar } from "Components/TopContextBar"
+import { SPECIALISTS } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
@@ -53,11 +54,12 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
 }) => {
   const [showExitModal, setShowExitModal] = useState(false)
   const { trackEvent } = useTracking()
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const {
     submitMutation: createConsignmentInquiry,
   } = useCreateConsignmentInquiry()
+
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
     initialValue,
@@ -66,6 +68,11 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
+
+  const recipientEmail = match.params.recipientEmail ?? null
+
+  const recipientName = SPECIALISTS.find(i => i.email === recipientEmail)
+    ?.firstName
 
   const handleSubmit = async ({
     name,
@@ -85,13 +92,22 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
       } ${phoneNumber.trim()}`
     }
 
-    const input: CreateConsignmentInquiryMutationInput = {
-      email,
-      message,
-      name,
-      phoneNumber: phoneNumberInternational,
-      userId: me?.internalID,
-    }
+    const input: CreateConsignmentInquiryMutationInput = !!recipientEmail
+      ? {
+          email,
+          message,
+          name,
+          phoneNumber: phoneNumberInternational,
+          userId: me?.internalID,
+          recipientEmail,
+        }
+      : {
+          email,
+          message,
+          name,
+          phoneNumber: phoneNumberInternational,
+          userId: me?.internalID,
+        }
 
     try {
       const response = await createConsignmentInquiry({
@@ -109,7 +125,12 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
       if (consignmentInquiryId) {
         trackEvent(tracks.sentConsignmentInquiry(consignmentInquiryId))
         router.replace({ pathname: "/sell" })
-        router.push("/sell/inquiry/sent")
+
+        router.push(
+          !!recipientEmail
+            ? `/sell/inquiry/${recipientEmail}/sent`
+            : "/sell/inquiry/sent"
+        )
       }
     } catch (error) {
       logger.error(error)
@@ -186,7 +207,8 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
               Back
             </TopContextBar>
             <Text mt={4} variant="lg-display">
-              Contact a specialist
+              {"Contact "}
+              {`${recipientName || "a specialist"}`}
             </Text>
             <Spacer y={4} />
             <Form>

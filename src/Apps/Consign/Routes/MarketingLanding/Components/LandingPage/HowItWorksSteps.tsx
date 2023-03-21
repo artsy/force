@@ -10,25 +10,25 @@ const reasons = [
     index: "01",
     title: "Submit your artwork",
     text:
-      "Upload artwork images and details through our online tool. Our specialists will let you know if we currently have market demand.",
+      "Enter the artist’s name on the submission page. If the artist is in our database, you’ll be able to upload images and artwork details.",
   },
   {
     index: "02",
     title: "Meet your expert",
     text:
-      "If your artwork is accepted, you’re matched with a specialist to guide you on pricing, sales options, and vetting potential buyers.",
+      "One of our specialists will review your submission and determine the best sales option.",
   },
   {
     index: "03",
     title: "Get a sales option",
     text:
-      "You’ll get a tailored sales strategy with a price estimate and we select the best sales option for your work, either auction, private sale or direct listing on Artsy.",
+      "Review your tailored sales strategy and price estimate. We’ll select the best way to sell your work—either at auction, through private sale, or a direct listing on Artsy.",
   },
   {
     index: "04",
     title: "Sell your work",
     text:
-      "Your artwork stays with you until it sells. Meanwhile, our logistics team handles everything, from organizing shipping to getting your payment to you.",
+      "Keep your work until it sells, then let our team handle the logistics. No costly presale insurance, shipping, or handling fees.",
   },
 ]
 
@@ -42,7 +42,7 @@ export const HowItWorksSteps: React.FC = () => {
       action: ActionType.tappedConsign,
       context_module: ContextModule.sellHowItWorks,
       context_page_owner_type: contextPageOwnerType,
-      label: "Start Selling",
+      label: "Get Started",
       destination_path: "/sell/submission",
       user_id: user?.id,
     })
@@ -68,7 +68,7 @@ export const HowItWorksSteps: React.FC = () => {
         onClick={trackStartSellingClick}
         data-testid="start-selling-button"
       >
-        Start Selling
+        Get Started
       </Button>
     </>
   )

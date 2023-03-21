@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa20c7b367cd6e460881092b04ad8bbb>>
+ * @generated SignedSource<<a41b10f0f9888387daf490f90ed620e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type SelectListsForArtworkModal_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly isSavedArtwork: boolean;
+        readonly name: string;
         readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
       } | null;
     } | null> | null;
@@ -23,6 +24,7 @@ export type SelectListsForArtworkModal_me$data = {
   readonly defaultSaves: {
     readonly internalID: string;
     readonly isSavedArtwork: boolean;
+    readonly name: string;
     readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
   } | null;
   readonly " $fragmentType": "SelectListsForArtworkModal_me";
@@ -52,6 +54,13 @@ var v0 = [
     ],
     "kind": "ScalarField",
     "name": "isSavedArtwork",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
     "storageKey": null
   },
   {
@@ -147,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "0a417c5fded1f7365a511ce16ed52af5";
+(node as any).hash = "57cf30d6a741d22f91ab04b28929bc09";
 
 export default node;
