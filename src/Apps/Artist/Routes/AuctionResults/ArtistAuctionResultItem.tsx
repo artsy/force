@@ -28,6 +28,8 @@ export interface Props extends SystemContextProps {
 
 export const ArtistAuctionResultItem: React.FC<Props> = props => {
   const { router } = useRouter()
+  const { user } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
 
   const {
     showArtistName,
@@ -52,11 +54,30 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
   const artistName = artist?.name
 
   const onAuctionResultClick = () => {
-    router.push(`/auction-results/${internalID}`)
+    if (!user) {
+      showAuthDialog({
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to see full auction records — for free`
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.auctionResult,
+        },
+      })
+    } else {
+      router.push(`/auction-result/${internalID}`)
+    }
   }
 
   return (
-    <Box width="100%" onClick={onAuctionResultClick}>
+    <Box
+      style={{ cursor: "pointer" }}
+      width="100%"
+      onClick={onAuctionResultClick}
+    >
       <GridColumns>
         <Column span={[4, 2]}>
           <ResponsiveBox
@@ -347,7 +368,7 @@ const getProps = (props: Props) => {
   }
 }
 
-const getDisplaySaleDate = (saleDate: string | null) => {
+export const getDisplaySaleDate = (saleDate: string | null) => {
   if (!saleDate) return null
 
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(

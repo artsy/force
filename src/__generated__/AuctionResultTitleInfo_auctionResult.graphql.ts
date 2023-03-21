@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<613c01cf7693f1a72d276737bfa282ca>>
+ * @generated SignedSource<<eed1e8399e7257db4e1d309b7086a396>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type AuctionResultTitleInfo_auctionResult$data = {
   } | null;
   readonly dateText: string | null;
   readonly organization: string | null;
+  readonly saleDate: string | null;
   readonly title: string | null;
   readonly " $fragmentType": "AuctionResultTitleInfo_auctionResult";
 };
@@ -76,6 +77,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "saleDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "title",
       "storageKey": null
     },
@@ -98,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2f6b39ec17a67b203623a18bbb6ab22e";
+(node as any).hash = "21944d1eebb28bb16a59077aa70e60b6";
 
 export default node;

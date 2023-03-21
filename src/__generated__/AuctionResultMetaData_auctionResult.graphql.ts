@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04e4cacbaf22d42fd7b6a8aead479912>>
+ * @generated SignedSource<<b5aa11dfcdf8cccc8e2f889787d7a1df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,16 +47,10 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM DD, YYYY"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
       "name": "saleDate",
-      "storageKey": "saleDate(format:\"MMM DD, YYYY\")"
+      "storageKey": null
     },
     {
       "alias": null,
@@ -91,6 +85,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e428931fd8bc2d34735984e2cece23a0";
+(node as any).hash = "f8541974beb0613bf2f6b7a20d39bce1";
 
 export default node;

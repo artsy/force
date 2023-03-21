@@ -1,14 +1,16 @@
 import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
-import { createFragmentContainer, graphql } from "react-relay"
-import { AuctionResultMetaData_auctionResult$data } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
+import { graphql, useFragment } from "react-relay"
+import { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 
 interface AuctionResultMetaDataProps {
-  auctionResultMetaData: AuctionResultMetaData_auctionResult$data
+  auctionResultMetaData: AuctionResultMetaData_auctionResult$key
 }
 
-const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
+export const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
   auctionResultMetaData,
 }) => {
+  const data = useFragment(auctionResultMetaDataFragment, auctionResultMetaData)
+
   const {
     mediumText,
     dimensionText,
@@ -17,7 +19,7 @@ const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
     location,
     saleTitle,
     lotNumber,
-  } = auctionResultMetaData
+  } = data
 
   return (
     <>
@@ -31,20 +33,14 @@ const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
     </>
   )
 }
-
-export const AuctionResultMetaDataFragmentContainer = createFragmentContainer(
-  AuctionResultMetaData,
-  {
-    auctionResult: graphql`
-      fragment AuctionResultMetaData_auctionResult on AuctionResult {
-        mediumText
-        dimensionText
-        saleDate(format: "MMM DD, YYYY")
-        organization
-        location
-        saleTitle
-        lotNumber
-      }
-    `,
+const auctionResultMetaDataFragment = graphql`
+  fragment AuctionResultMetaData_auctionResult on AuctionResult {
+    mediumText
+    dimensionText
+    saleDate
+    organization
+    location
+    saleTitle
+    lotNumber
   }
-)
+`

@@ -286,7 +286,7 @@ export const artistRoutes: AppRouteConfig[] = [
     ],
   },
   {
-    path: "/auction-results/:auctionResultId",
+    path: "/auction-result/:auctionResultId",
     hideNavigationTabs: true,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,

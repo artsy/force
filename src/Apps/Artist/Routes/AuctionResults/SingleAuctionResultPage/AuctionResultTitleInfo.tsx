@@ -1,15 +1,24 @@
 import { Box, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { getDisplaySaleDate } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
+import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { AuctionResultTitleInfo_auctionResult$data } from "__generated__/AuctionResultTitleInfo_auctionResult.graphql"
+import { AuctionResultTitleInfo_auctionResult$key } from "__generated__/AuctionResultTitleInfo_auctionResult.graphql"
 
 interface AuctionResultTitleInfoProps {
-  auctionResultTitleInfo: AuctionResultTitleInfo_auctionResult$data
+  auctionResultTitleInfo: AuctionResultTitleInfo_auctionResult$key
 }
-const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
+export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
   auctionResultTitleInfo,
 }) => {
-  const { artist, title, dateText, organization } = auctionResultTitleInfo
+  const data = useFragment(
+    auctionResultTitleInfoFragment,
+    auctionResultTitleInfo
+  )
+
+  const { artist, title, dateText, organization, saleDate } = data
+
+  const dateOfSale = getDisplaySaleDate(saleDate)
+
   return (
     <Box>
       <Text as="h1" variant="lg-display">
@@ -27,27 +36,23 @@ const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
       </Text>
 
       <Text variant="xs" color="black60" mb={4}>
-        /Auction date/ • {organization}
+        {dateOfSale} • {organization}
       </Text>
     </Box>
   )
 }
 
-export const AuctionResultTitleInfoFragmentContainer = createFragmentContainer(
-  AuctionResultTitleInfo,
-  {
-    auctionResult: graphql`
-      fragment AuctionResultTitleInfo_auctionResult on AuctionResult {
-        artist {
-          isPersonalArtist
-          name
-          slug
-          href
-        }
-        title
-        dateText
-        organization
-      }
-    `,
+const auctionResultTitleInfoFragment = graphql`
+  fragment AuctionResultTitleInfo_auctionResult on AuctionResult {
+    artist {
+      isPersonalArtist
+      name
+      slug
+      href
+    }
+    saleDate
+    title
+    dateText
+    organization
   }
-)
+`

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f847084df8dfc2fc3a08755ee017c303>>
+ * @generated SignedSource<<eebac7d4585539bfa6b757be1b722a80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,26 +23,21 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly dimensionText: string | null;
   readonly estimate: {
     readonly display: string | null;
     readonly high: number | null;
     readonly low: number | null;
   } | null;
   readonly images: {
-    readonly thumbnail: {
-      readonly aspectRatio: number;
-      readonly height: number | null;
-      readonly url: string | null;
-      readonly width: number | null;
+    readonly larger: {
+      readonly resized: {
+        readonly height: number | null;
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number | null;
+      } | null;
     } | null;
   } | null;
-  readonly location: string | null;
-  readonly lotNumber: string | null;
-  readonly mediumText: string | null;
-  readonly organization: string | null;
-  readonly saleDate: string | null;
-  readonly saleTitle: string | null;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"AuctionResultMetaData_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
@@ -59,16 +54,6 @@ const node: ReaderFragment = {
   "name": "AuctionResult_auctionResult",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionResultMetaData_auctionResult"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionResultTitleInfo_auctionResult"
-    },
-    {
       "alias": null,
       "args": null,
       "concreteType": "Artist",
@@ -80,17 +65,24 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "slug",
+          "name": "name",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "name",
+          "name": "slug",
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
       "storageKey": null
     },
     {
@@ -106,7 +98,7 @@ const node: ReaderFragment = {
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "thumbnail",
+          "name": "larger",
           "plural": false,
           "selections": [
             {
@@ -114,46 +106,60 @@ const node: ReaderFragment = {
               "args": [
                 {
                   "kind": "Literal",
+                  "name": "height",
+                  "value": 400
+                },
+                {
+                  "kind": "Literal",
                   "name": "version",
-                  "value": "large"
+                  "value": "larger"
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 400
                 }
               ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"large\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "aspectRatio",
-              "storageKey": null
+              "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "height",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "width",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "resized(height:400,version:\"larger\",width:400)"
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
       "storageKey": null
     },
     {
@@ -186,61 +192,6 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mediumText",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "dimensionText",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM DD, YYYY"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "saleDate",
-      "storageKey": "saleDate(format:\"MMM DD, YYYY\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "organization",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "location",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleTitle",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lotNumber",
       "storageKey": null
     },
     {
@@ -293,12 +244,22 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "comparableAuctionResults(first:6)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionResultMetaData_auctionResult"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionResultTitleInfo_auctionResult"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "7b672463dddaead5a34bd2dacf3504de";
+(node as any).hash = "0d13ca6b6cc4c73ea1dd5ddb0d626c07";
 
 export default node;
