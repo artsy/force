@@ -1,6 +1,6 @@
 import { Component, useContext } from "react"
 import * as React from "react"
-import { Box, BoxProps } from "@artsy/palette"
+import { Box, BoxProps, Pill } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
 import {
@@ -36,6 +36,19 @@ import track from "react-tracking"
 import { getENV } from "Utils/getENV"
 
 const logger = createLogger("Components/Search/SearchBar")
+
+const SearchPills = [
+  "TOP",
+  "ARTWORK",
+  "ARTIST",
+  "ARTICLE",
+  "SALE",
+  "ARTIST_SERIES",
+  "COLLECTION",
+  "FAIR",
+  "SHOW",
+  "GALLERY",
+]
 
 export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
@@ -331,6 +344,9 @@ export class SearchBar extends Component<Props, State> {
     displayType || (__typename === "Artist" ? "Artist" : null)
 
   renderSuggestion = (edge, rest) => {
+    if (React.isValidElement(edge)) {
+      return edge
+    }
     const renderer = edge.node.isFirstItem
       ? this.renderFirstSuggestion
       : this.renderDefaultSuggestion
@@ -410,10 +426,20 @@ export class SearchBar extends Component<Props, State> {
       },
     }
 
+    const pillTest = () => {
+      return (
+        <Box>
+          {SearchPills.map(pill => (
+            <Pill>{pill}</Pill>
+          ))}
+        </Box>
+      )
+    }
+
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const suggestions = [...edges, firstSuggestionPlaceholder]
+    const suggestions = [pillTest, ...edges, firstSuggestionPlaceholder]
 
     return (
       <Autosuggest
