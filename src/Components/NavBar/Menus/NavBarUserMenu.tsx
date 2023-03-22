@@ -19,10 +19,16 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
   const { user } = useContext(SystemContext)
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+
+  const savesHref = isArtworksListEnabled
+    ? "/collector-profile/saves2"
+    : "/collector-profile/saves"
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -97,7 +103,7 @@ export const NavBarUserMenu: React.FC = () => {
       >
         <NavBarMenuItemLink
           aria-label="View your Saves"
-          to="/collector-profile/saves"
+          to={savesHref}
           onClick={trackClick}
         >
           <HeartIcon mr={1} aria-hidden="true" /> Saves
