@@ -126,6 +126,11 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
     return null
   }
 
+  /**
+   * We ignore this, since this functionality is not needed for tests and will add some problems
+   * e.g. `screen.getByText("Label")` will return error,
+   * since there will be 2 elements with "Label" text on the page.
+   */
   if (longestLabel && process.env.NODE_ENV !== "test") {
     return (
       <Box position="relative">
