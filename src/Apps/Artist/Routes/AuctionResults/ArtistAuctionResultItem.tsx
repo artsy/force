@@ -291,7 +291,7 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         </Text>
       )}
 
-      {!salePrice && awaitingResults && (
+      {!salePrice && !boughtIn && awaitingResults && (
         <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
           <TimerIcon fill="black100" width={16} height={16} />
 
