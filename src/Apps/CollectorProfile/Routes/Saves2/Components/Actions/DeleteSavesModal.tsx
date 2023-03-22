@@ -2,10 +2,14 @@ import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useDeleteCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useDeleteCollection"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "System/Router/useRouter"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
+
+export interface DeleteSavesModalCollection {
+  internalID: string
+  name: string
+}
 
 interface Props {
-  collection: SavesArtworks_collection$data
+  collection: DeleteSavesModalCollection
   onClose: () => void
 }
 

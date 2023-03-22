@@ -17,18 +17,16 @@ jest.mock("System/Router/useRouter", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<SavesArtworks_Test_Query>({
   Component: props => {
-    if (!props.me?.collection) {
+    if (!props.me) {
       return null
     }
 
-    return <SavesArtworksRefetchContainer collection={props.me.collection} />
+    return <SavesArtworksRefetchContainer me={props.me} />
   },
   query: graphql`
     query SavesArtworks_Test_Query @relay_test_operation {
       me {
-        collection(id: "collectionID") {
-          ...SavesArtworks_collection
-        }
+        ...SavesArtworks_me @arguments(collectionID: "collectionID")
       }
     }
   `,
@@ -38,10 +36,15 @@ describe("SavesArtworks", () => {
   describe("Empty State", () => {
     it("should render correct texts for default collection", () => {
       renderWithRelay({
-        Collection: () => ({
-          default: true,
-          artworks: {
-            edges: [],
+        Me: () => ({
+          collection: {
+            default: true,
+            artworks: {
+              edges: [],
+            },
+          },
+          defaultSaves: {
+            artworksCount: 0,
           },
         }),
       })
@@ -54,12 +57,17 @@ describe("SavesArtworks", () => {
       expect(screen.getByText(description)).toBeInTheDocument()
     })
 
-    it("should render correct texts for non-default collection", () => {
+    it("should render correct texts for non-default collection when user has saved artworks", () => {
       renderWithRelay({
-        Collection: () => ({
-          default: false,
-          artworks: {
-            edges: [],
+        Me: () => ({
+          collection: {
+            default: false,
+            artworks: {
+              edges: [],
+            },
+          },
+          defaultSaves: {
+            artworksCount: 2,
           },
         }),
       })
@@ -71,12 +79,39 @@ describe("SavesArtworks", () => {
       expect(screen.getByText(title)).toBeInTheDocument()
       expect(screen.getByText(description)).toBeInTheDocument()
     })
+
+    it("should render correct texts for non-default collection when user doesn't have any saved artworks", () => {
+      renderWithRelay({
+        Me: () => ({
+          defaultSaves: {
+            artworksCount: 0,
+          },
+          collection: {
+            default: false,
+            artworks: {
+              edges: [],
+            },
+          },
+        }),
+      })
+
+      const title = "Keep track of artworks you love"
+      const description =
+        "Select the heart on an artwork to save it or add it to a list."
+
+      expect(screen.getByText(title)).toBeInTheDocument()
+      expect(screen.getByText(description)).toBeInTheDocument()
+    })
   })
 
   describe("Actions contextual menu", () => {
     it("should not render for default collection", () => {
       renderWithRelay({
-        Collection: () => ({ default: true }),
+        Me: () => ({
+          collection: {
+            default: true,
+          },
+        }),
       })
 
       const menuTriggerButton = screen.queryByLabelText("Open contextual menu")
@@ -85,7 +120,11 @@ describe("SavesArtworks", () => {
 
     it("should render for non-default collection", () => {
       renderWithRelay({
-        Collection: () => ({ default: false }),
+        Me: () => ({
+          collection: {
+            default: false,
+          },
+        }),
       })
 
       const menuTriggerButton = screen.queryByLabelText("Open contextual menu")

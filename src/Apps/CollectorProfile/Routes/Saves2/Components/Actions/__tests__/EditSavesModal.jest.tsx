@@ -1,15 +1,17 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 
 import { useMutation } from "Utils/Hooks/useMutation"
-import { EditSavesModal } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
+import {
+  EditSavesModal,
+  EditSavesModalCollection,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
 
 jest.mock("Utils/Hooks/useMutation")
 
-const collection = {
+const collection: EditSavesModalCollection = {
   internalID: "foobar",
   name: "Foo Bar",
-} as SavesArtworks_collection$data
+}
 
 const setup = () => {
   const nameInputField = screen.getByRole("textbox")

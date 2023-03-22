@@ -4,13 +4,18 @@ import {
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
-import { DeleteSavesModal } from "./DeleteSavesModal"
+import {
+  DeleteSavesModal,
+  DeleteSavesModalCollection,
+} from "./DeleteSavesModal"
 import { useTranslation } from "react-i18next"
-import { EditSavesModal } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
+import {
+  EditSavesModal,
+  EditSavesModalCollection,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
 
 interface Props {
-  collection: SavesArtworks_collection$data
+  collection: DeleteSavesModalCollection & EditSavesModalCollection
 }
 
 export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
