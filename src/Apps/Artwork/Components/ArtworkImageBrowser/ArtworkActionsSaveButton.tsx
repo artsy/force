@@ -4,10 +4,10 @@ import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
-import { ArtworkActionsSaveToListsButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveToListsButton"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkActionsWatchLotButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsWatchLotButton"
+import { ArtworkActionsSaveButtonV2FragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButtonV2"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -26,6 +26,14 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   const isOpenSale = isAuction && !isClosed
   const isSaved = !!artwork.isSaved
 
+  if (isArtworksListEnabled) {
+    return (
+      <ManageArtworkForSavesProvider>
+        <ArtworkActionsSaveButtonV2FragmentContainer artwork={artwork} />
+      </ManageArtworkForSavesProvider>
+    )
+  }
+
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
     return (
@@ -33,16 +41,6 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
         artwork={artwork}
         onClick={handleSave}
       />
-    )
-  }
-
-  if (isArtworksListEnabled) {
-    return (
-      <ManageArtworkForSavesProvider>
-        <ProgressiveOnboardingSaveArtworkQueryRenderer>
-          <ArtworkActionsSaveToListsButtonFragmentContainer artwork={artwork} />
-        </ProgressiveOnboardingSaveArtworkQueryRenderer>
-      </ManageArtworkForSavesProvider>
     )
   }
 
@@ -68,7 +66,7 @@ export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer
         }
         ...ArtworkActionsWatchLotButton_artwork
         ...ArtworkAuctionRegistrationPanel_artwork
-        ...ArtworkActionsSaveToListsButton_artwork
+        ...ArtworkActionsSaveButtonV2_artwork
       }
     `,
   }
