@@ -15,7 +15,7 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
-  const isArtworksListEnabled = true
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
     artwork,
