@@ -67,7 +67,6 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         collectionID={selectedCollectionId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
-        defaultSavesCount={savedCollection.artworksCount}
       />
     </>
   )

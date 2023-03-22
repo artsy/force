@@ -3,16 +3,20 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavesEmptyState_collection$data } from "__generated__/SavesEmptyState_collection.graphql"
+import { SavesEmptyState_me$data } from "__generated__/SavesEmptyState_me.graphql"
 
 interface SavesEmptyStateProps {
   collection: SavesEmptyState_collection$data
-  defaultSavesCount?: number
+  me: SavesEmptyState_me$data
 }
 
 export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
   collection,
-  defaultSavesCount,
+  me,
 }) => {
+  const defaultSavesCount = me.defaultSaves?.artworksCount
+  console.log("defaultSaves", me.defaultSaves)
+  console.log("defaultSavesCount", defaultSavesCount)
   const text = getTextByCollectionType(collection.default, defaultSavesCount)
 
   return (
@@ -20,7 +24,7 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
       flex={1}
       justifyContent="space-between"
       alignItems="center"
-      bg="black5"
+      bg={defaultSavesCount === 25 ? "red" : "black5"}
       p={2}
     >
       <Box>
@@ -50,6 +54,13 @@ export const SavesEmptyStateFragmentContainer = createFragmentContainer(
     collection: graphql`
       fragment SavesEmptyState_collection on Collection {
         default
+      }
+    `,
+    me: graphql`
+      fragment SavesEmptyState_me on Me {
+        defaultSaves: collection(id: "saved-artwork") {
+          artworksCount
+        }
       }
     `,
   }

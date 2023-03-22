@@ -1,5 +1,6 @@
 import { SavesArtworksGridFragmentContainer } from "./SavesArtworksGrid"
 import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
+import { SavesArtworks_me$data } from "__generated__/SavesArtworks_me.graphql"
 import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
 import {
   ArtworkFilterContextProvider,
@@ -19,7 +20,6 @@ interface SavesArtworksQueryRendererProps {
   collectionID: string
   initialPage?: number
   initialSort?: string
-  defaultSavesCount?: number
 }
 
 interface SavesArtworksProps {
@@ -27,7 +27,7 @@ interface SavesArtworksProps {
   relay: RelayRefetchProp
   initialPage?: number
   initialSort?: string
-  defaultSavesCount?: number
+  defaultSaves: SavesArtworks_me$data
 }
 
 const sortOptions: SortOptions = [
@@ -38,7 +38,7 @@ const defaultSort = sortOptions[0].value
 
 const SavesArtworks: FC<SavesArtworksProps> = ({
   collection,
-  defaultSavesCount,
+  defaultSaves,
   relay,
 }) => {
   const { match } = useRouter()
@@ -79,7 +79,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({
         artworks={collection.artworks!}
         collection={collection}
         relayRefetch={relay.refetch}
-        defaultSavesCount={defaultSavesCount}
+        me={defaultSaves}
       />
     </ArtworkFilterContextProvider>
   )
@@ -92,9 +92,12 @@ const QUERY = graphql`
     $page: Int
   ) {
     me {
-      collection(id: $collectionID) {
+      collection: collection(id: $collectionID) {
         ...SavesArtworks_collection @arguments(page: $page, sort: $sort)
       }
+    }
+    defaultSaves: me {
+      ...SavesArtworks_me
     }
   }
 `
@@ -118,6 +121,11 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
         ...SavesArtworksGrid_collection
       }
     `,
+    defaultSaves: graphql`
+      fragment SavesArtworks_me on Me {
+        ...SavesArtworksGrid_me
+      }
+    `,
   },
   QUERY
 )
@@ -126,7 +134,6 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
   collectionID,
   initialPage,
   initialSort,
-  defaultSavesCount,
 }) => {
   return (
     <SystemQueryRenderer<SavesArtworksQuery>
@@ -138,19 +145,20 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         page: initialPage,
       }}
       render={({ props, error }) => {
+        console.log("props", props)
         if (error) {
           console.error(error)
           return null
         }
 
-        if (!props?.me?.collection) {
+        if (!props?.me?.collection || !props?.defaultSaves) {
           return <SavesArtworksGridPlaceholder />
         }
 
         return (
           <SavesArtworksRefetchContainer
             collection={props.me.collection}
-            defaultSavesCount={defaultSavesCount}
+            defaultSaves={props.defaultSaves}
           />
         )
       }}

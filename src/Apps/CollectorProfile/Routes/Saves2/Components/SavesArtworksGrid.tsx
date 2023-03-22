@@ -1,6 +1,7 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SavesArtworksGrid_artworks$data } from "__generated__/SavesArtworksGrid_artworks.graphql"
 import { SavesArtworksGrid_collection$data } from "__generated__/SavesArtworksGrid_collection.graphql"
+import { SavesArtworksGrid_me$data } from "__generated__/SavesArtworksGrid_me.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -31,7 +32,7 @@ interface SavesArtworksGridProps {
   artworks: SavesArtworksGrid_artworks$data
   collection: SavesArtworksGrid_collection$data
   relayRefetch: RelayRefetchProp["refetch"]
-  defaultSavesCount?: number
+  me: SavesArtworksGrid_me$data
 }
 
 /**
@@ -42,7 +43,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   artworks,
   collection,
   relayRefetch,
-  defaultSavesCount,
+  me,
 }) => {
   const { trackEvent } = useTracking()
   const {
@@ -146,15 +147,8 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     }
   }, [context.filters])
 
-  console.log("artworksCount", defaultSavesCount)
-
   if (artworks.edges?.length === 0) {
-    return (
-      <SavesEmptyStateFragmentContainer
-        collection={collection}
-        defaultSavesCount={defaultSavesCount}
-      />
-    )
+    return <SavesEmptyStateFragmentContainer collection={collection} me={me} />
   }
 
   return (
@@ -241,6 +235,11 @@ export const SavesArtworksGridFragmentContainer = createFragmentContainer(
       fragment SavesArtworksGrid_collection on Collection {
         internalID
         ...SavesEmptyState_collection
+      }
+    `,
+    me: graphql`
+      fragment SavesArtworksGrid_me on Me {
+        ...SavesEmptyState_me
       }
     `,
   }
