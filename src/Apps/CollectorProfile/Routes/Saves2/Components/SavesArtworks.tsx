@@ -133,7 +133,6 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         page: initialPage,
       }}
       render={({ props, error }) => {
-        console.log("props", props)
         if (error) {
           console.error(error)
           return null
