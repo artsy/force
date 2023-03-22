@@ -79,7 +79,6 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
       fragment CollectorProfileSaves2Route_me on Me {
         defaultSaves: collection(id: "saved-artwork") {
           internalID
-          artworksCount
           ...SavesItem_item
         }
 

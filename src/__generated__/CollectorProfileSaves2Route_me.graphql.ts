@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<446ba3cbdb3fe407f039309984b778f3>>
+ * @generated SignedSource<<4106f0b25b745d636a13752eba75182f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
   readonly defaultSaves: {
-    readonly artworksCount: number;
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
   } | null;
@@ -77,13 +76,6 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworksCount",
-          "storageKey": null
-        },
         (v1/*: any*/)
       ],
       "storageKey": "collection(id:\"saved-artwork\")"
@@ -175,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "86d8cde3d60113caf9024837213636ea";
+(node as any).hash = "f49dfdbe88a36651445db15ce310923c";
 
 export default node;
