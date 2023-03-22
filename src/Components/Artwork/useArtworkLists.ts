@@ -45,11 +45,13 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
 
   const showToastByAction = (action: ResultAction) => {
     if (action === ResultAction.SavedToDefaultList) {
+      const key = artwork.isInAuction
+        ? "forAuctionArtwork"
+        : "forNonAuctionArtwork"
+
       sendToast({
         variant: "success",
-        message: t(
-          "collectorSaves.saveArtworkToLists.toast.artworkSaved.message"
-        ),
+        message: t(`collectorSaves.saveArtworkToLists.toast.${key}.message`),
         action: {
           label: t(
             "collectorSaves.saveArtworkToLists.toast.artworkSaved.button"
