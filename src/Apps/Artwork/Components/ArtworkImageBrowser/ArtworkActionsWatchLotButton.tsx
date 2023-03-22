@@ -10,12 +10,14 @@ import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/Artwork
 interface ArtworkActionsWatchLotButtonProps {
   isSaved: boolean
   artwork: ArtworkActionsWatchLotButton_artwork$data
+  canShowRegistrationPopover?: boolean
   onClick: () => void
 }
 
 const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   isSaved,
   artwork,
+  canShowRegistrationPopover = true,
   onClick,
 }) => {
   const { isLoggedIn } = useSystemContext()
@@ -33,7 +35,8 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
     isSaved ||
     isRegistrationClosed ||
     isLiveOpen ||
-    registrationAttempted
+    registrationAttempted ||
+    !canShowRegistrationPopover
 
   const maybeOpenAuctionRegistrationPopover = useCallback(() => {
     if (ignoreAuctionRegistrationPopover) return

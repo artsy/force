@@ -50,6 +50,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
         isSaved={isSaved}
         artwork={artwork}
         onClick={handleSave}
+        canShowRegistrationPopover={!isSavedToCustomLists}
       />
     )
   }
