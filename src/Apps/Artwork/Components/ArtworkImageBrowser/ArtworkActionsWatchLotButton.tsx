@@ -89,7 +89,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   )
 }
 
-const UnfilledIcon = () => <BellIcon title="Unwatch lot icon" fill="blue100" />
+const UnfilledIcon = () => <BellIcon title="Unwatch lot icon" />
 const FilledIcon = () => (
   <BellFillIcon title="Unwatch lot icon" fill="blue100" />
 )
