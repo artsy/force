@@ -15,8 +15,6 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
   me,
 }) => {
   const defaultSavesCount = me.defaultSaves?.artworksCount
-  console.log("defaultSaves", me.defaultSaves)
-  console.log("defaultSavesCount", defaultSavesCount)
   const text = getTextByCollectionType(collection.default, defaultSavesCount)
 
   return (
@@ -24,7 +22,7 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
       flex={1}
       justifyContent="space-between"
       alignItems="center"
-      bg={defaultSavesCount === 25 ? "red" : "black5"}
+      bg="black5"
       p={2}
     >
       <Box>

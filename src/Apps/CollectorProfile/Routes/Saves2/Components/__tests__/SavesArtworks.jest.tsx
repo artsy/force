@@ -17,6 +17,7 @@ jest.mock("System/Router/useRouter", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<SavesArtworks_Test_Query>({
   Component: props => {
+    console.log("test props", props)
     if (!props.me?.collection) {
       return null
     }
@@ -46,10 +47,15 @@ describe("SavesArtworks", () => {
   describe("Empty State", () => {
     it("should render correct texts for default collection", () => {
       renderWithRelay({
-        Collection: () => ({
-          default: true,
-          artworks: {
-            edges: [],
+        Me: () => ({
+          collection: {
+            default: true,
+            artworks: {
+              edges: [],
+            },
+          },
+          defaultSaves: {
+            artworksCount: 0,
           },
         }),
       })
