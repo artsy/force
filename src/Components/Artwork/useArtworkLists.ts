@@ -51,7 +51,9 @@ export const useArtworkLists = (options: SaveArtworkToListsOptions) => {
 
       sendToast({
         variant: "success",
-        message: t(`collectorSaves.saveArtworkToLists.toast.${key}.message`),
+        message: t(
+          `collectorSaves.saveArtworkToLists.toast.artworkSaved.message.${key}`
+        ),
         action: {
           label: t(
             "collectorSaves.saveArtworkToLists.toast.artworkSaved.button"
