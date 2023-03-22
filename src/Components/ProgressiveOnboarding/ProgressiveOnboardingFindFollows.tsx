@@ -1,4 +1,5 @@
 import { Text } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import {
   PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
   PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
@@ -45,6 +46,7 @@ const ProgressiveOnboardingFindFollows: FC<ProgressiveOnboardingFindFollowsProps
       onClose={handleClose}
       onDismiss={handleDismiss}
       ignoreClickOutside={false}
+      zIndex={Z.dropdown}
       popover={<Text variant="xs">Find and edit all your Follows here.</Text>}
     >
       {children}

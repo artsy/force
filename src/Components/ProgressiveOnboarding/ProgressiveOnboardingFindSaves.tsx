@@ -1,4 +1,5 @@
 import { Text } from "@artsy/palette"
+import { Z } from "Apps/Components/constants"
 import {
   PROGRESSIVE_ONBOARDING_FIND_SAVES,
   PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
@@ -45,6 +46,7 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
       onClose={handleClose}
       onDismiss={handleDismiss}
       ignoreClickOutside={false}
+      zIndex={Z.dropdown}
       popover={<Text variant="xs">Find and edit all your Saves here.</Text>}
     >
       {children}
