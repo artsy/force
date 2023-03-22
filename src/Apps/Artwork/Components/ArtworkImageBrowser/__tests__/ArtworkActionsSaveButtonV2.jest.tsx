@@ -147,7 +147,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       it("if artwork was previously saved in `All Saves` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
-            isSaved: false,
+            isSaved: true,
             customCollections: {
               totalCount: 2,
             },
