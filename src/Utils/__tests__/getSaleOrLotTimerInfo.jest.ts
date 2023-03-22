@@ -1,4 +1,4 @@
-import { getSaleOrLotTimerInfo } from "../getSaleOrLotTimerInfo"
+import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 
 describe("getSaleOrLotTimerInfo", () => {
   describe("when the timer info is on the sale", () => {
@@ -87,7 +87,7 @@ describe("getSaleOrLotTimerInfo", () => {
             lotsAreClosing,
             isSaleInfo,
           })
-          expect(saleTimerInfo.copy).toEqual("Bidding Starts Today")
+          expect(saleTimerInfo.copy).toEqual("20h 0m Until Bidding Starts")
           expect(saleTimerInfo.color).toEqual("blue100")
         })
       })
@@ -211,7 +211,7 @@ describe("getSaleOrLotTimerInfo", () => {
         const time = { days: "00", hours: "23", minutes: "01", seconds: "59" }
         it("shows '1 Day Until Bidding Starts'", () => {
           const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-          expect(lotTimerInfo.copy).toEqual("Bidding Starts Today")
+          expect(lotTimerInfo.copy).toEqual("23h 1m Until Bidding Starts")
           expect(lotTimerInfo.color).toEqual("blue100")
         })
       })
