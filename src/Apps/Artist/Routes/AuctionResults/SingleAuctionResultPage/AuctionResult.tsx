@@ -13,6 +13,7 @@ import {
 } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
+import { AuctionResultPrice } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultPrice"
 import { AuctionResultTitleInfo } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
 import { ArtworkLightboxPlaceholder } from "Apps/Artwork/Components/ArtworkLightboxPlaceholder"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -30,13 +31,7 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const {
-    artist,
-    images,
-    title,
-    estimate,
-    comparableAuctionResults,
-  } = auctionResult
+  const { artist, images, title, comparableAuctionResults } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
   const image = images?.larger?.resized
@@ -124,19 +119,11 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         <Column span={8}>
           <Box>
             <Join separator={<Spacer y={[2, 4]} />}>
-              <AuctionResultTitleInfo auctionResultTitleInfo={auctionResult} />
+              <AuctionResultTitleInfo auctionResult={auctionResult} />
 
-              <Box>
-                <Text variant="xs">Pre-sale Estimate</Text>
-                <Text variant="lg-display">{estimate?.display}</Text>
-                <Text variant="xs" color="black60">
-                  {/* TODO: display USD price - check the design */}
-                  {estimate?.display}
-                </Text>
-              </Box>
-              <Box>
-                <AuctionResultMetaData auctionResultMetaData={auctionResult} />
-              </Box>
+              <AuctionResultPrice auctionResult={auctionResult} />
+
+              <AuctionResultMetaData auctionResult={auctionResult} />
             </Join>
           </Box>
         </Column>
@@ -184,11 +171,6 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
             }
           }
         }
-        estimate {
-          display
-          high
-          low
-        }
         comparableAuctionResults(first: 6) @optionalField {
           edges {
             cursor
@@ -199,6 +181,7 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
         }
         ...AuctionResultMetaData_auctionResult
         ...AuctionResultTitleInfo_auctionResult
+        ...AuctionResultPrice_auctionResult
       }
     `,
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55832566dcc192058d5d8481fad3ec6a>>
+ * @generated SignedSource<<6dc0b88b6b5b756b71de690e4a438c7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -91,49 +91,100 @@ v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "display",
+  "name": "organization",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "organization",
+  "name": "mediumText",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "mediumText",
+  "name": "saleDate",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saleDate",
+  "name": "boughtIn",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "location",
+  "name": "currency",
   "storageKey": null
 },
 v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "lotNumber",
+  "name": "display",
   "storageKey": null
 },
 v15 = {
   "alias": null,
   "args": null,
+  "concreteType": "AuctionLotPerformance",
+  "kind": "LinkedField",
+  "name": "performance",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "mid",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v16 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "AuctionLotEstimate",
+  "kind": "LinkedField",
+  "name": "estimate",
+  "plural": false,
+  "selections": [
+    (v14/*: any*/)
+  ],
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "location",
+  "storageKey": null
+},
+v18 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "lotNumber",
+  "storageKey": null
+},
+v19 = {
+  "alias": null,
+  "args": null,
   "kind": "ScalarField",
   "name": "saleTitle",
+  "storageKey": null
+},
+v20 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isUpcoming",
   "storageKey": null
 };
 return {
@@ -267,32 +318,6 @@ return {
           },
           {
             "alias": null,
-            "args": null,
-            "concreteType": "AuctionLotEstimate",
-            "kind": "LinkedField",
-            "name": "estimate",
-            "plural": false,
-            "selections": [
-              (v9/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "high",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "low",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -343,7 +368,7 @@ return {
                         "name": "dimensionText",
                         "storageKey": null
                       },
-                      (v10/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -412,7 +437,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/),
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -427,21 +452,9 @@ return {
                         "name": "dateText",
                         "storageKey": null
                       },
+                      (v11/*: any*/),
                       (v12/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "boughtIn",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "currency",
-                        "storageKey": null
-                      },
+                      (v13/*: any*/),
                       {
                         "alias": "price_realized",
                         "args": null,
@@ -450,7 +463,7 @@ return {
                         "name": "priceRealized",
                         "plural": false,
                         "selections": [
-                          (v9/*: any*/),
+                          (v14/*: any*/),
                           {
                             "alias": "display_usd",
                             "args": null,
@@ -468,46 +481,12 @@ return {
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "AuctionLotPerformance",
-                        "kind": "LinkedField",
-                        "name": "performance",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "mid",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "AuctionLotEstimate",
-                        "kind": "LinkedField",
-                        "name": "estimate",
-                        "plural": false,
-                        "selections": [
-                          (v9/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v13/*: any*/),
-                      (v14/*: any*/),
                       (v15/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isUpcoming",
-                        "storageKey": null
-                      },
+                      (v16/*: any*/),
+                      (v17/*: any*/),
+                      (v18/*: any*/),
+                      (v19/*: any*/),
+                      (v20/*: any*/),
                       (v3/*: any*/)
                     ],
                     "storageKey": null
@@ -518,7 +497,7 @@ return {
             ],
             "storageKey": "comparableAuctionResults(first:6)"
           },
-          (v11/*: any*/),
+          (v10/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -526,16 +505,53 @@ return {
             "name": "dimensionText",
             "storageKey": null
           },
-          (v12/*: any*/),
-          (v10/*: any*/),
-          (v13/*: any*/),
-          (v15/*: any*/),
-          (v14/*: any*/),
+          {
+            "alias": "formattedSaleDate",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMM DD, YYYY"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "saleDate",
+            "storageKey": "saleDate(format:\"MMM DD, YYYY\")"
+          },
+          (v9/*: any*/),
+          (v17/*: any*/),
+          (v19/*: any*/),
+          (v18/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "dateText",
+            "storageKey": null
+          },
+          (v11/*: any*/),
+          (v13/*: any*/),
+          (v12/*: any*/),
+          (v20/*: any*/),
+          (v15/*: any*/),
+          (v16/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AuctionResultPriceRealized",
+            "kind": "LinkedField",
+            "name": "priceRealized",
+            "plural": false,
+            "selections": [
+              (v14/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "displayUSD",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           (v3/*: any*/)
@@ -545,12 +561,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7be7841e909ff8f709f4e8b04a03b79f",
+    "cacheID": "66503e89a7a287dd18be074f62b4d986",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_AuctionResultQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_AuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...AuctionResult_auctionResult\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment AuctionResultMetaData_auctionResult on AuctionResult {\n  mediumText\n  dimensionText\n  saleDate\n  organization\n  location\n  saleTitle\n  lotNumber\n}\n\nfragment AuctionResultTitleInfo_auctionResult on AuctionResult {\n  artist {\n    isPersonalArtist\n    name\n    slug\n    href\n    id\n  }\n  saleDate\n  title\n  dateText\n  organization\n}\n\nfragment AuctionResult_auctionResult on AuctionResult {\n  artist {\n    name\n    slug\n    id\n  }\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n  estimate {\n    display\n    high\n    low\n  }\n  comparableAuctionResults(first: 6) @optionalField {\n    edges {\n      cursor\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n  ...AuctionResultMetaData_auctionResult\n  ...AuctionResultTitleInfo_auctionResult\n}\n"
+    "text": "query artistRoutes_AuctionResultQuery(\n  $auctionResultId: String!\n) {\n  auctionResult(id: $auctionResultId) {\n    ...AuctionResult_auctionResult\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment AuctionResultMetaData_auctionResult on AuctionResult {\n  mediumText\n  dimensionText\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  organization\n  location\n  saleTitle\n  lotNumber\n}\n\nfragment AuctionResultPrice_auctionResult on AuctionResult {\n  saleDate\n  currency\n  boughtIn\n  isUpcoming\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  priceRealized {\n    display\n    displayUSD\n  }\n}\n\nfragment AuctionResultTitleInfo_auctionResult on AuctionResult {\n  artist {\n    isPersonalArtist\n    name\n    slug\n    href\n    id\n  }\n  formattedSaleDate: saleDate(format: \"MMM DD, YYYY\")\n  title\n  dateText\n  organization\n}\n\nfragment AuctionResult_auctionResult on AuctionResult {\n  artist {\n    name\n    slug\n    id\n  }\n  title\n  images {\n    larger {\n      resized(height: 400, width: 400, version: \"larger\") {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n  comparableAuctionResults(first: 6) @optionalField {\n    edges {\n      cursor\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n  ...AuctionResultMetaData_auctionResult\n  ...AuctionResultTitleInfo_auctionResult\n  ...AuctionResultPrice_auctionResult\n}\n"
   }
 };
 })();

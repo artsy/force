@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5aa11dfcdf8cccc8e2f889787d7a1df>>
+ * @generated SignedSource<<8bab8f1cfac47dd680655015e44b3c27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultMetaData_auctionResult$data = {
   readonly dimensionText: string | null;
+  readonly formattedSaleDate: string | null;
   readonly location: string | null;
   readonly lotNumber: string | null;
   readonly mediumText: string | null;
   readonly organization: string | null;
-  readonly saleDate: string | null;
   readonly saleTitle: string | null;
   readonly " $fragmentType": "AuctionResultMetaData_auctionResult";
 };
@@ -46,11 +46,17 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
+      "alias": "formattedSaleDate",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM DD, YYYY"
+        }
+      ],
       "kind": "ScalarField",
       "name": "saleDate",
-      "storageKey": null
+      "storageKey": "saleDate(format:\"MMM DD, YYYY\")"
     },
     {
       "alias": null,
@@ -85,6 +91,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f8541974beb0613bf2f6b7a20d39bce1";
+(node as any).hash = "02d2783f80fa38ab28aa9ecfead79e9e";
 
 export default node;

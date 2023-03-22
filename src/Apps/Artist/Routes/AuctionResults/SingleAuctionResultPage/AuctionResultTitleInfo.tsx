@@ -1,23 +1,17 @@
 import { Box, Text } from "@artsy/palette"
-import { getDisplaySaleDate } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { graphql, useFragment } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuctionResultTitleInfo_auctionResult$key } from "__generated__/AuctionResultTitleInfo_auctionResult.graphql"
 
 interface AuctionResultTitleInfoProps {
-  auctionResultTitleInfo: AuctionResultTitleInfo_auctionResult$key
+  auctionResult: AuctionResultTitleInfo_auctionResult$key
 }
 export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
-  auctionResultTitleInfo,
+  auctionResult,
 }) => {
-  const data = useFragment(
-    auctionResultTitleInfoFragment,
-    auctionResultTitleInfo
-  )
+  const data = useFragment(auctionResultTitleInfoFragment, auctionResult)
 
-  const { artist, title, dateText, organization, saleDate } = data
-
-  const dateOfSale = getDisplaySaleDate(saleDate)
+  const { artist, title, dateText, organization, formattedSaleDate } = data
 
   return (
     <Box>
@@ -36,7 +30,7 @@ export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
       </Text>
 
       <Text variant="xs" color="black60" mb={4}>
-        {dateOfSale} • {organization}
+        {formattedSaleDate} • {organization}
       </Text>
     </Box>
   )
@@ -50,7 +44,7 @@ const auctionResultTitleInfoFragment = graphql`
       slug
       href
     }
-    saleDate
+    formattedSaleDate: saleDate(format: "MMM DD, YYYY")
     title
     dateText
     organization

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eed1e8399e7257db4e1d309b7086a396>>
+ * @generated SignedSource<<881f597b8af3963b1d5ee24419c78338>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type AuctionResultTitleInfo_auctionResult$data = {
     readonly slug: string;
   } | null;
   readonly dateText: string | null;
+  readonly formattedSaleDate: string | null;
   readonly organization: string | null;
-  readonly saleDate: string | null;
   readonly title: string | null;
   readonly " $fragmentType": "AuctionResultTitleInfo_auctionResult";
 };
@@ -74,11 +74,17 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
+      "alias": "formattedSaleDate",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM DD, YYYY"
+        }
+      ],
       "kind": "ScalarField",
       "name": "saleDate",
-      "storageKey": null
+      "storageKey": "saleDate(format:\"MMM DD, YYYY\")"
     },
     {
       "alias": null,
@@ -106,6 +112,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "21944d1eebb28bb16a59077aa70e60b6";
+(node as any).hash = "e963110c0351ccfb2623c7997ffe32d5";
 
 export default node;

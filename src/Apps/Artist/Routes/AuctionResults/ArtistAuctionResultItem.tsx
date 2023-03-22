@@ -368,7 +368,7 @@ const getProps = (props: Props) => {
   }
 }
 
-export const getDisplaySaleDate = (saleDate: string | null) => {
+const getDisplaySaleDate = (saleDate: string | null) => {
   if (!saleDate) return null
 
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(

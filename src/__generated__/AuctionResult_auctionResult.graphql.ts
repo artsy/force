@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eebac7d4585539bfa6b757be1b722a80>>
+ * @generated SignedSource<<1e17dd5167a1715b91df554dab151a33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,11 +23,6 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly estimate: {
-    readonly display: string | null;
-    readonly high: number | null;
-    readonly low: number | null;
-  } | null;
   readonly images: {
     readonly larger: {
       readonly resized: {
@@ -39,7 +34,7 @@ export type AuctionResult_auctionResult$data = {
     } | null;
   } | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultMetaData_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
 };
 export type AuctionResult_auctionResult$key = {
@@ -164,38 +159,6 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "concreteType": "AuctionLotEstimate",
-      "kind": "LinkedField",
-      "name": "estimate",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "high",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "low",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -254,12 +217,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionResultTitleInfo_auctionResult"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionResultPrice_auctionResult"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "0d13ca6b6cc4c73ea1dd5ddb0d626c07";
+(node as any).hash = "4007a6b45ef90cd0db1f1c9c61e9f6ee";
 
 export default node;
