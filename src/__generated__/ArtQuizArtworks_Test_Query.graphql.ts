@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78ebf5c426d41caf1d7f9d5ae154f987>>
+ * @generated SignedSource<<38280ba98437f6bf2dfe3bafbe589fa6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,15 +39,9 @@ v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
-},
-v3 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
   "type": "Int"
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -135,25 +129,11 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "position",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "Artwork",
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -228,14 +208,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "isDisliked",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isSaved",
+                            "name": "internalID",
                             "storageKey": null
                           },
                           {
@@ -249,7 +222,14 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "title",
+                            "name": "isDisliked",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isSaved",
                             "storageKey": null
                           },
                           (v0/*: any*/)
@@ -272,7 +252,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e10cc72ccd62d5fc5b08bc3818cafa5",
+    "cacheID": "9b306d426ff55005848c6b8b0deaef72",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -302,7 +282,12 @@ return {
           "plural": true,
           "type": "QuizArtworkEdge"
         },
-        "me.quiz.quizArtworkConnection.edges.interactedAt": (v2/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.interactedAt": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
         "me.quiz.quizArtworkConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
@@ -322,10 +307,10 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.height": (v3/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.src": (v4/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.srcSet": (v4/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.image.resized.width": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.height": (v2/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.src": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.srcSet": (v3/*: any*/),
+        "me.quiz.quizArtworkConnection.edges.node.image.resized.width": (v2/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node.internalID": (v1/*: any*/),
         "me.quiz.quizArtworkConnection.edges.node.isDisliked": {
           "enumValues": null,
@@ -339,19 +324,12 @@ return {
           "plural": false,
           "type": "Boolean"
         },
-        "me.quiz.quizArtworkConnection.edges.node.slug": (v1/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.node.title": (v2/*: any*/),
-        "me.quiz.quizArtworkConnection.edges.position": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Int"
-        }
+        "me.quiz.quizArtworkConnection.edges.node.slug": (v1/*: any*/)
       }
     },
     "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  image {\n    resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

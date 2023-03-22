@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7d16aa8be27480557003f62d1edd2d7>>
+ * @generated SignedSource<<3700d0a717ff897daae4a70c3de9417b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,25 +166,11 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "position",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "Artwork",
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -259,10 +245,9 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "isDisliked",
+                            "name": "internalID",
                             "storageKey": null
                           },
-                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -274,9 +259,10 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "title",
+                            "name": "isDisliked",
                             "storageKey": null
                           },
+                          (v1/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -333,12 +319,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8fe129c5b80fc775e999a1fc03b76323",
+    "cacheID": "b5cc7dea83ec7e53a7cc7e17625f5bf5",
     "id": null,
     "metadata": {},
     "name": "artQuizRoutes_ArtworksQuery",
     "operationKind": "query",
-    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        isSaved\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        position\n        node {\n          internalID\n          image {\n            resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          isDisliked\n          isSaved\n          slug\n          title\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query artQuizRoutes_ArtworksQuery {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        isSaved\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  image {\n    resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
