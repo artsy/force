@@ -34,6 +34,7 @@ import { useTranslation } from "react-i18next"
 import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
+import { HorizontalOverflow } from "Components/Search/HorizontalOverflow"
 
 const logger = createLogger("Components/Search/SearchBar")
 
@@ -399,11 +400,13 @@ export class SearchBar extends Component<Props, State> {
 
   renderPills = () => {
     return (
-      <Box>
+      <HorizontalOverflow p={2}>
         {SearchPills.map(pill => (
-          <Pill>{pill}</Pill>
+          <Pill mr={1} key={pill}>
+            {pill}
+          </Pill>
         ))}
-      </Box>
+      </HorizontalOverflow>
     )
   }
 
@@ -449,9 +452,9 @@ export class SearchBar extends Component<Props, State> {
 
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const suggestions = [
       isPillsPlaceholder,
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       ...edges,
       firstSuggestionPlaceholder,
     ]
