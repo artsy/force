@@ -31,6 +31,7 @@ interface SavesArtworksGridProps {
   artworks: SavesArtworksGrid_artworks$data
   collection: SavesArtworksGrid_collection$data
   relayRefetch: RelayRefetchProp["refetch"]
+  defaultSavesCount?: number
 }
 
 /**
@@ -41,6 +42,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   artworks,
   collection,
   relayRefetch,
+  defaultSavesCount,
 }) => {
   const { trackEvent } = useTracking()
   const {
@@ -144,8 +146,15 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
     }
   }, [context.filters])
 
+  console.log("artworksCount", defaultSavesCount)
+
   if (artworks.edges?.length === 0) {
-    return <SavesEmptyStateFragmentContainer collection={collection} />
+    return (
+      <SavesEmptyStateFragmentContainer
+        collection={collection}
+        defaultSavesCount={defaultSavesCount}
+      />
+    )
   }
 
   return (

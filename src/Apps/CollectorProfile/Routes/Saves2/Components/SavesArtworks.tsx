@@ -19,6 +19,7 @@ interface SavesArtworksQueryRendererProps {
   collectionID: string
   initialPage?: number
   initialSort?: string
+  defaultSavesCount?: number
 }
 
 interface SavesArtworksProps {
@@ -26,6 +27,7 @@ interface SavesArtworksProps {
   relay: RelayRefetchProp
   initialPage?: number
   initialSort?: string
+  defaultSavesCount?: number
 }
 
 const sortOptions: SortOptions = [
@@ -34,7 +36,11 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
-const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
+const SavesArtworks: FC<SavesArtworksProps> = ({
+  collection,
+  defaultSavesCount,
+  relay,
+}) => {
   const { match } = useRouter()
 
   const counts: Counts = {
@@ -73,6 +79,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
         artworks={collection.artworks!}
         collection={collection}
         relayRefetch={relay.refetch}
+        defaultSavesCount={defaultSavesCount}
       />
     </ArtworkFilterContextProvider>
   )
@@ -119,6 +126,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
   collectionID,
   initialPage,
   initialSort,
+  defaultSavesCount,
 }) => {
   return (
     <SystemQueryRenderer<SavesArtworksQuery>
@@ -140,7 +148,10 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
         }
 
         return (
-          <SavesArtworksRefetchContainer collection={props.me.collection} />
+          <SavesArtworksRefetchContainer
+            collection={props.me.collection}
+            defaultSavesCount={defaultSavesCount}
+          />
         )
       }}
     />

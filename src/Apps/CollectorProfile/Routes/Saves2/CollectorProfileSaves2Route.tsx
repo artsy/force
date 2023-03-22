@@ -67,6 +67,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         collectionID={selectedCollectionId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
+        defaultSavesCount={savedCollection.artworksCount}
       />
     </>
   )
@@ -79,6 +80,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
       fragment CollectorProfileSaves2Route_me on Me {
         defaultSaves: collection(id: "saved-artwork") {
           internalID
+          artworksCount
           ...SavesItem_item
         }
 

@@ -6,10 +6,14 @@ import { SavesEmptyState_collection$data } from "__generated__/SavesEmptyState_c
 
 interface SavesEmptyStateProps {
   collection: SavesEmptyState_collection$data
+  defaultSavesCount?: number
 }
 
-export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ collection }) => {
-  const text = getTextByCollectionType(collection.default)
+export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
+  collection,
+  defaultSavesCount,
+}) => {
+  const text = getTextByCollectionType(collection.default, defaultSavesCount)
 
   return (
     <Flex
@@ -51,8 +55,11 @@ export const SavesEmptyStateFragmentContainer = createFragmentContainer(
   }
 )
 
-const getTextByCollectionType = (isDefault: boolean) => {
-  if (isDefault) {
+const getTextByCollectionType = (
+  isDefault: boolean,
+  defaultSavesCount?: number
+) => {
+  if (isDefault || !defaultSavesCount) {
     return {
       title: "Keep track of artworks you love",
       description:

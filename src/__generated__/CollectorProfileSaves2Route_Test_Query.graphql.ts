@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a312c6dd140a0051434f17d954a590b>>
+ * @generated SignedSource<<926c6915dbf3422b8d791f3bec702ab6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,21 +33,21 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "default",
+  "name": "artworksCount",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "default",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "artworksCount",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
@@ -292,9 +292,9 @@ return {
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
-                      (v1/*: any*/),
                       (v2/*: any*/),
                       (v3/*: any*/),
+                      (v1/*: any*/),
                       (v5/*: any*/),
                       (v4/*: any*/),
                       {
@@ -361,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8a3843edf07ebce7836728b83c6e14e",
+    "cacheID": "434c557b1c16e93656f7dbe499aa17b4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -422,7 +422,7 @@ return {
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    artworksCount\n    ...SavesItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...SavesItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
