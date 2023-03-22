@@ -9,7 +9,7 @@ interface SavesEmptyStateProps {
 }
 
 export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
-  const defaultSavesCount = me.defaultSaves?.artworksCount
+  const defaultSavesCount = me.defaultSaves?.artworksCount ?? 0
   const text = getTextByCollectionType(
     me.collection!.default,
     defaultSavesCount
@@ -64,7 +64,7 @@ export const SavesEmptyStateFragmentContainer = createFragmentContainer(
 
 const getTextByCollectionType = (
   isDefault: boolean,
-  defaultSavesCount?: number
+  defaultSavesCount: number
 ) => {
   if (isDefault || !defaultSavesCount) {
     return {
