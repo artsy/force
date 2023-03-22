@@ -35,7 +35,6 @@ interface UtilButtonProps {
   longestLabel?: string
   Icon?: React.ReactNode
   Component?: typeof UtilButtonButton | typeof UtilButtonLink
-  iconTitle?: string
   onClick?: () => void
 }
 
@@ -60,7 +59,6 @@ export const UtilButton: React.ForwardRefExoticComponent<
       Icon,
       Component = UtilButtonButton,
       download,
-      iconTitle,
       ...rest
     },
     forwardedRef
@@ -105,7 +103,7 @@ export const UtilButton: React.ForwardRefExoticComponent<
         >
           {/* TODO: Fix types */}
           {/* @ts-ignore */}
-          <ActionIcon title={iconTitle} {...rest} fill="currentColor" />
+          <ActionIcon {...rest} fill="currentColor" />
         </Flex>
 
         <UtilButtonInnerText

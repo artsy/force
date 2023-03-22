@@ -79,8 +79,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
           <UtilButton
             ref={anchorRef}
             name="bell"
-            Icon={isSaved ? FilledIcon : BellIcon}
-            iconTitle="Watch lot icon"
+            Icon={isSaved ? FilledIcon : UnfilledIcon}
             label="Watch lot"
             onClick={handleButtonClick}
           />
@@ -90,7 +89,10 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   )
 }
 
-const FilledIcon = () => <BellFillIcon fill="blue100" />
+const UnfilledIcon = () => <BellIcon title="Unwatch lot icon" fill="blue100" />
+const FilledIcon = () => (
+  <BellFillIcon title="Unwatch lot icon" fill="blue100" />
+)
 
 export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentContainer(
   ArtworkActionsWatchLotButton,
