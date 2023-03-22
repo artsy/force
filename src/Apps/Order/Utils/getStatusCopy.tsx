@@ -497,7 +497,7 @@ export const wireTransferArtsyBankDetails = order => {
           <Spacer y={1} />
           <Text>Wells Fargo Bank, N.A.</Text>
           <Text>420 Montgomery Street</Text>
-          <Text>San Francisco, CA 9410</Text>
+          <Text>San Francisco, CA 94104</Text>
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
