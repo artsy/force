@@ -120,7 +120,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       }))
     })
 
-    describe("should display `Saved` label", () => {
+    describe("should display `Saved` label with selected state", () => {
       it("if artwork was previously saved in `All Saves` list", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -129,6 +129,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -142,6 +143,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `All Saves` and custom lists", () => {
@@ -155,10 +157,11 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
     })
 
-    describe("should display `Watch lot` label", () => {
+    describe("should display `Watch lot` button with selected state", () => {
       it("if artwork was previously saved in `All Saves` list", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -167,7 +170,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -181,7 +184,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `All Saves` and custom lists", () => {
@@ -195,7 +198,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
       })
     })
 
