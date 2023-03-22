@@ -57,11 +57,10 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   useEffect(() => {
     // If we are coming in after authentication triggered by a save
     // *maybe* open the auction registration popover
-    if (!value || value.action !== "save") return
-
-    maybeOpenAuctionRegistrationPopover()
-
-    clearValue()
+    if (value?.action === "save" || value?.action === "saveArtworkToLists") {
+      maybeOpenAuctionRegistrationPopover()
+      clearValue()
+    }
   }, [value, maybeOpenAuctionRegistrationPopover, clearValue])
 
   return (
