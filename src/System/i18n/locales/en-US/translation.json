@@ -142,13 +142,15 @@
         "viewSavesButton": "View Saves"
       }
     },
-    "saveArtworkToListsButton": {
-      "artworkSavedToast": {
-        "message": "Artwork saved",
-        "button": "Add to a List"
-      },
-      "artworkRemovedToast": {
-        "message": "Removed from All Saves"
+    "saveArtworkToLists": {
+      "toast": {
+        "artworkSaved": {
+          "message": "Artwork saved",
+          "button": "Add to a List"
+        },
+        "artworkRemoved": {
+          "message": "Removed from All Saves"
+        }
       }
     },
     "selectedListsForArtwork": {

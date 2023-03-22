@@ -1,10 +1,15 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
-import { useSaveArtworkToLists } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
+import { ResultAction } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
+import { useArtworkLists } from "Components/Artwork/useArtworkLists"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import createLogger from "Utils/logger"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+
+const logger = createLogger("SaveArtworkToListsButton")
 
 interface SaveArtworkToListsButtonProps {
   artwork: SaveArtworkToListsButton_artwork$data
@@ -15,19 +20,52 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   artwork,
   contextModule,
 }) => {
-  const { isSavedToList, savedListId } = useManageArtworkForSavesContext()
-  const { isSaved, onSave } = useSaveArtworkToLists({
-    artwork,
+  const tracking = useTracking()
+  const { savedListId, isSavedToList } = useManageArtworkForSavesContext()
+
+  const customListsCount = artwork.customCollections?.totalCount ?? 0
+  const isSavedToDefaultList = !!artwork.is_saved
+  const isSavedToCustomLists = customListsCount > 0
+
+  const { isSaved, saveArtworkToLists } = useArtworkLists({
     contextModule,
-    customListsCount: artwork.customCollections?.totalCount ?? 0,
-    isSaved: !!artwork.is_saved,
+    artwork: {
+      internalID: artwork.internalID,
+      id: artwork.id,
+      slug: artwork.slug,
+      title: `${artwork.title}, ${artwork.date}`,
+      imageURL: artwork.preview?.url ?? null,
+      isSavedToDefaultList,
+      isSavedToCustomLists,
+    },
   })
 
-  const handleClick = (
+  const handleSave = async () => {
+    try {
+      const action = await saveArtworkToLists()
+
+      if (
+        action === ResultAction.SavedToDefaultList ||
+        action === ResultAction.RemovedFromDefaultList
+      ) {
+        const label = labelByResultAction[action]
+
+        tracking.trackEvent({
+          action: label,
+          entity_slug: artwork.slug,
+          entity_id: artwork.internalID,
+        })
+      }
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  const handleClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-    onSave()
+    handleSave()
   }
 
   return (
@@ -64,3 +102,8 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
     `,
   }
 )
+
+const labelByResultAction = {
+  [ResultAction.SavedToDefaultList]: "Saved Artwork",
+  [ResultAction.RemovedFromDefaultList]: "Removed Artwork",
+}
