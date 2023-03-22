@@ -108,7 +108,6 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         title
         href
         artistNames
-        isInAuction
         image {
           src: url(version: ["larger", "large"])
           width

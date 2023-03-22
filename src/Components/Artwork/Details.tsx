@@ -214,7 +214,6 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
-  const isInAuction = rest?.artwork.isInAuction
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
@@ -226,7 +225,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled && !isInAuction) {
+    if (isArtworksListEnabled) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}
@@ -369,7 +368,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      isInAuction
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artist {
