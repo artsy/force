@@ -18,26 +18,16 @@ jest.mock("System/Router/useRouter", () => ({
 const { renderWithRelay } = setupTestWrapperTL<SavesArtworks_Test_Query>({
   Component: props => {
     console.log("test props", props)
-    if (!props.me?.collection) {
+    if (!props.me) {
       return null
     }
 
-    return (
-      <SavesArtworksRefetchContainer
-        collection={props.me.collection}
-        defaultSaves={props.defaultSaves!}
-      />
-    )
+    return <SavesArtworksRefetchContainer me={props.me} />
   },
   query: graphql`
     query SavesArtworks_Test_Query @relay_test_operation {
       me {
-        collection: collection(id: "collectionID") {
-          ...SavesArtworks_collection
-        }
-      }
-      defaultSaves: me {
-        ...SavesArtworks_me
+        ...SavesArtworks_me @arguments(collectionID: "collectionID")
       }
     }
   `,

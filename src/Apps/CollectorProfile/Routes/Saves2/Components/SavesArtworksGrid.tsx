@@ -1,6 +1,4 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavesArtworksGrid_artworks$data } from "__generated__/SavesArtworksGrid_artworks.graphql"
-import { SavesArtworksGrid_collection$data } from "__generated__/SavesArtworksGrid_collection.graphql"
 import { SavesArtworksGrid_me$data } from "__generated__/SavesArtworksGrid_me.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
@@ -29,8 +27,6 @@ import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
 
 interface SavesArtworksGridProps {
-  artworks: SavesArtworksGrid_artworks$data
-  collection: SavesArtworksGrid_collection$data
   relayRefetch: RelayRefetchProp["refetch"]
   me: SavesArtworksGrid_me$data
 }
@@ -40,8 +36,6 @@ interface SavesArtworksGridProps {
  * when filter support is added.
  */
 const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
-  artworks,
-  collection,
   relayRefetch,
   me,
 }) => {
@@ -56,6 +50,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   const [fetching, setFetching] = useState(false)
   const previousFilters = usePrevious(filters)
 
+  const artworks = me.collection?.artworks!
   const {
     pageCursors,
     pageInfo: { hasNextPage },
@@ -148,7 +143,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   }, [context.filters])
 
   if (artworks.edges?.length === 0) {
-    return <SavesEmptyStateFragmentContainer collection={collection} me={me} />
+    return <SavesEmptyStateFragmentContainer me={me} />
   }
 
   return (
@@ -166,7 +161,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
-          savedListId={collection.internalID}
+          savedListId={me.collection?.internalID!}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
@@ -201,7 +196,7 @@ const PageWrapper: FC<SavesArtworksGridProps> = props => {
   return (
     <AnalyticsContext.Provider
       value={{
-        contextPageOwnerId: props.collection.internalID,
+        contextPageOwnerId: props.me.collection!.internalID,
         contextPageOwnerSlug,
         // TODO: Clarify some moment about analytics later (maybe we should pass OwnerType.collection)
         contextPageOwnerType,
@@ -215,31 +210,32 @@ const PageWrapper: FC<SavesArtworksGridProps> = props => {
 export const SavesArtworksGridFragmentContainer = createFragmentContainer(
   PageWrapper,
   {
-    artworks: graphql`
-      fragment SavesArtworksGrid_artworks on ArtworkConnection {
-        pageInfo {
-          hasNextPage
-        }
-        pageCursors {
-          ...Pagination_pageCursors
-        }
-        edges {
-          node {
-            id
+    me: graphql`
+      fragment SavesArtworksGrid_me on Me
+        @argumentDefinitions(
+          collectionID: { type: "String!" }
+          page: { type: "Int", defaultValue: 1 }
+          sort: { type: "CollectionArtworkSorts" }
+        ) {
+        collection(id: $collectionID) {
+          internalID
+
+          artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
+            pageInfo {
+              hasNextPage
+            }
+            pageCursors {
+              ...Pagination_pageCursors
+            }
+            edges {
+              node {
+                id
+              }
+            }
+            ...ArtworkGrid_artworks
           }
         }
-        ...ArtworkGrid_artworks
-      }
-    `,
-    collection: graphql`
-      fragment SavesArtworksGrid_collection on Collection {
-        internalID
-        ...SavesEmptyState_collection
-      }
-    `,
-    me: graphql`
-      fragment SavesArtworksGrid_me on Me {
-        ...SavesEmptyState_me
+        ...SavesEmptyState_me @arguments(collectionID: $collectionID)
       }
     `,
   }

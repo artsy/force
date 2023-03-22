@@ -2,20 +2,18 @@ import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavesEmptyState_collection$data } from "__generated__/SavesEmptyState_collection.graphql"
 import { SavesEmptyState_me$data } from "__generated__/SavesEmptyState_me.graphql"
 
 interface SavesEmptyStateProps {
-  collection: SavesEmptyState_collection$data
   me: SavesEmptyState_me$data
 }
 
-export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
-  collection,
-  me,
-}) => {
+export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
   const defaultSavesCount = me.defaultSaves?.artworksCount
-  const text = getTextByCollectionType(collection.default, defaultSavesCount)
+  const text = getTextByCollectionType(
+    me.collection!.default,
+    defaultSavesCount
+  )
 
   return (
     <Flex
@@ -49,13 +47,13 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({
 export const SavesEmptyStateFragmentContainer = createFragmentContainer(
   SavesEmptyState,
   {
-    collection: graphql`
-      fragment SavesEmptyState_collection on Collection {
-        default
-      }
-    `,
     me: graphql`
-      fragment SavesEmptyState_me on Me {
+      fragment SavesEmptyState_me on Me
+        @argumentDefinitions(collectionID: { type: "String!" }) {
+        collection(id: $collectionID) {
+          default
+        }
+
         defaultSaves: collection(id: "saved-artwork") {
           artworksCount
         }
