@@ -36,7 +36,7 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
         // @ts-ignore
         as={RouterLink}
         variant="secondaryBlack"
-        to="/"
+        to="/collection/trending-this-week"
       >
         Browse Works
       </Button>
