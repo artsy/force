@@ -55,6 +55,14 @@ describe("ArtworkActionsSaveButtonV2", () => {
     expect(screen.getByText("Save")).toBeInTheDocument()
   })
 
+  it("should display `Watch lot` label", () => {
+    renderWithRelay({
+      Artwork: () => unsavedAuctionArtwork,
+    })
+
+    expect(screen.getByText("Watch lot")).toBeInTheDocument()
+  })
+
   describe("Save flow", () => {
     beforeEach(() => {
       mockSaveArtwork.mockImplementation(args => ({
@@ -74,6 +82,17 @@ describe("ArtworkActionsSaveButtonV2", () => {
       fireEvent.click(screen.getByText("Save"))
 
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
+    })
+
+    it("should display a different toast message when artwork is in auction", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedAuctionArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Watch lot"))
+
+      expect(await screen.findByText("Watch lot saved")).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
@@ -139,6 +158,47 @@ describe("ArtworkActionsSaveButtonV2", () => {
       })
     })
 
+    describe("should display `Watch lot` label", () => {
+      it("if artwork was previously saved in `All Saves` list", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: true,
+            sale,
+          }),
+        })
+
+        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: false,
+            sale,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: true,
+            sale,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByText("Watch lot")).toBeInTheDocument()
+      })
+    })
+
     it("should display a toast message when artwork was unsaved", async () => {
       renderWithRelay({
         Artwork: () => savedArtwork,
@@ -184,6 +244,11 @@ describe("ArtworkActionsSaveButtonV2", () => {
   })
 })
 
+const sale = {
+  isAuction: true,
+  isClosed: false,
+}
+
 const unsavedArtwork = {
   isSaved: false,
   customCollections: {
@@ -196,4 +261,9 @@ const savedArtwork = {
   customCollections: {
     totalCount: 0,
   },
+}
+
+const unsavedAuctionArtwork = {
+  ...unsavedArtwork,
+  sale,
 }

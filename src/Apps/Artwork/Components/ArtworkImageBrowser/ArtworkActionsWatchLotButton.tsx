@@ -80,6 +80,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
             ref={anchorRef}
             name="bell"
             Icon={isSaved ? FilledIcon : BellIcon}
+            iconTitle="Watch lot icon"
             label="Watch lot"
             onClick={handleButtonClick}
           />
