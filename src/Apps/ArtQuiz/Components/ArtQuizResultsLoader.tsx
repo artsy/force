@@ -63,7 +63,11 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
 
               <Spacer y={2} />
 
-              <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
+              <Text variant={["lg", "xl"]}>
+                {loading
+                  ? t("artQuizPage.loadingScreen.findingArt")
+                  : t("artQuizPage.loadingScreen.resultsReady")}
+              </Text>
 
               <Spacer y={2} />
 

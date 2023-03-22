@@ -80,12 +80,12 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
 /* prettier-ignore */ export const OPTION_FINDING_GREAT_INVESTMENTS = "Finding my next great investment"
 /* prettier-ignore */ export const OPTION_COLLECTING_ART_THAT_MOVES_ME = "Collecting art that moves me"
 
-/* prettier-ignore */ export const OPTION_TOP_AUCTION_LOTS = "Top auction lots"
-/* prettier-ignore */ export const OPTION_A_CURATED_SELECTION_OF_ARTWORKS = "A curated selection of artworks"
+/* prettier-ignore */ export const OPTION_TOP_AUCTION_LOTS = "Explore top auction lots"
+/* prettier-ignore */ export const OPTION_A_CURATED_SELECTION_OF_ARTWORKS = "Browse a curated collection"
 /* prettier-ignore */ export const OPTION_ARTISTS_ON_THE_RISE = "Artists on the rise"
-/* prettier-ignore */ export const OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN = "Artists I want to collect"
+/* prettier-ignore */ export const OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN = "Follow artists you love"
 /* prettier-ignore */ export const OPTION_FOLLOW_GALLERIES_I_LOVE = "Galleries I'm interested in"
-/* prettier-ignore */ export const OPTION_ART_QUIZ = "The Art Taste Quiz"
+/* prettier-ignore */ export const OPTION_ART_QUIZ = "Take the art taste quiz"
 
 /* prettier-ignore */ export const VIEW_WELCOME = "VIEW_WELCOME"
 /* prettier-ignore */ export const VIEW_QUESTION_ONE = "VIEW_QUESTION_ONE"

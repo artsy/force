@@ -106,13 +106,14 @@ export const OnboardingQuestionThree: FC = () => {
           }}
         >
           <Text variant="lg-display" ref={register(1)}>
-            Almost done! What would you like to see first?
+            Almost done! Now select some artworks and artists to tailor Artsy to
+            your tastes.
           </Text>
 
           <Spacer y={1} />
 
           <Text variant="sm-display" ref={register(2)}>
-            Choose one to start exploring.
+            Choose a way to start exploring
           </Text>
 
           <Box ref={register(3)} mt={4}>
