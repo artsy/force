@@ -36,7 +36,7 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
     }
-  }, [counts.initialSavedArtworks, counts.savedArtworks, dismiss, isDismissed])
+  }, [counts.savedArtworks, dismiss, isDismissed])
 
   if (!isDisplayble) {
     return <>{children}</>

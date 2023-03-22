@@ -36,12 +36,7 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
     }
-  }, [
-    counts.followedArtists,
-    counts.initialFollowedArtists,
-    dismiss,
-    isDismissed,
-  ])
+  }, [counts.followedArtists, dismiss, isDismissed])
 
   if (!isDisplayable) {
     return <>{children}</>
