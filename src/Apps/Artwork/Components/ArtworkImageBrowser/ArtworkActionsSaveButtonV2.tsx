@@ -47,6 +47,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
   if (isOpenSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
+        isSaved={isSaved}
         artwork={artwork}
         onClick={handleSave}
       />

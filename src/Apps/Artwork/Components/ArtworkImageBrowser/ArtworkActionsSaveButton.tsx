@@ -15,7 +15,7 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
-  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+  const isArtworksListEnabled = true
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
     artwork,
@@ -38,6 +38,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   if (isOpenSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
+        isSaved={isSaved}
         artwork={artwork}
         onClick={handleSave}
       />

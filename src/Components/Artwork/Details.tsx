@@ -213,7 +213,7 @@ export const Details: React.FC<DetailsProps> = ({
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+  const isArtworksListEnabled = true
   const isInAuction = rest?.artwork.isInAuction
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 

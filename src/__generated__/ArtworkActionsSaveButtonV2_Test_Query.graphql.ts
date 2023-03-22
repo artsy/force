@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac05be9aba3057ed59fb9f042b579e5d>>
+ * @generated SignedSource<<fa9cb381db5795529479792727c89350>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -270,7 +270,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ef01d6b0f97ef6b68b7bdbf0b5c2b2e3",
+    "cacheID": "3e7e55c6576b4bb0cdb6e7443a433675",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -331,7 +331,7 @@ return {
     },
     "name": "ArtworkActionsSaveButtonV2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActionsSaveButtonV2_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButtonV2_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  isSaved\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
+    "text": "query ArtworkActionsSaveButtonV2_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButtonV2_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
   }
 };
 })();

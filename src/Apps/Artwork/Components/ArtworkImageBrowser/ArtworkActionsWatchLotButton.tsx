@@ -8,11 +8,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
 
 interface ArtworkActionsWatchLotButtonProps {
+  isSaved: boolean
   artwork: ArtworkActionsWatchLotButton_artwork$data
   onClick: () => void
 }
 
 const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
+  isSaved,
   artwork,
   onClick,
 }) => {
@@ -22,7 +24,6 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   const { isLiveOpen, isRegistrationClosed, registrationStatus, liveStartAt } =
     artwork.sale ?? {}
 
-  const isSaved = !!artwork.isSaved
   const registrationAttempted = !!registrationStatus
   const mobileMaxWidth = `calc(100% - (${THEME.space[2]} * 2))`
 
@@ -106,7 +107,6 @@ export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentConta
             qualifiedForBidding
           }
         }
-        isSaved
         ...ArtworkAuctionRegistrationPanel_artwork
       }
     `,

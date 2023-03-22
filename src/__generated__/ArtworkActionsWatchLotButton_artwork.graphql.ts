@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf716c0c47670b7b8a97498899951cf5>>
+ * @generated SignedSource<<7b2e1536a3397f32e2d8c53ebb322cdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsWatchLotButton_artwork$data = {
-  readonly isSaved: boolean | null;
   readonly sale: {
     readonly isLiveOpen: boolean | null;
     readonly isRegistrationClosed: boolean | null;
@@ -85,13 +84,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkAuctionRegistrationPanel_artwork"
@@ -101,6 +93,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "706c3445b489851fd8117297efc3d97c";
+(node as any).hash = "6082d7984e0f86314ccfee557da7362d";
 
 export default node;
