@@ -102,7 +102,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
       edges: [
         {
           node: {
-            isInAuction: true,
             internalID: "5de6b49aa665fc000db78197",
             images: [
               {
@@ -232,7 +231,6 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
         },
         {
           node: {
-            isInAuction: false,
             internalID: "5de6b3a46882b7000eee31f8",
             images: [
               {
