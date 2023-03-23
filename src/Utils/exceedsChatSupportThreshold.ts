@@ -6,7 +6,7 @@ const CURRENCIES = {
   GBP: 7000,
 } as const
 
-export const isExceededZendeskThreshold = (
+export const exceedsChatSupportThreshold = (
   amount: number,
   currencyCode: string
 ) => {

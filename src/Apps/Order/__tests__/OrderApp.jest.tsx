@@ -26,6 +26,9 @@ import { DateTime } from "luxon"
 import { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { getENV } from "Utils/getENV"
+
+jest.mock("Utils/getENV")
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -576,6 +579,8 @@ describe("OrderApp routing redirects", () => {
 })
 
 describe("OrderApp", () => {
+  const mockGetENV = getENV as jest.Mock
+
   const getWrapper = ({ props, context }: any) => {
     return mount(
       <MockBoot>
@@ -653,6 +658,23 @@ describe("OrderApp", () => {
     })
 
     expect(subject.find("ZendeskWrapper")).toHaveLength(1)
+  })
+
+  it("shows the Salesforce chat integration button", () => {
+    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+    const props = getProps() as any
+    const subject = getWrapper({ props }) as any
+    expect(subject.find("SalesforceWrapper")).toHaveLength(1)
+  })
+
+  it("does not show the Salesforce chat integration button if in a modal", () => {
+    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+    const props = getProps()
+    const subject = getWrapper({
+      props: { ...props, location: { query: { isModal: true } } },
+    })
+
+    expect(subject.find("SalesforceWrapper")).toHaveLength(0)
   })
 
   it("shows an error page if the order is missing", () => {

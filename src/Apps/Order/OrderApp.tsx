@@ -13,11 +13,12 @@ import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
+import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
 import { useSystemContext } from "System/useSystemContext"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
+import { SalesforceWrapper } from "Components/SalesforceWrapper"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -83,15 +84,19 @@ const OrderApp: FC<OrderAppProps> = props => {
     return <ErrorPage code={404} />
   }
 
-  const renderZendeskScript = () => {
+  const renderChatSupportScript = () => {
     const { itemsTotalCents, currencyCode } = order
     const price = itemsTotalCents! / 100
 
-    if (!price || !isExceededZendeskThreshold(price, currencyCode)) {
+    if (!price || !exceedsChatSupportThreshold(price, currencyCode)) {
       return null
     }
 
-    return <ZendeskWrapper />
+    return getENV("SALESFORCE_CHAT_ENABLED") ? (
+      <SalesforceWrapper />
+    ) : (
+      <ZendeskWrapper />
+    )
   }
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
@@ -109,7 +114,7 @@ const OrderApp: FC<OrderAppProps> = props => {
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
-      {!isEigen && !isModal && renderZendeskScript()}
+      {!isEigen && !isModal && renderChatSupportScript()}
       <SafeAreaContainer>
         <OrderPaymentContextProvider>
           <Elements stripe={stripePromise}>
