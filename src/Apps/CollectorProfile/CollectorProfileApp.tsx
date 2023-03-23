@@ -25,16 +25,11 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   // TODO: Remove this👇 when we're ready to launch the new artworks list page
   const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
 
-  const savesPath = "/collector-profile/saves"
-  const isSavesPathActive = useIsRouteActive(savesPath, { exact: false })
-  const savesPath2 = "/collector-profile/saves2"
-  const isSaves2PathActive = useIsRouteActive(savesPath2, { exact: false })
-
   const savesPathToUse = isArtworksListEnabled
     ? "/collector-profile/saves2"
     : "/collector-profile/saves"
 
-  const isSavesOrSaves2RouteActive = isSavesPathActive || isSaves2PathActive
+  const isSavesPathActive = useIsRouteActive(savesPathToUse, { exact: false })
   // TODO: Remove this ☝️ when we're ready to launch the new artworks list page
 
   if (!isLoggedIn) {
@@ -61,7 +56,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
         <Tab to="/collector-profile/insights">Insights</Tab>
 
         <ProgressiveOnboardingSavesHighlight position="center">
-          <Tab to={savesPathToUse} active={isSavesOrSaves2RouteActive}>
+          <Tab to={savesPathToUse} active={isSavesPathActive}>
             Saves
           </Tab>
         </ProgressiveOnboardingSavesHighlight>
