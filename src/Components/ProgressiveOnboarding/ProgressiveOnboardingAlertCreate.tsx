@@ -6,7 +6,16 @@ import {
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC, ReactNode } from "react"
-import { Box, Button, Flex, ResponsiveBox, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  ResponsiveBox,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { resized } from "Utils/resized"
 
 interface ProgressiveOnboardingAlertCreateProps {
   children: (actions: { onSkip(): void }) => ReactNode
@@ -19,6 +28,8 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
 
   const isDisplayable =
     isEnabledFor("alerts") && !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
+
+  const image = resized(IMAGE.src, { width: 230 })
 
   const handleDismiss = () => {
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
@@ -55,22 +66,11 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
 
             <ResponsiveBox
               bg="black10"
-              aspectWidth={734}
-              aspectHeight={500}
+              aspectWidth={IMAGE.width}
+              aspectHeight={IMAGE.height}
               maxWidth="100%"
             >
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ width: "100%", height: "100%" }}
-              >
-                <source
-                  src="https://files.artsy.net/videos/progressive-onboarding-alerts.mp4"
-                  type="video/mp4"
-                />
-              </video>
+              <Image {...image} width="100%" height="100%" lazyLoad alt="" />
             </ResponsiveBox>
 
             <Spacer y={2} />
@@ -116,4 +116,10 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
       {children({ onSkip: handleDismiss })}
     </ProgressiveOnboardingPopover>
   )
+}
+
+const IMAGE = {
+  src: "https://files.artsy.net/images/ProgOnboard.jpg",
+  width: 2880,
+  height: 1960,
 }
