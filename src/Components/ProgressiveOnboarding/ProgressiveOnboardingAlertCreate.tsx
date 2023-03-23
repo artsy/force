@@ -1,6 +1,5 @@
 import {
   PROGRESSIVE_ONBOARDING_ALERT_CREATE,
-  PROGRESSIVE_ONBOARDING_ALERT_FIND,
   PROGRESSIVE_ONBOARDING_ALERT_READY,
   PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
   useProgressiveOnboarding,
@@ -10,7 +9,7 @@ import { FC, ReactNode } from "react"
 import { Box, Button, Flex, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 
 interface ProgressiveOnboardingAlertCreateProps {
-  children: (actions: { onNext(): void }) => ReactNode
+  children: (actions: { onSkip(): void }) => ReactNode
 }
 
 export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps> = ({
@@ -25,22 +24,25 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_READY)
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_FIND)
   }
 
   const handleNext = () => {
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
   }
 
+  const handleClose = () => {
+    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
+  }
+
   if (!isDisplayable) {
-    return <>{children({ onNext: () => {} })}</>
+    return <>{children({ onSkip: () => {} })}</>
   }
 
   return (
     <ProgressiveOnboardingPopover
       name={PROGRESSIVE_ONBOARDING_ALERT_CREATE}
-      onClose={handleNext}
       ignoreClickOutside
+      onClose={handleClose}
       variant="defaultLight"
       popover={({ onHide }) => {
         return (
@@ -85,7 +87,10 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
                 size="small"
                 variant="secondaryBlack"
                 flex={1}
-                onClick={onHide}
+                onClick={() => {
+                  onHide()
+                  handleNext()
+                }}
               >
                 Learn More
               </Button>
@@ -108,7 +113,7 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
         )
       }}
     >
-      {children({ onNext: handleNext })}
+      {children({ onSkip: handleDismiss })}
     </ProgressiveOnboardingPopover>
   )
 }

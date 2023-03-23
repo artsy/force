@@ -47,6 +47,13 @@ jest.mock(
   })
 )
 
+jest.mock(
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind",
+  () => ({
+    ProgressiveOnboardingAlertFindQueryRenderer: ({ children }) => children,
+  })
+)
+
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 

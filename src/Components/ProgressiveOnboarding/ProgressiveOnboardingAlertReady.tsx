@@ -9,7 +9,7 @@ import { FC, ReactNode } from "react"
 import { Text } from "@artsy/palette"
 
 interface ProgressiveOnboardingAlertReadyProps {
-  children: (actions: { onNext(): void }) => ReactNode
+  children: (actions: { onSkip(): void }) => ReactNode
 }
 
 export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReadyProps> = ({
@@ -24,11 +24,13 @@ export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReady
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_READY)
 
   const handleClose = () => {
+    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_READY)
   }
 
   if (!isDisplayable) {
-    return <>{children({ onNext: () => {} })}</>
+    return <>{children({ onSkip: () => {} })}</>
   }
 
   return (
@@ -38,7 +40,7 @@ export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReady
       onClose={handleClose}
       popover={<Text variant="xs">When you’re ready, click Create Alert.</Text>}
     >
-      {children({ onNext: handleClose })}
+      {children({ onSkip: handleClose })}
     </ProgressiveOnboardingPopover>
   )
 }

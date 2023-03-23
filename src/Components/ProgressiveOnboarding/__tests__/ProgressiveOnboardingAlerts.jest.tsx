@@ -35,13 +35,13 @@ const Example: FC = () => {
       </ProgressiveOnboardingAlertSelectFilter>
 
       <ProgressiveOnboardingAlertCreate>
-        {({ onNext: createOnNext }) => (
+        {({ onSkip: createOnSkip }) => (
           <ProgressiveOnboardingAlertReady>
-            {({ onNext: readyOnNext }) => (
+            {({ onSkip: readyOnSkip }) => (
               <button
                 onClick={() => {
-                  createOnNext()
-                  readyOnNext()
+                  createOnSkip()
+                  readyOnSkip()
                 }}
               >
                 Create Alert
@@ -119,4 +119,6 @@ describe("ProgressiveOnboarding: Alerts", () => {
     expect(screen.queryByText(alertSelectFilterText)).not.toBeInTheDocument()
     expect(screen.queryByText(alertReadyText)).not.toBeInTheDocument()
   })
+
+  it("gets dismissed completely when you go to create an alert")
 })

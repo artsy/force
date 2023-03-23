@@ -63,16 +63,16 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
         }}
         renderButton={({ onClick }) => (
           <ProgressiveOnboardingAlertCreate>
-            {({ onNext: createOnNext }) => (
+            {({ onSkip: createSkip }) => (
               <ProgressiveOnboardingAlertReady>
-                {({ onNext: readyOnNext }) => (
+                {({ onSkip: readySkip }) => (
                   <Button
                     variant="secondaryBlack"
                     size="small"
                     Icon={BellIcon}
                     onClick={() => {
-                      createOnNext()
-                      readyOnNext()
+                      createSkip()
+                      readySkip()
                       onClick()
                     }}
                   >
