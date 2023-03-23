@@ -17,10 +17,10 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
   counts,
   children,
 }) => {
-  const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayble =
-    enabled &&
+    isEnabledFor("saves") &&
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK) &&
     counts.savedArtworks === 0
 
@@ -36,7 +36,7 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
     }
-  }, [counts.initialSavedArtworks, counts.savedArtworks, dismiss, isDismissed])
+  }, [counts.savedArtworks, dismiss, isDismissed])
 
   if (!isDisplayble) {
     return <>{children}</>

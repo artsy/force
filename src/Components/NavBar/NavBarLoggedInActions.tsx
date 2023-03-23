@@ -24,6 +24,7 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { ProgressiveOnboardingFindFollowsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
 import { ProgressiveOnboardingFindSavesQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
+import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -113,13 +114,15 @@ export const NavBarLoggedInActions: React.FC<Partial<
           <Flex mr={-1}>
             <ProgressiveOnboardingFindSavesQueryRenderer>
               <ProgressiveOnboardingFindFollowsQueryRenderer>
-                <NavBarItemButton
-                  ref={anchorRef as any}
-                  active={visible}
-                  {...anchorProps}
-                >
-                  <SoloIcon title="Your account" fill="currentColor" />
-                </NavBarItemButton>
+                <ProgressiveOnboardingAlertFindQueryRenderer>
+                  <NavBarItemButton
+                    ref={anchorRef as any}
+                    active={visible}
+                    {...anchorProps}
+                  >
+                    <SoloIcon title="Your account" fill="currentColor" />
+                  </NavBarItemButton>
+                </ProgressiveOnboardingAlertFindQueryRenderer>
               </ProgressiveOnboardingFindFollowsQueryRenderer>
             </ProgressiveOnboardingFindSavesQueryRenderer>
           </Flex>

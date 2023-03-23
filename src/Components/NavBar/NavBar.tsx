@@ -51,6 +51,7 @@ import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFindFollowsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
 import { ProgressiveOnboardingFindSavesQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
+import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -294,17 +295,23 @@ export const NavBar: React.FC = track(
 
                     <ProgressiveOnboardingFindFollowsQueryRenderer>
                       <ProgressiveOnboardingFindSavesQueryRenderer>
-                        <NavBarItemButton
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          aria-label="My Collection"
-                          onClick={() =>
-                            router.push("/collector-profile/my-collection")
-                          }
-                        >
-                          <SoloIcon aria-hidden="true" height={22} width={22} />
-                        </NavBarItemButton>
+                        <ProgressiveOnboardingAlertFindQueryRenderer>
+                          <NavBarItemButton
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            aria-label="My Collection"
+                            onClick={() =>
+                              router.push("/collector-profile/my-collection")
+                            }
+                          >
+                            <SoloIcon
+                              aria-hidden="true"
+                              height={22}
+                              width={22}
+                            />
+                          </NavBarItemButton>
+                        </ProgressiveOnboardingAlertFindQueryRenderer>
                       </ProgressiveOnboardingFindSavesQueryRenderer>
                     </ProgressiveOnboardingFindFollowsQueryRenderer>
                   </>
