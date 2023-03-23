@@ -11,10 +11,7 @@ export const useFullscreenBox = ({
   aspectWidth,
   aspectHeight,
 }: UseFullscreenBox) => {
-  const { ref, width, height } = useSizeAndPosition({
-    debounce: 50,
-    trackMutation: true,
-  })
+  const { ref, width, height } = useSizeAndPosition()
 
   const [{ scaledWidth, scaledHeight }, setScaled] = useState({
     scaledWidth: 0,
