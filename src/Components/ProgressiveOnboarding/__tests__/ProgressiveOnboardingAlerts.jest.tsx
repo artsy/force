@@ -120,5 +120,25 @@ describe("ProgressiveOnboarding: Alerts", () => {
     expect(screen.queryByText(alertReadyText)).not.toBeInTheDocument()
   })
 
-  it("gets dismissed completely when you go to create an alert")
+  it("gets dismissed completely when you go to create an alert", async () => {
+    mockUseArtworkFilterContext.mockImplementation(() => ({
+      currentlySelectedFilters: () => ({}),
+    }))
+
+    render(<Example />)
+
+    // Initially see the first tip
+    expect(screen.getByText(alertCreateText)).toBeInTheDocument()
+    expect(screen.queryByText(alertSelectFilterText)).not.toBeInTheDocument()
+    expect(screen.queryByText(alertReadyText)).not.toBeInTheDocument()
+
+    // Click the create alert button
+    screen.getByText("Create Alert").click()
+    await flushPromiseQueue()
+
+    // No more tips
+    expect(screen.queryByText(alertCreateText)).not.toBeInTheDocument()
+    expect(screen.queryByText(alertSelectFilterText)).not.toBeInTheDocument()
+    expect(screen.queryByText(alertReadyText)).not.toBeInTheDocument()
+  })
 })

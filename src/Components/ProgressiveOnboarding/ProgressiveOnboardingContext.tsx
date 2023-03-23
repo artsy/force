@@ -30,9 +30,9 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const dismiss = useCallback(
     (key: ProgressiveOnboardingKey) => {
       __dismiss__(id, key)
-      setDismissed([...dismissed, key])
+      setDismissed(prevDismissed => [...prevDismissed, key])
     },
-    [dismissed, id]
+    [id]
   )
 
   useEffect(() => {
