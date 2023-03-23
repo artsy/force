@@ -49,8 +49,8 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { ProgressiveOnboardingFindFollowsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
-import { ProgressiveOnboardingFindSavesQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
+import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /**
@@ -293,8 +293,8 @@ export const NavBar: React.FC = track(
                       {renderNotificationsIndicator()}
                     </NavBarItemButton>
 
-                    <ProgressiveOnboardingFindFollowsQueryRenderer>
-                      <ProgressiveOnboardingFindSavesQueryRenderer>
+                    <ProgressiveOnboardingFollowFindQueryRenderer>
+                      <ProgressiveOnboardingSaveFindQueryRenderer>
                         <ProgressiveOnboardingAlertFindQueryRenderer>
                           <NavBarItemButton
                             display="flex"
@@ -312,8 +312,8 @@ export const NavBar: React.FC = track(
                             />
                           </NavBarItemButton>
                         </ProgressiveOnboardingAlertFindQueryRenderer>
-                      </ProgressiveOnboardingFindSavesQueryRenderer>
-                    </ProgressiveOnboardingFindFollowsQueryRenderer>
+                      </ProgressiveOnboardingSaveFindQueryRenderer>
+                    </ProgressiveOnboardingFollowFindQueryRenderer>
                   </>
                 )}
                 <NavBarItemButton

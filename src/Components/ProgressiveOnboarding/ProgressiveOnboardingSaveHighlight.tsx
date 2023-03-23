@@ -1,6 +1,6 @@
 import {
-  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
+  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_SAVE_FIND,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -9,11 +9,11 @@ import {
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { FC, useEffect } from "react"
 
-interface ProgressiveOnboardingFollowsHighlightProps {
+interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFollowsHighlightProps> = ({
+export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHighlightProps> = ({
   children,
   position,
 }) => {
@@ -21,17 +21,17 @@ export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFoll
 
   const isDisplayable =
     // If the feature is enabled
-    isEnabledFor("follows") &&
+    isEnabledFor("saves") &&
     // And you haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT) &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT) &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
+    isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND)
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
+      dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -48,7 +48,7 @@ export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFoll
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT}
+      name={PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT}
     >
       {children}
     </ProgressiveOnboardingHighlight>

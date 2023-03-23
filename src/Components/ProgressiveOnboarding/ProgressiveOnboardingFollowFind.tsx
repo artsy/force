@@ -1,8 +1,8 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_SAVE_FIND,
-  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
+  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -12,27 +12,27 @@ import {
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
-interface ProgressiveOnboardingFindSavesProps
+interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = ({
+const ProgressiveOnboardingFollowFind: FC<ProgressiveOnboardingFollowFindProps> = ({
   children,
   counts,
 }) => {
   const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("saves") &&
-    counts.savedArtworks === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND)
+    isEnabledFor("follows") &&
+    counts.followedArtists === 1 &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_FIND)
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
   }
 
   if (!isDisplayable) {
@@ -41,25 +41,25 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_SAVE_FIND}
+      name={PROGRESSIVE_ONBOARDING_FOLLOW_FIND}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}
       ignoreClickOutside={false}
       zIndex={Z.dropdown}
-      popover={<Text variant="xs">Find and edit all your Saves here.</Text>}
+      popover={<Text variant="xs">Find and edit all your Follows here.</Text>}
     >
       {children}
     </ProgressiveOnboardingPopover>
   )
 }
 
-export const ProgressiveOnboardingFindSavesQueryRenderer: FC = ({
+export const ProgressiveOnboardingFollowFindQueryRenderer: FC = ({
   children,
 }) => {
   return (
     <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingFindSaves}
+      Component={ProgressiveOnboardingFollowFind}
     >
       {children}
     </ProgressiveOnboardingCountsQueryRenderer>
