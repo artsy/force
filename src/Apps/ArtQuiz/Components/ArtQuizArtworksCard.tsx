@@ -4,6 +4,7 @@ import { FC } from "react"
 import { Image } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtQuizArtworksCard_artwork$data } from "__generated__/ArtQuizArtworksCard_artwork.graphql"
+import { ArtQuizArtworksCardMetadataFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCardMetadata"
 
 interface ArtQuizArtworksCardProps {
   mode: Mode
@@ -31,6 +32,7 @@ const ArtQuizArtworksCard: FC<ArtQuizArtworksCardProps> = ({
         aspectWidth={image.width ?? 1}
         aspectHeight={image.height ?? 1}
         bg="black10"
+        position="relative"
       >
         <Image
           width="100%"
@@ -38,6 +40,13 @@ const ArtQuizArtworksCard: FC<ArtQuizArtworksCardProps> = ({
           src={image.src}
           srcSet={image.srcSet}
           lazyLoad
+        />
+
+        <ArtQuizArtworksCardMetadataFragmentContainer
+          artwork={artwork}
+          position="absolute"
+          bottom={0}
+          left={0}
         />
       </FullscreenBox>
     </ArtQuizCard>
@@ -49,6 +58,7 @@ export const ArtQuizArtworksCardFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtQuizArtworksCard_artwork on Artwork {
+        ...ArtQuizArtworksCardMetadata_artwork
         image {
           resized(
             width: 900

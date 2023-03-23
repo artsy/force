@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5c6a3ed16c2fb8d0af172db39989020>>
+ * @generated SignedSource<<0a6460b804b95b6b2411ac48fca452b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ArtQuizArtworksCard_artwork$data = {
       readonly width: number | null;
     } | null;
   } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworksCardMetadata_artwork">;
   readonly " $fragmentType": "ArtQuizArtworksCard_artwork";
 };
 export type ArtQuizArtworksCard_artwork$key = {
@@ -32,6 +33,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtQuizArtworksCard_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtQuizArtworksCardMetadata_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -107,6 +113,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1c42dd8eeef346d66f85523fabf8962e";
+(node as any).hash = "50e5c4f32bdbd704568f801957dd566a";
 
 export default node;
