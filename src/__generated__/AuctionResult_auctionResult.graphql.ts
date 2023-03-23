@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e17dd5167a1715b91df554dab151a33>>
+ * @generated SignedSource<<4794e7ce768f8e8361448993c394f887>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,18 +23,7 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly images: {
-    readonly larger: {
-      readonly resized: {
-        readonly height: number | null;
-        readonly src: string;
-        readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
-  } | null;
-  readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
 };
 export type AuctionResult_auctionResult$key = {
@@ -68,90 +57,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "slug",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "AuctionLotImages",
-      "kind": "LinkedField",
-      "name": "images",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "larger",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 400
-                },
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "larger"
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 400
-                }
-              ],
-              "concreteType": "ResizedImageUrl",
-              "kind": "LinkedField",
-              "name": "resized",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "height",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "width",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "resized(height:400,version:\"larger\",width:400)"
-            }
-          ],
           "storageKey": null
         }
       ],
@@ -222,12 +127,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionResultPrice_auctionResult"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionResultImage_auctionResult"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "4007a6b45ef90cd0db1f1c9c61e9f6ee";
+(node as any).hash = "e3619fc89e195e60d25818a61db308c3";
 
 export default node;

@@ -7,9 +7,9 @@ import {
   TimerIcon,
   Tooltip,
 } from "@artsy/palette"
+import { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
-import { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 
 interface AuctionResultPriceProps {
   auctionResult: AuctionResultPrice_auctionResult$key
