@@ -1,8 +1,8 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
-  PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
+  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -24,15 +24,15 @@ const ProgressiveOnboardingFindFollows: FC<ProgressiveOnboardingFindFollowsProps
   const isDisplayable =
     isEnabledFor("follows") &&
     counts.followedArtists === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
   }
 
   if (!isDisplayable) {
@@ -41,7 +41,7 @@ const ProgressiveOnboardingFindFollows: FC<ProgressiveOnboardingFindFollowsProps
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_FIND_FOLLOWS}
+      name={PROGRESSIVE_ONBOARDING_FOLLOW_FIND}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

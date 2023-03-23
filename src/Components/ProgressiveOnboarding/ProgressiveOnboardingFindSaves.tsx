@@ -1,8 +1,8 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_FIND_SAVES,
-  PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_SAVE_FIND,
+  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -24,15 +24,15 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
   const isDisplayable =
     isEnabledFor("saves") &&
     counts.savedArtworks === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
+    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND)
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_FIND_SAVES)
+    dismiss(PROGRESSIVE_ONBOARDING_SAVE_FIND)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT)
+    dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
   }
 
   if (!isDisplayable) {
@@ -41,7 +41,7 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_FIND_SAVES}
+      name={PROGRESSIVE_ONBOARDING_SAVE_FIND}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

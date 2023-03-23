@@ -1,6 +1,6 @@
 import {
-  PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
+  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -23,15 +23,15 @@ export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFoll
     // If the feature is enabled
     isEnabledFor("follows") &&
     // And you haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT) &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT) &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_FIND_FOLLOWS)
+    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT)
+      dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -48,7 +48,7 @@ export const ProgressiveOnboardingFollowsHighlight: FC<ProgressiveOnboardingFoll
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT}
+      name={PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT}
     >
       {children}
     </ProgressiveOnboardingHighlight>
