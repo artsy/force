@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
+import { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
 import { graphql, useFragment } from "react-relay"
-import { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 
 interface AuctionResultMetaDataProps {
   auctionResult: AuctionResultMetaData_auctionResult$key
@@ -20,10 +20,15 @@ export const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
     location,
     saleTitle,
     lotNumber,
+    isUpcoming,
+    estimate,
   } = data
 
   return (
     <Box>
+      {!isUpcoming && (
+        <MetadataField label="Pre-sale estimate" value={estimate?.display} />
+      )}
       <MetadataField label="Medium" value={mediumText} />
       <MetadataField label="Dimensions" value={dimensionText} />
       <MetadataField label="Sale Date" value={formattedSaleDate} />
@@ -44,5 +49,9 @@ const auctionResultMetaDataFragment = graphql`
     location
     saleTitle
     lotNumber
+    estimate {
+      display
+    }
+    isUpcoming
   }
 `

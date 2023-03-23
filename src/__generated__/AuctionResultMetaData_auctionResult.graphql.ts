@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8bab8f1cfac47dd680655015e44b3c27>>
+ * @generated SignedSource<<7204c63f476a5bf4faf71425ed0247a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultMetaData_auctionResult$data = {
   readonly dimensionText: string | null;
+  readonly estimate: {
+    readonly display: string | null;
+  } | null;
   readonly formattedSaleDate: string | null;
+  readonly isUpcoming: boolean | null;
   readonly location: string | null;
   readonly lotNumber: string | null;
   readonly mediumText: string | null;
@@ -85,12 +89,37 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "lotNumber",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AuctionLotEstimate",
+      "kind": "LinkedField",
+      "name": "estimate",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isUpcoming",
+      "storageKey": null
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "02d2783f80fa38ab28aa9ecfead79e9e";
+(node as any).hash = "88fd0ce96e0b12e3a59083602eb6c6a2";
 
 export default node;
