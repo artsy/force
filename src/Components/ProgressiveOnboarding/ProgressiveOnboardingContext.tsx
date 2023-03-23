@@ -57,19 +57,36 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   )
 }
 
-const FEATURE_FLAG_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_FOLLOW_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_SAVE_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_ALERT_KEY = "grow_progressive-onboarding-alerts"
+
+type Kind = "follows" | "saves" | "alerts"
 
 export const useProgressiveOnboarding = () => {
   const { dismiss, dismissed, isDismissed } = useContext(
     ProgressiveOnboardingContext
   )
 
-  const enabled = useFeatureFlag(FEATURE_FLAG_KEY)
+  const followEnabled = useFeatureFlag(FEATURE_FLAG_FOLLOW_KEY)
+  const saveEnabled = useFeatureFlag(FEATURE_FLAG_SAVE_KEY)
+  const alertEnabled = useFeatureFlag(FEATURE_FLAG_ALERT_KEY)
+
+  const isEnabledFor = (kind: Kind) => {
+    switch (kind) {
+      case "follows":
+        return followEnabled
+      case "saves":
+        return saveEnabled
+      case "alerts":
+        return alertEnabled
+    }
+  }
 
   return {
     dismiss,
     dismissed,
-    enabled,
+    isEnabledFor,
     isDismissed,
   }
 }

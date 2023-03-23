@@ -19,10 +19,10 @@ const ProgressiveOnboardingFindSaves: FC<ProgressiveOnboardingFindSavesProps> = 
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
-    enabled &&
+    isEnabledFor("saves") &&
     counts.savedArtworks === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
 

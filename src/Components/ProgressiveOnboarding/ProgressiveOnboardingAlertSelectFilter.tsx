@@ -9,7 +9,7 @@ import { Text } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
-  const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const initialFilterState = useRef(
@@ -17,7 +17,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
   )
 
   const isDisplayable =
-    enabled &&
+    isEnabledFor("alerts") &&
     isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE) &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
 
@@ -35,13 +35,13 @@ export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
       JSON.stringify(currentlySelectedFilters?.())
 
     if (
-      enabled &&
+      isEnabledFor("alerts") &&
       isFilterStateChanged &&
       !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     }
-  }, [dismiss, enabled, currentlySelectedFilters, isDismissed])
+  }, [dismiss, isEnabledFor, currentlySelectedFilters, isDismissed])
 
   if (!isDisplayable) {
     return <>{children}</>
