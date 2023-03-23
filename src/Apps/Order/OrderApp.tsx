@@ -52,7 +52,8 @@ const OrderApp: FC<OrderAppProps> = props => {
     window.addEventListener("beforeunload", preventHardReload)
 
     return () => {
-      if (removeNavigationListenerRef) {
+      if (removeNavigationListenerRef.current) {
+        removeNavigationListenerRef.current()
         removeNavigationListenerRef.current = null
       }
       window.removeEventListener("beforeunload", preventHardReload)
