@@ -20,7 +20,6 @@ export const CollectorProfileSavesAndFollowsRouteFragmentContainer = createFragm
     me: graphql`
       fragment CollectorProfileSavesAndFollowsRoute_me on Me {
         name
-        ...CollectorProfileSaves2Route_me
       }
     `,
   }
