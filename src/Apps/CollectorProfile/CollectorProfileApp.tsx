@@ -5,8 +5,8 @@ import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { useSystemContext } from "System/useSystemContext"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
-import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
 import { useIsRouteActive } from "System/Router/useRouter"
@@ -51,15 +51,15 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
 
         <Tab to="/collector-profile/insights">Insights</Tab>
 
-        <ProgressiveOnboardingSavesHighlight position="center">
+        <ProgressiveOnboardingSaveHighlight position="center">
           <Tab to={savesPath} active={isSavesPathActive}>
             Saves
           </Tab>
-        </ProgressiveOnboardingSavesHighlight>
+        </ProgressiveOnboardingSaveHighlight>
 
-        <ProgressiveOnboardingFollowsHighlight position="center">
+        <ProgressiveOnboardingFollowHighlight position="center">
           <Tab to="/collector-profile/follows">Follows</Tab>
-        </ProgressiveOnboardingFollowsHighlight>
+        </ProgressiveOnboardingFollowHighlight>
       </RouteTabs>
 
       <Spacer y={[2, 4]} />
