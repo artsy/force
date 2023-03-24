@@ -61,7 +61,7 @@ export const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
 const Field = ({ label, value }) => {
   return (
     <Flex justifyContent="space-between">
-      <Text color="black60" variant="xs">
+      <Text minWidth={128} color="black60" variant="xs">
         {label}
       </Text>
 
