@@ -6,7 +6,7 @@ orbs:
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.12.1
-  yarn: artsy/yarn@6.4.0
+  yarn: artsy/yarn@6.5.0
 
 jobs:
   validate_production_schema:
