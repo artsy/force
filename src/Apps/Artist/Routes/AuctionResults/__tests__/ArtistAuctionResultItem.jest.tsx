@@ -1,8 +1,8 @@
+import { screen } from "@testing-library/react"
+import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
+import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
-import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
-import { screen } from "@testing-library/react"
 import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
@@ -73,12 +73,20 @@ describe("ArtistAuctionResultItem", () => {
     expect(screen.queryByText("Andy Warhol")).not.toBeInTheDocument()
   })
 
-  /*   it("navigates to the single auction result page", () => {
+  it("navigates to the single auction result page", () => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      user: { name: "Logged In", email: "loggedin@example.com" },
+    }))
+
     renderWithRelay(mockResolver, false)
 
+    screen.getByText("Neuschwanstein (Feldmann & Schellmann 372), 1987").click()
 
+    expect(mockRouterPush).toHaveBeenCalledWith(
+      "/auction-result/auction-result-id"
+    )
   })
- */
+
   describe("when showArtistName is true", () => {
     it("renders artist name with the auction result data", () => {
       renderWithRelay(mockResolver, false, { showArtistName: true })
@@ -129,7 +137,7 @@ describe("ArtistAuctionResultItem", () => {
 })
 
 const auctionResult = {
-  // internalID: "auction-result-id",
+  internalID: "auction-result-id",
   title: "Neuschwanstein (Feldmann & Schellmann 372)",
   dimension_text: "62.0 x 91.0 cm",
   organization: "Bonhams",

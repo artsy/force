@@ -44,22 +44,27 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
 
       <Spacer y={[4, 6]} />
 
-      <Text variant={["sm-display", "md"]} textAlign="left">
-        Comparable Works
-      </Text>
+      {!!results.length && (
+        <>
+          <Text variant={["sm-display", "md"]} textAlign="left">
+            Comparable Works
+          </Text>
 
-      <Spacer y={[2, 4]} />
-      <Join separator={<Spacer y={2} />}>
-        {results.map((result, index) => {
-          return (
-            <ArtistAuctionResultItemFragmentContainer
-              key={index}
-              auctionResult={result}
-              filtersAtDefault={false}
-            />
-          )
-        })}
-      </Join>
+          <Spacer y={[2, 4]} />
+
+          <Join separator={<Spacer y={2} />}>
+            {results.map((result, index) => {
+              return (
+                <ArtistAuctionResultItemFragmentContainer
+                  key={index}
+                  auctionResult={result}
+                  filtersAtDefault={false}
+                />
+              )
+            })}
+          </Join>
+        </>
+      )}
     </>
   )
 }
