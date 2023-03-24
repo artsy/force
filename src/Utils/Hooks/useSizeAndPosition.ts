@@ -1,5 +1,8 @@
-import { useIsomorphicLayoutEffect, useMutationObserver } from "@artsy/palette"
-import { debounce } from "lodash"
+import {
+  useIsomorphicLayoutEffect,
+  useMutationObserver,
+  useResizeObserver,
+} from "@artsy/palette"
 import { MutableRefObject, useCallback, useRef, useState } from "react"
 
 interface Geometry {
@@ -17,9 +20,7 @@ const DEFAULT_GEOMETRY: Geometry = {
 }
 
 interface UseSizeAndPosition {
-  debounce?: number
   trackMutation?: boolean
-  trackResize?: boolean
   targetRef?: MutableRefObject<HTMLElement | null>
 }
 
@@ -29,9 +30,7 @@ interface UseSizeAndPosition {
  * Updates on mutation optionally.
  **/
 export const useSizeAndPosition = ({
-  debounce: debounceMs = 0,
   trackMutation = false,
-  trackResize = true,
   targetRef,
 }: UseSizeAndPosition = {}) => {
   const ref = useRef<HTMLElement | null>(null)
@@ -51,8 +50,6 @@ export const useSizeAndPosition = ({
     })
   }, [targetRef])
 
-  const handler = debounceMs ? debounce(handleUpdate, debounceMs) : handleUpdate
-
   useMutationObserver({
     ref,
     onMutate: mutations => {
@@ -60,7 +57,7 @@ export const useSizeAndPosition = ({
 
       mutations.forEach(mutation => {
         if (mutation.type === "attributes") {
-          handler()
+          handleUpdate()
         }
       })
     },
@@ -68,20 +65,13 @@ export const useSizeAndPosition = ({
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) return
-
-    setTimeout(handleUpdate, 0)
-
-    const handleResize = () => {
-      if (!trackResize) return
-      handler()
-    }
-
-    window.addEventListener("resize", handleResize)
-
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
+    requestAnimationFrame(handleUpdate)
   }, [ref])
+
+  useResizeObserver({
+    target: ref,
+    onResize: handleUpdate,
+  })
 
   return { ref, ...geometry }
 }
