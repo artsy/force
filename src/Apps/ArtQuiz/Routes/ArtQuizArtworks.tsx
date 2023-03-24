@@ -268,9 +268,13 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         </Flex>
 
         <Tooltip
-          content={tooltipText.map(text => (
-            <Text variant="xs">{text}</Text>
-          ))}
+          content={
+            <Text variant="xs">
+              {tooltipText.map((text, i) => {
+                return <div key={i}>{text}</div>
+              })}
+            </Text>
+          }
           variant="defaultDark"
           offset={-10}
           pointer
