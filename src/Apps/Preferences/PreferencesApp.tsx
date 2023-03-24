@@ -27,11 +27,16 @@ export const parseTokenFromRouter = (router): string => {
   return tokenFromQuery.split("?")[0]
 }
 const NOTIFICATION_FIELDS = {
-  recommendedByArtsy: false,
-  artWorldInsights: false,
-  productUpdates: false,
-  guidanceOnCollecting: false,
-  customAlerts: false,
+  recommendedByArtsyEmail: false,
+  recommendedByArtsyPush: false,
+  artWorldInsightsEmail: false,
+  artWorldInsightsPush: false,
+  productUpdatesEmail: false,
+  productUpdatesPush: false,
+  guidanceOnCollectingEmail: false,
+  guidanceOnCollectingPush: false,
+  customAlertsEmail: false,
+  customAlertsPush: false,
 }
 
 interface PreferencesAppProps {
