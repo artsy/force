@@ -15,7 +15,7 @@ export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
 
   return (
     <Box>
-      <Text as="h1" variant="lg-display">
+      <Text as="h1" variant={["sm-display", "lg-display"]}>
         {artist?.isPersonalArtist ? (
           artist?.name
         ) : (
@@ -24,7 +24,7 @@ export const AuctionResultTitleInfo: React.FC<AuctionResultTitleInfoProps> = ({
           </RouterLink>
         )}
       </Text>
-      <Text as="h1" variant="lg-display" mb={[0.5, 0]}>
+      <Text as="h1" variant={["sm-display", "lg-display"]} mb={[0.5, 0]}>
         {title?.trim()}
         {dateText && dateText.replace(/\s+/g, "").length > 0 && ", " + dateText}
       </Text>

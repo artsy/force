@@ -1,7 +1,8 @@
-import { Box } from "@artsy/palette"
+import { Box, Flex, Join, Separator, Text } from "@artsy/palette"
 import { AuctionResultMetaData_auctionResult$key } from "__generated__/AuctionResultMetaData_auctionResult.graphql"
 import { MetadataField } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarMetadata"
 import { graphql, useFragment } from "react-relay"
+import { Media } from "Utils/Responsive"
 
 interface AuctionResultMetaDataProps {
   auctionResult: AuctionResultMetaData_auctionResult$key
@@ -26,17 +27,52 @@ export const AuctionResultMetaData: React.FC<AuctionResultMetaDataProps> = ({
 
   return (
     <Box>
-      {!isUpcoming && (
-        <MetadataField label="Pre-sale estimate" value={estimate?.display} />
-      )}
-      <MetadataField label="Medium" value={mediumText} />
-      <MetadataField label="Dimensions" value={dimensionText} />
-      <MetadataField label="Sale Date" value={formattedSaleDate} />
-      <MetadataField label="Auction house" value={organization} />
-      <MetadataField label="Sale location" value={location} />
-      <MetadataField label="Sale name" value={saleTitle} />
-      <MetadataField label="Lot" value={lotNumber} />
+      <Media greaterThan="xs">
+        {!isUpcoming && (
+          <MetadataField label="Pre-sale estimate" value={estimate?.display} />
+        )}
+        <MetadataField label="Medium" value={mediumText} />
+        <MetadataField label="Dimensions" value={dimensionText} />
+        <MetadataField label="Sale Date" value={formattedSaleDate} />
+        <MetadataField label="Auction house" value={organization} />
+        <MetadataField label="Sale location" value={location} />
+        <MetadataField label="Sale name" value={saleTitle} />
+        <MetadataField label="Lot" value={lotNumber} />
+      </Media>
+
+      <Media at="xs">
+        <Join separator={<Separator my={1} />}>
+          {!isUpcoming && (
+            <Field label="Pre-sale estimate" value={estimate?.display} />
+          )}
+          <Field label="Medium" value={mediumText} />
+          <Field label="Dimensions" value={dimensionText} />
+          <Field label="Sale Date" value={formattedSaleDate} />
+          <Field label="Auction house" value={organization} />
+          <Field label="Sale location" value={location} />
+          <Field label="Sale name" value={saleTitle} />
+          <Field label="Lot" value={lotNumber} />
+        </Join>
+      </Media>
     </Box>
+  )
+}
+
+const Field = ({ label, value }) => {
+  return (
+    <Flex justifyContent="space-between">
+      <Text color="black60" variant="xs">
+        {label}
+      </Text>
+
+      <Text
+        color={value ? "black100" : "black60"}
+        variant="xs"
+        textAlign="right"
+      >
+        {value || "----"}
+      </Text>
+    </Flex>
   )
 }
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4794e7ce768f8e8361448993c394f887>>
+ * @generated SignedSource<<c8861d86fc22f69f0a497149331e058d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
-  readonly artist: {
-    readonly name: string | null;
-    readonly slug: string;
-  } | null;
   readonly comparableAuctionResults: {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
@@ -23,7 +19,7 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultBackLink_auctionResult" | "AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
 };
 export type AuctionResult_auctionResult$key = {
@@ -37,31 +33,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "AuctionResult_auctionResult",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -116,12 +87,17 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionResultMetaData_auctionResult"
+      "name": "AuctionResultBackLink_auctionResult"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionResultTitleInfo_auctionResult"
+      "name": "AuctionResultImage_auctionResult"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionResultMetaData_auctionResult"
     },
     {
       "args": null,
@@ -131,13 +107,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionResultImage_auctionResult"
+      "name": "AuctionResultTitleInfo_auctionResult"
     }
   ],
   "type": "AuctionResult",
   "abstractKey": null
 };
 
-(node as any).hash = "e3619fc89e195e60d25818a61db308c3";
+(node as any).hash = "8d7e2480e52ea2fae87e4a614529f1b3";
 
 export default node;

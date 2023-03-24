@@ -34,7 +34,7 @@ export const AuctionResultPrice: React.FC<AuctionResultPriceProps> = ({
     return (
       <Box>
         <Text variant="xs">Pre-sale Estimate</Text>
-        <Text variant="lg-display">
+        <Text variant={["md", "lg-display"]}>
           {estimate?.display ? (
             estimate?.display
           ) : (
@@ -70,12 +70,12 @@ export const AuctionResultPrice: React.FC<AuctionResultPriceProps> = ({
       {salePrice && (
         <>
           <Flex>
-            <Text variant="lg-display">{salePrice}</Text>
+            <Text variant={["md", "lg-display"]}>{salePrice}</Text>
 
             <AuctionResultPerformance value={performance?.mid!} />
           </Flex>
           {showPriceUSD && (
-            <Text variant="sm" color="black60">
+            <Text variant={["xs", "sm"]} color="black60">
               {priceRealized?.displayUSD}
             </Text>
           )}
@@ -83,7 +83,7 @@ export const AuctionResultPrice: React.FC<AuctionResultPriceProps> = ({
       )}
 
       {!salePrice && boughtIn && (
-        <Text variant="lg-display">
+        <Text variant={["md", "lg-display"]}>
           <i>Bought In</i>
         </Text>
       )}
@@ -91,14 +91,14 @@ export const AuctionResultPrice: React.FC<AuctionResultPriceProps> = ({
       {!salePrice && awaitingResult && !boughtIn && (
         <Flex alignItems="center">
           <TimerIcon fill="black100" width={23} height={23} mr={0.5} />
-          <Text variant="lg-display">
+          <Text variant={["md", "lg-display"]}>
             <i>Awaiting results</i>
           </Text>
         </Flex>
       )}
 
       {!salePrice && !boughtIn && !awaitingResult && (
-        <Text variant="lg-display">
+        <Text variant={["md", "lg-display"]}>
           <i>Price not available</i>
         </Text>
       )}
@@ -116,7 +116,7 @@ const AuctionResultPerformance = ({ value }) => {
   const text = value[0] === "-" ? value.slice(1) : value
 
   return (
-    <Text variant="lg-display" color={color} ml={2}>
+    <Text variant={["md", "lg-display"]} color={color} ml={2}>
       {sign}
       {text} est
     </Text>

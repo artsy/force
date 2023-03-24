@@ -1,23 +1,13 @@
-import {
-  Box,
-  ChevronIcon,
-  Column,
-  Flex,
-  GridColumns,
-  Join,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
+import { AuctionResultBackLink } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultBackLink"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
 import { AuctionResultPrice } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultPrice"
 import { AuctionResultTitleInfo } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { Media } from "Utils/Responsive"
 
 interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
@@ -26,27 +16,13 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { artist, comparableAuctionResults } = auctionResult
+  const { comparableAuctionResults } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
 
   return (
     <>
-      <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
-        <RouterLink
-          textDecoration="none"
-          to={`/artist/${artist?.slug}/auction-results`}
-        >
-          <Flex alignItems="center">
-            <ChevronIcon height={14} width={14} direction="left" />
-            <Media greaterThanOrEqual="sm">
-              <Text variant="xs" pl={1}>
-                Back to {artist?.name}
-              </Text>
-            </Media>
-          </Flex>
-        </RouterLink>
-      </Flex>
+      <AuctionResultBackLink auctionResult={auctionResult} />
 
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={4}>
@@ -93,10 +69,6 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment AuctionResult_auctionResult on AuctionResult {
-        artist {
-          name
-          slug
-        }
         comparableAuctionResults(first: 6) @optionalField {
           edges {
             cursor
@@ -105,10 +77,11 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...AuctionResultMetaData_auctionResult
-        ...AuctionResultTitleInfo_auctionResult
-        ...AuctionResultPrice_auctionResult
+        ...AuctionResultBackLink_auctionResult
         ...AuctionResultImage_auctionResult
+        ...AuctionResultMetaData_auctionResult
+        ...AuctionResultPrice_auctionResult
+        ...AuctionResultTitleInfo_auctionResult
       }
     `,
   }
