@@ -88,6 +88,37 @@ describe("SavesItem", () => {
 
     expect(screen.getAllByAltText("")).toHaveLength(4)
   })
+
+  it("should render the correct link", () => {
+    renderWithRelay({
+      CollectionsConnection: () => collectionsConnection,
+    })
+
+    const link = screen.getByRole("link")
+    const href = "/collector-profile/saves2/collection-id"
+
+    expect(link).toHaveAttribute("href", href)
+  })
+
+  it("should render the correct link for default collection", () => {
+    renderWithRelay({
+      CollectionsConnection: () => ({
+        edges: [
+          {
+            node: {
+              ...collectionNode,
+              default: true,
+            },
+          },
+        ],
+      }),
+    })
+
+    const link = screen.getByRole("link")
+    const href = "/collector-profile/saves2"
+
+    expect(link).toHaveAttribute("href", href)
+  })
 })
 
 const artworksConnection = {

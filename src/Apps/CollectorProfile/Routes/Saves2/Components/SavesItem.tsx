@@ -43,6 +43,8 @@ const SavesItem: FC<SavesItemProps> = ({ imagesLayout, item }) => {
   return (
     <Clickable
       as="a"
+      // @ts-ignore
+      href={getLink()}
       textDecoration="none"
       aria-current={isSelected}
       onClick={handleClick}
