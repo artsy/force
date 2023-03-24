@@ -1,20 +1,13 @@
 import { captureException } from "@sentry/browser"
 import { verifyEmail } from "./verifyEmail"
-import { verifyID } from "./verifyID"
 import { useCallback, useState } from "react"
 import { useSystemContext } from "System/useSystemContext"
 import { Environment } from "relay-runtime"
 
-type verificationType = "ID" | "Email"
-
-const IDVerificationBlockingStates = ["passed", "failed", "watchlist_hit"]
+type verificationType = "Email"
 
 export const useHandleEmailVerification = () => {
   return useHandleVerification("Email")
-}
-
-export const useHandleIDVerification = () => {
-  return useHandleVerification("ID")
 }
 
 const VERIFICATION_BANNER_TIMEOUT = 6000
@@ -25,14 +18,9 @@ const useHandleVerification = (type: verificationType) => {
 
   const handleVerification = useCallback(async () => {
     try {
-      const response = await verify(type, relayEnvironment!)
+      await verify(type, relayEnvironment!)
 
-      // if response as state from ID verification
-      const IDVerificationState = !(
-        response && IDVerificationBlockingStates.includes(response)
-      )
-
-      if (type === "Email" || IDVerificationState) {
+      if (type === "Email") {
         setShowVerificationBanner(true)
       }
     } catch (error) {
@@ -58,11 +46,5 @@ const verify = async (
 
     const confirmationOrError = sendConfirmationEmail?.confirmationOrError
     return confirmationOrError?.unconfirmedEmail
-  } else {
-    const { sendIdentityVerificationEmail } = await verifyID(relayEnvironment)
-
-    const confirmationOrError =
-      sendIdentityVerificationEmail?.confirmationOrError
-    return confirmationOrError?.identityVerificationEmail?.state
   }
 }

@@ -13,10 +13,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import {
-  useHandleEmailVerification,
-  useHandleIDVerification,
-} from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
+import { useHandleEmailVerification } from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   SettingsEditProfileImageFragmentContainer,
   SettingsEditProfileImageRef,
@@ -39,6 +36,10 @@ import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserPro
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { RouterLink } from "System/Router/RouterLink"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("SettingsEditProfileFields")
 
 interface EditableLocationProps extends EditableLocation {
   display: string | null
@@ -64,13 +65,9 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const imageContainerRef = useRef<SettingsEditProfileImageRef | null>(null)
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const { submitMutation: submitVerifyIDMutation } = useVerifyID()
   const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
-
-  const {
-    showVerificationBanner: showVerificationBannerForID,
-    handleVerification: handleIDVerification,
-  } = useHandleIDVerification()
 
   const {
     showVerificationBanner: showVerificationBannerForEmail,
@@ -78,24 +75,13 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   } = useHandleEmailVerification()
 
   useEffect(() => {
-    if (!!showVerificationBannerForID) {
-      sendToast({
-        variant: "success",
-        message: `ID verification link sent to ${me?.email ?? ""}.`,
-      })
-    }
     if (!!showVerificationBannerForEmail) {
       sendToast({
         variant: "success",
         message: `Email sent to ${me?.email ?? ""}`,
       })
     }
-  }, [
-    me.email,
-    sendToast,
-    showVerificationBannerForID,
-    showVerificationBannerForEmail,
-  ])
+  }, [me.email, sendToast, showVerificationBannerForEmail])
 
   const isEmailConfirmed = me?.isEmailConfirmed
   const isIdentityVerified = me?.isIdentityVerified
@@ -257,7 +243,33 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                 <Flex alignItems="center">
                   <CheckCircleIcon fill="black60" mr={0.5} />
                   <Clickable
-                    onClick={handleIDVerification}
+                    onClick={async () => {
+                      try {
+                        await submitVerifyIDMutation({
+                          variables: { input: {} },
+                          rejectIf: res => {
+                            return res.sendIdentityVerificationEmail
+                              ?.confirmationOrError?.mutationError
+                          },
+                        })
+
+                        sendToast({
+                          variant: "success",
+                          message: `ID verification link sent to ${
+                            me?.email ?? ""
+                          }.`,
+                          ttl: 6000,
+                        })
+                      } catch (error) {
+                        logger.error(error)
+
+                        sendToast({
+                          variant: "error",
+                          message: "There was a problem",
+                          description: error.message || "Something went wrong",
+                        })
+                      }
+                    }}
                     textDecoration="underline"
                   >
                     <Text variant="sm-display">Verify Your ID</Text>
